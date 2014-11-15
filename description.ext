@@ -95,35 +95,3 @@ class CfgSounds
  
 };
 
-class CfgWorlds
-{
-	class CAWorld;
-
-	class Altis : CAWorld
-	{
-
-
-		class Sea
-		{
-		//BIG tide
-			MaxTide = 10; // 2h35min
-			MaxWave = 2;
-			
-			/*seaMaterial = "#water";
-			seaTexture = "a3\data_f\seatexture_co.paa";
-			SeaWaveHScale = 20;
-			SeaWaveXDuration = 50000;
-			SeaWaveXScale = "2.0/50";
-			SeaWaveZDuration = 100000;
-			SeaWaveZScale = "2/50";
-			shoreFoamMaterial = "#shorefoam";
-			shoreMaterial = "#shore";
-			shoreWetMaterial = "#shorewet";
-			WaterGrid = 50;
-			WaterMapScale = 20;*/
-
-		};
-
-	};
-
-};
