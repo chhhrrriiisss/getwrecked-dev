@@ -48,7 +48,7 @@ Hold Rotate - User Action 5<br />
 <br />
 [ Common ]<br />
 <br />
-Windows Key - Open Vehicle Settings<br />
+Open Vehicle Settings - User Action 20<br />
 "
 ]];
 

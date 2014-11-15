@@ -57,6 +57,7 @@ while {time < _timeout && alive _unit && GW_CURRENTZONE == "workshopZone" && (is
 // Wipe player actions
 _unit removeAction _paintAction;
 _unit removeAction _cancelAction;
+_unit spawn setPlayerActions;
 
 _target = _unit getVariable 'paintTarget';
 
