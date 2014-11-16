@@ -16,18 +16,8 @@ _saveTarget = [_this,0, "", [""]] call BIS_fnc_param;
 
 _onExit = {
     systemChat (_this select 0);
-    if (!isNil "GW_SAVE_VEHICLE") then {        
-
-        // Wait for all the attached items to arrive before re-locking
-        waitUntil{
-            Sleep 0.1;
-            _allNearby = true;
-            { if (_x distance GW_SAVE_VEHICLE > 10) exitWith { _allNearby = false; } } count (attachedObjects GW_SAVE_VEHICLE) > 0;
-            _allNearby    
-        };
-
+    if (!isNil "GW_SAVE_VEHICLE") then {       
         [GW_SAVE_VEHICLE, true] call setVehicleLocked;
-
     };
 
     GW_WAITSAVE = false;

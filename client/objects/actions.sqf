@@ -98,7 +98,7 @@ setMoveAction = {
 
 		removeAllActions _obj;	
 
-	}, [], 0, false, false, "", "( ( (vehicle player) == player ) && !GW_EDITING && (player distance _target < 5) && [_target, player, false] call checkOwner && !GW_LIFT_ACTIVE)"];		
+	}, [], 0, false, false, "", "( ( (vehicle player) == player ) && !GW_EDITING && (player distance _target < 5) && [_target, player, false] call checkOwner && !GW_LIFT_ACTIVE && GW_CURRENTZONE == 'workshopZone' )"];		
 
 	_obj setVariable ["hasActions", true];
 
@@ -125,7 +125,7 @@ setDetachAction = {
 
 		removeAllActions _obj;
 		
-	}, [], 0, false, false, "", "( ( (vehicle player) == player ) && !GW_EDITING && (player distance _target < 5) && [_target, player, false] call checkOwner && !GW_LIFT_ACTIVE)"];
+	}, [], 0, false, false, "", "( ((vehicle player) == player) && !GW_EDITING && (player distance _target < 5) && [_target, player, false] call checkOwner && !GW_LIFT_ACTIVE && GW_CURRENTZONE == 'workshopZone' )"];
 
 	_obj setVariable ["hasActions", true];
 

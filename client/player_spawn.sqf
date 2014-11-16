@@ -95,13 +95,15 @@ if (!_firstSpawn) then {
 		[_unit, _unit] spawn deathCamera;
 	};
 
+	_failSpawn = false;
 	_location = [spawnAreas, ["Car", "Man"]] call findEmpty;
-	_pos = (ASLtoATL getPosATL _location);
+
+	// If we've failed to find an empty one, just use the first in the list
+	_pos = if (typename _location == "ARRAY") then { _failSpawn = true; (ASLtoATL getPosASL (spawnAreas select 0)) } else { (ASLtoATL getPosASL _location) };
 	_unit setPosATL _pos;	
 	_unit setDir (getDir _location);
 
-	if (!isNil "GW_LASTLOAD") then {
-
+	if (!isNil "GW_LASTLOAD" && !_failSpawn) then {
 		_closest = [saveAreas, _pos] call findClosest; 
 		[(ASLtoATL getPosASL _closest), GW_LASTLOAD] spawn requestVehicle;
 	};

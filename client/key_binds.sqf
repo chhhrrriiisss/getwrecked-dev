@@ -108,9 +108,6 @@ keyCodes = [
 
 GW_RESTRICTED_KEYS = [
 	1, // esc
-	17, // w
-	30, // a 
-	32, // d
 	69 // Num Lock Spam
 ];
 
@@ -204,7 +201,7 @@ checkBinds = {
 		};
 	};
 
-	if (_key in GW_RESTRICTED_KEYS && GW_KEYBIND_ACTIVE) exitWith { systemChat 'That key is restricted.'; };
+	if ( (_key in GW_RESTRICTED_KEYS) && GW_KEYBIND_ACTIVE) exitWith { systemChat 'That key is restricted.'; };
 
 	GW_KEYDOWN = _key;
 

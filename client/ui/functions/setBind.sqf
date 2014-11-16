@@ -64,3 +64,4 @@ if (!isNil "GW_KEYDOWN" && time < _timeout && isNil "GW_SETTING_CANCEL") then {
 	GW_SETTING_CANCEL = nil;
 };	
 
+GW_KEYBIND_ACTIVE = false;
