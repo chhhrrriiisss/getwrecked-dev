@@ -1,6 +1,6 @@
 //
 //      Name: setVehicleLocked
-//      Desc: Locks access to a vehicle by disabling simulation, driver and inventory access
+//      Desc: Locks access to a vehicle by disabling driver and inventory access
 //      Return: None
 //
 
@@ -33,25 +33,6 @@ _vehicle lockTurret [[0,0], true];
 // Disable simulation, lock driver
 if (_lock) exitWith {
 
-	if (simulationEnabled _vehicle) then {
-
-		if (isServer) then {
-			_vehicle enableSimulationGlobal false;
-		} else {
-			[       
-			    [
-			        _vehicle,
-			        false
-			    ],
-			    "setObjectSimulation",
-			    false,
-			    false 
-			] call BIS_fnc_MP;  
-
-		};
-
-	};
-
 	if (!lockedDriver _vehicle) then {
 		_vehicle lockDriver true;
 	};
@@ -60,25 +41,6 @@ if (_lock) exitWith {
 
 // Enable simulation, unlock driver
 if (!_lock) exitWith {
-
-	if (!simulationEnabled _vehicle) then {
-
-		if (isServer) then {
-			_vehicle enableSimulationGlobal true;
-		} else {
-			[       
-			    [
-			        _vehicle,
-			        true
-			    ],
-			    "setObjectSimulation",
-			    false,
-			    false 
-			] call BIS_fnc_MP;  
-
-		};
-
-	};
 
 	if (lockedDriver _vehicle) then {
 		_vehicle lockDriver false;

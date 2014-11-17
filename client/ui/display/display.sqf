@@ -12,6 +12,7 @@ drawServiceIcon = {
 		
 		_pos = [_this,0, [], [[]]] call BIS_fnc_param;
 		_defaultIcon = [_this,1, "", [""]] call BIS_fnc_param;
+		_obj = [_this,5, objNull, [objNull]] call BIS_fnc_param;
 
 		// Optionally loop through a series of icons once close enough
 		_activeIcons = [_this,2, [], [[]]] call BIS_fnc_param;
@@ -26,10 +27,17 @@ drawServiceIcon = {
 		if (_alpha <= 0) exitWith {};
 
 		_colour = [1,1,1,_alpha];
+
+		if (_distance < 8 && !isNull _obj) then {			
+			(vehicle player) setVariable ["GW_NEARBY_SERVICE", (_obj getVariable ["GW_SERVICE_TYPE", nil]) ];
+		} else { 
+			(vehicle player) setVariable ["GW_NEARBY_SERVICE", nil];
+		};
+
 		_inUse = (vehicle player) getVariable ["inUse", false];
 		
 		//If the player is really close and we have an animated icon set switch icons to an 'active' state
-		if (_distance < 8 && count _activeIcons > 0 && _inUse) then {
+		if (count _activeIcons > 0 && _inUse) then {
 
 			// Every 5 seconds increase the tick on the animation
 			if (time - GW_LASTTICK > 0.5) then {

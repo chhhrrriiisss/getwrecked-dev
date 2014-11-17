@@ -858,15 +858,19 @@ player createDiaryRecord ["changelog",
 [
 "v0.7.8",
 "
-- Vehicles in workshop now has simulation disabled, which should fix a lot of physics issues<br />
+- Vehicles in workshop now toggle simulation off briefly while attaching which should fix a lot of physics issues<br />
 - Lift Vehicle and settings options now attached to player proximity to owned vehicle<br />
 - Vertical Thrusters should no longer be linked, along with most other items<br />
 - New 'Key Restricted' warning when trying to use a restricted key for a bind<br />
 - Tweaks to hud timeout bars to better show time remaining for multiple modules of the same type <br />
-- You can no longer detach or move objects while outside the workshop<br />
+- You can no longer detach or move objects while not in a race zone<br />
+- If you get kicked out of a vehicle due to low health the vehicle will now explode<br />
+- Flamethrower should now have better hit detection<br />
+- Incendiary ammo now has lower chance of setting vehicles on fire (15%)<br />
 - Removed - W, A and D from restricted keys<br />
-- Removed - Muzzle effect showing for non-local clients due to excess lag with hmg/gmg fire<br />
+- Removed - Muzzle effect showing for non-local clients due to excess lag with hmg/gmg/laser fire<br />
 - Added - Hold rotate bind for using the camera to rotate objects and lifted vehicles<br />
+- Fixed - You can no longer save a vehicle you don't own<br />
 - Fixed - Last loaded vehicle is now set via vehicle save (previously only on load)<br />
 - Fixed - Buy menu being generated twice on menu load<br />
 - Fixed - Script errors when buying items across different categories<br />

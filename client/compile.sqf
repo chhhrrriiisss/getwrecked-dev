@@ -213,6 +213,7 @@ damageIntersects = compile preprocessFile "client\functions\damageIntersects.sqf
 burnIntersects = compile preprocessFile "client\functions\burnIntersects.sqf";
 destroyInstantly = compile preprocessFile "client\functions\destroyInstantly.sqf";
 popIntersects = compile preprocessFile "client\functions\popIntersects.sqf";
+setVehicleOnFire = compile preprocessFile "client\functions\setVehicleOnFire.sqf";
 slowDown = compile preprocessFile "client\functions\slowDown.sqf";
 flipVehicle = compile preprocessFile "client\functions\flipVehicle.sqf";
 

@@ -38,6 +38,10 @@ for "_i" from 0 to _size step 1 do {
 	_inventory pushBack [(_x select 1), (_x select 0)];
 } ForEach GW_BUY_CART;
 
+// Plus currently selected item 
+_index = lnbcurselrow 92001;
+_total = _total + parseNumber(lnbData [97001, [_index, 0]]);
+
 disableSerialization;
 _text = ((findDisplay 97000) displayCtrl 97005);
 _text ctrlSetText format['TOTAL: $%1', ([_total] call numberToCurrency)];

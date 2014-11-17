@@ -74,7 +74,17 @@ _count = 0;
 	// Difference between these two
 	_dif = abs ( [_actualDir - _defaultDir] call flattenAngle );
 
-	if ( (_dif < _limit) && _type in _allowedWeapons) then {		
+	if ( (_dif < _limit) && _type in _allowedWeapons) then {	
+
+		// if (typeOf _obj != 'groundWeaponHolder') then {
+
+		// 	_currentDir = round ( getDir _obj );
+			
+		// 	if (_currentDir != round (_actualDir)) then {
+		// 		_obj setDir _actualDir;
+		// 	};
+
+		// };
 
 		if (true) then {
 

@@ -24,6 +24,8 @@ if (!_processed) then {
     
     _veh setVariable ['processedDeath', true];    
 
+
+
     _veh spawn {
 
         _veh = _this;
@@ -63,6 +65,8 @@ if (!_processed) then {
                 _name = 'A vehicle';     
             };                
 
+            if (isNil "GW_LASTMESSAGELOGGED") then { GW_LASTMESSAGELOGGED = time; };
+                
             // Prevent spamming the server with kill messages
             if (time > (GW_LASTMESSAGELOGGED + 3)) then {
 
@@ -81,14 +85,17 @@ if (!_processed) then {
 
                 ['destroyed', _veh, 1, true] call logStat;
 
-            };
-
-            // Kill the crew      
-            { _x setDammage 1; false } count _crew > 0;
+            };  
 
         };
 
     };
+
+    // Kill the crew & nearby players  
+    { _x setDammage 1; false } count _crew > 0;
+    _nearby = (ASLtoATL getPosASL _veh) nearEntities[["Man"], 5];
+    { if ((vehicle _x) == _x) then { _x setDammage 1; }; false  } count _nearby > 0;
+
 
     _collateral = attachedObjects _veh;
 

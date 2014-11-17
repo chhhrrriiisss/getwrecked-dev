@@ -104,16 +104,24 @@ _vehPitchBank = _veh call BIS_fnc_getPitchBank;
 _tarPitch = [((_pitchBank select 0) - (_vehPitchBank select 0))] call normalizeAngle;
 _tarBank = [((_pitchBank select 1) - (_vehPitchBank select 1))] call normalizeAngle;
 
-//Enable simulation
+_wasSimulated = (simulationEnabled _veh);
+
+// Disable simulation
 [		
 	[
-		_obj,
+		[_obj, _veh],
 		false
 	],
 	"setObjectSimulation",
 	false,
 	false 
 ] call BIS_fnc_MP;
+
+_timeout = time + 3;
+waitUntil{
+	Sleep 0.1;
+	( (time > _timeout) || ( !(simulationEnabled _veh) && !(simulationEnabled _obj)  )  )
+};
 
 // Attach it
 _obj attachTo [_veh];
@@ -132,6 +140,19 @@ if (_forceAttach) then {} else {
 pubVar_setDir = [_obj, getDir _obj];
 publicVariable "pubVar_setDir";  
 
+if (_wasSimulated) then {
+	// Update the direction by re-enabling simulation on the vehicle
+	[		
+		[
+			_veh,
+			true
+		],
+		"setObjectSimulation",
+		false,
+		false 
+	] call BIS_fnc_MP;
+
+};
 
 // Re-compile vehicle information
 if (_forceAttach) then {} else {
@@ -144,33 +165,6 @@ if (_forceAttach) then {} else {
 // Remove all actions from player
 removeAllActions player;
 player spawn setPlayerActions;
-
-// Update the direction by enabling simulation briefly on the vehicle
-[		
-	[
-		_veh,
-		true
-	],
-	"setObjectSimulation",
-	false,
-	false 
-] call BIS_fnc_MP;
-
-waitUntil{
-	Sleep 0.2;
-	(simulationEnabled _veh)
-};
-
-[		
-	[
-		_veh,
-		false
-	],
-	"setObjectSimulation",
-	false,
-	false 
-] call BIS_fnc_MP;
-
 
 true
 

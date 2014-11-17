@@ -15,7 +15,8 @@ while {GW_SIMULATION_MANAGER_ACTIVE} do {
 
 	_currentPos = positionCameraToWorld [0,0,0];
 
-	if (_currentPos distance _lastPos > CHECK_DISTANCE) then {
+	// If the player has actually moved from the last spot and we're not on a preview camera
+	if (_currentPos distance _lastPos > CHECK_DISTANCE && !GW_PREVIEW_CAM_ACTIVE) then {
 		_lastPos = _currentPos;
 
 		{
@@ -33,7 +34,7 @@ while {GW_SIMULATION_MANAGER_ACTIVE} do {
 
 		} count (allMissionObjects "Car") > 0;
 
-		Sleep 0.05;		
+		Sleep 0.01;		
 
 	};
 

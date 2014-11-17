@@ -16,10 +16,6 @@ _saveTarget = [_this,0, "", [""]] call BIS_fnc_param;
 
 _onExit = {
     systemChat (_this select 0);
-    if (!isNil "GW_SAVE_VEHICLE") then {       
-        [GW_SAVE_VEHICLE, true] call setVehicleLocked;
-    };
-
     GW_WAITSAVE = false;
 };
 
@@ -54,7 +50,10 @@ if ( (count _nearby) > 1) exitWith {
 
 GW_SAVE_VEHICLE = _nearby select 0;
 
-[GW_SAVE_VEHICLE, false] call setVehicleLocked;
+_isOwner = [GW_SAVE_VEHICLE, player, true] call checkOwner;
+if (!_isOwner) exitWith {
+    ['You dont own this vehicle!'] spawn _onExit;
+};
 
 // Check it's a valid vehicle and if not wait for it to be compiled
 _allowUpgrade = GW_SAVE_VEHICLE getVariable ['isVehicle', false];
@@ -63,11 +62,24 @@ if (!_allowUpgrade) then {
     [GW_SAVE_VEHICLE] call compileAttached;    
 };
 
+// Disable simulation on vehicle
+if (!simulationEnabled GW_SAVE_VEHICLE) then {
+    [       
+        [
+            GW_SAVE_VEHICLE,
+            true
+        ],
+        "setObjectSimulation",
+        false,
+        false 
+    ] call BIS_fnc_MP;
+};
+
 // Wait for simulation enabled and vehicle compiled
 _timeout = time + 3;
 waitUntil{ 
     Sleep 0.1;
-    if ( (time > _timeout) || (simulationEnabled GW_SAVE_VEHICLE && {GW_SAVE_VEHICLE getVariable ['isVehicle', false]} ) ) exitWith { true };
+    if ( (time > _timeout) || (simulationEnabled GW_SAVE_VEHICLE && { ((getPos GW_SAVE_VEHICLE) select 2 < 1) } && {GW_SAVE_VEHICLE getVariable ['isVehicle', false]} ) ) exitWith { true };
     false
 };
 

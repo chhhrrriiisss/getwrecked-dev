@@ -273,7 +273,7 @@ getTagData = {
 		case "RLG":	{  [20, 0.25] };
 		case "LSR":	{  [3, 0.05] };		
 
-		case "FLM":	{  [0.5, 0.01] };		
+		case "FLM":	{  [0.5, 0.03] };		
 
 		default
 		{

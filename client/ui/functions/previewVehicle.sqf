@@ -61,7 +61,7 @@ GW_PREVIEW_VEHICLE = nil;
 
 _name = toUpper ( _name );
 _nameArray = toArray (_name);
-_name = if (count _nameArray > 22) then { toString ( _nameArray resize 22 ) } else { _name };
+_name = [_name, 22, ''] call cropString; 
 
 // Fade out
 _title ctrlShow false;	

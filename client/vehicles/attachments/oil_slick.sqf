@@ -32,7 +32,7 @@ createOilDetector = {
 			_p = (ATLtoASL _p);
 
 			if ( ((ASLtoATL _p) distance [0,0,0]) < 100 || ((ASLtoATL _lastPos) distance [0,0,0]) < 100) then {} else {
-				[_lastPos, _p, objNull, 0] spawn burnIntersects;	
+				[_lastPos, _p, objNull, 100] spawn burnIntersects;	
 				if (GW_DEBUG) then { [_lastPos, _p, 1] spawn debugLine; };		
 			};
 

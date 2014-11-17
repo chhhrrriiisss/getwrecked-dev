@@ -143,14 +143,14 @@ setPlayerActions = {
 
 		[([player, 8] call validNearby), (_this select 0)] spawn liftVehicle;
 
-	}, [], 0, false, false, "", "( (GW_CURRENTZONE == 'workshopZone') && !GW_EDITING && (vehicle player) == player && (!isNil { [_target, 5] call validNearby }) && !GW_LIFT_ACTIVE && !(GW_PAINT_ACTIVE) )"];		
+	}, [], 0, false, false, "", "( (GW_CURRENTZONE == 'workshopZone') && !GW_EDITING && (vehicle player) == player && (!isNil { [_target, 7] call validNearby }) && !GW_LIFT_ACTIVE && !(GW_PAINT_ACTIVE) )"];		
 
 	// Open the box inventory
 	_unit addAction[settingsVehicleFormat, {
 
 		[([player, 8] call validNearby), (_this select 0)] spawn settingsMenu;
 
-	}, [], 0, false, false, "", "( !GW_EDITING && (vehicle player) == player && (!isNil { [_target, 5] call validNearby }) && !GW_LIFT_ACTIVE && !(GW_PAINT_ACTIVE) )"];		
+	}, [], 0, false, false, "", "( !GW_EDITING && (vehicle player) == player && (!isNil { [_target, 7] call validNearby }) && !GW_LIFT_ACTIVE && !(GW_PAINT_ACTIVE) )"];		
 
 };
 
@@ -204,11 +204,6 @@ while {alive _unit} do {
 	disableSerialization;
 	_invOpen = findDisplay 602;
     if (!isNull _invOpen) then  { closeDialog 602;  };
-
-    // Force 3rd Person
-    if (cameraOn == (vehicle player) && cameraView == "Internal") then {
-    	(vehicle player) switchCamera "External";
-    };
 
 	Sleep 0.5;
 

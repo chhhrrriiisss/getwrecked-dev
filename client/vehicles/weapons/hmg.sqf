@@ -43,12 +43,12 @@ for "_i" from 1 to _repeats step 1 do {
 	// If we're using incendiary ammo
 	if ('IND' in _special) then {		
 		_round = "B_127x99_Ball_Tracer_Yellow";		
-		[(getPosASL _gun), (ATLtoASL _targetPos), _vehicle, 25] spawn burnIntersects;
+		[(getPosASL _gun), (ATLtoASL _targetPos), _vehicle, 15] spawn burnIntersects;
 	};	
 
 	_bullet = createVehicle [_round, _gPos, [], 0, "FLY"];
 
-	if (GW_DEBUG) then { [_gPos, _targetPos, 3] spawn debugLine; };
+	if (GW_DEBUG) then { [_gPos, _targetPos, 0.1] spawn debugLine; };
 
 	[(ATLtoASL _gPos), (ATLtoASL _targetPos)] spawn markIntersects;
 

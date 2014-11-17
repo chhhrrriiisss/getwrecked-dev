@@ -43,7 +43,7 @@ for "_i" from 1 to _repeats step 1 do {
 	_bullet setVectorDir _heading; 
 	_bullet setVelocity _velocity; 
 
-	[ATLtoASL _oPos, ATLtoASL _tPos, (vehicle player), 10] spawn burnIntersects;
+	[ATLtoASL _oPos, ATLtoASL _tPos, (vehicle player), 90] spawn burnIntersects;
 
 	Sleep 0.05;
 

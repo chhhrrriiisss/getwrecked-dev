@@ -272,7 +272,7 @@ class Mission
 	};
 	class Vehicles
 	{
-		items=703;
+		items=706;
 		class Item0
 		{
 			position[]={14695.2,17.91,16776.066};
@@ -7053,6 +7053,38 @@ class Mission
 			id=710;
 			side="EMPTY";
 			vehicle="Land_TacticalBacon_F";
+			skill=0.60000002;
+		};
+		class Item703
+		{
+			position[]={14638.758,17.91,16757.957};
+			azimut=134.724;
+			id=711;
+			side="EMPTY";
+			vehicle="Land_HelipadSquare_F";
+			leader=1;
+			skill=0.60000002;
+			text="repairArea_20";
+			init="this setVariable [""GW_SERVICE_TYPE"", ""REPAIR""];";
+		};
+		class Item704
+		{
+			position[]={14630.204,17.91,16757.072};
+			azimut=10.669742;
+			id=712;
+			side="EMPTY";
+			vehicle="Land_Tyres_F";
+			leader=1;
+			skill=0.60000002;
+		};
+		class Item705
+		{
+			position[]={14631.269,17.91,16758.811};
+			azimut=-66.517242;
+			id=713;
+			side="EMPTY";
+			vehicle="Land_Tyres_F";
+			leader=1;
 			skill=0.60000002;
 		};
 	};

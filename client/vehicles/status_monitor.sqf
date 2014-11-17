@@ -76,6 +76,13 @@ if (fuel _vehicle < 0.01) then {
     _vehicle setFuel 0.01;
 };
 
+// If we're over a service pad, give the pad benefit
+if (!("emp" in _status) && { !("disabled" in _status) } && { !("tyresPopped" in _status) } && !isNil { _vehicle getVariable ["GW_NEARBY_SERVICE", nil] } ) then {
+
+    systemchat format['over pad: %1!', time];
+    
+};
+
 switch (true) do {     
 
      case ("disabled" in _status): {

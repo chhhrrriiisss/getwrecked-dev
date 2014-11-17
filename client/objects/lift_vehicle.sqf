@@ -72,14 +72,28 @@ while {alive _vehicle && alive _unit && GW_LIFT_ACTIVE && !GW_EDITING && !(_unit
 
 };
 
+if ((ASLtoATL getPosASL _vehicle) select 2 < 1) then {
 
+	[		
+		[
+			_vehicle,
+			true
+		],
+		"setObjectSimulation",
+		false,
+		false 
+	] call BIS_fnc_MP;
 
-[		
-	[
-		_vehicle,
-		false
-	],
-	"setObjectSimulation",
-	false,
-	false 
-] call BIS_fnc_MP;
+} else {
+	
+	[		
+		[
+			_vehicle,
+			false
+		],
+		"setObjectSimulation",
+		false,
+		false 
+	] call BIS_fnc_MP;
+
+};

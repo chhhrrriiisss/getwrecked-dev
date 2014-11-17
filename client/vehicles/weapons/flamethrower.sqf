@@ -17,7 +17,6 @@ _projectileRange = 50;
 _lifetime = 7;
 
 _cost = (['FLM'] call getTagData) select 1;
-_cost = 0.02;
 _fuel = (fuel _vehicle + (_vehicle getVariable ["fuel", 0])) - _cost;
 
 if (_fuel <= 0.01) exitWith {		
@@ -32,7 +31,7 @@ if (_fuel > 1) then {
 	_vehicle setVariable ["fuel", 0];
 };
 
-_oPos = _obj modelToWorldVisual [0,-3,0];
+_oPos = _obj modelToWorldVisual [0,-4,0];
 _tPos = if (typename _target == 'OBJECT') then { (ASLtoATL getPosASL _target) } else { _target };
 
 _heading = [_oPos,_tPos] call BIS_fnc_vectorFromXToY;
@@ -73,42 +72,29 @@ _nearby  = [GW_CURRENTZONE] call findAllInZone;
 
 if (count _nearby < 0) exitWith {};
 
-_src addEventHandler['EpeContact', {
-	
-	_target = _this select 1;
-	_isVehicle = _target getVariable ["isVehicle", false];
-	_status = _target getVariable ["status", []];
+_src addEventHandler['EpeContact', {	
+	[(_this select 1), 100] spawn setVehicleOnFire;
+}];
 
-	if ( !('fire' in _status) && _isVehicle ) then {
+_src spawn {
 
-		_rnd = random 6 + 6;
+	while {alive _this} do {
 
-		if (_target != (vehicle player) ) then { [_target] call markAsKilledBy;  };
+		_nearby = (ASLtoATL visiblePositionASL _this) nearEntities[["Car"], 6];
+		{ 
+			if (_x distance (ASLtoATL visiblePositionASL _this) < 4) exitWith {
+				_null = [_x, 100] spawn setVehicleOnFire;
+			};
+			false
+		} count _nearby > 0;
 
-		[       
-            [
-                _target,
-                ['fire'],
-                _rnd
-            ],
-            "addVehicleStatus",
-            _target,
-            false 
-		] call BIS_fnc_MP;  
-
-		[
-			[
-				_target,
-				_rnd
-			],
-			"burnEffect"
-		] call BIS_fnc_MP;
+		Sleep 0.25;
 
 	};
 
-}];
+};
 
-Sleep 2;
+Sleep 3.5;
 
 _timeout = time + _lifetime;
 waitUntil{
