@@ -65,16 +65,19 @@ if (!isNil "GW_PREVIEW_SELECTED" && !isNil "GW_PREVIEW_VEHICLE") then {
 	[_closest] call clearPad;
 	GW_PREVIEW_VEHICLE setPos _loadAreaPosition;
 
-	[		
-		[
-			GW_PREVIEW_VEHICLE,
-			false
-		],
-	"setObjectSimulation",
-		false,
-		false 
-	] call BIS_fnc_MP;
+	if (!simulationEnabled GW_PREVIEW_VEHICLE) then {
 
+		[		
+			[
+				GW_PREVIEW_VEHICLE,
+				true
+			],
+			"setObjectSimulation",
+			false,
+			false 
+		] call BIS_fnc_MP;
+
+	};
 };
 
 // Otherwise, clear up

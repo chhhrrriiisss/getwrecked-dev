@@ -229,27 +229,8 @@ checkBinds = {
 					_tag = _x select 0;
 			
 					if (_tag in GW_WEAPONSARRAY && _canShoot) then {
-
-						if (_tag == 'GUD' || _tag == 'MIS' || (_tag == 'MOR' && (count GW_LOCKEDTARGETS) > 0) )  then {
-
-							GW_ACTIVE_WEAPONS = (GW_ACTIVE_WEAPONS - [_obj]) + [_obj];
-							[_tag, _vehicle, "MANUAL"] spawn fireAttached;
-
-						} else {
-
-							if (count GW_AVAIL_WEAPONS == 0) exitWith {};
-
-							{
-								if ((_x select 0) == _obj) then {
-									GW_ACTIVE_WEAPONS = (GW_ACTIVE_WEAPONS - [_obj]) + [_obj];
-									[_tag, _vehicle, "MANUAL"] spawn fireAttached;
-								};
-								
-								false 
-
-							} count GW_AVAIL_WEAPONS > 0;
-
-						};
+						
+						[_tag, _vehicle, _obj] spawn fireAttached;			
 
 					};	
 				

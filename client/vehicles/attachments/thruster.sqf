@@ -20,6 +20,18 @@ _cost = (['THR'] call getTagData) select 1;
 _s = if (_fuel < _cost) then {
 
 	["LOW FUEL ", 0.3, warningIcon, colorRed, "warning"] spawn createAlert;
+
+	[       
+	    [
+	        _vehicle,
+	        ['nofuel'],
+	        3
+	    ],
+	    "addVehicleStatus",
+	    _vehicle,
+	    false 
+	] call BIS_fnc_MP;  
+
 	false
 
 } else {

@@ -308,6 +308,8 @@ while {GW_HUD_ACTIVE && alive player} do {
 	        {
 	        	_icon = switch (_x) do {
 
+	        		case "nofuel": { fuelIcon };
+	        		case "noammo": { ammoIcon };
 	        		case "emp": { warningIcon };
 	        		case "tyresPopped": { warningIcon };
 	        		case "invulnerable": { shieldIcon };

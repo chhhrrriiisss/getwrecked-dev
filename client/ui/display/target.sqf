@@ -140,7 +140,7 @@ if (GW_LMBDOWN && _canShoot && !GW_WAITFIRE) then {
 	} count GW_AVAIL_WEAPONS > 0;
 
 	{
-		[_x, _vehicle, "AUTO"] spawn fireAttached;
+		[_x, _vehicle, objNull] spawn fireAttached;
 		false
 	} count _availTypes > 0;
 };

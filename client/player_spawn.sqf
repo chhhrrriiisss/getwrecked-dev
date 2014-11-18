@@ -47,17 +47,26 @@ if (_tx == "") then {
 	_tx = "slytech";
 };
 
-switch (_tx) do {
-	
-	case "slytech": { _unit addheadgear "H_RacingHelmet_1_white_F"; };
-	case "crisp": { _unit addheadgear "H_RacingHelmet_1_red_F"; };
-	case "gastrol": { _unit addheadgear "H_RacingHelmet_1_black_F"; };
-	case "haywire": { _unit addheadgear "H_RacingHelmet_1_black_F"; };
-	case "cognition": { _unit addheadgear "H_RacingHelmet_1_white_F"; };
-	case "terminal": { _unit addheadgear "H_RacingHelmet_1_red_F"; };
-	case "tank": { _unit addheadgear "H_RacingHelmet_1_black_F"; };
-	case "veneer": { _unit addheadgear "H_RacingHelmet_1_white_F"; };
-	default { _unit addheadgear "H_RacingHelmet_1_black_F"; };
+_fixDLC = profileNamespace getVariable ['GW_FIXDLC', false];
+
+// For people with the dlc, add helmets
+if (!_fixDLC) then {
+
+	switch (_tx) do {
+		
+		case "slytech": { _unit addheadgear "H_RacingHelmet_1_white_F"; };
+		case "crisp": { _unit addheadgear "H_RacingHelmet_1_red_F"; };
+		case "gastrol": { _unit addheadgear "H_RacingHelmet_1_black_F"; };
+		case "haywire": { _unit addheadgear "H_RacingHelmet_1_black_F"; };
+		case "cognition": { _unit addheadgear "H_RacingHelmet_1_white_F"; };
+		case "terminal": { _unit addheadgear "H_RacingHelmet_1_red_F"; };
+		case "tank": { _unit addheadgear "H_RacingHelmet_1_black_F"; };
+		case "veneer": { _unit addheadgear "H_RacingHelmet_1_white_F"; };
+		default { _unit addheadgear "H_RacingHelmet_1_black_F"; };
+	};
+
+} else {
+	removeHeadgear _unit; // Remove the helmet to prevent DLC ads
 };
 	
 if(!isNil "_tx") then {

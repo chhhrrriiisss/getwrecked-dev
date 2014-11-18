@@ -867,11 +867,12 @@ player createDiaryRecord ["changelog",
 - If you get kicked out of a vehicle due to low health the vehicle will now explode<br />
 - Flamethrower should now have better hit detection<br />
 - Incendiary ammo now has lower chance of setting vehicles on fire (15%)<br />
+- Removed - Repair/reload/refuel area map triggers in favour of a new system <br />
 - Removed - W, A and D from restricted keys<br />
 - Removed - Muzzle effect showing for non-local clients due to excess lag with hmg/gmg/laser fire<br />
 - Added - Hold rotate bind for using the camera to rotate objects and lifted vehicles<br />
-- Fixed - You can no longer save a vehicle you don't own<br />
-- Fixed - Last loaded vehicle is now set via vehicle save (previously only on load)<br />
+- Fixed - You can no longer save a vehicle you don't own, but you can save an unowned one<br />
+- Fixed - Last loaded vehicle is now set via vehicle save (previously only on vehicle load)<br />
 - Fixed - Buy menu being generated twice on menu load<br />
 - Fixed - Script errors when buying items across different categories<br />
 <br />

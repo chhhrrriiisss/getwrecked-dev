@@ -10,9 +10,12 @@ GW_WAITFIRE = true;
 
 _type = [_this,0, "", [""]] call BIS_fnc_param;
 _vehicle = [_this,1, objNull, [objNull]] call BIS_fnc_param;
-_fireMode = [_this,2, "AUTO", [""]] call BIS_fnc_param;
+_module = [_this,2, objNull, [objNull]] call BIS_fnc_param;
 
 if (isNull _vehicle || _type == "") exitWith { GW_WAITFIRE = false; };
+
+// If an object has been specified, set manual mode
+_manual = if (isNull _module) then { false } else { true };
 
 _weaponsList = _vehicle getVariable ["weapons", []];
 
@@ -32,17 +35,23 @@ if (count _weaponsList == 0) exitWith {
 _ammo = _vehicle getVariable ["ammo", 0];
 if (_ammo <= 0 && _type != "FLM") exitWith {
 	["OUT OF AMMO ", 0.3, warningIcon, colorRed, "warning"] spawn createAlert;
+	
+	[       
+	    [
+	        _vehicle,
+	        ['noammo'],
+	        3
+	    ],
+	    "addVehicleStatus",
+	    _vehicle,
+	    false 
+	] call BIS_fnc_MP;  
+
 	GW_WAITFIRE = false;
 };
 
 // Is the specific item currently attached?
-_isAttached = false;
-{
-	if (_type == _x select 0) exitWith {
-		_isAttached = true;	
-	};
-
-} ForEach _weaponsList;	
+_isAttached = if ( ([_type, _vehicle] call hasType) > 0) then { true } else { false };
 
 if (!_isAttached) exitWith {
 	['NOT EQUIPPED! ', 1, warningIcon, colorRed, "warning"] spawn createAlert;
@@ -72,8 +81,83 @@ _cost = _tagData select 1;
 // Do we have enough ammo? Flamethrower is an exception
 if (_ammo < _cost && _type != "FLM") exitWith {	
 	["NEED AMMO ", 0.3, warningIcon, colorRed, "warning"] spawn createAlert;
+
+	[       
+	    [
+	        _vehicle,
+	        ['noammo'],
+	        3
+	    ],
+	    "addVehicleStatus",
+	    _vehicle,
+	    false 
+	] call BIS_fnc_MP;  
+
 	GW_WAITFIRE = false;
 };
+
+
+_obj = nil;
+
+// If it's just a specific module we're firing
+_obj = if (_manual) then {	
+
+	_module
+
+} else {
+
+	{
+		if (_type == _x select 0) exitWith { (_x select 1) };
+	} Foreach _weaponsList;
+};
+
+// If we found an object, loop through and get the appropriate function for the tag
+_success = if (!isNil "_obj") then {
+	
+	_avail = true;
+	_lock = false;
+	
+	_command = switch (_type) do {
+		
+		case "HMG": {  fireHmg };
+		case "GMG": {  firGmg };
+		case "RPG": {  fireRpg };
+		case "GUD": { _avail = false; fireGuided };
+		case "MIS": { _avail = false; _lock = true; fireLockOn };
+
+		case "MOR": { _avail = false; fireMortar };
+		case "LSR": {  fireLaser };
+		case "RLG": {  fireRail };
+		case "FLM": {  fireFlamethrower };
+
+	};
+
+	// If it requires camera to be aimed in the direction of the gun
+	_error = if (_avail && !(_obj in GW_AVAIL_WEAPONS) ) then { true } else { false };
+	_error = if (!_active) then { false } else { _error };
+	_error = if (_lock && count GW_LOCKEDTARGETS == 0) then { true } else { _error };
+
+	if (!_error) exitWith { ([_obj, GW_TARGET, _vehicle] call _command) };
+	false
+
+} else {
+	false
+};
+
+// Only if the call was successful put the item on timeout
+if (_success) then {
+	_reference = if (_manual) then { [_type, str _module] } else { _type };
+	[_reference, _reloadTime] call createTimeout;	
+};
+
+// Reload appropriately
+if (_reloadTime > 1) then {	
+	playSound3D ["a3\sounds_f\weapons\Reloads\missile_reload.wss", _vehicle, false, getPos _vehicle, 3, 1, 100];
+};
+
+GW_WAITUSE = false;
+
+
 
 // Ok we're good to go, lets fire something!
 switch (_type) do {

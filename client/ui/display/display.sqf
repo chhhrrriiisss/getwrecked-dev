@@ -12,7 +12,7 @@ drawServiceIcon = {
 		
 		_pos = [_this,0, [], [[]]] call BIS_fnc_param;
 		_defaultIcon = [_this,1, "", [""]] call BIS_fnc_param;
-		_obj = [_this,5, objNull, [objNull]] call BIS_fnc_param;
+		_type = [_this,4, "", [""]] call BIS_fnc_param; // Optional position type
 
 		// Optionally loop through a series of icons once close enough
 		_activeIcons = [_this,2, [], [[]]] call BIS_fnc_param;
@@ -28,13 +28,12 @@ drawServiceIcon = {
 
 		_colour = [1,1,1,_alpha];
 
-		if (_distance < 8 && !isNull _obj) then {			
-			(vehicle player) setVariable ["GW_NEARBY_SERVICE", (_obj getVariable ["GW_SERVICE_TYPE", nil]) ];
-		} else { 
-			(vehicle player) setVariable ["GW_NEARBY_SERVICE", nil];
-		};
 
 		_inUse = (vehicle player) getVariable ["inUse", false];
+
+		if (_distance < 8 && _type != "") then {	
+			(vehicle player) setVariable ["GW_NEARBY_SERVICE", _type]; 
+		};	
 		
 		//If the player is really close and we have an animated icon set switch icons to an 'active' state
 		if (count _activeIcons > 0 && _inUse) then {
@@ -168,14 +167,14 @@ drawDisplay = {
 
 					for "_i" from 0 to (count _areas) step 1 do {
 						if (((_areas select _i) distance player) < 500) then {
-							[((_areas select _i) modelToWorldVisual [0,0,(_x select 0)]), (_x select 2), (_x select 3), 500] call drawServiceIcon;		
+							[((_areas select _i) modelToWorldVisual [0,0,(_x select 0)]), (_x select 2), (_x select 3), 500, (_x select 4)] call drawServiceIcon;		
 						};
 					};
 
 				} count [	
-					[1, reloadAreas, rearmIcon, [activeIconA, activeIconB, activeIconC] ],
-					[1, repairAreas, repairIcon, [activeIconA, activeIconB, activeIconC] ],
-					[1, refuelAreas, refuelIcon, [activeIconA, activeIconB, activeIconC] ]
+					[1, reloadAreas, rearmIcon, [activeIconA, activeIconB, activeIconC], "REARM" ],
+					[1, repairAreas, repairIcon, [activeIconA, activeIconB, activeIconC], "REPAIR" ],
+					[1, refuelAreas, refuelIcon, [activeIconA, activeIconB, activeIconC], "REFUEL" ]
 				] > 0;
 
 			};

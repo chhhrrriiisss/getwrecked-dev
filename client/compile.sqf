@@ -92,6 +92,7 @@ createTimer = compile preprocessFile "client\ui\dialogs\timer.sqf";
 deployVehicle = compile preprocessFile 'client\zones\deploy.sqf';
 parachuteVehicle = compile preprocessFile 'client\zones\parachute_vehicle.sqf';
 checkInZone = compile preprocessFile 'client\zones\check_in_zone.sqf';
+servicePoint = compile preprocessFile 'client\zones\vehicle_point.sqf';
 
 // Persistance Functions
 paintVehicle = compile preprocessFile 'client\customization\paint_vehicle.sqf';
@@ -226,5 +227,8 @@ pubVar_fnc_status = compile preprocessFile "client\functions\pubvar_status.sqf";
 
 pubVar_fnc_systemChat = compile preprocessFile "client\functions\pubvar_systemchat.sqf";
 "pubVar_systemChat" addPublicVariableEventHandler {(_this select 1) call pubVar_fnc_systemChat};
+
+// Chat command interceptor
+[] call compile preProcessFilelineNumbers "client\commands\init.sqf";
 
 clientCompileComplete = true;

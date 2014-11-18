@@ -63,6 +63,18 @@ if (_remainder == 0 && (typeOf _vehicle != "Steerable_Parachute_F")) then {
 
 };
 
+// If we're not disabled to any extent (or we've not been to a pad for 3 seconds)
+if ( !("emp" in _status) && !("disabled" in _status) && !("noservice" in _status) ) then {
+
+    _nearbyService = _vehicle getVariable ["GW_NEARBY_SERVICE", nil];
+    _inUse = _vehicle getVariable ["inUse", false];
+
+    if (!isNil "_nearbyService" && !_inUse) then {   
+        [_vehicle, _nearbyService] call servicePoint;
+    };
+
+};
+
 // No status, reinflate tyres 
 if (count _status <= 0) exitWith {
     _vehicle sethit ["wheel_1_1_steering", 0];
@@ -74,13 +86,6 @@ if (count _status <= 0) exitWith {
 // Give a little bit of fuel if it looks like we're out
 if (fuel _vehicle < 0.01) then {
     _vehicle setFuel 0.01;
-};
-
-// If we're over a service pad, give the pad benefit
-if (!("emp" in _status) && { !("disabled" in _status) } && { !("tyresPopped" in _status) } && !isNil { _vehicle getVariable ["GW_NEARBY_SERVICE", nil] } ) then {
-
-    systemchat format['over pad: %1!', time];
-    
 };
 
 switch (true) do {     

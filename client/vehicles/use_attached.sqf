@@ -31,10 +31,7 @@ if ('emp' in _status || 'cloak' in _status || (GW_CURRENTZONE == 'workshopZone' 
 };
 
 // Is the specific item currently attached?
-_isAttached = false;
-{
-	if (_type == _x select 0) exitWith { _isAttached = true; };
-} ForEach _tacticalList;	
+_isAttached = if ( ([_type, _vehicle] call hasType) > 0) then { true } else { false };
 
 if (!_isAttached) exitWith {
 	['NOT EQUIPPED!  ', 1, warningIcon, colorRed, "warning"] spawn createAlert;
@@ -89,30 +86,32 @@ _obj = if (_manual) then {
 	} Foreach _tacticalList;
 };
 
-_success = false;
-
 // If we found an object, loop through and get the appropriate function for the tag
-if (!isNil "_obj") then {
+_success = if (!isNil "_obj") then {
 
-	_success = call compile format['([_obj, _vehicle] call %1)', switch (_type) do {
+	_command = switch (_type) do {
 		
-		case "SMK": { 'smokeBomb' };
-		case "SHD": { 'shieldGenerator' };
-		case "NTO": { 'nitroBoost' };
-		case "THR": { 'verticalThruster' };
-		case "OIL": { 'oilSlick' };
-		case "REP": { 'emergencyRepair' };
-		case "DES": { 'selfDestruct' };
-		case "EMP": { 'empDevice' };
-		case "CAL": { 'dropCaltrops' };
-		case "MIN": { 'dropMines' };
-		case "PART": { 'ejectSystem' };
-		case "EPL": { 'dropExplosives' };
-		case "CLK": { 'cloakingDevice' };
-		case "MAG": { 'magneticCoil' };
+		case "SMK": { smokeBomb };
+		case "SHD": { shieldGenerator };
+		case "NTO": { nitroBoost };
+		case "THR": { verticalThruster };
+		case "OIL": { oilSlick };
+		case "REP": { emergencyRepair };
+		case "DES": { selfDestruct };
+		case "EMP": { empDevice };
+		case "CAL": { dropCaltrops };
+		case "MIN": { dropMines };
+		case "PAR": { ejectSystem };
+		case "EPL": { dropExplosives };
+		case "CLK": { cloakingDevice };
+		case "MAG": { magneticCoil };
 
-	}];
+	};
 
+	([_obj, _vehicle] call _command)
+
+} else {
+	false
 };
 
 // Only if the call was successful put the item on timeout

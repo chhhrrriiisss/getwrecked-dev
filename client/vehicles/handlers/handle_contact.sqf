@@ -36,5 +36,5 @@ if ('FRK' in _special) then {
 
 // Handle fall damage for vehicle
 if ((_this select 4) > 2 && GW_CURRENTZONE != "workshopZone" && !(_veh getVariable ["newSpawn", false]) ) then {
-	systemchat format['impact damage2: %1', (_this select 4)];
+	// systemchat format['impact damage2: %1', (_this select 4)];
 };
