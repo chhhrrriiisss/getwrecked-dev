@@ -5,6 +5,8 @@
 //		Modified by Sli for Get Wrecked
 //
 
+
+// Get the list of available commands
 [] call compile preProcessFilelineNumbers "client\commands\commands.sqf";
 
 GW_COMMANDS_MARKER = "!"; //Character at the front of the chat input to intercept it

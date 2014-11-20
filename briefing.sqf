@@ -866,7 +866,8 @@ player createDiaryRecord ["changelog",
 - You can no longer detach or move objects while not in a race zone<br />
 - If you get kicked out of a vehicle due to low health the vehicle will now explode<br />
 - Flamethrower should now have better hit detection<br />
-- Incendiary ammo now has lower chance of setting vehicles on fire (15%)<br />
+- To prevent afk money farming, you now only earn money if you have moved a distance within the two minute timer<br />
+- Incendiary ammo now has a lower fire duration when tagging vehicles<br />
 - Removed - Repair/reload/refuel area map triggers in favour of a new system <br />
 - Removed - W, A and D from restricted keys<br />
 - Removed - Muzzle effect showing for non-local clients due to excess lag with hmg/gmg/laser fire<br />

@@ -60,16 +60,15 @@ if (!_isAttached) exitWith {
 
 // Ok it's there, lets see if we can use it
 _currentTime = time;
-_state = [_type, _currentTime] call checkTimeout;
+_state = if (_manual) then { ([str _module, _currentTime] call checkTimeout) } else { ([_type, _currentTime] call checkTimeout) };
 _timeLeft = _state select 0;
 _found = _state select 1;
 
 // Is the device on timeout?
 if (_timeLeft > 0 && _found) exitWith {
-
-		if ( _type == "HMG" || _type == "GMG" || _type == "FLM") then {} else {
-			[format['RELOADING (%1s)', round(_timeLeft)], 0.5, warningIcon, nil, "flash"] spawn createAlert;
-		};
+	if ( _type == "HMG" || _type == "GMG" || _type == "FLM") then {} else {
+		[format['PLEASE WAIT (%1s)', round(_timeLeft)], 0.5, warningIcon, nil, "flash"] spawn createAlert;
+	};
 		GW_WAITFIRE = false;
 };	
 
@@ -120,25 +119,19 @@ _success = if (!isNil "_obj") then {
 	_command = switch (_type) do {
 		
 		case "HMG": {  fireHmg };
-		case "GMG": {  firGmg };
+		case "GMG": {  fireGmg };
 		case "RPG": {  fireRpg };
-		case "GUD": { _avail = false; fireGuided };
-		case "MIS": { _avail = false; _lock = true; fireLockOn };
+		case "GUD": {  fireGuided };
+		case "MIS": { _lock = true; fireLockOn };
 
-		case "MOR": { _avail = false; fireMortar };
+		case "MOR": {  fireMortar };
 		case "LSR": {  fireLaser };
 		case "RLG": {  fireRail };
 		case "FLM": {  fireFlamethrower };
 
 	};
 
-	// If it requires camera to be aimed in the direction of the gun
-	_error = if (_avail && !(_obj in GW_AVAIL_WEAPONS) ) then { true } else { false };
-	_error = if (!_active) then { false } else { _error };
-	_error = if (_lock && count GW_LOCKEDTARGETS == 0) then { true } else { _error };
-
-	if (!_error) exitWith { ([_obj, GW_TARGET, _vehicle] call _command) };
-	false
+	([_obj, GW_TARGET, _vehicle] call _command)
 
 } else {
 	false
@@ -159,228 +152,228 @@ GW_WAITUSE = false;
 
 
 
-// Ok we're good to go, lets fire something!
-switch (_type) do {
+// // Ok we're good to go, lets fire something!
+// switch (_type) do {
 
-	// HMG
-	case "HMG":
-	{	
-		// Enforce a reload time
-		[_type, _reloadTime] call createTimeout;
+// 	// HMG
+// 	case "HMG":
+// 	{	
+// 		// Enforce a reload time
+// 		[_type, _reloadTime] call createTimeout;
 
-		_count = 0;
-		_found = false;
+// 		_count = 0;
+// 		_found = false;
 
-		{
-			if (_type == _x select 0) then {
+// 		{
+// 			if (_type == _x select 0) then {
 
-				_obj = _x select 1;	
+// 				_obj = _x select 1;	
 
-				if (_obj in GW_ACTIVE_WEAPONS) then {
-					_target = GW_TARGET;
-					[_obj, _target, _vehicle] spawn fireHmg;
-					_count = _count + 1;
-				};						
-			};	
-		} ForEach _weaponsList;	
+// 				if (_obj in GW_ACTIVE_WEAPONS) then {
+// 					_target = GW_TARGET;
+// 					[_obj, _target, _vehicle] spawn fireHmg;
+// 					_count = _count + 1;
+// 				};						
+// 			};	
+// 		} ForEach _weaponsList;	
 
-		// Multiply cost by the number of guns fired
-		_cost = _cost * _count;
-	};
+// 		// Multiply cost by the number of guns fired
+// 		_cost = _cost * _count;
+// 	};
 
 
-	// GMG
-	case "GMG":
-	{
-		_count = 0;
-		_found = false;
+// 	// GMG
+// 	case "GMG":
+// 	{
+// 		_count = 0;
+// 		_found = false;
 
-		{
+// 		{
 
-			if (_type == _x select 0) then {
+// 			if (_type == _x select 0) then {
 
-				_obj = _x select 1;			
+// 				_obj = _x select 1;			
 
-				if (_obj in GW_ACTIVE_WEAPONS) then {
-					_target = GW_TARGET;		
-					[_obj, _target] spawn fireGmg;
-					_count = _count + 1;
-				};	
-			};
-		} ForEach _weaponsList;	
+// 				if (_obj in GW_ACTIVE_WEAPONS) then {
+// 					_target = GW_TARGET;		
+// 					[_obj, _target] spawn fireGmg;
+// 					_count = _count + 1;
+// 				};	
+// 			};
+// 		} ForEach _weaponsList;	
 
-		_reloadTime = _reloadTime * _count;
-		_cost = _cost * _count;
-		[_type, _reloadTime] call createTimeout;
-	};
+// 		_reloadTime = _reloadTime * _count;
+// 		_cost = _cost * _count;
+// 		[_type, _reloadTime] call createTimeout;
+// 	};
 
-	// RPG
-	case "RPG":
-	{
-		_count = 0;	
-		_found = false;		
+// 	// RPG
+// 	case "RPG":
+// 	{
+// 		_count = 0;	
+// 		_found = false;		
 
-		{
-			if (_type == _x select 0) then {
+// 		{
+// 			if (_type == _x select 0) then {
 
-				_obj = _x select 1;	
+// 				_obj = _x select 1;	
 
-				if (_obj in GW_ACTIVE_WEAPONS) then {	
-					_target = GW_TARGET;			
-					[_obj, _target, _vehicle] spawn fireRpg;	
-					_count = _count + 1;
-				};	
-			};
-		} ForEach _weaponsList;	
+// 				if (_obj in GW_ACTIVE_WEAPONS) then {	
+// 					_target = GW_TARGET;			
+// 					[_obj, _target, _vehicle] spawn fireRpg;	
+// 					_count = _count + 1;
+// 				};	
+// 			};
+// 		} ForEach _weaponsList;	
 
-		_reloadTime = _reloadTime * _count;
-		_cost = _cost * _count;
-		[_type, _reloadTime] call createTimeout;
+// 		_reloadTime = _reloadTime * _count;
+// 		_cost = _cost * _count;
+// 		[_type, _reloadTime] call createTimeout;
 
-	};
+// 	};
 
-	// Guided
-	case "GUD":
-	{
-		_count = 0;			
-		[_type, _reloadTime] call createTimeout;
+// 	// Guided
+// 	case "GUD":
+// 	{
+// 		_count = 0;			
+// 		[_type, _reloadTime] call createTimeout;
 
-		{
-			if (_type == _x select 0) exitWith {
-				_obj = _x select 1;	
-				_target = GW_TARGET;		
-				[_obj, _target, _vehicle] spawn fireGuided;				
-			};
-		} ForEach _weaponsList;			
+// 		{
+// 			if (_type == _x select 0) exitWith {
+// 				_obj = _x select 1;	
+// 				_target = GW_TARGET;		
+// 				[_obj, _target, _vehicle] spawn fireGuided;				
+// 			};
+// 		} ForEach _weaponsList;			
 
-	};
+// 	};
 
-	// Lock on
-	case "MIS":
-	{
-		// No locked targets, abort
-		if (count GW_LOCKEDTARGETS <= 0) exitWith {
-			_reloadTime = 0;
-			_cost = 0;
-		};	
+// 	// Lock on
+// 	case "MIS":
+// 	{
+// 		// No locked targets, abort
+// 		if (count GW_LOCKEDTARGETS <= 0) exitWith {
+// 			_reloadTime = 0;
+// 			_cost = 0;
+// 		};	
 		
-		_count = 0;
-		{
-			if (_type == _x select 0) then {
+// 		_count = 0;
+// 		{
+// 			if (_type == _x select 0) then {
 
-				_obj = _x select 1;	
+// 				_obj = _x select 1;	
 
-				if (_obj in GW_ACTIVE_WEAPONS) then {	
-					[_obj, _vehicle] spawn fireLockOn;
-					_count = _count + 1;
-				};
-			};
-		} ForEach _weaponsList;	
+// 				if (_obj in GW_ACTIVE_WEAPONS) then {	
+// 					[_obj, _vehicle] spawn fireLockOn;
+// 					_count = _count + 1;
+// 				};
+// 			};
+// 		} ForEach _weaponsList;	
 
-		_reloadTime = _reloadTime * _count;
-		_cost = _cost * _count;
-		[_type, _reloadTime] call createTimeout;
-	};
+// 		_reloadTime = _reloadTime * _count;
+// 		_cost = _cost * _count;
+// 		[_type, _reloadTime] call createTimeout;
+// 	};
 
-	// MOR
-	case "MOR":
-	{		
-		_count = 0;
-		_found = false;
+// 	// MOR
+// 	case "MOR":
+// 	{		
+// 		_count = 0;
+// 		_found = false;
 
-		{
-			if (_type == _x select 0) then {
-				_obj = _x select 1;	
+// 		{
+// 			if (_type == _x select 0) then {
+// 				_obj = _x select 1;	
 
-				if (_obj in GW_ACTIVE_WEAPONS) then {
-					_target = GW_SCREEN;	
-					[_obj, _target] spawn fireMortar;
-					_count = _count + 1;
-				};			
-			};
+// 				if (_obj in GW_ACTIVE_WEAPONS) then {
+// 					_target = GW_SCREEN;	
+// 					[_obj, _target] spawn fireMortar;
+// 					_count = _count + 1;
+// 				};			
+// 			};
 
-		} ForEach _weaponsList;	
+// 		} ForEach _weaponsList;	
 
-		_reloadTime = _reloadTime * _count;
-		_cost = _cost * _count;
-		[_type, _reloadTime] call createTimeout;
-	};
+// 		_reloadTime = _reloadTime * _count;
+// 		_cost = _cost * _count;
+// 		[_type, _reloadTime] call createTimeout;
+// 	};
 
 
-	// Laser
-	case "LSR":
-	{
-		_count = 0;
-		_found = false;
+// 	// Laser
+// 	case "LSR":
+// 	{
+// 		_count = 0;
+// 		_found = false;
 		
-		{
-			if (_type == _x select 0) then {
+// 		{
+// 			if (_type == _x select 0) then {
 
-				_obj = _x select 1;				
+// 				_obj = _x select 1;				
 
-				if (_obj in GW_ACTIVE_WEAPONS) then {
-					_target = GW_TARGET;		
-					[_obj, _target, _vehicle] spawn fireLaser;
-					_count = _count + 1;
-				};			
-			};
+// 				if (_obj in GW_ACTIVE_WEAPONS) then {
+// 					_target = GW_TARGET;		
+// 					[_obj, _target, _vehicle] spawn fireLaser;
+// 					_count = _count + 1;
+// 				};			
+// 			};
 
-			if (_found) exitWith {};
+// 			if (_found) exitWith {};
 
-		} ForEach _weaponsList;	
+// 		} ForEach _weaponsList;	
 
-		_reloadTime = _reloadTime * _count;
-		_cost = _cost * _count;
-		[_type, _reloadTime] call createTimeout;
-	};
+// 		_reloadTime = _reloadTime * _count;
+// 		_cost = _cost * _count;
+// 		[_type, _reloadTime] call createTimeout;
+// 	};
 
-	// Railgun
-	case "RLG":
-	{
-		_count = 0;			
-		{
-			if (_type == _x select 0) then {
-				_obj = _x select 1;			
+// 	// Railgun
+// 	case "RLG":
+// 	{
+// 		_count = 0;			
+// 		{
+// 			if (_type == _x select 0) then {
+// 				_obj = _x select 1;			
 
-				if (_obj in GW_ACTIVE_WEAPONS) then {
-					_target = GW_TARGET;			
-					[_obj, _target, _vehicle] spawn fireRail;
-					_count = _count + 1;
-				};
-			};
-		} ForEach _weaponsList;	
+// 				if (_obj in GW_ACTIVE_WEAPONS) then {
+// 					_target = GW_TARGET;			
+// 					[_obj, _target, _vehicle] spawn fireRail;
+// 					_count = _count + 1;
+// 				};
+// 			};
+// 		} ForEach _weaponsList;	
 
-		_reloadTime = _reloadTime * _count;
-		_cost = _cost * _count;
-		[_type, _reloadTime] call createTimeout;
-	};
+// 		_reloadTime = _reloadTime * _count;
+// 		_cost = _cost * _count;
+// 		[_type, _reloadTime] call createTimeout;
+// 	};
 
-	// Flamethrower
-	case "FLM":
-	{
-		_count = 0;			
-		{
-			if (_type == _x select 0) then {
-				_obj = _x select 1;			
+// 	// Flamethrower
+// 	case "FLM":
+// 	{
+// 		_count = 0;			
+// 		{
+// 			if (_type == _x select 0) then {
+// 				_obj = _x select 1;			
 
-				if (_obj in GW_ACTIVE_WEAPONS) then {
-					_target = GW_TARGET;			
-					[_obj, _target, _vehicle] spawn fireFlamethrower;
-					_count = _count + 1;
-				};
-			};
-		} ForEach _weaponsList;	
+// 				if (_obj in GW_ACTIVE_WEAPONS) then {
+// 					_target = GW_TARGET;			
+// 					[_obj, _target, _vehicle] spawn fireFlamethrower;
+// 					_count = _count + 1;
+// 				};
+// 			};
+// 		} ForEach _weaponsList;	
 
-		_reloadTime = _reloadTime * _count;
-		_cost = _cost * _count;
-		[_type, _reloadTime] call createTimeout;
-	};
+// 		_reloadTime = _reloadTime * _count;
+// 		_cost = _cost * _count;
+// 		[_type, _reloadTime] call createTimeout;
+// 	};
 
-	default
-	{
-		['Error!    ', 1, warningIcon, colorRed] spawn createAlert;
-	};
-};
+// 	default
+// 	{
+// 		['Error!    ', 1, warningIcon, colorRed] spawn createAlert;
+// 	};
+// };
 
 _newAmmo = _ammo - _cost;
 if (_newAmmo < 0) then { _newAmmo = 0; };

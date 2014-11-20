@@ -13,25 +13,9 @@ _special = _vehicle getVariable ["special", []];
 // Do we need to eject?
 [_vehicle, player] spawn checkEject;
 
-// Every 2 minutes, give sponsorship money
-if (isNil "GW_LASTPAYCHECK") then {  GW_LASTPAYCHECK = time; };
-if (time - GW_LASTPAYCHECK > 120) then {
-
-    GW_LASTPAYCHECK = time;
-    _wantedValue = _vehicle getVariable ["GW_WantedValue", 0]; 
-    _totalValue = 100 + (_wantedValue);
-    _totalValue call changeBalance;
-    _totalValueString = [_totalValue] call numberToCurrency;
-    systemchat format['You earned $%1. Next payment in two minutes.', _totalValueString];
-    ['moneyEarned', _vehicle, _totalValue] spawn logStat;   
-    _wantedValue = _wantedValue + 50;
-    _vehicle setVariable ["GW_WantedValue", _wantedValue];
-    _vehicle say3D "money";
-
-};
-
 // Every 3 seconds, record position, ignoring while in parachute
 _remainder = round (time) % 3;
+_hasMoved = false;
 
 if (_remainder == 0 && (typeOf _vehicle != "Steerable_Parachute_F")) then {
    
@@ -42,7 +26,8 @@ if (_remainder == 0 && (typeOf _vehicle != "Steerable_Parachute_F")) then {
     if (!isNil "_prevPos") then {
         _distanceTravelled = _prevPos distance _currentPos;   
         if (_distanceTravelled > 3) then {       
-            ['mileage', _vehicle, _distanceTravelled] spawn logStat;   
+            ['mileage', _vehicle, _distanceTravelled] spawn logStat;  
+            _hasMoved = true; 
         };
     };
 
@@ -60,6 +45,23 @@ if (_remainder == 0 && (typeOf _vehicle != "Steerable_Parachute_F")) then {
     _vehicle setVariable ['prevPos', _currentPos];
     player setVariable ['prevPos', _currentPos];
     player setVariable ['prevVeh', _vehicle];
+
+};
+
+// Every 2 minutes, give sponsorship money, if we've moved
+if (isNil "GW_LASTPAYCHECK") then {  GW_LASTPAYCHECK = time; };
+if (time - GW_LASTPAYCHECK > 120 && _hasMoved) then {
+
+    GW_LASTPAYCHECK = time;
+    _wantedValue = _vehicle getVariable ["GW_WantedValue", 0]; 
+    _totalValue = 100 + (_wantedValue);
+    _totalValue call changeBalance;
+    _totalValueString = [_totalValue] call numberToCurrency;
+    systemchat format['You earned $%1. Next payment in two minutes.', _totalValueString];
+    ['moneyEarned', _vehicle, _totalValue] spawn logStat;   
+    _wantedValue = _wantedValue + 50;
+    _vehicle setVariable ["GW_WantedValue", _wantedValue];
+    _vehicle say3D "money";
 
 };
 

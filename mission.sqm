@@ -52,7 +52,9 @@ class Mission
 		"A3_Characters_F_OPFOR",
 		"A3_Structures_F_Heli_Civ_Constructions",
 		"A3_Structures_F_Heli_Items_Luggage",
-		"A3_Structures_F_Heli_Ind_Machines"
+		"A3_Structures_F_Heli_Ind_Machines",
+		"A3_Soft_F_TruckHeavy",
+		"A3_Soft_F_MRAP_03"
 	};
 	addOnsAuto[]=
 	{
@@ -76,6 +78,13 @@ class Mission
 		"A3_Structures_F_EPA_Mil_Scrapyard",
 		"A3_Structures_F_Ind_Cargo",
 		"A3_Structures_F_Items_Cans",
+		"A3_Soft_F_MRAP_01",
+		"A3_Soft_F_Kart_Kart_01",
+		"A3_Soft_F_Quadbike",
+		"A3_Soft_F_SUV",
+		"A3_Soft_F_Truck",
+		"A3_Soft_F_TruckHeavy",
+		"A3_Soft_F_MRAP_03",
 		"a3_map_altis"
 	};
 	randomSeed=2523513;
@@ -272,7 +281,7 @@ class Mission
 	};
 	class Vehicles
 	{
-		items=703;
+		items=720;
 		class Item0
 		{
 			position[]={14695.2,17.91,16776.066};
@@ -7054,6 +7063,176 @@ class Mission
 			leader=1;
 			skill=0.60000002;
 			text="refuelArea_11";
+		};
+		class Item703
+		{
+			position[]={23628.154,5.2670679,16262.676};
+			azimut=70.892899;
+			id=711;
+			side="EMPTY";
+			vehicle="B_MRAP_01_F";
+			skill=0.60000002;
+			init="this setVariable [""isVehicle"", true];";
+		};
+		class Item704
+		{
+			position[]={23619.459,5.23,16299.422};
+			azimut=136.972;
+			id=712;
+			side="EMPTY";
+			vehicle="B_MRAP_01_F";
+			skill=0.60000002;
+			init="this setVariable [""isVehicle"", true];";
+		};
+		class Item705
+		{
+			position[]={23644.432,5.23,16307.234};
+			azimut=179.91299;
+			id=713;
+			side="EMPTY";
+			vehicle="B_MRAP_01_F";
+			skill=0.60000002;
+			init="this setVariable [""isVehicle"", true];";
+		};
+		class Item706
+		{
+			position[]={23601.373,5.23,16269.206};
+			azimut=449.78299;
+			id=714;
+			side="EMPTY";
+			vehicle="C_Kart_01_Blu_F";
+			skill=0.60000002;
+			init="this setVariable [""isVehicle"", true];";
+		};
+		class Item707
+		{
+			position[]={23632.957,5.23,16304.21};
+			azimut=516.29797;
+			id=715;
+			side="EMPTY";
+			vehicle="C_Kart_01_Blu_F";
+			skill=0.60000002;
+			init="this setVariable [""isVehicle"", true];";
+		};
+		class Item708
+		{
+			position[]={23663.375,5.23,16304.185};
+			azimut=914.44;
+			id=716;
+			side="EMPTY";
+			vehicle="C_Kart_01_Blu_F";
+			skill=0.60000002;
+			init="this setVariable [""isVehicle"", true];";
+		};
+		class Item709
+		{
+			position[]={23612.713,5.23,16291.362};
+			azimut=449.78299;
+			id=717;
+			side="EMPTY";
+			vehicle="I_Quadbike_01_F";
+			skill=0.60000002;
+			init="this setVariable [""isVehicle"", true];";
+		};
+		class Item710
+		{
+			position[]={23615.752,5.23,16276.392};
+			azimut=486.60901;
+			id=718;
+			side="EMPTY";
+			vehicle="C_SUV_01_F";
+			skill=0.60000002;
+			init="this setVariable [""isVehicle"", true];";
+		};
+		class Item711
+		{
+			position[]={23643.783,5.23,16294.604};
+			azimut=555.04199;
+			id=719;
+			side="EMPTY";
+			vehicle="C_SUV_01_F";
+			skill=0.60000002;
+			init="this setVariable [""isVehicle"", true];";
+		};
+		class Item712
+		{
+			position[]={23619.348,5.23,16288.748};
+			azimut=449.78299;
+			id=720;
+			side="EMPTY";
+			vehicle="C_Van_01_transport_F";
+			skill=0.60000002;
+			init="this setVariable [""isVehicle"", true];";
+		};
+		class Item713
+		{
+			position[]={23628.844,5.23,16309.632};
+			azimut=565.177;
+			id=721;
+			side="EMPTY";
+			vehicle="C_Van_01_transport_F";
+			skill=0.60000002;
+			init="this setVariable [""isVehicle"", true];";
+		};
+		class Item714
+		{
+			position[]={23610.637,5.23,16282.216};
+			azimut=449.78299;
+			id=722;
+			side="EMPTY";
+			vehicle="I_Truck_02_transport_F";
+			skill=0.60000002;
+			init="this setVariable [""isVehicle"", true];";
+		};
+		class Item715
+		{
+			position[]={23635.369,5.23,16312.459};
+			azimut=547.53601;
+			id=723;
+			side="EMPTY";
+			vehicle="I_MRAP_03_F";
+			skill=0.60000002;
+			init="this setVariable [""isVehicle"", true];";
+		};
+		class Item716
+		{
+			position[]={23622.502,5.2531543,16265.067};
+			azimut=404.46301;
+			id=724;
+			side="EMPTY";
+			vehicle="I_MRAP_03_F";
+			skill=0.60000002;
+			init="this setVariable [""isVehicle"", true];";
+		};
+		class Item717
+		{
+			position[]={23653.287,5.23,16291.921};
+			azimut=573.76398;
+			id=725;
+			side="EMPTY";
+			vehicle="C_Kart_01_Blu_F";
+			skill=0.60000002;
+			init="this setVariable [""isVehicle"", true];";
+		};
+		class Item718
+		{
+			position[]={23655.641,5.23,16298.298};
+			azimut=622.64301;
+			id=726;
+			side="EMPTY";
+			vehicle="C_Van_01_transport_F";
+			skill=0.60000002;
+			init="this setVariable [""isVehicle"", true];";
+		};
+		class Item719
+		{
+			position[]={23661.551,5.23,16294.323};
+			azimut=605.00201;
+			id=727;
+			side="EMPTY";
+			vehicle="I_MRAP_03_F";
+			skill=0.60000002;
+			init="this setVariable [""isVehicle"", true];";
 		};
 	};
 	class Markers

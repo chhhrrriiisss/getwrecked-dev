@@ -130,19 +130,11 @@ if (GW_LMBDOWN && _canShoot && !GW_WAITFIRE) then {
 
 	_scale = 1.5;
 	_col = [1,1,1,1];	
-	_availTypes = [];
 	
 	{
-		_type = _x select 1;
-		if ( !(_type in _availTypes) ) then { _availTypes pushBack _type; };
-		GW_ACTIVE_WEAPONS pushback (_x select 0);
+		[(_x select 1), _vehicle, (_x select 0)] spawn fireAttached;
 		false
 	} count GW_AVAIL_WEAPONS > 0;
-
-	{
-		[_x, _vehicle, objNull] spawn fireAttached;
-		false
-	} count _availTypes > 0;
 };
 
 _pos = _vehicle modelToWorld [0,40,0];

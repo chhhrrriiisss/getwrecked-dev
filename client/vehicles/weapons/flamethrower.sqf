@@ -73,7 +73,7 @@ _nearby  = [GW_CURRENTZONE] call findAllInZone;
 if (count _nearby < 0) exitWith {};
 
 _src addEventHandler['EpeContact', {	
-	[(_this select 1), 100] spawn setVehicleOnFire;
+	[(_this select 1), 100, 6] spawn setVehicleOnFire;
 }];
 
 _src spawn {
@@ -83,7 +83,7 @@ _src spawn {
 		_nearby = (ASLtoATL visiblePositionASL _this) nearEntities[["Car"], 6];
 		{ 
 			if (_x distance (ASLtoATL visiblePositionASL _this) < 4) exitWith {
-				_null = [_x, 100] spawn setVehicleOnFire;
+				_null = [_x, 100, 6] spawn setVehicleOnFire;
 			};
 			false
 		} count _nearby > 0;
@@ -94,14 +94,22 @@ _src spawn {
 
 };
 
-Sleep 3.5;
+[_src, _lifeTime] spawn { 
 
-_timeout = time + _lifetime;
-waitUntil{
-	if ( time > _timeout || (((getPos _src) select 2) < 0.5) ) exitWith { true };
+	Sleep 3.5;
+
+	_o = _this select 0;
+	_l = _this select 1;
+
+	_timeout = time + _l;
+	waitUntil{
+	if ( time > _timeout || (((getPos _o) select 2) < 0.5) ) exitWith { true };
 	false
+	};
+
+	_o removeEventHandler['EpeContact', 0];
+	deleteVehicle _o;
+
 };
 
-_src removeEventHandler['EpeContact', 0];
-deleteVehicle _src;
-
+true
