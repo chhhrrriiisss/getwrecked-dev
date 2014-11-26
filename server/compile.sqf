@@ -20,6 +20,7 @@ setupVehicle = compile preprocessFile "server\vehicles\setup_vehicle.sqf";
 
 // Zone
 call compile preprocessFile "server\zones\explosive_barrels.sqf";
+initNitro = compile preprocessFile "server\zones\nitro_pads.sqf";
 generateBoundary = compile preprocessFile "server\zones\generate_boundary.sqf";
 initPaint = compile preprocessFile "client\customization\paint_bucket.sqf";
 

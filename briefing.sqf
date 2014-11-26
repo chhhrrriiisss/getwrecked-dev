@@ -860,7 +860,7 @@ player createDiaryRecord ["changelog",
 "
 - Vehicles in workshop now toggle simulation off briefly while attaching which should fix a lot of physics issues<br />
 - Lift Vehicle and settings options now attached to player proximity to owned vehicle<br />
-- Vertical Thrusters should no longer be linked, along with most other items<br />
+- Vertical Thrusters should no longer be linked, along with most other modules<br />
 - New 'Key Restricted' warning when trying to use a restricted key for a bind<br />
 - Tweaks to hud timeout bars to better show time remaining for multiple modules of the same type <br />
 - You can no longer detach or move objects while not in a race zone<br />
@@ -868,14 +868,19 @@ player createDiaryRecord ["changelog",
 - Flamethrower should now have better hit detection<br />
 - To prevent afk money farming, you now only earn money if you have moved a distance within the two minute timer<br />
 - Incendiary ammo now has a lower fire duration when tagging vehicles<br />
+- Mortar now has a chance of disabling tyres on nearby vehicles<br />
+- You can no longer use nitro while wheels are destroyed or vehicle is disabled<br />
 - Removed - Repair/reload/refuel area map triggers in favour of a new system <br />
 - Removed - W, A and D from restricted keys<br />
 - Removed - Muzzle effect showing for non-local clients due to excess lag with hmg/gmg/laser fire<br />
 - Added - Hold rotate bind for using the camera to rotate objects and lifted vehicles<br />
+- Added - !fixdlc can now be used to toggle removing non-dlc headgear on spawn for people without the Karts DLc<br />
+- Fixed - Easy money from tagging own vehicle with mortar<br />
 - Fixed - You can no longer save a vehicle you don't own, but you can save an unowned one<br />
 - Fixed - Last loaded vehicle is now set via vehicle save (previously only on vehicle load)<br />
 - Fixed - Buy menu being generated twice on menu load<br />
 - Fixed - Script errors when buying items across different categories<br />
+- Fixed - Total cost should now update when just selecting one item in buy menu <br />
 <br />
 "
 ]];

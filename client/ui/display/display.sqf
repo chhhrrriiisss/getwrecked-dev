@@ -166,7 +166,7 @@ drawDisplay = {
 					if (count _areas < 0) exitWith {};
 
 					for "_i" from 0 to (count _areas) step 1 do {
-						if (((_areas select _i) distance player) < 500) then {
+						if (((_areas select _i) distance (vehicle player)) < 500) then {
 							[((_areas select _i) modelToWorldVisual [0,0,(_x select 0)]), (_x select 2), (_x select 3), 500, (_x select 4)] call drawServiceIcon;		
 						};
 					};
@@ -176,6 +176,15 @@ drawDisplay = {
 					[1, repairAreas, repairIcon, [activeIconA, activeIconB, activeIconC], "REPAIR" ],
 					[1, refuelAreas, refuelIcon, [activeIconA, activeIconB, activeIconC], "REFUEL" ]
 				] > 0;
+
+				// Check we're not in range of a nitro pad
+				if (_inVehicle && _isDriver) then {
+					{
+						if (_x distance (vehicle player) < 6) exitWith {
+							_null = [_x, (vehicle player)] execVM 'client\zones\nitro_pad.sqf';
+						};
+					} Foreach nitroPads;
+				};
 
 			};
 

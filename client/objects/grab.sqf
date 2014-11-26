@@ -11,8 +11,8 @@ _unit = [_this,1, objNull, [objNull]] call BIS_fnc_param;
 
 if (isNull _obj || isNull _unit) exitWith {};
 
-// If the object isn't local, make it local so all this jazz runs better
-if ( !local _obj ) then {
+// If the object isn't local and isn't attached to anything, make it local so all this jazz runs better
+if ( !local _obj && isNull attachedTo _obj) then {
 
 	// Store prev location and hide current object
 	_obj hideObject true;

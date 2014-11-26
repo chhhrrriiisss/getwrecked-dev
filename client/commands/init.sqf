@@ -45,19 +45,17 @@ GW_executeCommand = {
 		{
 			if (_command == (_x select 0))exitWith{
 				[_argument] call (_x select 1);
-				false
 			};
-			false
-		} count GW_COMMANDS_LIST > 0;
+		}  Foreach GW_COMMANDS_LIST;
 
 };
 
 // Reset and old EH IDs and scripthandles
 if (!isNil "GW_COMMANDS_SETUP")then{
-	terminate GW_COMMANDS_SETUP
+	terminate GW_COMMANDS_SETUP;
 };
 if (!isNil "GW_COMMANDS_EH")then{
-	(findDisplay 24) displayRemoveEventHandler ["KeyDown",GW_COMMANDS_EH];
+	(findDisplay 24) displayRemoveEventHandler ["KeyDown", GW_COMMANDS_EH];
 	GW_COMMANDS_EH = nil;
 };
 

@@ -28,3 +28,29 @@ _ex = createVehicle ["R_TBG32V_F",_p,[],0,"FLY"];
 _ex setVectorDirAndUp [[0,0,1],[0,-1,0]];
 _ex setVelocity [0,0,_speed];
 
+_nearby = _p nearEntities [["Car"], 15];
+if (count _nearby == 0) exitWith {};
+{
+
+	_isVehicle = _x getVariable ["isVehicle", false];
+
+	if (_isVehicle) then {
+
+		_rnd = (random 5) + 3;
+
+		[       
+	        [
+	            _x,
+	            ['tyresPopped'],
+	            _rnd
+	        ],
+	        "addVehicleStatus",
+	        _x,
+	        false 
+		] call BIS_fnc_MP;  
+
+	};
+
+	false
+} count _nearby;
+

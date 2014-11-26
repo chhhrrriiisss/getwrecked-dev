@@ -103,7 +103,7 @@ class GW_Buy
 			rowHeight = GW_BUTTON_HEIGHT * 2;
 
 			onLBDblClick = "_this spawn setQuantity; false";
-			onLBClick = "[] call calculateTotal; false";
+			onMouseButtonClick = "_this call calculateTotal; false";
 		
 		};
 

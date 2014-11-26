@@ -4,6 +4,8 @@
 //      Return: Array (Total Cost, Number of Items, List of Items)
 //
 
+
+
 private ['_total', '_size', '_value', '_cost', '_subtotal', '_total'];
 
 _total = 0;
@@ -11,8 +13,11 @@ _size = [(lnbSize 97001),0, -1, [0]] call BIS_fnc_param;
 _itemCount = 0;
 _inventory = [];
 
+_list = ((findDisplay 97000) displayCtrl 97001);
+_index = lnbcurselrow 97001;
+
 if (_size == -1) exitWith { [0,0,0] };
-	
+
 for "_i" from 0 to _size step 1 do {
 
 	_value = lnbData [97001, [_i, 0]];
@@ -38,9 +43,14 @@ for "_i" from 0 to _size step 1 do {
 	_inventory pushBack [(_x select 1), (_x select 0)];
 } ForEach GW_BUY_CART;
 
-// Plus currently selected item 
-_index = lnbcurselrow 92001;
-_total = _total + parseNumber(lnbData [97001, [_index, 0]]);
+if (_itemCount == 0) then {
+	// Plus currently selected item if no others selected
+	_itemCount = 1;
+	_total = _total + parseNumber(lnbData [97001, [_index, 4]]);
+	_class = lnbData [97001, [_index, 3]];
+	_inventory pushBack [1, _class];
+};
+
 
 disableSerialization;
 _text = ((findDisplay 97000) displayCtrl 97005);

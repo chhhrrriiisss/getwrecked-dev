@@ -18,6 +18,9 @@ _number = ['NTO', _vehicle] call hasType;
 _cost = (['NTO'] call getTagData) select 1;
 _cost = (_cost * _number);
 
+_status = _vehicle getVariable ["status", []];
+if ('tyresPopped' in _status || 'disabled' in _status) exitWith { false };
+
 _s = if (_fuel < _cost) then {
 	["LOW FUEL  ", 0.3, warningIcon, colorRed, "warning"] spawn createAlert;
 
@@ -53,7 +56,7 @@ _s = if (_fuel < _cost) then {
 		_speed = _power; 
 		
 		// Wheels aren't touching the ground
-		if ( _alt > 1 ) exitWith {};	
+		if ( _alt > 1 ) exitWith { false };	
 
 		// Is the engine on? hah.
 		if (!isEngineOn _vehicle) exitWith { false};

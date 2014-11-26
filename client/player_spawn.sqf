@@ -17,7 +17,6 @@ removeAllWeapons _unit;
 removeVest _unit;
 removeBackpack _unit;
 removeGoggles _unit;
-
 removeAllPrimaryWeaponItems _unit;
 removeallassigneditems _unit;
 
@@ -66,7 +65,7 @@ if (!_fixDLC) then {
 	};
 
 } else {
-	removeHeadgear _unit; // Remove the helmet to prevent DLC ads
+	_unit addHeadgear "H_PilotHelmetHeli_B";
 };
 	
 if(!isNil "_tx") then {

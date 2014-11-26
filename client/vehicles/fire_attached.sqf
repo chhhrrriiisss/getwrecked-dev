@@ -131,7 +131,9 @@ _success = if (!isNil "_obj") then {
 
 	};
 
-	([_obj, GW_TARGET, _vehicle] call _command)
+	[_obj, GW_TARGET, _vehicle] call _command;
+
+	true
 
 } else {
 	false

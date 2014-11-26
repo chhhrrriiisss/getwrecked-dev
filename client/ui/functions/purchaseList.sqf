@@ -29,6 +29,8 @@ if (_totalItems <= 0 && !isNil "_index") then {
 	_cost = lnbData [97001, [_index, 4]];
 	_class = lnbData [97001, [_index, 3]];
 
+	systemchat format['%1 / %2', _class, time];
+
 	_totalCost = parseNumber( _cost );
 	_inventory = [[1, _class]];
 	_totalItems = 1;

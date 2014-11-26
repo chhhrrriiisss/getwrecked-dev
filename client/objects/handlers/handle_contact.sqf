@@ -11,7 +11,7 @@ _remote = _this select 1;
 
 systemchat 'contact!';
 
-_isVehicle = _remote getVariable ["isVehicle"];
+_isVehicle = _remote getVariable ["isVehicle", false];
 
 if (_isVehicle && GW_CURRENTZONE == "workshopZone") then {
 

@@ -351,6 +351,7 @@ checkTyres = compile preprocessFile 'global\functions\checkTyres.sqf';
 checkEject = compile preprocessFile 'global\functions\checkEject.sqf';
 
 // Pre-compile location arrays
+
 reloadAreas = ['reloadArea'] call findAllObjects;
 repairAreas = ['repairArea'] call findAllObjects;
 refuelAreas = ['refuelArea'] call findAllObjects;
@@ -360,3 +361,4 @@ spawnAreas = ['spawnArea'] call findAllObjects;
 buySigns = ['buySign'] call findAllObjects;
 vehicleTerminals = ['vehicleTerminal'] call findAllObjects;
 lootAreas = ['lootArea'] call findAllObjects;
+nitroPads = ['nitroPad'] call findAllObjects;

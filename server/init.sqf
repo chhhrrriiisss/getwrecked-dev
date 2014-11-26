@@ -12,6 +12,7 @@ _startTime = time;
 [] call initPaint;
 [] call initSupply;
 [] call generateBoundary;
+[] call initNitro;
 // [] call spawnExplosiveBarrels;
 
 serverSetupComplete = compileFinal "true";

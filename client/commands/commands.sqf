@@ -9,7 +9,7 @@ GW_COMMANDS_LIST = [
 				if (_name == "tp" || _name == "warp" || _name == "kill" || _name == "disable" || _name == "spawn" || _name == "fling" || _name == "grab") then {} else {
 					_commands = _commands + (pvpfw_chatIntercept_commandMarker + (_name)) + ", ";
 				};
-			} forEach pvpfw_chatIntercept_allCommands;
+			} forEach GW_COMMANDS_LIST;
 			systemChat format["Available Commands: %1",_commands];
 		}
 	],
@@ -196,7 +196,6 @@ GW_COMMANDS_LIST = [
 		}
 	],
 
-
 	[
 		
 		"grab",
@@ -280,73 +279,26 @@ GW_COMMANDS_LIST = [
 			};
 		}
 	],
+
 	[
 		
-		"setcamo",
+		"fixdlc",
 		{
 			_argument = _this select 0;
 
-			if ( player == (vehicle player) ) exitWith { 
+			_fixdlc = profileNamespace getVariable ['GW_FIXDLC', false];
 
-				systemChat "You need to be in a vehicle to use this.";
-			};
-
-			_isOwner = [(vehicle player), player, false] call checkOwner;
-
-			if (!_isOwner) exitWith { 
-
-				systemChat "You need to be the owner of the vehicle to use this.";
-			};
-
-			if (_argument == "") exitWith {
-
-				_camoString = '';
-
-				{
-					_str = format['%1 ', _x select 0];
-					_camoString = _camoString + _str;
-
-
-				} ForEach camoList;
-
-				systemChat format['Available camos: %1', _camoString];
-
-			}; 
-
-			{
-
-				_name = _x select 0;
-
-				if (_argument == _name) exitWith {
-
-					_name = _x select 0;
-					_path = _x select 1;
-					_veh = (vehicle player);
-
-					// pubVar_setObjectTexture = [_veh, _path];
-				 //    publicVariable "pubVar_setObjectTexture"; 
-
-					[		
-						[
-							_veh,
-							_path
-						],
-						"setObjectTextureMP",
-						false,
-						false 
-					] call BIS_fnc_MP;
-
-				    _veh setVariable ["camo", _path]; 
-
-				    // _path = format["%1%2", MISSION_ROOT, _path];
-				    // _veh setObjectTexture [0, _path];
-
-					systemChat format['Set vehicle camo to: %1 ', _name];
-
-				};
-
-			} ForEach camoList;
-			
+			if (_fixdlc) then {
+				profileNamespace setVariable ['GW_FIXDLC', false];
+				systemchat 'DLC fix disabled.';
+				removeHeadgear _unit;
+				_unit addHeadgear "H_RacingHelmet_1_black_F";
+			} else {
+				profileNamespace setVariable ['GW_FIXDLC', true];
+				systemchat 'DLC fix enabled.';
+				removeHeadgear _unit;
+				_unit addHeadgear "H_PilotHelmetHeli_B";
+			};				
 		}
 	],
 
