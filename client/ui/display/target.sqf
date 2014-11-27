@@ -54,7 +54,8 @@ _allowedWeapons = [
 	'RPG',
 	'LSR',
 	'RLG',
-	'FLM'
+	'FLM',
+	'HAR'
 ];
 
 _count = 0;
@@ -100,7 +101,8 @@ _count = 0;
 				case "MIS":	{ rpgTargetIcon };				
 				case "MOR":	{ rangeTargetIcon };				
 				case "GMG":	{ rangeTargetIcon };	
-				case "FLM":	{ rpgTargetIcon };				
+				case "FLM":	{ rpgTargetIcon };		
+				case "HAR":	{ hmgTargetIcon };			
 				default	{ noTargetIcon };			
 			};
 

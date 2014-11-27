@@ -181,7 +181,8 @@ drawDisplay = {
 				if (_inVehicle && _isDriver) then {
 					{
 						if (_x distance (vehicle player) < 6) exitWith {
-							_null = [_x, (vehicle player)] execVM 'client\zones\nitro_pad.sqf';
+							// _null = [_x, (vehicle player)] execVM 'client\zones\nitro_pad.sqf';
+							[_x, _vehicle] spawn nitroPad;
 						};
 					} Foreach nitroPads;
 				};

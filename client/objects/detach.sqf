@@ -21,10 +21,10 @@ if (!_isOwner) exitWith { false };
 
 _wasSimulated = (simulationEnabled _veh);
 
-// Disable simulation on vehicle briefly
+// Disable simulation on vehicle and object
 [		
 	[
-		_veh,
+		[_obj, _veh],
 		false
 	],
 	"setObjectSimulation",
@@ -42,7 +42,7 @@ detach _obj;
 
 if (_wasSimulated) then {
 
-	// Re enable simulation
+	// Re enable simulation on vehicle
 	[		
 		[
 			_veh,

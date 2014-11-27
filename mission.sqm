@@ -54,7 +54,8 @@ class Mission
 		"A3_Structures_F_Heli_Items_Luggage",
 		"A3_Structures_F_Heli_Ind_Machines",
 		"A3_Soft_F_TruckHeavy",
-		"A3_Soft_F_MRAP_03"
+		"A3_Soft_F_MRAP_03",
+		"A3_Structures_F_Civ_Constructions"
 	};
 	addOnsAuto[]=
 	{
@@ -281,7 +282,7 @@ class Mission
 	};
 	class Vehicles
 	{
-		items=677;
+		items=675;
 		class Item0
 		{
 			position[]={14695.2,17.91,16776.066};
@@ -6534,8 +6535,8 @@ class Mission
 		};
 		class Item643
 		{
-			position[]={14422.268,38.261593,18988.938};
-			azimut=137.435;
+			position[]={15123.512,17.91,16873.461};
+			azimut=19.845293;
 			id=651;
 			side="EMPTY";
 			vehicle="Land_RampConcrete_F";
@@ -6544,19 +6545,19 @@ class Mission
 		};
 		class Item644
 		{
-			position[]={14426.036,38.253353,18992.41};
-			azimut=137.435;
+			position[]={15118.665,17.91,16875.223};
+			azimut=19.845293;
 			id=652;
 			side="EMPTY";
 			vehicle="Land_RampConcrete_F";
 			skill=0.60000002;
-			text="nitroPad_0";
+			text="nitroPad_1";
 			init="this addEventHandler['handleDamage', { false }];";
 		};
 		class Item645
 		{
-			position[]={15123.512,17.91,16873.461};
-			azimut=19.845293;
+			position[]={14378.23,18.990494,16188.805};
+			azimut=-138.34178;
 			id=653;
 			side="EMPTY";
 			vehicle="Land_RampConcrete_F";
@@ -6565,19 +6566,19 @@ class Mission
 		};
 		class Item646
 		{
-			position[]={15118.665,17.91,16875.223};
-			azimut=19.845293;
+			position[]={14382.074,18.888002,16185.356};
+			azimut=-138.34184;
 			id=654;
 			side="EMPTY";
 			vehicle="Land_RampConcrete_F";
 			skill=0.60000002;
-			text="nitroPad_1";
+			text="nitroPad_2";
 			init="this addEventHandler['handleDamage', { false }];";
 		};
 		class Item647
 		{
-			position[]={14378.23,18.990494,16188.805};
-			azimut=-138.34178;
+			position[]={14373.505,12.777952,15717};
+			azimut=-134.41002;
 			id=655;
 			side="EMPTY";
 			vehicle="Land_RampConcrete_F";
@@ -6586,297 +6587,276 @@ class Mission
 		};
 		class Item648
 		{
-			position[]={14382.074,18.888002,16185.356};
-			azimut=-138.34184;
-			id=656;
-			side="EMPTY";
-			vehicle="Land_RampConcrete_F";
-			skill=0.60000002;
-			text="nitroPad_2";
-			init="this addEventHandler['handleDamage', { false }];";
-		};
-		class Item649
-		{
-			position[]={14373.505,12.777952,15717};
-			azimut=-134.41002;
-			id=657;
-			side="EMPTY";
-			vehicle="Land_RampConcrete_F";
-			skill=0.60000002;
-			init="this addEventHandler['handleDamage', { false }];";
-		};
-		class Item650
-		{
 			position[]={14377.091,12.76899,15713.302};
 			azimut=-134.40996;
-			id=658;
+			id=656;
 			side="EMPTY";
 			vehicle="Land_RampConcrete_F";
 			skill=0.60000002;
 			text="nitroPad_3";
 			init="this addEventHandler['handleDamage', { false }];";
 		};
-		class Item651
+		class Item649
 		{
 			position[]={14381.631,19.004492,16192.567};
 			azimut=-138.341;
-			id=659;
+			id=657;
 			side="EMPTY";
 			vehicle="Land_RampConcreteHigh_F";
 			skill=0.60000002;
 			init="this addEventHandler['handleDamage', { false }];p = getpos this; p set [2, -0.5]; this setPos p;";
 		};
-		class Item652
+		class Item650
 		{
 			position[]={14385.351,18.905909,16189.21};
 			azimut=-138.341;
-			id=660;
+			id=658;
 			side="EMPTY";
 			vehicle="Land_RampConcreteHigh_F";
 			skill=0.60000002;
 			init="this addEventHandler['handleDamage', { false }];p = getpos this; p set [2, -0.5]; this setPos p;";
 		};
-		class Item653
+		class Item651
 		{
 			position[]={14916.515,17.123087,17118.299};
 			azimut=-326.15448;
-			id=661;
+			id=659;
 			side="EMPTY";
 			vehicle="Land_RampConcrete_F";
 			skill=0.60000002;
 			init="this addEventHandler['handleDamage', { false }];";
 		};
-		class Item654
+		class Item652
 		{
 			position[]={14912.262,17.121305,17121.215};
 			azimut=-326.15439;
-			id=662;
+			id=660;
 			side="EMPTY";
 			vehicle="Land_RampConcrete_F";
 			skill=0.60000002;
 			text="nitroPad_4";
 			init="this addEventHandler['handleDamage', { false }];";
 		};
-		class Item655
+		class Item653
 		{
 			position[]={14913.565,17.116297,17113.98};
 			azimut=-325.939;
-			id=663;
+			id=661;
 			side="EMPTY";
 			vehicle="Land_RampConcreteHigh_F";
 			skill=0.60000002;
 			init="this addEventHandler['handleDamage', { false }];p = getpos this; p set [2, -0.5]; this setPos p;";
 		};
-		class Item656
+		class Item654
 		{
 			position[]={14909.441,17.101175,17116.834};
 			azimut=-325.939;
-			id=664;
+			id=662;
 			side="EMPTY";
 			vehicle="Land_RampConcreteHigh_F";
 			skill=0.60000002;
 			init="this addEventHandler['handleDamage', { false }];p = getpos this; p set [2, -0.5]; this setPos p;";
 		};
-		class Item657
+		class Item655
 		{
 			position[]={15168.578,17.925129,16679.924};
 			azimut=-136.92075;
-			id=665;
+			id=663;
 			side="EMPTY";
 			vehicle="Land_RampConcrete_F";
 			skill=0.60000002;
 			init="this addEventHandler['handleDamage', { false }];";
 		};
-		class Item658
+		class Item656
 		{
 			position[]={15172.336,17.915396,16676.383};
 			azimut=-136.92101;
-			id=666;
+			id=664;
 			side="EMPTY";
 			vehicle="Land_RampConcrete_F";
 			skill=0.60000002;
 			text="nitroPad_5";
 			init="this addEventHandler['handleDamage', { false }];";
 		};
-		class Item659
+		class Item657
 		{
 			position[]={15172.194,17.924917,16683.688};
 			azimut=-136.705;
-			id=667;
+			id=665;
 			side="EMPTY";
 			vehicle="Land_RampConcreteHigh_F";
 			skill=0.60000002;
 			init="this addEventHandler['handleDamage', { false }];p = getpos this; p set [2, -0.5]; this setPos p;";
 		};
-		class Item660
+		class Item658
 		{
 			position[]={15175.815,17.915882,16680.227};
 			azimut=-136.705;
-			id=668;
+			id=666;
 			side="EMPTY";
 			vehicle="Land_RampConcreteHigh_F";
 			skill=0.60000002;
 			init="this addEventHandler['handleDamage', { false }];p = getpos this; p set [2, -0.5]; this setPos p;";
 		};
-		class Item661
+		class Item659
 		{
 			position[]={14614.602,17.913864,16100.451};
 			azimut=43.511314;
-			id=669;
+			id=667;
 			side="EMPTY";
 			vehicle="Land_RampConcrete_F";
 			skill=0.60000002;
 			init="this addEventHandler['handleDamage', { false }];";
 		};
-		class Item662
+		class Item660
 		{
 			position[]={14610.865,17.92087,16104.017};
 			azimut=43.511101;
-			id=670;
+			id=668;
 			side="EMPTY";
 			vehicle="Land_RampConcrete_F";
 			skill=0.60000002;
 			text="nitroPad_7";
 			init="this addEventHandler['handleDamage', { false }];";
 		};
-		class Item663
+		class Item661
 		{
 			position[]={14610.956,17.912277,16096.707};
 			azimut=43.7271;
-			id=671;
+			id=669;
 			side="EMPTY";
 			vehicle="Land_RampConcreteHigh_F";
 			skill=0.60000002;
 			init="this addEventHandler['handleDamage', { false }];p = getpos this; p set [2, -1.5]; this setPos p;";
 		};
-		class Item664
+		class Item662
 		{
 			position[]={14607.363,17.916925,16100.194};
 			azimut=43.7271;
-			id=672;
+			id=670;
 			side="EMPTY";
 			vehicle="Land_RampConcreteHigh_F";
 			skill=0.60000002;
 			init="this addEventHandler['handleDamage', { false }];p = getpos this; p set [2, -1.5]; this setPos p;";
 		};
-		class Item665
+		class Item663
 		{
 			position[]={14622.02,17.91,16093.383};
 			azimut=43.511314;
-			id=673;
+			id=671;
 			side="EMPTY";
 			vehicle="Land_RampConcrete_F";
 			skill=0.60000002;
 			init="this addEventHandler['handleDamage', { false }];";
 		};
-		class Item666
+		class Item664
 		{
 			position[]={14618.283,17.91,16096.948};
 			azimut=43.511101;
-			id=674;
+			id=672;
 			side="EMPTY";
 			vehicle="Land_RampConcrete_F";
 			skill=0.60000002;
 			text="nitroPad_6";
 			init="this addEventHandler['handleDamage', { false }];";
 		};
-		class Item667
+		class Item665
 		{
 			position[]={14618.374,17.91,16089.639};
 			azimut=43.7271;
-			id=675;
+			id=673;
 			side="EMPTY";
 			vehicle="Land_RampConcreteHigh_F";
 			skill=0.60000002;
 			init="this addEventHandler['handleDamage', { false }];p = getpos this; p set [2, -1.5]; this setPos p;";
 		};
-		class Item668
+		class Item666
 		{
 			position[]={14614.781,17.91,16093.126};
 			azimut=43.7271;
-			id=676;
+			id=674;
 			side="EMPTY";
 			vehicle="Land_RampConcreteHigh_F";
 			skill=0.60000002;
 			init="this addEventHandler['handleDamage', { false }];p = getpos this; p set [2, -1.5]; this setPos p;";
 		};
-		class Item669
+		class Item667
 		{
 			position[]={15517.984,19.076052,17069.953};
 			azimut=-295.17194;
-			id=677;
+			id=675;
 			side="EMPTY";
 			vehicle="Land_RampConcrete_F";
 			skill=0.60000002;
 			init="this addEventHandler['handleDamage', { false }];";
 		};
-		class Item670
+		class Item668
 		{
 			position[]={15515.815,18.92997,17074.623};
 			azimut=-295.172;
-			id=678;
+			id=676;
 			side="EMPTY";
 			vehicle="Land_RampConcrete_F";
 			skill=0.60000002;
 			text="nitroPad_8";
 			init="this addEventHandler['handleDamage', { false }];";
 		};
-		class Item671
+		class Item669
 		{
 			position[]={15513.235,19.041574,17067.781};
 			azimut=-294.95599;
-			id=679;
+			id=677;
 			side="EMPTY";
 			vehicle="Land_RampConcreteHigh_F";
 			skill=0.60000002;
 			init="this addEventHandler['handleDamage', { false }];p = getpos this; p set [2, -0.5]; this setPos p;";
 		};
-		class Item672
+		class Item670
 		{
 			position[]={15511.149,18.934832,17072.336};
 			azimut=-294.95599;
-			id=680;
+			id=678;
 			side="EMPTY";
 			vehicle="Land_RampConcreteHigh_F";
 			skill=0.60000002;
 			init="this addEventHandler['handleDamage', { false }]; p = getpos this; p set [2, -0.5]; this setPos p;";
 		};
-		class Item673
+		class Item671
 		{
 			position[]={14223.459,15.874828,16600.797};
 			azimut=235.21956;
-			id=681;
+			id=679;
 			side="EMPTY";
 			vehicle="Land_RampConcrete_F";
 			skill=0.60000002;
 			init="this addEventHandler['handleDamage', { false }];";
 		};
-		class Item674
+		class Item672
 		{
 			position[]={14226.38,15.894573,16596.555};
 			azimut=235.21974;
-			id=682;
+			id=680;
 			side="EMPTY";
 			vehicle="Land_RampConcrete_F";
 			skill=0.60000002;
 			text="nitroPad_9";
 			init="this addEventHandler['handleDamage', { false }];";
 		};
-		class Item675
+		class Item673
 		{
 			position[]={14227.788,15.857624,16603.713};
 			azimut=235.435;
-			id=683;
+			id=681;
 			side="EMPTY";
 			vehicle="Land_RampConcreteHigh_F";
 			skill=0.60000002;
 			init="this addEventHandler['handleDamage', { false }];p = getpos this; p set [2, -0.5]; this setPos p;";
 		};
-		class Item676
+		class Item674
 		{
 			position[]={14230.612,15.887237,16599.574};
 			azimut=235.435;
-			id=684;
+			id=682;
 			side="EMPTY";
 			vehicle="Land_RampConcreteHigh_F";
 			skill=0.60000002;

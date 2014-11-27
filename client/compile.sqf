@@ -93,6 +93,7 @@ deployVehicle = compile preprocessFile 'client\zones\deploy.sqf';
 parachuteVehicle = compile preprocessFile 'client\zones\parachute_vehicle.sqf';
 checkInZone = compile preprocessFile 'client\zones\check_in_zone.sqf';
 servicePoint = compile preprocessFile 'client\zones\vehicle_point.sqf';
+nitroPad =  compile preprocessFile 'client\zones\nitro_pad.sqf';
 
 // Persistance Functions
 paintVehicle = compile preprocessFile 'client\customization\paint_vehicle.sqf';
@@ -143,7 +144,7 @@ fireGmg = compile preprocessFile "client\vehicles\weapons\gmg.sqf";
 fireLockOn = compile preprocessFile "client\vehicles\weapons\lockon_missile.sqf";
 fireGuided = compile preprocessFile "client\vehicles\weapons\guided_missile.sqf";
 fireFlamethrower = compile preprocessFile "client\vehicles\weapons\flamethrower.sqf";
-
+fireHarpoon = compile preprocessFile "client\vehicles\weapons\harpoon.sqf";
 
 // Module Functions
 smokeBomb = compile preprocessFile "client\vehicles\attachments\smoke_bomb.sqf";

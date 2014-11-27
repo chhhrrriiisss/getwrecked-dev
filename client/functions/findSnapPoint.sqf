@@ -121,10 +121,10 @@ _foundSnap = false;
 // If there was no snap point, try snap vehicle direction instead
 if (!_foundSnap) then {
 
-	_frontDir = getDir _currentVehicle;
+	_frontDir = (getDir _currentVehicle);
 	_sideDir = [(_frontDir + 90)] call normalizeAngle;
 	_forwardCornerDir = [(_frontDir + 45)] call normalizeAngle;
-	_rearCornerDir = [(_frontDir -45)] call normalizeAngle;
+	_rearCornerDir = [(_frontDir - 45)] call normalizeAngle;
 
 	if (_currentDir != _frontDir || _currentDir != _sideDir || _currentDir != _rearCornerDir || _currentDir != _forwardCornerDir) then {
 

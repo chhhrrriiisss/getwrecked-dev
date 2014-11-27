@@ -21,15 +21,16 @@ GW_LOOT_LIST = [
 
 	// Weapons
 
-	["B_HMG_01_A_F", "HMG .50 Cal", 400, 9999, 0, 0, 'HMG', "High calibre machine gun", 0.1, hmgIcon],
-	["B_GMG_01_A_F", "GMG 20mm HE", 500, 9999, 0, 0, 'GMG', "High explosive grenade launcher", 0.3, gmgIcon],
-	["B_static_AT_F", "Lock-On Missile Launcher", 1000, 9999, 0, 0, 'MIS', "Fires heat seeking missiles", 1, lockonIcon],
+	["B_HMG_01_A_F", "HMG .50 Cal", 750, 9999, 0, 0, 'HMG', "High calibre machine gun", 0.1, hmgIcon],
+	["B_GMG_01_A_F", "GMG 20mm HE", 750, 9999, 0, 0, 'GMG', "High explosive grenade launcher", 0.3, gmgIcon],
+	["B_static_AT_F", "Lock-On Missile Launcher", 750, 9999, 0, 0, 'MIS', "Fires heat seeking missiles", 1, lockonIcon],
 	["B_Mortar_01_F", "Mk6 Mortar", 750, 9999, 0, 0, 'MOR', "Heat seeking mounted mortar", 0.1, mortarIcon],
 	["Land_Runway_PAPI", "Tactical Laser", 400, 9999, 0, 0, 'LSR', "High Energy Laser", 0.9, laserIcon],
 	["launch_NLAW_F", "Guided Missile", 750, 9999, 0, 0, 'GUD', "Guided Missile", 1, guidedIcon], 
 	["launch_RPG32_F", "Rocket Launcher", 750, 9999, 0, 0, 'RPG', "Rocket Launcher", 0.3, rpgIcon],
 	["srifle_LRR_LRPS_F", "SR2 Railgun", 750, 9999, 0, 0, 'RLG', "Railgun", 1, railgunIcon],
 	["Land_DischargeStick_01_F", "Flamethrower", 750, 9999, 0, 0, 'FLM', "Flamethrower", 1, flameIcon],
+	["srifle_GM6_F", "Harpoon Launcher", 750, 9999, 0, 0, 'HAR', "Harpoon", 1, hmgIcon],
 
 	// Fuel
 
@@ -100,7 +101,8 @@ GW_LOOT_WEAPONS = [
 	["launch_NLAW_F", 300],
 	["launch_RPG32_F", 200],
 	["srifle_LRR_LRPS_F", 600],
-	["Land_DischargeStick_01_F", 300]
+	["Land_DischargeStick_01_F", 300],
+	["srifle_GM6_F", 300]
 ];
 
 // Performance

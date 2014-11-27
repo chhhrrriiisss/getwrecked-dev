@@ -167,7 +167,8 @@ GW_WEAPONSARRAY = [
 	'GUD',
 	'LSR',
 	'RLG',
-	'FLM'
+	'FLM',
+	'HAR'
 ];
 
 // Weapons that use groundWeaponsHolder 
@@ -272,8 +273,8 @@ getTagData = {
 		case "MOR":	{  [2.5, 0.05] };
 		case "RLG":	{  [20, 0.25] };
 		case "LSR":	{  [3, 0.05] };		
-
-		case "FLM":	{  [0.5, 0.03] };		
+		case "FLM":	{  [0.5, 0.03] };	
+		case 'HAR': {  [0, 0] };
 
 		default
 		{

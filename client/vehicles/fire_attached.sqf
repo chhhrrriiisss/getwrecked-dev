@@ -123,11 +123,11 @@ _success = if (!isNil "_obj") then {
 		case "RPG": {  fireRpg };
 		case "GUD": {  fireGuided };
 		case "MIS": { _lock = true; fireLockOn };
-
 		case "MOR": {  fireMortar };
 		case "LSR": {  fireLaser };
 		case "RLG": {  fireRail };
 		case "FLM": {  fireFlamethrower };
+		case "HAR": {  fireHarpoon };
 
 	};
 
