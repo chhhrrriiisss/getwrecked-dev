@@ -233,7 +233,7 @@ class GW_Settings
 			text = "UNFLIP VEHICLE";
 			size = 0.03;
 			sizeEx = "0.03";
-			onButtonClick = "[GW_SETTINGS_VEHICLE] spawn flipVehicle; closeDialog 0; false";
+			onButtonClick = "[GW_SETTINGS_VEHICLE, true] spawn flipVehicle; closeDialog 0; false";
 			x = (SETTINGS_X + GW_BUTTON_WIDTH + GW_BUTTON_GAP_X) * safezoneW + safezoneX;
 			y = (SETTINGS_Y + (GW_BUTTON_HEIGHT * 8) + (GW_BUTTON_GAP_Y * 8)) * safezoneH + safezoneY;
 			w = (GW_BUTTON_WIDTH - GW_BUTTON_GAP_X) * safezoneW;

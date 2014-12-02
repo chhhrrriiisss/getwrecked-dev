@@ -32,7 +32,27 @@ for "_i" from 0 to _listLength step 1 do {
 				} count (GW_SETTINGS_VEHICLE getVariable ["tactical", []]) > 0;
 
 			} else {
-				_obj setVariable ["bind", _key];
+
+				// If it's a vehicle bind
+				if (_obj == GW_SETTINGS_VEHICLE) then {
+
+					_bindsList = GW_SETTINGS_VEHICLE getVariable ["GW_Binds", []];
+
+					{
+						if ((_x select 0) == _tag) then {
+							_x set [1, _key];
+						};
+
+					} Foreach _bindsList;
+
+					GW_SETTINGS_VEHICLE setVariable ["GW_Binds", _bindsList];
+
+				} else {
+
+					_obj setVariable ["bind", _key];
+
+				};
+
 			};
 
 		};

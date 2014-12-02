@@ -120,11 +120,18 @@ initBinds = {
 
 	waituntil {!(isNull (findDisplay 46))};
 
-	(findDisplay 46) displayAddEventHandler ["KeyDown", "_this call checkBinds; false"];
-	(findDisplay 46) displayAddEventHandler ["KeyUp", "_this call resetBinds; false"];
+	// Main HUD
+	if (!isNil "GW_KD_EH") then { (findDisplay 46) displayRemoveEventHandler ["KeyDown", GW_KD_EH];	GW_KD_EH = nil;	};
+	GW_KD_EH = (findDisplay 46) displayAddEventHandler ["KeyDown", "_this call checkBinds; false"];
 
-	(findDisplay 46) displayAddEventHandler ["MouseButtonDown", "_this call setMouseDown; false;"];
-	(findDisplay 46) displayAddEventHandler ["MouseButtonUp", "_this call setMouseUp; false;"];
+	if (!isNil "GW_KU_EH") then { (findDisplay 46) displayRemoveEventHandler ["KeyUp", GW_KU_EH];	GW_KU_EH = nil;	};
+	GW_KU_EH = (findDisplay 46) displayAddEventHandler ["KeyUp", "_this call resetBinds; false"];
+
+	if (!isNil "GW_MD_EH") then { (findDisplay 46) displayRemoveEventHandler ["MouseButtonDown", GW_MD_EH];	GW_MD_EH = nil;	};
+	GW_MD_EH = (findDisplay 46) displayAddEventHandler ["MouseButtonDown", "_this call setMouseDown; false;"];
+
+	if (!isNil "GW_MU_EH") then { (findDisplay 46) displayRemoveEventHandler ["MouseButtonUp", GW_MU_EH];	GW_MU_EH = nil;	};
+	GW_MU_EH = (findDisplay 46) displayAddEventHandler ["MouseButtonUp", "_this call setMouseUp; false;"];
 
 	setMouseDown = {			
 		if ((_this select 1) == 0) then {  GW_LMBDOWN = true; };
@@ -274,6 +281,33 @@ checkBinds = {
 			} count _tacticalList > 0;
 
 		};
+
+
+		// Also loop through vehicle binds for custom abilities
+		_bindsList = _vehicle getVariable ["GW_Binds", []];
+		{
+			_tag = _x select 0;
+			_bind = _x select 1;
+			_bind = if (typename _bind == "STRING") then { parseNumber(_bind) } else { _bind };
+
+			if (_bind >= 0 && _bind == _key) then {	
+
+				if (_tag == "HORN") exitWith { [_vehicle] spawn tauntVehicle; };
+				if (_tag == "UNFL") exitWith { [_vehicle] spawn flipVehicle; };				
+				if (_tag == "EPLD") exitWith { [_vehicle] call detonateTargets; };
+				if (_tag == "LOCK" && {
+					// Check we have at least one lock on on this vehicle
+					_exists = false;
+					{	if (([_x, _vehicle] call hasType) > 0) exitWith { _exists = true; };	false } count GW_LOCKONWEAPONS > 0;
+					_exists
+				}) exitWith { [_vehicle] call toggleLockOn; };
+				if (_tag == "OILS" && ((['OIL', _vehicle] call hasType) > 0) ) exitWith { "Stop Oil Slick" };
+
+			};
+
+			false
+
+		} count _bindsList > 0;
 
 	};
 

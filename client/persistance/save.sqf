@@ -257,13 +257,15 @@ if (count _attachments > 0) then {
 _creator = GW_SAVE_VEHICLE getVariable ['creator', GW_PLAYERNAME];
 _prevAmmo = GW_SAVE_VEHICLE getVariable ["ammo", 1];
 _prevFuel = (fuel GW_SAVE_VEHICLE) + (GW_SAVE_VEHICLE getVariable ["fuel", 0]);
+_vehicleBinds = GW_SAVE_VEHICLE getVariable ['GW_Binds', GW_BINDS_ORDER];
 
 _meta = [
     GW_VERSION, // Current version of GW
     _creator, // Original author of vehicle
     _prevFuel, // Prior Fuel
-    _prevAmmo  // Prior Ammo
-    // Stats would go here, but they are handled locally and seperately  
+    _prevAmmo,  // Prior Ammo
+    [], // Stats would go here, but they are handled locally and seperately  
+    _vehicleBinds
 ];
 
 _data = [_class, _name, _paint, _oldPos, _oldDir, _attachArray, _meta];    

@@ -98,7 +98,6 @@ GW_DEPLOYLIST = GW_DEPLOYLIST + [_obj];
 				_tPos set [2, 2];			
 				_bomb = createVehicle ["Bo_GBU12_LGB", _tPos, [], 0, "CAN_COLLIDE"];
 				_bomb setVelocity [0,0,-100];	
-				_x call destroyInstantly;		
 
 				false
 				

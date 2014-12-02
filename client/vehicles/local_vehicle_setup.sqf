@@ -32,11 +32,15 @@ _vehicle setVariable ["isSaved", true];
 // Apply meta (if exists)
 if (isNil "_meta") then {} else {
     
+    _meta resize 7;
+
     _version = _meta select 0;
     _creator = _meta select 1;
     _prevFuel = _meta select 2;
     _prevAmmo = _meta select 3;
     _stats = _meta select 4;
+    _binds = _meta select 5;
+    _taunt = _meta select 6;
 
     if (_version < GW_VERSION) then {
         systemChat 'Warning: Vehicle saved with an older version.';
@@ -76,6 +80,14 @@ if (isNil "_meta") then {} else {
             _count = _count + 1;
         } ForEach _stats;
 
+    };
+
+    if (!isNil "_binds") then {
+        _vehicle setVariable ["GW_Binds", _binds];
+    };
+
+    if (!isNil "_taunt") then {
+        _vehicle setVariable ["GW_Taunt", _taunt];
     };
 
 };

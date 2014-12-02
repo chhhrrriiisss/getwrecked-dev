@@ -109,23 +109,23 @@ noSnappingIcon =  ICON_ROOT + "menus\nosnapping.paa";
 cameraRotateIcon =  ICON_ROOT + "menus\cameraRotate.paa";
 
 // Action Menu Formatting
-settingsVehicleFormat = "<img size='3' color='#ffffff' shadow='0' image='" + ICON_ROOT + "menus\settings.paa' />";
-moveVehicleFormat = "<img size='3' color='#ffffff' shadow='0' image='" + ICON_ROOT + "menus\move.paa' />";
-moveObjectFormat = "<img size='3' color='#ffffff' shadow='0' image='" + ICON_ROOT + "menus\move.paa' />";
-openBoxFormat = "<img size='3' color='#ffffff' shadow='0' image='" + ICON_ROOT + "menus\openbox.paa' />";
-rotateCWObjectFormat = "<img size='3' color='#ffffff' shadow='0' image='" + ICON_ROOT + "menus\rotatecw.paa' />";
-rotateCCWObjectFormat = "<img size='3' color='#ffffff' shadow='0' image='" + ICON_ROOT + "menus\rotateccw.paa' />";
+settingsVehicleFormat = "<img size='3' color='#ffffff' shadow='0' image='" + ICON_ROOT + "menus\settings.paa' align='left' /> <t size='1.1' shadow='0' align='left'>SETTINGS  </t>";
+moveVehicleFormat = "<img size='3' color='#ffffff' shadow='0' image='" + ICON_ROOT + "menus\move.paa' align='left' /> <t size='1.1' shadow='0' align='left'>LIFT  </t>";
+moveObjectFormat = "<img size='3' color='#ffffff' shadow='0' image='" + ICON_ROOT + "menus\move.paa' align='left' /> <t size='1.1' shadow='0' align='left'>MOVE  </t>";
+openBoxFormat = "<img size='3' color='#ffffff' shadow='0' image='" + ICON_ROOT + "menus\openbox.paa' align='left' /> <t size='1.1' shadow='0' align='left'>OPEN  </t>";
+rotateCWObjectFormat = "<img size='3' color='#ffffff' shadow='0' image='" + ICON_ROOT + "menus\rotatecw.paa' align='left' /> <t size='1.1' shadow='0' align='left'> </t>";
+rotateCCWObjectFormat = "<img size='3' color='#ffffff' shadow='0' image='" + ICON_ROOT + "menus\rotateccw.paa' align='left' /> <t size='1.1' shadow='0' align='left'> </t>";
 
 tiltForwardObjectFormat = "<img size='3' color='#ffffff' shadow='0' image='" + ICON_ROOT + "menus\tiltForward.paa' />";
 tiltBackwardObjectFormat = "<img size='3' color='#ffffff' shadow='0' image='" + ICON_ROOT + "menus\tiltBackward.paa' />";
-attachObjectFormat = "<img size='3' color='#ffffff' shadow='0' image='" + ICON_ROOT + "menus\attach.paa' />";
-detachObjectFormat = "<img size='3' color='#ff1100' shadow='0' image='" + ICON_ROOT + "menus\detach.paa' />";
-dropObjectFormat = "<img size='3' color='#ffffff' shadow='0' image='" + ICON_ROOT + "menus\drop.paa' />";
-snapObjectFormat = "<img size='3' color='#ffffff' shadow='0' image='" + ICON_ROOT + "menus\snapping.paa' />";
-nosnapObjectFormat = "<img size='3' color='#ffffff' shadow='0' image='" + ICON_ROOT + "menus\nosnapping.paa' />";
-liftVehicleFormat = "<img size='3' color='#ffffff' shadow='0' image='" + ICON_ROOT + "menus\lift.paa' />";
-dropVehicleFormat = "<img size='3' color='#ffffff' shadow='0' image='" + ICON_ROOT + "menus\drop.paa' />";
-paintVehicleFormat = "<img size='3' color='#ffffff' shadow='0' image='" + ICON_ROOT + "menus\paint.paa' />";
+attachObjectFormat = "<img size='3' color='#ffffff' shadow='0' image='" + ICON_ROOT + "menus\attach.paa' align='left' /> <t size='1.1' shadow='0' align='left'>ATTACH  </t>";
+detachObjectFormat = "<img size='3' color='#ff1100' shadow='0' image='" + ICON_ROOT + "menus\detach.paa' align='left' /> <t size='1.1' color='ff1100' shadow='0' align='left'>DETACH  </t>";
+dropObjectFormat = "<img size='3' color='#ffffff' shadow='0' image='" + ICON_ROOT + "menus\drop.paa' align='left' /> <t size='1.1' shadow='0' align='left'>DROP  </t>";
+snapObjectFormat = "<img size='3' color='#ffffff' shadow='0' image='" + ICON_ROOT + "menus\snapping.paa' align='left' /> <t size='1.1' shadow='0' align='left'>SNAPPING</t>";
+nosnapObjectFormat = "<img size='3' color='#ffffff' shadow='0' image='" + ICON_ROOT + "menus\nosnapping.paa' align='left' /> <t size='1.1' shadow='0' align='left'>DISABLE SNAPPING </t>";
+liftVehicleFormat = "<img size='3' color='#ffffff' shadow='0' image='" + ICON_ROOT + "menus\lift.paa' align='left' /> <t size='1.1' shadow='0' align='left'>LIFT  </t>";
+dropVehicleFormat = "<img size='3' color='#ffffff' shadow='0' image='" + ICON_ROOT + "menus\drop.paa' align='left' /> <t size='1.1' shadow='0' align='left'>DROP  </t>";
+paintVehicleFormat = "<img size='3' color='#ffffff' shadow='0' image='" + ICON_ROOT + "menus\paint.paa' align='left' /> <t size='1.1' shadow='0' align='left'>PAINT  </t>";
 
 blankIcon = ICON_ROOT + "hud\blank.paa";
 

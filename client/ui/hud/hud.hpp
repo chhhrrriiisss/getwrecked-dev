@@ -11,8 +11,8 @@
 #define GW_BUTTON_GAP_X 0.0025
 #define GW_BUTTON_BACKGROUND {0,0,0,0.7}
 
-#define STATUS_X (( 1 - GW_BUTTON_WIDTH ) - (GW_BUTTON_GAP_X * 6))
-#define STATUS_Y 0.78
+#define STATUS_X ((( 1 - GW_BUTTON_WIDTH ) - (GW_BUTTON_GAP_X * 6)) + 0.0047)
+#define STATUS_Y 0.788
 
 #define WEAPONS_X 0.28
 #define WEAPONS_Y 0.26

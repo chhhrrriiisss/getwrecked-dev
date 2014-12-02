@@ -95,6 +95,9 @@ if (isNil "GW_CALTROP_ARRAY") then {
 
 playSound3D ["a3\sounds_f\sfx\vehicle_drag_end.wss", (vehicle player), false, getPos (vehicle player), 2, 1, 50];
 
+// Make our own tyres partially invulnerable for a limited duration
+[_vehicle, ['invTyres'], 3] call addVehicleStatus;
+
 // Create a maximum of 10 caltrops
 for "_i" from 0 to 10 step 1 do {
 

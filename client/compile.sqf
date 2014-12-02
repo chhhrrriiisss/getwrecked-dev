@@ -16,6 +16,14 @@ colorInvisible = [0.99,0.14,0.09,0];
 colorWhite = [1,1,1,1];
 
 // Variables
+GW_BINDS_ORDER = [ 
+	["HORN", ""], 
+	["UNFL", ""], 
+	["EPLD", ""], 
+	["LOCK", ""],
+	["OILS", ""]
+];
+
 GW_STATS_ORDER = ["kills", "deaths", "destroyed", "mileage", "moneyEarned", "timeAlive", "deploys"];
 GW_INVULNERABLE = true;
 GW_DEPLOYLIST = [];
@@ -218,6 +226,9 @@ popIntersects = compile preprocessFile "client\functions\popIntersects.sqf";
 setVehicleOnFire = compile preprocessFile "client\functions\setVehicleOnFire.sqf";
 slowDown = compile preprocessFile "client\functions\slowDown.sqf";
 flipVehicle = compile preprocessFile "client\functions\flipVehicle.sqf";
+tauntVehicle = compile preprocessFile "client\functions\tauntVehicle.sqf";
+detonateTargets = compile preprocessFile "client\functions\detonateTargets.sqf";
+toggleLockOn = compile preprocessFile "client\functions\toggleLockOn.sqf";
 
 // MP Functions
 logStatKill = compile preprocessFile "client\functions\logStatKill.sqf";

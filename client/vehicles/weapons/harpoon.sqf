@@ -15,6 +15,12 @@ _projectileSpeed = 100;
 _projectileRange = 50;
 _lifetime = 7;
 
+// Prevent multiple harpoons from the same launcher
+_srcRope = _obj getVariable ['sourceRope', nil];
+if (!isNil "_srcRope") then {
+	ropeDestroy _srcRope;
+};
+
 _oPos = _obj modelToWorldVisual [0,0,0];
 _tPos = if (typename _target == 'OBJECT') then { (ASLtoATL getPosASL _target) } else { _target };
 
@@ -24,21 +30,19 @@ _heading = [_oPos,_tPos] call BIS_fnc_vectorFromXToY;
 _velocity = [_heading, _projectileSpeed] call BIS_fnc_vectorMultiply; 
 _velocity = (velocity _vehicle) vectorAdd _velocity;
 
-
-
 _src = createVehicle ["Land_PenBlack_F", _oPos, [], 0, "CAN_COLLIDE"];
 
 _attachPoint = _vehicle worldToModel (ASLtoATL visiblePositionASL _obj);
 _attachPoint set[1, (_attachPoint select 1) + 0.5];
 _attachPoint set[0, (_attachPoint select 0) - 0.075];
 
-playSound3D ["a3\sounds_f\sfx\vehicle_drag_end.wss", _vehicle, false, (ASLtoATL visiblePositionASL _vehicle), 2, 1, 40]; 
-playSound3D ["a3\sounds_f\weapons\smokeshell\smoke_1.wss", _vehicle, false, (ASLtoATL visiblePositionASL _vehicle), 2, 1, 40]; 
+playSound3D ["a3\sounds_f\weapons\smokeshell\smoke_1.wss", _vehicle, false, (ASLtoATL visiblePositionASL _vehicle), 3, 1, 40]; 
 
 _rope = ropeCreate[_vehicle, _attachPoint, _src, [0,0,0], 20];
 [_src,[0,0,0]] ropeAttachTo _rope;
 
-_src setVariable ['sourceAttachPoint', [_attachPoint, _vehicle]];
+_obj setVariable ['sourceRope', _rope];
+_src setVariable ['sourceRope', _rope];
 _src setVectorDir _heading; 
 _src setVelocity _velocity; 
 
@@ -73,11 +77,19 @@ _src addEventHandler['EpeContactStart', {
 		
 		_isVehicle = _v getVariable ["isVehicle", false];
 
-		if (_isVehicle) then {
+		if (_isVehicle && _v != (vehicle player)) then {
 
-			_srcPoint = _o getVariable ['sourceAttachPoint', []];
-			_newAttachPoint = _v worldToModel (ASLtoATL visiblePositionASL _o);
-			_rope2 = ropeCreate[(_srcPoint select 1), (_srcPoint select 0), _v, _newAttachPoint, 20];
+			_srcRope = _o getVariable ['sourceRope', nil];
+
+			systemchat 'contact!';
+
+			_attachPoint = _v worldToModel (ASLtoATL visiblePositionASL _o);
+			systemchat str _attachPoint;
+
+			[_v, [0,0,0]] ropeAttachTo _srcRope;
+
+			// _newAttachPoint = _v worldToModel (ASLtoATL visiblePositionASL _o); // Not used atm due to unreliability
+			// _rope2 = ropeCreate[(_srcPoint select 1), (_srcPoint select 0), _v, [0,0,0], 20];
 
 		};
 
@@ -85,20 +97,32 @@ _src addEventHandler['EpeContactStart', {
 	
 }];
 
+_vehicle addEventHandler['RopeBreak', {
 
-[_src, _rope] spawn { 
+	systemchat 'rope detached';
+}];
+
+
+[_src, _rope, _obj] spawn { 
 	
 	_o = _this select 0;
 	_r = _this select 1;
+	_obj = _this select 2;
+
 	_timeout = time + 3;
 	waitUntil{
 	if ( time > _timeout || (((getPos _o) select 2) < 0.1) ) exitWith { true };
 	false
 	};
 
-	ropeDestroy _r;
-	_o removeEventHandler['EpeContactStart', 0];
-	deleteVehicle _o;
+	if (isNull ropeAttachedTo _r) then {
+
+		ropeDestroy _r;
+		_obj setVariable ['sourceRope', nil];
+		_o removeEventHandler['EpeContactStart', 0];
+		deleteVehicle _o;
+
+	};
 
 };
 

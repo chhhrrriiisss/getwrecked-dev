@@ -52,6 +52,7 @@ class CfgSounds
 {
 	sounds[] = {};
 
+	// Made by Sli
 	class nitro
 	{
 		name = "nitro";
@@ -59,10 +60,19 @@ class CfgSounds
 		titles[] = {};
 	};
 
+	// Made by Sli
 	class nitroAlt
 	{
 		name = "nitroAlt";
 		sound[] = {"\client\sounds\nitro_alt.ogg", 0.75, 1};
+		titles[] = {};
+	};
+
+	// Made by Sli
+	class tyreBurst
+	{
+		name = "tyreBurst";
+		sound[] = {"\client\sounds\tyreBurst.ogg", 0.5, 1};
 		titles[] = {};
 	};
 

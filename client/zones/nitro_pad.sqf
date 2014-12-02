@@ -28,9 +28,12 @@ if ("boost" in _status) exitWith {};
 
 _pb = _vehicle call BIS_fnc_getPitchBank;
 
-_dir = [getDir _pad] call flipDir; 
-_maxSpeed = 100;
+_dir = getDir _vehicle;
 _vel = velocity _vehicle;
+_actualVel = [0,0,0] distance _vel;
+
+// Use the vehicles current velocity and limit to min 30 max 80
+_maxSpeed = [_actualVel * 1.5, 30, 80] call limitToRange;
 
 [
 	[

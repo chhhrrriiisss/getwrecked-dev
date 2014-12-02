@@ -180,16 +180,14 @@ setVehicleActions = {
 	if (_vehicle getVariable ["lockOns", false]) then {
 
 		_vehicle addAction["<t color='#ff1100' style='0'>Disable Auto-Lock</t>", {
-			GW_LOCKEDTARGETS = [];
-			(_this select 0) setVariable ["lockOns", false];
-			["DISABLED! ", 0.5, clearIcon, colorRed, "warning"] spawn createAlert;   
+
+			[(_this select 0), false] call toggleLockOn;
 
 		}, [], 0, false, false, "", " (_target getVariable 'lockOns') && player in _target && (player == (driver _target))"];	
 
 		_vehicle addAction["<t color='#ff1100' style='0'>Enable Auto-Lock</t>", {
-			GW_LOCKEDTARGETS = [];
-			(_this select 0) setVariable ["lockOns", true];
-			["ENABLED! ", 1.5, lockingIcon, nil, "slideDown"] spawn createAlert;   
+
+			[(_this select 0), true] call toggleLockOn;			
 
 		}, [], 0, false, false, "", " !(_target getVariable 'lockOns') && player in _target && (player == (driver _target))"];	
 
@@ -206,15 +204,7 @@ setVehicleActions = {
 	// Detonate explosives
 	_vehicle addAction ["<t color='#ff1100' style='0'>Detonate Explosives</t>", {
 
-		_v = (_this select 0);
-		_targets = _v getVariable ["GW_detonateTargets", []];
-
-		{
-			_x setVariable ["triggered", true];
-
-		} ForEach _targets;
-
-		_v setVariable ["GW_detonateTargets", []];
+		[(_this select 0)] call detonateTargets;
 
 	}, [], 0, false, false, "", "( (player in _target) && (player == (driver _target)) && (count (_target getVariable ['GW_detonateTargets', []]) > 0) )"];
 

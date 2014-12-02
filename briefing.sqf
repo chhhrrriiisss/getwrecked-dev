@@ -870,12 +870,19 @@ player createDiaryRecord ["changelog",
 - Incendiary ammo now has a lower fire duration when tagging vehicles<br />
 - Mortar now has a chance of disabling tyres on vehicles nearby the impact<br />
 - You can no longer use nitro while wheels are destroyed or vehicle is disabled<br />
+- Flip vehicle using key bind now requires you to press it a few times to roll over<br />
+- Overall damage and GMG damage lowered slightly<br />
+- Tweaked Bag of Explosives damage to make it less powerful<br />
 - Removed - Repair/reload/refuel area map triggers in favour of a new system <br />
 - Removed - Muzzle effect showing for non-local clients due to excess lag with hmg/gmg/laser fire<br />
+- Added - Special vehicle binds (taunt/unflip/toggle lock/detonate explosives) to settings menu<br />
 - Added - New nitro pads (WIP) to Airfield zone<br />
 - Added - Hold rotate bind for using the camera to rotate objects and lifted vehicles<br />
 - Added - !fixdlc can now be used to toggle removing non-dlc headgear on spawn for people without the Karts DLc<br />
+- Added - tyreBurst sound effect to caltrops<br />
 - Fixed - Easy money from tagging own vehicle with mortar<br />
+- Fixed - Emergency Repair Device failing to repair caltropped wheels<br />
+- Fixed - Having invulnerability while shielded should no longer recover all health when hit<br />
 - Fixed - You can no longer save a vehicle you don't own, but you can save an unowned one<br />
 - Fixed - Last loaded vehicle is now set via vehicle save (previously only on vehicle load)<br />
 - Fixed - Buy menu being generated twice on menu load<br />

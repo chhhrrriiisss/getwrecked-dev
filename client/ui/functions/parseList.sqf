@@ -43,6 +43,11 @@ _register = [];
 		// Used for preventing repeats of certain objects
 		_register = _register + [_tag];
 
+		// Additionally add custom bind entries for certain module types
+		if (_tag == "EPL") then {
+
+		};
 	};
+	
 	false
 } count _a > 0;	

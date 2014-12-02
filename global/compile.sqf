@@ -16,7 +16,7 @@ GW_OBJECT_ABANDON_DELAY = 3;
 GW_OBJECT_DEAD_DELAY = .5;
 
 // Weapon Damage (vs vehicles)
-GW_GDS = 0.3;
+GW_GDS = 0.25;
 WHEEL_COLLISION_DMG_SCALE = 0;
 COLLISION_DMG_SCALE = 0;
 FIRE_DMG_SCALE = 25;
@@ -27,8 +27,8 @@ GUD_DMG_SCALE = (2 * GW_GDS);
 HMG_DMG_SCALE = (4 * GW_GDS);
 HMG_HE_DMG_SCALE = (1 * GW_GDS);
 HMG_IND_DMG_SCALE = (1 * GW_GDS);
-GMG_DMG_SCALE = (4 * GW_GDS);
-EXP_DMG_SCALE = (20 * GW_GDS);
+GMG_DMG_SCALE = (2 * GW_GDS);
+EXP_DMG_SCALE = (5 * GW_GDS);
 LSR_DMG_SCALE = (1 * GW_GDS);
 FLM_DMG_SCALE = (0 * GW_GDS);
 RLG_DMG_SCALE = 1 * GW_GDS;
@@ -58,7 +58,7 @@ GW_LOCKON_TOLERANCE = 10; // Difference in angle needed to acquire target
 GW_MAXDEPLOYABLES = 20;
 
 // Render distance of effects
-GW_EFFECTS_RANGE = 3000;
+GW_EFFECTS_RANGE = 2500;
 
 // Value modifier for killed vehicles
 GW_KILL_VALUE = 0.5;
@@ -198,7 +198,7 @@ GW_TACTICALARRAY = [
 	'GRP'
 ];
 
-// Modules without an action menu, but that still do something
+// Modules without an action menu entry, but that still do something
 GW_SPECIALARRAY = [
 	'IND',
 	'EXP',
@@ -274,7 +274,7 @@ getTagData = {
 		case "RLG":	{  [20, 0.25] };
 		case "LSR":	{  [3, 0.05] };		
 		case "FLM":	{  [0.5, 0.03] };	
-		case 'HAR': {  [0, 0] };
+		case 'HAR': {  [8, 0] };
 
 		default
 		{

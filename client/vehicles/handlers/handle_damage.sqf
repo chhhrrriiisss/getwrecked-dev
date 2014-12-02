@@ -72,7 +72,7 @@ if (_selection != "?") then  {
 // If we're invulnerable, ignore all damage
 _status = _vehicle getVariable ["status", []];
 if ("invulnerable" in _status) then {
-    _damage = 0;
+    _damage = getDammage _vehicle;
 }  else {
     _vDmg = getDammage _vehicle;
     _crew = crew _vehicle;

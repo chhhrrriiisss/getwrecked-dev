@@ -36,3 +36,4 @@ GW_SPAWN_LOCATION = GW_VALID_ZONES select _currentIndex;
 [GW_SPAWN_LOCATION] spawn previewLocation;
 
 
+

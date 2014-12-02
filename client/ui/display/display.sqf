@@ -54,9 +54,12 @@ drawServiceIcon = {
 		};
 };
 
+
+
 drawDisplay = {
 
 	if(!hasInterface) exitWith {};
+		
 	// Useful for detecting mouse presses
 	[] call mouseHandler;
 
@@ -64,7 +67,12 @@ drawDisplay = {
 	[] call initBinds;
 
 	// Main HUD
-	_mEH = addMissionEventHandler ["Draw3D", {
+	if (!isNil "GW_DISPLAY_EH") then {
+		removeMissionEventHandler ["Draw3D", GW_DISPLAY_EH];
+		GW_DISPLAY_EH = nil;
+	};
+
+	GW_DISPLAY_EH = addMissionEventHandler ["Draw3D", {
 
 		// Get all the conditions we need
 		_vehicle = (vehicle player);		
@@ -182,7 +190,7 @@ drawDisplay = {
 					{
 						if (_x distance (vehicle player) < 6) exitWith {
 							// _null = [_x, (vehicle player)] execVM 'client\zones\nitro_pad.sqf';
-							[_x, _vehicle] spawn nitroPad;
+							[_x, _vehicle] call nitroPad;
 						};
 					} Foreach nitroPads;
 				};
@@ -246,14 +254,15 @@ drawDisplay = {
 			
 	}];
 
-	if (_mEH < 0) then {
-		systemChat 'Display rendering failed.';
-	};	
-
 	// Map Icons
 	waitUntil{sleep 0.22; !isNull ((findDisplay 12) displayCtrl 51)};
 
-	_eh = ((findDisplay 12) displayCtrl 51) ctrlAddEventHandler ["Draw", {
+	if (!isNil "GW_MAP_EH") then {
+		((findDisplay 12) displayCtrl 51) ctrlRemoveEventHandler ["Draw", GW_MAP_EH];
+		GW_MAP_EH = nil;
+	};
+
+	GW_MAP_EH = ((findDisplay 12) displayCtrl 51) ctrlAddEventHandler ["Draw", {
 
 		_vehicle = (vehicle player);
 		_scale = 0.75;
@@ -351,9 +360,5 @@ drawDisplay = {
 		};
 
 	}];
-
-	if (_eh < 0) then {
-		systemChat 'Map icon rendering failed.';
-	};
 
 };
