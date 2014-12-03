@@ -42,8 +42,8 @@ The [website](http://getwrecked.info) contains a starter guide and server list, 
 
 Sli
 
-- <https://twitter.com/mdo>
-- <https://chrisnicholls.nz/mdo>
+- [@chhhrrriiisss](https://twitter.com/chhhrrriiisss)
+- [chrisnicholls.nz](http://chrisnicholls.nz)
 
 ## License
 
