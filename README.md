@@ -38,12 +38,7 @@ The [website](http://getwrecked.info) contains a starter guide and server list, 
 
 ## Creator
 
-**Chris Nicholls**
-
-Sli
-
-- [@chhhrrriiisss](https://twitter.com/chhhrrriiisss)
-- [chrisnicholls.nz](http://chrisnicholls.nz)
+** Sli **
 
 ## License
 
