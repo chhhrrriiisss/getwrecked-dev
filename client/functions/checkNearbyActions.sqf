@@ -24,6 +24,11 @@ if(count _nearby == 0) exitWith {};
    		_isVehicle = _x getVariable ["isVehicle", false];	
    		_isPaint = _x getVariable ["isPaint", false];
    		_isSupply = _x getVariable ["isSupply", false];
+   		_isTerminal = _x getVariable ["isTerminal", nil];
+
+   		if (!isNil "_isTerminal") then {
+   			[_x, _isTerminal] call setTerminalActions;
+   		};
 
    		// Supply boxes
    		if (_isSupply) then {

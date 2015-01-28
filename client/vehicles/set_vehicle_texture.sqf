@@ -10,7 +10,7 @@ _vehicle = [_this,0, ObjNull, [ObjNull]] call BIS_fnc_param;
 _tx = [_this,1, "", [""]] call BIS_fnc_param;
 
 if(isNull _vehicle || _tx == "") exitWith { diag_log 'Couldnt apply texture - blank or no texture'; };
-if (!(_tx in GW_TEXTURES_LIST) && _tx != "Shield") exitWith { diag_log 'Couldnt apply texture - not in texture list'; };
+if (!(_tx in GW_TEXTURES_LIST) && !(_tx in GW_SPECIAL_TEXTURES_LIST)) exitWith { diag_log 'Couldnt apply texture - not in texture list'; };
 
 _class = typeOf _vehicle;
 _file =  format['client\images\vehicle_textures\%1\%1.jpg', toLower(_tx)];

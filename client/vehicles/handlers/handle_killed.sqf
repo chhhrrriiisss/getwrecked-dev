@@ -56,10 +56,7 @@ if (!_processed) then {
             _crew = crew _veh;    
 
             // No money for destroying own vehicle
-            _value = if (_owner == _killedBy) then { 0 } else { _value }; 
-
-            // Reduce value if the vehicle is empty 
-            _value = if (count _crew > 0) then { (_value * GW_KILL_VALUE) } else { (_value * GW_KILL_EMPTY_VALUE) };
+            _value = if (_owner == (_killedBy select 0)) then { 0 } else { _value }; 
 
             if (_name == "") then {   
                 _name = 'A vehicle';     
@@ -68,15 +65,17 @@ if (!_processed) then {
             if (isNil "GW_LASTMESSAGELOGGED") then { GW_LASTMESSAGELOGGED = time; };
                 
             // Prevent spamming the server with kill messages
-            if (time > (GW_LASTMESSAGELOGGED + 3)) then {
+            if (time > (GW_LASTMESSAGELOGGED + 4)) then {
 
                 GW_LASTMESSAGELOGGED = time;
                 
                 [       
                     [
                         _name,
-                        _killedBy,
-                        _value
+                        (_killedBy select 0), // Killer
+                        [(_killedBy select 2), (_killedBy select 3)], // Killer's vehicle
+                        _value,
+                        (_killedBy select 1) // Method
                     ],
                     "logKill",
                     false,
@@ -101,18 +100,9 @@ if (!_processed) then {
 
     if (count _collateral > 0) then {
 
-        {
-            _rnd = floor (random 100);
-
-            _type = typeOf _x;
-
-            if (_rnd > 50 || _type == 'Land_Device_assembled_F') then {
-
-            	detach _x;
-            	
-                [_x, _veh] spawn destroyObj;
-            };        
-
+        {         
+            detach _x;
+            [_x, false] spawn destroyObj;    
         } ForEach _collateral;
 
     };

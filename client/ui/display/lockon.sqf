@@ -38,12 +38,14 @@ if (isNil "GW_TARGET_DIRECTION") then {	GW_TARGET_DIRECTION = 0; };
 			_dist = _vPos distance _tPos;
 
 			// Is it within lock range and are we looking at it?
-			_inRange = if (_dist < GW_MAXLOCKRANGE) then { true } else { false };
+			_inRange = if (_dist <= GW_MAXLOCKRANGE && _dist >= GW_MINLOCKRANGE) then { true } else { false };
 			_inScope = [GW_TARGET_DIRECTION, _x, GW_LOCKON_TOLERANCE] call checkScope;
 
 			_vPos set [2, (_vPos select 2) + 2];					
 			_tPos set [2, (_tPos select 2) + 2];
 			_hasLos = if (count (lineIntersectsWith [_vPos, _tPos, _vehicle, _x]) == 0) then { true } else { false };
+
+			['Lock on R/S/L', format['%1/%2/%3', _inRange, _inScope, _hasLos]] call logDebug;
 
 			// When its in range, but not in list and alive
 			if (_inScope && _inRange && _hasLos) then {						
@@ -131,7 +133,7 @@ if (!GW_ACQUIRE_ACTIVE && !(_closest in GW_LOCKEDTARGETS) && !_isCloaked) then {
 if (count GW_LOCKEDTARGETS > 0) then {
 
 	_lockedTarget = GW_LOCKEDTARGETS select 0;
-	_inScope = [GW_TARGET_DIRECTION, _lockedTarget, 15] call checkScope;
+	_inScope = [GW_TARGET_DIRECTION, _lockedTarget, GW_LOCKON_TOLERANCE] call checkScope;
 
 	// If the target is still alive and within view scope
 	if (alive _lockedTarget && _inScope) then {

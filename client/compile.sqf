@@ -21,7 +21,9 @@ GW_BINDS_ORDER = [
 	["UNFL", ""], 
 	["EPLD", ""], 
 	["LOCK", ""],
-	["OILS", ""]
+	["OILS", ""],
+	["DCLK", ""],
+	["PARC", ""]
 ];
 
 GW_STATS_ORDER = ["kills", "deaths", "destroyed", "mileage", "moneyEarned", "timeAlive", "deploys"];
@@ -92,14 +94,14 @@ previewMenu = compile preprocessFile "client\ui\menus\preview.sqf";
 
 // HUD Functions
 createAlert = compile preprocessFile "client\ui\hud\alert.sqf";
+createNotification = compile preprocessFile "client\ui\hud\notification.sqf";
+createHalo = compile preprocessFile "client\ui\hud\halo.sqf";
 createTween = compile preprocessFile "client\ui\hud\tween.sqf";
 createMessage = compile preprocessFile "client\ui\dialogs\message.sqf";
 createTimer = compile preprocessFile "client\ui\dialogs\timer.sqf";
 
 // Zone
 deployVehicle = compile preprocessFile 'client\zones\deploy.sqf';
-parachuteVehicle = compile preprocessFile 'client\zones\parachute_vehicle.sqf';
-checkInZone = compile preprocessFile 'client\zones\check_in_zone.sqf';
 servicePoint = compile preprocessFile 'client\zones\vehicle_point.sqf';
 nitroPad =  compile preprocessFile 'client\zones\nitro_pad.sqf';
 
@@ -137,6 +139,8 @@ tiltObj = compile preprocessFile 'client\objects\tilt.sqf';
 tagObj = compile preprocessFile 'client\objects\tag.sqf';	
 findSnapPoint = compile preprocessFile "client\functions\findSnapPoint.sqf";
 checkNearbyActions = compile preprocessFile "client\functions\checkNearbyActions.sqf";	
+setPlayerActions = compile preprocessFile "client\functions\setPlayerActions.sqf";	
+
 
 // Vehicle Functions
 fireAttached = compile preprocessFile "client\vehicles\fire_attached.sqf";
@@ -153,20 +157,21 @@ fireLockOn = compile preprocessFile "client\vehicles\weapons\lockon_missile.sqf"
 fireGuided = compile preprocessFile "client\vehicles\weapons\guided_missile.sqf";
 fireFlamethrower = compile preprocessFile "client\vehicles\weapons\flamethrower.sqf";
 fireHarpoon = compile preprocessFile "client\vehicles\weapons\harpoon.sqf";
+fireLmg = compile preprocessFile "client\vehicles\weapons\lmg.sqf";
 
 // Module Functions
 smokeBomb = compile preprocessFile "client\vehicles\attachments\smoke_bomb.sqf";
 verticalThruster = compile preprocessFile "client\vehicles\attachments\thruster.sqf";
 nitroBoost = compile preprocessFile "client\vehicles\attachments\nitro_boost.sqf";
-ejectSystem = compile preprocessFile "client\vehicles\attachments\eject_system.sqf";
 emergencyRepair = compile preprocessFile "client\vehicles\attachments\emergency_repair.sqf";
 empDevice = compile preprocessFile "client\vehicles\attachments\emp_device.sqf";
 selfDestruct = compile preprocessFile "client\vehicles\attachments\self_destruct.sqf";
-ejectSystem = compile preprocessFile "client\vehicles\attachments\eject_system.sqf";
+emergencyParachute = compile preprocessFile "client\vehicles\attachments\emergency_parachute.sqf";
 oilSlick = compile preprocessFile "client\vehicles\attachments\oil_slick.sqf";
 dropCaltrops = compile preprocessFile "client\vehicles\attachments\caltrops.sqf";
 dropMines = compile preprocessFile 'client\vehicles\attachments\mines.sqf';
 dropExplosives = compile preprocessFile "client\vehicles\attachments\explosives.sqf";
+dropJammer = compile preprocessFile "client\vehicles\attachments\frequency_jammer.sqf";
 shieldGenerator = compile preprocessFile "client\vehicles\attachments\shield_generator.sqf";
 cloakingDevice = compile preprocessFile "client\vehicles\attachments\cloak.sqf";
 magneticCoil = compile preprocessFile "client\vehicles\attachments\magnetic_coil.sqf";
@@ -190,6 +195,7 @@ magnetEffect = compile preprocessFile "client\effects\magnet.sqf";
 nitroEffect = compile preprocessFile "client\effects\nitro.sqf";
 muzzleEffect = compile preprocessFile "client\effects\muzzle.sqf";
 flameEffect = compile preprocessFile "client\effects\flame.sqf";
+nukeEffect = compile preprocessFile "client\effects\nuke.sqf";
 
 // Zone Functions
 returnToZone =  compile preprocessFile "client\functions\returnToZone.sqf";
@@ -213,6 +219,7 @@ cleanDeployList = compile preprocessFile "client\functions\cleanDeployList.sqf";
 getZoom = compile preprocessFile "client\functions\getZoom.sqf";
 setVariance = compile preprocessFile "client\functions\setVariance.sqf";
 setVelocityLocal = compile preprocessFile "client\functions\setVelocityLocal.sqf";
+inString =  compile preprocessFile "client\functions\inString.sqf";
 
 // Vehicle Functions
 markAsKilledBy = compile preprocessFile "client\functions\markAsKilledBy.sqf";
@@ -242,5 +249,114 @@ pubVar_fnc_systemChat = compile preprocessFile "client\functions\pubvar_systemch
 
 // Chat command interceptor
 [] call compile preProcessFilelineNumbers "client\commands\init.sqf";
+
+// Keycodes
+keyCodes = [
+
+	['ESC', 1],
+	['F1', 59],
+	['F2', 60],
+	['F3', 61],
+	['F4', 62],
+	['F5', 63],
+	['F6', 64],
+	['F7', 65],
+	['F8', 66],
+	['F9', 67],
+	['F10', 68],
+	['F11', 87],
+	['F12', 88],
+	['Print', 183],
+	['Scroll', 70],
+	['Pause', 197],
+	['^', 41],
+	['1', 2],
+	['2', 3],
+	['3', 4],
+	['4', 5],
+	['5', 6],
+	['6', 7],
+	['7', 8],
+	['8', 9],
+	['9', 10],
+	['0', 11],
+	['ß', 12],
+	['´', 13],
+	['Ü', 26],
+	['Ö', 39],
+	['Ä', 40],
+	['#', 43],
+	['<', 86],
+	[',', 51],
+	['.', 52],
+	['-', 53],
+	['POS1', 199],
+	['Tab', 15],
+	['Enter', 28],
+	['Del', 211],
+	['Backspace', 14],
+	['Insert', 210],
+	['End', 207],
+	['PgUP', 201],
+	['PgDown', 209],
+	['Caps', 58],
+	['A', 30],
+	['B', 48],
+	['C', 46],
+	['D', 32],
+	['E', 18],
+	['F', 33],
+	['G', 34],
+	['H', 35],
+	['I', 23],
+	['J', 36],
+	['K', 37],
+	['L', 38],
+	['M', 50],
+	['N', 49],
+	['O', 24],
+	['P', 25],
+	['Q', 16],
+	['U', 22],
+	['R', 19],
+	['S', 31],
+	['T', 20],
+	['V', 47],
+	['W', 17],
+	['X', 45],
+	['Y', 21],
+	['Z', 44],
+	['LShift', 42],
+	['RShift', 54],
+	['Up', 200],
+	['Down', 208],
+	['Left', 203],
+	['Right', 205],
+	['Num 0', 82],
+	['Num 1', 79],
+	['Num 2', 80],
+	['Num 3', 81],
+	['Num 4', 75],
+	['Num 5', 76],
+	['Num 6', 77],
+	['Num 7', 71],
+	['Num 8', 72],
+	['Num 9', 73],
+	['Num +', 78],
+	['NUM', 69],
+	['Num /', 181],
+	['Num *', 55],
+	['Num -', 74],
+	['Num Enter', 156],
+	['R Ctrl', 29],
+	['L Ctrl', 157],
+	['L Win', 220],
+	['R Win', 219],
+	['L Alt', 56],
+	['Space', 57],
+	['R Alt', 184],
+	['App ', 221]
+
+];
 
 clientCompileComplete = true;

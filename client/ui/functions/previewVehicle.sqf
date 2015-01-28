@@ -78,7 +78,7 @@ waitUntil {
 
 if (loadError || time > _timeout) then {
 	_title ctrlShow true;	
-	_title ctrlSetText 'ERROR LOADING VEHICLE';
+	_title ctrlSetText 'ERROR LOADING';
 	_title ctrlCommit 0;
 
 } else {

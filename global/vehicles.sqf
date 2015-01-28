@@ -1,7 +1,7 @@
 // 0 Type / 1 Display Name / 2 Data / 3 Description
 
 // [ Data ]
-// 1 Mass Modifier / 2 Max Modules / 3 Max Weapon / 4 Ammo Capacity / 5 Fuel Capacity / 6 Armor Rating / 7 Unused / 8 Radar Signature / 9 Unused
+// 1 Mass Modifier / 2 Max Weapon / 3 Max Modules / 4 Ammo Capacity / 5 Fuel Capacity / 6 Armor Rating / 7 Unused / 8 Radar Signature / 9 Unused
 
 GW_VEHICLE_LIST = [	
 	
@@ -22,7 +22,7 @@ GW_VEHICLE_LIST = [
 
 	// Military
 
-	["I_MRAP_03_F", "Stryder", [ 2.25, 5, 2, 2, 0.5, 9, 8, 'Medium', 4000 ], 'A fast, heavily armoured amphibious assault vehicle.' ],
+	["I_MRAP_03_F", "Strider", [ 2.25, 5, 2, 2, 0.5, 9, 8, 'Medium', 4000 ], 'A fast, heavily armoured amphibious assault vehicle.' ],
 	["B_MRAP_01_F", "Hunter", [ 1.75, 4, 3, 2, 1, 8, 7, 'Medium', 3500 ], 'This armoured monster is a true jack of all trades.' ],
 	["O_MRAP_02_F", "Ifrit", [1.5, 5, 2, 2, 0.75, 7, 6, 'Large', 1000 ], 'Trades speed for upgraded armor and marginally better looks.' ]	
 	

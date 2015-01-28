@@ -26,7 +26,7 @@ GW_SPAWN_VEHICLE = nil;
 	false
 } count _nearby > 0;
 
-if (isNil "GW_SPAWN_VEHICLE") exitWith { systemChat 'Error using this vehicle, maybe try save and load it again.'; GW_SPAWN_ACTIVE = false; };
+if (isNil "GW_SPAWN_VEHICLE") exitWith { systemChat 'No valid vehicle found. Try load or save again.'; GW_SPAWN_ACTIVE = false; };
 
 if (!simulationEnabled GW_SPAWN_VEHICLE) then {
 
@@ -91,8 +91,11 @@ _hasActions = GW_SPAWN_VEHICLE getVariable ["hasActions", false];
 if (!_firstCompile || !_hasActions) exitWith {	systemChat 'Vehicle is not ready to deploy.'; GW_SPAWN_ACTIVE = false };
 
 // If we've deployed somewhere previously, show that
-GW_SPAWN_LOCATION = if (!isNil "GW_LASTLOCATION") then { GW_LASTLOCATION } else {  GW_VALID_ZONES select (random (count GW_VALID_ZONES -1)) };
-_startIndex = (GW_VALID_ZONES find GW_SPAWN_LOCATION);
+GW_SPAWN_LOCATION = if (!isNil "GW_LASTLOCATION") then { GW_LASTLOCATION } else {  ((GW_VALID_ZONES select (random (count GW_VALID_ZONES -1))) select 0) };
+_startIndex = 0;
+{
+    if ((_x select 0) == GW_SPAWN_LOCATION) exitWith { _startIndex = _foreachindex; };
+} Foreach GW_VALID_ZONES;
 
 disableSerialization;
 if(!(createDialog "GW_Spawn")) exitWith { GW_SPAWN_ACTIVE = false; };

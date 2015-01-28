@@ -4,10 +4,11 @@
 //      Return: None
 //
 
-private ['_src', '_des', '_objs'];
+private ['_src', '_des', '_objs', '_m'];
 
 _src = [_this,0, [], [[]]] call BIS_fnc_param;
 _des = [_this,1, [], [[]]] call BIS_fnc_param;
+_m =  [_this,2, "", [""]] call BIS_fnc_param;
 
 if (count _src == 0 || count _des == 0) exitWith {};
 
@@ -16,5 +17,5 @@ _objs = lineIntersectsWith [_src, _des, (vehicle player), (player), false];
 if (count _objs == 0) exitWith {};
 
 {
-	[_x] spawn checkMark;
+	[_x, _m] spawn checkMark;
 } ForEach _objs;

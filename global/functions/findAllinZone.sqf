@@ -14,13 +14,14 @@ if (_zone == "") exitWith {};
 _arr = [];
 
 // Get the camera marker for the specified zone
-_zoneCenter = getMarkerPos format['%1_camera', _zone];
+// _zoneCenter = getMarkerPos format['%1_camera', _zone];
+// _zoneName = format['%1Zone', _zone];
 
 if (count allUnits <= 0) exitWith { [] };
 
 {
-	// If the unit is alive and within range of the marker
-	if (alive _x && { (_x distance _zoneCenter) < 2200 }) then {
+	// If the unit is alive and within the zone
+	if (alive _x && { ([(getPos _x), _zone] call checkInZone) }) then {
 
 		// If the target is in a vehicle, add the vehicle
 		_target = if ( (vehicle _x) == _x) then { _x } else { (vehicle _x) };

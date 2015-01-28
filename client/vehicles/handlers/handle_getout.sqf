@@ -1,8 +1,8 @@
-/*
-
-	Get Out Handler
-
-*/
+//
+//      Name: handleGetOut
+//      Desc: Main handler for getting out of vehicles
+//      Return: None
+//
 
 private ['_unit'];
 
@@ -16,22 +16,6 @@ GW_INVULNERABLE = false;
 if (getDammage _vehicle > 0.9) then {
 	_vehicle setDammage 1;
 };
-
-// if ( count (attachedObjects _vehicle) > 0) then {
-
-// 	{
-// 		_defaultDir = _x getVariable ["defaultDirection", 0];
-
-// 		// Flip it around to the correct side if laser or flamethrower
-// 		_defaultDir = if (_type == "LSR" || _type == "FLM") then { ([_defaultDir + 180] call normalizeAngle) } else { _defaultDir };
-
-// 		_x setDir _defaultDir;
-
-// 		false
-
-// 	} count (attachedObjects _vehicle) > 0;
-
-// };
 
 "dynamicBlur" ppEffectEnable false; 
 "colorCorrections" ppEffectEnable false; 

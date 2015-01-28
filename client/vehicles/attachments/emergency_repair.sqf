@@ -20,7 +20,7 @@ if ("tyresPopped" in _status) then {
 	_tyresRepaired = true;
 
 	[_vehicle, ['tyresPopped']] call removeVehicleStatus;
-	[_vehicle, ['invTyres'], 3] call addVehicleStatus;
+	[_vehicle, ['invTyres'], 5] call addVehicleStatus;
 	
 	_vehicle sethit ["wheel_1_1_steering", 0];
 	_vehicle sethit ["wheel_1_2_steering", 0];

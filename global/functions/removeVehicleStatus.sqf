@@ -10,7 +10,21 @@ _vehicle = [_this,0, objNull, [objNull]] call BIS_fnc_param;
 _status = [_this,1, [], [[]]] call BIS_fnc_param;	
 
 if (isNull _vehicle || count _status == 0) exitWith {};
-if (!alive _vehicle || !local _vehicle) exitWith {};
+if (!alive _vehicle) exitWith {};
+
+// If we're not dealing with the local vehicle, go find it
+if (!local _vehicle) exitWith {
+
+	[       
+		[
+			_vehicle,
+			_status
+		],
+		"removeVehicleStatus",
+		_vehicle,
+		false 
+	] call BIS_fnc_MP; 
+};
 
 [_vehicle, _status] spawn {	
 	

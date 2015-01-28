@@ -29,6 +29,11 @@ playSound3D ["a3\sounds_f\sfx\special_sfx\sparkles_wreck_2.wss", _obj, false, _o
 [_obj, _target, _vehicle] spawn {
 
 	_projectileSpeed = 1000;
+	_oPos = (ASLtoATL getPosASL (_this select 0));
+	_tPos = if (typename (_this select 1) == 'OBJECT') then { (ASLtoATL getPosASL (_this select 01)) } else { (_this select 1) };
+
+	[(ATLtoASL _oPos), (ATLtoASL _tPos), "LSR"] call markIntersects;	
+	[ATLtoASL _oPos, ATLtoASL _tPos, (_this select 2), 0.1] spawn damageIntersects;
 
 	for "_i" from 1 to 15 step 1 do {
 
@@ -47,6 +52,7 @@ playSound3D ["a3\sounds_f\sfx\special_sfx\sparkles_wreck_2.wss", _obj, false, _o
 		_bullet setVelocity _velocity; 
 
 		[ATLtoASL _oPos, ATLtoASL _tPos, (vehicle player), 90, 0] spawn burnIntersects;
+		
 
 		Sleep 0.05;
 

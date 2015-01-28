@@ -74,6 +74,21 @@ drawDisplay = {
 
 	GW_DISPLAY_EH = addMissionEventHandler ["Draw3D", {
 
+		// Debugging
+		if (!GW_DEBUG || GW_DEBUG_ARRAY isEqualTo []) then {} else {
+
+			GW_DEBUG_MONITOR_LAST_UPDATE = time;
+
+			_totalString = format["[   DEBUG MODE   ] \n\n Time: %1\n Zone: %2\n Player: %3\n", time, GW_CURRENTZONE, GW_PLAYERNAME];
+
+			{
+				_totalString = format['%1 \n %2: %3', _totalString, (_x select 0), (_x select 1)];
+			} count GW_DEBUG_ARRAY > 0;
+
+			hintSilent _totalString;
+		};
+
+
 		// Get all the conditions we need
 		_vehicle = (vehicle player);		
 		_inVehicle = !(player == _vehicle);
@@ -160,8 +175,7 @@ drawDisplay = {
 
 				} count [	
 					[2.2, vehicleTerminals, saveAreaIcon],
-					[1.7, buySigns, buyAreaIcon],
-					[2.2, lootAreas, lootAreaIcon]
+					[1.7, buySigns, buyAreaIcon]
 				] > 0;
 
   			};
@@ -317,7 +331,7 @@ drawDisplay = {
 					_next = if (_c == (count _points - 1)) then { 0 } else { _c + 1 };
 					_p2 = ATLtoASL(_points select _next);
 
-					_dirTo = [_p1, _p2] call BIS_fnc_dirTo;
+					_dirTo = [_p1, _p2] call dirTo;
 					_distance = _p1 distance _p2;
 					_thickness = 1;
 

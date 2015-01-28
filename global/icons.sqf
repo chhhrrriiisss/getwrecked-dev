@@ -49,6 +49,10 @@ createIcon = ICON_ROOT + "menus\create.paa";
 loadIcon = ICON_ROOT + "menus\load.paa";
 saveIcon = ICON_ROOT + "menus\save.paa";
 clearIcon = ICON_ROOT + "menus\clear.paa";
+linkIcon = ICON_ROOT + "menus\link.paa";
+mouseActiveIcon = ICON_ROOT + "menus\mouseActive.paa";
+mouseInactiveIcon = ICON_ROOT + "menus\mouseInactive.paa";
+hornIcon = ICON_ROOT + "menus\horn.paa";
 
 // Economy 
 lockIcon = ICON_ROOT + "menus\padlock.paa";
@@ -77,7 +81,20 @@ fuelEmptyIcon =  ICON_ROOT + "hud\fuelEmpty.paa";
 ammoIcon =  ICON_ROOT + "hud\ammo.paa";
 healthIcon =  ICON_ROOT + "hud\health.paa";
 balanceIcon = ICON_ROOT + "hud\balance.paa";
+randomIcon = ICON_ROOT + "hud\random4.paa";
 objectTag = MISSION_ROOT + 'client\images\tag.paa';
+
+nukeSign = MISSION_ROOT + 'client\images\signage\supply_nuke.jpg';
+armorSign = MISSION_ROOT + 'client\images\signage\supply_armor.jpg';
+damageSign = MISSION_ROOT + 'client\images\signage\supply_damage.jpg';
+randomSign = MISSION_ROOT + 'client\images\signage\supply_random.jpg';
+speedSign = MISSION_ROOT + 'client\images\signage\supply_speed.jpg';
+jammerSign = MISSION_ROOT + 'client\images\signage\supply_jammer.jpg';
+
+damageSupplyIcon = ICON_ROOT + "hud\damageSupply.paa";
+speedSupplyIcon = ICON_ROOT + "hud\speedSupply.paa";
+armorSupplyIcon = ICON_ROOT + "hud\armorSupply.paa";
+jammerSupplyIcon = ICON_ROOT + "hud\jammerSupply.paa";
 
 // Markers
 targetIcon = ICON_ROOT + "hud\target.paa";
@@ -119,13 +136,21 @@ rotateCCWObjectFormat = "<img size='3' color='#ffffff' shadow='0' image='" + ICO
 tiltForwardObjectFormat = "<img size='3' color='#ffffff' shadow='0' image='" + ICON_ROOT + "menus\tiltForward.paa' />";
 tiltBackwardObjectFormat = "<img size='3' color='#ffffff' shadow='0' image='" + ICON_ROOT + "menus\tiltBackward.paa' />";
 attachObjectFormat = "<img size='3' color='#ffffff' shadow='0' image='" + ICON_ROOT + "menus\attach.paa' align='left' /> <t size='1.1' shadow='0' align='left'>ATTACH  </t>";
-detachObjectFormat = "<img size='3' color='#ff1100' shadow='0' image='" + ICON_ROOT + "menus\detach.paa' align='left' /> <t size='1.1' color='ff1100' shadow='0' align='left'>DETACH  </t>";
+detachObjectFormat = "<img size='3' color='#ff1100' shadow='0' image='" + ICON_ROOT + "menus\detach.paa' align='left' /> <t size='1.1' color='#ff1100' shadow='0' align='left'>DETACH  </t>";
 dropObjectFormat = "<img size='3' color='#ffffff' shadow='0' image='" + ICON_ROOT + "menus\drop.paa' align='left' /> <t size='1.1' shadow='0' align='left'>DROP  </t>";
 snapObjectFormat = "<img size='3' color='#ffffff' shadow='0' image='" + ICON_ROOT + "menus\snapping.paa' align='left' /> <t size='1.1' shadow='0' align='left'>SNAPPING</t>";
 nosnapObjectFormat = "<img size='3' color='#ffffff' shadow='0' image='" + ICON_ROOT + "menus\nosnapping.paa' align='left' /> <t size='1.1' shadow='0' align='left'>DISABLE SNAPPING </t>";
 liftVehicleFormat = "<img size='3' color='#ffffff' shadow='0' image='" + ICON_ROOT + "menus\lift.paa' align='left' /> <t size='1.1' shadow='0' align='left'>LIFT  </t>";
 dropVehicleFormat = "<img size='3' color='#ffffff' shadow='0' image='" + ICON_ROOT + "menus\drop.paa' align='left' /> <t size='1.1' shadow='0' align='left'>DROP  </t>";
 paintVehicleFormat = "<img size='3' color='#ffffff' shadow='0' image='" + ICON_ROOT + "menus\paint.paa' align='left' /> <t size='1.1' shadow='0' align='left'>PAINT  </t>";
+
+// Terminal formatting
+createVehFormat = "<img size='3' color='#ffffff' shadow='0' image='" + MISSION_ROOT + "client\images\icons\menus\create.paa' align='left' /> <t size='1.1' shadow='0' align='left'>CREATE  </t>";
+spawnInFormat = "<img size='3' color='#ffffff' shadow='0' image='" + MISSION_ROOT + "client\images\icons\menus\spawnin.paa' align='left' /> <t size='1.1' shadow='0' align='left'>DEPLOY  </t>";
+clearPadFormat = "<img size='3' color='#ffffff' shadow='0' image='" + MISSION_ROOT + "client\images\icons\menus\clear.paa' align='left' /> <t size='1.1' shadow='0' align='left'>CLEAR  </t>";
+savePadFormat = "<img size='3' color='#ffffff' shadow='0' image='" + MISSION_ROOT + "client\images\icons\menus\save.paa' align='left' /> <t size='1.1' shadow='0' align='left'>SAVE  </t>";
+loadPadFormat = "<img size='3' color='#ffffff' shadow='0' image='" + MISSION_ROOT + "client\images\icons\menus\load.paa' align='left' /> <t size='1.1' shadow='0' align='left'>LOAD  </t>";
+buyMenuFormat = "<img size='3' color='#ffffff' shadow='0' image='" + MISSION_ROOT + "client\images\icons\menus\cart.paa' />";
 
 blankIcon = ICON_ROOT + "hud\blank.paa";
 

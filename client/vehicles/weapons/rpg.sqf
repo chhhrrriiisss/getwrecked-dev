@@ -30,7 +30,7 @@ _velocity = (velocity _vehicle) vectorAdd _velocity;
 
 _bullet = createVehicle [_round, _gPos, [], 0, "FLY"];
 
-[(ATLtoASL _gPos), (ATLtoASL _targetPos)] call markIntersects;
+[(ATLtoASL _gPos), (ATLtoASL _targetPos), "RPG"] call markIntersects;
 
 _bullet setVectorDir _heading; 
 _bullet setVelocity _velocity; 

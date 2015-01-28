@@ -23,9 +23,11 @@ if (count _objects == 0) exitWith {};
 
 	// If its not invulnerable, damage it
 	if ( !('invulnerable' in _status) && _isVehicle && _x != (vehicle player)) then {
-		if (_x != (vehicle player)) then { [_x] call markAsKilledBy; };
+		if (_x != (vehicle player)) then { [_x, "RLG"] call markAsKilledBy; };
 
 		_dmg = getDammage _x;
+
+		_modifier = if ("nanoarmor" in _status) then { 0.01 } else { _modifier };
 
 		// Apply the damage, or destroy if we're going to KO it
 		if ( (_dmg + _modifier) > 1) then {		

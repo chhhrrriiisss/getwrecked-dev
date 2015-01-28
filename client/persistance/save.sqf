@@ -10,7 +10,7 @@ if (GW_SETTINGS_ACTIVE || GW_PREVIEW_CAM_ACTIVE) exitWith {};
 if (GW_WAITSAVE) exitWith {  systemChat 'Save currently in progress. Please wait.'; };
 GW_WAITSAVE = true;
 
-_startTime = time;
+
 
 _saveTarget = [_this,0, "", [""]] call BIS_fnc_param;
 
@@ -168,9 +168,13 @@ if (_name == "Untitled") then {
 
     _result = ['SAVE', _name, 'INPUT'] call createMessage;
 
-    if (count toArray _result > 0) then {
-        _name = _result;
-        _saveTarget = _result;
+    if (typename _result == "STRING") then {
+
+        if (count toArray _result > 0) then {
+            _name = _result;
+            _saveTarget = _result;
+        };
+        
     } else {
         _abort = true;
     };    
@@ -181,6 +185,7 @@ if (_abort) exitWith {
     GW_SAVE_VEHICLE setPosASL _targetPos;
 };
 
+_startTime = time;
 
 _paint = GW_SAVE_VEHICLE getVariable ["paint",""];
 
@@ -238,7 +243,7 @@ if (count _attachments > 0) then {
 
             _p =  _p call positionToString;
             _c = typeOf _x;   
-            _k = _x getVariable ["bind", -1];  
+            _k = _x getVariable ["GW_KeyBind",  ["-1", "1"]];
 
             if (_c == 'groundWeaponHolder') then { _c = _x getVariable "type"; };
 
@@ -258,6 +263,7 @@ _creator = GW_SAVE_VEHICLE getVariable ['creator', GW_PLAYERNAME];
 _prevAmmo = GW_SAVE_VEHICLE getVariable ["ammo", 1];
 _prevFuel = (fuel GW_SAVE_VEHICLE) + (GW_SAVE_VEHICLE getVariable ["fuel", 0]);
 _vehicleBinds = GW_SAVE_VEHICLE getVariable ['GW_Binds', GW_BINDS_ORDER];
+_taunt = GW_SAVE_VEHICLE getVariable ['GW_Taunt', []];
 
 _meta = [
     GW_VERSION, // Current version of GW
@@ -265,10 +271,12 @@ _meta = [
     _prevFuel, // Prior Fuel
     _prevAmmo,  // Prior Ammo
     [], // Stats would go here, but they are handled locally and seperately  
-    _vehicleBinds
+    _vehicleBinds,
+    _taunt
 ];
 
 _data = [_class, _name, _paint, _oldPos, _oldDir, _attachArray, _meta];    
+
 _success = [_saveTarget, _data] call registerVehicle;
 GW_LASTLOAD = _saveTarget;
 

@@ -4,10 +4,10 @@
 //      Return: None
 //
 
-private ['_gun', '_target', '_vehicle'];
+private ['_gun', '_target', '_vehicle', '_m', '_v', '_t'];
 
 _gun = _this select 0;
-_vehicle = _this select 1;
+_vehicle = _this select 2;
 
 _repeats = 1;
 _round = "M_Titan_AT";
@@ -19,6 +19,8 @@ _gPos = _gun selectionPosition "otochlaven";
 _gPos set[1, 4];
 _gPos set[2, 2];
 
+if (count GW_LOCKEDTARGETS <= 0) exitWith {};
+	
 _lockedTarget = (GW_LOCKEDTARGETS select 0);
 
 if (!alive _lockedTarget) then {
@@ -46,30 +48,32 @@ if (!alive _lockedTarget) then {
 	// Spawn the loop that keeps updating the missile heading/velocity
 	[_missile, _vehicle, _lockedTarget] spawn {
 
+		
+
 		Sleep 0.75;
 
-		_m = _this select 0;
+		_mis = _this select 0;
 		_v = _this select 1;
 		_t = _this select 2;
 		_timeout = time + 10;
 
-		while {alive _m && alive _v && alive _t && time < _timeout} do {
+		while {alive _mis && alive _v && alive _t && time < _timeout} do {
 
 			// Abort updating the heading if the target has escaped locking
 			_status = _t getVariable ["status", []];
 			if ("nolock" in _status || !("locked" in _status)) exitWith {};
 
-			_cPos = visiblePosition _m;
+			_cPos = visiblePosition _mis;
 			_tPos = visiblePosition _t;	
 
-			_speed = 60;
+			_speed = 65;
 
 			_heading = [_cPos,_tPos] call BIS_fnc_vectorFromXToY;
 
 			_distanceToTarget = ([_cPos select 0, _cPos select 1, 0] distance [_tPos select 0, _tPos select 1, 0]);
 			_heightAboveTerrain = (_cPos select 2);
 
-			[(ATLtoASL _cPos), (ATLtoASL _tPos)] call markIntersects;
+			[(ATLtoASL _cPos), (ATLtoASL _tPos), "MIS"] call markIntersects;
 			
 			if (_distanceToTarget > 5 && _heightAboveTerrain <= 3) then {					
 				_heading set[2, 0];
@@ -84,10 +88,10 @@ if (!alive _lockedTarget) then {
 
 			_velocity = [_heading, _speed] call BIS_fnc_vectorMultiply; 	
 
-			_m setVectorDir _heading; 
-			_m setVelocity _velocity; 
+			_mis setVectorDir _heading; 
+			_mis setVelocity _velocity; 
 
-			Sleep 0.1;
+			Sleep 0.01;
 
 		};
 

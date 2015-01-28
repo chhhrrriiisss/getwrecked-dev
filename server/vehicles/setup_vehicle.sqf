@@ -4,6 +4,8 @@
 //      Return: None
 //
 
+private ['_data', '_vehicle', '_name', '_respawn', '_recreate', '_defaultAmmo', '_defaultFuel'];
+
 _vehicle = [_this,0, objNull, [objNull]] call BIS_fnc_param;
 _name = [_this,1, "Untitled", [""]] call BIS_fnc_param;
 _respawn = [_this,2, true] call BIS_fnc_param;
@@ -61,7 +63,7 @@ clearItemCargoGlobal _vehicle;
 [_vehicle] call setVehicleHandlers;
 
 if (_respawn) then {
-    [_vehicle, GW_ABANDON_DELAY, GW_DEAD_DELAY, _recreate] spawn setVehicleRespawn;
+    [_vehicle, GW_ABANDON_DELAY] spawn setVehicleRespawn;
 };
 
 

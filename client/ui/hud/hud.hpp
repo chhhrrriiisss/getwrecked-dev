@@ -472,7 +472,7 @@ class GW_HUD_Vehicle
 
 			text = "";
 
-		};
+		};		
 
 		class VehicleNotification : GW_StructuredTextBox
 		{
@@ -502,6 +502,19 @@ class GW_HUD_Vehicle
 			};
 
 			text = "";
+		};
+
+		class VehicleHorn : GW_StructuredTextBox
+		{
+			idc = 12018;
+			fade = 1;
+			colorBackground[] = {0,0,0,0};
+			x = (0.865) * safezoneW + safezoneX;
+			y = (0.015) * safezoneH + safezoneY;
+			w = (GW_BUTTON_WIDTH / 6) * safezoneW;
+			h = (GW_BUTTON_HEIGHT * 2) * safezoneH;
+
+			text = "TEST";
 		};
 
 	};

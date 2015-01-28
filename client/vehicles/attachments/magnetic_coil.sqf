@@ -55,7 +55,7 @@ _nearby = _pos nearEntities[["Car"], _range];
 		if (_dist < 25) then { _dist = 25; };
 
 		// Get the angle we're getting thrown too
-		_dir = [_vehicle, _x] call BIS_fnc_dirTo;
+		_dir = [_vehicle, _x] call dirTo;
 		_relPos = [_vehicle, _dist, _dir] call BIS_fnc_relPos;
 
 		// Closer, more height		
@@ -72,7 +72,7 @@ _nearby = _pos nearEntities[["Car"], _range];
 
 		if (GW_DEBUG) then { systemChat format['%1 / %2 / %3', typeof _x, _calcPower, _mass]; };
 
-		if (_x != (_vehicle)) then { [_x] call markAsKilledBy; };
+		if (_x != (_vehicle)) then { [_x, "MAG"] call markAsKilledBy; };
 			
 		// Apply velocity to vehicles
 		if (local _x) then {

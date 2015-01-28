@@ -8,6 +8,8 @@ private ['_obj'];
 
 _obj = _this select 0;
 
+if (!local _obj) exitWith {};
+
 if (isNil {_obj getVariable "GW_handleTakeEH"} && typeOf _obj == 'groundWeaponHolder') then {
 	_obj setVariable ["GW_handleTakeEH", _obj addEventHandler ["Take", handleTakeObject]];
 };

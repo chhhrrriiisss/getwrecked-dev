@@ -20,7 +20,7 @@ _ground = _p;
 _ground set [2,0];
 
 // Tag nearby players as killed by
-[_ground, 4] call markNearby;
+[_ground, 4, "MOR"] call markNearby;
 
 Sleep _delay;
 
@@ -28,21 +28,20 @@ _ex = createVehicle ["R_TBG32V_F",_p,[],0,"FLY"];
 _ex setVectorDirAndUp [[0,0,1],[0,-1,0]];
 _ex setVelocity [0,0,_speed];
 
-_nearby = _p nearEntities [["Car"], 15];
+_nearby = _p nearEntities [["Car"], 10];
 if (count _nearby == 0) exitWith {};
 {
 
 	_isVehicle = _x getVariable ["isVehicle", false];
+	_chance = random 100;
 
-	if (_isVehicle) then {
-
-		_rnd = (random 5) + 3;
+	if (_isVehicle && _chance > 60) then {
 
 		[       
 	        [
 	            _x,
 	            ['tyresPopped'],
-	            _rnd
+	            4
 	        ],
 	        "addVehicleStatus",
 	        _x,

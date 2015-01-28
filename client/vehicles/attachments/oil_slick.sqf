@@ -11,6 +11,7 @@ _vehicle = [_this,1, objNull, [objNull]] call BIS_fnc_param;
 
 if (isNull _obj || isNull _vehicle) exitWith {};
 
+
 // Creates a detector that runs intersect checks on all points in the oil array
 createOilDetector = {
 	 
@@ -28,11 +29,11 @@ createOilDetector = {
 			_t = (_x select 1);
 
 			_p = if (typename _o == "OBJECT") then { getPosATL _o } else { _o };
-			_p set [2, 1];
-			_p = (ATLtoASL _p);
+			_p set [2, 1];		
 
 			if ( ((ASLtoATL _p) distance [0,0,0]) < 100 || ((ASLtoATL _lastPos) distance [0,0,0]) < 100) then {} else {
-				[_lastPos, _p, objNull, 100] spawn burnIntersects;	
+				_p = (ATLtoASL _p);
+				[_lastPos, _p, objNull, 100] spawn burnIntersects;					
 				if (GW_DEBUG) then { [_lastPos, _p, 1] spawn debugLine; };		
 			};
 

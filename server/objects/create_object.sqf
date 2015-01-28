@@ -45,7 +45,7 @@ if (_isHolder) then {
 
 	_holder = nil;
 	_holder = createVehicle ["groundWeaponHolder", _pos, [], 0, 'CAN_COLLIDE']; // So it doesnt collide when spawned in]
-
+	
 	if ( isClass (configFile >> "CFGWeapons" >> _type)) then {
 		_holder addWeaponCargoGlobal [_type, 1];
 	} else {
@@ -60,16 +60,14 @@ if (_isHolder) then {
 
 
 if (!_isHolder) then {
-
 	
-   	_newObj = createVehicle [_type, _pos, [], 0, _collide]; // So it doesnt collide when spawned in]   	
+   	_newObj = createVehicle [_type, _pos, [], 0, _collide]; // So it doesnt collide when spawned in]   
+
    	clearMagazineCargo _newObj;
 	clearWeaponCargo _newObj;
 	clearItemCargoGlobal _newObj;	
 	
 };
-
-
 
 if (isServer) then { 
 

@@ -6,7 +6,6 @@
 
 private ["_obj"];
 
-
 _obj = _this select 0;
 _target = _this select 1;
 _vehicle = _this select 2;
@@ -36,7 +35,7 @@ _tPos = if (typename _target == 'OBJECT') then { (ASLtoATL getPosASL _target) } 
 
 _heading = [_oPos,_tPos] call BIS_fnc_vectorFromXToY;
 _velocity = [_heading, _projectileSpeed] call BIS_fnc_vectorMultiply; 
-_velocity = (velocity _vehicle) vectorAdd _velocity;
+// _velocity = (velocity _vehicle) vectorAdd _velocity;
 
 // Fire sound effect
 [		

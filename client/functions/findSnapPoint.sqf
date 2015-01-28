@@ -68,7 +68,7 @@ _validPoints = [];
 
 		// Mirror Point (opposite side of vehicle)
 		_mDist = (_oPos) distance (getPosASL _currentVehicle);
-		_dirTo = [_currentVehicle, _x] call BIS_fnc_dirTo;
+		_dirTo = [_currentVehicle, _x] call dirTo;
 		_vehDir = getDir _currentVehicle;
 		_dif = [(_vehDir - _dirTo)] call normalizeAngle;
 		_actual = [ ((_vehDir) - (_dif * -1)) ] call normalizeAngle;
@@ -129,7 +129,7 @@ if (!_foundSnap) then {
 	if (_currentDir != _frontDir || _currentDir != _sideDir || _currentDir != _rearCornerDir || _currentDir != _forwardCornerDir) then {
 
 		// Which side are we on?
-		_dirTo = [_currentVehicle, _currentObj] call BIS_fnc_dirTo;
+		_dirTo = [_currentVehicle, _currentObj] call dirTo;
 		_dif = [_frontDir - _dirTo] call flattenAngle;
 
 		_side = if (_dif < 0) then { "right" } else { "left" };

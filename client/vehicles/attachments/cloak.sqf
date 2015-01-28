@@ -42,16 +42,7 @@ _layerStatic cutRsc ["RscStatic", "PLAIN" , 2];
 
 playSound3D ["a3\sounds_f\sfx\special_sfx\sparkles_wreck_3.wss", _vehicle, false, _pos, 2, 1, 30];	
 
-[       
-    [
-        _vehicle,
-        ['cloak'],
-        9999
-    ],
-    "addVehicleStatus",
-    _vehicle,
-    false 
-] call BIS_fnc_MP;  
+[_vehicle, ['cloak'], 9999] call addVehicleStatus;
 
 [       
     [
@@ -79,6 +70,9 @@ waitUntil{
 	_c = _this select 2;
 	_s = _this select 3;
 	_p = _this select 4;
+
+	_prevFuel = fuel _v;
+	_v setFuel 0;
 
 	while {alive _v && _vA > 0 && (!isEngineOn _v) && !GW_LMBDOWN && fireKeyDown == ''} do {	
 
@@ -126,11 +120,13 @@ waitUntil{
 
 	};
 
+	_v setFuel _prevFuel;
+
 	[       
 	    [
 	        _v,
 	        ['nocloak'],
-	        5
+	        4
 	    ],
 	    "addVehicleStatus",
 	    _v,

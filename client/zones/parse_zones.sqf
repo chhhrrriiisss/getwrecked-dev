@@ -35,8 +35,8 @@ parsePoints = {
 		_prev = if (_count == 0) then { _size } else { _count - 1 };
 		_next = if (_count >= _size) then { 0 } else { _count + 1 };
 
-		_startDir = [_p, ((_zoneData select _prev) select 0) ] call BIS_fnc_dirTo;
-		_endDir = [_p, ((_zoneData select _next) select 0) ] call BIS_fnc_dirTo;
+		_startDir = [_p, ((_zoneData select _prev) select 0) ] call dirTo;
+		_endDir = [_p, ((_zoneData select _next) select 0) ] call dirTo;
 
 		_dif = [_startDir - _endDir] call flattenAngle;
 		_dif = abs (_dif);
@@ -66,44 +66,34 @@ parsePoints = {
 
 };
 
-GW_ZONE_LIST = [
-	'airfieldZone',
-	'swampZone',
-	'downtownZone',
-	'wastelandZone',
-	'saltflatZone',
-	'workshopZone'
-];
-
 GW_ZONES = [];
 GW_ZONE_BOUNDARIES = [];
 
 // Calculate point data for each in zone list
 {
-	[_x, GW_ZONES] call parsePoints;
-} ForEach GW_ZONE_LIST;
+	[format['%1Zone', (_x select 0)], GW_ZONES] call parsePoints;
+} ForEach GW_VALID_ZONES;
 
 // Calculate deploy positions for all zones
-
 GW_ZONE_DEPLOY_TARGETS = call {
 	
 	_arr = [];
 
 	{
 
-		_str = _x;
-		_strDeploy = format['%1_deploy', _str];
-		_markers = [_strDeploy, false] call findAllMarkers;		
+		_str = (_x select 0);	
+		_type = (_x select 1);
+
+		_markers = [format['%1Zone_deploy', _str], false] call findAllMarkers;
+		_checkpoints = if (_type == "race") then { [format['%1Zone_checkpoint', _str], false] call findAllMarkers; } else { [] };
 
 		if (count _markers > 0) then {
-			_arr set[count _arr, [_str, _markers]];
+			_arr set[count _arr, [format['%1Zone', _str], _markers, _checkpoints]];
 		};
 
-	} ForEach GW_ZONE_LIST;
+	} ForEach GW_VALID_ZONES;
 
 	_arr
 
 };
-
-
 

@@ -55,7 +55,7 @@ dropDebris = {
 	Sleep 0.5;
 
 	_type = "Land_New_WiredFence_5m_F";
-	_oPos = [_oPos, 5, 5, 0] call setVariance;
+	_oPos = [_oPos, 8, 8, 0] call setVariance;
 	_oPos set[2, -2.35];
 	_o = createVehicle [_type, _oPos, [], 0, "CAN_COLLIDE"];
 	_o setPosATL _oPos;

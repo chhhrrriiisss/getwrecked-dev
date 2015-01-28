@@ -14,7 +14,9 @@ _isVehicle = _target getVariable ["isVehicle", false];
 _status = _target getVariable ["status", []];
 _rnd = random 100;
 
-if ( !('fire' in _status) && !('nofire' in _status) && _isVehicle && _rnd < _chance) then {
+if ( !('inferno' in _status) && !('nofire' in _status) && _isVehicle && _rnd < _chance) then {
+
+	_statusToAdd = if ('fire' in _status) then { ['inferno'] } else { ['fire'] };
 
 	// Fire duration
 	_rnd = random 6 + _minDuration;
@@ -24,7 +26,7 @@ if ( !('fire' in _status) && !('nofire' in _status) && _isVehicle && _rnd < _cha
 	[       
         [
             _target,
-            ['fire'],
+            _statusToAdd,
             _rnd
         ],
         "addVehicleStatus",

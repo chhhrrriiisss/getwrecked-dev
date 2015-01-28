@@ -11,6 +11,22 @@ _driver = (driver _vehicle);
 // // If player is not in the driver seat abort
 // if (player != _driver) exitWith {};
 
+
+noServiceLock = {
+
+	[       
+		[
+			_this,
+			['noservice'],
+			7
+		],
+		"addVehicleStatus",
+		_this,
+		false 
+	] call BIS_fnc_MP; 
+
+};
+
 if (_type == "REPAIR" && {getDammage _vehicle > 0}) exitWith {
 
 	_vehicle setVariable ['inUse', true];
@@ -21,7 +37,10 @@ if (_type == "REPAIR" && {getDammage _vehicle > 0}) exitWith {
 		// Start the ticker, timeout after 10 seconds
 		_error = false;
 		_timeout = time + 10;
-		while {getDammage _this > 0 && time < _timeout} do {
+
+		for "_i" from 0 to 1 step 0 do {
+
+			if (getDammage _this <= 0 || time > _timeout) exitWith {};
 
 			// If the vehicle is going too fast (ie leaves the pad)
 			if ([0,0,0] distance (velocity _this) > 10) exitWith { _error = true; };
@@ -41,16 +60,7 @@ if (_type == "REPAIR" && {getDammage _vehicle > 0}) exitWith {
 
 		_this setVariable ["inUse", false];
 
-		[       
-			[
-				_this,
-				['noservice'],
-				5
-			],
-			"addVehicleStatus",
-			_this,
-			false 
-		] call BIS_fnc_MP; 
+		_this spawn noServiceLock;
 
 	};
 	
@@ -72,8 +82,9 @@ if (_type == "REFUEL" && (_currentFuel < _maxFuel) ) exitWith {
 
 
 		_timeout = time + 10;
-		while { (_currentFuel < _maxFuel) && time < _timeout} do {
+		for "_i" from 0 to 1 step 0 do {
 
+			if (_currentFuel >= _maxFuel || time > _timeout) exitWith {};
 			if ([0,0,0] distance (velocity _this) > 10) exitWith { _error = true; };
 
 			_currentFuel = (fuel _this) + (_this getVariable ["fuel",0]);
@@ -95,16 +106,7 @@ if (_type == "REFUEL" && (_currentFuel < _maxFuel) ) exitWith {
 
 		_this setVariable ["inUse", false];
 
-		[       
-			[
-				_this,
-				['noservice'],
-				5
-			],
-			"addVehicleStatus",
-			_this,
-			false 
-		] call BIS_fnc_MP; 
+		_this spawn noServiceLock;
 
 	};
 	
@@ -126,7 +128,10 @@ if (_type == "REARM" && (_currentAmmo < _maxAmmo) ) exitWith {
 		_currentAmmo = (_this getVariable ["ammo",0]);
 
 		_timeout = time + 10;
-		while { (_currentAmmo < _maxAmmo) && time < _timeout} do {
+
+		for "_i" from 0 to 1 step 0 do {
+
+			if (_currentAmmo >= _maxAmmo || time > _timeout) exitWith {};
 
 			if ([0,0,0] distance (velocity _this) > 10) exitWith { _error = true; };
 
@@ -148,16 +153,7 @@ if (_type == "REARM" && (_currentAmmo < _maxAmmo) ) exitWith {
 
 		_this setVariable ["inUse", false];
 
-		[       
-			[
-				_this,
-				['noservice'],
-				5
-			],
-			"addVehicleStatus",
-			_this,
-			false 
-		] call BIS_fnc_MP;  
+		_this spawn noServiceLock; 
 	};
 	
 };

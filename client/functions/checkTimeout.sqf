@@ -15,6 +15,7 @@ if (_currentTime == 0 || (count GW_WAITLIST == 0)) exitWith { _state };
 
 _numberOfType = 0;
 _timeLeft = 0;
+_count = 0;
 {	
 	_timeLeft = 0;
 	_error = false;
@@ -26,34 +27,40 @@ _timeLeft = 0;
 		if (!isNil "_timeNeeded" && !isNil "_source") then {
 
 			_timeLeft = _timeNeeded - _currentTime;			
+			_applyTimeout = false;
 
-			// If we're checking an object reference, check both tag and object
-			if (_timeLeft > 0 && { typename _source == "ARRAY" } && { (_source select 0) == _type || (_source select 1) == _type }) then {
-				_state set[0, (_state select 0) + ceil(_timeLeft)];
-				_state set[1, true];
-				_numberOfType = _numberOfType + 1;
+			_applyTimeout = if (_timeLeft > 0) then {
+
+				if (_timeLeft > 0 && { typename _source == "ARRAY" } && { (_source select 0) == _type || (_source select 1) == _type }) exitWith { true };
+				if (_timeLeft > 0 && { typename _source == "STRING" } && { _source == _type }) exitWith { true };
+				false
+
+			} else {
+				false
 			};
 
-			// If we're just checking a tag state
-			if (_timeLeft > 0 && { typename _source == "STRING" } && { _source == _type }) then {
+			if (_applyTimeout) then {
 				_state set[0, (_state select 0) + ceil(_timeLeft)];
 				_state set[1, true];
 				_numberOfType = _numberOfType + 1;
 			};
 
 		};		
+		
 	} elsE {
 		_error = true;
 	};	
 
 	// If it should have expired
 	if (_timeLeft <= 0 || _error) then {
-		GW_WAITLIST deleteAt _foreachindex;				
+		GW_WAITLIST deleteAt _count;				
 	};		
 
+	_count = _count + 1;
 
-} ForEach GW_WAITLIST;
+} count GW_WAITLIST > 0;
 
 _state set[2, _numberOfType];
+
 
 _state

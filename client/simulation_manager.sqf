@@ -4,9 +4,9 @@
 //      Return: Bool
 //
 
-#define CHECK_RATE 5
-#define CHECK_DISTANCE 50
-#define SIMULATION_RANGE 2500
+#define CHECK_RATE 3
+#define CHECK_DISTANCE 30
+#define SIMULATION_RANGE 2200
 
 GW_SIMULATION_MANAGER_ACTIVE = true;
 _lastPos = positionCameraToWorld [0,0,0];

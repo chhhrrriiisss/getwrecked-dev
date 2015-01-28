@@ -13,6 +13,8 @@ _origDamage = _damage;
 _oldDamage = nil;
 _projectile = _this select 4;
 
+_status = _vehicle getVariable ["status", []];
+
 if (_selection != "?") then  {
 
     _oldDamage = if (_selection == "") then { 
@@ -49,9 +51,11 @@ if (_selection != "?") then  {
                 case ("R_TBG32V_F"): { MORTAR_DMG_SCALE };                
                 case ("G_40mm_HEDP"): { GMG_DMG_SCALE };
                 case ("Bo_GBU12_LGB"): { EXP_DMG_SCALE };    
+                case ("B_762x51_Tracer_Green"): { LMG_DMG_SCALE };
                 default                                { 1 };
             };
 
+            _scale = if ("nanoarmor" in _status) then { 0.01 } else { _scale };
             _damage = ((_damage - _oldDamage) * _scale) + _oldDamage; 
 
         };
@@ -67,10 +71,8 @@ if (_selection != "?") then  {
 
 // Check tyres and whether we need to eject
 [_vehicle] spawn checkTyres; 
-[_vehicle, player] call checkEject;
 
 // If we're invulnerable, ignore all damage
-_status = _vehicle getVariable ["status", []];
 if ("invulnerable" in _status) then {
     _damage = getDammage _vehicle;
 }  else {

@@ -12,7 +12,11 @@ _logo ctrlCommit 0;
 _value = _this select 0;
 _newValue = 0;
 
-_currentIndex = GW_VALID_ZONES find GW_SPAWN_LOCATION;
+_currentIndex = 0;
+{
+    if ((_x select 0) == GW_SPAWN_LOCATION) exitWith { _currentIndex = _foreachindex; };
+} Foreach GW_VALID_ZONES;
+
 _length = ((count GW_VALID_ZONES) - 1);
 _type = typename _value;
 
@@ -31,7 +35,11 @@ if (_type == "STRING") then {
 
 _currentIndex = [_newValue, 0, (count GW_VALID_ZONES - 1), true] call limitToRange;
 
-GW_SPAWN_LOCATION = GW_VALID_ZONES select _currentIndex;
+GW_SPAWN_LOCATION = (GW_VALID_ZONES select _currentIndex) select 0;
+
+if (((GW_VALID_ZONES select _currentIndex) select 1) == "safe") exitWith {
+	[_value] spawn changeLocation;
+};
 
 [GW_SPAWN_LOCATION] spawn previewLocation;
 

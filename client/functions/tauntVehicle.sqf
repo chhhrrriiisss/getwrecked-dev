@@ -10,21 +10,32 @@ _vehicle = [_this,0, objNull, [objNull]] call BIS_fnc_param;
 
 if (isNull _vehicle) exitWith {};
 
-systemchat 'playing taunt!';
+_sound = _vehicle getVariable ['GW_Taunt', 'none'];
+_sound = if (typename _sound == "ARRAY") then { "none" } else { _sound };
 
-_sound = _vehicle getVariable ['GW_Taunt', ''];
+if (!isNil "_sound") then {
 
-if (count toArray _sound > 0) then {
+	if (_sound == "none") exitWith {};
 
-	[		
-		[
-			_vehicle,
-			_sound,
-			100
-		],
-		"playSoundAll",
-		true,
-		false
-	] call BIS_fnc_MP;
+	// Prevent too much horn spam
+    if (isNil "GW_LASTTAUNT") then {  GW_LASTTAUNT = time;  };   
+    _timeSince = (time - GW_LASTTAUNT);
+
+	if (_sound in GW_TAUNTS_LIST && (_timeSince > 1)) then {
+
+		GW_LASTTAUNT = time;		
+
+		[		
+			[
+				_vehicle,
+				_sound,
+				200
+			],
+			"playSoundAll",
+			true,
+			false
+		] call BIS_fnc_MP;
+
+	};
 
 };

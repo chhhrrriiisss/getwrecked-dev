@@ -13,6 +13,10 @@ _forceAttach = [_this,2, false, [false]] call BIS_fnc_param; // Used by the serv
 if (isNull _unit || isNull _orig) exitWith { false };
 if (!alive _unit || !alive _orig) exitWith { false };
 
+// Dont attach supply boxes
+_isSupply = _orig getVariable ["isSupply", false];
+if (_isSupply) exitWith { false };
+
 // Check there's actually a vehicle within range
 _position = (ASLtoATL getPosASL _orig);
 _nearby = _position nearEntities [["car"], 8];
@@ -54,6 +58,10 @@ _allowUpgrade = _veh getVariable ['isVehicle', false];
 if (!_allowUpgrade && !_forceAttach) exitWith {
 	["CANT ATTACH!", 1.5, warningIcon, colorRed] spawn createAlert;
 	false
+};
+
+if (!simulationEnabled _veh) then {
+	systemChat 'Note: Object rotation will only update once vehicle is dropped.';
 };
 
 // Precompile to prevent errors

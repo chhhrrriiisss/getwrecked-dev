@@ -15,7 +15,7 @@ X_Client = false;
 X_JIP = false;
 
 // Used to determine if saved vehicles are out-of-date
-GW_VERSION = 78;
+GW_VERSION = 80;
 
 if (isServer) then { X_Server = true };
 if (!isDedicated) then { X_Client = true };
@@ -33,13 +33,12 @@ MISSION_ROOT = call {
 call compile preprocessFile "global\compile.sqf";
 [] execVM "briefing.sqf";
 
-hint "v0.7.8k DEV";
+hint "v0.8.0i RC4";
 
 99999 cutText ["Loading...", "BLACK", 0.01]; 
 
 // Zone boundaries
 [] call parseZones;
-
 
 if (X_Client || X_JIP) then {
    
@@ -59,4 +58,5 @@ if (isServer) then {
     [] execVM 'server\init.sqf'; 
 
 };
+
 

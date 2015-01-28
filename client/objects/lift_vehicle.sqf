@@ -37,7 +37,9 @@ _origPosition = (ASLtoATL getPosASL _vehicle);
 GW_HOLD_ROTATE_POS = [];
 _startAngle = 360;
 
-while {alive _vehicle && alive _unit && GW_LIFT_ACTIVE && !GW_EDITING && !(_unit in _vehicle)} do {
+for "_i" from 0 to 1 step 0 do {
+
+	if ( !alive _vehicle ||  !alive _unit || !GW_LIFT_ACTIVE || GW_EDITING || (_unit in _vehicle) ) exitWith {};
 
 	// Use the camera height to determine how far we should lift the vehicle
 	_cameraHeight = (positionCameraToWorld [0,0,0]) select 2;

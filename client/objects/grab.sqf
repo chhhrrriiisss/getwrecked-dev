@@ -170,7 +170,7 @@ while {alive _unit && alive _obj && GW_EDITING && _unit == (vehicle player)} do 
 		// Reset player's direction post hold rotate
 		if (count GW_HOLD_ROTATE_POS > 0) then {			
 
-			_dirTo = [_unit, _obj] call BIS_fnc_dirTo;	
+			_dirTo = [_unit, _obj] call dirTo;	
 			_unit setDir _dirTo;
 			_obj setPos GW_HOLD_ROTATE_POS;
 
@@ -190,6 +190,14 @@ while {alive _unit && alive _obj && GW_EDITING && _unit == (vehicle player)} do 
 	_interval = if (_snapping) then { _snappingInterval } else { _moveInterval };
 	Sleep _interval;
 
+};
+
+if (!alive _obj) then {
+
+	removeAllActions _unit;
+	_unit spawn setPlayerActions;
+	GW_EDITING = false;
+	_unit setVariable['editingObject', nil];
 };
 
 true

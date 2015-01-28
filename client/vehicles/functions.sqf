@@ -225,6 +225,13 @@ setVehicleActions = {
 
 	}, [], 0, false, false, "", "( (player in _target) && (player == (driver _target)) && ( 'cloak' in (_target getVariable ['status', []]) ) )"];
 
+	// Open the settings menu
+	_vehicle addAction[settingsVehicleFormat, {
+
+		[(_this select 0), player] spawn settingsMenu;
+
+	}, [], 0, false, false, "", "( !GW_EDITING && player in _target && !GW_LIFT_ACTIVE && !(GW_PAINT_ACTIVE))"];		
+
 	// Horn override (and used for firing with mouse)
 	_vehicle addAction ["", {}, "", 0, false, true, "DefaultAction"];
 

@@ -25,7 +25,7 @@ if (count _tacticalList == 0) exitWith { GW_WAITUSE = false; };
 // Check we're not emp'd or anything
 _status = _vehicle getVariable ['status', []];
 
-if ('emp' in _status || 'cloak' in _status || (GW_CURRENTZONE == 'workshopZone' && !GW_DEBUG)) exitWith {
+if ('emp' in _status || 'cloak' in _status || 'jammed' in _status || (GW_CURRENTZONE == 'workshopZone' && !GW_DEBUG)) exitWith {
 	['DISABLED!  ', 0.5, warningIcon, colorRed, "flash"] spawn createAlert;
 	GW_WAITUSE = false;	
 };
@@ -55,6 +55,7 @@ if (_timeLeft > 0 && _found) exitWith {
 // Defaults
 _tagData = [_type] call getTagData;
 _reloadTime = (_tagData) select 0;
+_reloadTime = if ("overcharge" in _status) then { (_reloadTime * 0.1) } else { _reloadTime };
 _cost = (_tagData) select 1;
 _ammo = _vehicle getVariable ["ammo", 0];
 
@@ -101,10 +102,11 @@ _success = if (!isNil "_obj") then {
 		case "EMP": { empDevice };
 		case "CAL": { dropCaltrops };
 		case "MIN": { dropMines };
-		case "PAR": { ejectSystem };
+		case "PAR": { emergencyParachute };
 		case "EPL": { dropExplosives };
 		case "CLK": { cloakingDevice };
 		case "MAG": { magneticCoil };
+		case "JMR": { dropJammer };
 
 	};
 

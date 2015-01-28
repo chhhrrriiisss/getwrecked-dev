@@ -1,16 +1,182 @@
 GW_COMMANDS_LIST = [
 
 	[
-		"help",
+		
+		"changebalance",
 		{
-			_commands = "";
-			{
-				_name = _x select 0;
-				if (_name == "tp" || _name == "warp" || _name == "kill" || _name == "disable" || _name == "spawn" || _name == "fling" || _name == "grab") then {} else {
-					_commands = _commands + (pvpfw_chatIntercept_commandMarker + (_name)) + ", ";
+
+			_argument = _this select 0;
+
+			if ( !(serverCommandAvailable "#kick") ) exitWith {
+				systemChat 'You need to be an admin to use that.';
+			};
+
+			if (isNil "_argument" || _argument == '' || _argument == ' ') exitWith {				
+				systemChat 'No target player.';				
+			};
+
+			_global = if (_argument in ['All', 'ALL', 'all']) then { true } else { false };
+			_unit = if (!_global) then { ([_argument] call findUnit) } else { objNull };
+
+			if (isNull _unit && !_global) exitWith { systemCHat 'Player not found.'; };			
+
+			[_unit, _global] spawn {
+
+				_result = ['ENTER AMOUNT', '0', 'INPUT'] call createMessage;
+
+				if (typename _result == "STRING") then {
+
+					if (count toArray _result > 0) then {
+
+						_amount = parseNumber(_result);
+						_target = if ( (_this select 1) ) then { true } else { (_this select 0) };
+
+						[		
+							_amount,
+							"changeBalance",
+							_target,
+							false
+						] call BIS_fnc_MP;	 
+
+					};
+
+				};	
+
+			};		
+					
+		}
+	],
+
+	[
+		
+		"supply",
+		{
+
+			_argument = _this select 0;	
+
+			if ( !(serverCommandAvailable "#kick") ) exitWith {
+				systemChat 'You need to be an admin to use that.';
+			};
+
+			_pos = (vehicle player) modelToWorldVisual [0, 40, 0];
+
+			[
+				[_pos, true, _argument],
+				'createSupplyDrop',
+				false,
+				false
+			] call BIS_fnc_MP;	
+
+			systemChat 'Supply drop inbound.';	
+					
+		}
+	],
+	
+	[
+		
+		"reset",
+		{
+
+			_argument = _this select 0;			
+
+			_argument = if (isNil "_argument" || _argument == '' || _argument == ' ') then { 'all' } else { _argument };
+			_argument = toUpper(_argument);
+
+			0 = [_argument] spawn {
+
+				_result = [format['RESET %1?', (_this select 0)], '', 'CONFIRM'] call createMessage;
+
+				if (typename _result != "BOOL") exitWith {};
+				if (!_result) exitWith {};
+
+				(_this select 0) call {
+
+					if (_this == "ALL") exitWith {
+						profileNamespace setVariable ['GW_BALANCE', nil];
+						profileNamespace setVariable ['GW_UNLOCKED_ITEMS', nil]; 
+						profileNamespace SetVariable ['GW_LIBRARY', nil];
+						profileNamespace setVariable ['GW_FIXDLC', nil];	
+						systemChat 'Profile reset successfully.';
+					};
+
+					if (_this == "MONEY") exitWith {
+						profileNamespace setVariable ['GW_BALANCE', nil];		
+						systemChat 'Money reset successfully.';			
+					};
+
+					if (_this == "UNLOCKS") exitWith {
+						profileNamespace setVariable ['GW_UNLOCKED_ITEMS', nil]; 
+						systemChat 'Unlocks reset successfully.';					
+					};
+
+					if (_this == "LIBRARY") exitWith {
+						profileNamespace SetVariable ['GW_LIBRARY', nil];	
+						systemChat 'Library reset successfully.';				
+					};
+
+					true	
 				};
-			} forEach GW_COMMANDS_LIST;
-			systemChat format["Available Commands: %1",_commands];
+
+					saveProfileNamespace;
+				
+			};		
+					
+		}
+	],
+
+	[
+		
+		"sendmoney",
+		{
+
+			_argument = _this select 0;
+
+			if (isNil "_argument" || _argument == '' || _argument == ' ') exitWith {				
+				systemChat 'Please enter target name.';				
+			};
+
+			_unit = [_argument] call findUnit;
+
+			if (isNull _unit) exitWith { systemCHat 'Target not found.'; };		
+			//if (_unit == player) exitWith { systemChat 'You cant send money to yourself.' };	
+
+			[_unit, _argument] spawn {
+
+				_result = ['ENTER AMOUNT', '0', 'INPUT'] call createMessage;
+
+				if (typename _result == "STRING") then {
+
+					if (count toArray _result > 0) then {
+
+						_amount = parseNumber(_result);
+						_accepted = -_amount call changeBalance;						
+
+						if (_accepted) then {
+
+							[		
+								_amount,
+								"changeBalance",
+								(_this select 0),
+								false
+							] call BIS_fnc_MP;	 
+
+							_string = format['%1 received $%2 from %3.', toUpper(_this select 1), ([_amount] call numberToCurrency), GW_PLAYERNAME];
+							systemChat _string;	
+							pubVar_systemChat = _string;
+							publicVariable "pubVar_systemChat";
+
+						} else {
+							systemchat 'You do not have enough money.';
+						};
+
+					};
+
+				} else {
+					systemChat 'Invalid amount.';
+				};
+
+			};		
+					
 		}
 	],
 
@@ -21,14 +187,11 @@ GW_COMMANDS_LIST = [
 
 			_argument = _this select 0;
 
-			if (isNil "_argument" || _argument == '' || _argument == ' ') exitWith {				
-				//[] execVM 'client\persistance\list.sqf';	
+			if (isNil "_argument" || _argument == '' || _argument == ' ') exitWith {
 				[] spawn listVehicles;					
 			};
 
-			if (_argument == 'clear') exitWith {
-
-				//['clear'] execVM 'client\persistance\library.sqf';			
+			if (_argument == 'clear') exitWith {		
 				['clear'] spawn listFunctions;		
 			};		
 
@@ -36,97 +199,24 @@ GW_COMMANDS_LIST = [
 
 			if (_delete) exitWith {
 
-				//['delete',_argument] execVM 'client\persistance\library.sqf';	
-				['delete', _argument] spawn listFunctions;	
+				0 = [] spawn {
+
+					_result = ['VEHICLE TO DELETE', '', 'INPUT'] call createMessage;
+
+					if (typename _result == "STRING") then {
+
+						if (count toArray _result > 0) then {		
+
+							['delete', _result] spawn listFunctions;	
+
+						};
+
+					};
+
+				};				
 				
 			};
-
-			_share = ['share', _argument] call inString;
-
-			if (_share) exitWith {
-
-				//['share',_argument] execVM 'client\persistance\library.sqf';	
-				['share', _argument] spawn listFunctions;	
-				
-			};
-
-			_add = ['add', _argument] call inString;
-
-			if (_add) exitWith {
-
-				//['add',_argument] execVM 'client\persistance\library.sqf';	
-				['add', _argument] spawn listFunctions;	
-				
-			};
-
 					
-		}
-	],
-
-	[
-		
-		"save",
-		{
-			_argument = _this select 0;	
-
-			[_argument] spawn saveVehicle;
-			//[_argument] execVM 'client\persistance\save.sqf';			
-		}
-	],
-
-	[
-		"clear",
-		{
-
-			_pos = (ASLtoATL (getPosASL player));
-			_closest = [saveAreas, _pos] call findClosest; 
-
-			_distance = (_closest distance player);
-
-			if (_distance > 15) exitWith {
-				systemChat 'You need to be closer to use that.';
-			};		
-
-			//hint str (typeOf _argument);
-			[_closest] spawn clearPad;
-	
-		}
-
-	],
-
-
-	[
-		
-		"load",
-		{
-			_argument = _this select 0;
-
-			if (isNil "_argument") then {
-				_argument == '';
-			};			
-
-			if ( (_argument == '' || _argument == 'last') && lastLoad == '') exitWith {
-				systemChat 'You have no previous vehicles to load';
-			};
-
-			if ( (_argument == '' || _argument == 'last') && lastLoad != '') then {
-				_argument = lastLoad;
-			};
-			//hint format['load got: %1', _argument];
-
-			_pos = (ASLtoATL getPosASL player);
-			_closest = [saveAreas, _pos] call findClosest; 
-
-			_distance = (_closest distance player);
-
-			if (_distance > 15) exitWith {
-				systemChat 'You need to be closer to use that.';
-			};		
-
-			//hint str (typeOf _argument);
-			[_closest, _argument] spawn requestVehicle;
-
-	
 		}
 	],
 	
@@ -137,8 +227,8 @@ GW_COMMANDS_LIST = [
 
 			_argument = _this select 0;
 
-			if (GW_CURRENTZONE != 'workshopZone' && !(serverCommandAvailable "#kick")) exitWith {
-				systemChat 'You cant use that here.';
+			if ( !(serverCommandAvailable "#kick") ) exitWith {
+				systemChat 'You need to be an admin to use that.';
 			};
 
 			_len = count toArray(_argument);
@@ -146,7 +236,7 @@ GW_COMMANDS_LIST = [
 				_argument = lastSpawn;
 			};
 
-			_data = [_argument, lootArray] call getObjectData;
+			_data = [_argument, GW_LOOT_LIST] call getData;
 
 			if (!isNil "_data") then {
 
@@ -198,28 +288,6 @@ GW_COMMANDS_LIST = [
 
 	[
 		
-		"grab",
-		{
-			_argument = _this select 0;
-
-			if (serverCommandAvailable "#kick") then {			
-
-				_target = [_argument] call findUnit;
-				_curPos = (ASLtoATL getPosASL player);
-				_curPos set [2, 1];
-
-				if (!isNil "_target") then {
-					(vehicle _target) setPosATL _curPos;	
-				} else {
-					systemChat 'Player not found';					
-				};
-			
-			};		
-		}
-	],
-
-	[
-		
 		"tp",
 		{
 			_argument = _this select 0;
@@ -229,9 +297,7 @@ GW_COMMANDS_LIST = [
 				_target = [_argument] call findUnit;
 
 				if (!isNil "_target") then {
-					_pos =  (ASLtoATL getPosASL (vehicle _target));
-					_pos set[2,1];
-					player setPos _pos;
+					(vehicle player) setPos ((vehicle _target) modelToWorld [10, 0, 1]);
 				} else {
 					systemChat 'Player not found';					
 				};
@@ -264,24 +330,6 @@ GW_COMMANDS_LIST = [
 
 	[
 		
-		"setname",
-		{
-			_argument = _this select 0;
-
-			if ( !(player == (vehicle player)) ) then { 
-
-				(vehicle player) setVariable["name", _argument, true];
-				systemChat format["Vehicle renamed to: %1",_argument];
-
-			} else {
-
-				systemChat "No vehicle to rename!";
-			};
-		}
-	],
-
-	[
-		
 		"fixdlc",
 		{
 			_argument = _this select 0;
@@ -290,31 +338,15 @@ GW_COMMANDS_LIST = [
 
 			if (_fixdlc) then {
 				profileNamespace setVariable ['GW_FIXDLC', false];
-				systemchat 'DLC fix disabled.';
-				removeHeadgear _unit;
-				_unit addHeadgear "H_RacingHelmet_1_black_F";
+				systemchat 'DLC fix disabled. ';
+				removeHeadgear player;
+				player addHeadgear "H_RacingHelmet_1_black_F";
 			} else {
 				profileNamespace setVariable ['GW_FIXDLC', true];
-				systemchat 'DLC fix enabled.';
-				removeHeadgear _unit;
-				_unit addHeadgear "H_PilotHelmetHeli_B";
+				systemchat 'DLC fix enabled. Use !fixdlc to disable.';
+				removeHeadgear player;
+				player addHeadgear "H_PilotHelmetHeli_B";
 			};				
-		}
-	],
-
-	[
-		
-		"stuck",
-		{
-
-			_vehicle = (vehicle player);
-
-			if ( player == _vehicle ) exitWith { 
-				systemChat "You need to be in a vehicle to use this.";
-			};
-
-			[_vehicle] spawn flipVehicle;
-			
 		}
 	]
 ];        

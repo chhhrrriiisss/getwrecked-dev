@@ -59,21 +59,25 @@ call addReservedIndex;
 	_key = (_x select 1);
 
 	_string = _tag call {
-		if (_this == "HORN") exitWith { "Vehicle Taunt" };
-		if (_this == "UNFL") exitWith { "Unflip Vehicle" };
-		if (_this == "EPLD" && ((['EPL', GW_SETTINGS_VEHICLE] call hasType) > 0) ) exitWith { "Detonate Explosives" };
+		if (_this == "HORN") exitWith { [hornIcon, "Play Taunt"] };
+		if (_this == "UNFL") exitWith { [rotateCCWIcon, "Push Vehicle"] };
+		if (_this == "EPLD" && ((['EPL', GW_SETTINGS_VEHICLE] call hasType) > 0) ) exitWith { [warningIcon, "Detonate Explosives"] };		
 		if (_this == "LOCK" && {
 
 			// Check we have at least one lock on on this vehicle
 			_exists = false;
 			{	if (([_x, GW_SETTINGS_VEHICLE] call hasType) > 0) exitWith { _exists = true; };	false } count GW_LOCKONWEAPONS > 0;
 			_exists
-		}) exitWith { "Toggle Auto-Lock" };
-		if (_this == "OILS" && ((['OIL', GW_SETTINGS_VEHICLE] call hasType) > 0) ) exitWith { "Stop Oil Slick" };
-
-		""
+		}) exitWith { [lockingIcon, "Toggle Auto-Lock"] };
+		if (_this == "OILS" && ((['OIL', GW_SETTINGS_VEHICLE] call hasType) > 0) ) exitWith { [oilslickIcon, "Stop Oil Slick"] };
+		if (_this == "DCLK" && ((['CLK', GW_SETTINGS_VEHICLE] call hasType) > 0) ) exitWith { [cloakIcon, "Deactivate Cloak"] };
+		if (_this == "PARC" && ((['PAR', GW_SETTINGS_VEHICLE] call hasType) > 0) ) exitWith { [ejectIcon, "Cut Parachute"] };
+		[warningIcon, ""]
 	};
 
+	_icon = _string select 0;
+	_string = _string select 1;
+	
 	// Dont bother adding an entry for a weapon we don't have
 	if (count toArray _string == 0) then {} else {
 	
@@ -81,6 +85,10 @@ call addReservedIndex;
 		_row = ((((lnbSize 92001) select 0)) -1);
 
 		if (!isNil "_key") then { [_row, _key] call formatBind; };
+
+		if (!isNil "_icon") then {
+			_list lnbSetPicture[[_row, 0], _icon];
+		};
 
 		_list lnbSetData[[_row, 1], _tag];
 

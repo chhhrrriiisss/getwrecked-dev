@@ -79,7 +79,7 @@ _s = if (_fuel < _cost) then {
 	// If we're too high
 	_pos = (getPosATL _vehicle);
 	_alt = (_pos select 2);		
-	if (_alt > 50) exitWith { false };		
+	if (_alt > 80) exitWith { false };		
 		
 	// Fuel calculation
 	_final = _fuel - _cost;	

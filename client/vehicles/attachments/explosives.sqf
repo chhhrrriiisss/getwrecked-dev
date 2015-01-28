@@ -14,7 +14,6 @@ _vehicle = [_this,1, objNull, [objNull]] call BIS_fnc_param;
 playSound3D ["a3\sounds_f\sfx\vehicle_drag_end.wss",_vehicle, false, getPosATL _vehicle, 2, 1, 50];
 
 _type = typeOf _obj;
-detach _obj;
 deleteVehicle _obj;
 
 // Ok, let's position it behind the vehicle
@@ -92,7 +91,7 @@ GW_DEPLOYLIST = GW_DEPLOYLIST + [_obj];
 		if (count _nearby > 0) then {
 			// To be extra badass, lets spawn a bomb for each vehicle nearby
 			{
-				if (_x != (_v)) then { [_x] call markAsKilledBy; };
+				if (_x != (_v)) then { [_x, "EPL"] call markAsKilledBy; };
 
 				_tPos =  (ASLtoATL getPosASL _x);
 				_tPos set [2, 2];			

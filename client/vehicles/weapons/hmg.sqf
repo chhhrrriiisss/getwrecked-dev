@@ -47,7 +47,7 @@ _bullet = createVehicle [_round, _gPos, [], 0, "FLY"];
 
 if (GW_DEBUG) then { [_gPos, _targetPos, 0.1] spawn debugLine; };
 
-[(ATLtoASL _gPos), (ATLtoASL _targetPos)] spawn markIntersects;
+[(ATLtoASL _gPos), (ATLtoASL _targetPos), "HMG"] spawn markIntersects;
 
 _bullet setVectorDir _heading; 
 _bullet setVelocity _velocity; 

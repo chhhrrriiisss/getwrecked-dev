@@ -1,3 +1,9 @@
+//
+//      Name: setObjectSimulation
+//      Desc: Enable/disable simulation for a group or individual objects
+//      Return: None
+//
+
  _o = [_this,0, objNull, [objNull, []]] call BIS_fnc_param;
 
 if (typename _o == "ARRAY") exitWith {

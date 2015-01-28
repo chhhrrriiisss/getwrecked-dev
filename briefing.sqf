@@ -14,17 +14,8 @@ player createDiaryRecord ["issues",
 - Simulated objects bumping vehicles <br /> 
 Drop the object on the floor, wait a second then pick it back up <br />
 <br />
-- Wierd ballistics (projectiles hitting floor/not where you aim) <br />
-Check its position on the vehicle, if LOS is obscured the projectile probably wont hit exactly where you aim<br />
-<br />
-- The vehicle's parachute on deploy breaks immediately and you fall and die<br />
-Caused by objects getting in the way of the attach point of the parachute, try to keep the top of your vehicle clear if you are having problems<br />
-<br />
 - HUD does not show X weapon or X module<br />
 Occasionally this does get stuck. If you hop out and back in the vehicle it should fix it.<br />
-<br />
-- The vehicle repair/rearm/refuel point doesn't work<br />
-Try driving away and then coming back. Be sure to stop on the point and not drive through.<br />
 <br />
 - Weapons and objects not facing the correct direction when you load a vehicle<br />
 This is caused by lag and the object (especially if its a railgun/rpg) should eventually update, it just takes a while<br />
@@ -45,6 +36,7 @@ Attach / Detach - User Action 2<br />
 Rotate CW - User Action 3<br />
 Rotate CCW - User Action 4<br />
 Hold Rotate - User Action 5<br />
+
 <br />
 [ Common ]<br />
 <br />
@@ -856,41 +848,101 @@ player createDiaryRecord ["changelog",
 
 player createDiaryRecord ["changelog",
 [
-"v0.7.8",
+"v0.7.8 - v0.7.9",
 "
-- Vehicles in workshop now toggle simulation off briefly while attaching which should fix a lot of physics issues<br />
 - Lift Vehicle and settings options now attached to player proximity to owned vehicle<br />
 - Vertical Thrusters should no longer be linked, along with most other modules<br />
-- 'Key Restricted' warning when trying to use a restricted key for a bind W,A and D are no longer restricted<br />
+- 'Key Restricted' warning when trying to use a restricted key for a bind<br />
 - Tweaks to hud timeout bars to better show time remaining for multiple modules of the same type <br />
-- You can no longer detach or move objects while not in a race zone<br />
+- You can no longer detach or move objects while in a race zone<br />
 - If you get kicked out of a vehicle due to low health the vehicle will now explode<br />
 - Flamethrower should now have better hit detection<br />
-- To prevent afk money farming, you now only earn money if you have moved a distance within the two minute timer<br />
 - Incendiary ammo now has a lower fire duration when tagging vehicles<br />
 - Mortar now has a chance of disabling tyres on vehicles nearby the impact<br />
 - You can no longer use nitro while wheels are destroyed or vehicle is disabled<br />
-- Flip vehicle using key bind now requires you to press it a few times to roll over<br />
 - Overall damage and GMG damage lowered slightly<br />
+- To prevent afk money farming, you now only earn money if you have moved a distance within the two minute timer<br />
 - Tweaked Bag of Explosives damage to make it less powerful<br />
-- Removed - Repair/reload/refuel area map triggers in favour of a new system <br />
-- Removed - Muzzle effect showing for non-local clients due to excess lag with hmg/gmg/laser fire<br />
-- Added - Special vehicle binds (taunt/unflip/toggle lock/detonate explosives) to settings menu<br />
-- Added - New nitro pads (WIP) to Airfield zone<br />
-- Added - Hold rotate bind for using the camera to rotate objects and lifted vehicles<br />
-- Added - !fixdlc can now be used to toggle removing non-dlc headgear on spawn for people without the Karts DLc<br />
-- Added - tyreBurst sound effect to caltrops<br />
-- Fixed - Easy money from tagging own vehicle with mortar<br />
-- Fixed - Emergency Repair Device failing to repair caltropped wheels<br />
-- Fixed - Having invulnerability while shielded should no longer recover all health when hit<br />
 - Fixed - You can no longer save a vehicle you don't own, but you can save an unowned one<br />
 - Fixed - Last loaded vehicle is now set via vehicle save (previously only on vehicle load)<br />
 - Fixed - Buy menu being generated twice on menu load<br />
 - Fixed - Script errors when buying items across different categories<br />
 - Fixed - Total cost should now update when just selecting one item in buy menu <br />
+- Fixed - Bug allowing supply boxes to be attached to vehicles <br />
+- Fixed - Easy money from tagging own vehicle with mortar<br />
+- Fixed - Emergency Repair Device failing to repair caltropped wheels<br />
+- Removed - Repair/reload/refuel area map triggers in favour of a new system <br />
+- Removed - Muzzle effect showing for non-local clients due to excess lag with hmg/gmg/laser fire<br />
+- Added - Special vehicle binds (taunt/unflip/toggle lock/detonate explosives) to settings menu<br />
+- Added - New nitro pads to some zones (WIP)<br />
+- Added - Hold rotate bind for using the camera to rotate objects and lifted vehicles<br />
+- Added - !fixdlc can now be used to toggle removing non-dlc headgear on spawn for people without the Karts DLc<br />
+- Added - Tyre burst sound effect to caltrops<br />
+- Added - Indirect fire mode for weapons (eg shooting backwards)<br />
+- Added - Mouse fire toggle button for individual weapons <br />
+- Added - !sendmoney <player name> can now be used to transfer money to other players<br />
+- Added - New pink and camouflage paint<br />
+- Added - New vehicle taunts: surprise, horn, toot and buzzer<br />
 <br />
 "
 ]];
+
+player createDiaryRecord ["changelog",
+[
+"v0.8",
+"
+- Optimized vehicle service terminal initialization script<br />
+- Tweaked lock-on missiles slightly to improve accuracy<br />
+- All items attached to a vehicle are now destroyed when the vehicle is blown up<br />
+- Adjusted size of all battle zones slightly to account for more player slots<br />
+- Bandwidth optimization to load vehicle system to improve responsiveness<br />
+- Slowed HMG rate of fire, increased stock damage per round<br />
+- Shield generator now correctly swaps textures for vehicles without a custom texture<br />
+- Lowered chance of tyre pop on mortar impact and mortar rof reduced<br />
+- Eject system is now an emergency parachute (WIP) <br />
+- Optimized HUD loop to improve client fps slightly<br />
+- Added cleanup to remove excess actions from unnecessary items while in battle<br />
+- Tweaked terminals to now use checkNearbyActions<br />
+- Tweaked eventHandler for karts to prevent ground stick<br />
+- Fixed - Damage object causing action menu to bug out<br />
+- Fixed - Key binds resetting on load vehicle <br />
+- Fixed - Guided missile always exploding at 1000m <br />
+- Fixed - Lock-on using front of vehicle instead of camera direction<br />
+- Fixed - Mouse fire mode not defaulting to 'active' on newly attached weapons<br />
+- Fixed - Laser not firing due to script error <br />
+- Fixed - Bug causing player invulnerability to toggle on/off in the wrong areas<br />
+- Fixed - Railgun should now correctly use indirect/direct fire mode after delay<br />
+- Fixed - Lock on missile failing to launch to target and no minimum lock range<br />
+- Fixed - Vehicle status monitor setHit spam causing desync/lag<br />
+- Fixed - parseZones not correctly finding all markers<br />
+- Fixed - Karts and vehicles shifting sideways with stuck wheels on deploy<br />
+- Fixed - Bag of explosives should no longer bump source vehicle when detaching<br />
+- Fixed - Meta data bug with default vehicles for new players<br />
+- Fixed - Railgun, mortar blocking mouse fire for all weapons <br />
+- Fixed - New players unable to get past 'loading screen'<br />
+- Fixed - Older saved cars not using updated vehicle binds order on fresh load <br />
+- Temp Fix - Multiple vehicles loading on top of each other when multiple people spawn at same pad<br />
+- Removed - Parachute vehicle drop as it causes desync and does not work properly<br />
+- Removed - Long concrete wall, for balance purposes <br />
+- Added - Nuke death camera focus mode<br />
+- Added - 3D halo status effect for vehicle power ups (WIP)<br />
+- Added - Supply drop crates with custom power ups/money/ammo etc<br />
+- Added - New events system to handle random, condition based script execution<br />
+- Added - New text notifications to show deploying players, weapon used<br />
+- Added - Charge up noise on railgun<br />
+- Added - More taunts: batman, sparta, herewego, hax, headshot and horn icon for settings menu <br />
+- Added - Beep sound effect to 'lock detected'<br />
+- Added - Lights to temporary vehicle spawn areas so you can see them in preview at night<br />
+- Added - More vehicle terminals and support for 12 players<br />
+- Added - Support for destroyable attached building objects on vehicles (WIP)<br />
+[ Note: This does not currently include weapons or tactical modules ] 
+- Added - Key binds for modules now shown on vehicle hud<br />
+- Added - Light Machine Gun (WIP)<br />
+- Added - !reset to allow for character profile resets<br />
+"
+]];
+
+
 
 
 
