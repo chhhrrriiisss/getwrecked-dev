@@ -21,10 +21,7 @@ _special = _vehicle getVariable ["special", []];
 [_gun] spawn muzzleEffect;
 
 _targetPos = if (typename _target == 'OBJECT') then { getPosASL _target } else { _target };
-_gPos = _gun selectionPosition "otochlaven";
-_gPos set[1, 2];
-_gPos set[2, -0.7];
-_gPos = _gun modelToWorld _gPos;
+_gPos = _gun modelToWorldVisual [0, 3, -0.7];
 
 _heading = [_gPos, _targetPos] call BIS_fnc_vectorFromXToY;
 _velocity = [_heading, _projectileSpeed] call BIS_fnc_vectorMultiply; 

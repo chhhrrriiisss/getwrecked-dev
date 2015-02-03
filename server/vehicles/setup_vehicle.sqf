@@ -33,6 +33,8 @@ _mass = getMass _vehicle;
 if (isNil "_mass") then { _mass = 5000; };
 
 _data = [typeOf _vehicle, GW_VEHICLE_LIST] call getData;
+if (isNil "_data") exitWith { false };
+
 _defaultAmmo = if (!isNil "_data") then { ((_data select 2) select 3) } else { 1 };
 _defaultFuel = if (!isNil "_data") then { ((_data select 2) select 4) } else { 1 };
 
@@ -51,16 +53,24 @@ _vehicle setVariable["GW_defaults", [
 
 ], true];
 
-{
-    _vehicle setVariable ["GW_hitPoint_" + getText (_x >> "name"), configName _x, true];
-    false
-} count ((typeOf _vehicle) call getHitPoints) > 0;
+// if (GW_DAMAGE_SYSTEM == 2) then {
+
+//     _vehicle setVariable ["GW_Selections", [], true];
+//     _vehicle setVariable ["GW_Gethit", [], true];
+//     _armor = (_data select 2) select 6;
+//     _vehicle setVariable ['GW_Armor', _armor, true];    
+
+// } else {
+    
+_vehicle setVariable ['GW_Hitpoints', (_vehicle call getHitPoints), true];
+
+// };
 
 clearWeaponCargoGlobal _vehicle;
 clearMagazineCargoGlobal _vehicle;
 clearItemCargoGlobal _vehicle;
 
-[_vehicle] call setVehicleHandlers;
+[_vehicle] spawn setVehicleHandlers;
 
 if (_respawn) then {
     [_vehicle, GW_ABANDON_DELAY] spawn setVehicleRespawn;

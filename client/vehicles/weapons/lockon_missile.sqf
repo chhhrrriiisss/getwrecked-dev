@@ -46,9 +46,7 @@ if (!alive _lockedTarget) then {
 	playSound3D [_soundToPlay, _gun, false, getPos _gun, 1, 1, 50];		
 
 	// Spawn the loop that keeps updating the missile heading/velocity
-	[_missile, _vehicle, _lockedTarget] spawn {
-
-		
+	[_missile, _vehicle, _lockedTarget] spawn {		
 
 		Sleep 0.75;
 
@@ -57,7 +55,9 @@ if (!alive _lockedTarget) then {
 		_t = _this select 2;
 		_timeout = time + 10;
 
-		while {alive _mis && alive _v && alive _t && time < _timeout} do {
+		for "_i" from 0 to 1 step 0 do {
+
+			if (!alive _mis || !alive _v || !alive _t || time > _timeout) exitWith {};
 
 			// Abort updating the heading if the target has escaped locking
 			_status = _t getVariable ["status", []];
@@ -66,7 +66,7 @@ if (!alive _lockedTarget) then {
 			_cPos = visiblePosition _mis;
 			_tPos = visiblePosition _t;	
 
-			_speed = 65;
+			_speed = 85;
 
 			_heading = [_cPos,_tPos] call BIS_fnc_vectorFromXToY;
 
@@ -80,9 +80,9 @@ if (!alive _lockedTarget) then {
 
 			} else {
 
-				if (_distanceToTarget < 2) then {
-					_rnd = (random 0.25) + 0.25;
-					_t setDammage _rnd;		
+				if (_distanceToTarget < 4) then {
+					_rnd = (random 0.4) + 0.4;
+					[_t, _rnd] call setVehicleDamage;	
 				};
 			};
 

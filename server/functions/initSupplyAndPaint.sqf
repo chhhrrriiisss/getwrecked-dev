@@ -1,8 +1,10 @@
 //
-//      Name: initPaint
-//      Desc: Provides initialization for paint bucket (server side)
+//      Name: initSupplyAndPaint
+//      Desc: Provides initialization for paint bucket and supply crates (server side)
 //      Return: Bool
 //
+
+private ['_pos', '_objs'];
 
 setupPaint = {
 	
@@ -33,12 +35,14 @@ setupPaint = {
 
 };
 
-// Use the workshop zone as a reference point
+
 _pos = getMarkerPos "workshopZone_camera";
-_objs = _pos nearEntities 200;
+_objs = nearestObjects [_pos, [], 150];
 
 if (count _objs <= 0) exitWith { true };
+
 {	
+	if ((typeOf _x) == "Land_PaperBox_closed_F") then {	_x call setupSupplyBox;	};
 	if ((typeOf _x) == "Land_Bucket_painted_F") then {	_x call setupPaint;	};
 	false
 } count _objs > 0;

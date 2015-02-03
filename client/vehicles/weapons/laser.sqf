@@ -37,7 +37,7 @@ playSound3D ["a3\sounds_f\sfx\special_sfx\sparkles_wreck_2.wss", _obj, false, _o
 
 	for "_i" from 1 to 15 step 1 do {
 
-		_oPos = (ASLtoATL getPosASL (_this select 0));
+		_oPos = (_this select 0) modelToWorldVisual [0,-2, 0];
 		_oPos set [2, (_oPos select 2) + 0.4]; // Adjusted center of laser
 
 		[(_this select 0)] spawn muzzleEffect;

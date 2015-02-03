@@ -13,8 +13,6 @@ _origDamage = _damage;
 _oldDamage = nil;
 _projectile = _this select 4;
 
-_status = _vehicle getVariable ["status", []];
-
 if (_selection != "?") then  {
 
     _oldDamage = if (_selection == "") then { 
@@ -55,15 +53,12 @@ if (_selection != "?") then  {
                 default                                { 1 };
             };
 
+            _status = _vehicle getVariable ['status', []];
             _scale = if ("nanoarmor" in _status) then { 0.01 } else { _scale };
+
             _damage = ((_damage - _oldDamage) * _scale) + _oldDamage; 
 
         };
-
-        // Stop immobilization when engine is hit
-        if (_selection == "engine") then {
-            _vehicle setHit ["engine", 0];
-        }; 
 
     };
 
@@ -73,12 +68,20 @@ if (_selection != "?") then  {
 [_vehicle] spawn checkTyres; 
 
 // If we're invulnerable, ignore all damage
+_status = _vehicle getVariable ["status", []];
 if ("invulnerable" in _status) then {
-    _damage = getDammage _vehicle;
+    _damage = false;
 }  else {
+    
+    // Match damage to crew
     _vDmg = getDammage _vehicle;
     _crew = crew _vehicle;
     { _x setDammage _vDmg; } ForEach _crew;
+
+    // Match hull damage to other parts
+    _dmg = _vehicle getHit "karoserie";
+    {  _vehicle setHit [_x, _dmg]; } Foreach (_vehicle getVariable ['GW_Hitpoints', []]);
+
 };
 
 _damage

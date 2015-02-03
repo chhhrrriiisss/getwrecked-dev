@@ -12,18 +12,16 @@ if (!isServer) exitWith {};
 #define VARIANCE_X 15
 #define VARIANCE_Y 15
 
-spawnedList = [];
-
 // Find a type of loot of the rarity specified
 findLoot = {
+
+	private ['_value', '_loot', '_lootValue', '_return'];
 
 	_value = _this select 0;
 
 	_rnd = round ( random (count GW_LOOT_LIST - 1) );
-
 	_loot = (GW_LOOT_LIST select _rnd);
 	_lootValue = _loot select 8;
-
 	_return = _loot select 0;
 
 	// Ignore weapon holder weapons as they dont spawn correctly
@@ -42,17 +40,17 @@ findLoot = {
 // Generate loot in random positions
 populateLoot = {
 
+	private ['_pos'];
+
 	_pos = _this select 0;
 
 	_rndAmount = (random 15) + 15;
 
-	for [{_i=0},{_i<=_rndAmount},{_i=_i+1}] do {
-
-		//_rnd = round ( random (count GW_LOOT_LIST - 1) );
+	for "_i" from 0 to _rndAmount step 1 do {
 
 		_rndX = (random VARIANCE_X) - (VARIANCE_X/2);	
 		_rndY = (random VARIANCE_Y) - (VARIANCE_Y/2);
-
+		
 		// Get a random direction
 		_rndDir = random 360;
 
@@ -60,11 +58,7 @@ populateLoot = {
 		_rndPos = [(_pos select 0) + _rndX, (_pos select 1) + _rndY, _pos select 2];
 
 		// Create the loot object
-		[_rndPos, _rndDir, '', 0, "CAN_COLLIDE", true] spawn createObject; 
-
-		// Create a respawn handler for it
-		//[_obj, ABANDON_DELAY, DEAD_DELAY] execVM 'server\object_respawn.sqf';
-		
+		[_rndPos, _rndDir, '', 0, "CAN_COLLIDE", false] spawn createObject; 	
 
 	};
 };

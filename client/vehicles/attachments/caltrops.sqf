@@ -27,7 +27,11 @@ createCaltropDetector = {
 	GW_CALTROP_DETECTOR = true;
 
 	_timeout = time + 60;
-	while {time < _timeout && !isNil "GW_CALTROP_DETECTOR" && (count GW_CALTROP_ARRAY > 0)} do {
+	for "_i" from 0 to 1 step 0 do {
+
+		if (time > _timeout || isNil "GW_CALTROP_DETECTOR" || (count GW_CALTROP_ARRAY == 0)) exitWith {};
+
+
 		{
 			[(_x select 1), (_x select 2)] spawn popIntersects;	
 			if (GW_DEBUG) then { [(_x select 1), (_x select 2), 1] spawn debugLine; };			

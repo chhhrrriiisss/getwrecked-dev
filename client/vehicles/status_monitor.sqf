@@ -3,7 +3,7 @@ if (!isNil "GW_STATUS_MONITOR_EH") then {
 };
 
 GW_STATUS_MONITOR_EH = ["GW_STATUS_MONITOR", "onEachFrame", {
-
+	
 	_vehicle = (vehicle player);
 	_inVehicle = if (_vehicle != player) then { true } else { false };
 
@@ -16,9 +16,6 @@ GW_STATUS_MONITOR_EH = ["GW_STATUS_MONITOR", "onEachFrame", {
     if (cameraOn == (vehicle player) && cameraView == "Internal") then {
     	(vehicle player) switchCamera "External";
     };
-
-
-
 
     if (isNil "GW_STATUS_MONITOR_LAST_UPDATE") then {
     	GW_STATUS_MONITOR_LAST_UPDATE = time;
@@ -34,7 +31,7 @@ GW_STATUS_MONITOR_EH = ["GW_STATUS_MONITOR", "onEachFrame", {
 
 	if (!_inVehicle || (time - GW_STATUS_MONITOR_LAST_UPDATE < 0.3)) exitWith {};
 
-	  // Apply vehicle damage to driver
+	// Apply vehicle damage to driver
     _vehDamage = getDammage _vehicle;
     _playerDamage = getDammage player;
     if (_playerDamage != _vehDamage) then {
@@ -59,6 +56,9 @@ GW_STATUS_MONITOR_EH = ["GW_STATUS_MONITOR", "onEachFrame", {
 
 		// If there's position data stored and we're not at the workshop
 		if (!isNil "_prevPos") then {
+
+			['PrevPos', format['%1', _prevPos]] call logDebug;
+
 			_distanceTravelled = _prevPos distance _currentPos;   
 			if (_distanceTravelled > 3) then {       
 			    ['mileage', _vehicle, _distanceTravelled] spawn logStat;  
@@ -157,8 +157,6 @@ GW_STATUS_MONITOR_EH = ["GW_STATUS_MONITOR", "onEachFrame", {
 			_vehicle sethit ["wheel_2_2_steering", 0];        
 
 		};
-
-
 
 		case ("jammer" in _status): {
 

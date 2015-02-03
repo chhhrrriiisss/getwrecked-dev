@@ -14,7 +14,7 @@ calcMass = {
 	_vMass = (getMass _v);
 
 	_d = [(typeof _v), GW_VEHICLE_LIST] call getData;
-	_modifier = if (!isNil "_d") then { ((_d select 2) select 0) } else { 1 };
+	_modifier = if (!isNil "_d") then { (((_d select 2) select 0) select 0) } else { 1 };
 	_oMass = ( _o getVariable ["mass", 0] );	
 	_oMass = _oMass * _modifier;
 	_newMass = _vMass + _oMass;
@@ -176,6 +176,8 @@ setVehicleActions = {
 	
 	_vehicle = _this select 0;
 
+	_vehicle setVariable ['hasActions', true];
+
 	// Lock ons
 	if (_vehicle getVariable ["lockOns", false]) then {
 
@@ -231,6 +233,13 @@ setVehicleActions = {
 		[(_this select 0), player] spawn settingsMenu;
 
 	}, [], 0, false, false, "", "( !GW_EDITING && player in _target && !GW_LIFT_ACTIVE && !(GW_PAINT_ACTIVE))"];		
+
+	// Open the settings menu
+	_vehicle addAction[unflipVehicleFormat, {
+
+		[(_this select 0), true, true] spawn flipVehicle;
+
+	}, [], 0, false, false, "", "( GW_CURRENTZONE != 'workshopZone' && !(canMove _target) )"];		
 
 	// Horn override (and used for firing with mouse)
 	_vehicle addAction ["", {}, "", 0, false, true, "DefaultAction"];

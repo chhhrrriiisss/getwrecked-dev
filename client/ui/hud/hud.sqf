@@ -97,6 +97,7 @@ _blink = false;
 _blinkCount = 0;
 _blinkLimit = _refreshRate * 0.5;
 
+_jammedActive = false;
 _empActive = false;
 _invActive = false;
 _safeActive = false;
@@ -283,7 +284,7 @@ for "_i" from 0 to 1 step 0 do {
 		// Hud Status & Visual Effects			
         if (count _status <= 0) then {
 
-            if (_empActive || _boundsActive || _fireActive || _invActive || _powerUpActive || _lockedActive) then {
+            if (_empActive || _boundsActive || _fireActive || _invActive || _powerUpActive || _lockedActive || _jammedActive) then {
 
                 _empActive = false;  
                 _boundsActive = false;  
@@ -292,15 +293,17 @@ for "_i" from 0 to 1 step 0 do {
                 _safeActive = false;
                 _powerUpActive = false;
                 _lockedActive = false;
+                _jammedActive = false;
                 
+                "dynamicBlur" ppEffectEnable false; 
                 "dynamicBlur" ppEffectAdjust [0]; 
-                "dynamicBlur" ppEffectCommit 0.5; 
+                "dynamicBlur" ppEffectCommit 0; 
 
                 "colorCorrections" ppEffectEnable false; 
                 "colorCorrections" ppEffectCommit 0;
-
-                "filmGrain" ppEffectAdjust [0, 0, 0, 0, 0, true];  
-                "filmGrain" ppEffectCommit 0.5; 
+               
+                "colorCorrections" ppEffectEnable false; 
+                "filmGrain" ppEffectCommit 0; 
 
                 _vHudStatus ctrlSetStructuredText parseText( "" );
 				_vHudStatus ctrlCommit 0;
@@ -323,7 +326,7 @@ for "_i" from 0 to 1 step 0 do {
 	        		if (_this == "fire") exitWith { flameIcon };
 	        		if (_this == "locked") exitWith { lockedIcon };
 	        		if (_this == "locking") exitWith { lockingIcon };
-	        		if (_this == "jammer") exitWith { jammerSupplyIcon };
+	        		if (_this == "radar") exitWith { radarSupplyIcon };
 	        		if (_this == "nanoarmor") exitWith { armorSupplyIcon };
 	        		if (_this == "overcharge") exitWith { speedSupplyIcon };
 	        		""
@@ -360,8 +363,16 @@ for "_i" from 0 to 1 step 0 do {
 
         if ("jammed" in _status) then {
 
+        	if (_jammedActive) then {} else {
+        		_jammedActive = true;
+        		"filmGrain" ppEffectEnable true; 
+        		"filmGrain" ppEffectAdjust [0.3 + (random 0.2), 0.1, 0.1, 0.5, 0.1, true];             
+        		"filmGrain" ppEffectCommit 0.1;
+        	};
+
         	if (_blink) then {
-        		["JAMMING DEVICE DETECTED!", 1, jammerSupplyIcon, colorRed, "warning"] spawn createAlert; 
+        		["JAMMING DETECTED!", 1, jammerSupplyIcon, colorRed, "warning"] spawn createAlert; 
+        		 _layerStatic cutRsc ["RscStatic", "PLAIN" ,2];     
         	};
               
         };
@@ -530,8 +541,9 @@ for "_i" from 0 to 1 step 0 do {
 		} count _vHudIcons;
 
 	};
+	
+	['HUD Update', format['%1', (time - _startTime)]] call logDebug;
 
-	//hint format['%1', time - _startTime];
 	Sleep _refreshRate;
 
 };

@@ -9,14 +9,11 @@ private ['_zone', '_arr', '_zoneCenter', '_vehiclesOnly'];
 _zone = [_this,0, "", [""]] call BIS_fnc_param;	
 _vehiclesOnly =  [_this,1, false, [false]] call BIS_fnc_param;	
 
-if (_zone == "") exitWith {};
+if (_zone == "") exitWith { [] };
 
 _arr = [];
 
 // Get the camera marker for the specified zone
-// _zoneCenter = getMarkerPos format['%1_camera', _zone];
-// _zoneName = format['%1Zone', _zone];
-
 if (count allUnits <= 0) exitWith { [] };
 
 {

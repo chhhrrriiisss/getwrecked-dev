@@ -38,7 +38,9 @@ dropTrigger = {
 	_obj addEventHandler['Explosion', {	(_this select 0) setVariable ["triggered", true];   }];
 	_obj addEventHandler['Hit', { (_this select 0) setVariable ["triggered", true];  }];
 
-	while {alive _obj && time < _timeout && !_triggered} do {
+	for "_i" from 0 to 1 step 0 do {
+
+		if (!alive _obj || time > _timeout || _triggered) exitWith {};
 
 		// Wait a quarter of a second between checks
 		Sleep 0.25;
@@ -63,8 +65,9 @@ dropTrigger = {
 
 					_tPos =  (ASLtoATL getPosASL _x);
 					_tPos set[2, 0.25];
-					_d = if ('nanoarmor' in _status) then { 0.1 } else { 0.98 };
-					_x setDammage ((getDammage _x) + _d);
+					_d = if ('nanoarmor' in _status) then { 0.05 } else { 0.5 };
+					[_x, ((getDammage _x) +_d)] call setVehicleDamage;
+
 					_bomb = createVehicle ["Bo_GBU12_LGB", _tPos, [], 0, "CAN_COLLIDE"];		
 					Sleep 0.01;			
 					deleteVehicle _obj;

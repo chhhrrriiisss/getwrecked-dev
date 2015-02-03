@@ -115,8 +115,6 @@ listFunctions = compile preprocessFile  'client\persistance\library.sqf';
 listVehicles = compile preprocessFile  'client\persistance\list.sqf';
 
 // Setup Functions
-setupLocalVehicleHandlers = compile preprocessFile "client\vehicles\handlers\local_handlers.sqf";
-setupLocalObjectHandlers = compile preprocessFile "client\objects\handlers\local_handlers.sqf";
 setupLocalVehicle = compile preprocessFile "client\vehicles\local_vehicle_setup.sqf";
 
 // Economy Functions
@@ -236,6 +234,7 @@ flipVehicle = compile preprocessFile "client\functions\flipVehicle.sqf";
 tauntVehicle = compile preprocessFile "client\functions\tauntVehicle.sqf";
 detonateTargets = compile preprocessFile "client\functions\detonateTargets.sqf";
 toggleLockOn = compile preprocessFile "client\functions\toggleLockOn.sqf";
+assignKill = compile preprocessFile "client\functions\assignKill.sqf";
 
 // MP Functions
 logStatKill = compile preprocessFile "client\functions\logStatKill.sqf";

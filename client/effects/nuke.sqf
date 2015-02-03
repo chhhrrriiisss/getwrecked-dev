@@ -36,7 +36,7 @@ _dmg = _dist call {
 
 _status = _vehicle getVariable ['status', []];
 if (!("invulnerable" in _status)) then {
-	_vehicle setDammage _dmg;
+	[_vehicle, _dmg] call setVehicleDamage;
 };
 
 

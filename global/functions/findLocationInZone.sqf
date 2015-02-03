@@ -14,7 +14,7 @@ _c set [0, (_c select 0) + ((random _r) - (_r / 2))];
 _c set [1, (_c select 1) + ((random _r) - (_r / 2))];
 
 _inZone = [_c, _z] call checkInZone;
-_normal = [0,0,1] distanceSqr (surfaceNormal _c);
+_normal = [0,0,1] distance (surfaceNormal _c);
 _nearby = nearestObjects [_c, ["House"],10];
 
 _c = if (!_inZone || _normal >= 0.2 || (count _nearby > 0)) then {

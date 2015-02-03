@@ -75,7 +75,13 @@ drawDisplay = {
 	GW_DISPLAY_EH = addMissionEventHandler ["Draw3D", {
 
 		// Debugging
-		if (!GW_DEBUG || GW_DEBUG_ARRAY isEqualTo []) then {} else {
+		if (!GW_DEBUG) then {} else {
+
+			if (isNil "GW_DEBUG_ARRAY") then {
+				GW_DEBUG_ARRAY = [];
+			};
+
+			if (GW_DEBUG_ARRAY isEqualTo []) exitWith {};
 
 			GW_DEBUG_MONITOR_LAST_UPDATE = time;
 
@@ -83,16 +89,17 @@ drawDisplay = {
 
 			{
 				_totalString = format['%1 \n %2: %3', _totalString, (_x select 0), (_x select 1)];
+				false
 			} count GW_DEBUG_ARRAY > 0;
 
 			hintSilent _totalString;
 		};
 
-
 		// Get all the conditions we need
 		_vehicle = (vehicle player);		
 		_inVehicle = !(player == _vehicle);
 		_isDriver = (player == (driver (_vehicle)));		
+		_status = _vehicle getVariable ["status", []];
 		_hasLockOns = _vehicle getVariable ["lockOns", false];
 		_freshSpawn = _vehicle getVariable ["newSpawn", false];
 		_currentDir = direction player;
@@ -203,10 +210,11 @@ drawDisplay = {
 				if (_inVehicle && _isDriver) then {
 					{
 						if (_x distance (vehicle player) < 6) exitWith {
-							// _null = [_x, (vehicle player)] execVM 'client\zones\nitro_pad.sqf';
 							[_x, _vehicle] call nitroPad;
+							false
 						};
-					} Foreach nitroPads;
+						false
+					} count nitroPads;
 				};
 
 			};
@@ -261,6 +269,15 @@ drawDisplay = {
 			};
 
 			if (_owner != '' && _isVehicle && (vehicle player) != _x && !_newSpawn) then {
+
+				if ('radar' in _status && !(_x in GW_TARGETICON_ARRAY)) then { 
+					GW_TARGETICON_ARRAY pushback _x;
+				};
+
+				IF (!('radar' in _status)) then {
+					GW_TARGETICON_ARRAY = [];
+				};	
+
 				[_x] call vehicleTag;
 			};		
 			false

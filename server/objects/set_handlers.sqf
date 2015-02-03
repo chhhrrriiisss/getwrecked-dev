@@ -1,18 +1,25 @@
-/*
+//
+//      Name: setObjectHandlers
+//      Desc: Adds eh's to object
+//      Return: Bool
+//
 
-	Object Event Handlers
-*/
-
-if (!isServer) exitWith {};
+private ['_obj'];
 
 _obj = _this select 0;
 
-if (isNil {_obj getVariable "GW_MPHitEH"}) then {	
-	_obj setVariable ["GW_MPHitEH", _obj addMPEventHandler ["MPHit", handleHitObject]];
-};
+_obj setVariable ['hasHandlers', true];
 
-if (isNil {_obj getVariable "GW_MPKilledEH"}) then {	
-	_obj setVariable ["GW_MPKilledEH", _obj addMPEventHandler ["MPKilled", handleKilledObject]];
+if (isServer) then {
+
+	if (isNil {_obj getVariable "GW_MPHitEH"}) then {	
+		_obj setVariable ["GW_MPHitEH", _obj addMPEventHandler ["MPHit", handleHitObject]];
+	};
+
+	if (isNil {_obj getVariable "GW_MPKilledEH"}) then {	
+		_obj setVariable ["GW_MPKilledEH", _obj addMPEventHandler ["MPKilled", handleKilledObject]];
+	};
+
 };
 
 if (isNil {_obj getVariable "GW_ExplosionEH"}) then {	

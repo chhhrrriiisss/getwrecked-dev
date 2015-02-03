@@ -82,7 +82,6 @@ if (!_continue) exitWith { GW_SPAWN_ACTIVE = false; };
 
 // Ensure the vehicle is compiled & has handlers
 [GW_SPAWN_VEHICLE] call compileAttached;
-[GW_SPAWN_VEHICLE] call setupLocalVehicleHandlers;
 
 _firstCompile = GW_SPAWN_VEHICLE getVariable ["firstCompile", false];
 _hasActions = GW_SPAWN_VEHICLE getVariable ["hasActions", false];

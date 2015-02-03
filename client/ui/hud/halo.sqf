@@ -31,9 +31,7 @@ _ringBottom attachTo [_vehicle, _vehicle worldToModelVisual (ASLtoATL getPosASL 
 _timeout = time + _duration;
 _dir = getDir _ringTop;
 
-
-
-Sleep 0.1;
+Sleep 0.01;
 
 _ringTop setObjectTextureGlobal [0, _texture];
 _ringBottom setObjectTextureGlobal [0, _texture];

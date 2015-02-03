@@ -62,7 +62,7 @@ if (!isNil "GW_COMMANDS_EH")then{
 GW_COMMANDS_SETUP = [] spawn {
 	private["_equal","_chatArr"];
 	
-	while{true}do{
+	for "_i" from 0 to 1 step 0 do {
 
 		GW_COMMANDS_STRING = "";
 		

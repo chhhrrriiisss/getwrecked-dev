@@ -21,6 +21,40 @@ call compile preprocessFile 'global\objects.sqf';
 // Supply Data Compile
 call compile preprocessFile 'global\supply.sqf';
 
+if (hasInterface) then {
+
+	if (isNil "GW_DEBUG_ARRAY") then {
+		GW_DEBUG_ARRAY = [];
+	};
+
+	logDebug = {
+
+		// Don't log if debug isn't enabled
+		if (!GW_DEBUG || !hasInterface) exitWith {};
+
+		if (isNil "GW_DEBUG_ARRAY") then {
+			GW_DEBUG_ARRAY = [];
+		};
+
+		_exists = false;
+		{
+			if ((_x select 0) == ( _this select 0)) exitWith {
+				GW_DEBUG_ARRAY set [_forEachIndex, [(_x select 0), (_this select 1)]];
+				_exists = true;
+				true
+			};		
+			false
+		} foreach GW_DEBUG_ARRAY;
+
+		if (!_exists) then {
+			GW_DEBUG_ARRAY pushBack [(_this select 0), (_this select 1)];
+		};
+
+		true
+	};
+};
+
+
 // Trigger function for a supply box effects
 supplyDropEffect = {	
 	_crate = _this select 0;
@@ -62,7 +96,7 @@ getTagData = {
 		case "MAG":	{  [75, 0]	};
 		case "GRP":	{  [1, 0]	};
 		case "CAL":	{  [30, 0.1] };
-		case "EPL":	{  [0, 0]	};
+		case "EPL":	{  [0.5, 0]	};
 		case "JMR":	{  [0, 0]	};
 
 		case "HMG": {  [0.15, 0.002]	};
@@ -93,7 +127,10 @@ parseZones = compile preprocessFile 'client\zones\parse_zones.sqf';
 call compile preprocessFile "client\customization\supply_box.sqf";
 
 // Event Handlers
-handleDamageVehicle = compile preprocessFile 'client\vehicles\handlers\handle_damage.sqf';
+setVehicleHandlers = compile preprocessFile "server\vehicles\set_handlers.sqf";
+
+_handlerLocation = if (GW_DAMAGE_SYSTEM == 2) then { 'client\vehicles\handlers\handle_damage.sqf' } else { 'client\vehicles\handlers\handle_damage_old.sqf' };
+handleDamageVehicle = compile preprocessFile _handlerLocation;
 handleExplosionVehicle = compile preprocessFile 'client\vehicles\handlers\handle_explosion.sqf';
 handleContactVehicle = compile preprocessFile 'client\vehicles\handlers\handle_contact.sqf';
 handleHitVehicle = compile preprocessFile 'client\vehicles\handlers\handle_hit.sqf';
@@ -101,10 +138,8 @@ handleKilledVehicle = compile preprocessFile 'client\vehicles\handlers\handle_ki
 handleGetIn = compile preprocessFile 'client\vehicles\handlers\handle_getin.sqf';
 handleGetOut = compile preprocessFile 'client\vehicles\handlers\handle_getout.sqf';
 
-// Object Functions
-destroyObj = compile preprocessFile "client\objects\destroy.sqf";
-createObject = compile preprocessFile "server\objects\create_object.sqf";
-setPitchBankYaw = compile preprocessFile 'global\functions\setPitchBankYaw.sqf';
+// Event Handlers
+setObjectHandlers = compile preprocessFile "server\objects\set_handlers.sqf";
 
 // Event Handlers
 handleDamageObject = compile preprocessFile 'client\objects\handlers\handle_damage.sqf';
@@ -114,6 +149,12 @@ handleHitObject = compile preprocessFile 'client\objects\handlers\handle_hit.sqf
 handleKilledObject = compile preprocessFile 'client\objects\handlers\handle_killed.sqf';
 handleTakeObject = compile preprocessFile 'client\objects\handlers\handle_take.sqf';
 handleDisassembledObject = compile preprocessFile 'client\objects\handlers\handle_disassembled.sqf';
+setVehicleDamage = compile preprocessFile 'global\functions\setVehicleDamage.sqf';
+getHitPoints = compile preprocessFile 'global\functions\getHitPoints.sqf';
+// Object Functions
+destroyObj = compile preprocessFile "client\objects\destroy.sqf";
+createObject = compile preprocessFile "server\objects\create_object.sqf";
+setPitchBankYaw = compile preprocessFile 'global\functions\setPitchBankYaw.sqf';
 
 // Vehicle utility
 clearPad = compile preprocessFile  'client\persistance\clear.sqf';

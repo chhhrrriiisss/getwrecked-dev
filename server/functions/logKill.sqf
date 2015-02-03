@@ -42,7 +42,7 @@ if (!isNil "_killerTarget") then {
         [
             _value
         ],
-        "receiveMoney",
+        "assignKill",
         _killerTarget,
         false 
     ] call BIS_fnc_MP;  

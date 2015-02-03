@@ -4,20 +4,25 @@
 //      Return: Bool
 //
 
+waitUntil{ !(isNil "GW_CURRENTZONE") };
+
 #define CHECK_RATE 3
 #define CHECK_DISTANCE 30
-#define SIMULATION_RANGE 2200
+#define SIMULATION_RANGE 1600
 
 GW_SIMULATION_MANAGER_ACTIVE = true;
 _lastPos = positionCameraToWorld [0,0,0];
 
-while {GW_SIMULATION_MANAGER_ACTIVE} do {
+for "_i" from 0 to 1 step 0 do {
+
+	if (!GW_SIMULATION_MANAGER_ACTIVE) exitWith {};
 
 	_currentPos = positionCameraToWorld [0,0,0];
 
-	// If the player has actually moved from the last spot and we're not on a preview camera
 	if (_currentPos distance _lastPos > CHECK_DISTANCE && !GW_PREVIEW_CAM_ACTIVE) then {
+
 		_lastPos = _currentPos;
+		['Sim Update', format['%1', time]] call logDebug;
 
 		{
 
@@ -32,7 +37,7 @@ while {GW_SIMULATION_MANAGER_ACTIVE} do {
 			
 			false
 
-		} count (allMissionObjects "Car") > 0;
+		} count (allMissionObjects "Car" ) > 0;
 
 		Sleep 0.01;		
 

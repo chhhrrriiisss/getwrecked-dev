@@ -17,7 +17,7 @@ _pos = (ASLtoATL getPosASL _vehicle);
 _alt = _pos select 2;
 _vel = [0,0,0] distance (velocity _vehicle);
 
-if (_vel > 4 && !_force) exitWith {}; // Going too fast
+if (_vel > 4) exitWith {}; // Going too fast
 if (_alt > 30 && !_force) exitWith {}; // Going too high
 
 _normalDist = (vectorUp _vehicle) distance (surfaceNormal (ASLtoATL getPosASL _vehicle));
@@ -35,4 +35,5 @@ if (!_full) then {
 
 } else {	
 	_vehicle setVectorUp [0,0,1];
+	_vehicle setVelocity [0,0,4];
 };

@@ -7,8 +7,7 @@ class GWS
 		class initBoundary { file = "server\functions\initBoundary.sqf"; };	
 		class createBoundary { file = "server\functions\createBoundary.sqf"; };		
 		class initNitro { file = "server\functions\initNitro.sqf"; };		
-		class initSupply { file = "server\functions\initSupply.sqf"; };		
-		class initPaint { file = "server\functions\initPaint.sqf"; };	
+		class initSupplyAndPaint { file = "server\functions\initSupplyAndPaint.sqf"; };	
 		class initObjects { file = "server\functions\initObjects.sqf"; };
 		class loadVehicle { file = "server\functions\loadVehicle.sqf"; };	
 	};

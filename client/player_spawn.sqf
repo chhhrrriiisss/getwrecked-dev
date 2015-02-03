@@ -88,13 +88,6 @@ if (!_firstSpawn) then {
 
 	if (!isNil "_killedBy") then {
 
-		[       
-            [],
-            "logStatKill",
-            _killedBy,
-            false 
-        ] call BIS_fnc_MP;
-
 		// If killed by exists, trigger camera on killer		
 		[_unit, _killedBy] spawn deathCamera;
 
@@ -120,12 +113,21 @@ if (!_firstSpawn) then {
 	// First spawn, just show us the workshop yo!
 	_unit setVariable ["firstSpawn", false];
 	titlecut["","BLACK IN",3];
+
+	
 };
 
 // Wait for the death camera to be active before setting the current zone
 _timeout = time + 3;
 waitUntil { (time > _timeout) || GW_DEATH_CAMERA_ACTIVE };
 ['workshopZone'] call setCurrentZone;
+
+// Clear/Unsimulate unnecessary items near workshop
+{
+	
+	if (isPlayer _x || _x isKindOf "car") then { _x enableSimulation true; } else { _x enableSimulation false; };
+	false
+} count (nearestObjects [ (getMarkerPos "workshopZone_camera"), [], 150]) > 0;
 
 // Reset killed by as we need to start fresh
 profileNamespace setVariable ['killedBy', nil];

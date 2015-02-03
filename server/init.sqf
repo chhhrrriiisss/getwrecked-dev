@@ -9,11 +9,9 @@
 _startTime = time;
 
 [] call GWS_fnc_initObjects;
-[] call GWS_fnc_initPaint;
-[] call GWS_fnc_initSupply;
+[] call GWS_fnc_initSupplyAndPaint;
 [] call GWS_fnc_initBoundary;
 [] call GWS_fnc_initNitro;
-
 [] spawn initEvents;
 
 serverSetupComplete = compileFinal "true";

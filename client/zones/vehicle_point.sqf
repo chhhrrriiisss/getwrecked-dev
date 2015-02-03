@@ -10,15 +10,13 @@ _driver = (driver _vehicle);
 
 // // If player is not in the driver seat abort
 // if (player != _driver) exitWith {};
-
-
 noServiceLock = {
 
 	[       
 		[
 			_this,
 			['noservice'],
-			7
+			3
 		],
 		"addVehicleStatus",
 		_this,

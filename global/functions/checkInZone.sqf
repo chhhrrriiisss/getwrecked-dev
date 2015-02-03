@@ -29,7 +29,7 @@ if (count _data isEqualTo []) exitWith { false };
 _distance = 99999;
 _cl = [0,0,0];
 {
-	_d = (_x select 0) distanceSqr ( _this select 0 );
+	_d = (_x select 0) distance ( _this select 0 );
 	_distance = if (_d < _distance) then { _cl = _x; _d } else { _distance };
 	false
 } count _data > 0;

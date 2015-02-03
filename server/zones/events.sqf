@@ -82,9 +82,11 @@ for "_i" from 0 to 1 step 0 do {
     	if (_rnd < _chance) then {
     		_condition = [] call (_x select 2);    		
     		if (_condition) then {
-    			[] call (_x select 3);
+    			[] spawn (_x select 3);
     		};
     	};
+
+    	false
 
 	} count _eventsList > 0;
 };

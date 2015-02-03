@@ -76,7 +76,6 @@ if (_timeLeft > 0 && _found) exitWith {
 // Check we have enough ammo
 _tagData = [_type] call getTagData;
 _reloadTime = _tagData select 0;
-_reloadTime = if ("overcharge" in _status) then { (_reloadTime * 0.1) } else { _reloadTime };
 _reloadTime = if ('jammed' in _status) then { (_reloadTime * 10) } else { _reloadTime };
 
 _cost = _tagData select 1;

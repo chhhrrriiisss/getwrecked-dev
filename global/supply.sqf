@@ -3,7 +3,7 @@ GW_SUPPLY_TYPES = [
 
 	[		
 		"care",
-		0.4,
+		0.45,
 		randomSign,
 		{	
 			_crate = _this;
@@ -23,7 +23,7 @@ GW_SUPPLY_TYPES = [
 
 	[		
 		"money",
-		0.5,
+		0.45,
 		randomSign,
 		{	
 			_crate = _this;
@@ -46,7 +46,7 @@ GW_SUPPLY_TYPES = [
 
 	[		
 		"pink",
-		0.7,
+		0.9,
 		randomSign,
 		{	
 			_crate = _this;
@@ -69,7 +69,7 @@ GW_SUPPLY_TYPES = [
 
 	[		
 		"tp",
-		0.5,
+		0.45,
 		randomSign,
 		{	
 			_crate = _this;			
@@ -130,6 +130,7 @@ GW_SUPPLY_TYPES = [
 				"magnetEffect"
 			] call BIS_fnc_MP;
 
+			if ((_newPos select 2) < 0) then { _newPos set [2, 0]; };
 			_vehicle setPos _newPos;
 			
 		}
@@ -198,7 +199,7 @@ GW_SUPPLY_TYPES = [
 
 			[_vehicle, ['overcharge'], _maxTime] call addVehicleStatus;
 			[_vehicle, _maxTime, 'client\images\power_halo.paa', _condition] spawn createHalo;
-			[_vehicle, 'client\images\vehicle_textures\special\speed.jpg', _maxTime, _condition] spawn swapVehicleTexture;
+			[_vehicle, 'client\images\vehicle_textures\fire\fire.jpg', _maxTime, _condition] spawn swapVehicleTexture;
 			['OVERCHARGE', _maxTime, speedSupplyIcon] spawn createNotification;
 		}
 	],
@@ -222,20 +223,20 @@ GW_SUPPLY_TYPES = [
 	],
 
 	[		
-		"jammer",
+		"radar",
 		0.5,
 		jammerSign,
 		{	
 			_crate = _this;
-			_condition = { ("jammer" in ((vehicle player) getVariable ['status', []])) };
+			_condition = { ("radar" in ((vehicle player) getVariable ['status', []])) };
 			_maxTime = 60;
 			_vehicle = (vehicle player);
 			_vehicle setVariable ['status', [], true];
+
+			playSound3D ["a3\sounds_f\sfx\special_sfx\sparkles_wreck_2.wss", _vehicle, false, (ASLtoATL getposASL _vehicle), 2, 1, 150];
 			
-			[_vehicle, ['jammer'], _maxTime] call addVehicleStatus;
-			[_vehicle, _maxTime, 'client\images\power_halo.paa', _condition] spawn createHalo;
-			[_vehicle, 'client\images\vehicle_textures\special\jammer.jpg', _maxTime, _condition] spawn swapVehicleTexture;
-			['JAMMING DEVICE', _maxTime, jammerSupplyIcon, _condition] spawn createNotification;	
+			[_vehicle, ['radar'], _maxTime] call addVehicleStatus;
+			['RADAR ACTIVE', _maxTime, radarSupplyIcon, _condition] spawn createNotification;	
 
 		}
 	],
@@ -256,7 +257,7 @@ GW_SUPPLY_TYPES = [
 
 	[		
 		"nuke",
-		0.97,
+		0.95,
 		nukeSign,
 		{	
 

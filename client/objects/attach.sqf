@@ -95,6 +95,17 @@ if (!_isOwner && !_forceAttach) exitWith {
 	false
 };
 
+// Is the vehicle overloaded?
+_vMass = getMass _veh;
+_oMass = getMass _orig;
+_modifier = if (!isNil "_data") then { (((_data select 2) select 0) select 0) } else { 1 };
+_maxMass = if (!isNil "_data") then { (((_data select 2) select 0) select 1) } else { 99999 };
+
+if (_vMass + (_oMass * _modifier) > _maxMass) exitWith {
+	["TOO HEAVY!", 1.5, warningIcon, colorRed] spawn createAlert;
+	false
+};
+
 // If there's something already attached.
 if ( !isNull attachedTo _orig ) then {  detach _orig; };
 

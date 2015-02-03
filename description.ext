@@ -11,18 +11,6 @@ loadScreen = "client\images\load.jpg";
 
 disabledAI = true;
 
-// Cleanup
-corpseManagerMode = 1;
-corpseLimit = 6;
-corpseRemovalMinTime = 25; 
-corpseRemovalMaxTime = 45; 
-
-wreckManagerMode = 1;
-wreckLimit = 8;
-wreckRemovalMinTime = 25;
-wreckRemovalMaxTime = 45;
-
-
 class Header
 {
 	gameType = SANDBOX; 

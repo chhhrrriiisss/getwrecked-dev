@@ -33,7 +33,7 @@ addToLeaderboard = {
 		if ((_x select 0) == _uid && (_x select 1) == _name && (_x select 2) == _vehicle) then {
 
 			_exists = true;
-			_data = (_x select 3);		
+			_data = (_x select 4);		
 
 			if (count _data != count _stats) then {
 				_data resize (count _stats);
@@ -42,7 +42,6 @@ addToLeaderboard = {
 			for "_i" from 0 to ((count _stats) -1) step 1 do {
 
 				_v = if (isNil { (_data select _i) }) then { 0 } else { (_data select _i) };
-				systemchat typename _v;
 				_data set [_i, (_v + (_stats select _i))];
 
 			};

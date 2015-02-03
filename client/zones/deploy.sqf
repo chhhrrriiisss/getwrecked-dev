@@ -78,11 +78,33 @@ _stripActions = {
 	false
 } count (attachedObjects _targetVehicle) > 0;
 
-// Clear all unnecessary actions in workshop
+// Clear/Unsimulate unnecessary items near workshop
 {
 	_x call _stripActions;
+	if (simulationEnabled _x) then {
+		_x enableSimulation false;
+	};
+
 	false
-} count (nearestObjects [ (getMarkerPos "workshopZone_camera"), [], 200]) > 0;
+} count (nearestObjects [ (getMarkerPos "workshopZone_camera"), [], 150]) > 0;
+
+// Add handlers for vehicle
+_hasHandlers = _targetVehicle getVariable ['hasHandlers', false];
+if (!_hasHandlers) then {
+	[_targetVehicle] spawn setVehicleHandlers;
+};
+
+// Add handlers for objects
+{
+	_h = _x getVariable ['hasHandlers', false];
+	if (!_h) then {
+		[_x] spawn setObjectHandlers;
+	};
+	false
+} count (attachedObjects _targetVehicle) > 0;
+
+// Set wanted value
+_targetVehicle setVariable ['GW_WantedValue', 0];
 
 _targetVehicle lockDriver false;
 [_targetVehicle, 2] spawn dustCircle;

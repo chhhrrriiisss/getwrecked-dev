@@ -33,7 +33,7 @@ MISSION_ROOT = call {
 call compile preprocessFile "global\compile.sqf";
 [] execVM "briefing.sqf";
 
-hint "v0.8.0i RC4";
+hint "v0.8.0 RC6";
 
 99999 cutText ["Loading...", "BLACK", 0.01]; 
 
@@ -45,7 +45,7 @@ if (X_Client || X_JIP) then {
    [] spawn {  
 
         call compile preprocessFile "client\compile.sqf";  
-        waitUntil {!isNull player};                 
+        waitUntil {!isNull player};               
         [] execVM 'client\init.sqf'; 
 
     };
@@ -56,6 +56,7 @@ if (isServer) then {
 
     call compile preprocessFile "server\compile.sqf";   
     [] execVM 'server\init.sqf'; 
+    [] execVM 'addons\recurringCleanup\init.sqf';
 
 };
 

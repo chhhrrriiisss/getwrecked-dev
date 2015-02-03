@@ -74,7 +74,9 @@ waitUntil{
 	_prevFuel = fuel _v;
 	_v setFuel 0;
 
-	while {alive _v && _vA > 0 && (!isEngineOn _v) && !GW_LMBDOWN && fireKeyDown == ''} do {	
+	for "_i" from 0 to 1 step 0 do {
+
+		if (!alive _v || _vA <= 0 || isEngineOn _v || GW_LMBDOWN || fireKeyDown != '') exitWith {};
 
 		Sleep 2;	
 

@@ -66,7 +66,9 @@ waitUntil{
 	(([] call _condition) || (time > _timeout))
 };
 
-while { ([] call _condition) && (time < _timeout) } do {
+for "_i" from 0 to 1 step 0 do {
+
+	if ( !([] call _condition) || time > _timeout || (!alive player)) exitWith {};
 	_origin = time + _duration;
 	_timeLeft = round(-1 * (time - _timeout));
 	_timeLeft = if (_timeLeft < 0) then { 0 } else { _timeLeft };

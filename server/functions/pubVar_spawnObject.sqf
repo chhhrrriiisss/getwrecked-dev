@@ -16,7 +16,7 @@ _this spawn {
 
 	_frame = if (_exact) then { "CAN_COLLIDE" } else { "NONE" };
 
-	_newObj = [_pos, 0, _type, 0, "NONE", false] call createObject;
+	_newObj = [_pos, 0, _type, 0, "NONE", true] call createObject;
 
 	[_newObj] spawn setObjectCleanup;
 

@@ -37,7 +37,6 @@ _nearby = _pos nearEntities [["Car"], 30];
 
 {
 	if (_x != _vehicle) then { 
-		[_x, "DES"] call markAsKilledBy; 
 		_tPos =  (ASLtoATL getPosASL _x);
 		_tPos set[2, 0.5];
 		_bomb = createVehicle ["Bo_GBU12_LGB", _tPos, [], 0, "CAN_COLLIDE"];

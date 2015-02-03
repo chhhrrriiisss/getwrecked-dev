@@ -13,7 +13,6 @@ systemchat 'Waiting for server...';
 waitUntil {Sleep 0.1; !isNil "serverSetupComplete"};
 systemchat 'Ready to go!';
 
-[] execVM 'global\functions\initDebug.sqf';
 
 // Check for an existing library
 _newPlayer = false;
@@ -41,6 +40,9 @@ GW_LASTLOAD = if (isNil "_last") then {  profileNamespace setVariable ['GW_LASTL
 
 // Prepare player, display and key binds
 [player] call playerInit;
+
+// Start simulation toggling
+[] spawn simulationManager;
 
 Sleep 0.1;
 

@@ -100,7 +100,7 @@ _deletedItems = ["Land_Sack_F", "Land_CnCBarrierMedium4_F", "Land_WaterTank_F"];
             _p = _newVehicle modelToWorld _p;
             
             // Spawn the object
-            _o = [_p, 0, (_x select 0), 0, "CAN_COLLIDE", false] call createObject;
+            _o = [_p, 0, (_x select 0), 0, "CAN_COLLIDE", true] call createObject;
             _o disableCollisionWith _newVehicle;
             _o setPos _p;                     
             _o attachTo [_newVehicle];

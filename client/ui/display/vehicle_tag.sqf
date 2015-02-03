@@ -12,6 +12,7 @@ if (isNull _vehicle) exitWith {};
 _dist = player distance _vehicle;
 _data = [typeOf _vehicle, GW_VEHICLE_LIST] call getData;
 _signature = if (!isNil "_data") then { ((_data select 2) select 7) } else { "" };
+_signature  = if (!isEngineOn _vehicle) then { "Tiny" } else { _signature };
 _visibleRange = switch (_signature) do { case "Large": { 450 }; case "Medium": { 350 }; case "Low": { 250 }; case "Tiny": { 150 }; default { 250 }; };
 if (_dist > _visibleRange) exitWith {};
 

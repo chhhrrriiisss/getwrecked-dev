@@ -13,7 +13,7 @@ if (alive _vehicle) then { _unit setDammage 0; };
 GW_INVULNERABLE = false;
 
 // If we've been kicked out due to lower health blow it up
-if (getDammage _vehicle > 0.9) then {
+if (getDammage _vehicle >= 0.9) then {
 	_vehicle setDammage 1;
 };
 

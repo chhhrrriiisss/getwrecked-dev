@@ -33,7 +33,7 @@ if (count _objects == 0) exitWith {};
 		if ( (_dmg + _modifier) > 1) then {		
 			_x call destroyInstantly;
 		} else {
-			_x setDammage (_dmg + _modifier);
+			[_x, (_dmg + _modifier)] call setVehicleDamage;
 		};
 	};
 

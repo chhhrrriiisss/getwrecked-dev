@@ -11,7 +11,7 @@ _target = _this select 1;
 _vehicle = _this select 2;
 
 _repeats = 3;
-_projectileSpeed = 40;
+_projectileSpeed = 60;
 _projectileRange = 50;
 _lifetime = 7;
 
@@ -63,7 +63,7 @@ _src = createVehicle ["Land_PenBlack_F", _oPos, [], 0, "CAN_COLLIDE"];
 ] call BIS_fnc_MP;
 
 _src setVectorDir _heading; 
-_src setVelocity _velocity; 
+_src setVelocity _velocity;
 
 _vehiclePos = (ASLtoATL getPosASL _vehicle);
 _nearby = _vehiclePos nearEntities [["Car"], 50];
@@ -71,17 +71,22 @@ _nearby  = [GW_CURRENTZONE] call findAllInZone;
 
 if (count _nearby < 0) exitWith {};
 
+
+
 _src addEventHandler['EpeContact', {	
+	if ((_this select 1) == (vehicle player)) exitWith {};
 	[(_this select 1), 100, 6] spawn setVehicleOnFire;
 }];
 
 _src spawn {
 
-	while {alive _this} do {
+	for "_i" from 0 to 1 step 0 do {
+
+		if (!alive _this) exitWith {};
 
 		_nearby = (ASLtoATL visiblePositionASL _this) nearEntities[["Car"], 6];
 		{ 
-			if (_x distance (ASLtoATL visiblePositionASL _this) < 4) exitWith {
+			if (_x distance (ASLtoATL visiblePositionASL _this) < 4 && _x != (vehicle player)) exitWith {
 				_null = [_x, 100, 6] spawn setVehicleOnFire;
 			};
 			false

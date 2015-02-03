@@ -66,6 +66,7 @@ _attachedValue = 0;
 	
 } count _attachedObjects > 0;
 
+// Calculate and set vehicle value
 _vehicleValue = [typeOf _vehicle, "", ""] call getCost;
 _totalValue = _attachedValue + _vehicleValue;
 _vehicle setVariable ["GW_Value", _totalValue];

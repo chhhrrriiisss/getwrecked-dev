@@ -44,7 +44,7 @@ if ( !local _obj && isNull attachedTo _obj) then {
 
 	// Create a new one, locally
 	_newObj = nil;
-	_newObj = [_pos, _dir, _type, nil, "CAN_COLLIDE", false] call createObject; 	
+	_newObj = [_pos, _dir, _type, nil, "CAN_COLLIDE", true] call createObject; 	
 
 	// Re-add the object properties depending on if its a supply box, or normal object
 	if (_isSupply) then {
@@ -75,7 +75,7 @@ if ( !local _obj && isNull attachedTo _obj) then {
 			false,
 			false 
 		] call BIS_fnc_MP;   
-
+		
 		// Special event handler to prevent launching vehicles
 		_newObj addEventHandler['EpeContactStart', {
 
@@ -134,7 +134,9 @@ _snappingInterval = 0.1;
 GW_HOLD_ROTATE_POS = [];
 _startAngle = 360;
 
-while {alive _unit && alive _obj && GW_EDITING && _unit == (vehicle player)} do {
+for "_i" from 0 to 1 step 0 do {
+
+	if (!alive _unit || !alive _obj || !GW_EDITING || _unit != (vehicle player)) exitWith {};
 
 	// Continually prevent damage and simulation (wierd stuff happens otherwise...)
 	if (simulationEnabled _obj) then { _obj enableSimulation false; };

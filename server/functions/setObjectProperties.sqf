@@ -10,4 +10,3 @@ if (isNull _o) exitWith {};
 if (!alive _o) exitWith {};
 
 [_o] spawn setObjectData;
-[_o] spawn setObjectHandlers;
