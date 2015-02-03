@@ -16,10 +16,10 @@ For the latest updates please follow [@GetWreckedA3 on Twitter](https://twitter.
 ## Credits
 
 **Steve IV**, **Lee**, **GoVeg**, **Grimple Poopenstein**, **Reazack**
-** The infamous alpha test crew - forever breaking my shit **
+The infamous alpha test crew - forever breaking my shit 
 
-**Orangesherbet**, **iTigah** & co
-** For their continuing help promoting and supporting the mod via Twitch, Youtube, Twitter and also lending their feedback! **
+**Orangesherbet, Tigah & co**
+For their continuing help promoting and supporting the mod via Twitch, Youtube, Twitter and also lending their feedback!
 
 ## License
 
