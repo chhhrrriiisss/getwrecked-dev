@@ -6,11 +6,9 @@
 
 private ['_source', '_target', '_tolerance'];
 
-_source = [_this,0, objNull, [objNull, 0]] call BIS_fnc_param;
-_target = [_this, 1, objNull, [objNull]] call BIS_fnc_param;
-_tolerance = [_this, 2, 10, [0]] call BIS_fnc_param;
-
-if (typename _source == "OBJECT" && { isNull _source }) exitWith { false };
+_source = _this select 0;
+_target = _this select 1;
+_tolerance = _this select 2;
 
 // Get angles from source to target
 _sourceDir = if (typename _source == "SCALAR") then { _source } else { getDir _source; };

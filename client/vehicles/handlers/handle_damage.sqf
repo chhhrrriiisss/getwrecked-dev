@@ -50,6 +50,7 @@ if (_selection != "?") then  {
                 case ("G_40mm_HEDP"): { GMG_DMG_SCALE };
                 case ("Bo_GBU12_LGB"): { EXP_DMG_SCALE };    
                 case ("B_762x51_Tracer_Green"): { LMG_DMG_SCALE };
+                case ("M_PG_AT"): { MSC_DMG_SCALE };
                 default                                { 1 };
             };
 
@@ -64,8 +65,12 @@ if (_selection != "?") then  {
 
 };
 
-// Check tyres and whether we need to eject
-[_vehicle] spawn checkTyres; 
+if (GW_DEBUG) then {
+    _str = format['%1 / %2 / %3 / %4', typeof _vehicle, _damage, _selection, (getDammage _vehicle)];
+    systemchat _str;
+    pubVar_systemChat = _str;
+    publicVariable "pubVar_systemChat";
+};
 
 // If we're invulnerable, ignore all damage
 _status = _vehicle getVariable ["status", []];
@@ -78,9 +83,25 @@ if ("invulnerable" in _status) then {
     _crew = crew _vehicle;
     { _x setDammage _vDmg; } ForEach _crew;
 
-    // Match hull damage to other parts
-    _dmg = _vehicle getHit "karoserie";
-    {  _vehicle setHit [_x, _dmg]; } Foreach (_vehicle getVariable ['GW_Hitpoints', []]);
+    // Match max part damage to all other parts
+    _highestDmg = 0;
+    _parts = ['palivo', 'motor', 'karoserie'];
+    { 
+        _dmg = _vehicle getHit _x; 
+        if (!isNil "_dmg") then {
+            if (_dmg > _highestDmg) then {
+                _highestDmg = _dmg;
+            };
+        };
+        false
+    } count _parts > 0;
+
+    if (_highestDmg > 0.91) then {
+        _vehicle setDammage 1;
+    } else {
+        { _vehicle setHit [_x, _highestDmg]; false } count _parts > 0;
+        _vehicle setDammage _highestDmg;
+    };
 
 };
 

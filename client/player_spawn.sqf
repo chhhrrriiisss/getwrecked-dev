@@ -124,8 +124,9 @@ waitUntil { (time > _timeout) || GW_DEATH_CAMERA_ACTIVE };
 
 // Clear/Unsimulate unnecessary items near workshop
 {
-	
-	if (isPlayer _x || _x isKindOf "car") then { _x enableSimulation true; } else { _x enableSimulation false; };
+	_i = _x getVariable ['GW_Ignore_Sim', false];
+	if ( (isPlayer _x || _x isKindOf "car") && !_i) then { _x enableSimulation true; } else { _x enableSimulation false; };
+	_x hideObject false;
 	false
 } count (nearestObjects [ (getMarkerPos "workshopZone_camera"), [], 150]) > 0;
 
@@ -137,7 +138,9 @@ waitUntil {Sleep 0.1; !isNil "serverSetupComplete"};
 
 _unit spawn setPlayerActions;
 
-[] spawn statusMonitor;
+_unit setVariable ['GW_Playername', GW_PLAYERNAME, true];
+
+[] call statusMonitor;
 
 for "_i" from 0 to 1 step 0 do {
 	

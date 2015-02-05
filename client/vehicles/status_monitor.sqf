@@ -1,10 +1,18 @@
+//
+//      Name: statusMonitor
+//      Desc: Main loop for vehicle damage and status effects
+//      Return: None
+//
+
 if (!isNil "GW_STATUS_MONITOR_EH") then {
 	[GW_STATUS_MONITOR_EH, "onEachFrame"] call BIS_fnc_removeStackedEventHandler;
+	GW_STATUS_MONITOR_EH = nil;
 };
 
 GW_STATUS_MONITOR_EH = ["GW_STATUS_MONITOR", "onEachFrame", {
 	
-	_vehicle = (vehicle player);
+	GW_CURRENTVEHICLE = (vehicle player);
+	_vehicle = GW_CURRENTVEHICLE;
 	_inVehicle = if (_vehicle != player) then { true } else { false };
 
 	// Auto close inventories
@@ -21,11 +29,8 @@ GW_STATUS_MONITOR_EH = ["GW_STATUS_MONITOR", "onEachFrame", {
     	GW_STATUS_MONITOR_LAST_UPDATE = time;
     };
 
-    if (GW_CURRENTZONE == "workshopZone" || (_inVehicle && GW_CURRENTZONE != "workshopZone")) then {
-    	GW_INVULNERABLE = true;
-    } else {
-    	GW_INVULNERABLE = false;
-	};
+    GW_INVULNERABLE = false;
+    if (GW_CURRENTZONE == "workshopZone" || (_inVehicle && GW_CURRENTZONE != "workshopZone")) then { GW_INVULNERABLE = true; };
 
 	['Invulnerable', format['%1', GW_INVULNERABLE]] call logDebug;
 
@@ -112,18 +117,20 @@ GW_STATUS_MONITOR_EH = ["GW_STATUS_MONITOR", "onEachFrame", {
 
 	};
 
+	[_vehicle] spawn checkTyres;
+	
+	// Give a little bit of fuel if it looks like we're out
+	if (fuel _vehicle < 0.01 && !("emp" in _status)) then {
+		_vehicle setFuel 0.01;
+	};
+
 	// No status, reinflate tyres 
 	if (count _status <= 0) exitWith {
 		_vehicle sethit ["wheel_1_1_steering", 0];
 		_vehicle sethit ["wheel_1_2_steering", 0];
 		_vehicle sethit ["wheel_2_1_steering", 0];
 		_vehicle sethit ["wheel_2_2_steering", 0];
-	};
-
-	// Give a little bit of fuel if it looks like we're out
-	if (fuel _vehicle < 0.01 && !("emp" in _status)) then {
-		_vehicle setFuel 0.01;
-	};
+	};	
 
 	switch (true) do {     
 
@@ -158,44 +165,10 @@ GW_STATUS_MONITOR_EH = ["GW_STATUS_MONITOR", "onEachFrame", {
 
 		};
 
-		case ("jammer" in _status): {
-
-			_vehiclesInZone = [GW_CURRENTZONE] call findAllInZone;
-
-			{
-
-				if (_x != _vehicle) then {
-
-					_vehStatus = _x getVariable ['status', []];
-
-					if ((_x distance _vehicle) < 150 && !("jammed" in _vehStatus)) then {
-
-						[       
-							[
-								_x,
-								['jammed'],
-								5
-							],
-							"addVehicleStatus",
-							_x,
-							false 
-						] call BIS_fnc_MP; 
-
-					};
-
-				};
-
-				false
-
-			} count _vehiclesInZone > 0;		
-
-		};
-
 		case ("invulnerable" in _status): {
 
 			// _invState = getDammage _vehicle;        
 			// _vehicle setDammage _invState;
-
 		};
 
 		case ("inferno" in _status && !("nanoarmor" in _status)): {   

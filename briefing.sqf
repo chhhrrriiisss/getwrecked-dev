@@ -11,6 +11,21 @@ player createDiaryRecord ["issues",
 [
 "Common issues and fixes:",
 "
+- An item I attached isn't rotated how I want it<br />
+If your vehicle is suspended in the air, this will only update when you drop the vehicle back on the ground<br />
+<br />
+- My vehicle won't save<br />
+Make sure your vehicle is placed on the ground and there are no other vehicles nearby<br />
+<br />
+- My keybinds don't save<br />
+Keybinds are only saved when you save the vehicle in the workshop - editing them in zone will not persist<br />
+<br />
+- I can't fire a weapon/module<br />
+Ensure you have enough ammo/fuel and that it is keybound correctly. Sometimes hopping out of the vehicle then back in can help<br />
+<br />
+- My vehicle went flying across the map all of a sudden?<br />
+If this happens when you are in a battle zone - then it is not a bug, it's the magnetic coil - make your vehicle heavier or use an emergency parachute<br />
+<br />
 - Simulated objects bumping vehicles <br /> 
 Drop the object on the floor, wait a second then pick it back up <br />
 <br />
@@ -21,7 +36,8 @@ Occasionally this does get stuck. If you hop out and back in the vehicle it shou
 This is caused by lag and the object (especially if its a railgun/rpg) should eventually update, it just takes a while<br />
 <br />
 - Vehicle repair/rearm/refuel pads not working<br />
-They can be temperamental and slow, but they do work - just give it a second!<br />
+They can be temperamental and slow, but they do work - just give it a second, or drive off then back on the pad.<br />
+
 <br />
 "
 ]];
@@ -47,7 +63,13 @@ Open Vehicle Settings - User Action 20<br />
 "
 ]];
 
-
+player createDiaryRecord ["changelog",
+[
+"Changelog:",
+"
+Please go to getwrecked.info/changelog for a complete list of changes.
+"
+]];
 
 
 

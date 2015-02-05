@@ -4,9 +4,9 @@
 //      Return: Bool (Found)
 //
 
-_source =  [_this,0, objNull, [objNull]] call BIS_fnc_param;
-_range = [_this,1, 15, [0]] call BIS_fnc_param;
-_scope = [_this, 2, false, [false]] call BIS_fnc_param;
+_source =  _this select 0;
+_range = if (isNil "_this select 1") then { 15 } else { (_this select 1) };
+_scope = if (isNil "_this select 2") then { true } else { (_this select 2) };
 
 _found = nil;
 

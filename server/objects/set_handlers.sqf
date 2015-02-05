@@ -8,8 +8,6 @@ private ['_obj'];
 
 _obj = _this select 0;
 
-_obj setVariable ['hasHandlers', true];
-
 if (isServer) then {
 
 	if (isNil {_obj getVariable "GW_MPHitEH"}) then {	
@@ -33,5 +31,7 @@ if (isNil {_obj getVariable "GW_HandleDamageEH"}) then {
 if (isNil {_obj getVariable "GW_EpeContactEH"}) then {	
 	_obj setVariable ["GW_EpeContactEH", _obj addEventHandler ["EpeContact", handleContactObject]];
 };
+
+_obj setVariable ['hasHandlers', true];
 
 true

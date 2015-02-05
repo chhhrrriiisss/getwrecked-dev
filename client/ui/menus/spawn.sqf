@@ -10,23 +10,45 @@ GW_SPAWN_ACTIVE = true;
 _pad = _this select 0;
 _unit = _this select 1;
 
+_onExit = {
+    systemChat (_this select 0);
+    GW_SPAWN_ACTIVE = false;
+};
+
+
 // Do we actually have something to deploy?
 _nearby = (ASLtoATL (getPosASL _pad)) nearEntities [["Car"], 8];
-if (count _nearby <= 0 && isNil "GW_LASTLOAD") exitWith {	systemChat 'You have no vehicle to deploy.'; GW_SPAWN_ACTIVE = false; };
+if (count _nearby <= 0 && isNil "GW_LASTLOAD") exitWith { ['You have no vehicle to deploy.'] spawn _onExit; };
+
+// Check ownership
+_owner = ( [_pad, 8] call checkNearbyOwnership);
+
+if (!_owner) exitWith {
+    ["You don't own this vehicle."] spawn _onExit;
+};
 
 // Check the vehicle on the pad exists, is ready and simulated
 GW_SPAWN_VEHICLE = nil;
+_ownership = false;
 {
 	_isVehicle = _x getVariable ["isVehicle", false];
 	_isOwner = [_x, _unit, true] call checkOwner;	
 	
+    _ownership = _isOwner;
 	if (_isVehicle && _isOwner) exitWith {
 		GW_SPAWN_VEHICLE = _x;
 	};
 	false
 } count _nearby > 0;
 
-if (isNil "GW_SPAWN_VEHICLE") exitWith { systemChat 'No valid vehicle found. Try load or save again.'; GW_SPAWN_ACTIVE = false; };
+if (isNil "GW_SPAWN_VEHICLE") exitWith { 
+
+    if (_ownership) then {
+        ['No valid vehicle found. Try load or save again.'] spawn _onExit;
+    } else {
+        ["You don't own this vehicle."] spawn _onExit;
+    };
+};
 
 if (!simulationEnabled GW_SPAWN_VEHICLE) then {
 
@@ -51,8 +73,7 @@ waitUntil{
 };
 
 if (time > _timeout) exitWith {
-    systemChat 'Vehicle needs to be placed on the ground to be deployed.';
-    GW_SPAWN_ACTIVE = false;
+    ["Vehicle needs to be placed on the ground to be deployed."] spawn _onExit;
 };
 
 // Check it's a valid vehicle and if not wait for it to be compiled
@@ -71,8 +92,7 @@ waitUntil{
 };
 
 if (time > _timeout) exitWith {
-    systemChat 'Please hop in this vehicle at least once before saving.';
-    GW_SPAWN_ACTIVE = false;
+    ["Badly spawned vehicle, you should probably start again."] spawn _onExit;
 };
 
 // Check the vehicle has been saved at least once prior
@@ -87,7 +107,9 @@ _firstCompile = GW_SPAWN_VEHICLE getVariable ["firstCompile", false];
 _hasActions = GW_SPAWN_VEHICLE getVariable ["hasActions", false];
 
 // Abort if either of the above fail
-if (!_firstCompile || !_hasActions) exitWith {	systemChat 'Vehicle is not ready to deploy.'; GW_SPAWN_ACTIVE = false };
+if (!_firstCompile || !_hasActions) exitWith {	
+     ["Vehicle is not ready to deploy."] spawn _onExit;
+};
 
 // If we've deployed somewhere previously, show that
 GW_SPAWN_LOCATION = if (!isNil "GW_LASTLOCATION") then { GW_LASTLOCATION } else {  ((GW_VALID_ZONES select (random (count GW_VALID_ZONES -1))) select 0) };

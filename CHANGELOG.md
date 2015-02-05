@@ -1,7 +1,12 @@
+
+
+
+
 # [Get Wrecked](http://getwrecked.info) Changelog
 ## Last Updated: [03-02-2015] ##
 
 Note: Some changes that are deemed spoilers are hidden from this log (we have to keep some surprises)
+
 
 **v0.8** [Public alpha release]
 
@@ -15,14 +20,17 @@ Note: Some changes that are deemed spoilers are hidden from this log (we have to
 - Lowered chance of tyre pop on mortar impact and mortar rof reduced
 - Eject system is now an emergency parachute (WIP) 
 - Optimized HUD loop to improve client fps
-- Added cleanup to remove excess actions from unnecessary items while in battle
 - Vehicles with engines off now have lower radar signatures
 - Overcharge no longer affects weapons, only module cooldowns
 - Reduced overall number of items in workshop to improve fps
-- Tweaked eventHandler for karts to prevent ground stick
+- Tweaked eventHandler for karts to prevent wheels getting stuck
 - Lowered mass modifiers further to allow for more items on kart/quadbike/suv
-- Reduced mine damage to 50%
+- Self destruct no longer tags players killed by it
+- Reduced mine damage to 30%
 - Tweaked terminals to now use checkNearbyActions
+- Additional checks on save/deploy/clear to determine ownership and prevent griefing
+- AttachToRelative function thanks to KillzoneKid
+- Tweaks to vehicle name tag function and simulation manager to improve client fps
 - Fixed - Damage object causing action menu to bug out
 - Fixed - Key binds resetting on load vehicle 
 - Fixed - Guided missile always exploding at 1000m 
@@ -48,6 +56,7 @@ Note: Some changes that are deemed spoilers are hidden from this log (we have to
 - Removed - Parachute vehicle drop as it causes desync and does not work properly
 - Removed - Long concrete wall, for balance purposes 
 - Removed - Jammer supply crate in place of radar powerup
+- Added - cleanup to remove excess actions from unnecessary items while in battle
 - Added - Nuke death camera focus mode
 - Added - 3D halo status effect for vehicle power ups (WIP)
 - Added - Supply drop crates with custom power ups/money/ammo etc
@@ -59,13 +68,13 @@ Note: Some changes that are deemed spoilers are hidden from this log (we have to
 - Added - Lights to temporary vehicle spawn areas so you can see them in preview at night
 - Added - More vehicle terminals and support for 12 players
 - Added - Support for destroyable attached building objects on vehicles (WIP)
-[ Note: This does not currently include weapons or tactical modules ] 
 - Added - Key binds for modules now shown on vehicle hud
 - Added - Light Machine Gun (WIP)
 - Added - !reset to allow for character profile resets
 - Added - Recurring cleanup script by MDCCLXXVI
 - Added - Reintroduced simulation manager to increase overall fps 
 - Added - Unflip vehicle option to vehicle scroll menu (when in zone) 
+- Added - Object tilting and respective binds (User6 and User7) (WIP)
 
 
 **v0.7.8 - v0.7.9**, [Closed alpha release]
@@ -140,10 +149,6 @@ Note: Some changes that are deemed spoilers are hidden from this log (we have to
 - Fixed - handleKill spamming the server with 'logKill' requests when a vehicle is blown up
 - Fixed - Vehicles disappearing in workshop area (stay within 10m of it and nothing should happen)
 - Fixed - Key binds for some weapons not working despite being bound correctly (Railgun/Rocket Launcher primarily)
-
-
-
-
 
 
 **v0.7.6 **, [Make Arma Not War Release]

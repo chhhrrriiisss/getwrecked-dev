@@ -76,6 +76,7 @@ for "_i" from 0 to 1 step 0 do {
 
 if ((ASLtoATL getPosASL _vehicle) select 2 < 1) then {
 
+	_vehicle setVariable ['GW_Ignore_Sim', false];
 	[		
 		[
 			_vehicle,
@@ -87,7 +88,8 @@ if ((ASLtoATL getPosASL _vehicle) select 2 < 1) then {
 	] call BIS_fnc_MP;
 
 } else {
-	
+
+	_vehicle setVariable ['GW_Ignore_Sim', true];
 	[		
 		[
 			_vehicle,

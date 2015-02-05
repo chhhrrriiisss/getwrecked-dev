@@ -64,29 +64,29 @@ _unit addAction[snapObjectFormat, {
 
 // Tilt Object Forward & Backward (Applies to only some objects)
 // Currently disabled due to bugginess
-// if ( !((typeOf _obj) in GW_TILT_EXCLUSIONS) ) then {
+if ( !((typeOf _obj) in GW_TILT_EXCLUSIONS) ) then {
 
-// 	_unit addAction[tiltForwardObjectFormat, {
+	_unit addAction[tiltForwardObjectFormat, {
 
-// 		_unit = _this select 0;
-// 		_obj = _unit getVariable ['editingObject', nil];
-// 		if (isNil "_obj" || isNull _unit) exitWith {};
+		_unit = _this select 0;
+		_obj = _unit getVariable ['editingObject', nil];
+		if (isNil "_obj" || isNull _unit) exitWith {};
 
-// 		[_obj, [-10, 0]] call tiltObj;
+		[_obj, [-10, 0]] call tiltObj;
 		
-// 	}, _obj, 4, false, false, "", "( (vehicle player) == player)"]; 
+	}, _obj, 4, false, false, "", "( (vehicle player) == player)"]; 
 
-// 	_unit addAction[tiltBackwardObjectFormat, {
+	_unit addAction[tiltBackwardObjectFormat, {
 
-// 		_unit = _this select 0;
-// 		_obj = _unit getVariable ['editingObject', nil];
-// 		if (isNil "_obj" || isNull _unit) exitWith {};
+		_unit = _this select 0;
+		_obj = _unit getVariable ['editingObject', nil];
+		if (isNil "_obj" || isNull _unit) exitWith {};
 
-// 		[_obj, [10, 0]] call tiltObj;
+		[_obj, [10, 0]] call tiltObj;
 		
-// 	}, _obj, 4, false, false, "", "( (vehicle player) == player)"]; 
+	}, _obj, 4, false, false, "", "( (vehicle player) == player)"]; 
 
-// };
+};
 
 // Rotate Object CW
 _unit addAction[rotateCWObjectFormat, {

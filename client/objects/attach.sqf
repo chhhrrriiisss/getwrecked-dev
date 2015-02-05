@@ -112,17 +112,6 @@ if ( !isNull attachedTo _orig ) then {  detach _orig; };
 _obj = _orig;
 if (_forceAttach) then {} else { GW_EDITING = false; };
 
-// Obtain vector/angle information for the object
-_pitchBank = _obj call BIS_fnc_getPitchBank;
-_dir = getDir _obj;
-_vehDir = getDir _veh;
-_tarDir = (_dir - _vehDir);
-_tarDir = [_tarDir] call normalizeAngle;
-
-_vehPitchBank = _veh call BIS_fnc_getPitchBank;
-_tarPitch = [((_pitchBank select 0) - (_vehPitchBank select 0))] call normalizeAngle;
-_tarBank = [((_pitchBank select 1) - (_vehPitchBank select 1))] call normalizeAngle;
-
 _wasSimulated = (simulationEnabled _veh);
 
 // Disable simulation
@@ -142,8 +131,9 @@ waitUntil{
 	( (time > _timeout) || ( !(simulationEnabled _veh) && !(simulationEnabled _obj)  )  )
 };
 
-// Attach it
+_vect = [_obj, _veh] call getVectorDirAndUpRelative;
 _obj attachTo [_veh];
+_obj setVectorDirAndUp _vect;
 
 // Wait for it to be attached
 waitUntil { !isNull attachedTo _obj };	
@@ -153,11 +143,6 @@ if (_forceAttach) then {} else {
 	["OBJECT ATTACHED!", 1, successIcon, nil, "slideDown"] spawn createAlert;	
 };
 
-// Set the object angle using the information we gathered before
-[_obj, [_tarPitch,_tarBank,_tarDir]] call setPitchBankYaw;
-
-pubVar_setDir = [_obj, getDir _obj];
-publicVariable "pubVar_setDir";  
 
 if (_wasSimulated) then {
 	// Update the direction by re-enabling simulation on the vehicle

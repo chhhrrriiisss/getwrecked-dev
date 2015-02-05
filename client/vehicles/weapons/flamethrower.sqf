@@ -67,7 +67,6 @@ _src setVelocity _velocity;
 
 _vehiclePos = (ASLtoATL getPosASL _vehicle);
 _nearby = _vehiclePos nearEntities [["Car"], 50];
-_nearby  = [GW_CURRENTZONE] call findAllInZone;
 
 if (count _nearby < 0) exitWith {};
 

@@ -6,12 +6,11 @@
 
 private ['_pos', '_icon', '_limit', '_vehDir'];
 
-_nearbyTargets = if (!isNil "GW_CURRENTZONE") then { [GW_CURRENTZONE, true] call findAllInZone } else { [] };
-
+_nearbyTargets = _this;
 if (count _nearbyTargets == 0) exitWith {};
 
 // Some required conditions
-_vehicle = (vehicle player);
+_vehicle = GW_CURRENTVEHICLE;
 _pos = (ASLtoATL getPosASL _vehicle);
 _isCloaked = if ('cloak' in (_vehicle getVariable ["status", []]) ) then { true } else { false };
 
@@ -100,7 +99,7 @@ if (isNil "GW_TARGET_DIRECTION") then {	GW_TARGET_DIRECTION = 0; };
 } count _nearbyTargets > 0;
 
 _dist = 9999;
-_closest = (vehicle player);
+_closest = GW_CURRENTVEHICLE;
 
 // Find the closest target from those that are valid
 {
@@ -108,8 +107,9 @@ _closest = (vehicle player);
 	if (isNil "_x") exitWith { GW_VALIDTARGETS = []; };
 
 	_d = _x distance (vehicle player);
-	if (_d < _dist && _x != (vehicle player) && !(_x in GW_LOCKEDTARGETS)) then {
+	if (_d < _dist && _x != GW_CURRENTVEHICLE && !(_x in GW_LOCKEDTARGETS)) then {
 		_closest = _x;
+
 	};
 
 
@@ -124,6 +124,7 @@ if (!GW_ACQUIRE_ACTIVE && !(_closest in GW_LOCKEDTARGETS) && !_isCloaked) then {
 	// If we're not already locked and there's no CM
 	if ( !("locked" in _status) && !("nolock" in _status) && !("cloak" in _status)) then {
 		[_closest] spawn acquireTarget;
+
 
 	};
 	

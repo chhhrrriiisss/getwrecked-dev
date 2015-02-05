@@ -77,7 +77,7 @@ if (_type == "REFUEL" && (_currentFuel < _maxFuel) ) exitWith {
 		_error = false;
 		_maxFuel = (_this getVariable ["maxFuel",1]);		
 		_currentFuel = (fuel _this) + (_this getVariable ["fuel",0]);
-
+		_increment = (_maxFuel * 0.1);
 
 		_timeout = time + 10;
 		for "_i" from 0 to 1 step 0 do {
@@ -85,10 +85,15 @@ if (_type == "REFUEL" && (_currentFuel < _maxFuel) ) exitWith {
 			if (_currentFuel >= _maxFuel || time > _timeout) exitWith {};
 			if ([0,0,0] distance (velocity _this) > 10) exitWith { _error = true; };
 
+
+			if ((fuel _this) < 1) then {
+				_this setFuel ((fuel _this) + _increment);
+			} else {
+				_this setFuel 1;
+				_this setVariable ["fuel", (_this getVariable ["fuel", 0]) + _increment];
+			};
+
 			_currentFuel = (fuel _this) + (_this getVariable ["fuel",0]);
-			_allocated = [ ( ( _currentFuel  + ( _maxFuel / 10) ) - 1), 0, 100 ] call limitToRange;
-			_this setVariable["fuel", _allocated];
-			_this setFuel _currentFuel;
 			sleep 0.5;
 		};	
 		

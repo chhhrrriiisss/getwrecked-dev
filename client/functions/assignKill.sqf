@@ -21,7 +21,7 @@ if (isNil "_v") exitWith {};
 if (player != _v && alive _v) then {
 
 	_wantedValue = _v getVariable ["GW_WantedValue", 0];
-	_wantedValue = _wantedValue + ((random 5000) + 2500);
+	_wantedValue = _wantedValue + (_money * 0.25);
 	_v setVariable ["GW_WantedValue", _wantedValue];
 
 };

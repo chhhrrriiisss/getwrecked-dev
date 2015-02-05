@@ -4,6 +4,8 @@
 //      Return: None
 //
 
+private ['_vehicle', '_target', '_acquireTime', '_data', '_status'];
+
 // Dont acquire more than one target at once
 if (GW_ACQUIRE_ACTIVE) exitWith {};
 GW_ACQUIRE_ACTIVE = true;
@@ -18,8 +20,8 @@ _distanceModifier = (_target distance (vehicle player)) / 500;
 
 // Targets with a larger signature are easier to lock
 _data = [typeOf _target, GW_VEHICLE_LIST] call getData;
-_vehicle = (vehicle player);
-_status = _vehicle getVariable ["status", []];
+GW_CURRENTVEHICLE = (vehicle player);
+_status = GW_CURRENTVEHICLE getVariable ["status", []];
 _signature = if (!isNil "_data") then { ((_data select 2) select 7) } else { "" };
 _signature = if ('radar' in _status) then { "Large" } else { _signature };
 _adjustedLockTime = switch (_signature) do { case "Large": { (GW_MINLOCKTIME / 3) }; case "Medium": { (GW_MINLOCKTIME * 0.6) }; case "Low": { (GW_MINLOCKTIME * 1) }; case "Tiny": { (GW_MINLOCKTIME * 2) }; default { GW_MINLOCKTIME }; };
@@ -32,15 +34,16 @@ _targetted = false;
 _direction = 0;
 _scale = 2;
 
-_hasLockons = _vehicle getVariable ["lockOns", false];	
+_hasLockons = GW_CURRENTVEHICLE getVariable ["lockOns", false];	
+
 _isCloaked = if ('cloak' in _status) then { true } else { false };	
 
 // While its in locking range and alive
 for "_i" from 0 to 1 step 0 do {
 
-	if (_isCloaked || _hasLockons || !(_target in GW_VALIDTARGETS) || !alive _target || _targetted || _target == (vehicle player) ) exitWith {};
+	if (_isCloaked || !_hasLockons || !(_target in GW_VALIDTARGETS) || !alive _target || _targetted || _target == GW_CURRENTVEHICLE ) exitWith {};
 
-	_hasLockons = (vehicle player) getVariable ["lockOns", false];
+	_hasLockons = GW_CURRENTVEHICLE getVariable ["lockOns", false];
 	_pos =  _target modelToWorld [0,0,0];
 
 	// Combined velocity of both vehicles influences lock time

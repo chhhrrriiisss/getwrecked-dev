@@ -39,6 +39,8 @@ setTerminalActions = {
 	// If it's a vehicle terminal
 	if (typeOf _obj == "Land_spp_Transformer_F" || (typeOf _obj == "SignAd_Sponsor_ARMEX_F" && typename _var == "OBJECT") ) exitWith {
 
+		_obj setVariable ['GW_Target', _var];		
+
 		// New Vehicle
 		_obj addAction[createVehFormat, { 
 			[(_this select 3)] spawn newMenu;
@@ -47,7 +49,7 @@ setTerminalActions = {
 		// Save Vehicle
 		_obj addAction[savePadFormat, {
 			[''] spawn saveVehicle;
-		}, _var, 8, false, false, "", "( !GW_EDITING && ((player distance _target) < 12) )"];
+		}, _var, 8, false, false, "", "( !GW_EDITING && ((player distance _target) < 12)  )"];
 
 		// Deploy/Spawn
 		_obj addAction[spawnInFormat, { 
@@ -63,7 +65,6 @@ setTerminalActions = {
 		_obj addAction[clearPadFormat, {
 			[(_this select 3)] spawn clearPad;
 		}, _var, 5, false, false, "", "( !GW_EDITING && ((player distance _target) < 12) )"];
-
 	};
 
 	true

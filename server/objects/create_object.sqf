@@ -86,9 +86,7 @@ if (isServer) then {
 
 _newObj setDir _dir;
 if (_handlers) then { 
-
-	[_newObj] spawn setObjectHandlers; 
-
+	[_newObj] call setObjectHandlers; 
 };
 	
 if (!isServer) exitWith {

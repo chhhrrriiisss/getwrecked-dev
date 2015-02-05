@@ -43,6 +43,7 @@ GW_DEPLOY_ACTIVE = false;
 GW_TIMER_ACTIVE = false;
 GW_DIALOG_ACTIVE = false;
 GW_HUD_ACTIVE = false;
+GW_CURRENTVEHICLE = (vehicle player);
 GW_CURRENTZONE = nil;
 GW_CURRENTZONE_DATA = [];
 GW_WAITFIRE = false;
@@ -64,6 +65,8 @@ GW_LINEEFFECT_COLOR = colorRed;
 GW_TARGETICON_ARRAY = [];
 GW_WARNINGICON_ARRAY = [];
 GW_TAGLIST = [];
+GW_ANIMCOUNT = 0;
+GW_LASTTICK = 0;
 
 // Player
 playerInit = compile preprocessFile 'client\player_init.sqf';
@@ -76,9 +79,10 @@ previewCamera = compile preprocessFile "client\ui\cameras\preview_camera.sqf";
 setPlayerTexture = compile preprocessFile 'client\functions\setPlayerTexture.sqf';
 call compile preprocessfile "client\key_binds.sqf";
 
-// Ui
-call compile preprocessfile "client\ui\display\display.sqf";
+// UI
 call compile preprocessFile 'client\ui\compile.sqf';
+drawMap = compile preprocessfile "client\ui\display\map.sqf";
+drawDisplay = compile preprocessfile "client\ui\display\display.sqf";
 drawHud = compile preprocessFile "client\ui\hud\hud.sqf";
 vehicleTag = compile preprocessFile 'client\ui\display\vehicle_tag.sqf';
 targetLockOn = compile preprocessFile 'client\ui\display\lockon.sqf';
@@ -90,7 +94,7 @@ buyMenu = compile preprocessFile "client\ui\dialogs\buy.sqf";
 inventoryMenu = compile preprocessFile "client\ui\dialogs\inventory.sqf";
 spawnMenu = compile preprocessFile "client\ui\menus\spawn.sqf";
 previewMenu = compile preprocessFile "client\ui\menus\preview.sqf";
-
+drawServiceIcon = compile preprocessFile "client\functions\drawServiceIcon.sqf";
 
 // HUD Functions
 createAlert = compile preprocessFile "client\ui\hud\alert.sqf";
@@ -138,6 +142,7 @@ tagObj = compile preprocessFile 'client\objects\tag.sqf';
 findSnapPoint = compile preprocessFile "client\functions\findSnapPoint.sqf";
 checkNearbyActions = compile preprocessFile "client\functions\checkNearbyActions.sqf";	
 setPlayerActions = compile preprocessFile "client\functions\setPlayerActions.sqf";	
+checkNearbyOwnership = compile preprocessFile "client\functions\checkNearbyOwnership.sqf";	
 
 
 // Vehicle Functions

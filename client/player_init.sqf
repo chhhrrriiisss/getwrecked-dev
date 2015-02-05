@@ -30,17 +30,11 @@ GW_PLAYERNAME = (name player);
 _unit setVariable ["firstSpawn", true];
 
 _unit addeventhandler ["respawn", {
-
 	_this spawn playerRespawn;
-	//_this execVM 'client\player_respawn.sqf';
-
 }];  
 
-_unit addeventhandler ["killed",{
-	
+_unit addeventhandler ["killed",{	
 	_this spawn playerKilled;
-	//_this execVM 'client\player_killed.sqf';
-
 }];
 
 _unit addeventhandler ["handleDamage",{ 
@@ -57,9 +51,41 @@ _unit addeventhandler ["handleDamage",{
 
 }];
 
-[_unit] spawn playerSpawn;
-//[_unit] execVM 'client\player_spawn.sqf';
+addMissionEventHandler ["HandleDisconnect",{
 
+	systemchat 'RUNNING DISCONNECT HANDLER';
+	
+	// Remove ownership from any vehicles in workshop
+	_n = (_this select 0) getVariable ['GW_Playername', ''];
+	_o = nearestObjects [getmarkerpos "workshopZone_camera", [], 150];
+
+	{
+
+		_owner = _x getVariable ['owner', ''];
+		if (_owner == _n) then {
+			_x setVariable ['owner', '', true];
+		};
+		false
+	} count _o > 0;
+
+	// Kill the unit
+	_n setDammage 1;
+
+}];
+
+// Player set up
+[_unit] spawn playerSpawn;
+
+// Useful for detecting mouse presses
+[] call mouseHandler;
+
+// Used for detecting key presses
+[] call initBinds;
+
+// Map markers, boundaries
+[] spawn drawMap;
+
+// UI loop for hud icons
 [] call drawDisplay;
 
 systemChat 'Player initialization complete.';

@@ -82,7 +82,7 @@ if (!alive _lockedTarget) then {
 
 				if (_distanceToTarget < 4) then {
 					_rnd = (random 0.4) + 0.4;
-					[_t, _rnd] call setVehicleDamage;	
+					_t setDamage ((getDammage _t) + _rnd);
 				};
 			};
 

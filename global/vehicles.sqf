@@ -15,7 +15,7 @@ GW_VEHICLE_LIST = [
 	["C_Offroad_01_F", "Civilian Offroad", [ [0.2, 99999], 3, 5, 2, 1, 5, (0.1 * GAM), 'Low', 1000 ],  'The offroad is an agile, versatile albeit lightly armored utility vehicle.' ],
 	["C_SUV_01_F", "SUV", [ [0.1, 3000] , 3, 4, 1, 2, 4, (0.1 * GAM), 'Low', 1000 ], 'A capable and reliable vehicle with a low radar signature.' ],
 	["C_Van_01_transport_F", "Civilian Truck", [ [0.5, 99999], 2, 7, 2, 2, 5, (0.25 * GAM), 'Medium', 1000 ], 'Ample storage, fuel and ammo capacity, a great workhorse.' ],		
-	["C_Kart_01_F", "Kart", [ [0.025, 500], 2, 3, 1, 1, 1, (0.1 * GAM), 'Tiny', 1000 ], 'Extremely quick and hard to hit which makes it quite unpredictable.' ],
+	["C_Kart_01_F", "Kart", [ [0.075, 500], 2, 3, 1, 1, 1, (0.1 * GAM), 'Tiny', 1000 ], 'Extremely quick and hard to hit which makes it quite unpredictable.' ],
 
 	// Trucks
 

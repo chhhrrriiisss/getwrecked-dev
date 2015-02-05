@@ -28,6 +28,17 @@ if (!isNil "GW_SPAWN_LOCATION") then {
 		_success = false;
 	};
 
+	if (_sucess) then {
+
+		// Refresh simulation manager now that we've switched zones
+		GW_SIMULATION_MANAGER_ACTIVE = false;
+		Sleep 2;
+		[] spawn simulationManager;
+
+		// Make sure we record a successful deploy
+		['deploy', _targetVehicle, 1] spawn logStat; 
+	};
+
 	if (!_success) then {
 
 		_driver = driver GW_SPAWN_VEHICLE;

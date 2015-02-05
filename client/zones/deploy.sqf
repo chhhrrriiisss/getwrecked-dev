@@ -14,6 +14,10 @@ GW_DEPLOY_ACTIVE = true;
 private ['_pad', '_unit', '_location'];
 
 _targetVehicle = _this select 0;
+_targetName = _targetVehicle getVariable ['name', ''];
+
+GW_LASTLOAD = _targetName;
+
 _unit = _this select 1;
 _location = _this select 2;
 
@@ -83,6 +87,7 @@ _stripActions = {
 	_x call _stripActions;
 	if (simulationEnabled _x) then {
 		_x enableSimulation false;
+		_x hideObject true;
 	};
 
 	false
@@ -91,14 +96,14 @@ _stripActions = {
 // Add handlers for vehicle
 _hasHandlers = _targetVehicle getVariable ['hasHandlers', false];
 if (!_hasHandlers) then {
-	[_targetVehicle] spawn setVehicleHandlers;
+	[_targetVehicle] call setVehicleHandlers;
 };
 
 // Add handlers for objects
 {
 	_h = _x getVariable ['hasHandlers', false];
 	if (!_h) then {
-		[_x] spawn setObjectHandlers;
+		[_x] call setObjectHandlers;
 	};
 	false
 } count (attachedObjects _targetVehicle) > 0;
@@ -112,9 +117,6 @@ _targetVehicle lockDriver false;
 
 // Everything is ok, return true
 GW_DEPLOY_ACTIVE = false;
-
-// Make sure we record a successful deploy
-['deploy', _targetVehicle, 1] spawn logStat; 
 
 // Tell everyone else where we've gone
 _str = if (GW_SPAWN_LOCATION == "downtown") then { "" } else { "the "};

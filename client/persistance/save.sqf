@@ -10,9 +10,7 @@ if (GW_SETTINGS_ACTIVE || GW_PREVIEW_CAM_ACTIVE) exitWith {};
 if (GW_WAITSAVE) exitWith {  systemChat 'Save currently in progress. Please wait.'; };
 GW_WAITSAVE = true;
 
-
-
-_saveTarget = [_this,0, "", [""]] call BIS_fnc_param;
+_saveTarget = _this select 0;
 
 _onExit = {
     systemChat (_this select 0);
@@ -35,6 +33,12 @@ if (_distance > 15) exitWith {
 
 _target = _closest;
 
+_owner = ( [_target, 8] call checkNearbyOwnership);
+
+if (!_owner) exitWith {
+     ["You don't own this vehicle."] spawn _onExit;
+};
+
 // Find the closest valid vehicle on pad
 _targetPos = getPosASL _target;
 _nearby = (position _target) nearEntities [["Car"], 8];
@@ -52,7 +56,7 @@ GW_SAVE_VEHICLE = _nearby select 0;
 
 _isOwner = [GW_SAVE_VEHICLE, player, true] call checkOwner;
 if (!_isOwner) exitWith {
-    ['You dont own this vehicle!'] spawn _onExit;
+    ["You don't own this vehicle!"] spawn _onExit;
 };
 
 // Check it's a valid vehicle and if not wait for it to be compiled

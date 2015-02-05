@@ -18,9 +18,11 @@ if (isNull _vehicle || isNull _unit) exitWith {};
 _isOwner = [_vehicle, _unit, true] call checkOwner;
 
 // Check the vehicle is ok to use (compiled) and we own it
-if (!alive _vehicle || !alive _unit || !_isOwner) exitWith {};
+if (!alive _vehicle || !alive _unit || !_isOwner) exitWith { GW_SETTINGS_ACTIVE = false; };
 if (isNil { (_vehicle getVariable "firstCompile") } ) exitWith {
-	systemChat 'You need to hop in this car at least once before customizing it.';
+	systemChat 'Something is not right here... try again in a second.';
+	[_vehicle] call compileAttached;
+	GW_SETTINGS_ACTIVE = false;
 };
 
 GW_SETTINGS_VEHICLE = _vehicle;

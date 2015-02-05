@@ -111,7 +111,7 @@ GW_DEPLOYLIST = GW_DEPLOYLIST + [_obj];
 				if (_x != (_v)) then { [_x, "EPL"] call markAsKilledBy; };
 				_status = _x getVariable ['status', []];
 				_d = if ('nanoarmor' in _status) then { 0.05 } else { (random (0.25) + 0.75) };
-				[_x, ((getDammage _X) + _d)] call setVehicleDamage;
+				_x setDammage ((getdammage _x) + _d);
 				false
 				
 			} count _nearby > 0;

@@ -10,11 +10,6 @@ _obj = _this select 0;
 _damage = _this select 2;
 _projectile = _this select 4;
 
-_firstHit = _obj getVariable ['firstHit', nil];
-if (isNil "_firstHit") then {
-	_obj setVariable ['firstHit', time];
-};
-
 _health = _obj getVariable ["GW_Health", 0];
 
 _data = [typeof _obj, GW_LOOT_LIST] call getData;
@@ -22,7 +17,7 @@ _originalHealth = 0;
 _tag = if (!isNil "_data") then { _originalHealth = (_data select 3); (_data select 6) } else { _originalHealth = 1; "" };
 
 // Only handle damage outside of the workshop
-if (GW_CURRENTZONE == "workshopZone" || ((count toArray _tag) > 0) ) exitWith {
+if ( (GW_CURRENTZONE == "workshopZone" && !isDedicated) || ((count toArray _tag) > 0) ) exitWith {
 	_obj setVariable ["GW_Health", _health, true];
     _obj setDammage 0;
     false
@@ -68,19 +63,12 @@ _name = (_obj getVariable ['name', 'object']);
 
 if (_health < 0) then {
 
-	_firstHit = _obj getVariable ['firstHit', 0];
-	_totalTime = time - _firstHit;
-	if (GW_DEBUG) then { systemChat format['%1 destroyed in %2', _name, _totalTime]; };
-
     _obj spawn {       
         [_this, true] spawn destroyObj;
     };
 
-} else {
-	
-	if (GW_DEBUG) then {  systemchat format['%1 / %2 / %3%', _name, _projectile, _health, ceil((_health / _originalHealth) * 100)]; };
+} else {	
 	_obj setVariable["GW_Health", _health, true];
-
 };
 
 

@@ -8,7 +8,7 @@
 
 // Leaderboard stats tracking (default: false)
 // Please message @getwreckeda3 (Sli) if you'd like to get this working as it involves the use of a third party add on
-GW_LEADERBOARD_ENABLED = true;
+GW_LEADERBOARD_ENABLED = false;
 
 // Spawn timer in seconds (default: 30)
 GW_RESPAWN_DELAY = 30;
@@ -24,7 +24,7 @@ GW_OBJECT_DEAD_DELAY = .5;
 GW_DAMAGE_SYSTEM = 2; // 1 == (old)  // 2 == v2 (new)
 
 // Weapon Damage vs vehicles 
-GW_GDS = 0.2; 
+GW_GDS = 0.15; 
 WHEEL_COLLISION_DMG_SCALE = 0; 
 COLLISION_DMG_SCALE = 0; 
 FIRE_DMG_SCALE = 18; 
@@ -41,6 +41,7 @@ EXP_DMG_SCALE = (5 * GW_GDS);
 LSR_DMG_SCALE = (1 * GW_GDS);
 FLM_DMG_SCALE = (0 * GW_GDS); 
 RLG_DMG_SCALE = 1 * GW_GDS; 
+MSC_DMG_SCALE = 0; // Any explosions that are purely visual
 
 // Weapon Damage vs objects
 GW_GHS = 4;
@@ -60,7 +61,7 @@ OBJ_RLG_DMG_SCALE = 20 * GW_GHS;
 
 // Lock on properties
 GW_MINLOCKRANGE = 100; // (default: 100)
-GW_MAXLOCKRANGE = 2500; // (default: 2500)
+GW_MAXLOCKRANGE = 1700; // (default: 2500)
 GW_MINLOCKTIME = 3; // Minimum amount of time to lock onto a target (default: 3)
 GW_LOCKON_TOLERANCE = 10; // Difference in angle needed to acquire target (default: 10)
 
@@ -68,7 +69,7 @@ GW_LOCKON_TOLERANCE = 10; // Difference in angle needed to acquire target (defau
 GW_MAXDEPLOYABLES = 50; // Per player (default :50)
 
 // Render distance of effects
-GW_EFFECTS_RANGE = 1700; // Increasing this may add lag at the workshop (default: 2000)
+GW_EFFECTS_RANGE = 1700; // Increasing this may add lag at the workshop (default: 1700)
 
 // Value modifier for killed vehicles
 GW_KILL_VALUE = 0.5; // How much of the vehicles value should the killer get? (default: 0.5)
@@ -84,10 +85,10 @@ GW_INIT_BALANCE = 5000; // (Default: 5000)
 GW_INVENTORY_LIMIT = 40; // (Default: 40)
 
 // Supply Crates
-GW_EVENTS_FREQUENCY = [(60), (45), 30]; // Frequency to perform checks for events (low/med/high pop) (default: 60, 45, 30)
+GW_EVENTS_FREQUENCY = [(60), (50), (40)]; // Frequency to perform checks for events (low/med/high pop) (default: 60, 50, 40)
 GW_SUPPLY_ACTIVE = 0; // Dont change this
-GW_SUPPLY_MAX = 30; // Maximum number of supply boxes active at once (default: 30)
-GW_SUPPLY_CLEANUP = (3*60); // 10 Minute timeout before cleanup (default: (3*60) )
+GW_SUPPLY_MAX = 30; // Maximum number of supply drops active at once (default: 30)
+GW_SUPPLY_CLEANUP = (3*60); // Timeout before cleaning up supply drop (default: (3*60) )
 
 /*	
 	If you edit below here, I hope you know what you're doing...

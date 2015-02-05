@@ -54,7 +54,7 @@ if (!_processed) then {
             // No money for killing new spawns
             _rawValue = _veh getVariable ['GW_Value', 200];
             _wanted = _veh getVariable ['GW_WantedValue', 0];
-            _value =  if (_newSpawn) then { 0 } else { (_rawValue + _wanted) };
+            _value =  if (_newSpawn) then { 0 } else { ((_rawValue + _wanted) * GW_KILL_VALUE) };
             _crew = crew _veh;    
 
             // No money for destroying own vehicle

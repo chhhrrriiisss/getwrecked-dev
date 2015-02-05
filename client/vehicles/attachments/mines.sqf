@@ -30,17 +30,24 @@ dropTrigger = {
 	_pos set[2, 0];
 
 	_timeout = time + 120;
-	_triggered = false;
-
-	// Add handlers
-	_obj addEventHandler['EpeContact', {	(_this select 0) setVariable ["triggered", true]; }];
-	_obj addEventHandler['HandleDamage', {	(_this select 0) setVariable ["triggered", true];  false }];
-	_obj addEventHandler['Explosion', {	(_this select 0) setVariable ["triggered", true];   }];
-	_obj addEventHandler['Hit', { (_this select 0) setVariable ["triggered", true];  }];
+	_triggered = false;	
 
 	for "_i" from 0 to 1 step 0 do {
 
 		if (!alive _obj || time > _timeout || _triggered) exitWith {};
+
+		_hasHandlers = _obj getVariable ['hasHandlers', false];
+
+		if (!_hasHandlers) then {
+			
+			// Add handlers
+			_obj setVariable ['hasHandlers', true];
+			_obj addEventHandler['EpeContact', {	(_this select 0) setVariable ["triggered", true]; }];
+			_obj addEventHandler['HandleDamage', {	(_this select 0) setVariable ["triggered", true];  false }];
+			_obj addEventHandler['Explosion', {	(_this select 0) setVariable ["triggered", true];   }];
+			_obj addEventHandler['Hit', { (_this select 0) setVariable ["triggered", true];  }];
+
+		};
 
 		// Wait a quarter of a second between checks
 		Sleep 0.25;
@@ -64,11 +71,13 @@ dropTrigger = {
 					playSound3D ["a3\sounds_f\weapons\mines\electron_trigger_1.wss", _obj, false, getPos _obj, 2, 1, 50]; 
 
 					_tPos =  (ASLtoATL getPosASL _x);
-					_tPos set[2, 0.25];
-					_d = if ('nanoarmor' in _status) then { 0.05 } else { 0.5 };
-					[_x, ((getDammage _x) +_d)] call setVehicleDamage;
+					_tPos set[2, 0];
+					_d = if ('nanoarmor' in _status) then { 0.05 } else { (0.3 + random 0.2) };
 
-					_bomb = createVehicle ["Bo_GBU12_LGB", _tPos, [], 0, "CAN_COLLIDE"];		
+					_x setDamage ((getDammage _x) + _d);
+					
+					_bomb = createVehicle ["M_PG_AT", _tPos, [], 0, "CAN_COLLIDE"];		
+					_bomb setVelocity [0,0,-100];
 					Sleep 0.01;			
 					deleteVehicle _obj;
 

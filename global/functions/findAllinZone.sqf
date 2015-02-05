@@ -6,8 +6,8 @@
 
 private ['_zone', '_arr', '_zoneCenter', '_vehiclesOnly'];
 
-_zone = [_this,0, "", [""]] call BIS_fnc_param;	
-_vehiclesOnly =  [_this,1, false, [false]] call BIS_fnc_param;	
+_zone = _this select 0;
+_vehiclesOnly = if (isNil "_this select 1") then { false } else { (_this select 1) };
 
 if (_zone == "") exitWith { [] };
 
@@ -30,8 +30,7 @@ if (count allUnits <= 0) exitWith { [] };
 
 	}; 
 
-	false
-	
+	false	
 	
 } count allUnits > 0;
 

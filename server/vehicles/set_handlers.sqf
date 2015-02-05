@@ -8,8 +8,6 @@ private ['_vehicle'];
 
 _vehicle = _this select 0;
 
-_vehicle setVariable ['hasHandlers', true];
-
 if (isServer) then {
 
 	if (isNil {_vehicle getVariable "GW_MPHitEH"}) then {	
@@ -24,8 +22,17 @@ if (isServer) then {
 
 if (isNil {_vehicle getVariable "GW_handleDamageHP"}) then {
 
-	_vehicle setVariable ['GW_Hitpoints', (_vehicle call getHitPoints), true];
 	_vehicle setVariable ["GW_handleDamageHP", true, true];
+
+	if (isNil { _vehicle getVariable 'GW_Hitpoints' }) then {
+
+		{
+			_vehicle setVariable ["GW_hitPoint_" + getText (_x >> "name"), configName _x, true];
+			false
+		} count ((typeOf _vehicle) call getHitPoints) > 0;
+
+		_vehicle setVariable ['GW_Hitpoints', true, true];
+	};	
 };
 
 if (isNil {_vehicle getVariable "GW_ExplosionEH"}) then {	
@@ -47,3 +54,7 @@ if (isNil {_vehicle getVariable "GW_handleGetInEH"}) then {
 if (isNil {_vehicle getVariable "GW_handleGetOutEH"}) then {		
 	_vehicle setVariable ["GW_handleGetOutEH", _vehicle addEventHandler ["GetOut", handleGetOut]];
 };
+
+_vehicle setVariable ['hasHandlers', true];
+
+true

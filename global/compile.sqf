@@ -129,8 +129,7 @@ call compile preprocessFile "client\customization\supply_box.sqf";
 // Event Handlers
 setVehicleHandlers = compile preprocessFile "server\vehicles\set_handlers.sqf";
 
-_handlerLocation = if (GW_DAMAGE_SYSTEM == 2) then { 'client\vehicles\handlers\handle_damage.sqf' } else { 'client\vehicles\handlers\handle_damage_old.sqf' };
-handleDamageVehicle = compile preprocessFile _handlerLocation;
+handleDamageVehicle = compile preprocessFile 'client\vehicles\handlers\handle_damage.sqf';
 handleExplosionVehicle = compile preprocessFile 'client\vehicles\handlers\handle_explosion.sqf';
 handleContactVehicle = compile preprocessFile 'client\vehicles\handlers\handle_contact.sqf';
 handleHitVehicle = compile preprocessFile 'client\vehicles\handlers\handle_hit.sqf';
@@ -171,8 +170,8 @@ getBoundingBox = compile preprocessFile 'global\functions\getBoundingBox.sqf';
 getData = compile preprocessFile 'global\functions\getData.sqf';
 
 // Utility
+getVectorDirAndUpRelative = compile preprocessFile 'global\functions\getVectorDirAndUpRelative.sqf';
 limitToRange = compile preprocessFile 'global\functions\limitToRange.sqf';
-getHitPoints = compile preprocessFile 'global\functions\getHitPoints.sqf';
 hasType = compile preprocessFile 'global\functions\hasType.sqf';
 positionToString = compile preprocessFile 'global\functions\positionToString.sqf';
 checkOwner = compile preprocessFile 'global\functions\checkOwner.sqf';

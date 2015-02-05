@@ -4,12 +4,12 @@
 //      Return: None
 //
 
-private ['_pos', '_col', '_scale', '_icon', '_limit', '_vehDir'];
+private ['_pos', '_col', '_scale', '_icon', '_limit', '_vehDir', '_vehicle'];
 
-_vehicle = [_this,0, objNull, [objNull]] call BIS_fnc_param;
+if (isNull GW_CURRENTVEHICLE) exitWith {};
+if (!alive GW_CURRENTVEHICLE) exitWith {};
 
-if (isNull _vehicle) exitWith {};
-if (!alive _vehicle) exitWith {};
+_vehicle = GW_CURRENTVEHICLE;
 
 _unit = player;
 
@@ -83,30 +83,27 @@ _count = 0;
 		_bind = _obj getVariable ['GW_KeyBind', []];
 		_bind = if (typename _bind == "ARRAY") then { (_bind select 1) } else { _bind };
 
-		if (true) then {
+		GW_AVAIL_WEAPONS pushback [_obj, _type, _bind];
+		_col = [1,1,1,0.75];
 
-			GW_AVAIL_WEAPONS pushback [_obj, _type, _bind];
-			_col = [1,1,1,0.75];
+		// Decide on the icon to use for each weapon
+		_icon = _type call {
 
-			// Decide on the icon to use for each weapon
-			_icon = switch (_type) do {
-				case "HMG":	{ hmgTargetIcon };
-				case "RLG":	{ hmgTargetIcon };			
-				case "LSR":	{ hmgTargetIcon };				
-				case "RPG":	{ rpgTargetIcon };				
-				case "MIS":	{ rpgTargetIcon };		
-				case "GUD":	{ rpgTargetIcon };			
-				case "MOR":	{ rangeTargetIcon };				
-				case "GMG":	{ rangeTargetIcon };	
-				case "FLM":	{ rpgTargetIcon };		
-				case "HAR":	{ rangeTargetIcon };		
-				case "LMG":	{ hmgTargetIcon };		
-				default	{ noTargetIcon };			
-			};
-
-			_count = _count + 1;
-
+			if (_this == "HMG") exitWith { hmgTargetIcon };
+			if (_this == "RLG") exitWith { hmgTargetIcon };
+			if (_this == "LSR") exitWith { hmgTargetIcon };
+			if (_this == "RPG") exitWith { rpgTargetIcon };
+			if (_this == "MIS") exitWith { rpgTargetIcon };
+			if (_this == "GUD") exitWith { rpgTargetIcon };
+			if (_this == "MOR") exitWith { rangeTargetIcon };
+			if (_this == "GMG") exitWith { rangeTargetIcon };
+			if (_this == "FLM") exitWith { rpgTargetIcon };
+			if (_this == "HAR") exitWith { rangeTargetIcon };
+			if (_this == "LMG") exitWith { hmgTargetIcon };
+			noTargetIcon
 		};
+		
+		_count = _count + 1;		
 
 	};
 	false

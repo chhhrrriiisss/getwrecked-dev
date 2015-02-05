@@ -59,8 +59,8 @@ checkBinds = {
 	User3 = actionKeys "User3"; // Rotate CW 
 	User4 = actionKeys "User4"; // Rotate CCW
 	User5 = actionKeys "User5"; // Hold Rotate
-	// User6 = actionKeys "User6"; // Tilt Forward
-	// User7 = actionKeys "User7"; // Tilt Backward
+	User6 = actionKeys "User6"; // Tilt Forward
+	User7 = actionKeys "User7"; // Tilt Backward
 
 	User20 = actionKeys "User20"; // Settings
 

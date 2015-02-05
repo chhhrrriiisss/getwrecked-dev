@@ -37,10 +37,12 @@ if (isNil "_data") exitWith { false };
 
 _defaultAmmo = if (!isNil "_data") then { ((_data select 2) select 3) } else { 1 };
 _defaultFuel = if (!isNil "_data") then { ((_data select 2) select 4) } else { 1 };
+_signature = if (!isNil "_data") then { ((_data select 2) select 7) } else { "Low" };
 
 // Defaults used locally when compiled on client
 _vehicle setVariable["GW_defaults", [
-
+    
+    ['signature', _signature, true],
     ['fuel', 0, false],
     ['ammo', 1, false],
     ['maxAmmo', _defaultAmmo, false],
@@ -53,24 +55,11 @@ _vehicle setVariable["GW_defaults", [
 
 ], true];
 
-// if (GW_DAMAGE_SYSTEM == 2) then {
-
-//     _vehicle setVariable ["GW_Selections", [], true];
-//     _vehicle setVariable ["GW_Gethit", [], true];
-//     _armor = (_data select 2) select 6;
-//     _vehicle setVariable ['GW_Armor', _armor, true];    
-
-// } else {
-    
-_vehicle setVariable ['GW_Hitpoints', (_vehicle call getHitPoints), true];
-
-// };
+[_vehicle] call setVehicleHandlers;
 
 clearWeaponCargoGlobal _vehicle;
 clearMagazineCargoGlobal _vehicle;
 clearItemCargoGlobal _vehicle;
-
-[_vehicle] spawn setVehicleHandlers;
 
 if (_respawn) then {
     [_vehicle, GW_ABANDON_DELAY] spawn setVehicleRespawn;
