@@ -3,7 +3,7 @@
 
 
 # [Get Wrecked](http://getwrecked.info) Changelog
-## Last Updated: [14-02-2015] ##
+## Last Updated: [15-02-2015] ##
 
 Note: Some changes that are deemed spoilers are hidden from this log (we have to keep some surprises)
 
