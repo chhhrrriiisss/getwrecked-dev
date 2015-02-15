@@ -207,7 +207,11 @@ _pruneList = [
     'Land_PenBlack_F',
     'Land_Barrel_F', // old emp
     'B_HMG_01_F', // old hmg model
-    'Land_BarrelTrash_F'
+    'Land_BarrelTrash_F',
+    'Land_New_WiredFence_5m_F',
+    "Land_Sack_F", 
+    "Land_CnCBarrierMedium4_F", 
+    "Land_WaterTank_F" 
 ];
 
 
@@ -231,12 +235,14 @@ if (count _attachments > 0) then {
         if (_x isKindOf "StaticWeapon") then { 
             _boundingCenter = boundingCenter _x;
             _actualCenter = [-(_boundingCenter select 0), -(_boundingCenter select 1), -(_boundingCenter select 2)];
-            _pos = (_x modelToWorld _actualCenter);
+            _pos = (_x modelToWorldVisual _actualCenter);
 
             _p = _pos;
         };
-                
-        _p = GW_SAVE_VEHICLE worldToModel _p;
+        
+         _p = GW_SAVE_VEHICLE worldToModel _p;
+
+
         
         // Delete the object if we're having issues with it (or its old)
         if (!alive _x || (_p distance _pos) > 999999 || (typeOf _x) in _pruneList ) then {

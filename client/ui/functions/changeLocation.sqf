@@ -5,9 +5,6 @@
 //
 
 disableSerialization;
-_logo = findDisplay 52000 displayCtrl 52004;
-ctrlSetFocus _logo;
-_logo ctrlCommit 0;
 
 _value = _this select 0;
 _newValue = 0;

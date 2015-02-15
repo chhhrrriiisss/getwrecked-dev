@@ -7,7 +7,7 @@
 //
 
 // Leaderboard stats tracking (default: false)
-// Please message @getwreckeda3 (Sli) if you'd like to get this working as it involves the use of a third party add on
+// Currently non-functional
 GW_LEADERBOARD_ENABLED = false;
 
 // Spawn timer in seconds (default: 30)
@@ -20,44 +20,67 @@ GW_ABANDON_DELAY = 10;
 GW_OBJECT_ABANDON_DELAY = 3;
 GW_OBJECT_DEAD_DELAY = .5;
 
-// Damage system to use for vehicles (default: 2)
-GW_DAMAGE_SYSTEM = 2; // 1 == (old)  // 2 == v2 (new)
+// How quickly vehicle status indicator for damage should update for each client (higher = better stability in mp)
+GW_DAMAGE_UPDATE_INTERVAL = 0.1;
+
+// Enable vehicle armor to balance all vehicles (default: true)
+GW_ARMOR_SYSTEM_ENABLED = true;
 
 // Weapon Damage vs vehicles 
-GW_GDS = 0.15; 
+GW_GDS = 0.03; 
 WHEEL_COLLISION_DMG_SCALE = 0; 
 COLLISION_DMG_SCALE = 0; 
-FIRE_DMG_SCALE = 18; 
-MORTAR_DMG_SCALE = (5 * GW_GDS); 
-TITAN_AT_DMG_SCALE = (2 * GW_GDS); 
-RPG_DMG_SCALE = (0.5 * GW_GDS); 
-GUD_DMG_SCALE = (20 * GW_GDS);
-HMG_DMG_SCALE = (7 * GW_GDS); 
-LMG_DMG_SCALE = (3 * GW_GDS); 
-HMG_HE_DMG_SCALE = (4 * GW_GDS); 
-HMG_IND_DMG_SCALE = (4 * GW_GDS); 
-GMG_DMG_SCALE = (0.9 * GW_GDS); 
-EXP_DMG_SCALE = (5 * GW_GDS); 
-LSR_DMG_SCALE = (1 * GW_GDS);
-FLM_DMG_SCALE = (0 * GW_GDS); 
-RLG_DMG_SCALE = 1 * GW_GDS; 
-MSC_DMG_SCALE = 0; // Any explosions that are purely visual
+FIRE_DMG_SCALE = 10; 
 
 // Weapon Damage vs objects
 GW_GHS = 4;
 OBJ_COLLISION_DMG_SCALE = 1;
-OBJ_MORTAR_DMG_SCALE = (40 * GW_GHS);
-OBJ_TITAN_AT_DMG_SCALE = (20 * GW_GHS);
-OBJ_RPG_DMG_SCALE = (10 * GW_GHS);
-OBJ_GUD_DMG_SCALE = (20 * GW_GHS);
-OBJ_HMG_DMG_SCALE = (6 * GW_GHS);
-OBJ_LMG_DMG_SCALE = (10 * GW_GHS);
-OBJ_HMG_HE_DMG_SCALE = (1 * GW_GHS);
-OBJ_GMG_DMG_SCALE = (15 * GW_GHS);
-OBJ_EXP_DMG_SCALE = (40 * GW_GHS);
-OBJ_LSR_DMG_SCALE = (4 * GW_GHS);
-OBJ_FLM_DMG_SCALE = (4 * GW_GHS);
-OBJ_RLG_DMG_SCALE = 20 * GW_GHS;
+
+// Returns damage of projectile vs vehicle
+vehicleDamageData = {
+	
+	private ['_d'];
+
+	_d = _this call {
+
+		if (_this == "R_PG32V_F" || _this == "RPG") exitWith { (1 + random 0.5) };
+		if (_this == "M_Titan_AT" || _this == "GUD" || _this == "MIS") exitWith { (1.5 + random 0.5) };
+		if (_this == "M_Titan_AA_static" || _this == "RLG") exitWith { (35 + random 10) };
+		if (_this == "B_127x99_Ball_Tracer_Red" || _this == "LSR") exitWith { 1 };
+		if (_this == "B_127x99_Ball" || _this == "HMG") exitWith { 11 };
+		if (_this == "B_127x99_Ball_Tracer_Yellow") exitWith { 1 };
+		if (_this == "R_TBG32V_F" || _this == "MOR") exitWith { (7 + random 3) };
+		if (_this == "G_40mm_HEDP" || _this == "GMG") exitWith { (5 + random 1) };
+		if (_this == "Bo_GBU12_LGB" || _this == "EXP") exitWith { (4 + random 2) };
+		if (_this == "M_PG_AT") exitWith { 0 };
+		0
+	};	
+	
+	(_d * GW_GDS)
+};
+
+// Returns damage of projectile vs object
+objectDamageData = {
+	
+	private ['_d'];
+
+	_d = _this call {
+
+		if (_this == "R_PG32V_F" || _this == "RPG") exitWith { 10 };
+		if (_this == "M_Titan_AT" || _this == "GUD" || _this == "MIS") exitWith { 20 };
+		if (_this == "M_Titan_AA_static" || _this == "RLG") exitWith { 20 };
+		if (_this == "B_127x99_Ball_Tracer_Red" || _this == "LSR") exitWith { 4 };
+		if (_this == "B_127x99_Ball" || _this == "HMG") exitWith { 6 };
+		if (_this == "B_127x99_Ball_Tracer_Yellow") exitWith { 1 };
+		if (_this == "R_TBG32V_F" || _this == "MOR") exitWith { 40 };
+		if (_this == "G_40mm_HEDP" || _this == "GMG") exitWith { 15 };
+		if (_this == "Bo_GBU12_LGB" || _this == "EXP") exitWith { 40 };
+		if (_this == "M_PG_AT") exitWith { 0 };
+		0
+	};	
+	
+	(_d * GW_GHS)
+};
 
 // Lock on properties
 GW_MINLOCKRANGE = 100; // (default: 100)
@@ -190,8 +213,7 @@ GW_HOLDERARRAY = [
 	'launch_NLAW_F',
 	'launch_RPG32_F',
 	"srifle_LRR_LRPS_F",
-	"srifle_GM6_F",
-	"LMG_Zafir_F"
+	"srifle_GM6_F"
 ];
 
 

@@ -26,7 +26,6 @@ _signature = if (!isNil "_data") then { ((_data select 2) select 7) } else { "" 
 _signature = if ('radar' in _status) then { "Large" } else { _signature };
 _adjustedLockTime = switch (_signature) do { case "Large": { (GW_MINLOCKTIME / 3) }; case "Medium": { (GW_MINLOCKTIME * 0.6) }; case "Low": { (GW_MINLOCKTIME * 1) }; case "Tiny": { (GW_MINLOCKTIME * 2) }; default { GW_MINLOCKTIME }; };
 
-
 _lockTime = time + _adjustedLockTime + (_distanceModifier);
 _origLockTime = _lockTime;
 
@@ -61,8 +60,8 @@ for "_i" from 0 to 1 step 0 do {
 		[       
 			[
 				_target,
-				['locking'],
-				2.5 // Make it stay on for a bit to avoid too much spam
+				"['locking']",
+				3 
 			],
 			"addVehicleStatus",
 			_target,
@@ -101,7 +100,7 @@ for "_i" from 0 to 1 step 0 do {
 	drawIcon3D [lockingIcon,colorRed,_pos,_scale,_scale,_direction, _string, 0, 0.04, "PuristaMedium"];
 	playSound3D ["a3\sounds_f\sfx\beep_target.wss", (vehicle player), false, (visiblePosition  (vehicle player)), 0.8, 1, 20]; 
 
-	Sleep 0.05;
+	Sleep 0.1;
 
 };
 
@@ -114,12 +113,16 @@ if (_targetted) then {
 
 GW_ACQUIRE_ACTIVE = false;
 
-[       
-	[
+if ('locking' in _status) then {
+
+	[       
+		[
+			_target,
+			"['locking']"
+		],
+		"removeVehicleStatus",
 		_target,
-		['locking']
-	],
-	"removeVehicleStatus",
-	_target,
-	false 
-] call BIS_fnc_MP;  
+		false 
+	] call BIS_fnc_MP;  
+	
+};

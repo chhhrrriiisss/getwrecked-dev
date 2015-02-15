@@ -69,7 +69,7 @@ addMissionEventHandler ["HandleDisconnect",{
 	} count _o > 0;
 
 	// Kill the unit
-	_n setDammage 1;
+	(_this select 0) setDammage 1;
 
 }];
 

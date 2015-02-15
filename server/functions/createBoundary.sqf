@@ -23,6 +23,9 @@ _normal = if (_isWater) then {
 _wallInside = createVehicle ["UserTexture10m_F", _newDestination, [], 0, "CAN_COLLIDE"]; 
 _wallOutside = createVehicle ["UserTexture10m_F", _newDestination, [], 0, "CAN_COLLIDE"]; 
 
+_wallInside setVariable ['GW_CU_IGNORE', true];
+_wallOutside setVariable ['GW_CU_IGNORE', true];
+
 if (_isWater) then {
 	_wallInside setPosASL _newDestination;
 	_wallOutside setPosASL _newDestination;

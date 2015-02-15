@@ -6,10 +6,12 @@
 
 private ["_obj", "_vehicle", "_o"];
 
-_obj = [_this,0, objNull, [objNull]] call BIS_fnc_param;
-_vehicle = [_this,1, objNull, [objNull]] call BIS_fnc_param;
+if (isNull ( _this select 0) || isNull (_this select 1)) exitWith { false };
 
 [] spawn cleanDeployList;
+
+_obj = _this select 0;
+_vehicle = _this select 1;
 
 playSound3D ["a3\sounds_f\sfx\vehicle_drag_end.wss",_vehicle, false, getPosATL _vehicle, 2, 1, 50];
 
@@ -27,7 +29,7 @@ _holder = createVehicle ["Land_PenBlack_F", _pos, [], 0, 'CAN_COLLIDE']; // So i
 
 _obj attachTo [_holder, [0,0,0.1]];
 
-[_obj, _holder] spawn { 
+[_obj, _holder, _vehicle] spawn { 
 	_o = _this select 0;
 
 	_timeout = time + 10;
@@ -41,6 +43,9 @@ _obj attachTo [_holder, [0,0,0.1]];
 	_p = (ASLtoATL visiblePositionASL _o);
 	_p set [2, 0];
 	_o setPos _p;
+
+	// Recompile the vehicle to account for dropping one bag
+	[_this select 2] call compileAttached;
 
 };
 
@@ -62,8 +67,7 @@ _vehicle setVariable ["GW_detonateTargets", _newTargets];
 GW_WARNINGICON_ARRAY = GW_WARNINGICON_ARRAY + [_obj];
 GW_DEPLOYLIST = GW_DEPLOYLIST + [_obj];
 
-// Recompile the vehicle to account for dropping one bag
-[_vehicle] call compileAttached;
+
 
 [_obj, _timeout, _vehicle] spawn {
 	
@@ -103,6 +107,7 @@ GW_DEPLOYLIST = GW_DEPLOYLIST + [_obj];
 		] call BIS_fnc_MP;
 
 		_bomb = createVehicle ["Bo_GBU12_LGB", _pos, [], 0, "FLY"];		
+		_bomb setVelocity [0,0,-10];
 
 		_nearby = _pos nearEntities [["Car"], 15];	
 
@@ -112,6 +117,7 @@ GW_DEPLOYLIST = GW_DEPLOYLIST + [_obj];
 				_status = _x getVariable ['status', []];
 				_d = if ('nanoarmor' in _status) then { 0.05 } else { (random (0.25) + 0.75) };
 				_x setDammage ((getdammage _x) + _d);
+				_x call updateVehicleDamage;
 				false
 				
 			} count _nearby > 0;
@@ -137,5 +143,7 @@ GW_DEPLOYLIST = GW_DEPLOYLIST + [_obj];
 
 
 };
+
+
 
 true

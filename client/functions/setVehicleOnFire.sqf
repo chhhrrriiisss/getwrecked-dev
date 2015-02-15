@@ -7,8 +7,10 @@
 private ['_target', '_chance'];
 
 _target = _this select 0;
-_chance = [_this,1, 15, [0]] call BIS_fnc_param; // Chance of setting something alight default 15%
-_minDuration = [_this,2, 3, [0]] call BIS_fnc_param; // Default minimum duration of fire
+_chance = if (isNil {_this select 1}) then { 15 } else { (_this select 1) }; // Chance of setting something alight default 15%
+_minDuration = if (isNil {_this select 2}) then { 3 } else { (_this select 2) }; // Default minimum duration of fire
+
+if (isNull _target) exitWith {};
 
 _isVehicle = _target getVariable ["isVehicle", false];
 _status = _target getVariable ["status", []];
@@ -26,7 +28,7 @@ if ( !('inferno' in _status) && !('nofire' in _status) && _isVehicle && _rnd < _
 	[       
         [
             _target,
-            _statusToAdd,
+            str _statusToAdd,
             _rnd
         ],
         "addVehicleStatus",

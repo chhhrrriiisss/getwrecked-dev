@@ -27,7 +27,7 @@ lnbClear _spawnList;
 		lbSetData [52002, _forEachIndex, _name];	
 
 	};
-
+	
 } foreach GW_VALID_ZONES;
 
 if (!isNil "_startIndex") then {

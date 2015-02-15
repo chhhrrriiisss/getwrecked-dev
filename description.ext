@@ -129,6 +129,24 @@ class CfgSounds
 
 	// Retrieved from the awesome http://www.freesfx.co.uk
 	// Modified by Sli 
+	class oil
+	{
+		name = "oil";
+		sound[] = {"\client\sounds\oil.ogg", 1, 1};
+		titles[] = {};
+	};
+
+	// Retrieved from the awesome http://www.freesfx.co.uk
+	// Modified by Sli 
+	class rep
+	{
+		name = "rep";
+		sound[] = {"\client\sounds\rep.ogg", 1, 1};
+		titles[] = {};
+	};
+
+	// Retrieved from the awesome http://www.freesfx.co.uk
+	// Modified by Sli 
 	class nuke
 	{
 		name = "nuke";

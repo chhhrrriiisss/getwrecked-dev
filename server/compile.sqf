@@ -21,6 +21,8 @@ setVehicleRespawn = compile preprocessFile "server\vehicles\vehicle_respawn.sqf"
 setupVehicle = compile preprocessFile "server\vehicles\setup_vehicle.sqf";
 loadVehicle = compile preprocessFile "server\functions\loadVehicle.sqf";
 
+initCleanup = compile preprocessFile "server\cleanup.sqf";
+
 // MP Functions
 pubVar_fnc_spawnObject = compile preprocessFile "server\functions\pubVar_spawnObject.sqf";
 "pubVar_spawnObject" addPublicVariableEventHandler { (_this select 1) call pubVar_fnc_spawnObject };

@@ -4,6 +4,7 @@
 //      Return: None
 //
 
+systemchat format['%1', _this];
 // deleteVehicle (_this select 1);
 // deleteVehicle (_this select 2);
 

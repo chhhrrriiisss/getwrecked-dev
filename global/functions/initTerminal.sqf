@@ -10,6 +10,7 @@ _obj = _this select 0;
 _var = _this select 1;
 
 _obj setVariable ['isTerminal', _var];
+_obj setVariable ['GW_CU_IGNORE', true];
 
 // Only server should disable simulation/add textures
 if (!isServer) exitWith {};

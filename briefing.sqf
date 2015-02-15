@@ -14,10 +14,10 @@ player createDiaryRecord ["issues",
 - An item I attached isn't rotated how I want it<br />
 If your vehicle is suspended in the air, this will only update when you drop the vehicle back on the ground<br />
 <br />
-- My vehicle won't save<br />
+- Vehicle won't save<br />
 Make sure your vehicle is placed on the ground and there are no other vehicles nearby<br />
 <br />
-- My keybinds don't save<br />
+- Keybinds don't save<br />
 Keybinds are only saved when you save the vehicle in the workshop - editing them in zone will not persist<br />
 <br />
 - I can't fire a weapon/module<br />
@@ -37,7 +37,10 @@ This is caused by lag and the object (especially if its a railgun/rpg) should ev
 <br />
 - Vehicle repair/rearm/refuel pads not working<br />
 They can be temperamental and slow, but they do work - just give it a second, or drive off then back on the pad.<br />
-
+<br />
+- I'm getting shot at by an invisible vehicle<br />
+This is a rare issue that relates to the way simulation is toggled on and off between zones. The invisible vehicle should respawn to the workshop to fix this.<br />
+<br />
 <br />
 "
 ]];

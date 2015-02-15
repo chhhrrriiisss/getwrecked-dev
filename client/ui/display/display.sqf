@@ -164,8 +164,8 @@ GW_DISPLAY_EH = addMissionEventHandler ["Draw3D", {
 
 	// If there's no nearby targets, no point going any further
 	_r = if (GW_CURRENTZONE == "workshopZone") then { 200 } else { GW_MAXLOCKRANGE };
-	_targets = (ASLtoATL visiblePositionASL GW_CURRENTVEHICLE) nearEntities [["Car", "Civilian"], _r];
-	//_targets = [GW_CURRENTZONE] call findAllInZone;
+	//_targets = (ASLtoATL visiblePositionASL GW_CURRENTVEHICLE) nearEntities [["Car", "Civilian"], _r];
+	_targets = [GW_CURRENTZONE] call findAllInZone;
 	if (count _targets == 0) exitWith {};		
 
 	// Try to lock on to those targets if we have lock ons
@@ -180,7 +180,7 @@ GW_DISPLAY_EH = addMissionEventHandler ["Draw3D", {
 		_owner = _x getVariable ["owner",''];		
 		_newSpawn = _x getVariable ["newSpawn", false];	
 
-		if (!_isVehicle && _x != player && (_x == (vehicle _x)) && (alive _x)) then { // (isPlayer _x)
+		if (!_isVehicle && _x != player && (_x == (vehicle _x)) && (alive _x) && isPlayer _x) then { // (isPlayer _x)
 
 			_name = (name _x);
 			_pos = _x modelToWorldVisual [0, 0, 2.2];
@@ -202,10 +202,9 @@ GW_DISPLAY_EH = addMissionEventHandler ["Draw3D", {
 		};
 
 		// Only render tags we can see
-		_inScope = [GW_TARGET_DIRECTION, _x, 90] call checkScope;
-		if (_owner != '' && _isVehicle && GW_CURRENTVEHICLE != _x && !_newSpawn && _inScope) then {
+		if (_owner != '' && _isVehicle && !_newSpawn && GW_CURRENTZONE != "workshopZone") then {
 
-			if ('radar' in _status && !(_x in GW_TARGETICON_ARRAY)) then { 
+			if ('radar' in _status && !(_x in GW_TARGETICON_ARRAY) && _x != GW_CURRENTVEHICLE) then { 
 				GW_TARGETICON_ARRAY pushback _x;
 			};
 

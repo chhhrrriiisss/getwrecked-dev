@@ -126,7 +126,6 @@ waitUntil { (time > _timeout) || GW_DEATH_CAMERA_ACTIVE };
 {
 	_i = _x getVariable ['GW_Ignore_Sim', false];
 	if ( (isPlayer _x || _x isKindOf "car") && !_i) then { _x enableSimulation true; } else { _x enableSimulation false; };
-	_x hideObject false;
 	false
 } count (nearestObjects [ (getMarkerPos "workshopZone_camera"), [], 150]) > 0;
 
@@ -163,8 +162,11 @@ for "_i" from 0 to 1 step 0 do {
 	};
 	
 	// Adds actions to nearby objects & vehicles
-	if (!_inVehicle && !GW_EDITING && GW_CURRENTZONE == "workshopZone") then {		
-		[_currentPos] spawn checkNearbyActions;
+
+	if (!isNil "GW_CURRENTZONE") then {
+		if (!_inVehicle && !GW_EDITING && GW_CURRENTZONE == "workshopZone") then {		
+			[_currentPos] spawn checkNearbyActions;
+		};
 	};
 	
 	// In Zone Check

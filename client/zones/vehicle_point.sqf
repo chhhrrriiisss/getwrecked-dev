@@ -1,5 +1,5 @@
 //
-//      Name: vehiclePoint
+//      Name: servicePoint
 //      Desc: Handles adding ammo, health or fuel to a vehicle when over a pad
 //      Return: None
 //
@@ -8,155 +8,119 @@ _vehicle = _this select 0;
 _type = _this select 1;
 _driver = (driver _vehicle);
 
-// // If player is not in the driver seat abort
-// if (player != _driver) exitWith {};
-noServiceLock = {
 
-	[       
-		[
-			_this,
-			['noservice'],
-			3
-		],
-		"addVehicleStatus",
-		_this,
-		false 
-	] call BIS_fnc_MP; 
-
+if (isNil "GW_LASTSERVICE_CHECK") then {
+	GW_LASTSERVICE_CHECK = time;
 };
 
-if (_type == "REPAIR" && {getDammage _vehicle > 0}) exitWith {
+if (time - GW_LASTSERVICE_CHECK < 0.5) exitWith { true };
+GW_LASTSERVICE_CHECK = time;
 
-	_vehicle setVariable ['inUse', true];
-	_vehicle spawn {
+_inUse = _vehicle getVariable ['inUse', false];
+_currentDmg = getDammage _vehicle;
+_lowVelocity = if ((velocity _vehicle) distance [0,0,0] < 10) then { true } else { false };
 
+if (_type == "REPAIR" && _currentDmg > 0 && _lowVelocity) exitWith {
+
+	if (!_inUse) then {
+		_vehicle setVariable ['inUse', true];
 		["REPAIRING...      ", 1, healthIcon, nil, "flash"] spawn createAlert;
-
-		// Start the ticker, timeout after 10 seconds
-		_error = false;
-		_timeout = time + 10;
-
-		for "_i" from 0 to 1 step 0 do {
-
-			if (getDammage _this <= 0 || time > _timeout) exitWith {};
-
-			// If the vehicle is going too fast (ie leaves the pad)
-			if ([0,0,0] distance (velocity _this) > 10) exitWith { _error = true; };
-			_this setDamage (getDammage _this - 0.05);
-			sleep 0.5;
-		};				
-
-		// Stop the animation		
-		_this setVariable ["GW_NEARBY_SERVICE", nil];
-
-		if (!_error) then {
-
-			_this setDamage 0;
-			["REPAIRED!   ", 0.5, successIcon, nil, "slideDown"] spawn createAlert;		
-
-		};
-
-		_this setVariable ["inUse", false];
-
-		_this spawn noServiceLock;
-
 	};
+
+	[		
+		[
+			_vehicle,
+			"rep",
+			30
+		],
+		"playSoundAll",
+		true,
+		false
+	] call BIS_fnc_MP;	
+
+	_vehicle setDamage ((getDammage _vehicle) - 0.05);
+
+	true
 	
 };
 
 _maxFuel = (_vehicle getVariable ["maxFuel",1]);		
 _currentFuel = (fuel _vehicle) + (_vehicle getVariable ["fuel",0]);
 
-if (_type == "REFUEL" && (_currentFuel < _maxFuel) ) exitWith {
+if (_type == "REFUEL" && _currentFuel < _maxFuel && _lowVelocity ) exitWith {
 
-	_vehicle setVariable ['inUse', true];
-	_vehicle spawn {
-
+	if (!_inUse) then {
+		_vehicle setVariable ['inUse', true];
 		["REFUELLING...      ", 1, fuelIcon, nil, "flash"] spawn createAlert;
-
-		_error = false;
-		_maxFuel = (_this getVariable ["maxFuel",1]);		
-		_currentFuel = (fuel _this) + (_this getVariable ["fuel",0]);
-		_increment = (_maxFuel * 0.1);
-
-		_timeout = time + 10;
-		for "_i" from 0 to 1 step 0 do {
-
-			if (_currentFuel >= _maxFuel || time > _timeout) exitWith {};
-			if ([0,0,0] distance (velocity _this) > 10) exitWith { _error = true; };
-
-
-			if ((fuel _this) < 1) then {
-				_this setFuel ((fuel _this) + _increment);
-			} else {
-				_this setFuel 1;
-				_this setVariable ["fuel", (_this getVariable ["fuel", 0]) + _increment];
-			};
-
-			_currentFuel = (fuel _this) + (_this getVariable ["fuel",0]);
-			sleep 0.5;
-		};	
-		
-		_this setVariable ["GW_NEARBY_SERVICE", nil];
-
-		if (!_error) then {
-
-			_this setFuel 1;
-			_this setVariable ["fuel", ( (_this getVariable ["maxFuel",1]) - 1)];						
-			["REFUELLED!   ", 1, successIcon, nil, "slideDown"] spawn createAlert;
-
-		};		
-
-		_this setVariable ["inUse", false];
-
-		_this spawn noServiceLock;
-
 	};
-	
-};
 
+	[		
+		[
+			_vehicle,
+			"rep",
+			30
+		],
+		"playSoundAll",
+		true,
+		false
+	] call BIS_fnc_MP;	
+
+	_increment = (_maxFuel * 0.05);
+
+	if ((fuel _vehicle) < 0.99) then {
+		_vehicle setFuel ((fuel _vehicle) + _increment);
+	} else {
+		_vehicle setFuel 1;
+		_vehicle setVariable ["fuel", (_vehicle getVariable ["fuel", 0]) + _increment];
+	};	
+
+	true	
+};
 
 _maxAmmo= (_vehicle getVariable ["maxAmmo",1]);		
 _currentAmmo = (_vehicle getVariable ["ammo",0]);
 
-if (_type == "REARM" && (_currentAmmo < _maxAmmo) ) exitWith {
+if (_type == "REARM" && _currentAmmo < _maxAmmo && _lowVelocity ) exitWith {	
 
-	_vehicle setVariable ['inUse', true];
-	_vehicle spawn {
-
+	if (!_inUse) then {
+		_vehicle setVariable ['inUse', true];
 		["REARMING...      ", 1, ammoIcon, nil, "flash"] spawn createAlert;
-
-		_error = false;
-		_maxAmmo = (_this getVariable ["maxAmmo",1]);		
-		_currentAmmo = (_this getVariable ["ammo",0]);
-
-		_timeout = time + 10;
-
-		for "_i" from 0 to 1 step 0 do {
-
-			if (_currentAmmo >= _maxAmmo || time > _timeout) exitWith {};
-
-			if ([0,0,0] distance (velocity _this) > 10) exitWith { _error = true; };
-
-			_currentAmmo = (_this getVariable ["ammo",0]);
-			_newAmmo =  [( _currentAmmo  + ( _maxAmmo / 10)), 0, _maxAmmo] call limitToRange;
-			_this setVariable["ammo", _newAmmo];
-			playSound3D ["a3\sounds_f\weapons\Reloads\1_reload.wss", _this, false, (ASLtoATL visiblePositionASL _this), 3, 1, 20];	
-			sleep 0.5;
-		};	
-
-		_this setVariable ["GW_NEARBY_SERVICE", nil];
-
-		if (!_error) then {
-
-			_this setVariable["ammo", _maxAmmo];		
-			["REARMED!   ", 1, successIcon, nil, "slideDown"] spawn createAlert;			 
-
-		};		
-
-		_this setVariable ["inUse", false];
-
-		_this spawn noServiceLock; 
 	};
+
+	[		
+		[
+			_vehicle,
+			"upgrade",
+			20
+		],
+	"playSoundAll",
+	true,
+	false
+	] call BIS_fnc_MP;	 
+
+	_increment = _maxAmmo * 0.1;
+
+	_vehicle setVariable["ammo", (_currentAmmo + _increment)];
+
+	true
 	
 };
+
+// If it was just activated, block for a bit to prevent abuse
+if (_inUse) then {
+	_lastService = _vehicle getVariable ['GW_NEARBY_SERVICE', 'SERVICE'];
+	_lastServiceString = _lastService call { 
+		if (_this == "REFUEL") exitWith { 'REFUELLED!' };
+		if (_this == "REARM") exitWith { 'REARMED!' };
+		if (_this == "REPAIR") exitWith { 'REPAIRED!' };
+		'COMPLETE!'
+	};	
+
+	[_lastServiceString, 1, successIcon, nil, "slideDown"] spawn createAlert;
+	[_vehicle, ['noservice'], 3] call addVehicleStatus;
+};
+
+_vehicle setVariable ['inUse', false];
+_vehicle setVariable ['GW_NEARBY_SERVICE', nil];
+
+true

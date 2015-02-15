@@ -6,10 +6,12 @@
 
 private ['_source', '_destination', '_ignore'];
 
-_source =  [_this,0, [], [[]]] call BIS_fnc_param;
-_destination = [_this,1, [], [[]]] call BIS_fnc_param;	
-_ignore = [_this,2, objNull, [objNull]] call BIS_fnc_param;
-_modifier = [_this,3, 1, [0]] call BIS_fnc_param;
+_source = _this select 0;
+_destination = _this select 1;
+_ignore = if (isNil { _this select 2 }) then { objNull } else { (_this select 2) };
+_modifier = if (isNil { _this select 3 }) then { 1 } else { (_this select 3) };
+_tag = if (isNil { _this select 4 }) then { "" } else { (_this select 4) };
+
 
 if (count _source == 0 || count _destination == 0) exitWith {};
 
@@ -23,7 +25,7 @@ if (count _objects == 0) exitWith {};
 
 	// If its not invulnerable, damage it
 	if ( !('invulnerable' in _status) && _isVehicle && _x != (vehicle player)) then {
-		if (_x != (vehicle player)) then { [_x, "RLG"] call markAsKilledBy; };
+		if (_x != (vehicle player) && count toArray _tag > 0) then { [_x, _tag] call markAsKilledBy; };
 
 		_dmg = getDammage _x;
 
@@ -34,6 +36,7 @@ if (count _objects == 0) exitWith {};
 			_x call destroyInstantly;
 		} else {
 			_x setDamage ((getDammage _x) + (_dmg + _modifier));
+			_x call updateVehicleDamage;
 		};
 	};
 

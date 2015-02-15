@@ -24,7 +24,7 @@ _s = if (_fuel < _cost) then {
 	[       
 	    [
 	        _vehicle,
-	        ['nofuel'],
+	        "['nofuel']",
 	        3
 	    ],
 	    "addVehicleStatus",

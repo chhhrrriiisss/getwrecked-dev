@@ -32,6 +32,14 @@ if (isNil {_obj getVariable "GW_EpeContactEH"}) then {
 	_obj setVariable ["GW_EpeContactEH", _obj addEventHandler ["EpeContact", handleContactObject]];
 };
 
+if (_obj isKindOf "StaticWeapon" && isNil {_obj getVariable "GW_DisassembledEH"}) then {	
+	_obj setVariable ["GW_DisassembledEH", _obj addEventHandler ["WeaponDisassembled", handleDisassembledObject]];
+};
+
+if (typeof _obj == "groundWeaponHolder" && isNil {_obj getVariable "GW_TakeEH"}) then {	
+	_obj setVariable ["GW_TakeEH", _obj addEventHandler ["take", handleTakeObject]];
+};
+
 _obj setVariable ['hasHandlers', true];
 
 true

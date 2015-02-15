@@ -25,14 +25,16 @@ For their continuing help promoting and supporting the mod via Twitch, Youtube, 
 
 ## License
 
-Created, coded and designed by Sli
+**Created, coded and designed by Sli**
 
 This mod and its content (excluding those already attributed therein) are under a CC-BY-NC-ND 4.0 License
 Attribution-NonCommercial-NoDerivatives 4.0 International
-Permission must be sought from the Author for its commercial use or any modification
+Permission must be sought from the Author for its commercial use, any modification or use of a non-public release obtained via the mission cache
 
 **Additional scripts:**
 
 Nuclear Explosion by [Moerderhoschi](http://www.armaholic.com/page.php?id=23963)
+
 Recurring Cleanup Script by [MDCCLXXVI](http://www.armaholic.com/page.php?id=27333)
+
 Chat command interceptor by [Conroy](http://www.armaholic.com/page.php?id=26377)

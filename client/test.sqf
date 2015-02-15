@@ -1,33 +1,90 @@
-_pos = (ASLtoATL visiblePositionASL (vehicle player));
-_pos set[2, 0.35];
+_v = (vehicle player);
 
-_ringTop = createVehicle ['UserTexture10m_F', _pos, [], 0, 'CAN_COLLIDE'];
-_ringBottom = createVehicle ['UserTexture10m_F', _pos, [], 0, 'CAN_COLLIDE'];
+// player action ['eject', _v];
+_shooter = _v getVariable ['shooter', nil];
+_unit = nil;
 
-_ringTop attachTo [(vehicle player), (vehicle player) worldToModelVisual (ASLtoATL getPosASL _ringTop)];
-_ringBottom attachTo [(vehicle player), (vehicle player) worldToModelVisual (ASLtoATL getPosASL _ringBottom)];
+if (isNil "_shooter") then {
+	
+	_g =createGroup civilian;
+	(typeof player) createUnit [ _v modelToWorld [0,10,0], _g,"GW_Shooter = this;", 0.6, "corporal"];
+	_tx = player getVariable ["GW_Sponsor", ""];
 
-[_ringTop, [-90,0,0]] call setPitchBankYaw;
-[_ringBottom, [90,0,0]] call setPitchBankYaw;
+	_unit = GW_Shooter;
 
-_timeout = time + 15;
-_dir = getDir _ringTop;
+	removeAllActions _unit;
+	removeAllWeapons _unit;
+	removeVest _unit;
+	removeBackpack _unit;
+	removeGoggles _unit;
+	removeAllPrimaryWeaponItems _unit;
+	removeallassigneditems _unit;
 
-Sleep 0.1;
+	_unit setDir (getDir (_v));
 
-_ringTop setObjectTextureGlobal [0, 'client\images\ring3.paa'];
-_ringBottom setObjectTextureGlobal [0, 'client\images\ring3.paa'];
+	_unit addEventHandler['handleDamage', { false }];
 
 
-waitUntil {
+	switch (_tx) do {
+		
+		case "slytech": { _unit addheadgear "H_RacingHelmet_1_white_F"; };
+		case "crisp": { _unit addheadgear "H_RacingHelmet_1_red_F"; };
+		case "gastrol": { _unit addheadgear "H_RacingHelmet_1_black_F"; };
+		case "haywire": { _unit addheadgear "H_RacingHelmet_1_black_F"; };
+		case "cognition": { _unit addheadgear "H_RacingHelmet_1_white_F"; };
+		case "terminal": { _unit addheadgear "H_RacingHelmet_1_red_F"; };
+		case "tank": { _unit addheadgear "H_RacingHelmet_1_black_F"; };
+		case "veneer": { _unit addheadgear "H_RacingHelmet_1_white_F"; };
+		default { _unit addheadgear "H_RacingHelmet_1_black_F"; };
+	};
 
-	_dir = _dir + (	if (_dir > 360) then [{-360},{2}]	);
-	[_ringTop, [-90,0,_dir]] call setPitchBankYaw;
-	[_ringBottom, [90,0,_dir]] call setPitchBankYaw;
+	[[_unit,_tx],"setPlayerTexture",true,false] call BIS_fnc_MP;
+	_v setVariable ['shooter', _unit];
+	_unit addWeapon "launch_RPG32_F";
 
-	time > _timeout
+	_pPos = _v worldToModelVisual (ASLtoATL visiblePositionASL player);
+	_pPos set[0, (_pPos select 0) - 0.45];
+	_pPos set[1, (_pPos select 1) - 0.2];
+	_unit setPos (_v modelToWorldVisual _pPos);
+
+	_vect = [_unit, _v] call getVectorDirAndUpRelative;
+	_vect set [1, (_vect select 1) vectorAdd [-0.3, -0.3, 0] ];
+
+	_unit attachTo [_v];
+	_unit setVectorDirAndUp _vect;
+
 };
 
-deleteVehicle _ringTop;	
-deleteVehicle _ringBottom;
+_v animateDoor ["Door_LF", 1, FALSE];
+Sleep 0.5;
+_unit = _v getVariable 'shooter';
+player hideObject true;
+_unit hideObject false;
+_unit switchMove "amovpknlmstpsraswlnrdnon";
+GW_SHOOTER_ACTIVE = true;
 
+_unit spawn { 
+	_vel = velocity (vehicle player);
+	_up = vectorUp (vehicle player);
+	_dir = direction (vehicle player);
+	_speed = 0.7;
+
+	while {GW_SHOOTER_ACTIVE} do {
+		if (!alive _this) exitWith {};		
+		_this playMove "amovpknlmstpsraswlnrdnon";
+	};
+
+};
+
+// sleep 2;
+
+// detach player;
+
+// player moveInDriver _v;
+
+Sleep 10;
+
+_v animateDoor ["Door_LF", 0, false];
+GW_SHOOTER_ACTIVE = false;
+_unit hideObject true;
+player hideObject false;

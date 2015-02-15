@@ -13,6 +13,9 @@ _origDamage = _damage;
 _oldDamage = nil;
 _projectile = _this select 4;
 
+// Prevent wheel damage
+if (_selection find "wheel" != -1) exitWith { false }; 
+
 if (_selection != "?") then  {
 
     _oldDamage = if (_selection == "") then { 
@@ -37,24 +40,11 @@ if (_selection != "?") then  {
 
         } else {
 
-            _scale = switch (_projectile) do
-            {
-                case ("R_PG32V_F"): { RPG_DMG_SCALE };
-                case ("M_Titan_AT"): { TITAN_AT_DMG_SCALE };
-                case ("M_NLAW_AT_F"): { GUD_DMG_SCALE };
-                case ("B_127x99_Ball_Tracer_Red"): { LSR_DMG_SCALE };
-                case ("B_127x99_Ball"): { HMG_DMG_SCALE };
-                case ("B_127x99_Ball_Tracer_Yellow"): { HMG_IND_DMG_SCALE };
-                case ("B_35mm_AA_Tracer_Yellow"): { HMG_HE_DMG_SCALE };
-                case ("R_TBG32V_F"): { MORTAR_DMG_SCALE };                
-                case ("G_40mm_HEDP"): { GMG_DMG_SCALE };
-                case ("Bo_GBU12_LGB"): { EXP_DMG_SCALE };    
-                case ("B_762x51_Tracer_Green"): { LMG_DMG_SCALE };
-                case ("M_PG_AT"): { MSC_DMG_SCALE };
-                default                                { 1 };
-            };
+            _scale = _projectile call vehicleDamageData;
 
             _status = _vehicle getVariable ['status', []];
+            _armor = _vehicle getVariable ['armor', 1];
+            _scale = if (GW_ARMOR_SYSTEM_ENABLED) then { (_scale * _armor) } else { _scale };
             _scale = if ("nanoarmor" in _status) then { 0.01 } else { _scale };
 
             _damage = ((_damage - _oldDamage) * _scale) + _oldDamage; 
@@ -96,14 +86,16 @@ if ("invulnerable" in _status) then {
         false
     } count _parts > 0;
 
-    if (_highestDmg > 0.91) then {
-        _vehicle setDammage 1;
-    } else {
+   
+
+    if (_highestDmg > 0.91) then {} else {
         { _vehicle setHit [_x, _highestDmg]; false } count _parts > 0;
         _vehicle setDammage _highestDmg;
     };
 
 };
+
+_vehicle spawn { Sleep 0.05; _this call updateVehicleDamage; };
 
 _damage
 

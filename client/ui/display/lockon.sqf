@@ -4,6 +4,13 @@
 //      Return: None
 //
 
+if (isNil "GW_LASTLOCK_CHECK") then {
+	GW_LASTLOCK_CHECK = time;
+};
+
+if (time - GW_LASTLOCK_CHECK <= 0.1) exitWith { true };
+GW_LASTLOCK_CHECK = time;
+
 private ['_pos', '_icon', '_limit', '_vehDir'];
 
 _nearbyTargets = _this;
@@ -11,7 +18,7 @@ if (count _nearbyTargets == 0) exitWith {};
 
 // Some required conditions
 _vehicle = GW_CURRENTVEHICLE;
-_pos = (ASLtoATL getPosASL _vehicle);
+_pos = (ASLtoATL visiblePositionASL _vehicle);
 _isCloaked = if ('cloak' in (_vehicle getVariable ["status", []]) ) then { true } else { false };
 
 // Make sure we have these variables established
@@ -57,6 +64,7 @@ if (isNil "GW_TARGET_DIRECTION") then {	GW_TARGET_DIRECTION = 0; };
 		// If conditions werent met, cleanup
 		if (_fail) then {
 
+
 			if (!isNil "GW_ACQUIREDTARGET") then {
 				if (_x == GW_ACQUIREDTARGET) then {
 					GW_ACQUIREDTARGET = nil;
@@ -65,7 +73,7 @@ if (isNil "GW_TARGET_DIRECTION") then {	GW_TARGET_DIRECTION = 0; };
 					[       
 						[
 							_x,
-							['locking']
+							"['locking']"
 						],
 						"removeVehicleStatus",
 						_x,
@@ -81,10 +89,10 @@ if (isNil "GW_TARGET_DIRECTION") then {	GW_TARGET_DIRECTION = 0; };
 			if (_x in GW_LOCKEDTARGETS) then {			
 				GW_LOCKEDTARGETS = GW_LOCKEDTARGETS - [_x];
 
-				[       
+				[   
 					[
 						_x,
-						['locked', 'locking']
+						"['locked', 'locking']"
 					],
 					"removeVehicleStatus",
 					_x,
@@ -149,7 +157,7 @@ if (count GW_LOCKEDTARGETS > 0) then {
 			[       
                 [
                     _lockedTarget,
-                    ['locked'],
+                    "['locked']",
                     15
                 ],
                 "addVehicleStatus",
@@ -164,7 +172,7 @@ if (count GW_LOCKEDTARGETS > 0) then {
 		[       
             [
                 _lockedTarget,
-                ['locked']
+                "['locked']"
             ],
             "removeVehicleStatus",
             _lockedTarget,

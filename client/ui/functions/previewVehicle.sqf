@@ -61,7 +61,7 @@ GW_PREVIEW_VEHICLE = nil;
 
 _name = toUpper ( _name );
 _nameArray = toArray (_name);
-_name = [_name, 22, ''] call cropString; 
+_name = [_name, 28, ''] call cropString; 
 
 // Fade out
 _title ctrlShow false;	

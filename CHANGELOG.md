@@ -3,7 +3,7 @@
 
 
 # [Get Wrecked](http://getwrecked.info) Changelog
-## Last Updated: [03-02-2015] ##
+## Last Updated: [14-02-2015] ##
 
 Note: Some changes that are deemed spoilers are hidden from this log (we have to keep some surprises)
 
@@ -31,7 +31,11 @@ Note: Some changes that are deemed spoilers are hidden from this log (we have to
 - Additional checks on save/deploy/clear to determine ownership and prevent griefing
 - AttachToRelative function thanks to KillzoneKid
 - Tweaks to vehicle name tag function and simulation manager to improve client fps
+- Reworked damage system to extend engagement times and reliance on service points
+- Magnetic Coil now has less power but a faster cooldown
+- Single mouse press (instead of double) to toggle mouse fire on weapons in settings menu
 - Fixed - Damage object causing action menu to bug out
+- Fixed - Lock ons causing excessive network traffic
 - Fixed - Key binds resetting on load vehicle 
 - Fixed - Guided missile always exploding at 1000m 
 - Fixed - Lock-on using front of vehicle instead of camera direction
@@ -52,10 +56,13 @@ Note: Some changes that are deemed spoilers are hidden from this log (we have to
 - Fixed - Flamethrower should no longer set light to source vehicle when firing ahead
 - Fixed - Teleport Supply crate putting vehicles below ground
 - Fixed - Cleanup should no longer remove attached objects on vehicles 
+- Fixed - Weapon marking system not re-marking for same player with different weapon
+- Fixed - Weapons/modules activating while message dialog open
 - Temp Fix - Multiple vehicles loading on top of each other when multiple people spawn at same pad
 - Removed - Parachute vehicle drop as it causes desync and does not work properly
 - Removed - Long concrete wall, for balance purposes 
 - Removed - Jammer supply crate in place of radar powerup
+- Added - Custom sounds to vehicle service points
 - Added - cleanup to remove excess actions from unnecessary items while in battle
 - Added - Nuke death camera focus mode
 - Added - 3D halo status effect for vehicle power ups (WIP)
@@ -69,16 +76,17 @@ Note: Some changes that are deemed spoilers are hidden from this log (we have to
 - Added - More vehicle terminals and support for 12 players
 - Added - Support for destroyable attached building objects on vehicles (WIP)
 - Added - Key binds for modules now shown on vehicle hud
-- Added - Light Machine Gun (WIP)
 - Added - !reset to allow for character profile resets
-- Added - Recurring cleanup script by MDCCLXXVI
 - Added - Reintroduced simulation manager to increase overall fps 
-- Added - Unflip vehicle option to vehicle scroll menu (when in zone) 
-- Added - Object tilting and respective binds (User6 and User7) (WIP)
+- Added - Unflip vehicle option to vehicle scroll menu (when in zone)
+- Added - Status new health bars to vehicle tags
+- Added - Vehicle armor ratings to prolong time-to-kill
+- Added - New custom cleanup script for abandoned and destroyed vehicles
+
 
 
 **v0.7.8 - v0.7.9**, [Closed alpha release]
-"
+
 - Lift Vehicle and settings options now attached to player proximity to owned vehicle
 - Vertical Thrusters should no longer be linked, along with most other modules
 - 'Key Restricted' warning when trying to use a restricted key for a bind
@@ -151,7 +159,7 @@ Note: Some changes that are deemed spoilers are hidden from this log (we have to
 - Fixed - Key binds for some weapons not working despite being bound correctly (Railgun/Rocket Launcher primarily)
 
 
-**v0.7.6 **, [Make Arma Not War Release]
+**v0.7.6**, [Make Arma Not War Release]
 
 - Fix for kill message displaying multiple times
 - Cloaking device now properly hiding vehicle tag

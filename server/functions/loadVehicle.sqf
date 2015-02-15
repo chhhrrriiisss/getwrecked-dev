@@ -6,10 +6,10 @@
 
 private['_class', '_name', '_camo', '_source', '_o', '_k'];
 
-_player = [_this,0, objNull, [objNull]] call BIS_fnc_param;
-_target = [_this,1, [], [[]]] call BIS_fnc_param;
-_raw = [_this,2, "", [[],""]] call BIS_fnc_param;
-_ai = [_this,3, false, [false]] call BIS_fnc_param;
+_player = _this select 0;
+_target = _this select 1;
+_raw = _this select 2;
+_ai = if (isNil {_this select 3}) then { false } else { (_this select 3) };
 
 if (isNull _player || (count _target == 0) || (count _raw == 0)) exitWith {};
 if (GW_DEBUG) then { copyToClipboard str _raw; };
@@ -38,7 +38,6 @@ waitUntil{
 
 GW_LASTTARGET = [_target, diag_tickTime];
 
-
 _data = call compile _raw;
 
 if (!_ai && GW_DEBUG) then {
@@ -52,7 +51,7 @@ if (count _data == 0) exitWith {
     _source publicVariableClient "pubVar_systemChat";
 };
 
-_savedAttachments = [_data,5, [], [[]]] call BIS_fnc_param;
+_savedAttachments = if (isNil { _data select 4}) then { [] } else { (_data select 5) };
 _startTime = time;
 
 [_target, false] call clearPad;
@@ -63,7 +62,7 @@ if (!_ai) then {
 };
 
 // Create it
-_vehPos = [_data,3, [], ["", []]] call BIS_fnc_param;
+_vehPos = if (isNil {_data select 3}) then { [0,0,0] } else { (_data select 3) }; 
 
 if (typeName _vehPos == "STRING") then {
     _vehPos = call compile _vehPos; 
@@ -82,7 +81,16 @@ _newVehicle enableSimulationGlobal false;
 
 _errors = 0;
 
-_deletedItems = ["Land_Sack_F", "Land_CnCBarrierMedium4_F", "Land_WaterTank_F"];
+_deletedItems = [
+    'Land_PenBlack_F',
+    'Land_Barrel_F', // old emp
+    'B_HMG_01_F', // old hmg model
+    'Land_BarrelTrash_F',
+    'Land_New_WiredFence_5m_F',
+    "Land_Sack_F", 
+    "Land_CnCBarrierMedium4_F", 
+    "Land_WaterTank_F" 
+];
 
 // Loop through and create attached objects
 {

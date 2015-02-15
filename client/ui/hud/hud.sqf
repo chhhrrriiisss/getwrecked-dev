@@ -74,7 +74,6 @@ _hudStatusBox = [
 // Information while out of a vehicle
 _hudMoney = (_hud displayCtrl 10001);
 _hudTransaction = (_hud displayCtrl 10002);
-_hudLogo = (_hud displayCtrl 10020);
 _hudStripesTopLeft = (_hud displayCtrl 10021);
 _hudStripesBottomRight = (_hud displayCtrl 10022); 
 
@@ -134,18 +133,12 @@ for "_i" from 0 to 1 step 0 do {
 		GW_HUD_NORMAL_ACTIVE = true;
 
 		[[_hudMoney, _hudTransaction], [['fade', 1, 0, 1.2], ['y', '0', '0.1', 1.2]], "quad"] spawn createTween;
-		_hudLogo ctrlSetFade 0;
-		_hudLogo ctrlCommit 1;
 		
 	};
 
 	// Close the default HUD
 	if (GW_HUD_NORMAL_ACTIVE && (GW_PREVIEW_CAM_ACTIVE || GW_TIMER_ACTIVE) ) then {
 		GW_HUD_NORMAL_ACTIVE = false;
-
-		_hudLogo ctrlSetFade 1;
-		_hudLogo ctrlCommit 0;
-
 		[[_hudMoney, _hudTransaction], [['fade', 1, 0, 0], ['y', '0', '-0.1', 1.2]], "quad"] spawn createTween;
 
 	};
@@ -172,7 +165,7 @@ for "_i" from 0 to 1 step 0 do {
 			GW_HUD_VEHICLE_ACTIVE = true;				
 
 			// Fade Out Player HUD 
-			[[_hudMoney, _hudTransaction, _hudLogo], [['fade', 0, 1, 0]], "quad"] spawn createTween;
+			[[_hudMoney, _hudTransaction], [['fade', 0, 1, 0]], "quad"] spawn createTween;
 
 			// Fade in Vehicle HUD 
 			[[_vHudIcon, _vHudFuel, _vHudAmmo, _vHudHealth, _vHudMoney, _vHudNotification, _vHudHorn], [['fade', 1, 0, 0.1]], "quad"] spawn createTween;
@@ -214,7 +207,7 @@ for "_i" from 0 to 1 step 0 do {
 			_moduleList = [];
 
 			// Fade In Player HUD 
-			[[_hudMoney, _hudTransaction, _hudLogo], [['fade', 1, 0, 0.1]], "quad"] spawn createTween;
+			[[_hudMoney, _hudTransaction], [['fade', 1, 0, 0.1]], "quad"] spawn createTween;
 
 		};
 

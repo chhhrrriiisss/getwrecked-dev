@@ -124,8 +124,8 @@ if(!(createDialog "GW_Spawn")) exitWith { GW_SPAWN_ACTIVE = false; };
 _layerStatic = ("BIS_layerStatic" call BIS_fnc_rscLayer);
 _layerStatic cutRsc ["RscStatic", "PLAIN" , 1];
 
-[GW_SPAWN_LOCATION] spawn previewLocation;
 [_startIndex] call generateSpawnList;
+[GW_SPAWN_LOCATION] spawn previewLocation;
 
 99999 cutText ["", "BLACK IN", 0.35];  
 

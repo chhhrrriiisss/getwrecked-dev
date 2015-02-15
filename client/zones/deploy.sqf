@@ -87,7 +87,6 @@ _stripActions = {
 	_x call _stripActions;
 	if (simulationEnabled _x) then {
 		_x enableSimulation false;
-		_x hideObject true;
 	};
 
 	false
@@ -107,6 +106,17 @@ if (!_hasHandlers) then {
 	};
 	false
 } count (attachedObjects _targetVehicle) > 0;
+
+// Update simulation for all clients
+[		
+	[
+		_targetVehicle,
+		true
+	],
+	"setObjectSimulation",
+	false,
+	false 
+] call BIS_fnc_MP;
 
 // Set wanted value
 _targetVehicle setVariable ['GW_WantedValue', 0];

@@ -14,19 +14,20 @@ if (isNil "GW_EVENTS_ACTIVE") then {
 
 if (GW_EVENTS_ACTIVE) then {
 	GW_EVENTS_ACTIVE = false;
+	waitUntil{ Sleep 1; (isNil "GW_EVENTS_ACTIVE") };
 };
 
 _eventsList = [
 
 	[
-		"supply",
+		"supply", // Name of event
 		80, // Probability of event
 		// Condition to check for
 		{ 
 			if (count (['workshopZone'] call findAllInZone) < (count allUnits)) exitWith { true };
 			false
 		},
-		// Script to run
+		// Script to run on TRUE condition
 		{ 
 			_activeZones = [];
 
@@ -56,9 +57,8 @@ _eventsList = [
 
 ];
 
-
-
 GW_EVENTS_ACTIVE = true;
+diag_log format['Events check in initialized at %1.', time];
 
 for "_i" from 0 to 1 step 0 do {
 
@@ -90,3 +90,6 @@ for "_i" from 0 to 1 step 0 do {
 
 	} count _eventsList > 0;
 };
+
+diag_log format['Events check stopped at %1.', time];
+GW_EVENTS_ACTIVE = nil;

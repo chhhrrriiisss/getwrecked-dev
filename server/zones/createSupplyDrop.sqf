@@ -152,6 +152,8 @@ if (_rnd > 85 && (count toArray _type == 0) && (_supplyContents select 0) != ((c
 
 		pubVar_setDir = [_part, getDir _part];
 		publicVariable "pubVar_setDir";  
+	} else {
+		_part enableSimulationGlobal false;
 	};
 
 	_spawnedItems pushback _part;
@@ -217,6 +219,9 @@ _para setVectorUp [0,0,1];
 
 // Tidy up and particle effects
 0 = [_source, _para] spawn { 
+	
+	Sleep 0.5;
+	(_this select 0) enableSimulationGlobal true;
 	
 	_s = _this select 0;
 	_ps = _this select 1;

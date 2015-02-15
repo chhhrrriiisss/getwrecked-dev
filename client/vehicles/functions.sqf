@@ -218,7 +218,7 @@ setVehicleActions = {
 		[       
 			[
 				(_this select 0),
-				['cloak']
+				"['cloak']"
 			],
 			"removeVehicleStatus",
 			false,

@@ -31,6 +31,8 @@ setupPaint = {
 	_paint attachTo [_bucket, [0,0, 0.076]]; // 0.076 is the height inside the bucket
 	[_paint, [-90,0,0]] call setPitchBankYaw;
 
+	_paint setVariable ['GW_CU_IGNORE', true];
+
 	true
 
 };

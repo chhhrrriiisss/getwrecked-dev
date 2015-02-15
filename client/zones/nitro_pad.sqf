@@ -6,10 +6,11 @@
 
 private ["_pad", "_vehicle"];
 
-_pad = [_this,0, objNull, [objNull]] call BIS_fnc_param;
-_vehicle = [_this,1, objNull, [objNull]] call BIS_fnc_param;
+_pad = _this select 0;
+_vehicle = _this select 1;
 
 if (isNull _vehicle || isNull _pad || (player == _vehicle)) exitWith {};
+if (!alive _vehicle) exitWith {};
 
 _status = _vehicle getVariable ["status", []];
 
@@ -17,8 +18,8 @@ if ("boost" in _status) exitWith {};
 
 [       
     [
-        _vehicle,
-        ['boost'],
+        _vehicle,        
+        "['boost']",
         3
     ],
     "addVehicleStatus",

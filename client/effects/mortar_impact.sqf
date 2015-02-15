@@ -40,7 +40,7 @@ if (count _nearby == 0) exitWith {};
 		[       
 	        [
 	            _x,
-	            ['tyresPopped'],
+	            "['tyresPopped']",
 	            4
 	        ],
 	        "addVehicleStatus",

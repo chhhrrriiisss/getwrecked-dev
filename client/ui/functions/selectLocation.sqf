@@ -28,15 +28,15 @@ if (!isNil "GW_SPAWN_LOCATION") then {
 		_success = false;
 	};
 
-	if (_sucess) then {
+	if (_success) then {
 
-		// Refresh simulation manager now that we've switched zones
-		GW_SIMULATION_MANAGER_ACTIVE = false;
-		Sleep 2;
-		[] spawn simulationManager;
+		{
+			_x enableSimulation true;
+			false
+		} count ([GW_CURRENTZONE] call findAllInZone) > 0;
 
 		// Make sure we record a successful deploy
-		['deploy', _targetVehicle, 1] spawn logStat; 
+		['deploy', GW_SPAWN_VEHICLE, 1] spawn logStat; 
 	};
 
 	if (!_success) then {

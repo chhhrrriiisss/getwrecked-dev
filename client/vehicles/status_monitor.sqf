@@ -36,12 +36,19 @@ GW_STATUS_MONITOR_EH = ["GW_STATUS_MONITOR", "onEachFrame", {
 
 	if (!_inVehicle || (time - GW_STATUS_MONITOR_LAST_UPDATE < 0.3)) exitWith {};
 
+	if (!simulationEnabled _vehicle) then {
+		_vehicle enableSimulation true;
+	};
+	
 	// Apply vehicle damage to driver
     _vehDamage = getDammage _vehicle;
     _playerDamage = getDammage player;
     if (_playerDamage != _vehDamage) then {
     	player setDammage _vehDamage;
     };
+
+    // Update vehicle damage
+    _vehicle call updateVehicleDamage;
 
 	GW_STATUS_MONITOR_LAST_UPDATE = time;
 
@@ -109,9 +116,8 @@ GW_STATUS_MONITOR_EH = ["GW_STATUS_MONITOR", "onEachFrame", {
 	if ( !("emp" in _status) && !("disabled" in _status) && !("noservice" in _status) ) then {
 
 		_nearbyService = _vehicle getVariable ["GW_NEARBY_SERVICE", nil];
-		_inUse = _vehicle getVariable ["inUse", false];
 
-		if (!isNil "_nearbyService" && !_inUse) then {   
+		if (!isNil "_nearbyService") then {   
 			[_vehicle, _nearbyService] call servicePoint;
 		};
 
@@ -186,6 +192,8 @@ GW_STATUS_MONITOR_EH = ["GW_STATUS_MONITOR", "onEachFrame", {
 			    _newDmg = _dmg + _rnd;
 			    _vehicle setDammage _newDmg;
 			};
+
+			
 		};
 
 		case ("fire" in _status): {   
@@ -204,6 +212,7 @@ GW_STATUS_MONITOR_EH = ["GW_STATUS_MONITOR", "onEachFrame", {
 			    _newDmg = _dmg + _rnd;
 			    _vehicle setDammage _newDmg;
 			};
+
 		};
 
 		case ("emp" in _status): { 

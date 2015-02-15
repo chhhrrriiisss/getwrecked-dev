@@ -14,6 +14,13 @@ _startTime = time;
 [] call GWS_fnc_initNitro;
 [] spawn initEvents;
 
+// Prevent cleanup on mission.sqm placed items
+{
+	_x setVariable ['GW_CU_IGNORE', true];
+} count (nearestObjects [(getmarkerpos "workshopZone_camera"), [], 150]) > 0;
+
+[] spawn initCleanup;
+
 serverSetupComplete = compileFinal "true";
 publicVariable "serverSetupComplete";
 
@@ -21,3 +28,4 @@ _endTime = time;
 _str =  format['Server setup completed in %1s.', (_endTime - _startTime)];
 diag_log _str;
 systemchat _str;
+

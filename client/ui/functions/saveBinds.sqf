@@ -11,7 +11,7 @@ _list = ((findDisplay 92000) displayCtrl 92001);
 _listLength = if (isNil { ((lnbSize 92001) select 0) }) then { 0 } else { ((lnbSize 92001) select 0) };
 _binds = [];
 
-
+_index = if (isNIl {_this select 0}) then { 0 } else { (_this select 0) };
 
 for "_i" from 0 to _listLength step 1 do {
 
@@ -63,5 +63,13 @@ for "_i" from 0 to _listLength step 1 do {
 		};
 
 	};
+
+};
+
+[_list, _index] spawn {
+
+	Sleep 0.05;
+	disableSerialization;
+	(_this select 0) lnbSetCurSelRow (_this select 1);
 
 };

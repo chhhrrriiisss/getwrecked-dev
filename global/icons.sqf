@@ -83,6 +83,7 @@ healthIcon =  ICON_ROOT + "hud\health.paa";
 balanceIcon = ICON_ROOT + "hud\balance.paa";
 randomIcon = ICON_ROOT + "hud\random4.paa";
 objectTag = MISSION_ROOT + 'client\images\tag.paa';
+uiBar = MISSION_ROOT + 'client\images\uiBar.paa';
 
 nukeSign = MISSION_ROOT + 'client\images\signage\supply_nuke.jpg';
 armorSign = MISSION_ROOT + 'client\images\signage\supply_armor.jpg';

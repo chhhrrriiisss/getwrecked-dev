@@ -38,11 +38,14 @@ if (isNil "_data") exitWith { false };
 _defaultAmmo = if (!isNil "_data") then { ((_data select 2) select 3) } else { 1 };
 _defaultFuel = if (!isNil "_data") then { ((_data select 2) select 4) } else { 1 };
 _signature = if (!isNil "_data") then { ((_data select 2) select 7) } else { "Low" };
+_armor = if (!isNil "_data") then { ((_data select 2) select 6) } else { 1 };
 
 // Defaults used locally when compiled on client
 _vehicle setVariable["GW_defaults", [
     
+    ['armor', _armor, true],
     ['signature', _signature, true],
+    ['health', 100, true],
     ['fuel', 0, false],
     ['ammo', 1, false],
     ['maxAmmo', _defaultAmmo, false],

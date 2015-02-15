@@ -141,6 +141,7 @@ for "_i" from 0 to 1 step 0 do {
 	// Continually prevent damage and simulation (wierd stuff happens otherwise...)
 	if (simulationEnabled _obj) then { _obj enableSimulation false; };
 	_obj setDammage 0;
+	_obj setVectorUp [0,0,1];
 
 	// Use the camera height as a tool to manipulate the object height
 	_cameraHeight = (positionCameraToWorld [0,0,0]) select 2;

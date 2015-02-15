@@ -22,7 +22,6 @@ GW_LOOT_LIST = [
 	// Weapons
 
 	["B_HMG_01_A_F", "HMG .50 Cal", 750, 9999, 0, 0, 'HMG', "Heavy machine gun", 0.1, hmgIcon],
-	["LMG_Zafir_F", "Light Machine Gun", 750, 9999, 0, 0, 'LMG', "Light Machine Gun", 1, hmgIcon],
 	["B_GMG_01_A_F", "GMG 20mm HE", 750, 9999, 0, 0, 'GMG', "High explosive grenade launcher", 0.3, gmgIcon],
 	["B_static_AT_F", "Lock-On Missile Launcher", 750, 9999, 0, 0, 'MIS', "Fires heat seeking missiles", 1, lockonIcon],
 	["B_Mortar_01_F", "Mk6 Mortar", 750, 9999, 0, 0, 'MOR', "Heat seeking mounted mortar", 0.1, mortarIcon],
@@ -31,8 +30,9 @@ GW_LOOT_LIST = [
 	["launch_RPG32_F", "Rocket Launcher", 750, 9999, 0, 0, 'RPG', "Rocket Launcher", 0.3, rpgIcon],
 	["srifle_LRR_LRPS_F", "SR2 Railgun", 750, 9999, 0, 0, 'RLG', "Railgun", 1, railgunIcon],
 	["Land_DischargeStick_01_F", "Flamethrower", 750, 9999, 0, 0, 'FLM', "Flamethrower", 1, flameIcon],
-	
 
+	// Lmg [Disabled]
+	// ["LMG_Zafir_F", "Light Machine Gun", 750, 9999, 0, 0, 'LMG', "Light Machine Gun", 1, hmgIcon],
 	// Harpoon [Disabled]
 	// ["srifle_GM6_F", "Harpoon Launcher", 750, 9999, 0, 0, 'HAR', "Harpoon", 1, hmgIcon],
 
@@ -50,7 +50,7 @@ GW_LOOT_LIST = [
 	// Special
 
 	["Box_East_AmmoOrd_F", "Incendiary Ammo", 500, 8, 0.3, 0, 'IND', "Hit vehicles will be set alight", 1, flameIcon],
-	["Box_IND_Grenades_F", "HE Ammo", 500, 8, 0.3, 0, 'EXP', "Projectiles have a small explosive effect", 1, minesIcon],	
+	//["Box_IND_Grenades_F", "HE Ammo", 500, 8, 0.3, 0, 'EXP', "Projectiles have a small explosive effect", 1, minesIcon],	
 
 	// Claw [Disabled]
 	// ["Land_PalletTrolley_01_khaki_F", "Metal Spikes", 1000, 8, 0, 0, 'FRK', "Used to damage vehicles at close range", 1, warningIcon],	
@@ -91,8 +91,7 @@ GW_LOOT_BUILDING = [
 	["Land_Shoot_House_Corner_Crouch_F", 10],
 	["Land_Shoot_House_Wall_Crouch_F", 10],
 	["Land_Pallets_F", 20],
-	["Land_Pallet_vertical_F", 20],
-	["Land_New_WiredFence_5m_F", 30]
+	["Land_Pallet_vertical_F", 20]
 ];
 
 // Weapons
@@ -124,7 +123,6 @@ GW_LOOT_PERFORMANCE = [
 GW_LOOT_INCENDIARY = [
 	["Land_WaterTank_F", 100],
 	["Box_East_AmmoOrd_F", 400],
-	["Box_IND_Grenades_F", 300],
 	["Land_FireExtinguisher_F", 100],
 	["Land_Runway_PAPI", 400],
 	["Land_DischargeStick_01_F", 300]

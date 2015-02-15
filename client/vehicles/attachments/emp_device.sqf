@@ -40,7 +40,7 @@ playSound3D ["a3\sounds_f\sfx\special_sfx\sparkles_wreck_3.wss", _obj, false, _p
 			[       
                 [
                     _x,
-                    ['emp'],
+                    "['emp']",
                     12
                 ],
                 "addVehicleStatus",
@@ -62,7 +62,7 @@ playSound3D ["a3\sounds_f\sfx\special_sfx\sparkles_wreck_3.wss", _obj, false, _p
 			[       
 				[
 					_x,
-					_arr
+					str _arr
 				],
 				"removeVehicleStatus",
 				_x,

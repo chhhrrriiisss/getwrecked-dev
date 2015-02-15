@@ -8,5 +8,5 @@ private ['_obj'];
 
 _obj = _this select 0;
 
-[_obj, "", 0.1, _obj, "G_40mm_HEDP"] spawn handleDamageObject;
+[_obj, "", 0.1, _obj, "R_PG32V_F"] spawn handleDamageObject;
 

@@ -7,7 +7,7 @@
 private ['_zone', '_arr', '_zoneCenter', '_vehiclesOnly'];
 
 _zone = _this select 0;
-_vehiclesOnly = if (isNil "_this select 1") then { false } else { (_this select 1) };
+_vehiclesOnly = if (isNil {_this select 1}) then { false } else { (_this select 1) };
 
 if (_zone == "") exitWith { [] };
 

@@ -25,7 +25,11 @@ if (_key == 11) then {
 	lnbSetData [97001, [_index, 0], format['%1', _value]];
 };
 
-_list lnbsetcurselrow _index;
-
 // Recalculate
 _null = [] call calculateTotal;
+
+[_list, _index] spawn {
+	Sleep 0.1;
+	disableSerialization;
+	(_this select 0) lnbSetCurSelRow (_this select 1);
+};

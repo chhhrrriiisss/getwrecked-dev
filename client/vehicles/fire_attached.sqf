@@ -40,7 +40,7 @@ if (_ammo <= 0 && _type != "FLM") exitWith {
 	[       
 	    [
 	        _vehicle,
-	        ['noammo'],
+	        "['noammo']",
 	        3
 	    ],
 	    "addVehicleStatus",
@@ -87,7 +87,7 @@ if (_ammo < _cost && _type != "FLM") exitWith {
 	[       
 	    [
 	        _vehicle,
-	        ['noammo'],
+	        "['noammo']",
 	        3
 	    ],
 	    "addVehicleStatus",

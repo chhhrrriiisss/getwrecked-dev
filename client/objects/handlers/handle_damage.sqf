@@ -32,22 +32,7 @@ if (_health > 0) then  {
 
     } else {
 
-        _scale = switch (_projectile) do
-        {
-            case ("R_PG32V_F"): { OBJ_RPG_DMG_SCALE };
-            case ("M_Titan_AT"): { OBJ_TITAN_AT_DMG_SCALE };
-            case ("M_NLAW_AT_F"): { OBJ_GUD_DMG_SCALE };
-            case ("B_127x99_Ball_Tracer_Red"): { OBJ_LSR_DMG_SCALE };
-            case ("B_127x99_Ball"): { OBJ_HMG_DMG_SCALE };
-            case ("B_127x99_Ball_Tracer_Yellow"): { OBJ_HMG_DMG_SCALE };
-            case ("B_35mm_AA_Tracer_Yellow"): { OBJ_HMG_HE_DMG_SCALE };
-            case ("R_TBG32V_F"): { OBJ_MORTAR_DMG_SCALE };
-            case ("G_40mm_HEDP"): { OBJ_GMG_DMG_SCALE };
-            case ("Bo_GBU12_LGB"): { OBJ_EXP_DMG_SCALE };       
-            case ("B_762x51_Tracer_Green"): { OBJ_LMG_DMG_SCALE };   
-            default                                { 1 };
-        };
-
+        _scale = _projectile call objectDamageData;
         _damage = (_damage * _scale);
 
     };

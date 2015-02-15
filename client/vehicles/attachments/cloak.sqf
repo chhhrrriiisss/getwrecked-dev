@@ -127,7 +127,7 @@ waitUntil{
 	[       
 	    [
 	        _v,
-	        ['nocloak'],
+	        "['nocloak']",
 	        4
 	    ],
 	    "addVehicleStatus",
@@ -141,7 +141,7 @@ waitUntil{
 	[       
 		[
 			_v,
-			['cloak']
+			"['cloak']"
 		],
 		"removeVehicleStatus",
 		_v,

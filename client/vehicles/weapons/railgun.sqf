@@ -28,7 +28,7 @@ _this spawn {
 
 	_vel= velocity _vehicle;
 	_totalVel = [0,0,0] distance _vel;
-	_shake = if (_totalVel > 15) then { 3 } else { (_totalVel / 5) + 0.4 };
+	_shake = if (_totalVel > 15) then { 4 } else { (_totalVel / 5) + 0.6 };
 	_null = _shake spawn { addCamShake [_this, 5,150]; };
 
 	Sleep 1.8;
@@ -61,7 +61,7 @@ _this spawn {
 	_heading = [_oPos,_tPos] call BIS_fnc_vectorFromXToY;
 	_velocity = [_heading, _projectileSpeed] call BIS_fnc_vectorMultiply; 
 
-	_bullet = createVehicle ["M_NLAW_AT_F", _oPos, [], 0, "FLY"];
+	_bullet = createVehicle ["M_Titan_AA_static", _oPos, [], 0, "FLY"];
 
 	_bullet disableCollisionWith _obj;
 	_bullet disableCollisionWith _vehicle;
@@ -72,8 +72,7 @@ _this spawn {
 	playSound3D ["a3\sounds_f\sfx\special_sfx\sparkles_wreck_2.wss", _obj, false, _oPos, 2, 1, 50];	
 
 	[(ATLtoASL _oPos), (ATLtoASL _tPos), "RLG"] call markIntersects;
-	[ATLtoASL _oPos, ATLtoASL _tPos, (vehicle player), 0.5] spawn damageIntersects;
-
+	
 	_bullet setVectorDir _heading; 
 	_bullet setVelocity _velocity; 
 

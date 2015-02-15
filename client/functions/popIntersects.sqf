@@ -27,7 +27,7 @@ if (count _objects == 0) exitWith {};
 		[       
             [
                 _x,
-                ['tyresPopped'],
+                "['tyresPopped']",
                 _rnd
             ],
             "addVehicleStatus",
@@ -39,7 +39,7 @@ if (count _objects == 0) exitWith {};
         [       
             [
                 _x,
-                "tyreBurst",
+                'tyreBurst',
                 40
             ],
             "playSoundAll",

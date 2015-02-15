@@ -7,7 +7,7 @@
 //     
 //     This mod and its content (excluding those already attributed therein) are under a CC-BY-NC-ND 4.0 License
 //     Attribution-NonCommercial-NoDerivatives 4.0 International
-//     Permission must be sought from the Author for its commercial use or any modification
+//     Permission must be sought from the Author for its commercial use, any modification or use of a non-public release obtained via the mission cache
 //     
 
 X_Server = false;
@@ -33,7 +33,7 @@ MISSION_ROOT = call {
 call compile preprocessFile "global\compile.sqf";
 [] execVM "briefing.sqf";
 
-hint "v0.8.0 RC7";
+hint "v0.8.0 RC9";
 
 99999 cutText ["Loading...", "BLACK", 0.01]; 
 
@@ -56,7 +56,6 @@ if (isServer) then {
 
     call compile preprocessFile "server\compile.sqf";   
     [] execVM 'server\init.sqf'; 
-    [] execVM 'addons\recurringCleanup\init.sqf';
 
 };
 

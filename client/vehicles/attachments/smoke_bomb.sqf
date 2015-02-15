@@ -30,7 +30,7 @@ if (count _statusList > 0) then {
 	[       
 		[
 			_veh,
-			_statusList
+			str _statusList
 		],
 		"removeVehicleStatus",
 		_veh,
@@ -56,7 +56,7 @@ Sleep 0.01;
 [       
 	[
 		_veh,
-		['nolock', 'nofire'],
+		"['nolock', 'nofire']",
 		7
 	],
 	"addVehicleStatus",

@@ -13,11 +13,7 @@ GW_SUPPLY_TYPES = [
 			_vehicle setVariable ['ammo', (_vehicle getVariable ['maxAmmo', 1]), true];			
 			_vehicle setDammage 0;
 
-			['VEHICLE REFUELLED!', 0.75, fuelIcon, nil, "slideDown"] spawn createAlert; 
-			Sleep 1.2;
-			['VEHICLE REARMED!', 0.75, ammoIcon, nil, "slideDown"] spawn createAlert; 
-			Sleep 1.2;
-			['VEHICLE REPAIRED!', 0.75, healthIcon, nil, "slideDown"] spawn createAlert; 
+			['SERVICE PACKAGE!', 1, successIcon, nil, "slideDown"] spawn createAlert; 		
 		}
 	],
 
@@ -27,7 +23,7 @@ GW_SUPPLY_TYPES = [
 		randomSign,
 		{	
 			_crate = _this;
-			_amount = ((random 15000) + 15000);
+			_amount = ((random 5000) + 5000);
 			_amount call changeBalance;
 			[		
 				[
@@ -149,7 +145,7 @@ GW_SUPPLY_TYPES = [
 				[       
 					[
 						_x,
-						['emp'],
+						"['emp']",
 						10
 					],
 					"addVehicleStatus",
@@ -229,7 +225,7 @@ GW_SUPPLY_TYPES = [
 		{	
 			_crate = _this;
 			_condition = { ("radar" in ((vehicle player) getVariable ['status', []])) };
-			_maxTime = 60;
+			_maxTime = 90;
 			_vehicle = (vehicle player);
 			_vehicle setVariable ['status', [], true];
 
@@ -290,6 +286,7 @@ GW_SUPPLY_TYPES = [
 						if (alive _x) then {
 							_dmg = getDammage _x;
 							_x setDammage (_dmg + (random 0.05));
+							_x call updateVehicleDamage;
 						};
 
 					} count _vehiclesInZone > 0;

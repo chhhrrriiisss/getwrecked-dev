@@ -25,11 +25,25 @@ initBinds = {
 	GW_MU_EH = (findDisplay 46) displayAddEventHandler ["MouseButtonUp", "_this call setMouseUp; false;"];
 
 	setMouseDown = {			
-		if ((_this select 1) == 0) then {  GW_LMBDOWN = true; };
+		if ((_this select 1) == 0) then {  
+
+			GW_LMBDOWN = true; 
+			
+			if (GW_SETTINGS_ACTIVE && !isNil "GW_MOUSEX" && !isNil "GW_MOUSEY" && GW_MOUSEX > 0.4 ) then {
+				disableSerialization;
+				_list = ((findDisplay 92000) displayCtrl 92001);
+				_index = lnbcurselrow _list;
+				if (_index in reservedIndexes) exitWith {};
+				[_list, _index, true] spawn setBind;
+			};
+			
+		};
+		
 	};
 
 	setMouseUp = {		
 		if ((_this select 1) == 0) then {  GW_LMBDOWN = false; };	
+		
 	};
 
 };
@@ -59,8 +73,10 @@ checkBinds = {
 	User3 = actionKeys "User3"; // Rotate CW 
 	User4 = actionKeys "User4"; // Rotate CCW
 	User5 = actionKeys "User5"; // Hold Rotate
-	User6 = actionKeys "User6"; // Tilt Forward
-	User7 = actionKeys "User7"; // Tilt Backward
+	// User6 = actionKeys "User6"; // Tilt Forward
+	// User7 = actionKeys "User7"; // Tilt Backward
+
+
 
 	User20 = actionKeys "User20"; // Settings
 
@@ -68,6 +84,8 @@ checkBinds = {
 	_shift = _this select 2; 
 	_ctrl = _this select 3; 
 	_alt = _this select 4; 
+
+	if (GW_SHOOTER_ACTIVE) exitWIth { false };
 
 	// Conditionals
 	_vehicle = (vehicle player);
@@ -89,7 +107,7 @@ checkBinds = {
 
 	if (_key == 28 && GW_DIALOG_ACTIVE) exitWith {
 		[] call confirmCurrentDialog;
-	};
+	};	
 
 	// Windows key
 	if (_key in User20 && (_inVehicle && _isDriver) ) then {
@@ -107,7 +125,7 @@ checkBinds = {
 
 	GW_KEYDOWN = _key;
 
-	if (GW_SETTINGS_ACTIVE || GW_DEPLOY_ACTIVE || GW_SPAWN_ACTIVE) exitWith {};	
+	if (GW_SETTINGS_ACTIVE || GW_DEPLOY_ACTIVE || GW_SPAWN_ACTIVE || GW_DIALOG_ACTIVE) exitWith {};	
 
 	// Save
 	if (_ctrl && _key == 31) exitWith {
@@ -133,8 +151,8 @@ checkBinds = {
 		if (_key in User2) then { [player, _object] spawn attachObj; }; 
 		if (_key in User3) then { [_object, 4.5] spawn rotateObj; };
 		if (_key in User4) then { [_object, -4.5] spawn rotateObj; };	
-		// if (_key in User6) then { [_object, [-5, 0]] spawn tiltObj; }; 
-		// if (_key in User7) then { [_object, [5, 0]] spawn tiltObj; }; 
+		if (_key in User6) then { [_object, [-5, 0]] spawn tiltObj; }; 
+		if (_key in User7) then { [_object, [5, 0]] spawn tiltObj; }; 
 	};
 
 	// Outside Editor Keys

@@ -54,7 +54,6 @@ if (hasInterface) then {
 	};
 };
 
-
 // Trigger function for a supply box effects
 supplyDropEffect = {	
 	_crate = _this select 0;
@@ -62,7 +61,6 @@ supplyDropEffect = {
 	(_this select 0) spawn ((GW_SUPPLY_TYPES select _id) select 3);	
 	playsound "upgrade";
 };
-
 
 // Custom outlines for a few select vehicles 
 // (Why the stock ones are in perspective when all the others are 2D is pretty odd)
@@ -93,7 +91,7 @@ getTagData = {
 		case "MIN":	{  [30, 0.2] };
 		case "PAR":	{  [10, 0]	};
 		case "CLK":	{  [0, 0.08] };
-		case "MAG":	{  [75, 0]	};
+		case "MAG":	{  [45, 0]	};
 		case "GRP":	{  [1, 0]	};
 		case "CAL":	{  [30, 0.1] };
 		case "EPL":	{  [0.5, 0]	};
@@ -101,12 +99,12 @@ getTagData = {
 
 		case "HMG": {  [0.15, 0.002]	};
 		case "LMG": {  [0.1, 0.001]	};
-		case "GMG":	{  [0.75, 0.06] };
+		case "GMG":	{  [0.75, 0.03] };
 		case "RPG":	{  [3, 0.03] };
-		case "GUD":	{  [20, 0.2] };
-		case "MIS":	{  [10, 0.2] };	
+		case "GUD":	{  [20, 0.15] };
+		case "MIS":	{  [10, 0.15] };	
 		case "MOR":	{  [3, 0.05] };
-		case "RLG":	{  [20, 0.25] };
+		case "RLG":	{  [20, 0.15] };
 		case "LSR":	{  [3, 0.05] };		
 		case "FLM":	{  [0.5, 0.03] };	
 		case 'HAR': {  [8, 0] };
@@ -119,8 +117,6 @@ getTagData = {
 	};
 
 };
-
-
 
 // Zone Functions
 parseZones = compile preprocessFile 'client\zones\parse_zones.sqf';
@@ -150,6 +146,9 @@ handleTakeObject = compile preprocessFile 'client\objects\handlers\handle_take.s
 handleDisassembledObject = compile preprocessFile 'client\objects\handlers\handle_disassembled.sqf';
 setVehicleDamage = compile preprocessFile 'global\functions\setVehicleDamage.sqf';
 getHitPoints = compile preprocessFile 'global\functions\getHitPoints.sqf';
+updateVehicleDamage = compile preprocessFile 'global\functions\updateVehicleDamage.sqf';
+sendVehicleHit = compile preprocessFile 'global\functions\sendVehicleHit.sqf';
+
 // Object Functions
 destroyObj = compile preprocessFile "client\objects\destroy.sqf";
 createObject = compile preprocessFile "server\objects\create_object.sqf";
@@ -202,7 +201,6 @@ checkEject = compile preprocessFile 'global\functions\checkEject.sqf';
 checkInZone = compile preprocessFile 'global\functions\checkInZone.sqf';
 
 // Pre-compile location arrays
-
 reloadAreas = ['reloadArea'] call findAllObjects;
 repairAreas = ['repairArea'] call findAllObjects;
 refuelAreas = ['refuelArea'] call findAllObjects;

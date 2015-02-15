@@ -6,9 +6,9 @@
 
 private ["_obj", "_unit","_orig", "_id", "_veh"];
 
-_unit = [_this,0, objNull, [objNull]] call BIS_fnc_param;
-_orig = [_this,1, objNull, [objNull]] call BIS_fnc_param;
-_forceAttach = [_this,2, false, [false]] call BIS_fnc_param; // Used by the server to bypass notifications
+_unit = if (isNil {_this select 0}) then { objNull } else { (_this select 0) };
+_orig = if (isNil {_this select 1}) then { objNull } else { (_this select 1) };
+_forceAttach = if (isNil {_this select 2}) then { false } else { (_this select 2) };
 
 if (isNull _unit || isNull _orig) exitWith { false };
 if (!alive _unit || !alive _orig) exitWith { false };
@@ -58,10 +58,6 @@ _allowUpgrade = _veh getVariable ['isVehicle', false];
 if (!_allowUpgrade && !_forceAttach) exitWith {
 	["CANT ATTACH!", 1.5, warningIcon, colorRed] spawn createAlert;
 	false
-};
-
-if (!simulationEnabled _veh) then {
-	systemChat 'Note: Object rotation will only update once vehicle is dropped.';
 };
 
 // Precompile to prevent errors
@@ -156,6 +152,17 @@ if (_wasSimulated) then {
 		false 
 	] call BIS_fnc_MP;
 
+};
+
+// If it wasn't simulated, briefly toggle simulation so we see the upate
+if (!_wasSimulated) then {
+	_veh enableSimulation true;
+	_prevPos = (ASLtoATL visiblePositionASL _veh);
+	_timeout = time + 5;
+	waitUntil { Sleep 0.05; (simulationEnabled _veh || time > _timeout) };
+	Sleep 0.1;
+	_veh enableSimulation false;
+	_veh setPos _prevPos;
 };
 
 // Re-compile vehicle information
