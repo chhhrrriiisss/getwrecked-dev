@@ -38,5 +38,5 @@ if (isNil "GW_boundariesSpawned") then {
 		} count _points > 0;
 		
 		false
-	} count GW_ZONE_BOUNDARIES > 0;	
+	} count GW_ZONE_BOUNDARIES;
 };

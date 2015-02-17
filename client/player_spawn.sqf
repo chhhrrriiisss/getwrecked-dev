@@ -124,10 +124,10 @@ waitUntil { (time > _timeout) || GW_DEATH_CAMERA_ACTIVE };
 
 // Clear/Unsimulate unnecessary items near workshop
 {
-	_i = _x getVariable ['GW_Ignore_Sim', false];
+	_i = _x getVariable ['GW_IGNORE_SIM', false];
 	if ( (isPlayer _x || _x isKindOf "car") && !_i) then { _x enableSimulation true; } else { _x enableSimulation false; };
 	false
-} count (nearestObjects [ (getMarkerPos "workshopZone_camera"), [], 150]) > 0;
+} count (nearestObjects [ (getMarkerPos "workshopZone_camera"), [], 250]) > 0;
 
 // Reset killed by as we need to start fresh
 profileNamespace setVariable ['killedBy', nil];

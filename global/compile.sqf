@@ -87,7 +87,7 @@ getTagData = {
 		case "OIL":	{  [15, 0.004]	};
 		case "REP":	{  [60, 0]	};
 		case "DES":	{  [0, 0]	};
-		case "EMP":	{  [30, 0]	};
+		case "EMP":	{  [45, 0]	};
 		case "MIN":	{  [30, 0.2] };
 		case "PAR":	{  [10, 0]	};
 		case "CLK":	{  [0, 0.08] };
@@ -119,7 +119,7 @@ getTagData = {
 };
 
 // Zone Functions
-parseZones = compile preprocessFile 'client\zones\parse_zones.sqf';
+parseZones = compile preprocessFile 'global\functions\parse_zones.sqf';
 call compile preprocessFile "client\customization\supply_box.sqf";
 
 // Event Handlers

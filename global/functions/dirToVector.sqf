@@ -1,3 +1,9 @@
+//
+//      Name: dirToVector
+//      Desc: Converts a decimal degree to a vector heading
+//      Return: Array (Vector)
+//
+
 _dir = _this select 0;
 _angle = _this select 1;
 _pitch = _this select 2;

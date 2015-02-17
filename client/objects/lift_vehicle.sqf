@@ -76,7 +76,7 @@ for "_i" from 0 to 1 step 0 do {
 
 if ((ASLtoATL getPosASL _vehicle) select 2 < 1) then {
 
-	_vehicle setVariable ['GW_Ignore_Sim', false];
+	_vehicle setVariable ['GW_IGNORE_SIM', false];
 	[		
 		[
 			_vehicle,
@@ -89,7 +89,7 @@ if ((ASLtoATL getPosASL _vehicle) select 2 < 1) then {
 
 } else {
 
-	_vehicle setVariable ['GW_Ignore_Sim', true];
+	_vehicle setVariable ['GW_IGNORE_SIM', true];
 	[		
 		[
 			_vehicle,

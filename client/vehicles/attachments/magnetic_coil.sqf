@@ -76,8 +76,6 @@ _nearby = _pos nearEntities[["Car"], _range];
 			_calcPower = ((_power / (_mass * 0.001)) max 10) + (_dist / 6);
 			[_calcPower, _minPower, _maxPower] call limitToRange;
 			_vel = [_heading, _calcPower] call BIS_fnc_vectorMultiply; 
-
-			if (_x != (_vehicle)) then { [_x, "MAG"] call markAsKilledBy; };
 				
 			//Apply velocity to vehicles
 			if (local _x) then {

@@ -90,7 +90,7 @@ _stripActions = {
 	};
 
 	false
-} count (nearestObjects [ (getMarkerPos "workshopZone_camera"), [], 150]) > 0;
+} count (nearestObjects [ (getMarkerPos "workshopZone_camera"), [], 250]) > 0;
 
 // Add handlers for vehicle
 _hasHandlers = _targetVehicle getVariable ['hasHandlers', false];
@@ -131,7 +131,12 @@ GW_DEPLOY_ACTIVE = false;
 // Tell everyone else where we've gone
 _str = if (GW_SPAWN_LOCATION == "downtown") then { "" } else { "the "};
 systemChat format['You deployed to %1%2.', _str, GW_SPAWN_LOCATION];
-pubVar_systemChat = format['%1 deployed to %2%3', GW_PLAYERNAME, _str, GW_SPAWN_LOCATION];
+
+_strBroadcast = format['%1 deployed to %2%3', GW_PLAYERNAME, _str, GW_SPAWN_LOCATION];
+pubVar_systemChat = _strBroadcast;
 publicVariable "pubVar_systemChat";
+
+pubVar_logDiag = _strBroadcast;
+publicVariableServer "pubVar_logDiag";
 
 true

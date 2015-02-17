@@ -1,8 +1,8 @@
-/*
-
-	Player Init
-
-*/
+//
+//      Name: playerInit
+//      Desc: Initializes player handlers, variables etc on first load
+//      Return: None
+//
 
 waitUntil{!isNil { clientCompileComplete } };
 
@@ -51,13 +51,19 @@ _unit addeventhandler ["handleDamage",{
 
 }];
 
-addMissionEventHandler ["HandleDisconnect",{
+if (!isNil "GW_DC_EH") then {
+	removeMissionEventHandler ["HandleDisconnect",GW_DC_EH]; 
+	GW_DC_EH = nil;
+};
 
-	systemchat 'RUNNING DISCONNECT HANDLER';
-	
+GW_DC_EH = addMissionEventHandler ["HandleDisconnect",{
+
 	// Remove ownership from any vehicles in workshop
 	_n = (_this select 0) getVariable ['GW_Playername', ''];
 	_o = nearestObjects [getmarkerpos "workshopZone_camera", [], 150];
+
+	pubVar_logDiag = format['%1 disconnected.', _n];
+	publicVariableServer "pubVar_logDiag";
 
 	{
 
@@ -83,11 +89,14 @@ addMissionEventHandler ["HandleDisconnect",{
 [] call initBinds;
 
 // Map markers, boundaries
-[] spawn drawMap;
+[] call drawMap;
 
 // UI loop for hud icons
 [] call drawDisplay;
 
 systemChat 'Player initialization complete.';
+
+pubVar_logDiag = format['Player %1 initialization complete.', GW_PLAYERNAME];
+publicVariableServer "pubVar_logDiag";
 
 if (true) exitWith {};

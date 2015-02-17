@@ -8,20 +8,19 @@ parsePoints = {
 	_zoneData = [];
 	_pointData = [];
 
-	for "_i" from 0 to 999 step 1 do {	
+	for "_i" from 0 to 500 step 1 do {	
 
-		_str =  format['%1_%2', _zoneName, _i];
-		_point = getMarkerPos _str;
+		_point = getMarkerPos format['%1_%2', _zoneName, _i];
 
 		if (_point distance [0,0,0] <= 0) exitWith {};
 
 		_point set [2, 0];
 		_zoneData set [_i, [_point, 0, 0]];
-		_pointData set[count _pointData, _point];
+		_pointData pushback _point;
 		
 	};
 
-	GW_ZONE_BOUNDARIES set[count GW_ZONE_BOUNDARIES, [_zoneName, _pointData]];
+	GW_ZONE_BOUNDARIES pushBack [_zoneName, _pointData];
 
 	// Calculate point dirs
 	_count = 0;
@@ -54,13 +53,10 @@ parsePoints = {
 
 		_count = _count + 1;
 
-	} ForEach _zoneData;
+		false
+	} count _zoneData;
 
-	_zoneContainer = [];
-	_zoneContainer set[0, _zoneName];
-	_zoneContainer set[1, _zoneData];
-
-	_array set[(count _array), _zoneContainer];
+	_array pushback [_zoneName, _zoneData];
 
 	true
 
@@ -72,28 +68,23 @@ GW_ZONE_BOUNDARIES = [];
 // Calculate point data for each in zone list
 {
 	[format['%1Zone', (_x select 0)], GW_ZONES] call parsePoints;
-} ForEach GW_VALID_ZONES;
+	false
+} count GW_VALID_ZONES;
 
-// Calculate deploy positions for all zones
-GW_ZONE_DEPLOY_TARGETS = call {
-	
-	_arr = [];
+GW_ZONE_DEPLOY_TARGETS = [];
 
-	{
+{
 
-		_str = (_x select 0);	
-		_type = (_x select 1);
+	_str = (_x select 0);	
+	_type = (_x select 1);
 
-		_markers = [format['%1Zone_deploy', _str], false] call findAllMarkers;
-		_checkpoints = if (_type == "race") then { [format['%1Zone_checkpoint', _str], false] call findAllMarkers; } else { [] };
+	_markers = [format['%1Zone_deploy', _str], false] call findAllMarkers;
+	_checkpoints = if (_type == "race") then { [format['%1Zone_checkpoint', _str], false] call findAllMarkers; } else { [] };
 
-		if (count _markers > 0) then {
-			_arr set[count _arr, [format['%1Zone', _str], _markers, _checkpoints]];
-		};
+	if (count _markers > 0) then {
+		GW_ZONE_DEPLOY_TARGETS pushBack [format['%1Zone', _str], _markers, _checkpoints];
+	};
 
-	} ForEach GW_VALID_ZONES;
+	false
 
-	_arr
-
-};
-
+} count GW_VALID_ZONES;

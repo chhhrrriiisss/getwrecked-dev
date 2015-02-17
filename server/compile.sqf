@@ -27,6 +27,9 @@ initCleanup = compile preprocessFile "server\cleanup.sqf";
 pubVar_fnc_spawnObject = compile preprocessFile "server\functions\pubVar_spawnObject.sqf";
 "pubVar_spawnObject" addPublicVariableEventHandler { (_this select 1) call pubVar_fnc_spawnObject };
 
+pubVar_fnc_logDiag = compile preprocessFile "server\functions\pubVar_logDiag.sqf";
+"pubVar_logDiag" addPublicVariableEventHandler { (_this select 1) call pubVar_fnc_logDiag };
+
 // Utility
 setVisibleAttached = compile preprocessFile "server\functions\setVisibleAttached.sqf";
 setObjectSimulation = compile preprocessFile "server\functions\setObjectSimulation.sqf";

@@ -27,7 +27,6 @@ _itemsToClean = [
 	[{ 
 		_a = [];
 		{ 
-			_attached = attachedTo _x;
 			_ignore = _x getVariable ['GW_CU_IGNORE', false];
 			if (isNull (attachedTo _x) && !_ignore) then { _a pushBack _x; };
 			false
@@ -37,7 +36,7 @@ _itemsToClean = [
 	[{ 
 		_a = [];
 		{ 
-			_vS = (ASLtoATL getPosASL _x) nearEntities [["Man"], 10];
+			_vS = (ASLtoATL getPosASL _x) nearEntities [["Man"], 25];
 			_crew = false;
 			{ if (alive _X) exitWith { _crew = true; }; false } foreach (crew _x);
 			if (_vS isEqualTo [] && !_crew) then { _a pushBack _x; } else { _x setVariable ["GW_CU", nil]; };	
@@ -51,8 +50,7 @@ _itemsToClean = [
 	[{ (allMissionObjects "EmptyDetector") }, 10],
 	[{ (allMissionObjects "CraterLong") }, 10],
 	[{ (allMissionObjects "Ruins") }, 10],
-	[{ allDeadMen } , 30],
-	[{ (allDead - allDeadMen) }, 30]
+	[{ (allDead) }, 30]
 ];
 
 _cleanupTick = 10; 

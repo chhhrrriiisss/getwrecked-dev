@@ -34,7 +34,10 @@ FIRE_DMG_SCALE = 10;
 
 // Weapon Damage vs objects
 GW_GHS = 4;
-OBJ_COLLISION_DMG_SCALE = 1;
+OBJ_COLLISION_DMG_SCALE = 0;
+
+// Global armor modifier
+GW_GAM = 0.5;
 
 // Returns damage of projectile vs vehicle
 vehicleDamageData = {
@@ -43,9 +46,9 @@ vehicleDamageData = {
 
 	_d = _this call {
 
-		if (_this == "R_PG32V_F" || _this == "RPG") exitWith { (1 + random 0.5) };
-		if (_this == "M_Titan_AT" || _this == "GUD" || _this == "MIS") exitWith { (1.5 + random 0.5) };
-		if (_this == "M_Titan_AA_static" || _this == "RLG") exitWith { (35 + random 10) };
+		if (_this == "R_PG32V_F" || _this == "RPG") exitWith { (1.2 + random 0.5) };
+		if (_this == "M_Titan_AT" || _this == "GUD" || _this == "MIS") exitWith { (1 + random 0.5) };
+		if (_this == "M_Titan_AA_static" || _this == "RLG") exitWith { (40 + random 10) };
 		if (_this == "B_127x99_Ball_Tracer_Red" || _this == "LSR") exitWith { 1 };
 		if (_this == "B_127x99_Ball" || _this == "HMG") exitWith { 11 };
 		if (_this == "B_127x99_Ball_Tracer_Yellow") exitWith { 1 };
@@ -245,8 +248,7 @@ GW_SPECIALARRAY = [
 ];
 
 // Texture selection config for specific vehicles
-GW_TEXTURES_SPECIAL = [
-	
+GW_TEXTURES_SPECIAL = [	
 	['C_SUV_01_F', [""]],
 	['B_Truck_01_mover_F', ["B_Truck_01_mover_F", "default"] ],
 	['B_Truck_01_transport_F', ["B_Truck_01_mover_F", "default"] ],

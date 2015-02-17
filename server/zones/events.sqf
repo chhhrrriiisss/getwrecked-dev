@@ -9,7 +9,7 @@ private ['_condition'];
 if (!isServer) exitWith {};
 
 if (isNil "GW_EVENTS_ACTIVE") then {
-	GW_EVENTS_ACTIVE = true;
+	GW_EVENTS_ACTIVE = false;
 };
 
 if (GW_EVENTS_ACTIVE) then {
@@ -58,7 +58,7 @@ _eventsList = [
 ];
 
 GW_EVENTS_ACTIVE = true;
-diag_log format['Events check in initialized at %1.', time];
+diag_log format['Events check initialized at %1.', time];
 
 for "_i" from 0 to 1 step 0 do {
 

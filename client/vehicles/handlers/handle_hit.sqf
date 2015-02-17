@@ -12,6 +12,7 @@ _projectile = _this select 1;
 
 if (!local _vehicle) exitWith {};
 
+[_vehicle, ['noservice'], 5] call addVehicleStatus;
 [_vehicle] spawn checkTyres; 
 
 false

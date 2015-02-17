@@ -96,6 +96,7 @@ if ("invulnerable" in _status) then {
 };
 
 _vehicle spawn { Sleep 0.05; _this call updateVehicleDamage; };
+[_vehicle, ['noservice'], 5] call addVehicleStatus;
 
 _damage
 

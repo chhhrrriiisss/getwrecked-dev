@@ -1,12 +1,7 @@
-
-
-
-
 # [Get Wrecked](http://getwrecked.info) Changelog
-## Last Updated: [15-02-2015] ##
+## Last Updated: [17-02-2015] ##
 
-Note: Some changes that are deemed spoilers are hidden from this log (we have to keep some surprises)
-
+Note: Some changes that are deemed spoilers are hidden from this log 
 
 **v0.8** [Public alpha release]
 
@@ -25,7 +20,7 @@ Note: Some changes that are deemed spoilers are hidden from this log (we have to
 - Reduced overall number of items in workshop to improve fps
 - Tweaked eventHandler for karts to prevent wheels getting stuck
 - Lowered mass modifiers further to allow for more items on kart/quadbike/suv
-- Self destruct no longer tags players killed by it
+- Self destruct and Magnetic Coil no longer tags nearby players as killed by it
 - Reduced mine damage to 30%
 - Tweaked terminals to now use checkNearbyActions
 - Additional checks on save/deploy/clear to determine ownership and prevent griefing
@@ -34,6 +29,8 @@ Note: Some changes that are deemed spoilers are hidden from this log (we have to
 - Reworked damage system to extend engagement times and reliance on service points
 - Magnetic Coil now has less power but a faster cooldown
 - Single mouse press (instead of double) to toggle mouse fire on weapons in settings menu
+- Getting hit or taking damage now prevents service point being triggered for 5 seconds
+- EMP timeout increased to 40 seconds and effect duration on source vehicle increased to 4 seconds
 - Fixed - Damage object causing action menu to bug out
 - Fixed - Lock ons causing excessive network traffic
 - Fixed - Key binds resetting on load vehicle 
@@ -62,6 +59,7 @@ Note: Some changes that are deemed spoilers are hidden from this log (we have to
 - Removed - Parachute vehicle drop as it causes desync and does not work properly
 - Removed - Long concrete wall, for balance purposes 
 - Removed - Jammer supply crate in place of radar powerup
+- Removed - Custom vehicle skins in favour of a much smaller mission file size
 - Added - Custom sounds to vehicle service points
 - Added - cleanup to remove excess actions from unnecessary items while in battle
 - Added - Nuke death camera focus mode

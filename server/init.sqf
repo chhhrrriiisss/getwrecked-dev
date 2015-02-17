@@ -17,6 +17,7 @@ _startTime = time;
 // Prevent cleanup on mission.sqm placed items
 {
 	_x setVariable ['GW_CU_IGNORE', true];
+	false
 } count (nearestObjects [(getmarkerpos "workshopZone_camera"), [], 150]) > 0;
 
 [] spawn initCleanup;

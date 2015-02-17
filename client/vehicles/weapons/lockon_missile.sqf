@@ -81,7 +81,7 @@ if (!alive _lockedTarget) then {
 			} else {
 
 				if (_distanceToTarget < 4) then {
-					_rnd = (random 0.4) + 0.4;
+					_rnd = (random 0.25) + 0.25;
 					_t setDamage ((getDammage _t) + _rnd);
 				};
 			};

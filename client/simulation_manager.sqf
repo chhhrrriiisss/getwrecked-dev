@@ -27,7 +27,7 @@ for "_i" from 0 to 1 step 0 do {
 
 		{
 
-			_i = _x getVariable ['GW_Ignore_Sim', false];
+			_i = _x getVariable ['GW_IGNORE_SIM', false];
 
 			if (_x == (vehicle player) || _i) then {} else {
 			

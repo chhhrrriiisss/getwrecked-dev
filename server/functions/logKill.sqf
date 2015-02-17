@@ -14,7 +14,7 @@ _method = [_this,4,"",[""]] call bis_fnc_param;
 
 if (_victim == "" || _killer == "") exitWith {};
 
-if (isNil "GW_MESSAGELOGGED") then { GW_MESSAGELOGGED = time - 5; };
+if (isNil "GW_MESSAGELOGGED") then { GW_MESSAGELOGGED = time - 4; };
 if (time < (GW_MESSAGELOGGED + 3)) exitWith {};
 GW_MESSAGELOGGED = time;
 
