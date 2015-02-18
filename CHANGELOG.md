@@ -1,7 +1,17 @@
 # [Get Wrecked](http://getwrecked.info) Changelog
-## Last Updated: [17-02-2015] ##
+## Last Updated: [18-02-2015] ##
 
 Note: Some changes that are deemed spoilers are hidden from this log 
+
+**v0.8b** [Public alpha hotfix]
+
+- Fixed - Attached weapons should now be properly immune to damage
+- Fixed - Flamethrower consuming ammo in addition to fuel
+- Fixed - Invulnerability not working vs bag of explosives
+- Fixed - Attached static weapons disappearing after second save
+- Fixed - Hud failing to update after dropping explosives
+- Fixed - Explosives dropping all in one stack rather than individually
+- Added - Shockwave effects to some explosive weapons
 
 **v0.8** [Public alpha release]
 
@@ -59,7 +69,6 @@ Note: Some changes that are deemed spoilers are hidden from this log
 - Removed - Parachute vehicle drop as it causes desync and does not work properly
 - Removed - Long concrete wall, for balance purposes 
 - Removed - Jammer supply crate in place of radar powerup
-- Removed - Custom vehicle skins in favour of a much smaller mission file size
 - Added - Custom sounds to vehicle service points
 - Added - cleanup to remove excess actions from unnecessary items while in battle
 - Added - Nuke death camera focus mode
