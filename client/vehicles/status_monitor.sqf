@@ -21,9 +21,9 @@ GW_STATUS_MONITOR_EH = ["GW_STATUS_MONITOR", "onEachFrame", {
     if (!isNull _invOpen) then  { closeDialog 602;  };
     	
     // Force 3rd Person
-    if (cameraOn == (vehicle player) && cameraView == "Internal") then {
-    	(vehicle player) switchCamera "External";
-    };
+    // if (cameraOn == (vehicle player) && cameraView == "Internal") then {
+    // 	(vehicle player) switchCamera "External";
+    // };
 
     if (isNil "GW_STATUS_MONITOR_LAST_UPDATE") then {
     	GW_STATUS_MONITOR_LAST_UPDATE = time;
@@ -148,6 +148,41 @@ GW_STATUS_MONITOR_EH = ["GW_STATUS_MONITOR", "onEachFrame", {
 			_vehicle sethit ["wheel_2_2_steering", 1];
 
 			[_vehicle, 0] spawn slowDown;                 
+
+		};
+
+		case ("limpets" in _status): {
+
+			_random = random 100;
+			addCamShake [0.5, 0.25,30];
+
+			if (_random > 70) then {
+
+				_vel = velocity _vehicle;
+				_rnd = (random 4);
+
+				_random = random 100;
+
+				// if (_random > 50) then {
+				// 	_p = (_vehicle modelToWorldVisual [0,3,30]);	
+				// 	_g = createVehicle ["G_40mm_HEDP", _p, [], 0, 'FLY']; 
+				// 	_g setVelocity [0,0,-100];
+				// };				
+
+				_vehicle setVelocity [_vel select 0, _vel select 1, (_vel select 2) + _rnd];      
+				addCamShake [3, 0.25,10];
+				[
+					[
+						_vehicle,
+						0.1,
+						[0,0,0,0.2],
+						2,
+						-1
+					],
+					"smokeEffect"
+				] call gw_fnc_mp;    
+
+			};
 
 		};
 

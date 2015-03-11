@@ -7,7 +7,7 @@
 private['_target', '_nearby'];
 
 _target = _this select 0;
-_notify = [_this,1, true, [false]] call BIS_fnc_param; // Show notifications?
+_notify = [_this,1, true, [false]] call filterParam; 
 _targetPos = [0,0,0];
 
 _owner = if (isDedicated) then { true } else {

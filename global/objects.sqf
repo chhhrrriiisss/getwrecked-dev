@@ -71,7 +71,7 @@ GW_LOOT_LIST = [
 	["Land_FoodContainer_01_F", "Proximity Mines",  5, 500, 0, 0, 'MIN', "Drops a handful of mines", 0.7, minesIcon],
 	["Box_IND_Wps_F", "Shield Generator",  5, 500, 0, 0, 'SHD', "Shield that grants temporary invulnerability", 1, shieldIcon],
 	["Land_Coil_F", "Magnetic Coil",  5, 6000, 0, 0, 'MAG', "Deploys a magnetic pulse that pulls in vehicles", 1, magneticIcon]
-
+	// ["Land_Sleeping_bag_folded_F", "Limpet Mines",  5, 500, 0, 0, 'LPT', "Drops limpet mines", 0.7, minesIcon],
 ];
 
 
@@ -142,6 +142,7 @@ GW_LOOT_DEPLOYABLES = [
 	["Land_Sacks_heap_F", 50],
 	["Land_WoodenBox_F", 200],
 	["Land_FoodContainer_01_F", 500],
+	["Land_Sleeping_bag_folded_F", 200],
 	["Land_WaterTank_F", 100]
 ];
 

@@ -6,9 +6,9 @@
 
 private ['_source', '_string', '_data'];
 
-_source =  [_this,0, "", [""]] call BIS_fnc_param;
-_string = [_this,1, "", [""]] call BIS_fnc_param;
-_data = [_this,2, [], [[]]] call BIS_fnc_param;
+_source =  [_this,0, "", [""]] call filterParam;
+_string = [_this,1, "", [""]] call filterParam;
+_data = [_this,2, [], [[]]] call filterParam;
 
 if ((count _data == 0) || _string == "" || _source == "") exitWith {};
 if (_source == GW_PLAYERNAME) exitWith {};

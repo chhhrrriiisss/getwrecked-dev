@@ -6,8 +6,8 @@
 
 private ['_obj', '_unit', '_type'];
 
-_vehicle = [_this,0, objNull, [objNull]] call BIS_fnc_param;
-_unit = [_this,1, objNull, [objNull]] call BIS_fnc_param;
+_vehicle = [_this,0, objNull, [objNull]] call filterParam;
+_unit = [_this,1, objNull, [objNull]] call filterParam;
 
 if (isNull _vehicle || isNull _unit) exitWith {};
 
@@ -22,7 +22,7 @@ GW_EDITING = false;
 	"setObjectSimulation",
 	false,
 	false 
-] call BIS_fnc_MP;
+] call gw_fnc_mp;
 
 // Add the drop vehicle action
 removeAllActions _unit;
@@ -85,7 +85,7 @@ if ((ASLtoATL getPosASL _vehicle) select 2 < 1) then {
 		"setObjectSimulation",
 		false,
 		false 
-	] call BIS_fnc_MP;
+	] call gw_fnc_mp;
 
 } else {
 
@@ -98,6 +98,6 @@ if ((ASLtoATL getPosASL _vehicle) select 2 < 1) then {
 		"setObjectSimulation",
 		false,
 		false 
-	] call BIS_fnc_MP;
+	] call gw_fnc_mp;
 
 };

@@ -6,9 +6,9 @@
 
 private ["_obj", "_unit","_orig", "_id", "_veh"];
 
-_unit = if (isNil {_this select 0}) then { objNull } else { (_this select 0) };
-_orig = if (isNil {_this select 1}) then { objNull } else { (_this select 1) };
-_forceAttach = if (isNil {_this select 2}) then { false } else { (_this select 2) };
+_unit = [_this, 0, objNull, [objNull]] call filterParam;
+_orig = [_this, 1, objNull, [objNull]] call filterParam;
+_forceAttach = [_this, 2, false, [false]] call filterParam;
 
 if (isNull _unit || isNull _orig) exitWith { false };
 if (!alive _unit || !alive _orig) exitWith { false };
@@ -26,7 +26,7 @@ if (_forceAttach) then {
 };
 
 if (count _nearby <= 0) exitWith {
-	["NO VEHICLE FOUND!", 1.5, warningIcon, colorRed] spawn createAlert;
+	[localize "str_gw_no_vehicle_found", 1.5, warningIcon, colorRed] spawn createAlert;
 	false
 };
 
@@ -56,7 +56,7 @@ _veh = _closest;
 _allowUpgrade = _veh getVariable ['isVehicle', false];
 
 if (!_allowUpgrade && !_forceAttach) exitWith {
-	["CANT ATTACH!", 1.5, warningIcon, colorRed] spawn createAlert;
+	[localize "str_gw_cannot_attach", 1.5, warningIcon, colorRed] spawn createAlert;
 	false
 };
 
@@ -75,19 +75,19 @@ _currentWeapons = count (_veh getVariable ["weapons", []]);
 _currentModules = count (_veh getVariable ["tactical", []]);
 
 if (!isNil { _orig getVariable "weapons" } && _currentWeapons >= _maxWeapons) exitWith {
-	["TOO MANY WEAPONS!", 1.5, warningIcon, colorRed] spawn createAlert;
+	[localize "str_gw_too_many_weapons", 1.5, warningIcon, colorRed] spawn createAlert;
 	false
 };
 
 if (!isNil { _orig getVariable "tactical" } && _currentModules >= _maxModules) exitWith {
-	["TOO MANY MODULES!", 1.5, warningIcon, colorRed] spawn createAlert;
+	[localize "str_gw_too_many_modules", 1.5, warningIcon, colorRed] spawn createAlert;
 	false
 };
 
 // Do we own this vehicle?
 _isOwner = [_veh, player, false] call checkOwner;
 if (!_isOwner && !_forceAttach) exitWith {
-	["PERMISSION ERROR!", 1.5, warningIcon, colorRed] spawn createAlert;    	
+	[localize "str_gw_permission_error", 1.5, warningIcon, colorRed] spawn createAlert;    	
 	false
 };
 
@@ -98,7 +98,7 @@ _modifier = if (!isNil "_data") then { (((_data select 2) select 0) select 0) } 
 _maxMass = if (!isNil "_data") then { (((_data select 2) select 0) select 1) } else { 99999 };
 
 if (_vMass + (_oMass * _modifier) > _maxMass) exitWith {
-	["TOO HEAVY!", 1.5, warningIcon, colorRed] spawn createAlert;
+	[localize "str_gw_too_heavy", 1.5, warningIcon, colorRed] spawn createAlert;
 	false
 };
 
@@ -119,7 +119,7 @@ _wasSimulated = (simulationEnabled _veh);
 	"setObjectSimulation",
 	false,
 	false 
-] call BIS_fnc_MP;
+] call gw_fnc_mp;
 
 _timeout = time + 3;
 waitUntil{
@@ -136,7 +136,7 @@ waitUntil { !isNull attachedTo _obj };
 
 // If its being force added ignore message
 if (_forceAttach) then {} else {
-	["OBJECT ATTACHED!", 1, successIcon, nil, "slideDown"] spawn createAlert;	
+	[localize "str_gw_object_attached", 1, successIcon, nil, "slideDown"] spawn createAlert;	
 };
 
 
@@ -150,7 +150,7 @@ if (_wasSimulated) then {
 		"setObjectSimulation",
 		false,
 		false 
-	] call BIS_fnc_MP;
+	] call gw_fnc_mp;
 
 };
 

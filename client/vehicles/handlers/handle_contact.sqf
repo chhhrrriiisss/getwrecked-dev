@@ -25,7 +25,7 @@ if (GW_CURRENTZONE == "workshopZone") then {
 			"setVelocityLocal",
 			_veh,
 			false 
-		] call BIS_fnc_MP;  
+		] call gw_fnc_mp;  
 
 	};
 	

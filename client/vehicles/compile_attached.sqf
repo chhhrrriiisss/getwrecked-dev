@@ -9,7 +9,7 @@ private['_vehicle', '_o', '_obj'];
 if (GW_WAITCOMPILE) exitwith {};
 GW_WAITCOMPILE = true;
 
-_vehicle = [_this,0, objNull, [objNull]] call BIS_fnc_param;
+_vehicle = [_this,0, objNull, [objNull]] call filterParam;
 
 if (isNull _vehicle) exitWith { GW_WAITCOMPILE = false; };
 if (!alive _vehicle) exitWith { GW_WAITCOMPILE = false; };

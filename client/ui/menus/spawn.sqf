@@ -60,7 +60,7 @@ if (!simulationEnabled GW_SPAWN_VEHICLE) then {
         "setObjectSimulation",
         false,
         false 
-    ] call BIS_fnc_MP;  
+    ] call gw_fnc_mp;  
 
 };
 

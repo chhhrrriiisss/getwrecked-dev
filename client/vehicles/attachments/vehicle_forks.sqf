@@ -34,7 +34,7 @@ if (count _nearby == 0) exitWith {};
 	                "addVehicleStatus",
 	                _x,
 	                false 
-	        	] call BIS_fnc_MP;  
+	        	] call gw_fnc_mp;  
 
 	        	_p = _fork worldToModelVisual (ASLtoATL visiblePositionASL _x);
 

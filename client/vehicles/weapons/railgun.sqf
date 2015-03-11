@@ -24,7 +24,7 @@ _this spawn {
 		"playSoundAll",
 		true,
 		false
-	] call BIS_fnc_MP;	
+	] call gw_fnc_mp;	
 
 	_vel= velocity _vehicle;
 	_totalVel = [0,0,0] distance _vel;
@@ -40,7 +40,7 @@ _this spawn {
 		false
 		],
 		"nitroEffect"
-	] call BIS_fnc_MP;
+	] call gw_fnc_mp;
 
 
 	_dir = [GW_TARGET_DIRECTION] call normalizeAngle;

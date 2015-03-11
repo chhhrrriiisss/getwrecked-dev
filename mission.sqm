@@ -6448,7 +6448,7 @@ class Mission
 	};
 	class Markers
 	{
-		items=138;
+		items=172;
 		class Item0
 		{
 			position[]={14378.656,38.18771,19027.5};
@@ -7443,6 +7443,236 @@ class Mission
 			name="loot_spawn_15";
 			type="Empty";
 			angle=333.71201;
+		};
+		class Item138
+		{
+			position[]={12033.779,27.692245,15876.575};
+			name="highwayZone_0";
+			type="Empty";
+		};
+		class Item139
+		{
+			position[]={12036.254,27.629999,15821.09};
+			name="highwayZone_1";
+			type="Empty";
+		};
+		class Item140
+		{
+			position[]={11100.085,55.450241,15597.735};
+			name="highwayZone_2";
+			type="Empty";
+		};
+		class Item141
+		{
+			position[]={9848.7275,122.16328,15920.455};
+			name="highwayZone_3";
+			type="Empty";
+		};
+		class Item142
+		{
+			position[]={9029.4189,98.215309,15641.201};
+			name="highwayZone_4";
+			type="Empty";
+		};
+		class Item143
+		{
+			position[]={8258.8447,97.552971,15725.507};
+			name="highwayZone_5";
+			type="Empty";
+		};
+		class Item144
+		{
+			position[]={7235.9453,112.35126,15838.688};
+			name="highwayZone_6";
+			type="Empty";
+		};
+		class Item145
+		{
+			position[]={6026.9463,21.789417,14741.884};
+			name="highwayZone_7";
+			type="Empty";
+		};
+		class Item146
+		{
+			position[]={5468.8647,22.171804,14874.963};
+			name="highwayZone_8";
+			type="Empty";
+		};
+		class Item147
+		{
+			position[]={5328.2051,43.410099,14982.185};
+			name="highwayZone_9";
+			type="Empty";
+		};
+		class Item148
+		{
+			position[]={5469.123,42.956459,15145.897};
+			name="highwayZone_10";
+			type="Empty";
+		};
+		class Item149
+		{
+			position[]={5867.0088,22.133038,14842.303};
+			name="highwayZone_11";
+			type="Empty";
+		};
+		class Item150
+		{
+			position[]={6626.354,33.782616,15500.903};
+			name="highwayZone_12";
+			type="Empty";
+		};
+		class Item151
+		{
+			position[]={6740.2212,54.151432,16051.822};
+			name="highwayZone_13";
+			type="Empty";
+		};
+		class Item152
+		{
+			position[]={7724.8354,128.85379,16272.86};
+			name="highwayZone_14";
+			type="Empty";
+		};
+		class Item153
+		{
+			position[]={8351.1045,116.99722,15860.928};
+			name="highwayZone_15";
+			type="Empty";
+		};
+		class Item154
+		{
+			position[]={8764.71,97.811493,16070.243};
+			name="highwayZone_16";
+			type="Empty";
+		};
+		class Item155
+		{
+			position[]={9024.2588,122.01186,15822.413};
+			name="highwayZone_17";
+			type="Empty";
+		};
+		class Item156
+		{
+			position[]={9777.79,100.37476,16041.773};
+			name="highwayZone_18";
+			type="Empty";
+		};
+		class Item157
+		{
+			position[]={10496.157,99.80397,15984.843};
+			name="highwayZone_19";
+			type="Empty";
+		};
+		class Item158
+		{
+			position[]={11246.146,56.192249,15828.436};
+			name="highwayZone_20";
+			type="Empty";
+		};
+		class Item159
+		{
+			position[]={11999.063,28.196388,15848.661};
+			name="highwayZone_deploy_1";
+			type="Empty";
+			colorName="ColorBlue";
+			angle=-95.180656;
+		};
+		class Item160
+		{
+			position[]={11999.125,28.138689,15844.82};
+			name="highwayZone_deploy_2";
+			type="Empty";
+			colorName="ColorBlue";
+			angle=-95.180656;
+		};
+		class Item161
+		{
+			position[]={12004.337,28.003916,15844.647};
+			name="highwayZone_deploy_3";
+			type="Empty";
+			colorName="ColorBlue";
+			angle=-95.180656;
+		};
+		class Item162
+		{
+			position[]={12004.374,28.04616,15848.567};
+			name="highwayZone_deploy_4";
+			type="Empty";
+			colorName="ColorBlue";
+			angle=-95.180656;
+		};
+		class Item163
+		{
+			position[]={12008.756,27.899004,15844.602};
+			name="highwayZone_deploy_5";
+			type="Empty";
+			colorName="ColorBlue";
+			angle=-95.180656;
+		};
+		class Item164
+		{
+			position[]={12008.958,27.926739,15848.481};
+			name="highwayZone_deploy_6";
+			type="Empty";
+			colorName="ColorBlue";
+			angle=-95.180656;
+		};
+		class Item165
+		{
+			position[]={12013.571,27.804306,15844.469};
+			name="highwayZone_deploy_7";
+			type="Empty";
+			colorName="ColorBlue";
+			angle=-95.180656;
+		};
+		class Item166
+		{
+			position[]={12013.618,27.825962,15848.311};
+			name="highwayZone_deploy_8";
+			type="Empty";
+			colorName="ColorBlue";
+			angle=-95.180656;
+		};
+		class Item167
+		{
+			position[]={12018.528,27.729921,15844.381};
+			name="highwayZone_deploy_9";
+			type="Empty";
+			colorName="ColorBlue";
+			angle=-95.180656;
+		};
+		class Item168
+		{
+			position[]={12018.368,27.744102,15848.379};
+			name="highwayZone_deploy_10";
+			type="Empty";
+			colorName="ColorBlue";
+			angle=-95.180656;
+		};
+		class Item169
+		{
+			position[]={12023.248,27.665054,15844.141};
+			name="highwayZone_deploy_11";
+			type="Empty";
+			colorName="ColorBlue";
+			angle=-95.180656;
+		};
+		class Item170
+		{
+			position[]={12023.138,27.674219,15848.269};
+			name="highwayZone_deploy_12";
+			type="Empty";
+			colorName="ColorBlue";
+			angle=-95.180656;
+		};
+		class Item171
+		{
+			position[]={11987.483,28.560173,15847.267};
+			name="highwayZone_camera";
+			type="Empty";
+			colorName="ColorRed";
+			angle=-90.868195;
 		};
 	};
 };

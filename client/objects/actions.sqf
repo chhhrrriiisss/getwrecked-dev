@@ -9,7 +9,7 @@ setTerminalActions = {
 	
 	private ['_obj', '_var'];
 
-	_obj = [_this,0, objNull, [objNull]] call BIS_fnc_param;
+	_obj = [_this,0, objNull, [objNull]] call filterParam;
 	_var = _this select 1;
 
 	removeAllActions _obj;
@@ -75,7 +75,7 @@ setSupplyAction = {
 	
 	private ['_obj'];
 
-	_obj = [_this,0, objNull, [objNull]] call BIS_fnc_param;
+	_obj = [_this,0, objNull, [objNull]] call filterParam;
 	if (isNull _obj) exitWith {};
 
 	removeAllActions _obj;
@@ -120,7 +120,7 @@ setPaintAction = {
 
 	private ['_obj'];
 
-	_obj = [_this,0, objNull, [objNull]] call BIS_fnc_param;
+	_obj = [_this,0, objNull, [objNull]] call filterParam;
 	if (isNull _obj) exitWith {};
 
 	removeAllActions _obj;
@@ -150,7 +150,7 @@ setMoveAction = {
 
 	private ['_obj'];
 
-	_obj = [_this,0, objNull, [objNull]] call BIS_fnc_param;
+	_obj = [_this,0, objNull, [objNull]] call filterParam;
 	if (isNull _obj) exitWith {};
 
 	removeAllActions _obj;
@@ -176,7 +176,7 @@ setMoveAction = {
 // Actions for objects that are already attached to a vehicle
 setDetachAction = {
 
-	_obj = [_this,0, objNull, [objNull]] call BIS_fnc_param;
+	_obj = [_this,0, objNull, [objNull]] call filterParam;
 	if (isNull _obj) exitWith {};
 
 	removeAllActions _obj;

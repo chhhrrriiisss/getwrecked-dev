@@ -31,7 +31,7 @@ receiveMoney = {
 
 	private ['_value'];
 
-	_value = [_this,0,0,[0]] call bis_fnc_param;
+	_value = [_this,0,0,[0]] call filterParam;
 
 	if (_value == 0) exitWith {};
 
@@ -63,7 +63,7 @@ receiveMoney = {
 		"playSoundAll",
 		true,
 		false
-	] call BIS_fnc_MP;	 
+	] call gw_fnc_mp;	 
 };
 
 // Converts a number to a string with commas (as a currency)
@@ -71,7 +71,7 @@ numberToCurrency = {
 
 	private ["_value","_digits","_count","_string","_step", "_mod"];
 
-	_value = [_this,0,0,[0]] call bis_fnc_param;
+	_value = [_this,0,0,[0]] call filterParam;
 	_digits = _value call bis_fnc_numberDigits;
 	_count = count (_digits) - 1;
 
@@ -150,7 +150,7 @@ setBalance = {
 
 	private ['_value'];
 
-	_value = [_this,0,0,[0]] call BIS_fnc_param;
+	_value = [_this,0,0,[0]] call filterParam;
 
 	_oldBalance = profileNamespace getVariable ['GW_BALANCE', 0];
 	profileNamespace setVariable ['GW_BALANCE', _value];
@@ -166,7 +166,7 @@ changeBalance = {
 	
 	private ['_value', '_current'];
 
-	_value = [_this,0,0,[0]] call BIS_fnc_param;
+	_value = [_this,0,0,[0]] call filterParam;
 	if (_value == 0) exitWith { false };
 
 	_current = profileNamespace getVariable ['GW_BALANCE', 0];

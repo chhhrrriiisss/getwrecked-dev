@@ -12,7 +12,7 @@ _index = if (isNil {_this select 1}) then { 0 } else { (_this select 1) };
 ctrlShow[97001, true];
 
 // Before clearing, loop through and get existing quantities of any
-_listLength = [(lnbSize 97001),0, -1, [0]] call BIS_fnc_param;
+_listLength = [(lnbSize 97001),0, -1, [0]] call filterParam;
 	
 if (isNil "GW_BUY_CART") then {
 	GW_BUY_CART = [];

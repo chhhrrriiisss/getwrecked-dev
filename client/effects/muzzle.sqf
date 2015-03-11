@@ -3,7 +3,7 @@
 //      Desc: Small smoke burst at point to simulate gun firing
 //     
 
-_source = [_this,0, objNull, [objNull]] call BIS_fnc_param;
+_source = [_this,0, objNull, [objNull]] call filterParam;
 
 if (isNull _source) exitWith {};
 

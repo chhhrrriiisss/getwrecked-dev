@@ -44,7 +44,7 @@ _targetPosition = if (typename _location == "ARRAY") then { _location } else {
 
 	_rangeCheck = _zoneType call {
 		if (_this == "battle") exitWith { 150 };
-		if (_this == "race") exitWith { 4 };
+		if (_this == "race") exitWith { 5 };
 		5
 	};
 
@@ -116,7 +116,7 @@ if (!_hasHandlers) then {
 	"setObjectSimulation",
 	false,
 	false 
-] call BIS_fnc_MP;
+] call gw_fnc_mp;
 
 // Set wanted value
 _targetVehicle setVariable ['GW_WantedValue', 0];
@@ -124,6 +124,12 @@ _targetVehicle setVariable ['GW_WantedValue', 0];
 _targetVehicle lockDriver false;
 [_targetVehicle, 2] spawn dustCircle;
 [_targetVehicle, ['invulnerable', 'nolock', 'nofire'], 10] call addVehicleStatus;
+
+if (_zoneType == "race") then {
+	_targetVehicle setFuel 0;
+	_targetVehicle setVariable ['fuel', 0, true];
+	_targetVehicle setVariable ['ammo', 0, true];
+};
 
 // Everything is ok, return true
 GW_DEPLOY_ACTIVE = false;

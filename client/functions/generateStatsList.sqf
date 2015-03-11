@@ -6,8 +6,8 @@
 
 private ['_display', '_control', '_v', '_vehicleStats', '_dist', '_stats'];
 
-_control = [_this,0, [], [[]]] call BIS_fnc_param;
-_v = [_this,1, objNull, [objNull]] call BIS_fnc_param;
+_control = [_this,0, [], [[]]] call filterParam;
+_v = [_this,1, objNull, [objNull]] call filterParam;
 
 if (count _control == 0 || isNull _v) exitWith {};
 

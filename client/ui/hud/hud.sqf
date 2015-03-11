@@ -204,7 +204,7 @@ for "_i" from 0 to 1 step 0 do {
 
 			_layerStatic cutRsc ["RscStatic", "PLAIN" , 0.5];
 
-			['CONNECTION LOST!', 1, warningIcon, colorRed, "warning"] spawn createAlert;  
+			[localize "str_gw_connection_lost", 1, warningIcon, colorRed, "warning"] spawn createAlert;  
 
 			GW_HUD_VEHICLE_ACTIVE = false;
 
@@ -365,23 +365,7 @@ for "_i" from 0 to 1 step 0 do {
 	    };
 
         if ("tyresPopped" in _status) then {
-            ["WHEELS DISABLED!", 1, warningIcon, colorRed, "warning"] spawn createAlert;   
-        };
-
-        if ("jammed" in _status) then {
-
-        	if (_jammedActive) then {} else {
-        		_jammedActive = true;
-        		"filmGrain" ppEffectEnable true; 
-        		"filmGrain" ppEffectAdjust [0.3 + (random 0.2), 0.1, 0.1, 0.5, 0.1, true];             
-        		"filmGrain" ppEffectCommit 0.1;
-        	};
-
-        	if (_blink) then {
-        		["JAMMING DETECTED!", 1, jammerSupplyIcon, colorRed, "warning"] spawn createAlert; 
-        		 _layerStatic cutRsc ["RscStatic", "PLAIN" ,2];     
-        	};
-              
+            [localize "str_gw_wheels_disabled", 1, warningIcon, colorRed, "warning"] spawn createAlert;   
         };
 
         if ("overcharge" in _status || "extradamage" in _status || "nanoarmor" in _status || "jammer" in _status) then {
@@ -395,7 +379,7 @@ for "_i" from 0 to 1 step 0 do {
 
         if ("invulnerable" in _status) then {
 
-            ["INVULNERABLE!", 1, shieldIcon, colorRed, "warning"] spawn createAlert;
+            [localize "str_gw_invulnerable", 1, shieldIcon, colorRed, "warning"] spawn createAlert;
 
             if (_blink) then {
 	            
@@ -414,7 +398,7 @@ for "_i" from 0 to 1 step 0 do {
 
         if ("fire" in _status) then {
 
-            ["FIRE DETECTED!", 1, warningIcon, colorRed, "warning"] spawn createAlert;  
+            [localize "str_gw_fire_detected", 1, warningIcon, colorRed, "warning"] spawn createAlert;  
 
             if (_fireActive) then {} else {
                 _fireActive = true;
@@ -425,7 +409,7 @@ for "_i" from 0 to 1 step 0 do {
  
         if ("locked" in _status) then {
 
-            ["LOCK DETECTED!", 1, rpgTargetIcon, colorRed, "warning"] spawn createAlert;   
+            [localize "str_gw_lock_detected", 1, rpgTargetIcon, colorRed, "warning"] spawn createAlert;   
 
             if (!_lockedActive) then {
             	_lockedActive = true;
@@ -440,7 +424,7 @@ for "_i" from 0 to 1 step 0 do {
 
         if ("emp" in _status) then {
 
-            ["DISABLED!", 1, warningIcon, colorRed, "warning"] spawn createAlert;                  
+            [localize "str_gw_disabled", 1, warningIcon, colorRed, "warning"] spawn createAlert;                  
 
             if (_empActive) then {} else {
                 _empActive = true;                            
@@ -476,8 +460,7 @@ for "_i" from 0 to 1 step 0 do {
 
 			// If the type is missing
 			if (_hasType <= 0) then {
-				systemchat format['missing %1', _tag];
-
+		
 			} else {
 
 				// If there's more than one of these items, get the timeout to check all tags of that type

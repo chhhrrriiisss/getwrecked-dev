@@ -4,7 +4,7 @@
 //      Return: None
 //
 
-_victim = [_this,0, objNull, [objNull]] call BIS_fnc_param;
+_victim = [_this,0, objNull, [objNull]] call filterParam;
 _killer = _this select 1;
 
 if (isNull _victim) exitWith {};

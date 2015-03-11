@@ -6,8 +6,8 @@
 
 private ['_obj', '_unit', '_type'];
 
-_obj = [_this,0, objNull, [objNull]] call BIS_fnc_param;
-_unit = [_this,1, objNull, [objNull]] call BIS_fnc_param;
+_obj = [_this,0, objNull, [objNull]] call filterParam;
+_unit = [_this,1, objNull, [objNull]] call filterParam;
 
 if (isNull _obj || isNull _unit) exitWith {};
 
@@ -74,7 +74,7 @@ if ( !local _obj && isNull attachedTo _obj) then {
 			"setObjectProperties",
 			false,
 			false 
-		] call BIS_fnc_MP;   
+		] call gw_fnc_mp;   
 		
 		// Special event handler to prevent launching vehicles
 		_newObj addEventHandler['EpeContactStart', {
@@ -83,7 +83,7 @@ if ( !local _obj && isNull attachedTo _obj) then {
 		 		_v = _this select 1;
 		 		_isVehicle = _v getVariable ["isVehicle", false];
 		 		if (_isVehicle) then {
-		 			[[_v,[0,0,0]],"setVelocityLocal",_v,false ] call BIS_fnc_MP;  
+		 			[[_v,[0,0,0]],"setVelocityLocal",_v,false ] call gw_fnc_mp;  
 		 		};
 		 	};
  		}];
@@ -109,7 +109,7 @@ if ( !local _obj && isNull attachedTo _obj) then {
 	"setObjectSimulation",
 	false,
 	false 
-] call BIS_fnc_MP;  
+] call gw_fnc_mp;  
 	
 _unit setVariable['editingObject', _obj];
 
@@ -144,8 +144,12 @@ for "_i" from 0 to 1 step 0 do {
 	_obj setVectorUp [0,0,1];
 
 	// Use the camera height as a tool to manipulate the object height
-	_cameraHeight = (positionCameraToWorld [0,0,0]) select 2;
-	_height = [(3.5 - _cameraHeight), 0, 4] call limitToRange;	
+	_cameraHeight = (positionCameraToWorld [0,0,4]) select 2;
+
+	// _range = if (cameraOn == (vehicle player) && cameraView == "Internal") then { [0, 3.5] } else { _cameraHeight = _cameraHeight * 2; []}
+	_height = [_cameraHeight, 0, 4] call limitToRange;	
+	// _height = _cameraHeight;
+	systemchat format['%1', _height];
 	_pos = _unit modelToWorld [0, 2.5, _height];
 	_pos = ATLtoASL _pos;
 

@@ -9,7 +9,7 @@ private ['_vehicle', '_unit'];
 if (GW_NEW_ACTIVE) exitWith {};
 GW_NEW_ACTIVE = true;
 
-_pad = [_this,0, objNull, [objNull]] call BIS_fnc_param;
+_pad = [_this,0, objNull, [objNull]] call filterParam;
 
 if (isNull _pad) exitWith {  GW_NEW_ACTIVE = false;  };
 

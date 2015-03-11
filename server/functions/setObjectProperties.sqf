@@ -4,7 +4,7 @@
 //      Return: None
 //
 
-_o = [_this,0, objNull, [objNull]] call BIS_fnc_param;
+_o = [_this,0, objNull, [objNull]] call filterParam;
 
 if (isNull _o) exitWith {};
 if (!alive _o) exitWith {};

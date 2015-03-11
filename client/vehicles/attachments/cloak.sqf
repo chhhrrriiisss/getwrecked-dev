@@ -6,7 +6,7 @@
 
 private ['_vehicle', '_status', '_vehVel'];
 
-_vehicle = [_this,1, objNull, [objNull]] call BIS_fnc_param;
+_vehicle = [_this,1, objNull, [objNull]] call filterParam;
 
 if (isNull _vehicle) exitWith { false };
 
@@ -52,7 +52,7 @@ playSound3D ["a3\sounds_f\sfx\special_sfx\sparkles_wreck_3.wss", _vehicle, false
     "setVisibleAttached",
     false,
     false 
-] call BIS_fnc_MP;  
+] call gw_fnc_mp;  
 
 player action ["engineoff", _vehicle];
 
@@ -93,7 +93,7 @@ waitUntil{
 				_s
 			],
 		"cloakEffect"
-		] call BIS_fnc_MP;
+		] call gw_fnc_mp;
 
 		_nearby = _p nearEntities [["car"], 10];
 		_found = false;
@@ -133,7 +133,7 @@ waitUntil{
 	    "addVehicleStatus",
 	    _v,
 	    false 
-	] call BIS_fnc_MP;  
+	] call gw_fnc_mp;  
 
 	_layerStatic = ("BIS_layerStatic" call BIS_fnc_rscLayer);
 	_layerStatic cutRsc ["RscStatic", "PLAIN" , 2];
@@ -146,7 +146,7 @@ waitUntil{
 		"removeVehicleStatus",
 		_v,
 		false 
-	] call BIS_fnc_MP;  
+	] call gw_fnc_mp;  
 
 	playSound3D ["a3\sounds_f\sfx\special_sfx\sparkles_wreck_1.wss", _v, false, _p, 2, 1, 150];	
 
@@ -158,7 +158,7 @@ waitUntil{
 	    "setVisibleAttached",
 	    false,
 	    false 
-	] call BIS_fnc_MP;  
+	] call gw_fnc_mp;  
 
 };
 

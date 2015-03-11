@@ -6,8 +6,8 @@
 
 private ["_cam", "_victim", "_killer", "_centerCamera"];
 
-_victim = [_this,0, objNull, [objNull]] call BIS_fnc_param;
-_killer = [_this,1, objNull, [objNull]] call BIS_fnc_param;
+_victim = [_this,0, objNull, [objNull]] call filterParam;
+_killer = [_this,1, objNull, [objNull]] call filterParam;
 
 _point = getMarkerPos format['%1_%2', GW_CURRENTZONE, 'camera'];
 _centerCamera = if (_point distance [0,0,0] <= 0) then { getMarkerPos "workshopZone_camera" } else { _point };

@@ -1,6 +1,6 @@
 //
-//      Name: dropMines
-//      Desc: Deploys mines that explode when fast vehicles go near them 
+//      Name: dropLimpets
+//      Desc: Deploys mines that attach to vehicles and cause them to shake/show up on radar
 //      Return: None
 //
 
@@ -21,7 +21,7 @@ _this spawn {
 
 	["DROPPING MINES! ", 1, warningIcon, nil, "default"] spawn createAlert;   
 
-	_cost = (['MIN'] call getTagData) select 1;
+	_cost = (['LPT'] call getTagData) select 1;
 
 	_ammo = _vehicle getVariable ["ammo", 0];
 	_newAmmo = _ammo - _cost;
@@ -29,7 +29,7 @@ _this spawn {
 	_vehicle setVariable["ammo", _newAmmo];
 
 	// Drops a detector that causes the mine to explode 
-	dropTrigger = {
+	dropLimpetTrigger = {
 
 		_obj = _this select 0;
 		_pos = (ASLtoATL getPosASL _obj);
@@ -70,23 +70,20 @@ _this spawn {
 					_vel = [0,0,0] distance _velocity;
 
 					// If its a vehicle and its going fast blow it up
-					if (_isVehicle && _vel > 1.5) then {
-
-						if (_x != GW_CURRENTVEHICLE) then { [_x, "MIN"] call checkMark;	};
+					if (_isVehicle) then {						
 
 						playSound3D ["a3\sounds_f\weapons\mines\electron_trigger_1.wss", _obj, false, getPos _obj, 2, 1, 50]; 
 
-						_tPos =  (ASLtoATL getPosASL _x);
-						_tPos set[2, 0];
-						_d = if ('nanoarmor' in _status) then { 0.05 } else { (0.3 + random 0.2) };
-
-						_x setDamage ((getDammage _x) + _d);
-						
-						_bomb = createVehicle ["M_PG_AT", _tPos, [], 0, "CAN_COLLIDE"];		
-						_bomb setVelocity [0,0,-100];
-						Sleep 0.01;			
-
-						[_tPos, 25, 25] call shockwaveEffect;
+						[       
+							[
+								_x,
+								"['limpets']",
+								9999
+							],
+							"addVehicleStatus",
+							_x,
+							false 
+						] call gw_fnc_mp;  
 
 						deleteVehicle _obj;
 
@@ -117,14 +114,13 @@ _this spawn {
 	};
 
 	// Drops the actual mine at the target location
-	dropMine = {
+	dropLimpetMine = {
 
 		_oPos = _this select 0;
 		_oDir = _this select 1;
 
-		_type = "Land_FoodContainer_01_F";
+		_type = "Land_Flush_Light_red_F";
 		_oPos = [_oPos, 5, 5, 0] call setVariance;
-		_oPos set[2, -0.4];
 
 		_o = createVehicle [_type, _oPos, [], 0, "CAN_COLLIDE"];
 		_o enableSimulation false;
@@ -148,7 +144,7 @@ _this spawn {
 		// Wait half a second before arming
 		Sleep 0.5;
 
-		[_o] spawn dropTrigger;
+		[_o] spawn dropLimpetTrigger;
 
 
 	};
@@ -171,7 +167,7 @@ _this spawn {
 			_oPos set[2,0];
 			_oDir = random 360;
 
-			[_oPos, _oDir] spawn dropMine;
+			[_oPos, _oDir] spawn dropLimpetMine;
 
 		};
 

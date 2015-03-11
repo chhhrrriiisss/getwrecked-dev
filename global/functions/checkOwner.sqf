@@ -6,13 +6,13 @@
 
 private ['_obj', '_unit', '_makeOwner', '_owner'];
 
-_obj = [_this,0, objNull, [objNull]] call BIS_fnc_param;
-_unit = [_this,1, objNull, [objNull]] call BIS_fnc_param;
+_obj = [_this,0, objNull, [objNull]] call filterParam;
+_unit = [_this,1, objNull, [objNull]] call filterParam;
 
 if (isNull _obj || isNull _unit) exitWith { false };
 
 // Optionally take ownership if it's unowned
-_makeOwner = [_this,2, true, [false]] call BIS_fnc_param;
+_makeOwner = [_this,2, true, [false]] call filterParam;
 
 _owner = _obj getVariable ['owner', ''];
 

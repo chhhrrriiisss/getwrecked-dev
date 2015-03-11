@@ -5,8 +5,8 @@
 
 private ['_target', '_pos', '_duration'];
 
-_target = [_this,0, objNull, [objNull]] call BIS_fnc_param;
-_noise = [_this, 2, true, [false]] call BIS_fnc_param;
+_target = [_this,0, objNull, [objNull]] call filterParam;
+_noise = [_this, 2, true, [false]] call filterParam;
 
 if (isNull _target) exitWith {};
 _pos = visiblePositionASL _target;

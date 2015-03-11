@@ -30,7 +30,7 @@ if (_isVehicle) then {
 			"removeVehicleStatus",
 			_t,
 			false 
-		] call BIS_fnc_MP;  
+		] call gw_fnc_mp;  
 
 	};				
 

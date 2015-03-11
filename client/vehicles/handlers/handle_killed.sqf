@@ -6,7 +6,7 @@
 
 private ["_veh", "_name", "_value", "_totalValue", "_actualValue", "_owner", "_newSpawn", "_crew", "_name"];
 
-_veh = [_this,0, objNull, [objNull]] call BIS_fnc_param;
+_veh = [_this,0, objNull, [objNull]] call filterParam;
 
 if (isNull _veh) exitWith {};
 
@@ -82,7 +82,7 @@ if (!_processed) then {
                     "logKill",
                     false,
                     false 
-                ] call BIS_fnc_MP;    
+                ] call gw_fnc_mp;    
 
                 ['destroyed', _veh, 1, true] call logStat;
 

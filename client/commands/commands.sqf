@@ -36,7 +36,7 @@ GW_COMMANDS_LIST = [
 							"changeBalance",
 							_target,
 							false
-						] call BIS_fnc_MP;	 
+						] call gw_fnc_mp;	 
 
 					};
 
@@ -65,7 +65,7 @@ GW_COMMANDS_LIST = [
 				'createSupplyDrop',
 				false,
 				false
-			] call BIS_fnc_MP;	
+			] call gw_fnc_mp;	
 
 			systemChat 'Supply drop inbound.';	
 					
@@ -158,7 +158,7 @@ GW_COMMANDS_LIST = [
 								"changeBalance",
 								(_this select 0),
 								false
-							] call BIS_fnc_MP;	 
+							] call gw_fnc_mp;	 
 
 							_string = format['%1 received $%2 from %3.', toUpper(_this select 1), ([_amount] call numberToCurrency), GW_PLAYERNAME];
 							systemChat _string;	

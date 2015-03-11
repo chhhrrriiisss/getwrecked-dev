@@ -6,8 +6,8 @@
 
 private ['_t', '_r', '_p'];
 	
-_t = [_this,0,objNull,[[], objNull]] call BIS_fnc_param;
-_r = [_this,1,1,[0]] call BIS_fnc_param;
+_t = [_this,0,objNull,[[], objNull]] call filterParam;
+_r = [_this,1,1,[0]] call filterParam;
 
 _p = if (typename _t == "OBJECT") then { (ASLtoATL getPosASL _t) } else { _t };
 

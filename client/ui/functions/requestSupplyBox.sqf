@@ -6,7 +6,7 @@
 
 private ['_inventory', '_objs'];
 
-_inventory = [_this,0, [], [[]]] call BIS_fnc_param;
+_inventory = [_this,0, [], [[]]] call filterParam;
 if (count _inventory <= 0) exitWith {};
 
 // Is there an existing box nearby?

@@ -6,9 +6,9 @@
 
 private ['_target', '_pos', '_duration', '_size'];
 
- _target = [_this,0, objNull, [objNull]] call BIS_fnc_param;
-_duration = [_this,1, 1, [0]] call BIS_fnc_param;
-_size = [_this,2, 1, [0]] call BIS_fnc_param;
+ _target = [_this,0, objNull, [objNull]] call filterParam;
+_duration = [_this,1, 1, [0]] call filterParam;
+_size = [_this,2, 1, [0]] call filterParam;
 
 if (isNull _target || _duration < 0 || _size < 0) exitWith {};
 _pos = visiblePositionASL _target;

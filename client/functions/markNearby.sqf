@@ -6,9 +6,9 @@
 
 private ['_pos', '_radius', '_nearby', '_m'];
 
-_pos = [_this,0, [], [[]]] call BIS_fnc_param;
-_rad = [_this,1, 5, [0]] call BIS_fnc_param;
-_m =  [_this,2, "", [""]] call BIS_fnc_param;
+_pos = [_this,0, [], [[]]] call filterParam;
+_rad = [_this,1, 5, [0]] call filterParam;
+_m =  [_this,2, "", [""]] call filterParam;
 
 if (count _pos == 0) exitWith {};
 

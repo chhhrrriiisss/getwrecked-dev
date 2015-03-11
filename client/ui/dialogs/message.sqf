@@ -10,9 +10,9 @@ if (GW_DIALOG_ACTIVE) then {
 	closeDialog 93000;
 };
 
-_dialogString = [_this,0, "CONFIRM", [""]] call BIS_fnc_param;
-_msgString = [_this,1, "", [""]] call BIS_fnc_param;
-GW_DIALOG_TYPE = [_this,2, "CONFIRM", [""]] call BIS_fnc_param;
+_dialogString = [_this,0, "CONFIRM", [""]] call filterParam;
+_msgString = [_this,1, "", [""]] call filterParam;
+GW_DIALOG_TYPE = [_this,2, "CONFIRM", [""]] call filterParam;
 
 // Function used globally to close the dialog with "confirm"
 confirmCurrentDialog = {

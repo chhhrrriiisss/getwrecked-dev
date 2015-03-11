@@ -6,7 +6,7 @@
 
 private ['_a', '_bind', '_tag', '_state'];
 
-_a = [_this,0, [], [[]]] call BIS_fnc_param;
+_a = [_this,0, [], [[]]] call filterParam;
 
 if (count _a == 0) exitWith {};
 

@@ -4,7 +4,7 @@
 //      Return: None
 //
 
-_unit = [_this,0, objNull, [objNull]] call BIS_fnc_param;
+_unit = [_this,0, objNull, [objNull]] call filterParam;
 if (isNull _unit) exitWith {};
 if (!local _unit) exitWith {};
 
@@ -70,7 +70,7 @@ if (!_fixDLC) then {
 	
 if(!isNil "_tx") then {
 	_unit setVariable ["GW_Sponsor", _tx];
-	[[_unit,_tx],"setPlayerTexture",true,false] call BIS_fnc_MP;
+	[[_unit,_tx],"setPlayerTexture",true,false] call gw_fnc_mp;
 };
 
 playerPos = (ASLtoATL getPosASL _unit);
@@ -162,31 +162,38 @@ for "_i" from 0 to 1 step 0 do {
 	};
 	
 	// Adds actions to nearby objects & vehicles
-
 	if (!isNil "GW_CURRENTZONE") then {
-		if (!_inVehicle && !GW_EDITING && GW_CURRENTZONE == "workshopZone") then {		
+
+		if (GW_CURRENTZONE == "workshopZone" && !_inVehicle && !GW_EDITING) then {		
 			[_currentPos] spawn checkNearbyActions;
 		};
-	};
-	
-	// In Zone Check
-	if (!isNil "GW_CURRENTZONE" && (count GW_CURRENTZONE_DATA > 0) && (!GW_DEBUG) ) then {
 
-		_inZone = [_currentPos, GW_CURRENTZONE_DATA ] call checkInZone;
-
-		if (_inZone) then {
-			player setVariable ["outofbounds", false];	
+		// Set view distance depending on where we are
+		if (GW_CURRENTZONE == "workshopZone" && (!GW_PREVIEW_CAM_ACTIVE && !GW_DEATH_CAMERA_ACTIVE)) then {
+			if (viewDistance != 200) then { setViewDistance 200; };
 		} else {
-			_outOfBounds = player getVariable ["outofbounds", false];	
-			if ( !_outOfBounds && !GW_DEATH_CAMERA_ACTIVE) then {
-				// Activate the incentivizer
-				[player] spawn returnToZone;
-			};
+			if (viewDistance != GW_EFFECTS_RANGE) then { setViewDistance GW_EFFECTS_RANGE; };
 		};
 
-	} else {
-		player setVariable ["outofbounds", false];	
-	};	
+		if ( count GW_CURRENTZONE_DATA > 0 && !GW_DEBUG ) then {
+
+			_inZone = [_currentPos, GW_CURRENTZONE_DATA ] call checkInZone;
+
+			if (_inZone) then {
+				_unit setVariable ["outofbounds", false];	
+			} else {
+				_outOfBounds = _unit getVariable ["outofbounds", false];	
+				if ( !_outOfBounds && !GW_DEATH_CAMERA_ACTIVE) then {
+					// Activate the incentivizer
+					[_unit] spawn returnToZone;
+				};
+			};
+
+		} else {
+			_unit setVariable ["outofbounds", false];	
+		};	
+
+	};
 
 	Sleep 0.5;
 

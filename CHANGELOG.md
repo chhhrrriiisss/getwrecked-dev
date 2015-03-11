@@ -1,16 +1,27 @@
 # [Get Wrecked](http://getwrecked.info) Changelog
-## Last Updated: [19-02-2015] ##
+## Last Updated: [10-03-2015] ##
 
 Note: Some changes that are deemed spoilers are hidden from this log 
+(WIP) Indicates items that may not be functionally fully and are only partially implemented
+Items without Fixed/Added/Removed proceeding, are typically balance changes
 
-**v0.8c** [Public alpha hotfix 2]
+**v0.8.1** [Public alpha release]
+
+- Optimized filterParam and added some variable checks
+- Further fps increases in workshop by capping view distance
+- First person camera is no longer disabled 
+- Fixed - Black icons in dialogs as of 1.40
+- Added - Stringtable (English/French) (WIP)
+- Added - Max data packet size variable to prevent server instability when loading large vehicles
+
+**v0.8.0c** [Public alpha hotfix 2]
 
 - Fixed - Nuke not dealing any damage
 - Fixed - Magnetic coil script error
 - Fixed - Changed settings menu mouse bind back to double click to toggle
 - Fixed - Emergency parachutes can be deployed multiple times while active
 
-**v0.8b** [Public alpha hotfix]
+**v0.8.0b** [Public alpha hotfix]
 
 - Fixed - Attached weapons should now be properly immune to damage
 - Fixed - Flamethrower consuming ammo in addition to fuel
@@ -20,7 +31,7 @@ Note: Some changes that are deemed spoilers are hidden from this log
 - Fixed - Explosives dropping all in one stack rather than individually
 - Added - Shockwave effects to some explosive weapons
 
-**v0.8** [Public alpha release]
+**v0.8.0** [Public alpha release]
 
 - Optimized vehicle service terminal initialization script
 - Tweaked lock-on missiles slightly to improve accuracy

@@ -8,7 +8,7 @@ private ['_list', '_contents'];
 
 disableSerialization;
 _list = ((findDisplay 98000) displayCtrl 98001);
-_forceIndex = if (isNil { _this select 1}) then { 0 } else { (_this select 1) };
+_forceIndex = [_this, 1, 0, [0]] call filterParam;
 
 ctrlShow[98001, true]; 
 

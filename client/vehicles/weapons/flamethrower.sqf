@@ -47,7 +47,7 @@ _velocity = [_heading, _projectileSpeed] call BIS_fnc_vectorMultiply;
 	"playSoundAll",
 	true,
 	false
-] call BIS_fnc_MP;	  
+] call gw_fnc_mp;	  
 
 _src = createVehicle ["Land_PenBlack_F", _oPos, [], 0, "CAN_COLLIDE"];
 [_src, 1.5] spawn flameEffect;
@@ -60,7 +60,7 @@ _src = createVehicle ["Land_PenBlack_F", _oPos, [], 0, "CAN_COLLIDE"];
 	"flameEffect",
 	false,
 	false
-] call BIS_fnc_MP;
+] call gw_fnc_mp;
 
 _src setVectorDir _heading; 
 _src setVelocity _velocity;

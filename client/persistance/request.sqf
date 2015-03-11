@@ -22,8 +22,8 @@ if (GW_WAITLOAD) exitWith {
 
 GW_WAITLOAD = true;
 
-_target = [_this,0, [0,0,0], [objNull, []]] call BIS_fnc_param;
-_loadTarget = [_this,1, [], ["", []]] call BIS_fnc_param;
+_target = [_this,0, [0,0,0], [objNull, []]] call filterParam;
+_loadTarget = [_this,1, [], ["", []]] call filterParam;
 
 if (typename _target == 'OBJECT') then {
     _target = (ASLtoATL getPosASL _target);
@@ -83,7 +83,7 @@ if (GW_DEBUG) then { systemChat 'Sending load request... '; };
     "loadVehicle",
     false,
     false 
-] call BIS_fnc_MP; 
+] call gw_fnc_mp; 
 
 // Make it easier to spawn this vehicle next time
 if (typename _loadTarget != "ARRAY") then {

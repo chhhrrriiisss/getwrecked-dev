@@ -6,7 +6,7 @@
 
 private ["_vehicle"];
 
-_vehicle = [_this,1, objNull, [objNull]] call BIS_fnc_param;
+_vehicle = [_this,1, objNull, [objNull]] call filterParam;
 
 if (isNull _vehicle) exitWith {};
 if (!local _vehicle || !alive _vehicle) exitWith { false };

@@ -66,7 +66,7 @@ for "_i" from 0 to 1 step 0 do {
 			"addVehicleStatus",
 			_target,
 			false 
-		] call BIS_fnc_MP;  
+		] call gw_fnc_mp;  
 	};
 	
 	// Velocity increases lock time
@@ -123,6 +123,6 @@ if ('locking' in _status) then {
 		"removeVehicleStatus",
 		_target,
 		false 
-	] call BIS_fnc_MP;  
+	] call gw_fnc_mp;  
 	
 };

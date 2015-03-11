@@ -5,11 +5,11 @@
 //		Return: None
 //
 
-_target = if (isNil {_this select 0 }) exitWith {};
-_target = (_this select 0);
+_target = [_this, 0, objNull, [objNull]] call filterParam;
+if (isNull _target) exitWith {};
 
-_radius =  if (isNil {_this select 1 }) then { 20 } else { (_this select 1) };
-_force =  if (isNil {_this select 2 }) then { 25 } else { (_this select 2) };
+_radius =  [_this, 1, 20, [0]] call filterParam;
+_force =  [_this, 2, 25, [0]] call filterParam;
 
 _sourcePos = if (typename _target == "OBJECT") then { (ASLtoATL visiblePositionASL _target) } else { _target };
 
@@ -61,7 +61,7 @@ if (count _objectList == 0) exitWith {};
 			"setVelocityLocal",
 			_x,
 			false 
-		] call BIS_fnc_MP;  
+		] call gw_fnc_mp;  
 	};
 
 	false

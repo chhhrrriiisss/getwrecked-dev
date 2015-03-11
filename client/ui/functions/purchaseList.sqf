@@ -11,8 +11,8 @@ _list = (findDisplay 97000 displayCtrl 97001);
 _button = (findDisplay 97000 displayCtrl 97003);
 
 _final = [] call calculateTotal;
-_totalCost = [_final,0, 0, [0]] call BIS_fnc_param;
-_totalItems = [_final,1, 0, [0]] call BIS_fnc_param;
+_totalCost = [_final,0, 0, [0]] call filterParam;
+_totalItems = [_final,1, 0, [0]] call filterParam;
 
 if (_totalItems == 0 || _totalCost == 0) exitWith {};
 

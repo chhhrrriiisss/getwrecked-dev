@@ -6,7 +6,7 @@
 
 private ['_code'];
 
-_code = [_this,0, 0, [0]] call BIS_fnc_param;
+_code = [_this,0, 0, [0]] call filterParam;
 
 if (_code <= 0) exitWith { '' };
 

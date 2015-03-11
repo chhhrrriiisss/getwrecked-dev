@@ -6,7 +6,7 @@
 
 private ['_pos', '_nearby'];
 
-_pos = [_this,0, [], [[]]] call BIS_fnc_param;
+_pos = [_this,0, [], [[]]] call filterParam;
 
 if (count _pos == 0) exitWith {};
 

@@ -6,7 +6,7 @@
 
 private ['_vehicle', '_name', '_raw', '_meta', '_version', '_creator', '_prevFuel', '_prevAmmo', '_stats'];
 
-_vehicle = [_this,0, objNull, [objNull]] call BIS_fnc_param;
+_vehicle = [_this,0, objNull, [objNull]] call filterParam;
 
 if (isNull _vehicle) exitWith {};
 if (!alive _vehicle) exitWith {};

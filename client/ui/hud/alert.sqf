@@ -9,11 +9,11 @@ GW_WAITALERT = true;
 
 private ['_text', '_duration', '_icon', '_colour', '_type'];
 
-_text = [_this,0, "", [""]] call BIS_fnc_param;
-_duration = [_this,1, 1, [0]] call BIS_fnc_param;
-_icon = [_this,2, blankIcon, [""]] call BIS_fnc_param;
-_colour = [_this,3, [], [[]]] call BIS_fnc_param;
-_type =  [_this,4, "default", [""]] call BIS_fnc_param;
+_text = [_this,0, "", [""]] call filterParam;
+_duration = [_this,1, 1, [0]] call filterParam;
+_icon = [_this,2, blankIcon, [""]] call filterParam;
+_colour = [_this,3, [], [[]]] call filterParam;
+_type =  [_this,4, "default", [""]] call filterParam;
 
 _bgColour = [0,0,0,0.3];
 _fontColour = [1,1,1,1];

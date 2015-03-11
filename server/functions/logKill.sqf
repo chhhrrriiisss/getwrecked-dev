@@ -6,11 +6,11 @@
 
 private["_type", "_key", "_value"];
 
-_victim = [_this,0,"",[""]] call bis_fnc_param;
-_killer = [_this,1,"",[""]] call bis_fnc_param;
-_killersVehicle = [_this,2,[],[[]]] call bis_fnc_param;
-_value = [_this,3,0,[0]] call bis_fnc_param;
-_method = [_this,4,"",[""]] call bis_fnc_param;
+_victim = [_this,0,"",[""]] call filterParam;
+_killer = [_this,1,"",[""]] call filterParam;
+_killersVehicle = [_this,2,[],[[]]] call filterParam;
+_value = [_this,3,0,[0]] call filterParam;
+_method = [_this,4,"",[""]] call filterParam;
 
 if (_victim == "" || _killer == "") exitWith {};
 
@@ -45,7 +45,7 @@ if (!isNil "_killerTarget") then {
         "assignKill",
         _killerTarget,
         false 
-    ] call BIS_fnc_MP;  
+    ] call gw_fnc_mp;  
     
 };	
 

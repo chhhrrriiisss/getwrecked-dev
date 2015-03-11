@@ -78,7 +78,7 @@ if (isNil "GW_TARGET_DIRECTION") then {	GW_TARGET_DIRECTION = 0; };
 						"removeVehicleStatus",
 						_x,
 						false 
-					] call BIS_fnc_MP;  
+					] call gw_fnc_mp;  
 				};
 			};
 
@@ -97,7 +97,7 @@ if (isNil "GW_TARGET_DIRECTION") then {	GW_TARGET_DIRECTION = 0; };
 					"removeVehicleStatus",
 					_x,
 					false 
-				] call BIS_fnc_MP;  		
+				] call gw_fnc_mp;  		
 
 				playSound3D ["a3\sounds_f\sfx\Beep_Target.wss", (vehicle player), false, (visiblePosition  (vehicle player)), 2, 1, 20];  
 			};
@@ -163,7 +163,7 @@ if (count GW_LOCKEDTARGETS > 0) then {
                 "addVehicleStatus",
                 _lockedTarget,
                 false 
-        	] call BIS_fnc_MP;  
+        	] call gw_fnc_mp;  
 		};
 
 	} else {		
@@ -177,7 +177,7 @@ if (count GW_LOCKEDTARGETS > 0) then {
             "removeVehicleStatus",
             _lockedTarget,
             false 
-    	] call BIS_fnc_MP;  
+    	] call gw_fnc_mp;  
 
     	GW_LOCKEDTARGETS = GW_LOCKEDTARGETS - [_lockedTarget];
     	GW_VALIDTARGETS = GW_VALIDTARGETS - [_lockedTarget];

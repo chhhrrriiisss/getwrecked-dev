@@ -107,7 +107,7 @@ GW_DEPLOYLIST = GW_DEPLOYLIST + [_obj];
 			"setObjectSimulation",
 			false,
 			false 
-		] call BIS_fnc_MP;
+		] call gw_fnc_mp;
 
 		_bomb = createVehicle ["Bo_GBU12_LGB", _pos, [], 0, "FLY"];		
 		_bomb setVelocity [0,0,-10];

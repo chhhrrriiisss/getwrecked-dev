@@ -25,7 +25,7 @@ createSupplyBox = {
 		
 	private ['_box', '_pos'];
 
-	_pos = [_this,0, [], [[]]] call BIS_fnc_param;
+	_pos = [_this,0, [], [[]]] call filterParam;
 
 	if (count _pos == 0) exitWith { diag_log "Failed to create supply box - invalid position."; };
 

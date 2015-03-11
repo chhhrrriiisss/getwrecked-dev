@@ -6,8 +6,8 @@
 
 private ['_v', '_m'];
 
-_v = _this select 0;
-_m = if (isNil {_this select 1}) then { "" } else { _this select 1; };
+_v = [_this, 0, objNull, [objNull]] call filterParam;
+_m = [_this, 1, "", [""]] call filterParam;
 
 if (isNull _v) exitWith {};
 if (!alive _v) exitWith {};

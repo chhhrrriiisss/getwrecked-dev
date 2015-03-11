@@ -9,8 +9,8 @@ if (isNil "GW_PAINT_ACTIVE") then { GW_PAINT_ACTIVE = false; };
 if (GW_PAINT_ACTIVE) exitWith {};
 GW_PAINT_ACTIVE = true;
 
-_color = [_this,0, "", [""]] call BIS_fnc_param;
-_unit = [_this,1, objNull, [objNull]] call BIS_fnc_param;
+_color = [_this,0, "", [""]] call filterParam;
+_unit = [_this,1, objNull, [objNull]] call filterParam;
 
 if (isNull _unit || _color == "") exitWith {};
 if (!(_color in GW_TEXTURES_LIST)) exitWith {};
@@ -78,10 +78,10 @@ Sleep 0.25;
 	"playSoundAll",
 	true,
 	false
-] call BIS_fnc_MP;	  
+] call gw_fnc_mp;	  
 
 // Apply Vehicle Texture in MP
-[[_target,_color],"setVehicleTexture",true,false] call BIS_fnc_MP;
+[[_target,_color],"setVehicleTexture",true,false] call gw_fnc_mp;
 
 ['VEHICLE PAINTED!', 2, successIcon, nil, "slideDown"] spawn createAlert; 
 

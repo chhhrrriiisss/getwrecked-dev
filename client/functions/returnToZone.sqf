@@ -30,7 +30,7 @@ for "_i" from 0 to 1 step 0 do {
 
 	_outOfBounds = _unit getVariable ["outofbounds", false];	
 	_timeLeft = ceil (_timeout - time);
-	_str = format["OUT OF ZONE! (%1s)", _timeLeft];
+	_str = format[localize "str_gw_out_of_zone", _timeLeft];
 
 	[_str, 0.5, warningIcon, colorRed, "warning"] spawn createAlert;     
 

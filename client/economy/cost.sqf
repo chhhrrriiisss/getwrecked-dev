@@ -6,9 +6,9 @@
 
 private ['_item', '_sponsor', '_company', '_building', '_weapons', '_name', '_arr', '_cost', '_class'];
 
-_item = [_this,0, "", [""]] call BIS_fnc_param;
-_sponsor = [_this,1, "", [""]] call BIS_fnc_param;
-_company = [_this,2, "", [""]] call BIS_fnc_param;
+_item = [_this,0, "", [""]] call filterParam;
+_sponsor = [_this,1, "", [""]] call filterParam;
+_company = [_this,2, "", [""]] call filterParam;
 
 _cost = 0;
 _discount = 1;

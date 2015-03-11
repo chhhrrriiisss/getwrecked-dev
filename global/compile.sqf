@@ -201,6 +201,10 @@ checkEject = compile preprocessFile 'global\functions\checkEject.sqf';
 // Zone Functions
 checkInZone = compile preprocessFile 'global\functions\checkInZone.sqf';
 
+// Network Functions
+gw_fnc_mp = compileFinal preprocessFile 'global\functions\network\fn_mp.sqf';
+gw_fnc_mpexec = compileFinal preprocessFile 'global\functions\network\fn_mpexec.sqf';
+
 // Pre-compile location arrays
 reloadAreas = ['reloadArea'] call findAllObjects;
 repairAreas = ['repairArea'] call findAllObjects;

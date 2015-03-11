@@ -6,8 +6,8 @@
 
 private ["_obj", "_unit"];
 
-_unit = [_this,0, objNull, [objNull]] call BIS_fnc_param;
-_obj = [_this,1, objNull, [objNull]] call BIS_fnc_param;
+_unit = [_this,0, objNull, [objNull]] call filterParam;
+_obj = [_this,1, objNull, [objNull]] call filterParam;
 
 
 if (isNull _obj || isNull _unit) exitWith { false };

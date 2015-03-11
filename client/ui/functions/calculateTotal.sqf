@@ -9,7 +9,7 @@
 private ['_total', '_size', '_value', '_cost', '_subtotal', '_total'];
 
 _total = 0;
-_size = [(lnbSize 97001),0, -1, [0]] call BIS_fnc_param;
+_size = [(lnbSize 97001),0, -1, [0]] call filterParam;
 _itemCount = 0;
 _inventory = [];
 

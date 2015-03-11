@@ -6,7 +6,7 @@
 
 private ['_target', '_result'];
 
-_target = [_this,0, "", [""]] call BIS_fnc_param;
+_target = [_this,0, "", [""]] call filterParam;
 
 if (_target == "") exitWith { objNull };
 

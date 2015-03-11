@@ -116,6 +116,9 @@ GW_SUPPLY_ACTIVE = 0; // Dont change this
 GW_SUPPLY_MAX = 30; // Maximum number of supply drops active at once (default: 30)
 GW_SUPPLY_CLEANUP = (3*60); // Timeout before cleaning up supply drop (default: (3*60) )
 
+// Misc
+GW_MAX_DATA_SIZE = 8000; // Max packet size (in characters) that can be loaded (loadVehicle or saveVehicle will not work if this is too large)
+
 /*	
 	If you edit below here, I hope you know what you're doing...
 */
@@ -128,7 +131,7 @@ GW_VALID_ZONES = [
 	['downtown', 'battle'],
 	['wasteland', 'battle'],
 	['saltflat', 'battle'],	
-	// ['highway', 'race'], Disabled until race game mode complete
+	// ['highway', 'race'], 
 	['workshop', 'safe']
 ];
 
@@ -237,7 +240,8 @@ GW_TACTICALARRAY = [
 	'CLK',
 	'MAG',
 	'GRP',
-	'JMR'
+	'JMR',
+	'LPT'
 ];
 
 // Modules without an action menu entry, but that still do something

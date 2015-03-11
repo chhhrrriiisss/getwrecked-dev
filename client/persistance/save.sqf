@@ -76,7 +76,7 @@ if (!simulationEnabled GW_SAVE_VEHICLE) then {
         "setObjectSimulation",
         false,
         false 
-    ] call BIS_fnc_MP;
+    ] call gw_fnc_mp;
 };
 
 // Wait for simulation enabled and vehicle compiled
@@ -286,6 +286,10 @@ _meta = [
 ];
 
 _data = [_class, _name, _paint, _oldPos, _oldDir, _attachArray, _meta];    
+
+if (count str _data > GW_MAX_DATA_SIZE) exitWith {
+    ['Vehicle too large to save, please remove items.'] spawn _onExit;
+};
 
 _success = [_saveTarget, _data] call registerVehicle;
 GW_LASTLOAD = _saveTarget;

@@ -6,10 +6,10 @@
 
 private ['_data', '_vehicle', '_name', '_respawn', '_recreate', '_defaultAmmo', '_defaultFuel'];
 
-_vehicle = [_this,0, objNull, [objNull]] call BIS_fnc_param;
-_name = [_this,1, "Untitled", [""]] call BIS_fnc_param;
-_respawn = [_this,2, true] call BIS_fnc_param;
-_recreate = [_this,3, false] call BIS_fnc_param;
+_vehicle = [_this,0, objNull, [objNull]] call filterParam;
+_name = [_this,1, "Untitled", [""]] call filterParam;
+_respawn = [_this,2, true] call filterParam;
+_recreate = [_this,3, false] call filterParam;
 
 if (isNull _vehicle) exitWith { diag_log 'Couldnt initialize vehicle.'; };
 

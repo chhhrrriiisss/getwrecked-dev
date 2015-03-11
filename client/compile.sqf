@@ -178,8 +178,11 @@ dropJammer = compile preprocessFile "client\vehicles\attachments\frequency_jamme
 shieldGenerator = compile preprocessFile "client\vehicles\attachments\shield_generator.sqf";
 cloakingDevice = compile preprocessFile "client\vehicles\attachments\cloak.sqf";
 magneticCoil = compile preprocessFile "client\vehicles\attachments\magnetic_coil.sqf";
+dropLimpets = compile preprocessFile 'client\vehicles\attachments\limpet_mines.sqf';
+
 vehicleForks = compile preprocessFile "client\vehicles\attachments\vehicle_forks.sqf";
 attachVehicleTo = compile preprocessFile "client\functions\attachVehicleTo.sqf";
+
 
 statusMonitor = compile preprocessFile "client\vehicles\status_monitor.sqf";
 simulationManager = compile preprocessFile "client\simulation_manager.sqf";

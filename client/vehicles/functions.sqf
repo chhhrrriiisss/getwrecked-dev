@@ -223,7 +223,7 @@ setVehicleActions = {
 			"removeVehicleStatus",
 			false,
 			false 
-		] call BIS_fnc_MP;  
+		] call gw_fnc_mp;  
 
 	}, [], 0, false, false, "", "( (player in _target) && (player == (driver _target)) && ( 'cloak' in (_target getVariable ['status', []]) ) )"];
 

@@ -154,6 +154,10 @@ class GW_ListBox {
 	autoScrollDelay = 5;
 	autoScrollRewind = 0;
 
+	colorPicture[] = {1,1,1,1};
+	colorPictureSelected[] = {1,1,1,1};
+	colorPictureDisabled[] = {1,1,1,1};  
+
 	class ListScrollBar
 	{
 		color[] = {1,1,1,0.6};

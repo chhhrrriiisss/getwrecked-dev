@@ -6,8 +6,8 @@
 
 private ['_currentPos', '_currentObj', '_currentDir', '_resultPos', '_resultDir'];
 
-_currentPos = [_this,0, [], [[]]] call BIS_fnc_param;
-_currentObj = [_this,1, objNull, [objNull]] call BIS_fnc_param;
+_currentPos = [_this,0, [], [[]]] call filterParam;
+_currentObj = [_this,1, objNull, [objNull]] call filterParam;
 
 // if (count _currentPos == 0 || isNull _currentObj ) exitWith { [[0,0,0] ,0] };
 

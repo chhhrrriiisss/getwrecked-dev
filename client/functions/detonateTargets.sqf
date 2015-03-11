@@ -7,7 +7,7 @@
 private ['_vehicle', '_dir', '_pos', '_alt', '_vel'];
 
 
-_vehicle = [_this,0, objNull, [objNull]] call BIS_fnc_param;
+_vehicle = [_this,0, objNull, [objNull]] call filterParam;
 
 if (isNull _vehicle) exitWith {};
 

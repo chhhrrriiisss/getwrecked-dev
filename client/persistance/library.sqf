@@ -6,8 +6,8 @@
 
 private['_action', '_target'];
 
-_action = [_this,0, "", [""]] call BIS_fnc_param;
-_target = [_this,1, "", [""]] call BIS_fnc_param;
+_action = [_this,0, "", [""]] call filterParam;
+_target = [_this,1, "", [""]] call filterParam;
 
 if (_action == "") exitWith {};
 
@@ -94,7 +94,7 @@ if (_action == 'share') exitWith {
 		systemChat 'No data for that vehicle.';
 	};
 
-	[[GW_PLAYERNAME, _string, _data], "shareVehicle", true, true] call BIS_fnc_MP; 
+	[[GW_PLAYERNAME, _string, _data], "shareVehicle", true, true] call gw_fnc_mp; 
 
 	systemChat format['%1 was shared successfully.', _string];
 };

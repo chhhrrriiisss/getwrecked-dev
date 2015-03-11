@@ -6,8 +6,8 @@
 
 private ["_vehicle", "_obj"];
 
-_obj = [_this,0, objNull, [objNull]] call BIS_fnc_param;
-_vehicle = [_this,1, objNull, [objNull]] call BIS_fnc_param;
+_obj = [_this,0, objNull, [objNull]] call filterParam;
+_vehicle = [_this,1, objNull, [objNull]] call filterParam;
 
 if (isNull _obj || isNull _vehicle) exitWith { false };
 
@@ -30,7 +30,7 @@ _s = if (_fuel < _cost) then {
 	    "addVehicleStatus",
 	    _vehicle,
 	    false 
-	] call BIS_fnc_MP;  
+	] call gw_fnc_mp;  
 
 	false
 
@@ -99,7 +99,7 @@ _s = if (_fuel < _cost) then {
 		0.2
 		],
 		"thrusterEffect"
-	] call BIS_fnc_MP;
+	] call gw_fnc_mp;
 
 	_vehicle setVelocity _newVelocity;
 	

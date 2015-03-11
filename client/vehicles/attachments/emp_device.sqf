@@ -6,8 +6,8 @@
 
 private ["_obj", "_vehicle"];
 
-_obj = [_this,0, objNull, [objNull]] call BIS_fnc_param;
-_vehicle = [_this,1, objNull, [objNull]] call BIS_fnc_param;
+_obj = [_this,0, objNull, [objNull]] call filterParam;
+_vehicle = [_this,1, objNull, [objNull]] call filterParam;
 
 if (isNull _obj || isNull _vehicle) exitWith {};
 
@@ -20,7 +20,7 @@ _vehs = _pos nearEntities [["car"], 40];
 		0.7
 	],
 	"empCircle"
-] call BIS_fnc_MP;
+] call gw_fnc_mp;
 
 playSound3D ["a3\sounds_f\sfx\special_sfx\sparkles_wreck_3.wss", _obj, false, _pos, 2, 1, 100];	
 
@@ -46,7 +46,7 @@ playSound3D ["a3\sounds_f\sfx\special_sfx\sparkles_wreck_3.wss", _obj, false, _p
                 "addVehicleStatus",
                 _x,
                 false 
-        	] call BIS_fnc_MP;  
+        	] call gw_fnc_mp;  
 
 		};
 
@@ -67,7 +67,7 @@ playSound3D ["a3\sounds_f\sfx\special_sfx\sparkles_wreck_3.wss", _obj, false, _p
 				"removeVehicleStatus",
 				_x,
 				false 
-			] call BIS_fnc_MP;  
+			] call gw_fnc_mp;  
 
 		};	
 

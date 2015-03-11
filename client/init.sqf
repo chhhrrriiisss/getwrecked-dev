@@ -51,7 +51,7 @@ Sleep 0.1;
 Sleep 0.5;
 
 if (_newPlayer) then {
-	systemChat format['Welcome to Get Wrecked, %1.', GW_PLAYERNAME];
-	systemCHat 'A guide is available at getwrecked.info.';
+	systemChat format [localize "str_gw_welcome", GW_PLAYERNAME];
+	systemChat localize "str_gw_welcome_guide";
 };
 

@@ -5,8 +5,8 @@
 //
 
 _source =  _this select 0;
-_range = if (isNil {_this select 1}) then { 15 } else { (_this select 1) };
-_scope = if (isNil {_this select 2}) then { true } else { (_this select 2) };
+_range = [_this, 1, 15, [0]] call filterParam;
+_scope = [_this, 2, true, [false]] call filterParam;
 
 _found = nil;
 

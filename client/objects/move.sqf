@@ -6,8 +6,8 @@
 
 private ["_obj", "_unit","_id"];
 
-_obj = [_this,0, objNull, [objNull]] call BIS_fnc_param;
-_unit = [_this,1, objNull, [objNull]] call BIS_fnc_param;
+_obj = [_this,0, objNull, [objNull]] call filterParam;
+_unit = [_this,1, objNull, [objNull]] call filterParam;
 
 if (isNull _obj || isNull _unit) exitWith { false };
 
@@ -34,7 +34,7 @@ _unit spawn setPlayerActions;
 // Drop Object
 _unit addAction[dropObjectFormat, {
 
-	_unit = [_this,0, objNull, [objNull]] call BIS_fnc_param;
+	_unit = [_this,0, objNull, [objNull]] call filterParam;
 	_obj = _unit getVariable ['editingObject', nil];
 	if (isNil "_obj" || isNull _unit) exitWith {};
 
@@ -91,7 +91,7 @@ _unit addAction[snapObjectFormat, {
 // Rotate Object CW
 _unit addAction[rotateCWObjectFormat, {
 
-	_unit = [_this,0, objNull, [objNull]] call BIS_fnc_param;
+	_unit = [_this,0, objNull, [objNull]] call filterParam;
 	_obj = _unit getVariable ['editingObject', nil];
 	if (isNil "_obj" || isNull _unit) exitWith {};
 
@@ -103,7 +103,7 @@ _unit addAction[rotateCWObjectFormat, {
 // Rotate Object CCW
 _unit addAction[rotateCCWObjectFormat, {
 
-	_unit = [_this,0, objNull, [objNull]] call BIS_fnc_param;
+	_unit = [_this,0, objNull, [objNull]] call filterParam;
 	_obj = _unit getVariable ['editingObject', nil];
 	if (isNil "_obj" || isNull _unit) exitWith {};
 
@@ -114,7 +114,7 @@ _unit addAction[rotateCCWObjectFormat, {
 // Attach object to a nearby vehicle
 _unit addAction[attachObjectFormat, {
 
-	_unit = [_this,0, objNull, [objNull]] call BIS_fnc_param;
+	_unit = [_this,0, objNull, [objNull]] call filterParam;
 	_obj = _unit getVariable ['editingObject', nil];
 	if (isNil "_obj" || isNull _unit) exitWith {};
 

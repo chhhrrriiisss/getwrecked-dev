@@ -13,10 +13,10 @@ if (isNil "GW_ISLOGGING") then {
 if (GW_ISLOGGING) exitWith {};
 GW_ISLOGGING = true;
 
-_statToLog = [_this,0, "", [""]] call BIS_fnc_param;
-_vehicle = [_this,1, objNull, [objNull]] call BIS_fnc_param;
-_value = [_this,2, 0, [0]] call BIS_fnc_param;
-_forceSync = [_this,3, false, [false]] call BIS_fnc_param;
+_statToLog = [_this,0, "", [""]] call filterParam;
+_vehicle = [_this,1, objNull, [objNull]] call filterParam;
+_value = [_this,2, 0, [0]] call filterParam;
+_forceSync = [_this,3, false, [false]] call filterParam;
 
 if (_statToLog == "" || isNull _vehicle) exitWith {};
 
@@ -69,8 +69,8 @@ if ((_currentTime - GW_LASTSYNC) >= 10 || _forceSync) then {
 
 		if (isNil "_raw") then {} else {
 
-			_data = [_raw,0, [], [[]]] call BIS_fnc_param;
-			_meta = [_data,6, [], [[]]] call BIS_fnc_param;
+			_data = [_raw,0, [], [[]]] call filterParam;
+			_meta = [_data,6, [], [[]]] call filterParam;
 			_meta set[4, _newStats];
 			_data set[6, _meta];
 			_raw set[0, _data];

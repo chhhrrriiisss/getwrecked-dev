@@ -22,7 +22,7 @@ _points = [_obj, _tPos];
 		[[1,0,0,1], 1, _points]
 	],
 	"laserLine"
-] call BIS_fnc_MP;
+] call gw_fnc_mp;
 
 playSound3D ["a3\sounds_f\sfx\special_sfx\sparkles_wreck_2.wss", _obj, false, _oPos, 2, 1, 50];	
 

@@ -4,17 +4,27 @@
 //      Return: None
 //
 
-private['_class', '_name', '_camo', '_source', '_o', '_k'];
+private['_class', '_name', '_camo', '_source', '_o', '_k', '_raw'];
 
 _player = _this select 0;
 _target = _this select 1;
 _raw = _this select 2;
-_ai = if (isNil {_this select 3}) then { false } else { (_this select 3) };
+
+_ai = [_this, 3, false, [false]] call filterParam;
 
 if (isNull _player || (count _target == 0) || (count _raw == 0)) exitWith {};
 if (GW_DEBUG) then { copyToClipboard str _raw; };
 
 _source = if (!_ai) then { (owner _player) } else { nil };
+
+// Check the packet size is within tolerance
+if (count _raw > GW_MAX_DATA_SIZE) exitWith {
+    hint format['%1 / %2', _raw, count _raw];
+    pubVar_systemChat = 'Vehicle is too large to load.';
+    _source publicVariableClient "pubVar_systemChat";
+
+
+};
 
 // Check the current target isn't the same as the previous, if so clear the pad first
 _waitUntilClear = false;
@@ -51,7 +61,7 @@ if (count _data == 0) exitWith {
     _source publicVariableClient "pubVar_systemChat";
 };
 
-_savedAttachments = if (isNil { _data select 4}) then { [] } else { (_data select 5) };
+_savedAttachments = [_data, 5, [], [[]]] call filterParam;
 _startTime = time;
 
 [_target, false] call clearPad;
@@ -146,7 +156,7 @@ _deletedItems = [
 _paint = (_data select 2);
 
 if (!isNil "_paint") then {
-    [[_newVehicle,_paint],"setVehicleTexture",true,false] call BIS_fnc_MP;
+    [[_newVehicle,_paint],"setVehicleTexture",true,false] call gw_fnc_mp;
 };
     
 // Set simulation
