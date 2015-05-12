@@ -98,12 +98,14 @@ _filterBy = if (_category > 0) then {
 			if (_x select 0 == _class) exitWith { _quantity = _x select 1; };
 			false
 		} count GW_BUY_CART > 0;
-
-		_quantityString = if (_quantity > 0) then { format['%1x', _quantity] } else { "-" };
+		
+		_quantityString = if (_quantity > 0) then { 
+			lnbSetData [97001, [((((lnbSize 97001) select 0)) -1), 0], _quantity];
+			format['%1x', _quantity] 
+		} else { "-" };
 
 		_list lnbAddRow[_quantityString, "", _name, "", _cost];		
 
-		lnbSetData [97001, [((((lnbSize 97001) select 0)) -1), 0], _quantity]; // Quantity
 		lnbSetData [97001, [((((lnbSize 97001) select 0)) -1), 4], format['%1', _discountCost]]; // Cost
 		lnbSetData [97001, [((((lnbSize 97001) select 0)) -1), 3], _class];		 // Class
 

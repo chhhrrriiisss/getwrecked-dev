@@ -51,8 +51,6 @@ playSound3D ["a3\sounds_f\sfx\explosion3.wss", _obj, false, _oPos, 2, 1, 100];
 	"smokeEffect"
 ] call gw_fnc_mp;
 
-Sleep 0.01;
-
 [       
 	[
 		_veh,

@@ -4,73 +4,13 @@
 //		Return: None
 //
 
-calcMass = {
-
-	private ["_o", "_v", "_d"];
-
-	_o = _this select 0;
-	_v = _this select 1;
-
-	_vMass = (getMass _v);
-
-	_d = [(typeof _v), GW_VEHICLE_LIST] call getData;
-	_modifier = if (!isNil "_d") then { (((_d select 2) select 0) select 0) } else { 1 };
-	_oMass = ( _o getVariable ["mass", 0] );	
-	_oMass = _oMass * _modifier;
-	_newMass = _vMass + _oMass;
-
-	_v setMass _newMass;
-
-	true
-};
-
-calcAmmo = {
-
-	private ["_o", "_v"];
-
-	_o = _this select 0;
-	_v = _this select 1;
-
-	_ammo = (_o getVariable ["ammo", 0]);
-	_type = (_o getVariable ["ammo", 0]);
-
-	if (_ammo > 0) then { _v setVariable["maxAmmo", (_v getVariable "maxAmmo") + _ammo]; };
-
-	true
-};
-
-calcFuel = {
-
-	private ["_o", "_v"];
-
-	_o = _this select 0;
-	_v = _this select 1;
-
-	_fuel = _o getVariable ["fuel", 0];
-
-	if (_fuel > 0) then { _v setVariable["maxFuel", (_v getVariable "maxFuel") + _fuel]; };
-
-	true
-};
-
 calcWeapons = {
 
 	private ["_o", "_v"];
 
 	_o = _this select 0;
 	_v = _this select 1;
-	_w = _this select 2;
 
-	// Calculate the relative angle of the weapon
-	_vehDir =  getDir _v;
-	_wepDir = getDir _o;
-
-	if (typeOf _o == 'groundWeaponHolder') then {
-		_wepDir = _wepDir + 90;
-	};
-
-	_dif = [_wepDir - _vehDir] call normalizeAngle;
-	_o setVariable ['defaultDirection', _dif];
 
 	// Add the weapon target to the weapons array
 	_type = _w select 0;
@@ -103,20 +43,6 @@ calcTactical = {
 
 	// Check if a module of this type already exists
 	_exists = [_type, _v] call hasType;
-
-	if (_exists < 0) then {
-
-		_id = _v addAction[_desc, { 
-
-			_type = (_this select 3) select 0; 
-			_obj = (_this select 3) select 1; 
-			_id = (_this select 3) select 2; 
-			_veh = _this select 0; 
-
-			[_type, _veh] spawn useAttached;
-
-		}, [_type, _obj, _id], 0, false, false, "", format["( player in _target && (driver _target) == player && ((['%1', _target] call hasType) > 0) )", _type]]; // Only show action if the type exists on the vehicle
-	};
 
 	_vehTactical = _vehTactical + [ [_type, _obj, _id] ];
 	_v setVariable["tactical", _vehTactical];		

@@ -99,7 +99,6 @@ if (isNil "GW_TARGET_DIRECTION") then {	GW_TARGET_DIRECTION = 0; };
 					false 
 				] call gw_fnc_mp;  		
 
-				playSound3D ["a3\sounds_f\sfx\Beep_Target.wss", (vehicle player), false, (visiblePosition  (vehicle player)), 2, 1, 20];  
 			};
 		};
 	};
@@ -125,15 +124,13 @@ _closest = GW_CURRENTVEHICLE;
 
 
 // Start locking closest target if we havent already
-if (!GW_ACQUIRE_ACTIVE && !(_closest in GW_LOCKEDTARGETS) && !_isCloaked) then {
+if (!GW_ACQUIRE_ACTIVE && !(_closest in GW_LOCKEDTARGETS) && !_isCloaked && (count GW_LOCKEDTARGETS == 0)) then {
 
 	_status = _closest getVariable ["status", []];
 
 	// If we're not already locked and there's no CM
 	if ( !("locked" in _status) && !("nolock" in _status) && !("cloak" in _status)) then {
 		[_closest] spawn acquireTarget;
-
-
 	};
 	
 };
@@ -143,30 +140,32 @@ if (count GW_LOCKEDTARGETS > 0) then {
 
 	_lockedTarget = GW_LOCKEDTARGETS select 0;
 	_inScope = [GW_TARGET_DIRECTION, _lockedTarget, GW_LOCKON_TOLERANCE] call checkScope;
+	
 
 	// If the target is still alive and within view scope
-	if (alive _lockedTarget && _inScope) then {
+	_lostTarget = if (alive _lockedTarget && _inScope) then {
 
-		_pos =  visiblePosition _lockedTarget;
-		drawIcon3D [lockedIcon,colorRed,_pos,2.5,2.5,2, 'LOCKED', 0, 0.035, "PuristaMedium"];	
-		_status = _lockedTarget getVariable ["status", []];
+		_status = _lockedTarget getVariable ['status', []];
+		if ( ("nolock" in _status) || ("cloak" in _status) ) exitWith { true };
+		if ("locked" in _status) exitWith { false };
 
-		// If we're not already locked and there's no CM
-		if ( !("locked" in _status) && !("nolock" in _status) && !("cloak" in _status) ) then {
-
-			[       
-                [
-                    _lockedTarget,
-                    "['locked']",
-                    15
-                ],
-                "addVehicleStatus",
+		player say3D "beep_warning";
+		[       
+            [
                 _lockedTarget,
-                false 
-        	] call gw_fnc_mp;  
-		};
+                "['locked']",
+                15
+            ],
+            "addVehicleStatus",
+            _lockedTarget,
+            false 
+    	] call gw_fnc_mp;  
 
-	} else {		
+    	false
+
+	} else { true };
+
+	if (_lostTarget) then {		
 
 		// Remove from the lock list if the target has been lost
 		[       

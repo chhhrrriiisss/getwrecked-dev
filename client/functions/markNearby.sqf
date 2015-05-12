@@ -17,6 +17,6 @@ _nearby = _pos nearEntities [["car"], _rad];
 if (count _nearby == 0) exitWith {};
 
 {
-	if (_x != (vehicle player)) then { [_x,_m] spawn checkMark; };
+	if (_x != (vehicle player)) then { [_x,_m] call checkMark; };
 	false
 } count _nearby > 0;

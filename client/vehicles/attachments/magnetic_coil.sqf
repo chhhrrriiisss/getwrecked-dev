@@ -78,7 +78,7 @@ _this spawn {
 				_calcPower = ((_power / (_mass * 0.001)) max 10) + (_dist / 6);
 				[_calcPower, _minPower, _maxPower] call limitToRange;
 				_vel = [_heading, _calcPower] call BIS_fnc_vectorMultiply; 
-					
+	
 				//Apply velocity to vehicles
 				if (local _x) then {
 					
@@ -95,6 +95,7 @@ _this spawn {
 						_x,
 						false 
 					] call gw_fnc_mp;  
+					
 				};
 
 			};

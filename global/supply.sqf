@@ -82,8 +82,8 @@ GW_SUPPLY_TYPES = [
 
 			[
 				[
-				_vehicle,
-				3
+					_vehicle,
+					3
 				],
 				"magnetEffect"
 			] call gw_fnc_mp;

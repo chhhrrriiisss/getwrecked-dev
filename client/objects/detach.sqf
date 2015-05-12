@@ -56,7 +56,7 @@ if (_wasSimulated) then {
 
 removeAllActions _obj;
 
-[localize "str_gw_object_detached", 1, successIcon, nil, "slideDown"] spawn createAlert;
+[localize "str_gw_object_detached", 1, successIcon, nil, "slideDown", ""] spawn createAlert;
 [_obj, _unit] spawn moveObj;
 
 // Re-compile vehicle information

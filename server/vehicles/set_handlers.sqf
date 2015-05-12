@@ -47,6 +47,10 @@ if (isNil {_vehicle getVariable "GW_EpeContactEH"}) then {
 	_vehicle setVariable ["GW_EpeContactEH", _vehicle addEventHandler ["EpeContact", handleContactVehicle]];
 };
 
+if (isNil {_vehicle getVariable "GW_EpeContactStartEH"}) then {	
+	_vehicle setVariable ["GW_EpeContactStartEH", _vehicle addEventHandler ["EpeContactStart", handleContactStartVehicle]];
+};
+
 if (isNil {_vehicle getVariable "GW_handleGetInEH"}) then {
 	_vehicle setVariable ["GW_handleGetInEH", _vehicle addEventHandler ["GetIn", handleGetIn]];
 };

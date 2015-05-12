@@ -72,16 +72,31 @@ if (count _nearby < 0) exitWith {};
 
 
 
-_src addEventHandler['EpeContact', {	
+_src addEventHandler['EpeContactStart', {	
 	if ((_this select 1) == (vehicle player)) exitWith {};
+
+	(_this select 0) removeEventHandler ['EpeContactStart', 0];
+
 	[(_this select 1), 100, 6] spawn setVehicleOnFire;
+
+	_status = (_this select 1) getVariable ['status', []];
+	if ('nofire' in _status || 'invulnerable' in _status) exitWith {};
+
+	_d = if ('nanoarmor' in _status) then { 0.001 } else { 0.02 };
+	(_this select 1) setDammage ((getDammage (_this select 1)) + _d);
+	
+	[
+		(_this select 1),
+		"updateVehicleDamage",
+		(_this select 1),
+		false
+	] call gw_fnc_mp;
+
 }];
 
 _src spawn {
 
-	for "_i" from 0 to 1 step 0 do {
-
-		if (!alive _this) exitWith {};
+	waitUntil {
 
 		_nearby = (ASLtoATL visiblePositionASL _this) nearEntities[["Car"], 6];
 		{ 
@@ -91,8 +106,9 @@ _src spawn {
 			false
 		} count _nearby > 0;
 
-		Sleep 0.25;
+		Sleep 0.2;
 
+		(!alive _this)
 	};
 
 };

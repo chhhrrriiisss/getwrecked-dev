@@ -84,6 +84,30 @@ checkBinds = {
 	_inVehicle = !(player == (_vehicle));
 	_isDriver = (player == (driver (_vehicle)));	
 
+	if (_ctrl && _shift && _key == 46) then {
+		_hasCollision = _vehicle getVariable ['GW_COLLISION', false];
+
+		if (_hasCollision) then {
+			_vehicle setVariable ['GW_COLLISION', false];
+			systemChat 'Collision disabled';
+		} else {
+			_vehicle execVM 'testcollision.sqf';	
+			systemChat format['Collision active on [ %1 ]', _vehicle getVariable ['name', 'Untitled Vehicle']];
+		};		
+	};
+
+	if (_ctrl && _shift && _key == 50) then {
+		_hasCollision = _vehicle getVariable ['GW_MELEE', false];
+
+		if (_hasCollision) then {
+			_vehicle setVariable ['GW_MELEE', false];
+			systemChat 'Melee disabled';
+		} else {
+			_vehicle execVM 'client\vehicles\melee_attached.sqf';
+			systemChat format['Melee active on [ %1 ]', _vehicle getVariable ['name', 'Untitled Vehicle']];
+		};		
+	};
+
 	// Toggle Debug
 	if (_ctrl && _alt && _shift && _key == 32) exitWith {
 		GW_DEBUG = if (GW_DEBUG) then { false } else { true };
@@ -136,7 +160,7 @@ checkBinds = {
 	// Editor Keys
 	if ( GW_EDITING && !_inVehicle ) then {
 
-		_object = player getVariable ["editingObject", nil];
+		_object = player getVariable ["GW_EditingObject", nil];
 		if (isNil "_object") exitWith {};
 		
 		if (_key in User1) then { [player, _object] spawn dropObj; }; 
@@ -153,7 +177,7 @@ checkBinds = {
 		_object = cursorTarget;
 		if (isNil "_object") exitWith {};
 
-		_useable = _object getVariable ["isObject", false];
+		_useable = _object call isObject;
 		if ( !_useable ) exitWith {};
 		
 		if (_key in User1) then { [_object, player] spawn moveObj; }; 
@@ -163,35 +187,38 @@ checkBinds = {
 
 	if (GW_CURRENTZONE == "workshopZone") exitWith {};
 
-	if (_inVehicle && _isDriver && GW_CHUTE_ACTIVE) then {
+	if (_inVehicle && _isDriver && (GW_CHUTE_ACTIVE || GW_GUIDED_ACTIVE)) then {
 
-		_pitchBank = GW_CHUTE call BIS_fnc_getPitchBank;
-		_pitchBank set[2, (getDir GW_CHUTE)];
-		_pitchAmount = 1;
-		_bankAmount = 0.3;
+		if (GW_CHUTE_ACTIVE) then {
 
-		// S
-		if (_key == 17) then {
-			_pitchBank set [0, ([(_pitchBank select 0) - _pitchAmount, -3, 3] call limitToRange)];
+			_pitchBank = GW_CHUTE call BIS_fnc_getPitchBank;
+			_pitchBank set[2, (getDir GW_CHUTE)];
+			_pitchAmount = 1;
+			_bankAmount = 0.3;
+
+			// S
+			if (_key == 17) then {
+				_pitchBank set [0, ([(_pitchBank select 0) - _pitchAmount, -3, 3] call limitToRange)];
+			};
+
+			// S
+			if (_key == 31) then {
+				_pitchBank set [0, ([(_pitchBank select 0) + _pitchAmount, -3, 3] call limitToRange)];
+			};
+
+			// A
+			if (_key == 30) then {		
+				_pitchBank set [1, ([(_pitchBank select 1) - _bankAmount, -15, 15] call limitToRange)];
+			};
+
+			// D
+			if (_key == 32) then {
+				_pitchBank set [1, ([(_pitchBank select 1) + _bankAmount, -15, 15] call limitToRange)];
+			};
+
+			//systemchat str _pitchBank;
+			[GW_CHUTE, _pitchBank] call setPitchBankYaw;
 		};
-
-		// S
-		if (_key == 31) then {
-			_pitchBank set [0, ([(_pitchBank select 0) + _pitchAmount, -3, 3] call limitToRange)];
-		};
-
-		// A
-		if (_key == 30) then {		
-			_pitchBank set [1, ([(_pitchBank select 1) - _bankAmount, -15, 15] call limitToRange)];
-		};
-
-		// D
-		if (_key == 32) then {
-			_pitchBank set [1, ([(_pitchBank select 1) + _bankAmount, -15, 15] call limitToRange)];
-		};
-
-		//systemchat str _pitchBank;
-		[GW_CHUTE, _pitchBank] call setPitchBankYaw;
 
 	};
 
@@ -240,10 +267,12 @@ checkBinds = {
 							if (_tag == "HORN") exitWith { [_vehicle, ['horn'], 1] call addVehicleStatus; [_vehicle] spawn tauntVehicle; };
 							if (_tag == "UNFL") exitWith { [_vehicle, false, false] spawn flipVehicle; };				
 							if (_tag == "EPLD") exitWith { [_vehicle] call detonateTargets; playSound "beep"; };
+							if (_tag == "TELP") exitWith { [_vehicle] call activateTeleport;  playSound "beep"; };
 							if (_tag == "LOCK" && {	_exists = false; {	if (([_x, _vehicle] call hasType) > 0) exitWith { _exists = true; };false } count GW_LOCKONWEAPONS > 0;	_exists	}) exitWith { [_vehicle] call toggleLockOn; playSound "beep"; };
 							if (_tag == "OILS" && ((['OIL', _vehicle] call hasType) > 0) ) exitWith { GW_OIL_ACTIVE = nil; playSound "beep"; };
 							if (_tag == "DCLK" && ((['CLK', _vehicle] call hasType) > 0) ) exitWith { [_vehicle, ['cloak']] call removeVehicleStatus; playSound "beep"; };
 							if (_tag == "PARC" && ((['PAR', _vehicle] call hasType) > 0) ) exitWith { if (GW_CHUTE_ACTIVE) then { GW_CHUTE_ACTIVE = false; playSound "beep"; };  };
+							
 
 						};
 
@@ -259,7 +288,7 @@ checkBinds = {
 						if (_canUse && _isModuleBind) exitWith {
 
 							// If its a bag of explosives, just drop one bag
-							if (_tag == "EPL") then { _exitEarly = true; false };							
+							if (_tag == "EPL" || _tag == "TPD") then { _exitEarly = true; false };							
 							[_tag, _vehicle, _obj] call useAttached;
 						};	
 

@@ -6,7 +6,6 @@
 
 private ["_obj", "_pitchAmount","_bankAmount", "_pitchBank", "_pitch", "_bank", "_newPitch", "_newBank"];
 
-
 _obj = [_this,0, objNull, [objNull]] call filterParam;
 _pitchAmount = [(_this select 1),0, 0, [0]] call filterParam;
 _bankAmount = [(_this select 1),1, 0, [0]] call filterParam;

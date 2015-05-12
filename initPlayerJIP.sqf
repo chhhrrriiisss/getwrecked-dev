@@ -14,6 +14,11 @@ waitUntil {!isNull player};
 	{
 		[_x,_texture] spawn setVehicleTexture;
 	};
+
+	// Also sync hidden vehicles
+	_isHidden = _x getVariable ['GW_HIDDEN', false];
+	if (_isHidden) then { [_x, true] call pubVar_fnc_setHidden;	};
+
 } foreach (allMissionObjects "Car");
 
 // Retexture all players

@@ -40,7 +40,8 @@ if (_sponsor == _company && _sponsor != "" && _company != "") then { _discount =
 	["tank", GW_LOOT_DEFENCE],
 	["veneer", GW_LOOT_EVASION],
 	["haywire", GW_LOOT_ELECTRONICS],
-	["nocategory", GW_LOOT_VEHICLES]
+	["nocategory", GW_LOOT_VEHICLES],
+	["nocategory", GW_LOOT_MELEE]
 ] > 0;
 
 _cost

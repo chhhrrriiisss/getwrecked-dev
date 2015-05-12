@@ -37,3 +37,6 @@ if (!_full) then {
 	_vehicle setVectorUp [0,0,1];
 	_vehicle setVelocity [0,0,4];
 };
+
+// Recompile to avoid aiming errors
+[_vehicle] call compileAttached;

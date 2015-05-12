@@ -47,11 +47,11 @@ if (isNil "_meta") then {} else {
         _version = if (typename _version == "ARRAY") then { 0 } else { _version };
 
         if (_version < GW_VERSION) then {
-            systemChat 'Warning: Vehicle saved on older version, re-save, clear, then load to avoid issues.';      
+            player customChat [GW_WARNING_CHANNEL, localize "str_gw_version_mismatch"];        
         };
     };
 
-    if (!isNil "_creator") then {
+    if (!isNil "_creator") then {        
         _vehicle setVariable ['creator', _creator, true];
     };
 

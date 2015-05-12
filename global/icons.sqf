@@ -72,6 +72,7 @@ refuelActiveIcon = ICON_ROOT + "hud\refuel_active.paa";
 saveAreaIcon = ICON_ROOT + "hud\saveArea.paa";
 buyAreaIcon = ICON_ROOT + "hud\buyArea.paa";
 lootAreaIcon = ICON_ROOT + "hud\lootArea.paa"; 
+hiddenIcon =  ICON_ROOT + "hud\hidden.paa";
 
 activeIconA = ICON_ROOT + "hud\active_a.paa";
 activeIconB = ICON_ROOT + "hud\active_b.paa";
@@ -143,6 +144,8 @@ dropObjectFormat = "<img size='3' color='#ffffff' shadow='0' image='" + ICON_ROO
 snapObjectFormat = "<img size='3' color='#ffffff' shadow='0' image='" + ICON_ROOT + "menus\snapping.paa' align='left' /> <t size='1.1' shadow='0' align='left'>SNAPPING</t>";
 nosnapObjectFormat = "<img size='3' color='#ffffff' shadow='0' image='" + ICON_ROOT + "menus\nosnapping.paa' align='left' /> <t size='1.1' shadow='0' align='left'>DISABLE SNAPPING </t>";
 liftVehicleFormat = "<img size='3' color='#ffffff' shadow='0' image='" + ICON_ROOT + "menus\lift.paa' align='left' /> <t size='1.1' shadow='0' align='left'>LIFT  </t>";
+hideVehicleFormat = "<img size='3' color='#ffffff' shadow='0' image='" + ICON_ROOT + "hud\hidden.paa' align='left' /> <t size='1.1' shadow='0' align='left'>HIDE  </t>";
+showVehicleFormat = "<img size='3' color='#ffffff' shadow='0' image='" + ICON_ROOT + "tactical\cloak.paa' align='left' /> <t size='1.1' shadow='0' align='left'>SHOW  </t>";
 dropVehicleFormat = "<img size='3' color='#ffffff' shadow='0' image='" + ICON_ROOT + "menus\drop.paa' align='left' /> <t size='1.1' shadow='0' align='left'>DROP  </t>";
 paintVehicleFormat = "<img size='3' color='#ffffff' shadow='0' image='" + ICON_ROOT + "menus\paint.paa' align='left' /> <t size='1.1' shadow='0' align='left'>PAINT  </t>";
 

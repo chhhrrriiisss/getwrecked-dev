@@ -33,7 +33,7 @@ if (GW_DEBUG) then { [_gPos, _targetPos, 3] spawn debugLine; };
 _bullet setVectorDir _heading; 
 _bullet setVelocity _velocity; 
 
-playSound3D [_soundToPlay, _gun, false, getPos _gun, 1, 1, 50];		
+playSound3D [_soundToPlay, _gun, false, (ASLtoATL visiblePositionASL _gun), 2, 1, 50];		
 
 addCamShake [.5, 1,20];
 

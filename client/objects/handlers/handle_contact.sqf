@@ -4,35 +4,35 @@
 //      Return: None
 //
 
-if (isServer) exitWith {};
+// if (isServer) exitWith {};
 
-_obj = _this select 0;
-_remote = _this select 1;
+// _obj = _this select 0;
+// _remote = _this select 1;
 
-_isVehicle = _remote getVariable ["isVehicle", false];
+// _isVehicle = _remote getVariable ["isVehicle", false];
 
-if (_isVehicle && GW_CURRENTZONE == "workshopZone") then {
+// if (_isVehicle && GW_CURRENTZONE == "workshopZone") then {
 
-	// Apply velocity to vehicle
-	if (local _remote) then {
+// 	// Apply velocity to vehicle
+// 	if (local _remote) then {
 		
-		_remote setVelocity [0,0,0];
+// 		_remote setVelocity [0,0,0];
 
-	} else {
+// 	} else {
 
-		[       
-			[
-				_remote,
-				[0,0,0]
-			],
-			"setVelocityLocal",
-			_remote,
-			false 
-		] call gw_fnc_mp;  
+// 		[       
+// 			[
+// 				_remote,
+// 				[0,0,0]
+// 			],
+// 			"setVelocityLocal",
+// 			_remote,
+// 			false 
+// 		] call gw_fnc_mp;  
 
-	};
+// 	};
 	
-};
+// };
 
-// Stop damage to the source object
-_obj setDammage 0;
+// // Stop damage to the source object
+// _obj setDammage 0;

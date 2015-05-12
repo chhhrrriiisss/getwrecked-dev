@@ -5,7 +5,7 @@
 //
 //
 //
-
+loadVehicle =  compile preprocessFile "server\functions\loadVehicle.sqf";
 logKill = compile preprocessFile "server\functions\logKill.sqf";
 
 // Zone Functions
@@ -13,7 +13,7 @@ initEvents = compile preprocessFile "server\zones\events.sqf";
 createSupplyDrop = compile preprocessFile "server\zones\createSupplyDrop.sqf";
 
 // Object
-setObjectData = compile preprocessFile "server\objects\object_data.sqf";
+setupObject = compile preprocessFile "server\objects\setup_object.sqf";
 
 // Vehicle
 setVehicleRespawn = compile preprocessFile "server\vehicles\vehicle_respawn.sqf";
@@ -32,7 +32,7 @@ pubVar_fnc_logDiag = compile preprocessFile "server\functions\pubVar_logDiag.sqf
 // Utility
 setVisibleAttached = compile preprocessFile "server\functions\setVisibleAttached.sqf";
 setObjectSimulation = compile preprocessFile "server\functions\setObjectSimulation.sqf";
-setObjectProperties = compile preprocessFile "server\functions\setObjectProperties.sqf";
+setSimulationVisibility =  compile preprocessFile "server\functions\setSimulationVisibility.sqf";
 
 // Leaderboard
 if (GW_LEADERBOARD_ENABLED) then {

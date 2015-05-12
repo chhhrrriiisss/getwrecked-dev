@@ -64,9 +64,4 @@ clearWeaponCargoGlobal _vehicle;
 clearMagazineCargoGlobal _vehicle;
 clearItemCargoGlobal _vehicle;
 
-if (_respawn) then {
-    [_vehicle, GW_ABANDON_DELAY] spawn setVehicleRespawn;
-};
-
-
 true

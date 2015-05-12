@@ -14,7 +14,7 @@ _final = [] call calculateTotal;
 _totalCost = [_final,0, 0, [0]] call filterParam;
 _totalItems = [_final,1, 0, [0]] call filterParam;
 
-if (_totalItems == 0 || _totalCost == 0) exitWith {};
+if ((_totalItems == 0 || _totalCost == 0) && GW_ITEM_COST > 0) exitWith {};
 
 _inventory = _final select 2;
 
@@ -45,19 +45,21 @@ if (GW_BALANCE - _totalCost < 0) exitWith {	['INSUFFICIENT FUNDS'] spawn showPur
 _totalItemsString = if (_totalItems > 1) then { (format['%1 items', _totalItems]) } else { (format['%1 item', _totalItems]) };
 _result = ['CONFIRM PURCHASE', format[' $%1 (%2)', ([_totalCost] call numberToCurrency), _totalItemsString], 'CONFIRM'] call createMessage;
 
-if (_result) then {
+if (_result && GW_ITEM_COST > 0) then {
 	
 	_success = -_totalCost call changeBalance;
 
 	// Display a message depending on result of transaction
 	if (_success) then {
-		['PURCHASE COMPLETE!', 2, successIcon, nil, "slideDown"] spawn createAlert; 
+		//['PURCHASE COMPLETE!', 2, successIcon, nil, "slideDown"] spawn createAlert; 
+		playSound "money";
 	} else {
 		['ERROR!', 2, warningIcon, colorRed, "slideDown"] spawn createAlert; 
 		_result = false;
 	};
 };
 
+if (GW_ITEM_COST == 0) then { _result = true; };
 if (!_result) exitWith {};
 
 // If we're buying one item, just spawn it nearby, otherwise make a supply box

@@ -6,6 +6,8 @@
 
 private ['_vehicle', '_tx', '_class', '_file', '_path'];
 
+if (isDedicated || !hasInterface) exitWith {};
+
 _vehicle = [_this,0, ObjNull, [ObjNull]] call filterParam;
 _tx = [_this,1, "", [""]] call filterParam;
 
@@ -55,4 +57,4 @@ waitUntil{!isNil {_vehicle getVariable "paint"}};
 
 {
 	_vehicle setObjectTexture[_foreachindex,_x];
-} ForEach _textureArray;
+} foreach _textureArray;

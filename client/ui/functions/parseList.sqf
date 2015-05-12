@@ -14,12 +14,11 @@ _register = [];
 {
 	_tag = (_x select 0);
 	_obj = (_x select 1);
-	_type = if (typeOf (_x select 1) == "groundWeaponHolder") then { (_x select 1) getVariable "type" } else { typeOf (_x select 1) };
+	
+	_data = [_tag, GW_LOOT_LIST] call getData;
 
-	_data = [_type, GW_LOOT_LIST] call getData;
-
-	// For bags of explosives, ignore additional entries
-	if (isNil "_data" || (_tag in _register && _tag == 'EPL') ) then {} else {
+	// For bags of explosives and teleport devices, ignore additional entries
+	if (isNil "_data" || (_tag in _register && _tag == 'EPL') || (_tag in _register && _tag == 'TPD') ) then {} else {
 
 		_name = _data select 1;	
 		_icon = _data select 9;

@@ -27,9 +27,12 @@ GW_TARGET = GW_MIN;
 _terrainIntersect = terrainIntersect [(positionCameraToWorld [0,0,0]), GW_MIN];
 _heightAboveTerrain = (GW_ORIGIN) select 2;
 
-if (GW_DEBUG) then { [GW_ORIGIN, GW_SCREEN, 0.1] spawn debugLine; };
-
 if (_terrainIntersect || _heightAboveTerrain > 3) then { GW_TARGET = GW_SCREEN; };
+if (GW_DEBUG) then { [GW_ORIGIN, GW_TARGET, 0.1] spawn debugLine; };
+
+GW_TARGET = positionCameraToWorld [0,0,200];
+// _terrainIntersect = terrainIntersect [(positionCameraToWorld [0,0,0]), GW_TARGET];
+// if (_terrainIntersect) then { GW_TARGET = positionCameraToWorld [0,0,300]; };
 
 _vehDir = getDir _vehicle;
 
@@ -57,7 +60,8 @@ _allowedWeapons = [
 	'FLM',
 	'HAR',
 	'GUD',
-	'LMG'
+	'LMG',
+	'RPD'
 ];
 
 _count = 0;
@@ -68,8 +72,13 @@ _count = 0;
 
 	_defaultDir = _obj getVariable ["defaultDirection", 0];
 
-	// Flip it around to the correct side if laser
-	_defaultDir = if (_type == "LSR" || _type == "FLM") then { ([_defaultDir + 180] call normalizeAngle) } else { _defaultDir };
+	// Custom target offsets for different items
+	_defaultDir = [_type, _defaultDir] call {
+		_tag = _this select 0;
+		if (_tag == "LSR" || _tag == "FLM") exitWith { ([(_this select 1) + 180] call normalizeAngle) };
+		if (_tag == "RPD") exitWith { ([(_this select 1) -90] call normalizeAngle) };
+		(_this select 1)
+	};
 
 	// Corrected angle based off of vehicle direction
 	_actualDir = [GW_TARGET_DIRECTION - _vehDir] call normalizeAngle;	
@@ -100,6 +109,7 @@ _count = 0;
 			if (_this == "FLM") exitWith { rpgTargetIcon };
 			if (_this == "HAR") exitWith { rangeTargetIcon };
 			if (_this == "LMG") exitWith { hmgTargetIcon };
+			if (_this == "RPD") exitWith { rpgTargetIcon };
 			noTargetIcon
 		};
 		
@@ -130,7 +140,6 @@ if (GW_LMBDOWN && _canShoot && !GW_WAITFIRE) then {
 	_col = [1,1,1,1];	
 
 	{
-	
 		if (format['%1', (_x select 2)] == "1") then {
 			[(_x select 1), _vehicle, (_x select 0)] spawn fireAttached;
 		};
@@ -139,6 +148,6 @@ if (GW_LMBDOWN && _canShoot && !GW_WAITFIRE) then {
 	} count GW_AVAIL_WEAPONS > 0;
 };
 
-_pos = _vehicle modelToWorld [0,40,0];
+_pos = _vehicle modelToWorldVisual [0,40,0];
 drawIcon3D [vehicleTargetIcon, [1,1,1,0.5], _pos, 1.25, 1.25, 0];	
 drawIcon3D [_icon, _col, GW_TARGET, _scale, _scale, 0];	

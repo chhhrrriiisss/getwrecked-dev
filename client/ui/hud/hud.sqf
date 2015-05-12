@@ -118,16 +118,14 @@ GW_HUD_VEHICLE_ACTIVE = false;
 GW_HUD_NORMAL_ACTIVE = false;
 GW_HUD_REFRESH = false;
 
-for "_i" from 0 to 1 step 0 do {
+waitUntil {
 
 	_startTime = time;
-
-	if (!GW_HUD_ACTIVE || !alive player) exitWith {};
 
 	_vehicle = (vehicle player);		
 	_inVehicle = !(player == _vehicle);
 	_isDriver = (player == (driver (_vehicle)));		
-	_hasLockOns = _vehicle getVariable ["lockOns", false];
+
 
 	// Open the default HUD
 	if (!GW_HUD_NORMAL_ACTIVE && (!GW_PREVIEW_CAM_ACTIVE || !GW_TIMER_ACTIVE) ) then {
@@ -150,9 +148,10 @@ for "_i" from 0 to 1 step 0 do {
 		// Calculate a list of current modules on the vehicle
 		_moduleList = [];
 		{
-			if ( !((_x select 0) in _moduleList)) then {  _moduleList pushBack (_x select 0); };
+			_tag = _x getVariable ['GW_Tag', ''];
+			if ( !(_tag in _moduleList) && (_tag in GW_WEAPONSARRAY || _tag in GW_TACTICALARRAY)) then {  _moduleList pushBack _tag; };
 			false
-		} count (_vehicle getVariable ["weapons", []]) + (_vehicle getVariable ["tactical", []]) > 0;
+		} count attachedObjects _vehicle > 0;
 
 		if ((count _moduleList) > (count _vHudBars)) then {
 			_moduleList resize (count _vHudBars);
@@ -364,8 +363,12 @@ for "_i" from 0 to 1 step 0 do {
 		
 	    };
 
+	    if ("forked" in _status) then {
+            [localize "str_gw_wheels_disabled", 1, warningIcon, colorRed, "warning", "beep_warning"] spawn createAlert;   
+        };
+
         if ("tyresPopped" in _status) then {
-            [localize "str_gw_wheels_disabled", 1, warningIcon, colorRed, "warning"] spawn createAlert;   
+            [localize "str_gw_wheels_disabled", 1, warningIcon, colorRed, "warning", "beep_warning"] spawn createAlert;   
         };
 
         if ("overcharge" in _status || "extradamage" in _status || "nanoarmor" in _status || "jammer" in _status) then {
@@ -398,7 +401,7 @@ for "_i" from 0 to 1 step 0 do {
 
         if ("fire" in _status) then {
 
-            [localize "str_gw_fire_detected", 1, warningIcon, colorRed, "warning"] spawn createAlert;  
+            [localize "str_gw_fire_detected", 1, warningIcon, colorRed, "warning", "beep_warning"] spawn createAlert;  
 
             if (_fireActive) then {} else {
                 _fireActive = true;
@@ -409,22 +412,21 @@ for "_i" from 0 to 1 step 0 do {
  
         if ("locked" in _status) then {
 
-            [localize "str_gw_lock_detected", 1, rpgTargetIcon, colorRed, "warning"] spawn createAlert;   
+            [localize "str_gw_lock_detected", 1, rpgTargetIcon, colorRed, "warning", "beep_warning"] spawn createAlert;   
 
             if (!_lockedActive) then {
             	_lockedActive = true;
             	_condition = { ("locked" in ((vehicle player) getVariable ['status', []])) };
             	[_vehicle, 9999, 'client\images\lock_halo.paa', _condition, false] spawn createHalo;
+            	playSound "beep_warning";
 
             };
-
-            if (_blink) then { playSound "beep"; };
 
         };
 
         if ("emp" in _status) then {
 
-            [localize "str_gw_disabled", 1, warningIcon, colorRed, "warning"] spawn createAlert;                  
+            [localize "str_gw_disabled", 1, warningIcon, colorRed, "warning", "beep_warning"] spawn createAlert;                  
 
             if (_empActive) then {} else {
                 _empActive = true;                            
@@ -454,7 +456,6 @@ for "_i" from 0 to 1 step 0 do {
 		// Calculate reload times for each module        
 		_c = 0;
 		{
-			
 			_tag = _x;
 			_hasType = [_tag, _vehicle] call hasType;
 
@@ -543,6 +544,8 @@ for "_i" from 0 to 1 step 0 do {
 	['HUD Update', format['%1', (time - _startTime)]] call logDebug;
 
 	Sleep _refreshRate;
+
+	(!GW_HUD_ACTIVE || !alive player)
 
 };
 

@@ -39,8 +39,7 @@ if (!isNil "GW_NEW_SUPPLY_BOX" ) then {
 	};	
 
 	GW_NEW_SUPPLY_BOX setVariable ["GW_Inventory", _contents];
-	GW_NEW_SUPPLY_BOX setVariable ["name", format["%1's Supply Box", ([GW_PLAYERNAME, 8, ''] call cropString) ], true];
-	GW_NEW_SUPPLY_BOX setVariable ["owner", GW_PLAYERNAME, true];		
+	GW_NEW_SUPPLY_BOX setVariable ["GW_Owner", GW_PLAYERNAME, true];		
 
 	GW_NEW_SUPPLY_BOX spawn newItemsSupplyBox;
 

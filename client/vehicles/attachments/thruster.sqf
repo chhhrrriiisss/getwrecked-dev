@@ -36,6 +36,9 @@ _s = if (_fuel < _cost) then {
 
 } else {
 	
+	// Cut chute if we're parachuting
+	if (GW_CHUTE_ACTIVE) then { GW_CHUTE_ACTIVE = false };
+		
 	// Get object position
 	_oPos = (visiblePositionASL _obj);
 	_vPos = (visiblePositionASL _vehicle);

@@ -1,18 +1,63 @@
 # [Get Wrecked](http://getwrecked.info) Changelog
-## Last Updated: [10-03-2015] ##
+## Last Updated: [12-05-2015] ##
 
 Note: Some changes that are deemed spoilers are hidden from this log 
-(WIP) Indicates items that may not be functionally fully and are only partially implemented
+(WIP) Indicates items that may not be fully functional and are only partially implemented
 Items without Fixed/Added/Removed proceeding, are typically balance changes
 
-**v0.8.1** [Public alpha release]
+**v0.8.2** [Public alpha release]
 
-- Optimized filterParam and added some variable checks
-- Further fps increases in workshop by capping view distance
-- First person camera is no longer disabled 
+- Improved status effect handler system to improve fps
+- Improved guided missile handling slightly
+- Improved RPG accuracy and speed
+- Melee weapon damage no longer stacks and damage divided across all attached melee items of the same type 
+- Flamethrower damage reduced slightly, but does additional damage with sustained hits
+- Slightly increased HMG stock damage
+- Pulse effect to railgun
+- Vehicle health tag now only shows when player is looking directly at it 
+- Fixed - Script error causing guided missile screen to get stuck
+- Fixed - Vendor item script error (1.44)
+- Fixed - Custom font missing error on input dialog
+- Changed - Saalt flat is now Dry Lake
+- Added - Weapon FOV preview when attaching items in the workshop
+- Added - Rocket Pods, Grappling Hook, Teleportation Device, Electromagnet (WIP)
+- Added - EMP Resistant Fencing, Military-Grade Concrete, Chainlink Panel, Thick Concrete Wall
+- Added - Concrete Pylon, Hydraulic Hook (WIP)
+- Added - Box Truck, Fuel and Ammo Trucks to available vehicles 
+
+**v0.8.1** [Closed alpha release]
+
+- Widespread fps improvements and optimizations
+- Loading screen timeout to prevent endless black screen
+- Using thruster while parachuting will now automatically cut it
+- EMP duration changed to 10 seconds, 7 for source vehicle, 60 second timeout
+- Mine damage reduced to 20-30%
+- HMG damage increased by 25%
+- Incorrect selection for GW_KILL_VALUE causing low kill values
+- Removed unnecessary vehicle teleport in save/load system
+- Own vehicle health bar now wider and at bottom of screen
+- Tweaks to the ballistics system to better work on hills
+- Fixed - Melee spikes now only pick up cars (and not whole radar stations!)
+- Fixed - Weapon tagging unable to overwrite, even if different weapon
+- Fixed - Corrupted or reset libraries using !reset should now auto-fill with defaults when loading preview menu
+- Fixed - Save 'cancel' button not aborting properly
+- Fixed - Aggressive cleanup now has a 75m nearby man check in workshop, 10m in zone
+- Fixed - Buggy emergency parachute on kart
+- Fixed - Occasional filterParam script error
+- Fixed - Lock-on beeps causing unnecessary network traffic
 - Fixed - Black icons in dialogs as of 1.40
+- Fixed - Smoke generator script error
+- Fixed - Self Destruct now has a delay and can't blow up invulnerable vehicles
+- Added - Additional beep sound effects to alerts
+- Added - First person camera is now enabled for building and combat
+- Added - Customizable mission parameters (Starting cash, bounty rewards, game mode, respawn time etc)
 - Added - Stringtable (English/French) (WIP)
 - Added - Max data packet size variable to prevent server instability when loading large vehicles
+- Added - Stratis map support with three new battle zones - Airbase, Peninsula and Beach (WIP)
+- Added - Melee metal spikes (WIP), that do around 7.5% damage on hit and can grab vehicles
+- Added - !grab to bring players to admin and !cleanup to manually execute the cleanup script
+- Added - Auto detect for Karts DLC to remove racing helmets, (!fixdlc is no longer required)
+- Added - !collision command for testing attached object collisions (WIP)
 
 **v0.8.0c** [Public alpha hotfix 2]
 

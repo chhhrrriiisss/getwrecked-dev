@@ -46,6 +46,8 @@ if (!_processed) then {
         _killedBy = _veh getVariable ["killedBy", nil];
 
         if (!isNil "_killedBy") then {  
+
+            _killedBy = if (typename _killedBy == "STRING") then { (call compile _killedBy) } else { _killedBy };
                 
             _owner = _veh getVariable ["owner", ""];  
             _name = _veh getVariable ['name', ""];
@@ -58,7 +60,7 @@ if (!_processed) then {
             _crew = crew _veh;    
 
             // No money for destroying own vehicle
-            _value = if (_owner == (_killedBy select 0)) then { 0 } else { _value }; 
+            _value = if (_owner isEqualTo (_killedBy select 0)) then { 0 } else { _value }; 
 
             if (_name == "") then {   
                 _name = 'A vehicle';     
@@ -67,7 +69,7 @@ if (!_processed) then {
             if (isNil "GW_LASTMESSAGELOGGED") then { GW_LASTMESSAGELOGGED = time; };
                 
             // Prevent spamming the server with kill messages
-            if (time > (GW_LASTMESSAGELOGGED + 4)) then {
+            if (time > (GW_LASTMESSAGELOGGED + 5)) then {
 
                 GW_LASTMESSAGELOGGED = time;
                 
@@ -96,16 +98,14 @@ if (!_processed) then {
     { _x setDammage 1; false } count _crew > 0;
     _nearby = (ASLtoATL getPosASL _veh) nearEntities[["Man"], 5];
     { if ((vehicle _x) == _x) then { _x setDammage 1; }; false  } count _nearby > 0;
-
-
     _collateral = attachedObjects _veh;
 
     if (count _collateral > 0) then {
 
         {         
             detach _x;
-            [_x, false] spawn destroyObj;    
-        } ForEach _collateral;
+            deleteVehicle _x;
+        } foreach _collateral;
 
     };
 

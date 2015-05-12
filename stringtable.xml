@@ -19,8 +19,8 @@
 		</Key>
 
 		<Key ID="str_gw_welcome">
-			<English>Welcome to Get Wrecked, %1</English>
-			<French>Bienvenue à Get Wrecked, %1</French>
+			<English>Welcome to Get Wrecked!</English>
+			<French>Bienvenue à Get Wrecked!</French>
 		</Key>		
 
 		<Key ID="str_gw_welcome_guide">
@@ -30,6 +30,14 @@
 
 	</Package>
 
+	<!-- Warnings -->
+	<Package name="Warnings">
+		<Key ID="str_gw_version_mismatch">
+			<English>Warning: Vehicle saved with an older version, please re-save, clear and load to fix errors!</English>
+			<French>Attention: Véhicule sauvé avec une version antérieure, se il vous plaît ré-enregistrer, claire et charger à nouveau pour corriger les erreurs!</French>
+		</Key>
+	</Package>
+	
 	<!-- Alert Dialogs -->
 	<Package name="Alerts">					
 

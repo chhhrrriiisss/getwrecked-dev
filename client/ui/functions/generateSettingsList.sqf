@@ -62,6 +62,7 @@ call addReservedIndex;
 		if (_this == "HORN") exitWith { [hornIcon, "Play Taunt"] };
 		if (_this == "UNFL") exitWith { [rotateCCWIcon, "Push Vehicle"] };
 		if (_this == "EPLD" && ((['EPL', GW_SETTINGS_VEHICLE] call hasType) > 0) ) exitWith { [warningIcon, "Detonate Explosives"] };		
+		if (_this == "TELP" && ((['TPD', GW_SETTINGS_VEHICLE] call hasType) > 0) ) exitWith { [warningIcon, "Activate Teleport"] };
 		if (_this == "LOCK" && {
 
 			// Check we have at least one lock on on this vehicle
@@ -72,6 +73,7 @@ call addReservedIndex;
 		if (_this == "OILS" && ((['OIL', GW_SETTINGS_VEHICLE] call hasType) > 0) ) exitWith { [oilslickIcon, "Stop Oil Slick"] };
 		if (_this == "DCLK" && ((['CLK', GW_SETTINGS_VEHICLE] call hasType) > 0) ) exitWith { [cloakIcon, "Deactivate Cloak"] };
 		if (_this == "PARC" && ((['PAR', GW_SETTINGS_VEHICLE] call hasType) > 0) ) exitWith { [ejectIcon, "Cut Parachute"] };
+		
 		[warningIcon, ""]
 	};
 

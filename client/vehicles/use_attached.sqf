@@ -104,10 +104,12 @@ _success = if (!isNil "_obj") then {
 		case "MIN": { dropMines };
 		case "PAR": { emergencyParachute };
 		case "EPL": { dropExplosives };
+		case "TPD": { dropTeleport };
 		case "CLK": { cloakingDevice };
 		case "MAG": { magneticCoil };
 		case "JMR": { dropJammer };
 		case "LPT": { dropLimpets };
+		case "ELM": { activateElectromagnet };
 	};
 
 	([_obj, _vehicle] call _command)

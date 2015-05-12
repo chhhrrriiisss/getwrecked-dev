@@ -78,11 +78,11 @@ _this spawn {
 
 						_tPos =  (ASLtoATL getPosASL _x);
 						_tPos set[2, 0];
-						_d = if ('nanoarmor' in _status) then { 0.05 } else { (0.3 + random 0.2) };
+						_d = if ('nanoarmor' in _status) then { 0.05 } else { (0.2 + random 0.1) };
 
 						_x setDamage ((getDammage _x) + _d);
 						
-						_bomb = createVehicle ["M_PG_AT", _tPos, [], 0, "CAN_COLLIDE"];		
+						_bomb = createVehicle ["M_AT", _tPos, [], 0, "CAN_COLLIDE"];		
 						_bomb setVelocity [0,0,-100];
 						Sleep 0.01;			
 

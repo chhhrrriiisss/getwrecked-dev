@@ -57,5 +57,8 @@ _text = ((findDisplay 97000) displayCtrl 97005);
 _text ctrlSetText format['TOTAL: $%1', ([_total] call numberToCurrency)];
 _text ctrlCommit 0;
 
+// Cost multiplier
+_total = _total * GW_ITEM_COST; 
+
 [_total, _itemCount, _inventory]
 

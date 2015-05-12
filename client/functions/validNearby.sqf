@@ -26,7 +26,7 @@ if (count _nearby == 0) exitWith { _found };
 
 // Check it's visible to the player's camera (optional)
 if (_scope && !isNil "_found") then {
-	_inScope = [player, _found, 45] call checkScope;
+	_inScope = [player, _found, 60] call checkScope;
 	_found = if (_inScope) then { _found } else { nil };
 };
 

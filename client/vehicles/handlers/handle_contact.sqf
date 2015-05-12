@@ -3,69 +3,36 @@
 //      Return: None
 //
 
-private ['_veh'];
+private ['_vehicle', '_target'];
 
-_veh = _this select 0; 
+_vehicle = _this select 0; 
 
-// If we're in the safe zone prevent flying away
-if (GW_CURRENTZONE == "workshopZone") then {
+_inWorkshop = if (_vehicle distance getMarkerPos "workshopZone_camera" < 300) then { true } else { false };
+if (_inWorkshop) exitWith {};
 
-	// Apply velocity to vehicle
-	if (local _veh) then {
-		
-		_veh setVelocity [0,0,0];
+if (!local _vehicle) exitWith {};
 
-	} else {
-
-		[       
-			[
-				_veh,
-				[0,0,0]
-			],
-			"setVelocityLocal",
-			_veh,
-			false 
-		] call gw_fnc_mp;  
-
-	};
-	
-};
-
-if (!local _veh) exitWith {};
-
-[_veh] spawn checkTyres; 
+[_vehicle] spawn checkTyres; 
 
 // This is to ensure vehicles dont get stuck in the ground when landing at speed
 // Most commonly it occurs on the go kart due to the wheels being especially small
 
-if (isNil "GW_LAST_CONTACT") then { 
-	GW_LAST_CONTACT = time;
-};
+if (isNil "GW_LAST_CONTACT") then { GW_LAST_CONTACT = time; };
 
-
-
-if ( (typeOf _veh == "C_Kart_01_F" || !isNil {_veh getVariable "newSpawn"} ) && player == (driver _veh) && (time - GW_LAST_CONTACT > 0.3) ) then {
+if ( (typeOf _vehicle == "C_Kart_01_F" || !isNil {_vehicle getVariable "newSpawn"} ) && player == (driver _vehicle) && (time - GW_LAST_CONTACT > 0.3) ) then {
 	GW_LAST_CONTACT = time;
 
-	_prevPos = _veh getVariable ['prevPos', [0,0,0]];
+	_prevPos = _vehicle getVariable ['prevPos', [0,0,0]];
 	_prevAlt = _prevPos select 2;
-	_currentAlt = (getPos _veh) select 2;
+	_currentAlt = (getPos _vehicle) select 2;
 
 	if (_prevAlt > 2 || _currentAlt < 0) then {
-		_vel = velocity _veh;
-		_normal = surfaceNormal (ASLtoATL getPosASL _veh);
-		_veh setVectorUp _normal;
+		_vel = velocity _vehicle;
+		_normal = surfaceNormal (ASLtoATL getPosASL _vehicle);
+		_vehicle setVectorUp _normal;
 		_vel set[2, (_vel select 2) + 1];
-		_veh setVelocity _vel;
-		[_veh, true, false] call flipVehicle;		
+		_vehicle setVelocity _vel;
+		[_vehicle, true, false] call flipVehicle;		
 	};
 	
 };
-
-_special = _veh getVariable ["special", []];
-
-if ('FRK' in _special) then {	
-    [_veh] spawn vehicleForks;
-};
-
-

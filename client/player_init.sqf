@@ -24,28 +24,22 @@ _unit assignItem "ItemMap";
 
 GW_PLAYERNAME = (name player);
 
+GW_WARNING_CHANNEL = radioChannelCreate [[1, 0, 0, 1], "Warning Chat", "Warning", [player]]; 
+GW_SUCCESS_CHANNEL = radioChannelCreate [[0.99,0.85,0.23,1], "Success Chat", "Success", [player]]; 
+
 // Default Zone
 ['workshopZone'] call setCurrentZone;
 
 _unit setVariable ["firstSpawn", true];
 
-_unit addeventhandler ["respawn", {
-	_this spawn playerRespawn;
-}];  
-
-_unit addeventhandler ["killed",{	
-	_this spawn playerKilled;
-}];
-
+_unit addeventhandler ["respawn", { _this spawn playerRespawn; }];  
+_unit addeventhandler ["killed",{ _this spawn playerKilled;  }];
 _unit addeventhandler ["handleDamage",{ 
 
 	_damage = _this select 2;
 
-	if (GW_INVULNERABLE || GW_CURRENTZONE == 'workshopZone') then {
-		_damage = false;
-	} else {
-		_damage = _damage;
-	};
+	// Ignore damage in workshop
+	if (GW_INVULNERABLE || GW_CURRENTZONE == 'workshopZone') then {	_damage = false; } else { _damage = _damage; };
 
 	_damage
 
@@ -65,14 +59,29 @@ GW_DC_EH = addMissionEventHandler ["HandleDisconnect",{
 	pubVar_logDiag = format['%1 disconnected.', _n];
 	publicVariableServer "pubVar_logDiag";
 
+	// Loop through and find vehicles that player used to own
 	{
 
-		_owner = _x getVariable ['owner', ''];
+		_owner = _x getVariable ['GW_Owner', ''];	
+
 		if (_owner == _n) then {
-			_x setVariable ['owner', '', true];
+
+			_x setVariable ['GW_Owner', '', true];
+			_isHidden = _x getVariable ['GW_HIDDEN', false];
+
+			// Also un-hide those vehicles (if hidden)
+			if (_isHidden) then {
+				pubVar_setHidden = [_x, false];
+  				publicVariable "pubVar_setHidden";	
+			};
 		};
 		false
 	} count _o > 0;
+
+	// Remove old event handlers
+	(_this select 0) removeEventHandler['killed', 0];
+	(_this select 0) removeEventHandler['handleDamage', 0];
+	(_this select 0) removeEventHandler['respawn', 0];
 
 	// Kill the unit
 	(_this select 0) setDammage 1;
@@ -98,5 +107,7 @@ systemChat 'Player initialization complete.';
 
 pubVar_logDiag = format['Player %1 initialization complete.', GW_PLAYERNAME];
 publicVariableServer "pubVar_logDiag";
+
+clientLoadComplete = true;
 
 if (true) exitWith {};

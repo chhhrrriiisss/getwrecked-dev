@@ -22,6 +22,10 @@ if (!_owner) exitWith {
 // Get list of all vehicles
 GW_LIBRARY = profileNamespace getVariable ['GW_LIBRARY', []];
 
+// Check the library isn't corrupted and exists
+_resetLibrary = if (isNil "GW_LIBRARY") then { true } else { if (count GW_LIBRARY == 0) exitWith { true }; false };
+if (_resetLibrary) then { ['LIBRARY RESET!', 2, warningIcon, colorRed, "slideDown"] spawn createAlert;  GW_LIBRARY = [] call createDefaultLibrary; };
+
 disableSerialization;
 if(!(createDialog "GW_Menu")) exitWith {}; 
 
@@ -91,5 +95,5 @@ if (isNil "GW_PREVIEW_SELECTED" && !isNil "GW_PREVIEW_VEHICLE") then {
 	[GW_PREVIEW_VEHICLE, false] call clearPad;
 };
 
-_closest setVariable ['owner', '', true];
+_closest setVariable ['GW_Owner', '', true];
 

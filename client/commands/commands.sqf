@@ -92,7 +92,7 @@ GW_COMMANDS_LIST = [
 				(_this select 0) call {
 
 					if (_this == "ALL") exitWith {
-						profileNamespace setVariable ['GW_BALANCE', nil];
+						profileNamespace setVariable ['GW_BALANCE', GW_INIT_BALANCE];
 						profileNamespace setVariable ['GW_UNLOCKED_ITEMS', nil]; 
 						profileNamespace SetVariable ['GW_LIBRARY', nil];
 						profileNamespace setVariable ['GW_FIXDLC', nil];	
@@ -182,6 +182,32 @@ GW_COMMANDS_LIST = [
 
 	[
 		
+		"collision",
+		{
+
+			if (player == (vehicle player)) exitWith {
+				systemCHat 'You need to be in a vehicle to use this.';
+			};
+
+			_v = (vehicle player);
+
+			_hasCollision = _v getVariable ['GW_COLLISION', false];
+
+			if (_hasCollision) then {
+				_v setVariable ['GW_COLLISION', false];
+				systemChat 'Collision disabled';
+			} else {
+				_v execVM 'testcollision.sqf';	
+				systemChat format['Collision active on [ %1 ]', _v getVariable ['name', 'Untitled Vehicle']];
+			};		
+
+							
+		}
+	],
+	
+
+	[
+		
 		"list",
 		{
 
@@ -256,32 +282,48 @@ GW_COMMANDS_LIST = [
 		}
 	],
 
+	[
+		
+		"cleanup",
+		{
+
+			if ( !(serverCommandAvailable "#kick") ) exitWith { systemChat 'You need to be an admin to use that.'; };
+
+			[		
+				[
+					player
+				],
+				"executeCleanUp",
+				false,
+				false
+			] call gw_fnc_mp;
+		}
+	],
+
 
 	[
 		
 		"warp",
 		{
 
-			if (serverCommandAvailable "#kick") then {			
+			if ( !(serverCommandAvailable "#kick") ) exitWith { systemChat 'You need to be an admin to use that.'; };	
 
-				[] spawn
-				{
-					closedialog 0;
-					sleep 0.5;
-					TitleText [format["Click on the map to teleport."], "PLAIN DOWN"];
-					openMap [true, false];
-					onMapSingleClick "[_pos select 0, _pos select 1, 8] spawn {
+			[] spawn
+			{
+				closedialog 0;
+				sleep 0.5;
+				TitleText [format["Click on the map to teleport."], "PLAIN DOWN"];
+				openMap [true, false];
+				onMapSingleClick "[_pos select 0, _pos select 1, 8] spawn {
 
-						_pos = [_this select 0, _this select 1,_this select 2];
+					_pos = [_this select 0, _this select 1,_this select 2];
 
-						(vehicle player) setpos [_pos select 0, _pos select 1, 0];				
-						openMap [false, false];
-						TitleText [format[''], 'PLAIN DOWN'];
-						onMapSingleClick '';
+					(vehicle player) setpos [_pos select 0, _pos select 1, 0];				
+					openMap [false, false];
+					TitleText [format[''], 'PLAIN DOWN'];
+					onMapSingleClick '';
 
-					}; true";
-				};
-			
+				}; true";
 			};		
 		}
 	],
@@ -292,17 +334,33 @@ GW_COMMANDS_LIST = [
 		{
 			_argument = _this select 0;
 
-			if (serverCommandAvailable "#kick") then {			
+			if ( !(serverCommandAvailable "#kick") ) exitWith { systemChat 'You need to be an admin to use that.'; };	
 
-				_target = [_argument] call findUnit;
+			_target = [_argument] call findUnit;
 
-				if (!isNil "_target") then {
-					(vehicle player) setPos ((vehicle _target) modelToWorld [10, 0, 1]);
-				} else {
-					systemChat 'Player not found';					
-				};
-			
-			};		
+			if (!isNil "_target") then {
+				(vehicle player) setPos ((vehicle _target) modelToWorld [15, 0, 1]);
+			} else {
+				systemChat 'Player not found';					
+			};	
+		}
+	],
+
+	[
+		
+		"grab",
+		{
+			_argument = _this select 0;
+
+			if ( !(serverCommandAvailable "#kick") ) exitWith { systemChat 'You need to be an admin to use that.'; };	
+
+			_target = [_argument] call findUnit;
+
+			if (!isNil "_target") then {
+				(vehicle _target) setPos ((vehicle player) modelToWorld [0, 15, 1]);
+			} else {
+				systemChat 'Player not found';					
+			};	
 		}
 	],
 
@@ -312,18 +370,17 @@ GW_COMMANDS_LIST = [
 		{
 			_argument = _this select 0;
 
-			if (serverCommandAvailable "#kick") then {			
+			if ( !(serverCommandAvailable "#kick") ) exitWith { systemChat 'You need to be an admin to use that.'; };
 
-				_target = [_argument] call findUnit;
+			_target = [_argument] call findUnit;
 
-				if (!isNil "_target") then {
-					_pos = ASLtoATL getPosASL (vehicle _target);
-					_bomb = createVehicle ["Bo_GBU12_LGB", _pos, [], 0, "CAN_COLLIDE"];						
-					_target setDammage 1;
+			if (!isNil "_target") then {
+				_pos = ASLtoATL getPosASL (vehicle _target);
+				_bomb = createVehicle ["Bo_GBU12_LGB", _pos, [], 0, "CAN_COLLIDE"];						
+				_target setDammage 1;
 
-				} else {
-					systemChat 'Player not found';
-				};
+			} else {
+				systemChat 'Player not found';
 			};		
 		}
 	],

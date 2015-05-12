@@ -14,22 +14,22 @@ if (isNull _obj || isNull _unit) exitWith { false };
 // Optionally take ownership if it's unowned
 _makeOwner = [_this,2, true, [false]] call filterParam;
 
-_owner = _obj getVariable ['owner', ''];
+_owner = _obj getVariable ['GW_Owner', ''];
 
 // No owner, take ownership
-if (_owner == '' && _makeOwner) exitWith { 
-	_obj setVariable ['owner', (name _unit), true];	
+if (_owner isEqualTo '' && _makeOwner) exitWith { 
+	_obj setVariable ['GW_Owner', (name _unit), true];	
 	true
 };
 
 // No owner, dont take ownership	
-if (_owner == '' && !_makeOwner) exitWith { true }; 
+if (_owner isEqualTo '' && !_makeOwner) exitWith { true }; 
 
 // Has owner, not ours	
-if (_owner != (name _unit)) exitWith { false }; 
+if ( !(_owner isEqualTo (name _unit)) ) exitWith { false }; 
 
 // Has owner, ours
-if (_owner == (name _unit)) exitWith { true }; 
+if (_owner isEqualTo (name _unit)) exitWith { true }; 
 
 // Default, not the owner
 false 

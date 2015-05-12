@@ -104,6 +104,12 @@ if (!_hasHandlers) then {
 	if (!_h) then {
 		[_x] call setObjectHandlers;
 	};
+
+	pubVar_setHidden = [_targetVehicle, false];
+	publicVariable "pubVar_setHidden";
+	_targetVehicle hideObject false;
+	_targetVehicle setVariable ['GW_HIDDEN', nil, true];
+
 	false
 } count (attachedObjects _targetVehicle) > 0;
 
@@ -118,12 +124,16 @@ if (!_hasHandlers) then {
 	false 
 ] call gw_fnc_mp;
 
+// Enable melee collision checking
+_hasMelee = _targetVehicle call hasMelee;
+if (_hasMelee) then { _targetVehicle execVM 'client\vehicles\melee_attached.sqf'; };
+
 // Set wanted value
 _targetVehicle setVariable ['GW_WantedValue', 0];
 
 _targetVehicle lockDriver false;
 [_targetVehicle, 2] spawn dustCircle;
-[_targetVehicle, ['invulnerable', 'nolock', 'nofire'], 10] call addVehicleStatus;
+[_targetVehicle, ['invulnerable', 'nolock', 'nofire', 'nofork'], 10] call addVehicleStatus;
 
 if (_zoneType == "race") then {
 	_targetVehicle setFuel 0;

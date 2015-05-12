@@ -33,26 +33,17 @@ _targetted = false;
 _direction = 0;
 _scale = 2;
 
-_hasLockons = GW_CURRENTVEHICLE getVariable ["lockOns", false];	
-
 _isCloaked = if ('cloak' in _status) then { true } else { false };	
 
 // While its in locking range and alive
 for "_i" from 0 to 1 step 0 do {
 
-	if (_isCloaked || !_hasLockons || !(_target in GW_VALIDTARGETS) || !alive _target || _targetted || _target == GW_CURRENTVEHICLE ) exitWith {};
-
-	_hasLockons = GW_CURRENTVEHICLE getVariable ["lockOns", false];
-	_pos =  _target modelToWorld [0,0,0];
-
-	// Combined velocity of both vehicles influences lock time
-	_velTarget = [0,0,0] distance (velocity _target);
-	_velSource = [0,0,0] distance (velocity (vehicle player));
-	_vel = _velTarget + _velSource;
+	
+	if (_isCloaked || !GW_HASLOCKONS || !(_target in GW_VALIDTARGETS) || !alive _target || _targetted || _target == GW_CURRENTVEHICLE ) exitWith {};
 
 	// No lock status kills lock
 	_status = _target getVariable ["status", []];
-	if ("nolock" in _status || ("cloak" in _status)) exitWith { if (GW_DEBUG) then { systemchat 'failed - no lock or cloak'; }; };
+	if ("nolock" in _status || ("cloak" in _status) || ("locked" in _status)) exitWith { if (GW_DEBUG) then { systemchat 'failed - no lock or cloak'; }; };
 
 	// If it doesnt have a locking status, send one
 	if ( !("locking" in _status) ) then {
@@ -68,6 +59,13 @@ for "_i" from 0 to 1 step 0 do {
 			false 
 		] call gw_fnc_mp;  
 	};
+
+	_pos =  _target modelToWorldVisual [0,0,0];
+
+	// Combined velocity of both vehicles influences lock time
+	_velTarget = [0,0,0] distance (velocity _target);
+	_velSource = [0,0,0] distance (velocity (vehicle player));
+	_vel = _velTarget + _velSource;	
 	
 	// Velocity increases lock time
 	_lockTime = _lockTime + (_vel/1000);	
@@ -98,20 +96,11 @@ for "_i" from 0 to 1 step 0 do {
 
 	// Draw the icon and make a beeping sound for thrills
 	drawIcon3D [lockingIcon,colorRed,_pos,_scale,_scale,_direction, _string, 0, 0.04, "PuristaMedium"];
-	playSound3D ["a3\sounds_f\sfx\beep_target.wss", (vehicle player), false, (visiblePosition  (vehicle player)), 0.8, 1, 20]; 
+	player say3D "beep_light";
 
-	Sleep 0.1;
+	Sleep 0.2;
 
 };
-
-// If the lock was successful, add it to the locked targets list
-if (_targetted) then {		
-
-	GW_LOCKEDTARGETS = (GW_LOCKEDTARGETS - [_target]) + [_target];
-	playSound3D ["a3\sounds_f\weapons\mines\electron_trigger_1.wss", (vehicle player), false, (visiblePosition  (vehicle player)), 2, 1, 20];  
-};
-
-GW_ACQUIRE_ACTIVE = false;
 
 if ('locking' in _status) then {
 
@@ -126,3 +115,11 @@ if ('locking' in _status) then {
 	] call gw_fnc_mp;  
 	
 };
+
+// If the lock was successful, add it to the locked targets list
+if (_targetted) then {		
+	GW_LOCKEDTARGETS = (GW_LOCKEDTARGETS - [_target]) + [_target];
+};
+
+GW_ACQUIRE_ACTIVE = false;
+

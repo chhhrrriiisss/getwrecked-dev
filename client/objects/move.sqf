@@ -35,7 +35,7 @@ _unit spawn setPlayerActions;
 _unit addAction[dropObjectFormat, {
 
 	_unit = [_this,0, objNull, [objNull]] call filterParam;
-	_obj = _unit getVariable ['editingObject', nil];
+	_obj = _unit getVariable ['GW_EditingObject', nil];
 	if (isNil "_obj" || isNull _unit) exitWith {};
 
 	[_unit, _obj] call dropObj;
@@ -69,7 +69,7 @@ _unit addAction[snapObjectFormat, {
 // 	_unit addAction[tiltForwardObjectFormat, {
 
 // 		_unit = _this select 0;
-// 		_obj = _unit getVariable ['editingObject', nil];
+// 		_obj = _unit getVariable ['GW_editingObject', nil];
 // 		if (isNil "_obj" || isNull _unit) exitWith {};
 
 // 		[_obj, [-10, 0]] call tiltObj;
@@ -79,7 +79,7 @@ _unit addAction[snapObjectFormat, {
 // 	_unit addAction[tiltBackwardObjectFormat, {
 
 // 		_unit = _this select 0;
-// 		_obj = _unit getVariable ['editingObject', nil];
+// 		_obj = _unit getVariable ['GW_editingObject', nil];
 // 		if (isNil "_obj" || isNull _unit) exitWith {};
 
 // 		[_obj, [10, 0]] call tiltObj;
@@ -92,7 +92,7 @@ _unit addAction[snapObjectFormat, {
 _unit addAction[rotateCWObjectFormat, {
 
 	_unit = [_this,0, objNull, [objNull]] call filterParam;
-	_obj = _unit getVariable ['editingObject', nil];
+	_obj = _unit getVariable ['GW_EditingObject', nil];
 	if (isNil "_obj" || isNull _unit) exitWith {};
 
 	[_obj, 22.5] call rotateObj;
@@ -104,7 +104,7 @@ _unit addAction[rotateCWObjectFormat, {
 _unit addAction[rotateCCWObjectFormat, {
 
 	_unit = [_this,0, objNull, [objNull]] call filterParam;
-	_obj = _unit getVariable ['editingObject', nil];
+	_obj = _unit getVariable ['GW_EditingObject', nil];
 	if (isNil "_obj" || isNull _unit) exitWith {};
 
 	[_obj, -22.5] call rotateObj;
@@ -115,12 +115,12 @@ _unit addAction[rotateCCWObjectFormat, {
 _unit addAction[attachObjectFormat, {
 
 	_unit = [_this,0, objNull, [objNull]] call filterParam;
-	_obj = _unit getVariable ['editingObject', nil];
+	_obj = _unit getVariable ['GW_EditingObject', nil];
 	if (isNil "_obj" || isNull _unit) exitWith {};
 
 	[_unit, _obj] spawn attachObj; 
 
-}, _obj, 5, false, false, "", "( (vehicle player) == player && (!isNil { [_target, 9] call validNearby }) )"]; 
+}, _obj, 5, false, false, "", "( (vehicle player) == player && (!isNil { [_target, 12] call validNearby }) )"]; 
 
 true
 

@@ -117,8 +117,8 @@ class GW_Dialog
 				y = (DIALOG_Y - 0.025) * safezoneH + safezoneY;				
 				w = 0.025 * safezoneW;
 				h = 0.025 * safezoneH;
-				font = "";
-				sizeEx = 0.05;
+				font = "PuristaMedium";
+				sizeEx = "0.0275 / (getResolution select 5)";
 				colorBackground[] = {1,1,1,1}; 
 				colorText[] = {1,1,1,0.95}; 
 				text = "client\images\icons\hud\corner1.paa";
@@ -134,8 +134,8 @@ class GW_Dialog
 				y = (DIALOG_Y - 0.025) * safezoneH + safezoneY;				
 				w = 0.025 * safezoneW;
 				h = 0.025 * safezoneH;
-				font = "";
-				sizeEx = 0.05;
+				font = "PuristaMedium";
+				sizeEx = "0.0275 / (getResolution select 5)";
 				colorBackground[] = {1,1,1,1}; 
 				colorText[] = {1,1,1,0.95}; 
 				text = "client\images\icons\hud\corner2.paa";
@@ -151,8 +151,8 @@ class GW_Dialog
 				y = (DIALOG_Y + (GW_BUTTON_HEIGHT * 3) + (GW_BUTTON_GAP_Y * 2)) * safezoneH + safezoneY;				
 				w = 0.025 * safezoneW;
 				h = 0.025 * safezoneH;
-				font = "";
-				sizeEx = 0.05;
+				font = "PuristaMedium";
+				sizeEx = "0.0275 / (getResolution select 5)";
 				colorBackground[] = {1,1,1,1}; 
 				colorText[] = {1,1,1,0.95}; 
 				text = "client\images\icons\hud\corner3.paa";
@@ -168,8 +168,8 @@ class GW_Dialog
 				y = (DIALOG_Y + (GW_BUTTON_HEIGHT * 3) + (GW_BUTTON_GAP_Y * 2)) * safezoneH + safezoneY;		
 				w = 0.025 * safezoneW;
 				h = 0.025 * safezoneH;
-				font = "";
-				sizeEx = 0.05;
+				font = "PuristaMedium";
+				sizeEx = "0.0275 / (getResolution select 5)";
 				colorBackground[] = {1,1,1,1}; 
 				colorText[] = {1,1,1,0.95}; 
 				text = "client\images\icons\hud\corner4.paa";
@@ -186,6 +186,7 @@ class GW_Dialog
 		{
 			idc = GW_Dialog_Input_ID;
 			text = "";
+			font = "PuristaMedium";
 			colorBackgroundFocused[] = {0,0,0,0};
 			colorBackground[] = {0,0,0,0};
 			colorBackground2[] = {0,0,0,0};
@@ -200,6 +201,9 @@ class GW_Dialog
 		{
 			idc = GW_Dialog_Title_ID;
 			text = "CONFIRM";
+			font = "PuristaMedium";
+			sizeEx =  "0.0275 / (getResolution select 5)";
+
 			onButtonClick = "";
 			x = (DIALOG_X) * safezoneW + safezoneX;
 			y = (DIALOG_Y) * safezoneH + safezoneY;
@@ -233,7 +237,8 @@ class GW_Dialog
 			idc = -1;
 			text = "OK";
 			size = 0.03;
-			sizeEx = "0.03";
+			sizeEx =  "0.018 / (getResolution select 5)";
+			font = "PuristaMedium";
 
 			onButtonClick = "[] call confirmCurrentDialog; false";
 			x = (DIALOG_X) * safezoneW + safezoneX;
@@ -267,7 +272,7 @@ class GW_Dialog
 			idc = -1;
 			text = "CANCEL";
 			size = 0.03;
-			sizeEx = "0.03";
+			sizeEx =  "0.018 / (getResolution select 5)";
 
 			onButtonClick = "[] call cancelCurrentDialog; false";
 			x = (DIALOG_X + (GW_BUTTON_WIDTH / 2) + (GW_BUTTON_GAP_X / 2)) * safezoneW + safezoneX;

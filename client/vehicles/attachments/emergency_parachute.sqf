@@ -15,7 +15,7 @@ if (!local _vehicle) exitWith { false };
 if (isNil "GW_CHUTE_ACTIVE") then { GW_CHUTE_ACTIVE = false; };
 if (GW_CHUTE_ACTIVE) exitWith { false };
 
-_pos = (ASLtoATL getPosASL _vehicle);
+_pos = (ASLtoATL visiblePositionASL _vehicle);
 _alt = _pos select 2;
 _vel = [0,0,0] distance (velocity _vehicle);
 
@@ -25,13 +25,18 @@ if (_alt < 4) exitWith { ['TOO LOW!', 0.25, warningIcon, colorRed, "flash"] spaw
 
 	_class = "Steerable_Parachute_F";
 	GW_CHUTE = createVehicle [_class, [0,0,0], [], 0, "FLY"];
+	GW_CHUTE addEventHandler['handleDamage', { false }];
+	GW_CHUTE disableCollisionWith (_this select 1);
 	GW_CHUTE setDir getDir (_this select 1);
-	GW_CHUTE setPos getPos (_this select 1);
+	GW_CHUTE setPos (ASLtoATL visiblePositionASL (_this select 1));
+
+	GW_WAITCOMPILE = true;
+	(_this select 1) setMass 50;
 
 	_vel = velocity (_this select 1);      
 	_vector = vectorUp (_this select 1);
 
-	(_this select 1) attachTo [GW_CHUTE, [0,0,0]];
+	(_this select 1) attachTo [GW_CHUTE, [0,0,-1]];
 
 	_speed = 20;
 	_dir = direction (_this select 1);
@@ -42,9 +47,11 @@ if (_alt < 4) exitWith { ['TOO LOW!', 0.25, warningIcon, colorRed, "flash"] spaw
 
 		_veh = _this select 0;
 		GW_CHUTE_ACTIVE = true;
+
 		waitUntil {
 			Sleep 0.1;
-			((getPos _veh select 2 < 5) || !GW_CHUTE_ACTIVE || !alive (_this select 0))
+			_pos = (ASLtoATL visiblePositionASL _veh);
+			((_pos select 2 < 5) || !GW_CHUTE_ACTIVE || !alive (_this select 0))
 		};
 
 		_vel = velocity _veh;
@@ -58,14 +65,14 @@ if (_alt < 4) exitWith { ['TOO LOW!', 0.25, warningIcon, colorRed, "flash"] spaw
             _veh
         ];
 		
-		detach (_this select 1);
-		(_this select 1) disableCollisionWith _veh;   
+		detach (_this select 1);		 
 
 		_time = time + 5;
 		waitUntil {time > _time};
 		if (!isNull (_this select 1)) then {deleteVehicle (_this select 1)};
 
 		GW_CHUTE_ACTIVE = false;
+		GW_WAITCOMPILE = false;
 
 	};
 };

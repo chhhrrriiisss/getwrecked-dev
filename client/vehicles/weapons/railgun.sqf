@@ -28,20 +28,19 @@ _this spawn {
 
 	_vel= velocity _vehicle;
 	_totalVel = [0,0,0] distance _vel;
-	_shake = if (_totalVel > 15) then { 4 } else { (_totalVel / 5) + 0.6 };
+	_shake = if (_totalVel > 15) then { 3 } else { (_totalVel / 5) + 0.6 };
 	_null = _shake spawn { addCamShake [_this, 5,150]; };
 
 	Sleep 1.8;
 
 	[
 		[
-		_vehicle,
-		1,
-		false
+			_obj,
+			1,
+			0.1
 		],
-		"nitroEffect"
+		"magnetEffect"
 	] call gw_fnc_mp;
-
 
 	_dir = [GW_TARGET_DIRECTION] call normalizeAngle;
 

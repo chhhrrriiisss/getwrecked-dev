@@ -54,6 +54,57 @@ if (hasInterface) then {
 	};
 };
 
+// Custom checks for object/vehicles
+isObject = {
+	_tag = _this getVariable ['GW_Tag', ''];
+	if (_tag isEqualTo '') exitWith { false };
+	true
+};
+
+GW_SUPPLY_CLASS = "Land_PaperBox_closed_F";
+isSupplyBox = {
+	if ((typeOf _this) isEqualTo GW_SUPPLY_CLASS) exitWith  { true };
+	false
+};
+
+GW_PAINT_CLASS = "Land_Bucket_painted_F";
+isPaint = {	
+	if ((typeOf _this) isEqualTo GW_PAINT_CLASS) exitWith  { true };
+	false	
+};
+
+hasMelee = {	
+	_melee = false;
+	{
+		if ( [_x, _this] call hasType >= 0) exitWith { _melee = true; };
+	} foreach GW_MELEEWEAPONS;
+	_melee
+};
+
+isWeapon = {
+	_tag = _this getVariable ['GW_Tag', ''];
+	if (_tag in GW_WEAPONSARRAY) exitWith { true };
+	false
+};
+
+isModule = {
+	_tag = _this getVariable ['GW_Tag', ''];
+	if (_tag in GW_TACTICALARRAY) exitWith { true };
+	false
+};
+
+isSpecial = {
+	_tag = _this getVariable ['GW_Tag', ''];
+	if (_tag in GW_SPECIALARRAY) exitWith { true };
+	false
+};
+
+isHolder = {	
+	if ((typeof _this) == "GroundWeaponHolder") exitWith { true };
+	false
+};
+
+
 // Trigger function for a supply box effects
 supplyDropEffect = {	
 	_crate = _this select 0;
@@ -70,6 +121,8 @@ getVehiclePicture = {
 		case "C_Hatchback_01_sport_F": { "client\images\outlines\hatchback_low.paa"	};
 		case "C_SUV_01_F":{	"client\images\outlines\suv_low.paa" };
 		case "C_Van_01_transport_F": { "client\images\outlines\truck_low.paa"	};
+		case "C_Van_01_fuel_F": { "client\images\outlines\truck_fuel_low.paa"	};
+		case "C_Van_01_box_F": { "client\images\outlines\truck_box_low.paa"	};
 		default	{ (getText(configFile >> "CfgVehicles" >> (_this select 0) >> "picture"))};
 	};
 	
@@ -77,45 +130,9 @@ getVehiclePicture = {
 
 // Returns reload and cost data requested tag [Reload, Cost]
 getTagData = {
-
-	switch (_this select 0) do {
-		
-		case "SMK": {  [15, 0]	};
-		case "SHD":	{  [60, 0]	};
-		case "NTO":	{  [0.75, 0.04] };
-		case "THR":	{  [0.1, 0.05] };
-		case "OIL":	{  [15, 0.004]	};
-		case "REP":	{  [60, 0]	};
-		case "DES":	{  [0, 0]	};
-		case "EMP":	{  [45, 0]	};
-		case "MIN":	{  [30, 0.2] };
-		case "PAR":	{  [10, 0]	};
-		case "CLK":	{  [0, 0.08] };
-		case "MAG":	{  [45, 0]	};
-		case "GRP":	{  [1, 0]	};
-		case "CAL":	{  [30, 0.1] };
-		case "EPL":	{  [1, 0]	};
-		case "JMR":	{  [0, 0]	};
-
-		case "HMG": {  [0.15, 0.002]	};
-		case "LMG": {  [0.1, 0.001]	};
-		case "GMG":	{  [0.75, 0.03] };
-		case "RPG":	{  [3, 0.03] };
-		case "GUD":	{  [20, 0.15] };
-		case "MIS":	{  [10, 0.15] };	
-		case "MOR":	{  [3, 0.05] };
-		case "RLG":	{  [20, 0.15] };
-		case "LSR":	{  [3, 0.05] };		
-		case "FLM":	{  [0.5, 0.03] };	
-		case 'HAR': {  [8, 0] };
-
-		default
-		{
-			[0,0]
-		};
-
-	};
-
+	_data = [(_this select 0), GW_LOOT_LIST] call getData;
+	if (isNil "_data") exitWith { [0,0] };
+	(_data select 10)
 };
 
 // Zone Functions
@@ -128,13 +145,15 @@ setVehicleHandlers = compile preprocessFile "server\vehicles\set_handlers.sqf";
 handleDamageVehicle = compile preprocessFile 'client\vehicles\handlers\handle_damage.sqf';
 handleExplosionVehicle = compile preprocessFile 'client\vehicles\handlers\handle_explosion.sqf';
 handleContactVehicle = compile preprocessFile 'client\vehicles\handlers\handle_contact.sqf';
+handleContactStartVehicle = compile preprocessFile 'client\vehicles\handlers\handle_contact_start.sqf';
 handleHitVehicle = compile preprocessFile 'client\vehicles\handlers\handle_hit.sqf';
 handleKilledVehicle = compile preprocessFile 'client\vehicles\handlers\handle_killed.sqf';
 handleGetIn = compile preprocessFile 'client\vehicles\handlers\handle_getin.sqf';
 handleGetOut = compile preprocessFile 'client\vehicles\handlers\handle_getout.sqf';
 
 // Event Handlers
-setObjectHandlers = compile preprocessFile "server\objects\set_handlers.sqf";
+setObjectHandlers = compile preprocessFile "global\functions\setObjectHandlers.sqf";
+setObjectProperties = compile preprocessFile "global\functions\setObjectProperties.sqf";
 
 // Event Handlers
 handleDamageObject = compile preprocessFile 'client\objects\handlers\handle_damage.sqf';
@@ -186,15 +205,18 @@ normalizeAngle = compile preprocessFile 'global\functions\normalizeAngle.sqf';
 flattenAngle = compile preprocessFile 'global\functions\flattenAngle.sqf';
 padZeros = compile preprocessFile 'global\functions\padZeros.sqf';
 dirToVector = compile preprocessFile 'global\functions\dirToVector.sqf';
+roundTo = compile preprocessFile 'global\functions\roundTo.sqf';
 
 // Vehicle Functions 
 call compile preprocessFile 'client\vehicles\functions.sqf';
 compileAttached = compile preprocessFile "client\vehicles\compile_attached.sqf";
+cleanAttached = compile preprocessFile "client\vehicles\clean_attached.sqf";
 swapVehicleTexture = compile preprocessFile 'client\functions\swapVehicleTexture.sqf';
 setVehicleTexture = compile preprocessFile 'client\vehicles\set_vehicle_texture.sqf';
 setVehicleLocked = compile preprocessFile 'client\vehicles\set_vehicle_locked.sqf';
 removeVehicleStatus = compile preprocessFile "global\functions\removeVehicleStatus.sqf";
 addVehicleStatus = compile preprocessFile "global\functions\addVehicleStatus.sqf";
+triggerVehicleStatus = compile preprocessFile "client\vehicles\status_effects.sqf";
 checkTyres = compile preprocessFile 'global\functions\checkTyres.sqf';
 checkEject = compile preprocessFile 'global\functions\checkEject.sqf';
 

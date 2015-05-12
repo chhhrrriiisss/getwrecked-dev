@@ -19,7 +19,7 @@ _ownedByAnother = false;
 _ownedByMe = false;
 
 {
-	_isOwner = _x getVariable ['owner', ''];
+	_isOwner = _x getVariable ['GW_Owner', ''];
 
 	if (count toArray _isOwner == 0) then {} else {
 

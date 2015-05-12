@@ -26,14 +26,23 @@ _obj setVariable ["tag", _obj addAction ["", "", "", 0, false, false, "", "
 	    	_color set [3, 1 - _dist / 10];
 	    	_box = [_target] call getBoundingBox;
 	    	_height = _box select 2;
-	       	_name = _target getVariable ['name', ''];
-	       	_mass = _target getVariable ['mass', 0];
-	       	_fuel = _target getVariable ['fuel', 0];
-	       	_ammo = _target getVariable ['ammo', 0];
-	       	_health = _target getVariable ['health', 0];
-	       	_isPaint = _target getVariable ['isPaint', false];
-	       	isSupply = _target getVariable ['isSupply', false];
 
+	       	_data = _target getVariable ['GW_Data', '[]'];
+	       	_data = call compile _data;
+	       	if (count _data == 0) exitWith {};
+
+	       	_name = _data select 0;	       	
+	       	_mass = _data select 1;	       	
+	       	_ammo = _data select 2;
+	       	_fuel = _data select 3;
+
+	       	_health = _target getVariable ['GW_Health', 0];
+
+	       	_isPaint = _target call isPaint;
+	       	_isSupply = _target call isSupplyBox;
+	       	_isWeapon = _target call isWeapon;
+
+	       	if (_isWeapon) then { _target call renderFOV; };
 	       	_currentZoom = if (cameraView == 'Internal' || _dist < 2.2) then { 2 * round (call getZoom) } else { round (call getZoom) };
 
 		    _position = [
@@ -73,6 +82,8 @@ _obj setVariable ["tag", _obj addAction ["", "", "", 0, false, false, "", "
 		        0.04,
 		        'PuristaMedium'
 		    ];
+
+
 
 		    if (_isPaint || _isSupply) exitWith { false };
 		    	
