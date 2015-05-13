@@ -18,10 +18,12 @@ _statsList = (findDisplay (_control select 0)) displayCtrl (_control select 1);
 lnbClear _statsList;
 
 // Collect all stats
-_dist = (_v getVariable ["mileage", 0]);
+_name = _v getVariable ['name', ''];
+
+_dist = ["mileage", _name] call getStat;
 _dist = if (typename _dist == "ARRAY") then { 0 } else { _dist };
-_dist = if (_dist > 5000) then { format['%1km', _dist / 1000] } else { format['%1m', _dist ]};
-_seconds = (_v getVariable ["timeAlive", 0]);
+_dist = if (_dist > 5000) then { format['%1km', [_dist / 1000, 1] call roundTo ] } else { format['%1m', [_dist, 1] call roundTo ]};
+_seconds = ["timeAlive", _name] call getStat;
 _seconds = if (typename _seconds == "ARRAY") then { 0 } else { _seconds };
 _hoursAlive = floor(_seconds / 3600);
 _minsAlive = floor((_seconds - (_hoursAlive*3600)) / 60);
@@ -30,6 +32,7 @@ _timeAlive = format['%1h : %2m : %3s', ([_hoursAlive, 2] call padZeros), ([_mins
 _raw = [typeOf _v, GW_VEHICLE_LIST] call getData;
 if (isNil "_raw") exitWith {};	
 _data = _raw select 2;
+_massModifier = (_data select 0) select 0;
 _maxWeapons = (_data select 1);
 _maxModules = (_data select 2);
 
@@ -37,7 +40,7 @@ _maxModules = (_data select 2);
 _stats = [
 	['', '', ''],
 	['', 'Health', format['%1%2', round ((1-(getDammage _v)) * 100), '%']],
-	['', 'Mass', format['%1kg', round ( (getMass _v) / 10), '%']],
+	['', 'Mass', format['%1kg', round ( (getMass _v) / _massModifier), '%']],
 	['', 'Ammo Capacity', format['%1%2', round( (_v getVariable ["maxAmmo", 1]) * 100), '%']],
 	['', 'Fuel Tank', format['%1L', round( (_v getVariable ["maxFuel", 1]) * 100), '%']],
 	['', 'Weapons', 
@@ -48,19 +51,19 @@ _stats = [
 	],
 	['', '', ''],
 	['', 'Kills', 
-		format['%1', (_v getVariable ["kills", 0])]
+		format['%1', ["kill", _name] call getStat]
 	],
 	['', 'Deaths', 
-		format['%1', (_v getVariable ["deaths", 0])]
-	],
-	['', 'Destroyed', 
-		format['%1', (_v getVariable ["destroyed", 0])]
+		format['%1', ["death", _name] call getStat]
 	],
 	['', 'Deploys', 
-		format['%1', (_v getVariable ["deploys", 0])]
+		format['%1', ["deploy", _name] call getStat]
+	],
+	['', 'Immobilized', 
+		format['%1', ["disabled", _name] call getStat]
 	],
 	['', 'Mileage', _dist],
-	['', 'Money Earned', format['$%1', [(_v getVariable ["moneyEarned", 0])] call numberToCurrency] ],
+	['', 'Money Earned', format['$%1', [(["moneyEarned", _name] call getStat)] call numberToCurrency] ],
 	['', 'Time Alive',_timeAlive],
 	['', 'Creator', 
 		(_v getVariable ["creator", ""])

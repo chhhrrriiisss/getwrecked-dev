@@ -78,7 +78,7 @@ runCollisionCheck = {
 		_w = _box select 0;
 		_l = _box select 1;
 		_h = _box select 2;
-		_t = 1.01;
+		_t = 0.98;
 
 		_tag = _source getVariable ['GW_Tag', ''];
 
@@ -124,7 +124,7 @@ runCollisionCheck = {
 			_p1 = (_x select 0);
 			_p2 = (_x select 1);
 
-			[_p1, _p2, 0.001] spawn renderLine;
+			if (GW_DEBUG) then { [_p1, _p2, 0.001] spawn renderLine; };
 
 			_objs = lineIntersectsWith [ATLtoASL _p1, ATLtoASL _p2, _this, _source];
 
@@ -144,23 +144,18 @@ runCollisionCheck = {
 
 					_speed = ((velocity _targetVehicle) distance [0,0,0]) * 0.1;
 
-					_status = _targetVehicle getVariable ['status', []];
-					_collision = if (_tag == "FRK" && 'forked' in _status) then { false } else { if ((random 100) > 30) exitWith { false }; true  };					
+					_status = _targetVehicle getVariable ['status', []];			
 					_command = switch (_tag) do {						
 						case "FRK": {  meleeFork };
 						case "CRR": {  meleeRam };
-						case "HOK": {  meleeHook };
+						case "HOK": {  { true } };
 						default
-						{ {} };
+						{ {true} };
 					};
-
-					if (_collision) then { [_this, _vectInc, _targetVehicle, _vectOut] call _collide; };
-
-					if (isNil "GW_LAST_COLLISION") then { GW_LAST_COLLISION = time - 1; };
-					if (time - GW_LAST_COLLISION < 1) exitWith {};
-					GW_LAST_COLLISION = TIME;
-					[_source, _obj, _speed] call _command;					
 					
+					_collision = [_source, _obj, _speed] call _command;			
+
+					if (_collision) then { [_this, _vectInc, _targetVehicle, _vectOut] call _collide; };						
 
 					false
 

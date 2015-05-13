@@ -11,8 +11,8 @@ _pos = [_this,0, [], [[]]] call filterParam;
 if (count _pos == 0) exitWith {};
 
 // Check actions on objects nearby
-_nearby = nearestObjects [_pos, [],7];
-if(count _nearby == 0) exitWith {};
+GW_NEARBY_OBJECTS = nearestObjects [_pos, [],7];
+if(count GW_NEARBY_OBJECTS == 0) exitWith {};
 
 {
 
@@ -81,4 +81,4 @@ if(count _nearby == 0) exitWith {};
 
    	false
 
-} count _nearby > 0;
+} count GW_NEARBY_OBJECTS > 0;

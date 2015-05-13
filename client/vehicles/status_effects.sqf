@@ -1,8 +1,24 @@
+//
+//      Name: triggerVehicleStatus
+//      Desc: Spawns a status sffect dependent on active status
+//      Return: None
+//
+
 private ['_abort', '_statusEffect', '_commandToLoop'];
 
 _abort = false;
 _statusEffect = _this select 0;
 _maxTimeout = _this select 1;
+
+if ("disabled" isEqualTo _statusEffect ||
+	"tyresPopped" isEqualTo _statusEffect ||
+	"emp" isEqualTo _statusEffect ||
+	"forked" isEqualTo _statusEffect) then {
+
+	['disabled', GW_CURRENTVEHICLE, 1] call logStat; 
+
+};
+
 _commandToLoop = switch (true) do { 
 
 	case ("disabled" isEqualTo _statusEffect): {{

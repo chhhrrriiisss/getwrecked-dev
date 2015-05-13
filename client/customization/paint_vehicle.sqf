@@ -21,7 +21,7 @@ _selected = false;
 
 // Add the actions to the player
 removeAllActions _unit;
-_unit setVariable ['paintTarget', nil];
+_unit setVariable ['GW_paintTarget', nil];
 GW_PAINT_CANCEL = false;
 
 // Paint vehicle action
@@ -31,7 +31,7 @@ _paintAction = _unit addAction[paintVehicleFormat, {
 	_nearby = (ASLtoATL getPosASL _unit) nearEntities [["Car"], 10];
 
 	if ([(_nearby select 0), _unit, false] call checkOwner) then {
-		_unit setVariable ['paintTarget', (_nearby select 0)];
+		_unit setVariable ['GW_paintTarget', (_nearby select 0)];
 	} else {
 		systemChat 'You dont own this vehicle.';
 	};
@@ -43,10 +43,10 @@ _cancelAction = _unit addAction['Cancel', {
 
 	if (!GW_PAINT_CANCEL) then { GW_PAINT_CANCEL = true; };
 
-}, [], 0, true, false, "", "( ( (vehicle player) == player ) && !GW_EDITING && !GW_LIFT_ACTIVE && isNil { _unit getVariable ['paintTarget', nil] } ) && !GW_PAINT_CANCEL"];		
+}, [], 0, true, false, "", "( ( (vehicle player) == player ) && !GW_EDITING && !GW_LIFT_ACTIVE && isNil { _unit getVariable ['GW_paintTarget', nil] } ) && !GW_PAINT_CANCEL"];		
 
 // Time left loop
-while {time < _timeout && alive _unit && GW_CURRENTZONE == "workshopZone" && (isNil { _unit getVariable ['paintTarget', nil] }) && !GW_PAINT_CANCEL} do {
+while {time < _timeout && alive _unit && GW_CURRENTZONE == "workshopZone" && (isNil { _unit getVariable ['GW_paintTarget', nil] }) && !GW_PAINT_CANCEL} do {
 
 	_str = format["SELECT VEHICLE (%1s)", ceil (_timeout - time)];
 	[_str, 0.25, warningIcon, nil, "flash"] spawn createAlert;     
@@ -59,7 +59,7 @@ _unit removeAction _paintAction;
 _unit removeAction _cancelAction;
 _unit spawn setPlayerActions;
 
-_target = _unit getVariable 'paintTarget';
+_target = _unit getVariable 'GW_paintTarget';
 
 // Check we're all good to paint
 if (isNil "_target") exitWith { GW_PAINT_ACTIVE = false; };

@@ -126,7 +126,7 @@ if (!_hasHandlers) then {
 
 // Enable melee collision checking
 _hasMelee = _targetVehicle call hasMelee;
-if (_hasMelee) then { _targetVehicle execVM 'client\vehicles\melee_attached.sqf'; };
+if (_hasMelee) then { _targetVehicle spawn meleeAttached; };
 
 // Set wanted value
 _targetVehicle setVariable ['GW_WantedValue', 0];

@@ -41,9 +41,9 @@ GW_LOOT_LIST = [
 	["srifle_GM6_F", "Harpoon Launcher", 750, 9999, 0, 0, 'HAR', "Harpoon Launcher", 1, hmgIcon, [10,0]],
 
 	// Melee
-	["Land_PalletTrolley_01_khaki_F", "Metal Spikes", 1500, 8, 0, 0, 'FRK', "Medium damage, can capture vehicles", 1, warningIcon, [0,0] ],
-	["Land_Obstacle_Saddle_F", "Concrete Pylon", 1500, 8, 0, 0, 'CRR', "Inflicts massive damage", 1, warningIcon, [0,0] ],
-	["Land_enginecrane_01_f", "Hydraulic Rams", 1500, 8, 0, 0, 'HOK', "Light damage, but can snare vehicles", 1, warningIcon, [0,0] ],
+	["Land_PalletTrolley_01_khaki_F", "Metal Spikes", 1500, 30, 0, 0, 'FRK', "Medium damage, can capture vehicles", 1, warningIcon, [0,0] ],
+	["Land_Obstacle_Saddle_F", "Concrete Pylon", 1500, 30, 0, 0, 'CRR', "Inflicts massive damage", 1, warningIcon, [0,0] ],
+	["Land_enginecrane_01_f", "Hydraulic Rams", 1500, 30, 0, 0, 'HOK', "Light damage, but can snare vehicles", 1, warningIcon, [0,0] ],
 
 
 	// Fuel
@@ -253,7 +253,9 @@ GW_LOOT_EVASION = [
 
 // Melee
 GW_LOOT_MELEE = [
-	["Land_PalletTrolley_01_khaki_F", 300]
+	["Land_PalletTrolley_01_khaki_F", 300],
+	["Land_Obstacle_Saddle_F", 300],
+	["Land_enginecrane_01_f", 500]
 ];
 
 
@@ -279,6 +281,7 @@ GW_LOOT_VEHICLES = [
 	["B_Truck_01_transport_F", 10000],
 	["O_Truck_03_transport_F", 10000],
 	["I_Truck_02_transport_F", 12000],
+	["O_Truck_03_repair_F", 20000],
 
 	// Military
 

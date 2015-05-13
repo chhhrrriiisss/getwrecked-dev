@@ -38,9 +38,9 @@ receiveMoney = {
 	[_value] call changeBalance;	
 
 	// If we were just in a vehicle, count the money as "moneyEarned" stat
-	_vehicle = player getVariable ["prevVeh", nil];
+	_vehicle = player getVariable ["GW_prevVeh", nil];
 	if (!isNil "_vehicle") then {
-		['moneyEarned', _vehicle, _value] spawn logStat;   
+		['moneyEarned', _vehicle, _value] call logStat;   
 	};		
 
 	_valueString = ([_value] call numberToCurrency);

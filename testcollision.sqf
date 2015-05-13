@@ -5,9 +5,12 @@
 //
 
 _collisionEnabled = _this getVariable ['GW_COLLISION', false];;
-if (!isNil "_collisionEnabled") then { _collisionEnabled = false;};
+if (!isNil "_collisionEnabled") then { _collisionEnabled = false; };
 
-if (_collisionEnabled) exitWith {};
+if (_collisionEnabled) exitWith {
+	_this setVariable ['GW_COLLISION', false];
+};
+
 _this setVariable ['GW_COLLISION', true];
 
 _collide = {
@@ -119,7 +122,7 @@ runCollisionCheck = {
 					if ((attachedTo _x) != _this) exitWith { _obj = _x; };
 				} foreach _objs;
 
-				if (!isNil "_obj" && !((typeOf _obj) isEqualTo "")) then { 
+				if (!isNil "_obj" && !((typeOf _obj) isEqualTo "") && !(_obj call isMelee) ) then { 
 
 					_vectInc = [(ASLtoATL visiblePositionASL _obj), (ASLtoATL visiblePositionASL _source)] call bis_fnc_vectorFromXToY;
 					_vectOut = [(ASLtoATL visiblePositionASL _source), (ASLtoATL visiblePositionASL _obj)] call bis_fnc_vectorFromXToY;
@@ -151,11 +154,11 @@ runCollisionCheck = {
 };
 
 // Loop through every frame and check, disable when vehicle dies
-waitUntil {
+for "_i" from 0 to 1 step 0 do {
 	
 	_this call runCollisionCheck;
 	_collisionEnabled = _this getVariable ['GW_COLLISION', false];
-	(!alive _this || !_collisionEnabled)
+	if (!alive _this || !_collisionEnabled) exitWith {};
 };
 
 _this setVariable ['GW_COLLISION', false];

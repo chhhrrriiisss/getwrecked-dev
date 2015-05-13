@@ -1,4 +1,3 @@
-
 // Locked target icons
 if (count GW_LOCKEDTARGETS > 0) then {
 	{
@@ -73,7 +72,7 @@ if (count GW_WARNINGICON_ARRAY > 0) then {
 if (!isNil "GW_CURRENTZONE") then {
 
 	if (GW_CURRENTZONE == "workshopZone" && !GW_TIMER_ACTIVE) then {
-
+	
 		// Draw a 3D icon for the save areas and buy terminals
 		{		
 			_areas = _x select 1;

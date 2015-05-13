@@ -16,19 +16,19 @@ GW_STATUS_MONITOR_LAST_UPDATE = time;
 if (!simulationEnabled GW_CURRENTVEHICLE) then { GW_CURRENTVEHICLE enableSimulation true; };
 
 // Apply vehicle damage to driver
-_vehDamage = getDammage _vehicle;
+_vehDamage = getDammage GW_CURRENTVEHICLE;
 if ((GetDammage player) != (_vehDamage)) then { player setDammage _vehDamage; };
 
 // Update vehicle damage
-_vehicle call updateVehicleDamage;
+GW_CURRENTVEHICLE call updateVehicleDamage;
 
 // // Every 5 seconds, record position, ignoring while in parachute
 _remainder = round (time) % 5;
 _hasMoved = false;
 
-if (_remainder == 0 && (typeOf _vehicle != "Steerable_Parachute_F")) then {
+if (_remainder == 0 && (typeOf GW_CURRENTVEHICLE != "Steerable_Parachute_F")) then {
 	
-	_prevPos = GW_CURRENTVEHICLE getVariable ['prevPos', nil];
+	_prevPos = GW_CURRENTVEHICLE getVariable ['GW_prevPos', nil];
 	_currentPos = ASLtoATL getPosASL GW_CURRENTVEHICLE;
 
 	// If there's position data stored and we're not at the workshop
@@ -36,7 +36,7 @@ if (_remainder == 0 && (typeOf _vehicle != "Steerable_Parachute_F")) then {
 
 		_distanceTravelled = _prevPos distance _currentPos;   
 		if (_distanceTravelled > 3) then {       
-		    ['mileage', _vehicle, _distanceTravelled] spawn logStat;  
+		    ['mileage', GW_CURRENTVEHICLE, _distanceTravelled] call logStat;  
 		    _hasMoved = true; 
 		};
 	};
@@ -44,12 +44,11 @@ if (_remainder == 0 && (typeOf _vehicle != "Steerable_Parachute_F")) then {
 	// Log time alive
 	if (isNil "GW_LASTPOSCHECK") then { GW_LASTPOSCHECK = time;	};  
 	_timeAlive = (time - GW_LASTPOSCHECK);
-	if (_timeAlive > 0) then {	['timeAlive', _vehicle, _timeAlive] spawn logStat;  };
+	if (_timeAlive > 0) then {	['timeAlive', GW_CURRENTVEHICLE, _timeAlive] call logStat;  };
 	GW_LASTPOSCHECK = time;   
 
-	GW_CURRENTVEHICLE setVariable ['prevPos', _currentPos];
-	player setVariable ['prevPos', _currentPos];
-	player setVariable ['prevVeh', GW_CURRENTVEHICLE, true];
+	GW_CURRENTVEHICLE setVariable ['GW_prevPos', _currentPos];
+	player setVariable ['GW_prevPos', _currentPos];
 
 };
 
@@ -63,7 +62,7 @@ if (time - GW_LASTPAYCHECK > 120 && _hasMoved) then {
 	_totalValue call changeBalance;
 	_totalValueString = [_totalValue] call numberToCurrency;
 	systemchat format['You earned $%1. Next payment in two minutes.', _totalValueString];
-	['moneyEarned', GW_CURRENTVEHICLE, _totalValue] spawn logStat;   
+	['moneyEarned', GW_CURRENTVEHICLE, _totalValue] call logStat;   
 	_wantedValue = _wantedValue + 50;
 	GW_CURRENTVEHICLE setVariable ["GW_WantedValue", _wantedValue];
 	GW_CURRENTVEHICLE say3D "money";

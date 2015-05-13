@@ -27,7 +27,7 @@ GW_BINDS_ORDER = [
 	["TELP", ""]
 ];
 
-GW_STATS_ORDER = ["kills", "deaths", "destroyed", "mileage", "moneyEarned", "timeAlive", "deploys"];
+GW_STATS_ORDER = ["kill", "death", "destroyed", "mileage", "moneyEarned", "timeAlive", "deploy", "disabled"];
 GW_INVULNERABLE = true;
 GW_DEPLOYLIST = [];
 GW_LOCKEDTARGETS = [];
@@ -134,7 +134,8 @@ call compile preprocessFile 'client\economy\functions.sqf';
 getCost = compile preprocessFile  'client\economy\cost.sqf';
 
 // Stat Functions
-logStat = compile preprocessFile 'client\stats.sqf';
+logStat = compile preprocessFile 'client\logStat.sqf';
+getStat = compile preprocessFile 'client\getStat.sqf';
 
 // Object Functions
 call compile preprocessFile "client\objects\actions.sqf";
@@ -224,10 +225,6 @@ forkEffect = compile preprocessFile "client\effects\fork.sqf";
 magnetizeEffect = compile preprocessFile "client\effects\magnetize.sqf";
 impactEffect = compile preprocessFile "client\effects\impact.sqf";
 
-// Vehicle Status Effects
-disabledTyres = compile preprocessFile "client\effects\vehicles\disabledTyres.sqf";
-limpetMines = compile preprocessFile "client\effects\vehicles\limpetMines.sqf";
-
 // Zone Functions
 returnToZone =  compile preprocessFile "client\functions\returnToZone.sqf";
 setCurrentZone = compile preprocessFile "client\functions\setCurrentZone.sqf";	
@@ -273,7 +270,6 @@ assignKill = compile preprocessFile "client\functions\assignKill.sqf";
 activateTeleport = compile preprocessFile "client\functions\activateTeleport.sqf";
 
 // MP Functions
-logStatKill = compile preprocessFile "client\functions\logStatKill.sqf";
 playSoundAll = compile preprocessFile "client\functions\playSoundAll.sqf";
 
 pubVar_fnc_status = compile preprocessFile "client\functions\pubvar_status.sqf";

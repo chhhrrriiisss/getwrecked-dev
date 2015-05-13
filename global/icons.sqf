@@ -28,6 +28,7 @@ lockonIcon =  ICON_ROOT + "hud\rpgTarget.paa";
 laserIcon =  ICON_ROOT + "weapons\laser.paa";
 railgunIcon =  ICON_ROOT + "weapons\railgun.paa";
 flameIcon =  ICON_ROOT + "weapons\flame.paa";
+dotIcon = 'A3\ui_f\data\map\GroupIcons\selector_selectedfriendly_ca.paa';
 
 // Tactical Icons
 nitroIcon =  ICON_ROOT + "tactical\nitro.paa";
@@ -147,6 +148,7 @@ liftVehicleFormat = "<img size='3' color='#ffffff' shadow='0' image='" + ICON_RO
 hideVehicleFormat = "<img size='3' color='#ffffff' shadow='0' image='" + ICON_ROOT + "hud\hidden.paa' align='left' /> <t size='1.1' shadow='0' align='left'>HIDE  </t>";
 showVehicleFormat = "<img size='3' color='#ffffff' shadow='0' image='" + ICON_ROOT + "tactical\cloak.paa' align='left' /> <t size='1.1' shadow='0' align='left'>SHOW  </t>";
 dropVehicleFormat = "<img size='3' color='#ffffff' shadow='0' image='" + ICON_ROOT + "menus\drop.paa' align='left' /> <t size='1.1' shadow='0' align='left'>DROP  </t>";
+suspendVehicleFormat = "<img size='3' color='#ffffff' shadow='0' image='" + ICON_ROOT + "menus\drop.paa' align='left' /> <t size='1.1' shadow='0' align='left'>SUSPEND  </t>";
 paintVehicleFormat = "<img size='3' color='#ffffff' shadow='0' image='" + ICON_ROOT + "menus\paint.paa' align='left' /> <t size='1.1' shadow='0' align='left'>PAINT  </t>";
 
 // Terminal formatting

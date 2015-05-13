@@ -161,7 +161,7 @@ if (_abort) exitWith {};
 
 _startTime = time;
 
-_paint = GW_SAVE_VEHICLE getVariable ["paint",""];
+_paint = GW_SAVE_VEHICLE getVariable ["GW_paint",""];
 _attachments = attachedObjects GW_SAVE_VEHICLE;
 
 _attachArray = [];
@@ -246,9 +246,6 @@ if (count str _data > GW_MAX_DATA_SIZE) exitWith {
 
 _success = [_saveTarget, _data] call registerVehicle;
 GW_LASTLOAD = _saveTarget;
-
-// Force a sync of the vehicles stats
-['', GW_SAVE_VEHICLE, '', true] spawn logStat;  
 
 if (_success) then {
     _totalTime = time - _startTime;

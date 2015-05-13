@@ -15,7 +15,7 @@ GW_HUD_ACTIVE = false;
 9999 cutText ["", "BLACK OUT", 0.5];  
 
 _killedBy = _victim getVariable ["killedBy", nil];
-_prevVehicle = _victim getVariable ["prevVeh", nil];
+_prevVehicle = _victim getVariable ["GW_prevVeh", nil];
 
 // Log the death for the last vehicle we were in
 if (!isNil "_prevVehicle") then {

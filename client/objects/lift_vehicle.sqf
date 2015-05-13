@@ -12,6 +12,7 @@ _unit = [_this,1, objNull, [objNull]] call filterParam;
 if (isNull _vehicle || isNull _unit) exitWith {};
 
 GW_LIFT_ACTIVE = true;
+GW_LIFT_VEHICLE = _vehicle;
 GW_EDITING = false;
 
 [		
@@ -28,7 +29,13 @@ GW_EDITING = false;
 removeAllActions _unit;
 _unit spawn setPlayerActions;
 
+_unit addAction [suspendVehicleFormat, {
+	GW_LIFT_VEHICLE setVariable ['GW_suspend', true];
+	GW_LIFT_ACTIVE = false;
+}, [], 0, true, false, "", "( (GW_CURRENTZONE == 'workshopZone') && GW_LIFT_ACTIVE )"];
+
 _unit addAction [dropVehicleFormat, {
+	GW_LIFT_VEHICLE setVariable ['GW_suspend', false];
 	GW_LIFT_ACTIVE = false;
 }, [], 0, true, false, "", "( (GW_CURRENTZONE == 'workshopZone') && GW_LIFT_ACTIVE )"];
 
@@ -74,13 +81,13 @@ for "_i" from 0 to 1 step 0 do {
 
 };
 
-if ((ASLtoATL getPosASL _vehicle) select 2 < 1) then {
+if ( GW_LIFT_VEHICLE getVariable ['GW_suspend', true] ) then {
 
-	_vehicle setVariable ['GW_IGNORE_SIM', false];
+	_vehicle setVariable ['GW_IGNORE_SIM', true];
 	[		
 		[
 			_vehicle,
-			true
+			false
 		],
 		"setObjectSimulation",
 		false,
@@ -89,11 +96,11 @@ if ((ASLtoATL getPosASL _vehicle) select 2 < 1) then {
 
 } else {
 
-	_vehicle setVariable ['GW_IGNORE_SIM', true];
+		_vehicle setVariable ['GW_IGNORE_SIM', false];
 	[		
 		[
 			_vehicle,
-			false
+			true
 		],
 		"setObjectSimulation",
 		false,

@@ -24,7 +24,7 @@ _this spawn {
 	if ('emp' in _status || 'cloak' in _status) exitWith { false };
 
 	playSound3D ["a3\sounds_f\sfx\special_sfx\sparkles_wreck_2.wss", _vehicle, false, _pos, 5, 1, 50];
-	playSound3D ["a3\sounds_f\sfx\earthquake2.wss", _vehicle, false, _pos, 10, 1, 150];
+	playSound3D [format["a3\sounds_f\sfx\earthquake%1.wss", ceil (random 4)], _vehicle, false, _pos, 10, 1, 150];
 
 	_magnetizeNearby = {
 

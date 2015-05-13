@@ -50,10 +50,10 @@ _textureArray = [_file];
 //Local to us? Set it's color.
 if(local _vehicle) then
 {
-	_vehicle setVariable["paint",_tx,true];
+	_vehicle setVariable["GW_paint",_tx,true];
 };
 
-waitUntil{!isNil {_vehicle getVariable "paint"}};
+waitUntil{!isNil {_vehicle getVariable "GW_paint"}};
 
 {
 	_vehicle setObjectTexture[_foreachindex,_x];

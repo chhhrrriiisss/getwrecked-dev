@@ -137,13 +137,13 @@ objectDamageData = {
 // Available arenas and game type
 GW_VALID_ZONES = [
 	
-	['swamp', 'battle'],
-	['airfield', 'battle'],
-	['downtown', 'battle'],
-	['wasteland', 'battle'],
-	['drylake', 'battle'],
+	['swamp', 'battle', 'Swamp'],
+	['airfield', 'battle', 'Airfield'],
+	['downtown', 'battle', 'Downtown'],
+	['wasteland', 'battle', 'Wasteland'],
+	['drylake', 'battle', 'Dry Lake'],
 	// ['highway', 'race'], 
-	['workshop', 'safe']
+	['workshop', 'safe', 'Workshop']
 ];
 
 // Objects that cant be cleared by clearPad
@@ -194,7 +194,8 @@ GW_TEXTURES_SPECIAL = [
 	['C_Hatchback_01_sport_F', [""]],
 	['C_Van_01_transport_F', ["", "default"]],
 	['C_Van_01_box_F', ["C_Van_01_transport_F", "default"]],
-	['C_Van_01_fuel_F', ["C_Van_01_transport_F", "default"]]
+	['C_Van_01_fuel_F', ["C_Van_01_transport_F", "default"]],
+	['O_Truck_03_repair_F', ["default", "default"]]
 ];
 
 GW_SPECIAL_TEXTURES_LIST = [

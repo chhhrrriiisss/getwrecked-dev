@@ -22,7 +22,7 @@ if (isNil "GW_LAST_CONTACT") then { GW_LAST_CONTACT = time; };
 if ( (typeOf _vehicle == "C_Kart_01_F" || !isNil {_vehicle getVariable "newSpawn"} ) && player == (driver _vehicle) && (time - GW_LAST_CONTACT > 0.3) ) then {
 	GW_LAST_CONTACT = time;
 
-	_prevPos = _vehicle getVariable ['prevPos', [0,0,0]];
+	_prevPos = _vehicle getVariable ['GW_prevPos', [0,0,0]];
 	_prevAlt = _prevPos select 2;
 	_currentAlt = (getPos _vehicle) select 2;
 

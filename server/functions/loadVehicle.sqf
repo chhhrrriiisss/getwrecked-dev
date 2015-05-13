@@ -89,6 +89,14 @@ _newVehicle enableSimulationGlobal false;
 // Apply default attributes
 [_newVehicle, (_data select 1), true, false, true] call setupVehicle;
 
+// Set paint (if exists)
+_paint = (_data select 2);
+
+if (!isNil "_paint") then {
+    [[_newVehicle,_paint],"setVehicleTexture",true,false] call gw_fnc_mp;
+};
+
+
 // Loop through and create attached objects
 {
 
@@ -106,7 +114,7 @@ _newVehicle enableSimulationGlobal false;
         _o = [_p, 0, (_x select 0), 0, "CAN_COLLIDE", true] call createObject;
         _o setPos _p;    
 
-        for "_i" from 0 to 2 step 1 do {
+        for "_i" from 0 to 1 step 1 do {
 
             _o attachTo [_newVehicle];           
             _dir = (_x select 2);
@@ -138,13 +146,6 @@ _newVehicle enableSimulationGlobal false;
     false
     
 } count _savedAttachments > 0;
-
-// Set paint (if exists)
-_paint = (_data select 2);
-
-if (!isNil "_paint") then {
-    [[_newVehicle,_paint],"setVehicleTexture",true,false] call gw_fnc_mp;
-};
 
 // Set simulation
 _newVehicle enableSimulationGlobal true;

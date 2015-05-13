@@ -122,10 +122,9 @@ waitUntil {
 
 	_startTime = time;
 
-	_vehicle = (vehicle player);		
-	_inVehicle = !(player == _vehicle);
-	_isDriver = (player == (driver (_vehicle)));		
-
+	_vehicle = GW_CURRENTVEHICLE;		
+	_inVehicle = GW_INVEHICLE;
+	_isDriver = GW_ISDRIVER;	
 
 	// Open the default HUD
 	if (!GW_HUD_NORMAL_ACTIVE && (!GW_PREVIEW_CAM_ACTIVE || !GW_TIMER_ACTIVE) ) then {
@@ -139,7 +138,6 @@ waitUntil {
 	if (GW_HUD_NORMAL_ACTIVE && (GW_PREVIEW_CAM_ACTIVE || GW_TIMER_ACTIVE) ) then {
 		GW_HUD_NORMAL_ACTIVE = false;
 		[[_hudMoney, _hudTransaction], [['fade', 1, 0, 0], ['y', '0', '-0.1', 1.2]], "quad"] spawn createTween;
-
 	};
 	
 	// We're in a vehicle
@@ -249,7 +247,7 @@ waitUntil {
 
         // Health status (kinda unused right now)
 		_damage = getDammage _vehicle;    
-		_status = _vehicle getVariable ["status", []];  
+		_status = GW_VEHICLE_STATUS;
 
 		// Health Status
 	    _actualHealth = ((1 - _damage) * 100) max 0;
@@ -362,10 +360,6 @@ waitUntil {
 			};
 		
 	    };
-
-	    if ("forked" in _status) then {
-            [localize "str_gw_wheels_disabled", 1, warningIcon, colorRed, "warning", "beep_warning"] spawn createAlert;   
-        };
 
         if ("tyresPopped" in _status) then {
             [localize "str_gw_wheels_disabled", 1, warningIcon, colorRed, "warning", "beep_warning"] spawn createAlert;   

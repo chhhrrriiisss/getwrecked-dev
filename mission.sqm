@@ -79,7 +79,11 @@ class Mission
 		"A3_Structures_F_Bootcamp_Civ_SportsGrounds",
 		"A3_Armor_F_Panther",
 		"A3_Soft_F_Bootcamp_Offroad_01",
-		"A3_Soft_F_EPC_Truck_03"
+		"A3_Soft_F_EPC_Truck_03",
+		"A3_Armor_F_APC_Wheeled_03",
+		"A3_armor_f_beta_APC_Tracked_02",
+		"A3_Armor_F_EPB_APC_tracked_03",
+		"A3_Armor_F_Marid"
 	};
 	addOnsAuto[]=
 	{
@@ -107,6 +111,11 @@ class Mission
 		"A3_Structures_F_Walls",
 		"A3_Structures_F_Ind_Pipes",
 		"A3_Structures_F_Households_Addons",
+		"A3_Armor_F_Panther",
+		"A3_Armor_F_APC_Wheeled_03",
+		"A3_armor_f_beta_APC_Tracked_02",
+		"A3_Armor_F_EPB_APC_tracked_03",
+		"A3_Armor_F_Marid",
 		"a3_map_altis"
 	};
 	randomSeed=2523513;
@@ -501,7 +510,7 @@ class Mission
 	};
 	class Vehicles
 	{
-		items=937;
+		items=942;
 		class Item0
 		{
 			position[]={14976.409,17.95015,16537.611};
@@ -9428,18 +9437,64 @@ class Mission
 		};
 		class Item935
 		{
-			position[]={14404.736,38.25,19016.947};
+			position[]={14413.178,38.244396,19003.598};
 			id=953;
 			side="EMPTY";
-			vehicle="Land_Obstacle_Ramp_F";
+			vehicle="TargetP_Civ_F";
 			skill=0.60000002;
 		};
 		class Item936
 		{
-			position[]={14403.107,38.25,19015.441};
+			position[]={14405.727,38.484406,19053.045};
+			azimut=226.28166;
 			id=954;
 			side="EMPTY";
-			vehicle="Land_Obstacle_Saddle_F";
+			vehicle="B_APC_Tracked_01_CRV_F";
+			skill=0.60000002;
+		};
+		class Item937
+		{
+			position[]={14410.17,38.362823,19048.686};
+			azimut=226.282;
+			id=955;
+			side="EMPTY";
+			vehicle="B_APC_Tracked_01_rcws_F";
+			skill=0.60000002;
+		};
+		class Item938
+		{
+			position[]={14414.865,38.352158,19044.404};
+			azimut=226.282;
+			id=956;
+			side="EMPTY";
+			vehicle="I_APC_Wheeled_03_cannon_F";
+			skill=0.60000002;
+		};
+		class Item939
+		{
+			position[]={14418.889,38.31279,19040.072};
+			azimut=226.282;
+			id=957;
+			side="EMPTY";
+			vehicle="O_APC_Tracked_02_cannon_F";
+			skill=0.60000002;
+		};
+		class Item940
+		{
+			position[]={14423.53,38.317673,19036.254};
+			azimut=226.282;
+			id=958;
+			side="EMPTY";
+			vehicle="I_APC_tracked_03_cannon_F";
+			skill=0.60000002;
+		};
+		class Item941
+		{
+			position[]={14427.399,38.335976,19033.725};
+			azimut=226.282;
+			id=959;
+			side="EMPTY";
+			vehicle="O_APC_Wheeled_02_rcws_F";
 			skill=0.60000002;
 		};
 	};

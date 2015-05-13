@@ -24,8 +24,6 @@ if (!_processed) then {
     
     _veh setVariable ['processedDeath', true];    
 
-
-
     _veh spawn {
 
         _veh = _this;
@@ -84,9 +82,9 @@ if (!_processed) then {
                     "logKill",
                     false,
                     false 
-                ] call gw_fnc_mp;    
+                ] call gw_fnc_mp;       
 
-                ['destroyed', _veh, 1, true] call logStat;
+                ['death', _name, 1] call logStat;             
 
             };  
 

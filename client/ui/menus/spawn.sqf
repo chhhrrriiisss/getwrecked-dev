@@ -113,9 +113,10 @@ if (!_firstCompile || !_hasActions) exitWith {
 
 // If we've deployed somewhere previously, show that
 GW_SPAWN_LOCATION = if (!isNil "GW_LASTLOCATION") then { GW_LASTLOCATION } else {  ((GW_VALID_ZONES select (random (count GW_VALID_ZONES -1))) select 0) };
+_displayName = '';
 _startIndex = 0;
 {
-    if ((_x select 0) == GW_SPAWN_LOCATION) exitWith { _startIndex = _foreachindex; };
+    if ((_x select 0) == GW_SPAWN_LOCATION) exitWith { _startIndex = _foreachindex; _displayName = (_x select 2); };
 } Foreach GW_VALID_ZONES;
 
 disableSerialization;
@@ -125,7 +126,7 @@ _layerStatic = ("BIS_layerStatic" call BIS_fnc_rscLayer);
 _layerStatic cutRsc ["RscStatic", "PLAIN" , 1];
 
 [_startIndex] call generateSpawnList;
-[GW_SPAWN_LOCATION] spawn previewLocation;
+[GW_SPAWN_LOCATION, _displayName] spawn previewLocation;
 
 99999 cutText ["", "BLACK IN", 0.35];  
 

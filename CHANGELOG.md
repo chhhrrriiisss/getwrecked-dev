@@ -1,5 +1,5 @@
 # [Get Wrecked](http://getwrecked.info) Changelog
-## Last Updated: [12-05-2015] ##
+## Last Updated: [13-05-2015] ##
 
 Note: Some changes that are deemed spoilers are hidden from this log 
 (WIP) Indicates items that may not be fully functional and are only partially implemented
@@ -10,20 +10,27 @@ Items without Fixed/Added/Removed proceeding, are typically balance changes
 - Improved status effect handler system to improve fps
 - Improved guided missile handling slightly
 - Improved RPG accuracy and speed
+- Debris effect to bag of explosives
 - Melee weapon damage no longer stacks and damage divided across all attached melee items of the same type 
 - Flamethrower damage reduced slightly, but does additional damage with sustained hits
 - Slightly increased HMG stock damage
+- Refract effect to flame effects
 - Pulse effect to railgun
 - Vehicle health tag now only shows when player is looking directly at it 
-- Fixed - Script error causing guided missile screen to get stuck
+- Fixed - Vehicle stats should now be recorded properly
+- Fixed - Infinite flight with the emergency parachute
+- Fixed - Textures not loading occasionally for some vehicles
+- Fixed - Script error causing guided missile screen to occasionally get stuck
 - Fixed - Vendor item script error (1.44)
 - Fixed - Custom font missing error on input dialog
-- Changed - Saalt flat is now Dry Lake
+- Fixed - Vehicle load UI list should now correctly match current preview
+- Changed - 'Salt flat' is now 'Dry Lake'
 - Added - Weapon FOV preview when attaching items in the workshop
 - Added - Rocket Pods, Grappling Hook, Teleportation Device, Electromagnet (WIP)
 - Added - EMP Resistant Fencing, Military-Grade Concrete, Chainlink Panel, Thick Concrete Wall
 - Added - Concrete Pylon, Hydraulic Hook (WIP)
-- Added - Box Truck, Fuel and Ammo Trucks to available vehicles 
+- Added - Box Truck, Fuel and Ammo and Tempest Trucks to available vehicles 
+- Added - Suspend option to lift vehicle mechanic
 
 **v0.8.1** [Closed alpha release]
 

@@ -4,7 +4,7 @@
 //      Return: None
 //
 
-if (GW_WAITALERT) exitWith {};
+if (GW_WAITALERT || GW_SETTINGS_ACTIVE) exitWith {};
 GW_WAITALERT = true;
 
 private ['_text', '_duration', '_icon', '_colour', '_type'];

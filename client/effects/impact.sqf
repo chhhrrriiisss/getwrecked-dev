@@ -15,7 +15,7 @@ if ((visiblePositionASL player) distance _source > GW_EFFECTS_RANGE) exitWith {}
 _pos = if (typename _source isEqualTo "ARRAY") then { (_source vectorAdd _offset) } else { (_source modelToWorldVisual _offset) };
 if ((_pos select 2) < 0) then { _pos set [2, 0]; };
 
-for "_i" from 0 to ([(random _size), 3, 10] call limitToRange) step 1 do {
+for "_i" from 0 to ([(random _size), 3, 40] call limitToRange) step 1 do {
 
 	_debris = createVehicle [format["FxExploArmor%1", (ceil (random 3) + 1)], _pos, [], 0, 'CAN_COLLIDE']; 
 	_debris setDir (random 360);

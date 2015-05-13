@@ -105,3 +105,5 @@ call addReservedIndex;
 // Always add a blank row to pad bottom
 _list lnbAddRow["", "", " "];		
 call addReservedIndex;
+
+_list ctrlSetTooltip "Double click, then press key to set bind.";

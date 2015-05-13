@@ -54,9 +54,6 @@ GW_DISPLAY_EH = addMissionEventHandler ["Draw3D", {
 	if (isNil "GW_CURRENTZONE") exitWith {};
 
 
-
-
-
 	// Player target marker
 	if (GW_INVEHICLE && GW_ISDRIVER && !GW_TIMER_ACTIVE) then { call targetCursor; };
 

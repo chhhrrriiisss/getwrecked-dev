@@ -21,7 +21,7 @@ if (!isNull _killer && !isNull _victim) then {
 	if ((_killer == _victim) || (!alive _killer)) exitWith {		
 
 		// Do we have a previous position to work with?
-		_prevPos = _victim getVariable ['prevPos', nil];
+		_prevPos = _victim getVariable ['GW_prevPos', nil];
 		_target = if (!isNil "_prevPos") then { _prevPos } else { _centerCamera };
 		_type = 'overview';
 
@@ -43,13 +43,11 @@ if (!isNull _killer && !isNull _victim) then {
 
 // Reset kill stats
 player setVariable ["killedBy", nil];
-player setVariable ["prevPos", nil];
+player setVariable ["GW_prevPos", nil];
 
 GW_DEATH_CAMERA_ACTIVE = true;
 
 9999 cutText ["", "BLACK IN", 1.5];  
-
-
 
 // Create a timer dialog
 [] spawn {

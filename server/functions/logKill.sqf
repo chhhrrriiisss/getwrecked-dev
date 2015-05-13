@@ -40,7 +40,8 @@ if (!isNil "_killerTarget") then {
 
     [       
         [
-            _value
+            _value,
+            (_killersVehicle select 0)
         ],
         "assignKill",
         _killerTarget,

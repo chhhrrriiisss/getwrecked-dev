@@ -36,7 +36,7 @@ if (!isNil "GW_SPAWN_LOCATION") then {
 		} count ([GW_CURRENTZONE] call findAllInZone) > 0;
 
 		// Make sure we record a successful deploy
-		['deploy', GW_SPAWN_VEHICLE, 1] spawn logStat; 
+		['deploy', GW_SPAWN_VEHICLE, 1] call logStat; 
 	};
 
 	if (!_success) then {

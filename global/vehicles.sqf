@@ -18,18 +18,19 @@ GW_VEHICLE_LIST = [
 
 	// Trucks
 
-	["C_Van_01_fuel_F", "Civilian Fuel Truck", [ [0.5, 99999], 2, 4, 1, 9, 4, (0.2 * GW_GAM), 'Small', 1000 ], 'Surprisingly sturdy vehicle and reliable as always.' ],
-	["O_truck_02_fuel_f", "Zamak Tanker", [ [0.1, 99999], 4, 5, 0.5, 16, 8, (0.25 * GW_GAM), 'Medium', 1000 ], 'A fuel tank with additional wheels.' ],
-	["O_truck_03_ammo_f", "Tempest Ammo", [ [0.1, 99999], 6, 4, 20, 2, 8, (0.3 * GW_GAM), 'Large', 1000 ], 'A monster truck with a fair few bullets.' ],
+	["C_Van_01_fuel_F", "Civilian Fuel Truck", [ [0.5, 99999], 2, 4, 1, 10, 4, (0.2 * GW_GAM), 'Small', 1000 ], 'Surprisingly sturdy unit with extra fuel capactity.' ],
+	["O_truck_02_fuel_f", "Zamak Tanker", [ [0.1, 99999], 4, 5, 0.5, 18, 8, (0.25 * GW_GAM), 'Medium', 1000 ], 'A fuel tank with additional wheels.' ],
+	["O_truck_03_ammo_f", "Tempest Ammo", [ [0.1, 99999], 6, 4, 22, 2, 8, (0.3 * GW_GAM), 'Large', 1000 ], 'For those in need of a fair few bullets.' ],
 
 	["B_Truck_01_mover_F", "HEMTT Mover", [ [0.1, 99999], 3, 7, 3, 3, 8, (0.25 * GW_GAM), 'Medium', 1000 ], 'A tough rig that can withstand quite a few hits.' ],
 	["B_Truck_01_transport_F", "HEMTT Transport", [ [0.1, 99999], 2, 9, 5, 3, 8, (0.25 * GW_GAM), 'Large', 1000 ], 'A slightly tougher HEMTT with upgraded storage.' ],
 	["I_Truck_02_transport_F", "Zamak Truck", [ [0.1, 99999], 2, 8, 4, 2, 7, (0.09 * GW_GAM), 'Large', 1000 ], 'Smartly built, this clever rig presents lots of opportunities.' ],
+	// ["O_Truck_03_repair_F", "Tempest Transport", [ [0.1, 99999], 2, 12, 6, 3, 8, (0.25 * GW_GAM), 'Large', 1000 ], 'A behemoth that features excess storage and additional swag.' ],
 
 	// Military
 
 	["I_MRAP_03_F", "Strider", [ [2.25, 99999], 5, 3, 2, 0.5, 9, (1.8 * GW_GAM), 'Medium', 4000 ], 'A fast, heavily armoured amphibious assault vehicle.' ],
-	["B_MRAP_01_F", "Hunter", [ [1.75, 99999], 4, 4, 2, 1, 8, (1.75 * GW_GAM), 'Medium', 3500 ], 'This armoured monster is a true jack of all trades.' ],
+	["B_MRAP_01_F", "Hunter", [ [1.75, 99999], 4, 4, 2, 1, 8, (1.75 * GW_GAM), 'Medium', 3500 ], 'An armoured jack of all trades.' ],
 	["O_MRAP_02_F", "Ifrit", [ [1.5, 99999], 5, 3, 2, 0.75, 7, (1.6 * GW_GAM), 'Large', 1000 ], 'Trades speed for upgraded armor and marginally better looks.' ]	
 	
 ];
@@ -50,6 +51,7 @@ GW_LOCKED_ITEMS = [
 	"B_Truck_01_transport_F",
 	"O_Truck_03_transport_F",
 	"I_Truck_02_transport_F",
+	// "O_Truck_03_repair_F",
 
 	"C_Kart_01_F",
 	"C_SUV_01_F",

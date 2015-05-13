@@ -80,9 +80,9 @@ checkBinds = {
 	if (GW_SHOOTER_ACTIVE) exitWIth { false };
 
 	// Conditionals
-	_vehicle = (vehicle player);
-	_inVehicle = !(player == (_vehicle));
-	_isDriver = (player == (driver (_vehicle)));	
+	_vehicle = GW_CURRENTVEHICLE;
+	_inVehicle = GW_INVEHICLE;
+	_isDriver = GW_ISDRIVER;	
 
 	if (_ctrl && _shift && _key == 46) then {
 		_hasCollision = _vehicle getVariable ['GW_COLLISION', false];
@@ -191,33 +191,28 @@ checkBinds = {
 
 		if (GW_CHUTE_ACTIVE) then {
 
-			_pitchBank = GW_CHUTE call BIS_fnc_getPitchBank;
-			_pitchBank set[2, (getDir GW_CHUTE)];
-			_pitchAmount = 1;
-			_bankAmount = 0.3;
-
-			// S
-			if (_key == 17) then {
-				_pitchBank set [0, ([(_pitchBank select 0) - _pitchAmount, -3, 3] call limitToRange)];
+			_angleOffset = _key call {
+				if (_this == 17) exitWith { 0 };
+				if (_this == 31) exitWith { 180 };
+				if (_this == 30) exitWith { 90 };
+				if (_this == 32) exitWith { -90 };
+				0
 			};
 
-			// S
-			if (_key == 31) then {
-				_pitchBank set [0, ([(_pitchBank select 0) + _pitchAmount, -3, 3] call limitToRange)];
+			_yawFactor = _key call {
+				if (_this == 17 || _this == 31) exitWith { 1 };
+				if (_this == 30 || _this == 32) exitWith { 0.5 };
+				0
 			};
 
-			// A
-			if (_key == 30) then {		
-				_pitchBank set [1, ([(_pitchBank select 1) - _bankAmount, -15, 15] call limitToRange)];
-			};
-
-			// D
-			if (_key == 32) then {
-				_pitchBank set [1, ([(_pitchBank select 1) + _bankAmount, -15, 15] call limitToRange)];
-			};
-
-			//systemchat str _pitchBank;
-			[GW_CHUTE, _pitchBank] call setPitchBankYaw;
+			_dirTo = [GW_CHUTE_TARGET, GW_CHUTE] call dirTo;
+			_dirTo = [_dirTo + _angleOffset] call normalizeAngle;
+			_newTarget = [GW_CHUTE_TARGET, _yawFactor, _dirTo] call BIS_fnc_relPos;
+			_currentPos = (ASLtoATL visiblePositionASL GW_CHUTE);
+			_currentPos set [2, 0];
+			_dist = (_newTarget distance _currentPos);
+			if (_dist < 30 || _dist > 1000) exitWith {};
+			GW_CHUTE_TARGET = _newTarget;
 		};
 
 	};

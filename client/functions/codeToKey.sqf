@@ -13,7 +13,7 @@ if (_code <= 0) exitWith { '' };
 _string = '';
 
 {
-	if (_code == (_x select 1)) exitWith {
+	if (_code isEqualTo (_x select 1)) exitWith {
 		_string = _x select 0;
 	};
 

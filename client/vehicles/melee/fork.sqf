@@ -1,12 +1,19 @@
+private ['_source', '_target', '_collide', '_vehicle', '_damage', '_vp'];
+
+if (isNil "GW_LAST_COLLISION") then { GW_LAST_COLLISION = time - 1; };
+if (time - GW_LAST_COLLISION < 1) exitWith { true };
+GW_LAST_COLLISION = TIME;
+
 _source = _this select 0;
 _target = _this select 1;
-	
+_collide = false;
+
 _status = _target getVariable ['status', []];
-if ('invulnerable' in _status || 'cloak' in _status) exitWith {};
+if ('invulnerable' in _status || 'cloak' in _status) exitWith { true };
 
 _vehicle = attachedTo _source;
 _vP = _vehicle worldToModelVisual (_target modelToWorldVisual [0,0,0]);				
-_damage = [( ((random 0.2) + 0.2) / (['FRK', _vehicle] call hasType) ), 2] call roundTo;
+_damage = [( ((random 0.05) + 0.075) / (['FRK', _vehicle] call hasType) ), 2] call roundTo;
 
 [       
     [
@@ -16,7 +23,6 @@ _damage = [( ((random 0.2) + 0.2) / (['FRK', _vehicle] call hasType) ), 2] call 
     true,
     false 
 ] call gw_fnc_mp; 
-
 
 if ((_target isKindOf "Car") && !('forked' in _status || 'nofork' in _status) ) then  {
 
@@ -34,13 +40,23 @@ if ((_target isKindOf "Car") && !('forked' in _status || 'nofork' in _status) ) 
 
 	[_target, 'FRK'] call checkMark;
 
+	_collide = false;
+
 } else {
 	
 	_target setDammage ((getDammage _target) + _damage);
 
+	[       
+	    _target,
+	    "updateVehicleDamage",
+	    _target,
+	    false 
+	] call gw_fnc_mp; 
+
+	_collide = true;
+
 };
 
+if (GW_DEBUG) then { systemchat format['damage: %1 / %2', _damage, getdammage _target]; };
 
-systemchat format['damage: %2 / %3', _vehicle, _damage, getdammage _target];
-
-true
+_collide

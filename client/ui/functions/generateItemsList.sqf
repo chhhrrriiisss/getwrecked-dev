@@ -73,9 +73,9 @@ _filterBy = if (_category > 0) then {
 
 	if (!_valid) then {} else {
 
-		_discountCost = [_class, _sponsor, _company] call getCost; // Cost with discounts
+		_discountCost = [_class, _sponsor, _company] call getCost; // Cost with discounts		
 		_rawCost = [_class, "", ""] call getCost; // Cost with no discounts
-		_difCost = ((_rawCost - _discountCost) / _rawCost);
+		_difCost = IF (_rawCost == 0 && _discountCost == 0) then { 0 } else { ((_rawCost - _discountCost) / _rawCost); };
 
 		_colour = [1,1,1,0.5];
 
@@ -103,6 +103,9 @@ _filterBy = if (_category > 0) then {
 			lnbSetData [97001, [((((lnbSize 97001) select 0)) -1), 0], _quantity];
 			format['%1x', _quantity] 
 		} else { "-" };
+
+		// Don't add entries for items with no cost
+		if (_rawCost == 0 && _discountCost == 0) exitWith {};
 
 		_list lnbAddRow[_quantityString, "", _name, "", _cost];		
 

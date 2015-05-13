@@ -81,6 +81,12 @@ hasMelee = {
 	_melee
 };
 
+isMelee = {
+	_tag = _this getVariable ['GW_Tag', ''];
+	if (_tag in GW_MELEEWEAPONS) exitWith { true };
+	false
+};
+
 isWeapon = {
 	_tag = _this getVariable ['GW_Tag', ''];
 	if (_tag in GW_WEAPONSARRAY) exitWith { true };
@@ -183,6 +189,7 @@ findAllMarkers = compile preprocessFile 'global\functions\findAllMarkers.sqf';
 findClosest = compile preprocessFile 'global\functions\findClosest.sqf';
 findEmpty = compile preprocessFile 'global\functions\findEmpty.sqf';
 findUnit = compile preprocessFile 'global\functions\findUnit.sqf';
+findVehicle = compile preprocessFile 'global\functions\findVehicle.sqf';
 allPlayers = compile preprocessFile 'global\functions\allPlayers.sqf';
 getBoundingBox = compile preprocessFile 'global\functions\getBoundingBox.sqf';
 getData = compile preprocessFile 'global\functions\getData.sqf';

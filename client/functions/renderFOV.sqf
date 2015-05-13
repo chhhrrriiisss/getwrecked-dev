@@ -14,7 +14,7 @@ if (_tag == "RPD") then { _ang = [-120, -60]; };
 if (_tag == "HMG" || _tag == "GMG") then { _of = [-0.1,0.2,-1]; };
 if (_tag == "HAR") then { _ang = [-300, -240]; };
 if (_tag == "LSR") then { _ang = [-210, -150]; };
-
+	
 for "_i" from (_ang select 0) to (_ang select 1) step 5 do {
 
 	_rx = 2.5 * (sin _i) * (cos 1);

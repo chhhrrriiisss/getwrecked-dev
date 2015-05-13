@@ -13,6 +13,8 @@ _pos = (ASLtoATL visiblePositionASL _target);
 
 if ((ASLtoATL visiblePositionASL player) distance _pos > GW_EFFECTS_RANGE) exitWith {};
 
+[_target, _duration, 0.1] spawn magnetEffect;
+
 _source = "#particlesource" createVehicle _pos;
 _source setParticleClass "ObjectDestructionFire1Smallx";
 _source setDropInterval 0.05;

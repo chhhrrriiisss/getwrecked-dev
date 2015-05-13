@@ -9,7 +9,7 @@ waitUntil {!isNull player};
 
 // Retexture all vehicles
 {
-	_texture = _x getVariable "paint";
+	_texture = _x getVariable "GW_paint";
 	if(!isNil "_texture") then
 	{
 		[_x,_texture] spawn setVehicleTexture;

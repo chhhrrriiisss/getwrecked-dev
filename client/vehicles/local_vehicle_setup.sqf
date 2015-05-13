@@ -74,17 +74,6 @@ if (isNil "_meta") then {} else {
         };
     };  
 
-    // Iterate through and print each stat
-    if (!isNil "_stats") then {       
-
-        {
-            if (isNil "_x") then {} else {                
-                _vehicle setVariable [GW_STATS_ORDER select (_forEachIndex), (_stats select (_forEachIndex))];
-            };
-        } ForEach _stats;
-
-    };
-
     if (!isNil "_binds") then {
 
         // Set default keybind order       

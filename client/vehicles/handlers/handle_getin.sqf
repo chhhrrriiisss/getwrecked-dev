@@ -45,3 +45,7 @@ if (count _attached <= 0) exitWith {};
 if (local _vehicle) then {
 	systemChat "You are now the owner of this vehicle.";
 };
+
+// Set prevVeh reference on player (for stats tracking)
+_name = _vehicle getVariable ['name', nil];
+if (!isNil "_name") then { _unit setVariable ['GW_prevVeh', _name]; };
