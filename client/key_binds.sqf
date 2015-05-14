@@ -103,7 +103,7 @@ checkBinds = {
 			_vehicle setVariable ['GW_MELEE', false];
 			systemChat 'Melee disabled';
 		} else {
-			_vehicle execVM 'client\vehicles\melee_attached.sqf';
+			_vehicle spawn meleeAttached;
 			systemChat format['Melee active on [ %1 ]', _vehicle getVariable ['name', 'Untitled Vehicle']];
 		};		
 	};

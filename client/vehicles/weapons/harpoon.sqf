@@ -20,14 +20,14 @@ _heading = [ASLtoATL _oPos,ASLtoATL _tPos] call BIS_fnc_vectorFromXToY;
 _velocity = [_heading, 50] call BIS_fnc_vectorMultiply; 
 _hook = createVehicle ["Land_Tableware_01_fork_F", _oPos, [], 0, "CAN_COLLIDE"];
 
-_hook addEventHandler['EpeContactStart', {
+_hook addEventHandler['EpeContact', {
 		
 	_target = (_this select 1);
 	_hook = (_this select 0);
 	_isVehicle = _target getVariable ['isVehicle', false];	
 	if (_isVehicle && _target != GW_CURRENTVEHICLE) exitWith {
 
-		_hook removeEventHandler ['EpeContactStart', 0];		
+		_hook removeEventHandler ['EpeContact', 0];		
 		_sourceRope = _hook getVariable ['GW_ropeSource', nil];
 		if (isNil "_sourceRope") exitWith {};
 
@@ -41,21 +41,24 @@ _hook addEventHandler['EpeContactStart', {
 		[       
 	        [
 	            _target,
-	            "['EMP']",
+	            "['emp']",
 	            (random 2)
 	        ],
 	        "addVehicleStatus",
 	        _target,
 	        false 
-		] call gw_fnc_mp;  
+		] call gw_fnc_mp; 
 
-		// [
-		// 	[
-		// 		_target,
-		// 		2
-		// 	],
-		// 	"sparkEffect"
-		// ] call gw_fnc_mp;
+		_target setDammage (getDammage _target) + 0.025;
+
+		[       
+		    _target,
+		    "updateVehicleDamage",
+		    _target,
+		    false 
+		] call gw_fnc_mp; 
+
+		[_target, 'HAR'] call markAsKilledBy;
 
 		[_target, (_TARGET worldToModelVisual (ASLtoATL visiblePositionASL _hook)) ,[0,0,-1]] ropeAttachTo _sourceRope;	
 		

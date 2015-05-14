@@ -70,8 +70,12 @@ if (_totalItems > 1) then {
 	_type = ((_inventory select 0) select 1);
 	_relPos = player modelToWorld [0.25,0,0];
 
-	pubVar_spawnObject = [_type, _relPos, true];
-	publicVariableServer "pubVar_spawnObject"; 	
+	[
+		[_relPos, _type],
+		'createObject',
+		false,
+		false
+	] call gw_fnc_mp;	
 };
 
 closeDialog 0;

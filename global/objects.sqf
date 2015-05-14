@@ -21,7 +21,7 @@ GW_LOOT_LIST = [
 	["land_sportground_fence_f", "Chainlink Panel", 200, 7, 0, 0, 'CHL', "", 0.5, barrierIcon],
 	["land_wired_fence_4m_f", "EMP Resistant Fencing", 100, 3, 0, 0, 'EMF', "", 0.8, barrierIcon],
 	["land_mil_wallbig_4m_f", "Military-Grade Concrete", 2400, 25, 0, 0, 'MCP', "", 0.5, barrierIcon],	
-	["land_wall_indcnc_4_f", "Thick Concrete Wall", 1000, 8, 0, 0, 'TCW', "", 0.5, barrierIcon],
+	// ["land_wall_indcnc_4_f", "Thick Concrete Wall", 1000, 8, 0, 0, 'TCW', "", 0.5, barrierIcon],
 
 
 	//["Land_New_WiredFence_5m_F", "Wired Fence", 100, 6, 0, 0, '', "", 0.25, wirefenceIcon],
@@ -37,7 +37,7 @@ GW_LOOT_LIST = [
 	["launch_RPG32_F", "Rocket Launcher", 750, 9999, 0, 0, 'RPG', "Rocket Launcher", 0.3, rpgIcon, [3,0.03]],
 	["srifle_LRR_LRPS_F", "SR2 Railgun", 750, 9999, 0, 0, 'RLG', "Railgun", 1, railgunIcon, [0,0]],
 	["Land_DischargeStick_01_F", "Flamethrower", 750, 9999, 0, 0, 'FLM', "Flamethrower", 1, flameIcon, [0.5,0.03]],
-	["Land_Pipes_small_F", "Rocket Pods", 750, 9999, 0, 0, 'RPD', "Rocket Pods", 1, lockonIcon, [3,0.075]],
+	["Land_Pipes_small_F", "Rocket Pods", 750, 9999, 0, 0, 'RPD', "Rocket Pods", 1, lockonIcon, [3,0.045]],
 	["srifle_GM6_F", "Harpoon Launcher", 750, 9999, 0, 0, 'HAR', "Harpoon Launcher", 1, hmgIcon, [10,0]],
 
 	// Melee
@@ -72,7 +72,7 @@ GW_LOOT_LIST = [
 	["Land_BarrelEmpty_grey_F", "Vertical Thruster",  50, 8, 0, 0, 'THR', "Creates a short burst of exceedingly downward force", 0.6, thrusterIcon, [0.1,0.05] ],
 	["Land_BarrelEmpty_F", "Cloaking Device",  50, 8, 0, 0, 'CLK', "Temporarily gives the vehicle near-invisibility", 1, cloakIcon, [0,0.08] ],
 	["Land_Suitcase_F", "EMP Device",  50, 8, 0, 0, 'EMP', "Deploys a pulse that disables vehicles", 0.7, empIcon, [60,0] ],
-	["Land_RotorCoversBag_01_F", "Emergency Parachute",  5, 500, 0, 0, 'PAR', "Deploys a parachute", 0.2, ejectIcon, [10,0] ],
+	// ["Land_RotorCoversBag_01_F", "Emergency Parachute",  5, 500, 0, 0, 'PAR', "Deploys a parachute", 0.2, ejectIcon, [10,0] ],
 	["Land_WoodenBox_F", "Caltrops",  5, 500, 0, 0, 'CAL', "Drops road spikes that disable tyres", 0.25, caltropsIcon, [30,0.1] ],
 	["Land_Sacks_heap_F", "Bag of Explosives",  5, 500, 0, 0, 'EPL', "Deploys an especially big bag of explosives", 0.1, warningIcon, [1,0] ],
 	["Land_FoodContainer_01_F", "Proximity Mines",  5, 500, 0, 0, 'MIN', "Drops a handful of mines", 0.7, minesIcon, [30,0.2] ],

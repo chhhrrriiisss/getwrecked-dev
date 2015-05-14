@@ -129,10 +129,15 @@ waitUntil{
 
 _vect = [_obj, _veh] call getVectorDirAndUpRelative;
 _obj attachTo [_veh];
-_obj setVectorDirAndUp _vect;
 
-// Wait for it to be attached
-waitUntil { !isNull attachedTo _obj };	
+_timeout = time + 3;
+waitUntil {
+	_attached = if (!isNull attachedTo _obj) then { if ((attachedTo _obj) isEqualTo _veh) exitWith { true }; false } else { false };
+	(_attached || (time > _timeout))
+};
+
+_obj setVectorDirAndUp _vect;
+_obj setVectorUp [0,0,1];
 
 // Set ownership to prevent non-owner detachment
 _obj setVariable ['GW_Owner', GW_PLAYERNAME, true];

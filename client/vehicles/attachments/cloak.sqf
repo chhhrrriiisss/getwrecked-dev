@@ -127,6 +127,16 @@ waitUntil{
 	[       
 	    [
 	        _v,
+	        false
+	    ],
+	    "setVisibleAttached",
+	    false,
+	    false 
+	] call gw_fnc_mp;  
+
+	[       
+	    [
+	        _v,
 	        "['nocloak']",
 	        4
 	    ],
@@ -148,17 +158,21 @@ waitUntil{
 		false 
 	] call gw_fnc_mp;  
 
-	playSound3D ["a3\sounds_f\sfx\special_sfx\sparkles_wreck_1.wss", _v, false, _p, 2, 1, 150];	
 
 	[       
-	    [
-	        _v,
-	        false
-	    ],
-	    "setVisibleAttached",
-	    false,
-	    false 
+		[
+			_v,
+			1,
+			2
+		],
+		"magnetEffect",
+		true,
+		false 
 	] call gw_fnc_mp;  
+
+	playSound3D ["a3\sounds_f\sfx\special_sfx\sparkles_wreck_1.wss", _v, false, _p, 2, 1, 150];	
+
+	
 
 };
 

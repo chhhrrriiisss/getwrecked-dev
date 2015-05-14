@@ -8,8 +8,6 @@ private ['_data', '_vehicle', '_name', '_respawn', '_recreate', '_defaultAmmo', 
 
 _vehicle = [_this,0, objNull, [objNull]] call filterParam;
 _name = [_this,1, "Untitled", [""]] call filterParam;
-_respawn = [_this,2, true] call filterParam;
-_recreate = [_this,3, false] call filterParam;
 
 if (isNull _vehicle) exitWith { diag_log 'Couldnt initialize vehicle.'; };
 

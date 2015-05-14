@@ -34,6 +34,8 @@ _target setDammage (getDammage _target) + _damage;
     false 
 ] call gw_fnc_mp; 
 
+[_target, 'CRR'] call markAsKilledBy;
+
 if (GW_DEBUG) then { systemchat format['damage: %1 / %2', _damage, getdammage _target]; };
 
 true

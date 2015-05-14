@@ -29,7 +29,7 @@ saveProfileNamespace;
 // Handles money sent from the server, adjusts balance accordingly
 receiveMoney = {
 
-	private ['_value'];
+	private ['_value', '_vehicle', '_valueString'];
 
 	_value = [_this,0,0,[0]] call filterParam;
 
@@ -39,9 +39,7 @@ receiveMoney = {
 
 	// If we were just in a vehicle, count the money as "moneyEarned" stat
 	_vehicle = player getVariable ["GW_prevVeh", nil];
-	if (!isNil "_vehicle") then {
-		['moneyEarned', _vehicle, _value] call logStat;   
-	};		
+	if (!isNil "_vehicle") then { ['moneyEarned', _vehicle, _value] call logStat; };		
 
 	_valueString = ([_value] call numberToCurrency);
 

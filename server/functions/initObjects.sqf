@@ -59,7 +59,7 @@ populateLoot = {
 		_rndPos = [(_pos select 0) + _rndX, (_pos select 1) + _rndY, _pos select 2];
 
 		// Create the loot object
-		_o = [_rndPos, _rndDir, '', 0, "CAN_COLLIDE", false] call createObject; 	
+		_o = [_rndPos, '',  _rndDir, 0, "CAN_COLLIDE", false] call createObject; 	
 
 		_o setVariable ['GW_CU_IGNORE', true];
 

@@ -38,7 +38,7 @@ if ((_target isKindOf "Car") && !('forked' in _status || 'nofork' in _status) ) 
 	    false 
 	] call gw_fnc_mp; 
 
-	[_target, 'FRK'] call checkMark;
+	[_target, 'FRK'] call markAsKilledBy;
 
 	_collide = false;
 

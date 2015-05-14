@@ -120,7 +120,7 @@ _unit addAction[attachObjectFormat, {
 
 	[_unit, _obj] spawn attachObj; 
 
-}, _obj, 5, false, false, "", "( (vehicle player) == player && (!isNil { [_target, 12] call validNearby }) )"]; 
+}, _obj, 5, false, false, "", "( (vehicle player) == player && (!isNil { [_target, 12, 180] call validNearby }) )"]; 
 
 true
 

@@ -7,6 +7,8 @@ Items without Fixed/Added/Removed proceeding, are typically balance changes
 
 **v0.8.2** [Public alpha release]
 
+- Re-write to object manipulation system to avoid collisions in workshop
+- loadVehicle system is now client side to improve reliability 
 - Improved status effect handler system to improve fps
 - Improved guided missile handling slightly
 - Improved RPG accuracy and speed
@@ -16,7 +18,10 @@ Items without Fixed/Added/Removed proceeding, are typically balance changes
 - Slightly increased HMG stock damage
 - Refract effect to flame effects
 - Pulse effect to railgun
-- Vehicle health tag now only shows when player is looking directly at it 
+- Vehicle health tag now only shows when player is looking directly at it
+- Fixed - Memory crash involving object handle damage event handler
+- Fixed - Crash on attaching HMGs/GMGs 
+- Fixed - setVehicleTexture not exiting correctly on server
 - Fixed - Vehicle stats should now be recorded properly
 - Fixed - Infinite flight with the emergency parachute
 - Fixed - Textures not loading occasionally for some vehicles

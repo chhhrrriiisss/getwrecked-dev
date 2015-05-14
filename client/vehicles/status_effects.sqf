@@ -10,6 +10,8 @@ _abort = false;
 _statusEffect = _this select 0;
 _maxTimeout = _this select 1;
 
+if (isNil "GW_VEHICLE_STATUS") then { GW_VEHICLE_STATUS = []; };
+
 if ("disabled" isEqualTo _statusEffect ||
 	"tyresPopped" isEqualTo _statusEffect ||
 	"emp" isEqualTo _statusEffect ||

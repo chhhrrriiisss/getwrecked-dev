@@ -96,7 +96,8 @@ if ( GW_LIFT_VEHICLE getVariable ['GW_suspend', true] ) then {
 
 } else {
 
-		_vehicle setVariable ['GW_IGNORE_SIM', false];
+	_vehicle setVariable ['GW_IGNORE_SIM', false];
+	
 	[		
 		[
 			_vehicle,

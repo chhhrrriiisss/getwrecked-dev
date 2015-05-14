@@ -20,9 +20,8 @@ _source = if (!_ai) then { (owner _player) } else { nil };
 
 // Check the packet size is within tolerance
 if (count _raw > GW_MAX_DATA_SIZE) exitWith {
-    hint format['%1 / %2', _raw, count _raw];
-    pubVar_systemChat = 'Vehicle is too large to load.';
-    _source publicVariableClient "pubVar_systemChat";
+    systemChat = 'Vehicle is too large to load.';
+    false
 };
 
 // Check the current target isn't the same as the previous, if so clear the pad first
@@ -47,11 +46,11 @@ waitUntil{
 
 GW_LASTTARGET = [_target, diag_tickTime];
 
-_data = call compile _raw;
+_data = _raw;
 
 if (count _data == 0) exitWith {
-    pubVar_systemChat = 'Bad data, could not load.';
-    _source publicVariableClient "pubVar_systemChat";
+    systemChat 'Bad data, could not load.';
+    false
 };
 
 _savedAttachments = [_data, 5, [], [[]]] call filterParam;
@@ -60,17 +59,15 @@ _startTime = time;
 [_target, false] call clearPad;
 
 if (!_ai) then {
-    pubVar_systemChat = format['Loading... %1', (_data select 1)];
-    _source publicVariableClient "pubVar_systemChat";
+    systemChat format['Loading... %1', (_data select 1)];
 };
 
 // Create it
-_vehPos = tempArea_1;
-// _vehPos = [tempAreas, nil, nil] call findEmpty;
-// if (_vehPos distance [0,0,0] <= 200) exitWith { 
-//      pubVar_systemChat = 'Load areas full, try again in a second.';
-//     _source publicVariableClient "pubVar_systemChat";
-// };
+_vehPos = [tempAreas, nil, nil] call findEmpty;
+if (_vehPos distance [0,0,0] <= 200) exitWith { 
+    systemChat 'Load areas full, try again in a second.';
+    false
+};
 
 _heightAboveTerrain = 2;
 _vehPosATL = (ASLtoATL getPosASL _vehPos);
@@ -80,7 +77,34 @@ _newVehicle = createVehicle [(_data select 0), _vehPosATL, [], 0, "CAN_COLLIDE"]
 _newVehicle setPos _vehPosATL;
 _newVehicle setDir 0;
 _newVehicle setVectorUp [0,0,1];
-_newVehicle enableSimulationGlobal false;
+
+// Setup vehicle on server
+[       
+    [
+        _newVehicle,
+        (_data select 1)
+    ],
+    "setupVehicle",
+    false,
+    false 
+] call gw_fnc_mp;
+
+// Wait for it to be configured properly
+_timeout = time + 5;
+waitUntil {
+	((time > _timeout) || { _newVehicle getVariable ['isVehicle', false]; })	
+};
+
+// Set simulation
+[       
+    [
+        _newVehicle,
+        false
+    ],
+    "setObjectSimulation",
+    false,
+    false 
+] call gw_fnc_mp;
 
 // Get paint (if exists)
 _paint = (_data select 2);
@@ -96,34 +120,25 @@ _paint = (_data select 2);
             _p = call compile _p;
         };               
 
-        _wP = _newVehicle modelToWorldVisual _p;
         _dir = (_x select 2);
 
         // Spawn the object
-        _o = [_wP, (_x select 0), (_x select 2), 0, "CAN_COLLIDE", true] call createObject; 
+        _o = [[0,0,100], (_x select 0), (_x select 2), 0, "CAN_COLLIDE", true] call createObject; 
 
-        _o attachTo [_newVehicle, [random 20, random 20, random 20]];
+        _o attachTo [_newVehicle, [0,0,20]];
         _o attachTo [_newVehicle, (_p vectorAdd (boundingCenter _o))];
        
-        _rotation = if (typename _dir == "ARRAY") then {
+        if (typename _dir == "ARRAY") then {
             [_o, (_x select 2)] call setPitchBankYaw;   
-            ((_x select 2) select 2)
-
         } else {
-            _o setDir _dir;
-            _o setDir _dir;
-            (_x select 2)            
+            [_o, _dir] call setDirTo;          
         };      
   
-        _o setDammage 0;      
-        pubVar_setDir = [_o, _rotation];
-        publicVariable "pubVar_setDir";    
+        _o setDammage 0;  
 
         // Add key bind
-        _k = (_x select 3);
-        _k = if (isNil "_k") then { ["-1", "1"] } else { _k };            
-        _o setVariable ['GW_KeyBind', _k, true]; 
-        //_o enableSimulationGlobal false;     
+        _k = if (isNil { (_x select 3) }) then { ["-1", "1"] } else { (_x select 3) };            
+        _o setVariable ['GW_KeyBind', _k, true];  
 
     };
 
@@ -132,26 +147,41 @@ _paint = (_data select 2);
 } count _savedAttachments > 0;
 
 // Set simulation
-_newVehicle enableSimulationGlobal true;
-
-// Apply default attributes
-[_newVehicle, (_data select 1), true, false, true] call setupVehicle;
-
-if (!isNil "_paint") then {
-    [[_newVehicle,_paint],"setVehicleTexture",true,false] call gw_fnc_mp;
-};
+[       
+    [
+        _newVehicle,
+        true
+    ],
+    "setObjectSimulation",
+    false,
+    false 
+] call gw_fnc_mp;
 
 _timeout = time + 2;
 waitUntil { Sleep 0.1; ((time > _timeout) || (simulationEnabled _newVehicle)) };
 
-// Set Vehicle Texture
-[[_newVehicle,_paint],"setVehicleTexture",true,false] call gw_fnc_mp;
+// Setup vehicle on client
+[       
+    [
+        _newVehicle
+    ],
+    "setupLocalVehicle",
+    _newVehicle,
+    false 
+] call gw_fnc_mp;
+
+// Apply texture
+if (!isNil "_paint") then {
+    [[_newVehicle,_paint],"setVehicleTexture",true,false] call gw_fnc_mp;
+};
 
 // Check for bad weapons/too many parts
 _newVehicle call cleanAttached;
 
 _targetPos = if (!isNil "_target") then { _target } else { (ASLtoATL getPosASL _newVehicle) };
 _newVehicle setPos _targetPos;
+
+if (GW_PREVIEW_CAM_ACTIVE) then { GW_PREVIEW_CAM_TARGET = _newVehicle; GW_PREVIEW_VEHICLE = _newVehicle; };
 
 _newVehicle lockDriver true;
 _newVehicle lockCargo true;
@@ -160,9 +190,6 @@ _newVehicle setDammage 0;
 
 _endTime = time;
 _totalTime = round ((_endTime - _startTime) * (10 ^ 3)) / (10 ^ 3);
-pubVar_status = [1, [_newVehicle, (_endTime - _startTime)]]; 
+systemchat format['Vehicle loaded in %1.',  (_endTime - _startTime)];
 
-if (!_ai) then { _source publicVariableClient "pubVar_status"; } else {
-    _newVehicle setVariable ["isBot", true, true];
-    GW_BOT_ACTIVE = _newVehicle;
-};
+true

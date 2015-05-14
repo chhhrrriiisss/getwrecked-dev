@@ -147,6 +147,7 @@ call compile preprocessFile "client\customization\supply_box.sqf";
 
 // Event Handlers
 setVehicleHandlers = compile preprocessFile "server\vehicles\set_handlers.sqf";
+loadVehicle = compile preprocessFile  'global\functions\loadVehicle.sqf';
 
 handleDamageVehicle = compile preprocessFile 'client\vehicles\handlers\handle_damage.sqf';
 handleExplosionVehicle = compile preprocessFile 'client\vehicles\handlers\handle_explosion.sqf';
@@ -176,8 +177,10 @@ sendVehicleHit = compile preprocessFile 'global\functions\sendVehicleHit.sqf';
 
 // Object Functions
 destroyObj = compile preprocessFile "client\objects\destroy.sqf";
-createObject = compile preprocessFile "server\objects\create_object.sqf";
+createObject = compile preprocessFile "global\functions\createObject.sqf";
 setPitchBankYaw = compile preprocessFile 'global\functions\setPitchBankYaw.sqf';
+setDirTo = compile preprocessFile 'global\functions\setDirTo.sqf';
+setVectorDirAndUpTo = compile preprocessFile 'global\functions\setVectorDirAndUpTo.sqf';
 
 // Vehicle utility
 clearPad = compile preprocessFile  'client\persistance\clear.sqf';
@@ -193,7 +196,6 @@ findVehicle = compile preprocessFile 'global\functions\findVehicle.sqf';
 allPlayers = compile preprocessFile 'global\functions\allPlayers.sqf';
 getBoundingBox = compile preprocessFile 'global\functions\getBoundingBox.sqf';
 getData = compile preprocessFile 'global\functions\getData.sqf';
-filterParam = compile preprocessFile 'global\functions\filterParam.sqf';
 
 // Utility
 getVectorDirAndUpRelative = compile preprocessFile 'global\functions\getVectorDirAndUpRelative.sqf';
@@ -205,6 +207,7 @@ shareVehicle = compile preprocessFile 'global\functions\shareVehicle.sqf';
 findLocationInZone = compile preprocessFile "global\functions\findLocationInZone.sqf";
 arrayToJson = compile preprocessFile 'global\functions\arrayToJson.sqf';
 dirTo = compile preprocessFile 'global\functions\dirTo.sqf';
+filterParam = compile preprocessFile 'global\functions\filterParam.sqf';
 
 // Numerical
 flipDir = compile preprocessFile 'global\functions\flipDir.sqf';

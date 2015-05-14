@@ -62,6 +62,9 @@ _stats = [
 	['', 'Immobilized', 
 		format['%1', ["disabled", _name] call getStat]
 	],
+	['', 'Out of Bounds', 
+		format['%1', ["outofbounds", _name] call getStat]
+	],
 	['', 'Mileage', _dist],
 	['', 'Money Earned', format['$%1', [(["moneyEarned", _name] call getStat)] call numberToCurrency] ],
 	['', 'Time Alive',_timeAlive],

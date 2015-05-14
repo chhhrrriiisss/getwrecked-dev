@@ -1,3 +1,9 @@
+//
+//      Name: getStat
+//      Desc:  Store and retrieve vehicle stat values
+//      Return: None
+//
+
 _stat =  [_this, 0, "", [""]] call filterParam;
 _vName = [_this, 1, "", [""]] call filterParam;
 _set = [_this, 2, "", [0]] call filterParam;
@@ -7,8 +13,8 @@ if (_vName isEqualTo "") exitWith { 0 };
 _index = GW_STATS_ORDER find _stat;
 if (_index == -1) exitWith { 0 };
 
-_raw = profileNameSpace getVariable[_vName, 0]; 
-if (isNil "_raw") exitWith { 0 };	
+_raw = profileNameSpace getVariable[_vName, []]; 
+if (count _raw == 0) exitWith { 0 };	
 
 _data = [_raw,0, [], [[]]] call filterParam;
 _meta = [_data,6, [], [[]]] call filterParam;

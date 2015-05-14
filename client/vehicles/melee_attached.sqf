@@ -11,11 +11,17 @@ if (_meleeEnabled) exitWith {};
 _this setVariable ['GW_MELEE', true];
 
 _collide = {
+	
+	private ['_v1', '_vectIn', '_v2', '_vectOut'];
 
 	_v1 = _this select 0;
 	_vectIn = _this select 1;
 	_v2 = _this select 2;
 	_vectOut = _this select 3;
+
+	
+	if (_v1 == _v2) exitWith {};
+	if (GW_DEBUG) then { systemchat format['%1 colliding with %2 at %3.', typeof _v1, typeof _v2, time]; };
 
 	if (isNil "GW_LAST_VELOCITY_UPDATE") then { GW_LAST_VELOCITY_UPDATE = time - 1; };
 	if (time - GW_LAST_VELOCITY_UPDATE < 0.025) exitWith {};
@@ -128,43 +134,40 @@ runCollisionCheck = {
 
 			_objs = lineIntersectsWith [ATLtoASL _p1, ATLtoASL _p2, _this, _source];
 
-			if (count _objs == 0) then {} else {
+			if (count _objs == 0) exitWith {};
 
-				_obj = nil;
-				{		
-					if (isNull (attachedTo _x)) exitWith { _obj = _x; };
-					if ((attachedTo _x) != _this) exitWith { _obj = _x; };
-				} foreach _objs;
+			_obj = nil;
+			{		
+				if (isNull (attachedTo _x)) exitWith { _obj = _x; };
+				if ((attachedTo _x) != _this) exitWith { _obj = _x; };
+			} foreach _objs;
 
-				if (!isNil "_obj" && !((typeOf _obj) isEqualTo "")) then { 
+			if (!isNil "_obj" && !((typeOf _obj) isEqualTo "") && !(_obj isKindOf "ReammoBox") && !(_obj isKindOf "Man") && !(_obj isKindOf "ThingEffect") && !((typeOf _obj) isEqualTo "RopeSegment") ) then { 
 
-					_vectInc = [(ASLtoATL visiblePositionASL _obj), (ASLtoATL visiblePositionASL _source)] call bis_fnc_vectorFromXToY;
-					_vectOut = [(ASLtoATL visiblePositionASL _source), (ASLtoATL visiblePositionASL _obj)] call bis_fnc_vectorFromXToY;	
-					_targetVehicle = if (!isNull attachedTo _obj) then { (attachedTo _obj)	} else { _obj };									
+				_vectInc = [(ASLtoATL visiblePositionASL _obj), (ASLtoATL visiblePositionASL _source)] call bis_fnc_vectorFromXToY;
+				_vectOut = [(ASLtoATL visiblePositionASL _source), (ASLtoATL visiblePositionASL _obj)] call bis_fnc_vectorFromXToY;	
+				_targetVehicle = if (!isNull attachedTo _obj) then { (attachedTo _obj)	} else { _obj };									
 
-					_speed = ((velocity _targetVehicle) distance [0,0,0]) * 0.1;
+				_speed = ((velocity _targetVehicle) distance [0,0,0]) * 0.1;
 
-					_status = _targetVehicle getVariable ['status', []];			
-					_command = switch (_tag) do {						
-						case "FRK": {  meleeFork };
-						case "CRR": {  meleeRam };
-						case "HOK": {  { true } };
-						default
-						{ {true} };
-					};
-					
-					_collision = [_source, _obj, _speed] call _command;			
-
-					if (_collision) then { [_this, _vectInc, _targetVehicle, _vectOut] call _collide; };						
-
-					false
-
+				_status = _targetVehicle getVariable ['status', []];			
+				_command = switch (_tag) do {						
+					case "FRK": {  meleeFork };
+					case "CRR": {  meleeRam };
+					case "HOK": {  { true } };
+					default
+					{ {true} };
 				};
+				
+				_collision = [_source, _obj, _speed] call _command;			
 
-			};
+				if (_collision && _this != _targetVehicle) then { [_this, _vectInc, _targetVehicle, _vectOut] call _collide; };						
+
+				false
+
+			};	
 
 		} count _points;
-
 	
 
 		false

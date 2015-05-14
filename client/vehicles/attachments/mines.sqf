@@ -86,7 +86,7 @@ _this spawn {
 						_bomb setVelocity [0,0,-100];
 						Sleep 0.01;			
 
-						[_tPos, 25, 25] call shockwaveEffect;
+						[_tPos, 10, 35] call shockwaveEffect;
 
 						deleteVehicle _obj;
 

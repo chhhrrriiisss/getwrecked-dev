@@ -136,6 +136,13 @@ setVehicleActions = {
 
 	}, [], 0, false, false, "", "( (player in _target) && (player == (driver _target)) && (count (_target getVariable ['GW_detonateTargets', []]) > 0) )"];
 
+	// Activate Teleport
+	_vehicle addAction ["<t color='#ff1100' style='0'>Activate Teleport</t>", {
+
+		[(_this select 0)] call activateTeleport;
+
+	}, [], 0, false, false, "", "( (player in _target) && (player == (driver _target)) && (count (_target getVariable ['GW_teleportTargets', []]) > 0) )"];
+
 	// Deactivate Cloak
 	cloakObjectFormat = "<t color='#ff1100' style='0'>Deactivate Cloak</t>";
 

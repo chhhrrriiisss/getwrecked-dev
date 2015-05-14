@@ -24,7 +24,17 @@ deleteVehicle _obj;
 _obj = createVehicle ["containmentArea_02_sand_F", _pos, [], 0, 'CAN_COLLIDE']; // So it doesnt collide when spawned in]
 _obj setVectorUp (surfaceNormal _pos);
 _obj setDir (random 360);
-_obj enableSimulationGlobal false;
+
+// Disable simulation
+[		
+	[
+		_obj,
+		false
+	],
+	"setObjectSimulation",
+	false,
+	false 
+] call gw_fnc_mp;
 
 // Recompile the vehicle to account for dropping one bag
 [_this select 2] call compileAttached;
@@ -76,22 +86,14 @@ GW_DEPLOYLIST = GW_DEPLOYLIST + [_obj];
 
 		[
 			[
-				_o,
-				8
-			],
-			"magnetEffect"
-		] call gw_fnc_mp;
-
-		[
-			[
 				_v,
 				4,
 				0.5
 			],
-			"magnetEffect"
+			"magnetEffect",
+			true,
+			false
 		] call gw_fnc_mp;
-
-		Sleep 0.5;
 
 		_v spawn {
 			_timeout = time + 2;
@@ -99,18 +101,26 @@ GW_DEPLOYLIST = GW_DEPLOYLIST + [_obj];
 			waitUntil {
 				Sleep 0.25;
 				_n = _n + 1;
-				[_this, 14, 15] call shockwaveEffect;
+				[_this, 5, 10] call shockwaveEffect;
 				addCamShake[(random _n), 1, 10];
 				(time > _timeout)
 			};
 		};		
 
-		Sleep 0.5 + (random 1);
+		Sleep 3 + (random 2);
 
 		playSound3D ["a3\sounds_f\sfx\special_sfx\sparkles_wreck_1.wss", _o, false, _pos, 10, 1, 150];	
 
+		_vel = velocity _v;
+		_dir = vectorDir _v;
+		_up = vectorUp _v;
+
+		_pos set [2, (_pos select 2) + 2];
 		_v setPos _pos;
-		deleteVehicle _o;		
+		_v setVectorDirAndUp [_dir, _up];
+		_v setVelocity _vel;
+
+		deleteVehicle _o;
 				
 	};
 

@@ -111,7 +111,7 @@ GW_DEPLOYLIST = GW_DEPLOYLIST + [_obj];
 
 		_bomb = createVehicle ["Bo_GBU12_LGB", _pos, [], 0, "FLY"];		
 		_bomb setVelocity [0,0,-10];
-		[_pos, 30, 60] call shockwaveEffect;		
+		[_pos, 40, 50] call shockwaveEffect;		
 
 		_nearby = _pos nearEntities [["Car"], 20];	
 

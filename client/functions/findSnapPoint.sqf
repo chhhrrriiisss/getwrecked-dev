@@ -118,6 +118,8 @@ _foundSnap = false;
 
 } ForEach _validPoints;
 
+_foundSnap = false;
+
 // If there was no snap point, try snap vehicle direction instead
 if (!_foundSnap) then {
 

@@ -66,6 +66,8 @@ if (!_allowUpgrade) then {
     [GW_SAVE_VEHICLE] call compileAttached;    
 };
 
+GW_SAVE_VEHICLE setDir 0;
+
 // Disable simulation on vehicle
 if (!simulationEnabled GW_SAVE_VEHICLE) then {
     [       
@@ -228,12 +230,15 @@ _prevFuel = (fuel GW_SAVE_VEHICLE) + (GW_SAVE_VEHICLE getVariable ["fuel", 0]);
 _vehicleBinds = GW_SAVE_VEHICLE getVariable ['GW_Binds', GW_BINDS_ORDER];
 _taunt = GW_SAVE_VEHICLE getVariable ['GW_Taunt', []];
 
+_stats = [];
+{  _stats pushback ([_x, _name] call getStat); FALSE } count GW_STATS_ORDER;
+
 _meta = [
     GW_VERSION, // Current version of GW
     _creator, // Original author of vehicle
     _prevFuel, // Prior Fuel
     _prevAmmo,  // Prior Ammo
-    [], // Stats would go here, but they are handled locally and seperately  
+    _stats, // Stats would go here, but they are handled locally and seperately  
     _vehicleBinds,
     _taunt
 ];

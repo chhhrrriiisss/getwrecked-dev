@@ -14,10 +14,6 @@ _method = [_this,4,"",[""]] call filterParam;
 
 if (_victim == "" || _killer == "") exitWith {};
 
-if (isNil "GW_MESSAGELOGGED") then { GW_MESSAGELOGGED = time - 4; };
-if (time < (GW_MESSAGELOGGED + 3)) exitWith {};
-GW_MESSAGELOGGED = time;
-
 // What dealt the final blow?
 _str = ([_method, GW_LOOT_LIST] call getData) select 1;
 _method = if (!isNil "_str") then { _str } else { "" };

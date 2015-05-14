@@ -13,8 +13,11 @@ if (_target == "") exitWith { objNull };
 _result = objNull;
 _exit = false;
 {
-	_name = _x getVariable ['name', ''];
-	if (alive _unit) then {	if (_name isEqualTo _target) exitWith {	_result = _unit; _exit = true; }; };
+	
+	if (alive _x) then {
+		_name = _x getVariable ['name', ''];
+		if (_name isEqualTo _target) exitWith {	_result = _x; _exit = true; }; 
+	};
 	if (_exit) exitWith {};
 	false
 }  count allMissionObjects "Car" > 0;

@@ -48,4 +48,5 @@ if (_aroundZ != 0) then {
 
 _dir = [_dirX,_dirY,_dirZ]; 
 _up = [_upX,_upY,_upZ]; 
-_object setVectorDirAndUp [_dir,_up]; 
+
+[_object, [_dir,_up]] call setVectorDirAndUpTo;

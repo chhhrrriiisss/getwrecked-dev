@@ -10,7 +10,11 @@ _obj = _this select 0;
 _rotateAmount = _this select 1;
 _toggle = _this select 2;
 
-_targetDirection = [(getDir _obj) + _rotateAmount] call normalizeAngle;
+_targetDirection = if (isNull attachedTo _obj) then { [(getDir _obj) + _rotateAmount] call normalizeAngle; } else { 
+	_dirAttached = getDir (attachedTo _obj);
+	([((getDir _obj) - _dirAttached) + _rotateAmount] call normalizeAngle)
+};
+
 _pitchBank = _obj call BIS_fnc_getPitchBank;
 
 // Disabled until tilt system active

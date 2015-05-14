@@ -14,11 +14,11 @@ GW_VEHICLE_LIST = [
 	["C_SUV_01_F", "SUV", [ [0.1, 3000] , 3, 4, 1, 2, 4, (0.3 * GW_GAM), 'Low', 1000 ], 'A capable and reliable vehicle with a low radar signature.' ],
 	["C_Van_01_transport_F", "Civilian Truck", [ [0.5, 99999], 2, 7, 2, 2, 5, (0.25 * GW_GAM), 'Medium', 1000 ], 'Ample storage, fuel and ammo capacity, a great workhorse.' ],	
 	["C_Van_01_box_F", "Box Truck", [ [0.5, 99999], 1, 9, 1, 3, 5, (0.25 * GW_GAM), 'Large', 1000 ], 'An excellent choice for an especially special delivery.' ],		
-	["C_Kart_01_F", "Kart", [ [0.03, 350], 2, 3, 1, 1, 1, (0.01 * GW_GAM), 'Tiny', 1000 ], 'Extremely quick and hard to hit which makes it quite unpredictable.' ],	
+	["C_Kart_01_F", "Kart", [ [0.03, 350], 2, 3, 1, 1, 1, (0.02 * GW_GAM), 'Tiny', 1000 ], 'Extremely quick and hard to hit which makes it quite unpredictable.' ],	
 
 	// Trucks
 
-	["C_Van_01_fuel_F", "Civilian Fuel Truck", [ [0.5, 99999], 2, 4, 1, 10, 4, (0.2 * GW_GAM), 'Small', 1000 ], 'Surprisingly sturdy unit with extra fuel capactity.' ],
+	["C_Van_01_fuel_F", "Civilian Fuel Truck", [ [0.5, 99999], 2, 4, 1, 10, 4, (0.2 * GW_GAM), 'Small', 1000 ], 'Surprisingly sturdy unit with extra fuel capacity.' ],
 	["O_truck_02_fuel_f", "Zamak Tanker", [ [0.1, 99999], 4, 5, 0.5, 18, 8, (0.25 * GW_GAM), 'Medium', 1000 ], 'A fuel tank with additional wheels.' ],
 	["O_truck_03_ammo_f", "Tempest Ammo", [ [0.1, 99999], 6, 4, 22, 2, 8, (0.3 * GW_GAM), 'Large', 1000 ], 'For those in need of a fair few bullets.' ],
 

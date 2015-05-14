@@ -39,7 +39,9 @@ waitUntil {
 
 // Kill the player and vehicle if we're still out of zone
 if (_outOfBounds) then {
-	(vehicle player) call destroyInstantly;		
+	_name = (vehicle player) getVariable ['name', ''];
+	['outofbounds', _name, 1] call logStat; 
+	(vehicle player) call destroyInstantly;			 
 };
 
 // Restore all ppEffects

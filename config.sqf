@@ -93,13 +93,13 @@ vehicleDamageData = {
 
 	_d = _this call {
 
-		if (_this == "R_PG32V_F" || _this == "RPG") exitWith { (1.2 + random 0.5) };
-		if (_this == "M_PG_AT" || _this == "RPD") exitWith { ((random 0.4) + 0.3) };
+		if (_this == "R_PG32V_F" || _this == "RPG") exitWith { (1 + random 0.5) };
+		if (_this == "M_PG_AT" || _this == "RPD") exitWith { ((random 0.5) + 0.4) };
 		if (_this == "M_Titan_AT" || _this == "GUD" || _this == "MIS") exitWith { (1 + random 0.5) };
 		if (_this == "M_Titan_AA_static" || _this == "RLG") exitWith { (45 + random 5) };
 		if (_this == "B_127x99_Ball_Tracer_Red" || _this == "LSR") exitWith { 5 };
-		if (_this == "B_127x99_Ball" || _this == "HMG") exitWith { 22 };
-		if (_this == "B_127x99_Ball_Tracer_Yellow") exitWith { 5 };
+		if (_this == "B_127x99_Ball" || _this == "HMG") exitWith { 14 };
+		if (_this == "B_127x99_Ball_Tracer_Yellow") exitWith { 3 };
 		if (_this == "R_TBG32V_F" || _this == "MOR") exitWith { (7 + random 3) };
 		if (_this == "G_40mm_HEDP" || _this == "GMG") exitWith { (5 + random 1) };
 		if (_this == "Bo_GBU12_LGB" || _this == "EXP") exitWith { (4 + random 2) };
@@ -191,11 +191,10 @@ GW_TEXTURES_SPECIAL = [
 	['B_Truck_01_mover_F', ["B_Truck_01_mover_F", "default"] ],
 	['B_Truck_01_transport_F', ["B_Truck_01_mover_F", "default"] ],
 	["I_Truck_02_transport_F", ["default", "default"] ],
-	['C_Hatchback_01_sport_F', [""]],
-	['C_Van_01_transport_F', ["", "default"]],
-	['C_Van_01_box_F', ["C_Van_01_transport_F", "default"]],
-	['C_Van_01_fuel_F', ["C_Van_01_transport_F", "default"]],
-	['O_Truck_03_repair_F', ["default", "default"]]
+	['C_Hatchback_01_sport_F', [""] ],
+	['C_Van_01_transport_F', ["", "default"] ],
+	['C_Van_01_box_F', ["C_Van_01_transport_F", "default"] ],
+	['C_Van_01_fuel_F', ["C_Van_01_transport_F", "default"] ]
 ];
 
 GW_SPECIAL_TEXTURES_LIST = [

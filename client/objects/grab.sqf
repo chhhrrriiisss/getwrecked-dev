@@ -11,140 +11,115 @@ _unit = [_this,1, objNull, [objNull]] call filterParam;
 
 if (isNull _obj || isNull _unit) exitWith {};
 
-// If the object isn't local and isn't attached to anything, make it local so all this jazz runs better
-_isSupply = _obj call isSupplyBox;
-if ( !local _obj && isNull attachedTo _obj && !_isSupply) then {
+// We're now officially editing
+GW_EDITING = true;
 
-	// Grab object position information
-	_pos = getPos _obj;
-	_obj setPos (_obj modelToWorldVisual [0,0,10]);
+// If the object isn't local, let's take ownership to improve performance
+if (!local _obj) then {
 
-	// Hide current object	
-	_obj hideObject true;
-
-	_dir = getDir _obj;
-	_type = typeOf _obj;
-	_tag = _obj getVariable ["GW_Tag", ''];
-
-	// Determine the class for the object	
-	_isHolder = _obj call isHolder;
-
-	// Remove the previous object as its no longer needed
-	deleteVehicle _obj;
-
-	// Create a new one, locally
-	_newObj = nil;
-	_newObj = [_pos, _dir, _type, nil, "CAN_COLLIDE", true] call createObject; 	
-		
-	// Request the server adds these properties
-	[		
-		[
-			_newObj
-		],
-		"setObjectProperties",
+	[
+		[_obj, _unit],
+		'setObjectOwner',
 		false,
-		false 
-	] call gw_fnc_mp;   
+		false
+	] call gw_fnc_mp;	
 
-    _obj = _newObj;
+	_timeout = time + 2;
+	waitUntil {(local _obj || time > _timeout)};
 
 };
-
-// Disable simulation server side as a default
-[		
-	[
-		_obj,
-		false
-	],
-	"setObjectSimulation",
-	false,
-	false 
-] call gw_fnc_mp;  
 	
+// Used by some actions to target the current object we're editing
 _unit setVariable ['GW_EditingObject', _obj];
 
 // If a snapping state hasnt been set, default to false
 if (isNil { _unit getVariable 'snapping' }) then {	_unit setVariable ['snapping', false]; };
 
-GW_EDITING = true;
-
-// Wait for simulation to be disabled on the item before moving it
-_timeout = time + 5;
-waitUntil{	
-	if ( (time > _timeout) || !(simulationEnabled _obj) ) exitWith { true };
-	false
-};
-
-Sleep 1;
-
 // Used to dynamically change the loop period depending if snapping is active
 _moveInterval = 0.005;
 _snappingInterval = 0.1;
 
-GW_HOLD_ROTATE_POS = [];
-_startAngle = 360;
+GW_EDITING_TARGET = _unit worldToModelVisual (_obj modelToWorldVisual [0,0,0]);
+GW_EDITING_TARGET set [2, ([(GW_EDITING_TARGET select 2), 0, 10] call limitToRange)];
+
+GW_EDITING_DIRECTION = _obj call BIS_fnc_getPitchBank;
+_objVector = ([_obj, _unit] call getVectorDirAndUpRelative);
+_obj attachTo [_unit, GW_EDITING_TARGET];
+
+// Wait for the object to be attached to the player
+_timeout = time + 3;
+waitUntil {
+	_attached = if (!isNull attachedTo _obj) then { if ((attachedTo _obj) isEqualTo _unit) exitWith { true }; false } else { false };
+	(_attached || (time > _timeout))
+};
+
+// Restore object orientation post-attach
+_objVector set [1, [0,0,1]];
+[_obj, _objVector] call setVectorDirAndUpTo;
 
 for "_i" from 0 to 1 step 0 do {
 
-	if (!alive _unit || !alive _obj || !GW_EDITING || _unit != (vehicle player)) exitWith {};
-
-	// Continually prevent damage and simulation (wierd stuff happens otherwise...)
-	_obj setDammage 0;
-	//_obj setVectorUp [0,0,1];
+	if (!alive _unit || !alive _obj || !GW_EDITING || _unit != GW_CURRENTVEHICLE) exitWith {};
 
 	// Use the camera height as a tool to manipulate the object height
-	_cameraHeight = (positionCameraToWorld [0,0,4]) select 2;
-	_height = [_cameraHeight, 0, 4] call limitToRange;	
+	_cameraOffset = if (cameraView == "External") then { 1.5 } else { 1.25 };
+	_cameraHeight = [ (((positionCameraToWorld [0,0,4]) select 2) * _cameraOffset) * 1, 0, 10] call limitToRange;
 
-	_pos = _unit modelToWorld [0, 2.5, _height];
-	_pos = ATLtoASL _pos;
+	// Get the objects current location
+	_objPos = _unit worldToModelVisual (_obj modelToWorldVisual [0,0,0]);
+	_objAlt = (_objPos select 2);
+	_height = _objAlt;
 
+	// Adjust object if we're looking above or below it
+	// if (_cameraHeight < (_objAlt - 0.05)) then { _height = _objAlt - 0.05; };
+	// if (_cameraHeight > (_objAlt + 0.05) || (((ASLtoATL visiblePositionASL _obj) select 2) < 0)) then { _height = _objAlt + 0.05;  };
+	_height = [_cameraHeight, 0, 10] call limitToRange;
+	
+	GW_EDITING_TARGET = [([(_objPos select 0), 2] call roundTo),([(_objPos select 1), 2] call roundTo), ([_height, 2] call roundTo)];
+
+	// Set the object position and direction (if changed)
+	_obj attachTo [_unit, GW_EDITING_TARGET];
+
+	// Is the object in snapping mode?
 	_snapping = _unit getVariable ['snapping', false];	
+	if (_snapping) then {
 
-	// Use the camera yaw to spin the vehicle when toggle key is down
-	if (GW_HOLD_ROTATE) then {
+		_targetVehicle = ([_unit, 12, 180] call validNearby);
+		if (isNil "_targetVehicle") exitWith {};
 
-		if (count GW_HOLD_ROTATE_POS > 0) then {
+		// All angles available
+		_frontDir = (getDir _targetVehicle);
+		_sideDir = [(_frontDir + 90)] call normalizeAngle;
+		_forwardCornerDir = [(_frontDir + 45)] call normalizeAngle;
+		_rearCornerDir = [(_frontDir - 45)] call normalizeAngle;
+		_resultDir = 0;
+		_currentDir = [(getDir _obj) - (getDir _unit)] call normalizeAngle;
 
-			['ROTATE USING CAMERA', 3, cameraRotateIcon, nil, "flash", ""] spawn createAlert;   
+		if (_currentDir != _frontDir || _currentDir != _sideDir || _currentDir != _rearCornerDir || _currentDir != _forwardCornerDir) then {
 
-			_center = worldToScreen getPos _obj;
-			_adjustedCenter = ((_center select 0)+1);
-			if (isNil "_adjustedCenter") then { _adjustedCenter = 0; };
+			// Which side are we on?
+			_dirTo = [_targetVehicle, _obj] call dirTo;
+			_dif = [_frontDir - _dirTo] call flattenAngle;
 
-			_obj setDir ([(360 * _adjustedCenter) + (_startAngle)] call normalizeAngle);			
+			_side = if (_dif < 0) then { "right" } else { "left" };
+			_dirTo = abs (_dif);
 
-		} else { _startAngle = getDir _obj; };
-
-		GW_HOLD_ROTATE_POS = (ASLtoATL getPosASL _obj);
-
-	} else {
-
-		// Reset player's direction post hold rotate
-		if (count GW_HOLD_ROTATE_POS > 0) then {			
-
-			_dirTo = [_unit, _obj] call dirTo;	
-			_unit setDir _dirTo;
-			_obj setPos GW_HOLD_ROTATE_POS;
-
-			GW_HOLD_ROTATE_POS = [];
-
-		} else {
-
-	 		// If snapping is enabled, snap! Else, just set the new position.
-			if (_snapping && GW_EDITING) then { [_pos, _obj] spawn snapObj; };
-			if (!_snapping && GW_EDITING) then { _obj setPosASL _pos; };	
+			// Front of vehicle
+			if (_dirTo > 157.5 || _dirTo < 22.5) exitWith {	_resultDir = _frontDir;	};			
+			if (_dirTo >= 35  && _dirTo <= 55) exitWith { _resultDir = if (_side == 'right') then { _forwardCornerDir } else { _rearCornerDir };  }; // Corner of Vehicle
+			if (_dirTo >= 125  && _dirTo <= 145) exitWith {	_resultDir = if (_side == 'right') then { _rearCornerDir } else { _forwardCornerDir };	}; // Rear corner			
+			if (_dirTo <= 157.5 || _dirTo >= 22.5) exitWith { _resultDir = _sideDir; }; // Side of Vehicle
 
 		};
 
+		[_obj, _resultDir] call setDirTo;	
+					
 	};
 
-	// Render FOV if it's a weapon
 	if (_obj call isWeapon) then { _obj call renderFOV; };
 
 	// Dynamically adjust the sleep time to reduce errors during snapping
 	_interval = if (_snapping) then { _snappingInterval } else { _moveInterval };	
-
 	Sleep _interval;
 
 };
@@ -152,6 +127,12 @@ for "_i" from 0 to 1 step 0 do {
 if (!alive _obj) then {
 	removeAllActions _unit;
 	_unit spawn setPlayerActions;
+};
+
+if (!isNull attachedTo _obj) then {
+	if ((attachedTo _obj) isEqualTo _unit) then {
+		detach _obj;
+	};
 };
 
 GW_EDITING = false;

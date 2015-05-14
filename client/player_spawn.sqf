@@ -130,12 +130,12 @@ waitUntil { (time > _timeout) || GW_DEATH_CAMERA_ACTIVE };
 	false
 } count (nearestObjects [ (getMarkerPos "workshopZone_camera"), [], 200]) > 0;
 
-// Force save the profileNameSpace
-['kill', '', true] call logStat;
 
 // Reset killed by as we need to start fresh
 profileNamespace setVariable ['killedBy', nil];
-saveProfileNamespace;
+
+// Force save the profileNameSpace
+['', '', '', true] call logStat;
 
 waitUntil {Sleep 0.1; !isNil "serverSetupComplete"};
 

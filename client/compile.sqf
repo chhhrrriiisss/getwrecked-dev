@@ -27,7 +27,9 @@ GW_BINDS_ORDER = [
 	["TELP", ""]
 ];
 
-GW_STATS_ORDER = ["kill", "death", "destroyed", "mileage", "moneyEarned", "timeAlive", "deploy", "disabled"];
+GW_INVEHICLE = false;
+GW_ISDRIVER = false;
+GW_STATS_ORDER = ["kill", "death", "destroyed", "mileage", "moneyEarned", "timeAlive", "deploy", "disabled", "outofbounds"];
 GW_INVULNERABLE = true;
 GW_DEPLOYLIST = [];
 GW_LOCKEDTARGETS = [];
@@ -119,6 +121,7 @@ nitroPad =  compile preprocessFile 'client\zones\nitro_pad.sqf';
 paintVehicle = compile preprocessFile 'client\customization\paint_vehicle.sqf';
 liftVehicle = compile preprocessFile 'client\objects\lift_vehicle.sqf';
 requestVehicle = compile preprocessFile  'client\persistance\request.sqf';
+
 registerVehicle = compile preprocessFile  'client\persistance\add.sqf';
 saveVehicle = compile preprocessFile  'client\persistance\save.sqf';
 listFunctions = compile preprocessFile  'client\persistance\library.sqf';

@@ -270,8 +270,13 @@ GW_COMMANDS_LIST = [
 
 				_dir = direction player;
 				_relPos = [(ASLtoATL getPosASL player), 2, _dir] call BIS_fnc_relPos;
-				pubVar_spawnObject = [_type, _relPos];
-				publicVariableServer "pubVar_spawnObject"; 	
+					
+				[
+					[_relPos, _type],
+					'createObject',
+					false,
+					false
+				] call gw_fnc_mp;	
 
 				lastSpawn = _type;
 

@@ -35,8 +35,7 @@ _obj setVariable ["tag", _obj addAction ["", "", "", 0, false, false, "", "
 	       	_mass = _data select 1;	       	
 	       	_ammo = _data select 2;
 	       	_fuel = _data select 3;
-
-	       	_health = _target getVariable ['GW_Health', 0];
+	       	_health = _data select 4;
 
 	       	_isPaint = _target call isPaint;
 	       	_isSupply = _target call isSupplyBox;

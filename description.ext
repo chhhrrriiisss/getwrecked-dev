@@ -21,8 +21,6 @@ class Header
 #include "params.hpp"
 
 disableChannels[] = {0,2,3,6};
-allowFunctionsLog = 1;
-allowFunctionsRecompile = 1;
 
 // Control types
 #define CT_STATIC           0

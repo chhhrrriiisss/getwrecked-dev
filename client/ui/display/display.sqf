@@ -59,7 +59,7 @@ GW_DISPLAY_EH = addMissionEventHandler ["Draw3D", {
 
 	// If there's no nearby targets, no point going any further
 	_r = if (GW_CURRENTZONE == "workshopZone") then { 200 } else { GW_MAXLOCKRANGE };
-	_targets = [GW_CURRENTZONE] call findAllInZone;
+	_targets = if (GW_DEBUG) then { ((ASLtoATL visiblePositionASL GW_CURRENTVEHICLE) nearEntities [["Car", "Man"], 1000]) } else { ([GW_CURRENTZONE] call findAllInZone) };
 	if (count _targets == 0) exitWith {};		
 
 	// Try to lock on to those targets if we have lock ons

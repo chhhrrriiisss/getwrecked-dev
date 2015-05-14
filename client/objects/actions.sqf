@@ -90,7 +90,7 @@ setSupplyAction = {
 
 		removeAllActions _obj;	
 
-	}, [], 0, false, false, "", "( ( (vehicle player) == player ) && !GW_EDITING && (player distance _target < 5) && [_target, player, false] call checkOwner && !GW_LIFT_ACTIVE)"];		
+	}, [], 0, false, false, "", "( ( (vehicle player) == player ) && !GW_EDITING && (player distance _target < 7) && [_target, player, false] call checkOwner && !GW_LIFT_ACTIVE)"];		
 
 	// Open the box inventory
 	_obj addAction[openBoxFormat, {
@@ -105,7 +105,7 @@ setSupplyAction = {
 
 		[_obj, _unit] spawn inventoryMenu;
 
-	}, [], 0, false, false, "", "( ( (vehicle player) == player ) && !GW_EDITING && (player distance _target < 5) && [_target, player, false] call checkOwner && !GW_LIFT_ACTIVE && !GW_PAINT_ACTIVE )"];		
+	}, [], 0, false, false, "", "( ( (vehicle player) == player ) && !GW_EDITING && (player distance _target < 7) && [_target, player, false] call checkOwner && !GW_LIFT_ACTIVE && !GW_PAINT_ACTIVE )"];		
 	
 	_obj setVariable ["hasActions", true];
 
@@ -136,7 +136,7 @@ setPaintAction = {
 			[_color, _unit] spawn paintVehicle;
 		};		
 
-	}, [], 0, false, false, "", "( ( (vehicle player) == player ) && !GW_EDITING && (player distance _target < 5) && !GW_LIFT_ACTIVE)"];	
+	}, [], 0, false, false, "", "( ( (vehicle player) == player ) && !GW_EDITING && (player distance _target < 8) && !GW_LIFT_ACTIVE)"];	
 	
 	_obj setVariable ["hasActions", true];
 
@@ -164,7 +164,7 @@ setMoveAction = {
 
 		removeAllActions _obj;	
 
-	}, [], 0, false, false, "", "( ( (vehicle player) == player ) && !GW_EDITING && (player distance _target < 5) && [_target, player, false] call checkOwner && !GW_LIFT_ACTIVE && GW_CURRENTZONE == 'workshopZone' )"];		
+	}, [], 0, false, false, "", "( ( (vehicle player) == player ) && !GW_EDITING && (player distance _target < 8) && [_target, player, false] call checkOwner && !GW_LIFT_ACTIVE && GW_CURRENTZONE == 'workshopZone' )"];		
 
 	_obj setVariable ["hasActions", true];
 
@@ -191,7 +191,7 @@ setDetachAction = {
 
 		removeAllActions _obj;
 		
-	}, [], 0, false, false, "", "( ((vehicle player) == player) && !GW_EDITING && (player distance _target < 5) && [_target, player, false] call checkOwner && !GW_LIFT_ACTIVE && GW_CURRENTZONE == 'workshopZone' )"];
+	}, [], 0, false, false, "", "( ((vehicle player) == player) && !GW_EDITING && (player distance _target < 8) && [_target, player, false] call checkOwner && !GW_LIFT_ACTIVE && GW_CURRENTZONE == 'workshopZone' )"];
 
 	_obj setVariable ["hasActions", true];
 

@@ -5,11 +5,12 @@
 //		Return: None
 //
 
-_target = [_this, 0, objNull, [objNull]] call filterParam;
-if (isNull _target) exitWith {};
-
+_target = [_this, 0, objNull, [objNull, []]] call filterParam;
 _radius =  [_this, 1, 20, [0]] call filterParam;
 _force =  [_this, 2, 25, [0]] call filterParam;
+
+_exit = if (typename _target == "OBJECT") then { if (isNull _target) exitWith { true }; false } else { false };
+if (_exit) exitWith {};
 
 _sourcePos = if (typename _target == "OBJECT") then { (ASLtoATL visiblePositionASL _target) } else { _target };
 
@@ -22,8 +23,9 @@ if (count _objectList == 0) exitWith {};
 	_objectVel = velocity _x;
 	_objectDir = direction _x;
 
-	_objectMass = getMass _x;
-	_objectMass = if (isNil "_objectMass") then { 1000 } else { (_objectMass) };
+	_objectMass = if (isNil { getMass _x }) then { 1000 } else { (getmass _x) };
+	if (_objectMass == 0) then { _objectMass = 2; };
+		
 	_distance = _x distance _sourcePos;
 
 	_dis = _sourcePos vectorDiff (ASLtoATL visiblePositionASL _x);

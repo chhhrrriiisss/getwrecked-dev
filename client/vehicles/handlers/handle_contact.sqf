@@ -7,19 +7,21 @@ private ['_vehicle', '_target'];
 
 _vehicle = _this select 0; 
 
+if (!local _vehicle) exitWith {};
+
 _inWorkshop = if (_vehicle distance getMarkerPos "workshopZone_camera" < 300) then { true } else { false };
 if (_inWorkshop) exitWith {};
-
-if (!local _vehicle) exitWith {};
 
 [_vehicle] spawn checkTyres; 
 
 // This is to ensure vehicles dont get stuck in the ground when landing at speed
 // Most commonly it occurs on the go kart due to the wheels being especially small
 
+if (isDedicated) exitWith {};
+
 if (isNil "GW_LAST_CONTACT") then { GW_LAST_CONTACT = time; };
 
-if ( (typeOf _vehicle == "C_Kart_01_F" || !isNil {_vehicle getVariable "newSpawn"} ) && player == (driver _vehicle) && (time - GW_LAST_CONTACT > 0.3) ) then {
+if ( (typeOf _vehicle == "C_Kart_01_F" || !isNil {_vehicle getVariable "newSpawn"} ) && GW_ISDRIVER && (time - GW_LAST_CONTACT > 0.3) ) then {
 	GW_LAST_CONTACT = time;
 
 	_prevPos = _vehicle getVariable ['GW_prevPos', [0,0,0]];

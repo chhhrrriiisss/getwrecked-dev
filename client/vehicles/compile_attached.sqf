@@ -28,6 +28,7 @@ _prevFuel = (fuel _vehicle) + (_vehicle getVariable ["fuel", 0]);
 if (GW_CURRENTZONE == "workshopZone") then { _vehicle call cleanAttached; };
 _attachedValue = 0;
 _vData = [(typeof _vehicle), GW_VEHICLE_LIST] call getData;
+if (isNil "_vData") exitWith { GW_WAITCOMPILE = false; };
 _maxMass = ((_vData select 2) select 0) select 1;
 
 {
@@ -108,6 +109,8 @@ _maxMass = ((_vData select 2) select 0) select 1;
 
 		// Calculated associated cost		
 		_d = [_tag, GW_LOOT_LIST] call getData; 
+		if (isNil "_d") exitWith {};
+
 		_class = _d select 0;
 		_value = [_class, "", ""] call getCost;
 		_attachedValue = _attachedValue + _value;

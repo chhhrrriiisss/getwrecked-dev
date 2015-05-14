@@ -44,5 +44,9 @@ GW_INVENTORY_BOX setVariable ["GW_INVENTORY", _contents, true];
 _ind = if (_ind < 0) then { 0 } else { _ind };
 [GW_INVENTORY_BOX, _ind] spawn generateInventoryList;
 
-pubVar_spawnObject = [_class, _relPos, true];
-publicVariableServer "pubVar_spawnObject"; 	
+[
+	[_relPos, _class],
+	'createObject',
+	false,
+	false
+] call gw_fnc_mp;	

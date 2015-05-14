@@ -53,7 +53,8 @@ _this spawn {
 				(!alive (_this select 0))
 			};
 
-			 [_lastPos, 5, "RPD"] call markNearby;
+			[_lastPos, 5, "RPD"] call markNearby;
+			[_lastPos, 35, 40] call shockwaveEffect;
 
 
 		};

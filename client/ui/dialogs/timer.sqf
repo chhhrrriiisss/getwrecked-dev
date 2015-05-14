@@ -1,5 +1,5 @@
 //
-//      Name: settingsMenu
+//      Name: timer
 //      Desc: Used for customizing keybinds, checking stats and renaming/unflipping the vehicle
 //      Return: None
 //

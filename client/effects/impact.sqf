@@ -29,6 +29,6 @@ for "_i" from 0 to ([(random _size), 3, 40] call limitToRange) step 1 do {
 	_debris spawn {
 		Sleep 5;
 		deleteVehicle _this;
-	};
+	};	
 
 };

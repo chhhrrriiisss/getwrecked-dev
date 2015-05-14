@@ -36,7 +36,7 @@ _paintAction = _unit addAction[paintVehicleFormat, {
 		systemChat 'You dont own this vehicle.';
 	};
 
-}, [], 0, false, false, "", "( ( (vehicle player) == player ) && !GW_EDITING && !GW_LIFT_ACTIVE && (!isNil { [_target, 9] call validNearby }) )"];		
+}, [], 0, false, false, "", "( ( (vehicle player) == player ) && !GW_EDITING && !GW_LIFT_ACTIVE && (!isNil { [_target, 9, 180] call validNearby }) )"];		
 
 // Cancel action
 _cancelAction = _unit addAction['Cancel', {

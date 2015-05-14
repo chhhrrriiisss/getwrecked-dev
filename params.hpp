@@ -1,7 +1,8 @@
 // 
 //
 //		Permission is granted to edit these configuration values to suit your own need.
-//		To set any values permanently, edit default = #; to the required value.
+//		To set any values permanently, edit default = #; to any value in values[] = {#, #, #};
+//
 //		Incorrect or bad values may cause the mission to not work properly - edit at your own risk.
 //
 //
@@ -9,11 +10,11 @@
 class Params
 {
 	// 0
-	class GameMode // In sandbox there are no pre-defined zones
+	class GameMode // Placeholder for future game mode types
 	{
 		title = "Game Mode"; 
-		values[] = {0,1}; 
-		texts[] = {"Competitive [Default Zones]", "Sandbox [No Zones]"}; 
+		values[] = {0}; 
+		texts[] = {"Competitive [Default Zones]"}; 
 		default = 0; 
 	};
 
@@ -36,7 +37,7 @@ class Params
 	};
 
 	// 3
-	class ZoneMoney // Money given while player is in zone
+	class ZoneMoney // Starting money given while player is in zone (not including wanted-rating bonus)
 	{
 		title = "In-Zone Money"; 
 		values[] = {50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000}; 
@@ -45,7 +46,7 @@ class Params
 	};
 
 	// 4
-	class BountyMoney // Money earnt from killed vehicles
+	class BountyMoney // Percentage value of vehicle recieved from killed vehicles
 	{
 		title = "Bounty Money"; 
 		values[] = {0, 25, 50, 75, 100}; 
@@ -54,7 +55,7 @@ class Params
 	};
 
 	// 5
-	class ArmorSystem // Armor system  prolongs engagements and better balances all vehicles
+	class ArmorSystem // Armor system prolongs engagements and better balances all vehicles
 	{
 		title = "Armor Balance System";
 		values[] = {1,0}; 
