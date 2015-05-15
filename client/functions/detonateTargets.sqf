@@ -1,5 +1,5 @@
 //
-//      Name: detonateTargbets
+//      Name: detonateTargets
 //      Desc: Detonates all explosives current deployed
 //      Return: None
 //

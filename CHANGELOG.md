@@ -18,6 +18,7 @@ Items without Fixed/Added/Removed proceeding, are typically balance changes
 - Slightly increased HMG stock damage
 - Refract effect to flame effects
 - Pulse effect to railgun
+- Bags of explosives now do scaled damage depending on distance
 - Vehicle health tag now only shows when player is looking directly at it
 - Fixed - Memory crash involving object handle damage event handler
 - Fixed - Crash on attaching HMGs/GMGs 
@@ -30,6 +31,7 @@ Items without Fixed/Added/Removed proceeding, are typically balance changes
 - Fixed - Custom font missing error on input dialog
 - Fixed - Vehicle load UI list should now correctly match current preview
 - Changed - 'Salt flat' is now 'Dry Lake'
+- Added - !copy command for Admins to retrieve vehicles from remote clients
 - Added - Weapon FOV preview when attaching items in the workshop
 - Added - Rocket Pods, Grappling Hook, Teleportation Device, Electromagnet (WIP)
 - Added - EMP Resistant Fencing, Military-Grade Concrete, Chainlink Panel, Thick Concrete Wall

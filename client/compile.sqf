@@ -49,6 +49,8 @@ GW_DIALOG_ACTIVE = false;
 GW_GUIDED_ACTIVE = false;
 GW_TAG_ACTIVE = false;
 GW_HUD_ACTIVE = false;
+GW_MELEE_ACTIVE = false;
+GW_SHARED_ACTIVE = [];
 GW_CURRENTVEHICLE = (vehicle player);
 GW_CURRENTZONE = nil;
 GW_CURRENTZONE_DATA = [];
@@ -137,8 +139,8 @@ call compile preprocessFile 'client\economy\functions.sqf';
 getCost = compile preprocessFile  'client\economy\cost.sqf';
 
 // Stat Functions
-logStat = compile preprocessFile 'client\logStat.sqf';
-getStat = compile preprocessFile 'client\getStat.sqf';
+logStat = compile preprocessFile 'client\functions\logStat.sqf';
+getStat = compile preprocessFile 'client\functions\getStat.sqf';
 
 // Object Functions
 call compile preprocessFile "client\objects\actions.sqf";
@@ -155,7 +157,6 @@ findSnapPoint = compile preprocessFile "client\functions\findSnapPoint.sqf";
 checkNearbyActions = compile preprocessFile "client\functions\checkNearbyActions.sqf";	
 setPlayerActions = compile preprocessFile "client\functions\setPlayerActions.sqf";	
 checkNearbyOwnership = compile preprocessFile "client\functions\checkNearbyOwnership.sqf";	
-
 
 // Vehicle Functions
 fireAttached = compile preprocessFile "client\vehicles\fire_attached.sqf";
@@ -179,6 +180,7 @@ firePod = compile preprocessFile "client\vehicles\weapons\rocketPod.sqf";
 meleeFork = compile preprocessFile "client\vehicles\melee\fork.sqf";
 meleeRam = compile preprocessFile "client\vehicles\melee\ram.sqf";
 meleeHook = compile preprocessFile "client\vehicles\melee\hook.sqf";
+meleePylon = compile preprocessFile "client\vehicles\melee\pylon.sqf";
 
 // Module Functions
 smokeBomb = compile preprocessFile "client\vehicles\attachments\smoke_bomb.sqf";
@@ -202,7 +204,8 @@ activateElectromagnet = compile preprocessFile 'client\vehicles\attachments\elec
 
 vehicleForks = compile preprocessFile "client\vehicles\attachments\vehicle_forks.sqf";
 attachVehicleTo = compile preprocessFile "client\functions\attachVehicleTo.sqf";
-
+createCollision = compile preprocessFile 'client\functions\createCollision.sqf';
+collisionCheck = compile preprocessFile 'client\functions\collisionCheck.sqf';
 
 statusMonitor = compile preprocessFile "client\vehicles\status_monitor.sqf";
 simulationManager = compile preprocessFile "client\simulation_manager.sqf";

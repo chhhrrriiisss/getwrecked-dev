@@ -85,27 +85,9 @@ checkBinds = {
 	_isDriver = GW_ISDRIVER;	
 
 	if (_ctrl && _shift && _key == 46) then {
-		_hasCollision = _vehicle getVariable ['GW_COLLISION', false];
-
-		if (_hasCollision) then {
-			_vehicle setVariable ['GW_COLLISION', false];
-			systemChat 'Collision disabled';
-		} else {
-			_vehicle execVM 'testcollision.sqf';	
-			systemChat format['Collision active on [ %1 ]', _vehicle getVariable ['name', 'Untitled Vehicle']];
-		};		
-	};
-
-	if (_ctrl && _shift && _key == 50) then {
-		_hasCollision = _vehicle getVariable ['GW_MELEE', false];
-
-		if (_hasCollision) then {
-			_vehicle setVariable ['GW_MELEE', false];
-			systemChat 'Melee disabled';
-		} else {
-			_vehicle spawn meleeAttached;
-			systemChat format['Melee active on [ %1 ]', _vehicle getVariable ['name', 'Untitled Vehicle']];
-		};		
+		if (_vehicle call hasMelee) then {	
+			_vehicle call meleeAttached;
+		};
 	};
 
 	// Toggle Debug

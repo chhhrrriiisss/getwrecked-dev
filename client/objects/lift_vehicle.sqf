@@ -27,7 +27,7 @@ GW_EDITING = false;
 
 // Add the drop vehicle action
 removeAllActions _unit;
-_unit spawn setPlayerActions;
+_unit call setPlayerActions;
 
 _unit addAction [suspendVehicleFormat, {
 	GW_LIFT_VEHICLE setVariable ['GW_suspend', true];
@@ -109,3 +109,5 @@ if ( GW_LIFT_VEHICLE getVariable ['GW_suspend', true] ) then {
 	] call gw_fnc_mp;
 
 };
+
+GW_LIFT_ACTIVE = false;

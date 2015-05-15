@@ -1,7 +1,7 @@
 private ['_source', '_target', '_collide', '_vehicle', '_damage', '_vp'];
 
-if (isNil "GW_LAST_COLLISION") then { GW_LAST_COLLISION = time - 1; };
-if (time - GW_LAST_COLLISION < 1) exitWith { true };
+if (isNil "GW_LAST_COLLISION") then { GW_LAST_COLLISION = time - GW_COLLISION_FREQUENCY; };
+if (time - GW_LAST_COLLISION < GW_COLLISION_FREQUENCY) exitWith { true };
 GW_LAST_COLLISION = TIME;
 
 _source = _this select 0;

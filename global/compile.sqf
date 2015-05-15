@@ -203,11 +203,13 @@ limitToRange = compile preprocessFile 'global\functions\limitToRange.sqf';
 hasType = compile preprocessFile 'global\functions\hasType.sqf';
 positionToString = compile preprocessFile 'global\functions\positionToString.sqf';
 checkOwner = compile preprocessFile 'global\functions\checkOwner.sqf';
-shareVehicle = compile preprocessFile 'global\functions\shareVehicle.sqf';
 findLocationInZone = compile preprocessFile "global\functions\findLocationInZone.sqf";
 arrayToJson = compile preprocessFile 'global\functions\arrayToJson.sqf';
 dirTo = compile preprocessFile 'global\functions\dirTo.sqf';
 filterParam = compile preprocessFile 'global\functions\filterParam.sqf';
+
+shareVehicle = compile preprocessFile 'global\functions\shareVehicle.sqf';
+copyVehicle = compile preprocessFile 'global\functions\copyVehicle.sqf';
 
 // Numerical
 flipDir = compile preprocessFile 'global\functions\flipDir.sqf';

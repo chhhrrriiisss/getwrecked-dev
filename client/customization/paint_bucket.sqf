@@ -15,8 +15,6 @@ setupPaint = {
 
 	// Set bucket properties
 	_bucket setVariable ["color", _rnd, true];
-	_bucket setVariable["name", format['%1 Paint', _rnd], true];	
-	_bucket setVariable["mass", 200, true];	
 	_bucket enableSimulationGlobal true;
 
 	// Create the paint texture

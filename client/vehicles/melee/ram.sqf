@@ -1,7 +1,7 @@
 private ['_source', '_target', '_collide', '_velocity', '_damage', '_multiplier'];
 
-if (isNil "GW_LAST_COLLISION") then { GW_LAST_COLLISION = time - 1; };
-if (time - GW_LAST_COLLISION < 1) exitWith { true };
+if (isNil "GW_LAST_COLLISION") then { GW_LAST_COLLISION = time - (GW_COLLISION_FREQUENCY / 2); };
+if (time - GW_LAST_COLLISION < (GW_COLLISION_FREQUENCY / 2)) exitWith { true };
 GW_LAST_COLLISION = TIME;
 
 _source = _this select 0;
@@ -11,14 +11,36 @@ _status = _target getVariable ['status', []];
 if ('invulnerable' in _status || 'cloak' in _status) exitWith { true };
 
 _vehicle = attachedTo _source;
-_velocity = (velocity _vehicle) distance [0,0,0];	
-_multiplier = [((random (_velocity/100)) + ((_velocity/100) * 0.25)), 0.04, 0.5] call limitToRange;
+_damage = [(random 0.15), 0.05, 0.1] call limitToRange;
+_velocity = (velocity _vehicle) distance [0,0,0];   
 
-_damage = [( _multiplier / (['CRR', _vehicle] call hasType) ), 2] call roundTo;
+_dmg = 0;
+if (_velocity > 4) then {
+    _source setDammage (getDammage _source) + ((random 0.1) + 0.01); 
+};
+
+if ((getDammage _source) >= 1) exitWith {
+
+    playSound3D ["a3\sounds_f\sfx\vehicle_collision.wss", _source, false, (ASLtoATL visiblePositionASL _source), 10, 1, 50];
+
+    [       
+        [
+            _source modelToWorldVisual [0,0,0]
+        ],
+        "impactEffect",
+        true,
+        false 
+    ] call gw_fnc_mp;        
+
+    deleteVehicle _source;
+
+    true
+
+};
 
 [       
     [
-        _source modelToWorldVisual [0,-2,0]
+        _source modelToWorldVisual [0,0,0]
     ],
     "impactEffect",
     true,
@@ -34,30 +56,10 @@ _target setDammage (getDammage _target) + _damage;
     false 
 ] call gw_fnc_mp; 
 
-[_target, 'CRR'] call markAsKilledBy;
+[_target, 'WBR'] call markAsKilledBy;
 
-if (GW_DEBUG) then { systemchat format['damage: %1 / %2', _damage, getdammage _target]; };
+if (GW_DEBUG) then { 
+    systemchat format['damage: %1 / %2', _damage, getdammage _target]; 
+};
 
 true
-
-// if ((_target isKindOf "Car") && !('forked' in _status || 'nofork' in _status) ) then  {
-
-// 	[       
-// 	    [
-// 	        _target,
-// 	        _vehicle,
-// 	        _damage,
-// 	        _vP
-// 	    ],
-// 	    "forkEffect",
-// 	    _target,
-// 	    false 
-// 	] call gw_fnc_mp; 
-
-// 	[_target, 'FRK'] call checkMark;
-
-// } else {
-	
-// 	_target setDammage ((getDammage _target) + _damage);
-
-// };

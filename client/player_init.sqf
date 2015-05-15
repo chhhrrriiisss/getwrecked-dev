@@ -53,8 +53,8 @@ if (!isNil "GW_DC_EH") then {
 GW_DC_EH = addMissionEventHandler ["HandleDisconnect",{
 
 	// Remove ownership from any vehicles in workshop
-	_n = (_this select 0) getVariable ['GW_Playername', ''];
-	_o = nearestObjects [getmarkerpos "workshopZone_camera", [], 150];
+	_n = GW_PLAYERNAME;
+	_o = nearestObjects [getmarkerpos "workshopZone_camera", [], 200];
 
 	pubVar_logDiag = format['%1 disconnected.', _n];
 	publicVariableServer "pubVar_logDiag";
@@ -66,6 +66,9 @@ GW_DC_EH = addMissionEventHandler ["HandleDisconnect",{
 
 		if (_owner == _n) then {
 
+			// Delete supply boxes
+			if (_x call isSupply) exitWith { deleteVehicle _x; };
+
 			_x setVariable ['GW_Owner', '', true];
 			_isHidden = _x getVariable ['GW_HIDDEN', false];
 
@@ -74,6 +77,8 @@ GW_DC_EH = addMissionEventHandler ["HandleDisconnect",{
 				pubVar_setHidden = [_x, false];
   				publicVariable "pubVar_setHidden";	
 			};
+
+
 		};
 		false
 	} count _o > 0;

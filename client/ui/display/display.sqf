@@ -40,27 +40,25 @@ GW_DISPLAY_EH = addMissionEventHandler ["Draw3D", {
 	GW_VEHICLE_SPECIAL = GW_CURRENTVEHICLE getVariable ["special", []];
 
 	GW_HASLOCKONS = GW_CURRENTVEHICLE getVariable ["lockOns", false];
+	GW_HASMELEE = GW_CURRENTVEHICLE call hasMelee;
 	GW_NEWSPAWN = GW_CURRENTVEHICLE getVariable ["newSpawn", false];
 
 	_currentDir = direction player;
 	_currentPos = getPosASL player;
 
 	call drawIcons;
-
-	call statusMonitor;   	
-  
+	  
  	// If any of these menus are active, forget about drawing anything else
 	if (GW_DEPLOY_ACTIVE || GW_SPAWN_ACTIVE || GW_SETTINGS_ACTIVE) exitWith {};
 	if (isNil "GW_CURRENTZONE") exitWith {};
-
+	if (GW_CURRENTZONE == "workshopZone") exitWith {};
 
 	// Player target marker
-	if (GW_INVEHICLE && GW_ISDRIVER && !GW_TIMER_ACTIVE) then { call targetCursor; };
+	if (GW_INVEHICLE && GW_ISDRIVER && !GW_TIMER_ACTIVE) then { call targetCursor; };	
 
 	// If there's no nearby targets, no point going any further
-	_r = if (GW_CURRENTZONE == "workshopZone") then { 200 } else { GW_MAXLOCKRANGE };
-	_targets = if (GW_DEBUG) then { ((ASLtoATL visiblePositionASL GW_CURRENTVEHICLE) nearEntities [["Car", "Man"], 1000]) } else { ([GW_CURRENTZONE] call findAllInZone) };
-	if (count _targets == 0) exitWith {};		
+	_targets = if (GW_DEBUG) then { ((ASLtoATL visiblePositionASL GW_CURRENTVEHICLE) nearEntities [["Car", "Man"], 1000]) } else { ([GW_CURRENTZONE] call findAllInZone) };	
+	if (count _targets == 0) exitWith {};	
 
 	// Try to lock on to those targets if we have lock ons
 	if (GW_INVEHICLE && GW_ISDRIVER && GW_HASLOCKONS && !GW_NEWSPAWN) then {

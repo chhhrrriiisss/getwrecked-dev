@@ -18,13 +18,10 @@ GW_LOOT_LIST = [
 	["Land_Pallets_F", "Wooden Pallets", 50, 2, 0, 0, 'NWP', "", 0, palletsIcon],
 	["Land_Pallet_vertical_F", "Vertical Wooden Pallets", 50, 2, 0, 0, 'VWP', "", 0.1, palletsIcon],
 
-	["land_sportground_fence_f", "Chainlink Panel", 200, 7, 0, 0, 'CHL', "", 0.5, barrierIcon],
+	["land_sportground_fence_f", "Chainlink Panel", 200, 7, 0, 0, 'CHL', "", 0.5, caltropsIcon],
 	["land_wired_fence_4m_f", "EMP Resistant Fencing", 100, 3, 0, 0, 'EMF', "", 0.8, barrierIcon],
-	["land_mil_wallbig_4m_f", "Military-Grade Concrete", 2400, 25, 0, 0, 'MCP', "", 0.5, barrierIcon],	
+	["land_mil_wallbig_4m_f", "Military-Grade Concrete", 2400, 25, 0, 0, 'MCP', "", 0.5, barrierIcon],
 	// ["land_wall_indcnc_4_f", "Thick Concrete Wall", 1000, 8, 0, 0, 'TCW', "", 0.5, barrierIcon],
-
-
-	//["Land_New_WiredFence_5m_F", "Wired Fence", 100, 6, 0, 0, '', "", 0.25, wirefenceIcon],
 
 	// Weapons
 
@@ -42,8 +39,9 @@ GW_LOOT_LIST = [
 
 	// Melee
 	["Land_PalletTrolley_01_khaki_F", "Metal Spikes", 1500, 30, 0, 0, 'FRK', "Medium damage, can capture vehicles", 1, warningIcon, [0,0] ],
-	["Land_Obstacle_Saddle_F", "Concrete Pylon", 1500, 30, 0, 0, 'CRR', "Inflicts massive damage", 1, warningIcon, [0,0] ],
-	["Land_enginecrane_01_f", "Hydraulic Rams", 1500, 30, 0, 0, 'HOK', "Light damage, but can snare vehicles", 1, warningIcon, [0,0] ],
+	["Land_Obstacle_Saddle_F", "Concrete Pylon", 1200, 20, 0, 0, 'CRR', "Inflicts massive damage", 1, warningIcon, [0,0] ],
+	["Land_enginecrane_01_f", "Hydraulic Hook", 800, 15, 0, 0, 'HOK', "Light damage, but can snare vehicles", 1, warningIcon, [0,0] ],
+	["Land_WoodPile_large_F", "Wooden Battering Ram", 2000, 40, 0, 0, 'WBR', "An improvised smashing thing.", 1, warningIcon, [0,0] ],
 
 
 	// Fuel
@@ -96,7 +94,8 @@ GW_LOCKONWEAPONS = [
 GW_MELEEWEAPONS = [
 	'FRK',
 	'CRR',
-	'HOK'
+	'HOK',
+	'WBR'
 ];
 
 // Weapons reference
@@ -222,7 +221,6 @@ GW_LOOT_ELECTRONICS = [
 
 ];
 
-
 // Deployables
 GW_LOOT_DEPLOYABLES = [
 	["Land_Sacks_heap_F", 50],
@@ -238,7 +236,9 @@ GW_LOOT_DEFENCE = [
 	["Box_IND_Wps_F", 500],
 	["Land_Wall_IndCnc_2deco_F", 200],
 	["Land_Device_assembled_F", 250],
-	["Land_PalletTrolley_01_khaki_F", 300]
+	["Land_PalletTrolley_01_khaki_F", 300],
+	["land_wired_fence_4m_f", 350],
+	["land_mil_wallbig_4m_f", 300]
 ];
 
 // Evasion
@@ -255,7 +255,8 @@ GW_LOOT_EVASION = [
 GW_LOOT_MELEE = [
 	["Land_PalletTrolley_01_khaki_F", 300],
 	["Land_Obstacle_Saddle_F", 300],
-	["Land_enginecrane_01_f", 500]
+	["Land_enginecrane_01_f", 500],
+	["Land_WoodPile_large_F", 100]
 ];
 
 

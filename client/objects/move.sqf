@@ -22,11 +22,6 @@ GW_EDITING = true;
 // Grab that sucker!
 [_obj, _unit] spawn grabObj;
 
-// Notify if snapping is already enabled
-if (_unit getVariable ['snapping', false]) then {
-	["SNAPPING ACTIVE!", 1, snappingIcon, nil, 'default'] spawn createAlert;   
-};
-
 // Add all the actions that are available for this object
 removeAllActions _unit;
 _unit spawn setPlayerActions;
@@ -43,8 +38,13 @@ _unit addAction[dropObjectFormat, {
 }, _obj, 0, false, false, "", "(vehicle player) == player"];
 
 // Supply boxes can only be moved and dropped
-_isSupply = _obj getVariable ["isSupply", false];
+_isSupply = _obj call isSupplyBox;
 if (_isSupply) exitWith {};
+
+// Notify if snapping is already enabled
+if (_unit getVariable ['snapping', false]) then {
+	["SNAPPING ACTIVE!", 1, snappingIcon, nil, 'default'] spawn createAlert;   
+};
 
 // Disable Snapping 
 _unit addAction[nosnapObjectFormat, {

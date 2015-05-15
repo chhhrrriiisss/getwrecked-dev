@@ -74,8 +74,8 @@ _visible = true;
 	};
 	false
 } count [ 
-	[ (_vehicle modelToWorldVisual [0,4,0]) ],
-	[ (_vehicle modelToWorldVisual [0,-4,0]) ]
+	[ (_vehicle modelToWorldVisual [0,5,0]) ],
+	[ (_vehicle modelToWorldVisual [0,-5,0]) ]
 ];
 
 // If there's an obstruction, or the vehicle is cloaked/hidden

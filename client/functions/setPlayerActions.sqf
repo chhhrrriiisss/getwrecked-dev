@@ -1,3 +1,9 @@
+//
+//      Name: setPlayerActions
+//      Desc: Primary actions attached to player
+//      Return: None
+//
+
 _unit = _this;
 
 // Lift vehicle

@@ -113,7 +113,7 @@ GW_DEPLOYLIST = GW_DEPLOYLIST + [_obj];
 		_bomb setVelocity [0,0,-10];
 		[_pos, 40, 50] call shockwaveEffect;		
 
-		_nearby = _pos nearEntities [["Car"], 20];	
+		_nearby = _pos nearEntities [["Car"], 30];	
 
 		if (count _nearby > 0) then {
 			{
@@ -122,10 +122,25 @@ GW_DEPLOYLIST = GW_DEPLOYLIST + [_obj];
 				if ('invulnerable' in _status) then {} else {
 
 					if (_x != (_v)) then { [_x, "EPL"] call markAsKilledBy; };
-					
-					_d = if ('nanoarmor' in _status) then { 0.05 } else { (random (0.25) + 0.5) };
-					_x setDammage ((getdammage _x) + _d);
-					_x call updateVehicleDamage;
+
+					_modifier = [1 - (30 / ( _x distance _pos)), 0.5, 1] call limitToRange;					
+					_d = if ('nanoarmor' in _status) then { 0.05 } else { (random (0.2) + 0.6) };
+					_d = _d * _modifier;
+
+					systemChat format['%1 / %2 / %3', (_x distance _pos), _modifier, _d]; 
+
+					if (_d > 0) then {
+
+						_x setDammage ((getdammage _x) + _d);
+
+						[       
+							_x,
+							"updateVehicleDamage",
+							_x,
+							false
+						] call gw_fnc_mp; 
+
+					};
 
 				};
 				
@@ -138,6 +153,7 @@ GW_DEPLOYLIST = GW_DEPLOYLIST + [_obj];
 		
 		deleteVehicle _o;	
 		[_pos, [0,0,0], 30] call impactEffect;	
+
 	};
 
 	// Cleanup

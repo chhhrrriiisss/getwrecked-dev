@@ -84,6 +84,8 @@ _src addEventHandler['EpeContactStart', {
 
 	_d = if ('nanoarmor' in _status) then { 0.001 } else { 0.02 };
 	(_this select 1) setDammage ((getDammage (_this select 1)) + _d);
+
+	[(_this select 1), 'FLM'] call markAsKilledBy;
 	
 	[
 		(_this select 1),
@@ -102,6 +104,7 @@ _src spawn {
 		{ 
 			if (_x distance (ASLtoATL visiblePositionASL _this) < 4 && _x != (vehicle player)) exitWith {
 				_null = [_x, 100, 6] spawn setVehicleOnFire;
+				[_x, 'FLM'] call markAsKilledBy;
 			};
 			false
 		} count _nearby > 0;
@@ -126,7 +129,7 @@ _src spawn {
 	false
 	};
 
-	_o removeEventHandler['EpeContact', 0];
+	_o removeEventHandler['EpeContactStart', 0];
 	deleteVehicle _o;
 
 };

@@ -37,7 +37,7 @@ if (isNil { _unit getVariable 'snapping' }) then {	_unit setVariable ['snapping'
 
 // Used to dynamically change the loop period depending if snapping is active
 _moveInterval = 0.005;
-_snappingInterval = 0.1;
+_snappingInterval = 0.05;
 
 GW_EDITING_TARGET = _unit worldToModelVisual (_obj modelToWorldVisual [0,0,0]);
 GW_EDITING_TARGET set [2, ([(GW_EDITING_TARGET select 2), 0, 10] call limitToRange)];
@@ -80,7 +80,7 @@ for "_i" from 0 to 1 step 0 do {
 	// Set the object position and direction (if changed)
 	_obj attachTo [_unit, GW_EDITING_TARGET];
 
-	// Is the object in snapping mode?
+	// Snap object direction to that of vehicle
 	_snapping = _unit getVariable ['snapping', false];	
 	if (_snapping) then {
 
@@ -93,6 +93,7 @@ for "_i" from 0 to 1 step 0 do {
 		_forwardCornerDir = [(_frontDir + 45)] call normalizeAngle;
 		_rearCornerDir = [(_frontDir - 45)] call normalizeAngle;
 		_resultDir = 0;
+
 		_currentDir = [(getDir _obj) - (getDir _unit)] call normalizeAngle;
 
 		if (_currentDir != _frontDir || _currentDir != _sideDir || _currentDir != _rearCornerDir || _currentDir != _forwardCornerDir) then {

@@ -24,6 +24,7 @@ GW_WAITLOAD = true;
 
 _target = [_this,0, [0,0,0], [objNull, []]] call filterParam;
 _loadTarget = [_this,1, [], ["", []]] call filterParam;
+_forceServerLoad = [_this,2, false, [false]] call filterParam;
 
 if (typename _target == 'OBJECT') then {
     _target = (ASLtoATL getPosASL _target);
@@ -53,6 +54,20 @@ if ( (_temp distance [0,0,0]) <= 200) exitWith {
     loadError = true;
     GW_WAITLOAD = false;
 };
+
+// Optionally make the server spawn it
+if (_forceServerLoad) exitWith {
+
+    [
+        [player, _target, _raw],
+        'loadVehicle',
+        false,
+        false
+    ] call gw_fnc_mp;   
+
+    GW_WAITLOAD = false;
+    loadError = false;
+};  
 
 _done = [player, _target, _raw] spawn loadVehicle;
 

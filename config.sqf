@@ -37,6 +37,9 @@ FIRE_DMG_SCALE = 8;
 GW_GHS = 4;
 OBJ_COLLISION_DMG_SCALE = 0;
 
+// Melee Damage Frequency
+GW_COLLISION_FREQUENCY = 1;
+
 // Global armor modifier
 GW_GAM = 0.5;
 

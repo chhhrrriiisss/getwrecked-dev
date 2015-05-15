@@ -76,6 +76,7 @@ _stripActions = {
 	_this setVariable ['hasActions', false];
 	true	
 };
+
 // Get rid of excess addActions
 { 
 	_x call _stripActions;
@@ -85,12 +86,12 @@ _stripActions = {
 // Clear/Unsimulate unnecessary items near workshop
 {
 	_x call _stripActions;
-	if (simulationEnabled _x) then {
-		_x enableSimulation false;
-	};
-
+	if (simulationEnabled _x) then { _x enableSimulation false; };
 	false
 } count (nearestObjects [ (getMarkerPos "workshopZone_camera"), [], 250]) > 0;
+
+// Trigger get-in event handler
+[_targetVehicle, 'driver', _unit] call handleGetIn;
 
 // Add handlers for vehicle
 _hasHandlers = _targetVehicle getVariable ['hasHandlers', false];
@@ -98,20 +99,11 @@ if (!_hasHandlers) then {
 	[_targetVehicle] call setVehicleHandlers;
 };
 
-// Add handlers for objects
-{
-	_h = _x getVariable ['hasHandlers', false];
-	if (!_h) then {
-		[_x] call setObjectHandlers;
-	};
-
-	pubVar_setHidden = [_targetVehicle, false];
-	publicVariable "pubVar_setHidden";
-	_targetVehicle hideObject false;
-	_targetVehicle setVariable ['GW_HIDDEN', nil, true];
-
-	false
-} count (attachedObjects _targetVehicle) > 0;
+// Unhide vehicle and all attachments
+pubVar_setHidden = [_targetVehicle, false];
+publicVariable "pubVar_setHidden";
+_targetVehicle hideObject false;
+_targetVehicle setVariable ['GW_HIDDEN', nil, true];
 
 // Update simulation for all clients
 [		
@@ -123,10 +115,6 @@ if (!_hasHandlers) then {
 	false,
 	false 
 ] call gw_fnc_mp;
-
-// Enable melee collision checking
-_hasMelee = _targetVehicle call hasMelee;
-if (_hasMelee) then { _targetVehicle spawn meleeAttached; };
 
 // Set wanted value
 _targetVehicle setVariable ['GW_WantedValue', 0];

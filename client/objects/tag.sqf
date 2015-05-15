@@ -27,21 +27,42 @@ _obj setVariable ["tag", _obj addAction ["", "", "", 0, false, false, "", "
 	    	_box = [_target] call getBoundingBox;
 	    	_height = _box select 2;
 
-	       	_data = _target getVariable ['GW_Data', '[]'];
-	       	_data = call compile _data;
-	       	if (count _data == 0) exitWith {};
-
-	       	_name = _data select 0;	       	
-	       	_mass = _data select 1;	       	
-	       	_ammo = _data select 2;
-	       	_fuel = _data select 3;
-	       	_health = _data select 4;
-
 	       	_isPaint = _target call isPaint;
 	       	_isSupply = _target call isSupplyBox;
 	       	_isWeapon = _target call isWeapon;
 
-	       	if (_isWeapon) then { _target call renderFOV; };
+	       	_name = '';
+	       	_mass = 100;
+	       	_ammo = 0;
+	       	_fuel = 0;
+	       	_health = 100;
+
+	       	if (!_isSupply && !_isPaint) then {
+
+		       	_data = _target getVariable ['GW_Data', '[]'];
+				_data = call compile _data;
+				if (count _data == 0) exitWith {};
+
+				_name = _data select 0;	       	
+				_mass = _data select 1;	       	
+				_ammo = _data select 2;
+				_fuel = _data select 3;
+				_health = _data select 4;
+
+			};
+
+	       	if (_isSupply) then { 
+	       		_owner =  _target getVariable ['GW_Owner', ''];
+	       		_owner = [_owner, 10] call cropString;
+	       		_name = if (_owner isEqualTo '') then { 'Supply Box' } else { (format['%1`s Supply Box', _owner]) };
+	       	};
+
+	       	if (_isPaint) then { 
+	       		_paintColor = _target getVariable ['color', 'Random'];  
+	       		_name = format['%1 Paint', _paintColor]; 
+	       	};
+
+	       	if (_isWeapon) then { _target call renderFOV; }; 
 	       	_currentZoom = if (cameraView == 'Internal' || _dist < 2.2) then { 2 * round (call getZoom) } else { round (call getZoom) };
 
 		    _position = [
@@ -82,13 +103,13 @@ _obj setVariable ["tag", _obj addAction ["", "", "", 0, false, false, "", "
 		        'PuristaMedium'
 		    ];
 
-
-
-		    if (_isPaint || _isSupply) exitWith { false };
+		    if (_isPaint || _isSupply) exitWith { false };    	
 		    	
 		    _step = 0.14;
 
 		    if (isNull _attached) then {	
+
+				
 
 		    	_position set[2, (_position select 2) - (_step / _currentZoom)];
 		    	
