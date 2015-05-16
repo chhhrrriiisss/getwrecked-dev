@@ -21,6 +21,9 @@ call compile preprocessFile 'global\objects.sqf';
 // Supply Data Compile
 call compile preprocessFile 'global\supply.sqf';
 
+// Name List
+call compile preprocessFile 'global\names.sqf';
+
 if (hasInterface) then {
 
 	if (isNil "GW_DEBUG_ARRAY") then {
@@ -196,6 +199,7 @@ findVehicle = compile preprocessFile 'global\functions\findVehicle.sqf';
 allPlayers = compile preprocessFile 'global\functions\allPlayers.sqf';
 getBoundingBox = compile preprocessFile 'global\functions\getBoundingBox.sqf';
 getData = compile preprocessFile 'global\functions\getData.sqf';
+snapToPad = compile preprocessFile 'global\functions\snapToPad.sqf';
 
 // Utility
 getVectorDirAndUpRelative = compile preprocessFile 'global\functions\getVectorDirAndUpRelative.sqf';

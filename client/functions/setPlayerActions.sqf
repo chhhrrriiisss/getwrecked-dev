@@ -44,8 +44,6 @@ _unit addAction[hideVehicleFormat, {
 
 && !GW_EDITING && (vehicle player) == player && (!isNil { [_target, 8, 90] call validNearby }) && !GW_LIFT_ACTIVE && !(GW_PAINT_ACTIVE) && !GW_TAG_ACTIVE )"];	
 
-
-
 // Open the settings
 _unit addAction[settingsVehicleFormat, {
 

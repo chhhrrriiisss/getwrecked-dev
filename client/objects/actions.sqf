@@ -101,7 +101,7 @@ setSupplyAction = {
 		_isOwner = [_obj, _unit, true] call checkOwner;
 		if (!_isOwner) exitWith { systemChat 'You dont own this object' };	
 
-		_obj setVariable ["name", format["%1's Supply Box", GW_PLAYERNAME], true];	
+		_obj setVariable ["name", format["%1's Supply Box", name player], true];	
 
 		[_obj, _unit] spawn inventoryMenu;
 

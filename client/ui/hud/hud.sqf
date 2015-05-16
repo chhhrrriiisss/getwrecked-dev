@@ -9,6 +9,12 @@ private ['_b', '_k', '_bindKeys', '_tag'];
 if (GW_HUD_ACTIVE) exitWith {};
 GW_HUD_ACTIVE = true;
 
+desaturateScreen = {
+	"colorCorrections" ppEffectEnable true; 
+	"colorCorrections" ppEffectAdjust [1, 0.3, 0, [1,1,1,-0.1], [1,1,1,2], [-0.5,0,-1,5]]; 
+	"colorCorrections" ppEffectCommit 1;
+};
+
 disableSerialization;
 
 12000 cutRsc ["GW_HUD_Vehicle", "PLAIN"];
@@ -105,12 +111,7 @@ _fireActive = false;
 _powerUpActive = false;
 _lockedActive = false;
 _status = [];
-
-_desaturateScreen = {
-	"colorCorrections" ppEffectEnable true; 
-	"colorCorrections" ppEffectAdjust [1, 0.3, 0, [1,1,1,-0.1], [1,1,1,2], [-0.5,0,-1,5]]; 
-	"colorCorrections" ppEffectCommit 1;
-};
+_lastStatusCount = 0;
 
 _layerStatic = ("BIS_layerStatic" call BIS_fnc_rscLayer);
 
@@ -118,7 +119,7 @@ GW_HUD_VEHICLE_ACTIVE = false;
 GW_HUD_NORMAL_ACTIVE = false;
 GW_HUD_REFRESH = false;
 
-waitUntil {
+for "_i" from 0 to 1 step 0 do {
 
 	_startTime = time;
 
@@ -286,35 +287,26 @@ waitUntil {
 		_vHudHorn ctrlCommit 0;
 		
 		// Hud Status & Visual Effects			
-        if (count _status <= 0) then {
+        if (count _status == 0 && _lastStatusCount > 0) then {
 
-            if (_empActive || _boundsActive || _fireActive || _invActive || _powerUpActive || _lockedActive || _jammedActive) then {
-
-                _empActive = false;  
-                _boundsActive = false;  
-                _fireActive = false;
-                _invActive = false;
-                _safeActive = false;
-                _powerUpActive = false;
-                _lockedActive = false;
-                _jammedActive = false;
+ 			_lastStatusCount = 0;
                 
-                "dynamicBlur" ppEffectEnable false; 
-                "dynamicBlur" ppEffectAdjust [0]; 
-                "dynamicBlur" ppEffectCommit 0; 
+            "dynamicBlur" ppEffectEnable false; 
+            "dynamicBlur" ppEffectAdjust [0]; 
+            "dynamicBlur" ppEffectCommit 0; 
 
-                "colorCorrections" ppEffectEnable false; 
-                "colorCorrections" ppEffectCommit 0;
-               
-                "colorCorrections" ppEffectEnable false; 
-                "filmGrain" ppEffectCommit 0; 
+            "colorCorrections" ppEffectEnable false; 
+            "colorCorrections" ppEffectCommit 0;
+           
+            "colorCorrections" ppEffectEnable false; 
+            "filmGrain" ppEffectCommit 0; 
 
-                _vHudStatus ctrlSetStructuredText parseText( "" );
-				_vHudStatus ctrlCommit 0;
-
-            };
+            _vHudStatus ctrlSetStructuredText parseText( "" );
+			_vHudStatus ctrlCommit 0;
 
         } else {
+
+        	_lastStatusCount = count _status;
 
         	_string = '';
 
@@ -361,97 +353,52 @@ waitUntil {
 		
 	    };
 
+
+
         if ("tyresPopped" in _status) then {
             [localize "str_gw_wheels_disabled", 1, warningIcon, colorRed, "warning", "beep_warning"] spawn createAlert;   
-        };
-
-        if ("overcharge" in _status || "extradamage" in _status || "nanoarmor" in _status || "jammer" in _status) then {
-
-        	if (_powerUpActive) then {} else {
-                _powerUpActive = true;
-				[] call _desaturateScreen;
-
-			};
         };
 
         if ("invulnerable" in _status) then {
 
             [localize "str_gw_invulnerable", 1, shieldIcon, colorRed, "warning"] spawn createAlert;
 
-            if (_blink) then {
-	            
-			} else {
+            if (_blink) then {} else {
 				_vHudStatus ctrlSetStructuredText parseText( "" );
 				_vHudStatus ctrlCommit 0;
-			};
-
-            if (_invActive) then {} else {
-                _invActive = true;
-                [] call _desaturateScreen;
-
-            };                           
+			};                  
 
         };
 
         if ("fire" in _status) then {
-
             [localize "str_gw_fire_detected", 1, warningIcon, colorRed, "warning", "beep_warning"] spawn createAlert;  
-
-            if (_fireActive) then {} else {
-                _fireActive = true;
-                [] call _desaturateScreen;
-            };   
-
         };
  
         if ("locked" in _status) then {
-
-            [localize "str_gw_lock_detected", 1, rpgTargetIcon, colorRed, "warning", "beep_warning"] spawn createAlert;   
-
-            if (!_lockedActive) then {
-            	_lockedActive = true;
-            	_condition = { ("locked" in ((vehicle player) getVariable ['status', []])) };
-            	[_vehicle, 9999, 'client\images\lock_halo.paa', _condition, false] spawn createHalo;
-            	playSound "beep_warning";
-
-            };
-
+            [localize "str_gw_lock_detected", 1, rpgTargetIcon, colorRed, "warning", "beep_warning"] spawn createAlert;  
         };
 
         if ("emp" in _status) then {
 
             [localize "str_gw_disabled", 1, warningIcon, colorRed, "warning", "beep_warning"] spawn createAlert;                  
 
-            if (_empActive) then {} else {
-                _empActive = true;                            
-                _layerStatic cutRsc ["RscStatic", "PLAIN" ,2];       
-                playSound3D ["a3\sounds_f\sfx\special_sfx\sparkles_wreck_3.wss", (vehicle player), false, (visiblePosition (vehicle player)), 2, 1, 100]; 
-                "dynamicBlur" ppEffectEnable true; 
-                "dynamicBlur" ppEffectAdjust [2]; 
-                "dynamicBlur" ppEffectCommit 1; 
-
-                "filmGrain" ppEffectEnable true; 
-                "filmGrain" ppEffectAdjust [0.1, 0.5, 2, 0, 0, true];  
-                "filmGrain" ppEffectCommit 1;
-
-            };    
-          
-            if (_blink) then {} else {
-              
-				_layerStatic cutRsc ["RscStatic", "PLAIN" ,1];  
-
+            if (_blink) then {} else {              
+				_layerStatic cutRsc ["RscStatic", "PLAIN" ,1]; 
                 "dynamicBlur" ppEffectEnable true; 
                 "dynamicBlur" ppEffectAdjust [3]; 
                 "dynamicBlur" ppEffectCommit 1;       
             };                        
         };
 
-       
+        _weaponsArray = _vehicle getVariable ['weapons', []];
+        _tacticalArray = _vehicle getVariable ['tactical', []];
+       	
 		// Calculate reload times for each module        
 		_c = 0;
 		{
 			_tag = _x;
 			_hasType = [_tag, _vehicle] call hasType;
+			_relArray = if (_tag in GW_WEAPONSARRAY) then { _weaponsArray } else { _tacticalArray };
 
 			// If the type is missing
 			if (_hasType <= 0) then {
@@ -499,17 +446,13 @@ waitUntil {
 							if ((_b select 0) == "-1") exitWith { "-1" };
 							([parseNumber(_b select 0)] call codeToKey) 
 						};					
-						_k = if (_k != "-1") then { format[' [ %1 ]', _k] } else { '' };			
+						_k = if (_k != "-1") then { format[' [ %1 ]', _k] } else {''};			
 						_bindKeys = format['%1%2', _bindKeys, _k];
 
 					};
 					if (_exit) exitWith {};
 
-				} count (_vehicle getVariable [ (_tag call {
-					if (_tag in GW_WEAPONSARRAY) exitWith { 'weapons' };
-					if (_tag in GW_TACTICALARRAY) exitWith { 'tactical' };
-					''
-				}), []]) > 0;
+				} count _relArray > 0;
 
 				(_vHudIcons select _c) ctrlSetStructuredText parseText ( format["<img size='1.2' align='center' valign='middle' shadow='0' image='%3' /><t size='0.5' shadow='0' valign='middle' align='center' color='#ffc730'> %1</t>", _bindKeys, { if (count toArray _bindKeys > 0) exitWith { 'right' }; 'center' }, _icon] );	
 				(_vHudBars select _c) progressSetPosition _pos;		
@@ -535,11 +478,11 @@ waitUntil {
 
 	};
 	
-	['HUD Update', format['%1', (time - _startTime)]] call logDebug;
+	['HUD Update', format['%1', ([(time - _startTime), 2] call roundTo)]] call logDebug;
 
 	Sleep _refreshRate;
 
-	(!GW_HUD_ACTIVE || !alive player)
+	if (!GW_HUD_ACTIVE || !alive player) exitWith {};
 
 };
 

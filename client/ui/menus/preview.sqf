@@ -88,13 +88,6 @@ if (!isNil "GW_PREVIEW_SELECTED" && !isNil "GW_PREVIEW_VEHICLE") then {
 
 	};
 
-	// _timeout = time + 3;
-	// waitUntil {
-	// 	_velocity = (velocity GW_PREVIEW_VEHICLE) distance [0,0,0];
-	// 	_simulated = simulationEnabled GW_PREVIEW_VEHICLE;
-	// 	( ((_velocity < 0.1) && (_simulated)) || (time > _timeout))
-	// };	
-
 	GW_PREVIEW_VEHICLE setPos _loadAreaPosition;
 
 	[GW_PREVIEW_VEHICLE, _loadAreaPosition] spawn {
@@ -103,21 +96,6 @@ if (!isNil "GW_PREVIEW_SELECTED" && !isNil "GW_PREVIEW_VEHICLE") then {
 				(_this select 0) setPos (_this select 1);
 			};
 	};
-
-	// _loadAreaPosition set [2, (_loadAreaPosition select 2) + 1];
-	// GW_PREVIEW_VEHICLE setVelocity [0,0,0];
-	// GW_PREVIEW_VEHICLE setPos _loadAreaPosition;
-	// GW_PREVIEW_VEHICLE setVectorUp [0,0,1];
-
-	// GW_PREVIEW_VEHICLE,  spawn {
-
-
-			
-	// 	Sleep 5;
-	// 	systemchat 'uprighting...';
-
-	// 	_this setVectorUp [0,0,1];
-	// };
 };
 
 // Otherwise, clear up

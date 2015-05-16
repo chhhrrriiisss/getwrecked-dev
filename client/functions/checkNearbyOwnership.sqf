@@ -23,11 +23,11 @@ _ownedByMe = false;
 
 	if (count toArray _isOwner == 0) then {} else {
 
-		if (_isOwner != GW_PLAYERNAME) then {
+		if (_isOwner != name player) then {
 			_ownedByAnother = true;
 		};
 
-		if (_isOwner == GW_PLAYERNAME) then {
+		if (_isOwner == name player) then {
 			_ownedByMe = true;
 		};
 	};

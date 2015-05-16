@@ -1,6 +1,14 @@
+//
+//      Name: collisionCheck
+//      Desc: Check for a collision between all melee items on vehicle
+//      Return: None
+//
+
 private ['_v'];
 
 _v = _this;
+
+_startTime = time;
 
 if (isNil "getMeleeOffsets") then {
 
@@ -70,31 +78,31 @@ if (isNil "getMeleeOffsets") then {
 				false
 			} count _objs;
 
-			if (!isNil "_obj" && { !((typeOf _obj) isEqualTo "") } && { !(_obj isKindOf "ReammoBox") } && { !(_obj isKindOf "Man") } && { !(_obj isKindOf "ThingEffect") } && { !((typeOf _obj) isEqualTo "RopeSegment") } ) then { 
+			if (isNil "_obj") exitWith {};
+			if ((typeOf _obj) isEqualTo "") exitWith {};
+			if ({ if (_obj isKindOf _x) exitWith {1}; false	} count ["ReammoBox", "Man", "ThingEffect", "RopeSegment"] isEqualTo 1) exitWith {};
 
-				_vectInc = [(ASLtoATL visiblePositionASL _obj), (ASLtoATL visiblePositionASL _source)] call bis_fnc_vectorFromXToY;
-				_vectOut = [(ASLtoATL visiblePositionASL _source), (ASLtoATL visiblePositionASL _obj)] call bis_fnc_vectorFromXToY;	
-				_targetVehicle = if (!isNull attachedTo _obj) then { (attachedTo _obj)	} else { _obj };									
+			_vectInc = [(ASLtoATL visiblePositionASL _obj), (ASLtoATL visiblePositionASL _source)] call bis_fnc_vectorFromXToY;
+			_vectOut = [(ASLtoATL visiblePositionASL _source), (ASLtoATL visiblePositionASL _obj)] call bis_fnc_vectorFromXToY;	
+			_targetVehicle = if (!isNull attachedTo _obj) then { (attachedTo _obj)	} else { _obj };									
 
-				if (_v isEqualTo _targetVehicle) exitWith {};
+			if (_v isEqualTo _targetVehicle) exitWith {};
 
-				_speed = ((velocity _targetVehicle) distance [0,0,0]) * 0.1;
-				_command = switch (_tag) do {						
-					case "FRK": {  meleeFork };
-					case "CRR": {  meleePylon };
-					case "HOK": {  meleeHook };
-					case "WBR": {  meleeRam };
-					default
-					{ {true} };
-				};
-				
-				_collision = [_source, _obj, _speed] call _command;			
+			_speed = ((velocity _targetVehicle) distance [0,0,0]) * 0.1;
+			_command = switch (_tag) do {						
+				case "FRK": {  meleeFork };
+				case "CRR": {  meleePylon };
+				case "HOK": {  meleeHook };
+				case "WBR": {  meleeRam };
+				default
+				{ {true} };
+			};
+			
+			_collision = [_source, _obj, _speed] call _command;			
 
-				if (_collision) then { [_this, _vectInc, _targetVehicle, _vectOut] call createCollision; };						
+			if (_collision) then { [_this, _vectInc, _targetVehicle, _vectOut] call createCollision; };						
 
-				false
-
-			};	
+			false	
 
 		};
 
@@ -103,5 +111,7 @@ if (isNil "getMeleeOffsets") then {
 	false
 
 } count (attachedObjects _v);
+
+['Melee Update', (format['%1', ([time - _startTime, 2] call roundTo)])] call logDebug;
 
 true

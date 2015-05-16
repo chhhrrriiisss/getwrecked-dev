@@ -39,10 +39,10 @@ _obj setVariable ["tag", _obj addAction ["", "", "", 0, false, false, "", "
 
 	       	if (!_isSupply && !_isPaint) then {
 
-		       	_data = _target getVariable ['GW_Data', '[]'];
-				_data = call compile _data;
-				if (count _data == 0) exitWith {};
-
+		       	_data = _target getVariable ['GW_Data', '['', 0,0,0,0,0]'];
+		       	if (isNil '_data') exitWith {};
+		       	_data = call compile _data;
+	
 				_name = _data select 0;	       	
 				_mass = _data select 1;	       	
 				_ammo = _data select 2;

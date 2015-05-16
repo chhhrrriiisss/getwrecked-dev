@@ -69,15 +69,15 @@ if (time - GW_LASTPAYCHECK > 120 && _hasMoved) then {
 };
 
 // If we're not disabled to any extent (or we've not been to a pad for 3 seconds)
-if ( !("emp" in GW_VEHICLE_STATUS) && !("disabled" in GW_VEHICLE_STATUS) && !("noservice" in GW_VEHICLE_STATUS) ) then {
+if ({ if (_x in GW_VEHICLE_STATUS) exitWith {1}; false } count ["emp", "disabled", "noservice"] isEqualTo 0) then { 
 
 	_nearbyService = GW_CURRENTVEHICLE getVariable ["GW_NEARBY_SERVICE", nil];
+	[GW_CURRENTVEHICLE] spawn checkTyres;
 
 	if (!isNil "_nearbyService") then {   
 		[GW_CURRENTVEHICLE, _nearbyService] call servicePoint;
 	};
-
-};
+};	
 
 [GW_CURRENTVEHICLE] spawn checkTyres;
 

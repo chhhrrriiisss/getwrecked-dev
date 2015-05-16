@@ -16,6 +16,7 @@ if (!alive _vehicle) exitWith { GW_WAITCOMPILE = false; };
 	
 _attachedObjects = attachedObjects _vehicle;
 
+_vehicle lock true;
 _vehicle lockDriver true;
 _vehicle lockCargo true;
 
@@ -26,10 +27,12 @@ _prevFuel = (fuel _vehicle) + (_vehicle getVariable ["fuel", 0]);
 
 // Check for max limits or old items and prune
 if (GW_CURRENTZONE == "workshopZone") then { _vehicle call cleanAttached; };
+
 _attachedValue = 0;
-_vData = [(typeof _vehicle), GW_VEHICLE_LIST] call getData;
-if (isNil "_vData") exitWith { GW_WAITCOMPILE = false; };
-_maxMass = ((_vData select 2) select 0) select 1;
+_maxMass = _vehicle getVariable ['maxMass', 99999];
+_defaultMass = _vehicle getVariable ['mass', 1000];
+_massModifier = _vehicle getVariable ['massModifier', 1];
+_combinedMass = 0;
 
 {
 	_obj = _x;
@@ -40,16 +43,13 @@ _maxMass = ((_vData select 2) select 0) select 1;
 
 		// Get all the data we need
 		[_obj] call setObjectProperties;
-		_oData = _obj getVariable ['GW_Data', '[]'];
+		_oData = _obj getVariable ['GW_Data','["Bad data", 0, 0, 0, 0]'];
 		_oData = call compile _oData;
 		_tag = _obj getVariable ["GW_Tag", ''];
 
-		// Add object mass to vehicle		
-		_modifier = if (!isNil "_vData") then { (((_vData select 2) select 0) select 0) } else { 1 };
-		_oMass = (_oData select 1) * _modifier;
-		_vMass = getMass _vehicle;
-		_nMass = [(_vMass + _oMass), 0, _maxMass] call limitToRange;
-		_vehicle setMass _nMass;
+		// Add object mass to vehicle				
+		_oMass = (_oData select 1) * _massModifier;
+		_combinedMass = _combinedMass + _oMass;
 
 		// Add any fuel to vehicle
 		_fuel = (_oData select 3);
@@ -87,7 +87,7 @@ _maxMass = ((_vData select 2) select 0) select 1;
 				if (_isHolder) then { _wepDir = _wepDir + 90; };
 
 				_dif = [_wepDir - _vehDir] call normalizeAngle;
-				_obj setVariable ['defaultDirection', _dif];
+				_obj setVariable ['GW_defaultDirection', _dif];
 
 				if (_tag in GW_LOCKONWEAPONS) then { _vehicle setVariable["lockOns", true];	};
 			};		
@@ -107,17 +107,19 @@ _maxMass = ((_vData select 2) select 0) select 1;
 	
 		};
 
-		// Calculated associated cost		
-		_d = [_tag, GW_LOOT_LIST] call getData; 
-		if (isNil "_d") exitWith {};
+		_class = if (_isHolder) then {
+			(([_tag, GW_LOOT_LIST] call getData) select 0)
+		} else { (typeOf _obj) };
 
-		_class = _d select 0;
 		_value = [_class, "", ""] call getCost;
 		_attachedValue = _attachedValue + _value;
 	
 	};
 
 } count _attachedObjects > 0;
+
+// Apply combined mass to vehicle
+_vehicle setMass ([_combinedMass, _defaultMass, _maxMass] call limitToRange);
 
 // Calculate and set vehicle value
 _vehicleValue = [(typeOf _vehicle), "", ""] call getCost;
@@ -163,6 +165,7 @@ if (GW_CURRENTZONE == "workshopZone") then {
 
 if (GW_CURRENTZONE != "workshopZone") then {
 	_vehicle lockDriver false;
+	_vehicle lock false;
 };
 
 GW_WAITCOMPILE = false;

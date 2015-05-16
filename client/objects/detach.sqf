@@ -62,6 +62,8 @@ removeAllActions _obj;
 // Re-compile vehicle information
 [_veh] call compileAttached;
 
+// Snap the vehicle back to the closest save point
+[_veh] call snapToPad;
 
 true
 

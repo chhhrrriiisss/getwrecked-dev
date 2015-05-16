@@ -67,9 +67,15 @@ if (_handlers) then {
 
 	};
 
-	// Add local handlers anyway
-	[_newObj] call setObjectHandlers;
-
+	// Add local handlers wherever it is local
+	[		
+		[
+			_newObj
+		],
+		"setObjectHandlers",
+		_newObj,
+		false 
+	] call gw_fnc_mp;
 };
 
 _newObj

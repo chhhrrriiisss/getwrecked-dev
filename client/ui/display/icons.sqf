@@ -36,6 +36,9 @@ if (count GW_LINEFFECT_ARRAY > 0) then {
 		_p2 = _x select 1;
 		if (typename _p1 == "OBJECT") then { _p1 = (ASLtoATL visiblePositionASL _p1); };				
 		if (typename _p2 == "OBJECT") then { _p2 = (ASLtoATL visiblePositionASL _p2); };	
+
+		if ((_x select 2) == "LSR") then { _p1 set [2, (_p1 select 2) + 0.48]; };
+
 		drawLine3D [_p1, _p2, GW_LINEEFFECT_COLOR];				
 		false
 	} count GW_LINEFFECT_ARRAY > 0;

@@ -141,7 +141,7 @@ waitUntil {Sleep 0.1; !isNil "serverSetupComplete"};
 
 _unit spawn setPlayerActions;
 
-_unit setVariable ['GW_Playername', GW_PLAYERNAME, true];
+_unit setVariable ['name player', name player, true];
 
 waitUntil {
 	

@@ -160,7 +160,7 @@ GW_COMMANDS_LIST = [
 								false
 							] call gw_fnc_mp;	 
 
-							_string = format['%1 received $%2 from %3.', toUpper(_this select 1), ([_amount] call numberToCurrency), GW_PLAYERNAME];
+							_string = format['%1 received $%2 from %3.', toUpper(_this select 1), ([_amount] call numberToCurrency), name player];
 							systemChat _string;	
 							pubVar_systemChat = _string;
 							publicVariable "pubVar_systemChat";
@@ -290,7 +290,7 @@ GW_COMMANDS_LIST = [
 			if (isNil "_target") then {
 				{
 					_name = _x select 1;
-					if ((toUpper _name) isEqualTo (toUpper _argument)) exitWith { _target = _x; };	
+					if ((toUpper _name) isEqualTo (toUpper _argument)) exitWith { _target = _x; GW_SHARED_ARRAY deleteAt _foreachindex; };	
 				} foreach GW_SHARED_ARRAY;
 			};
 
@@ -378,16 +378,8 @@ GW_COMMANDS_LIST = [
 			if (!isNil "_data") then {
 
 				_type = _data select 0;
-
-				_dir = direction player;
-				_relPos = [(ASLtoATL getPosASL player), 2, _dir] call BIS_fnc_relPos;
-					
-				[
-					[_relPos, _type],
-					'createObject',
-					false,
-					false
-				] call gw_fnc_mp;	
+				_relPos = player modelToWorldVisual [0, 2, 0];		
+				[_relPos, _type] call createObject;
 
 				lastSpawn = _type;
 

@@ -9,6 +9,9 @@ _vehicle = _this select 0;
 _selection = _this select 1;
 _damage = _this select 2;
 
+// If we're in the workshop, ignore all damage
+if (_vehicle distance (getMarkerPos "workshopZone_camera") < 200) exitWith { false };
+
 _origDamage = _damage;
 _oldDamage = nil;
 _projectile = _this select 4;
@@ -43,7 +46,7 @@ if (_selection != "?") then  {
             _scale = _projectile call vehicleDamageData;
 
             _status = _vehicle getVariable ['status', []];
-            _armor = _vehicle getVariable ['armor', 1];
+            _armor = _vehicle getVariable ['GW_Armor', 1];
             _scale = if (GW_ARMOR_SYSTEM_ENABLED) then { (_scale * _armor) } else { _scale };
             _scale = if ("nanoarmor" in _status) then { 0.01 } else { _scale };
 
@@ -53,13 +56,6 @@ if (_selection != "?") then  {
 
     };
 
-};
-
-if (GW_DEBUG) then {
-    _str = format['%1 / %2 / %3 / %4', typeof _vehicle, _damage, _selection, (getDammage _vehicle)];
-    systemchat _str;
-    pubVar_systemChat = _str;
-    publicVariable "pubVar_systemChat";
 };
 
 // If we're invulnerable, ignore all damage
@@ -84,9 +80,7 @@ if ("invulnerable" in _status) then {
             };
         };
         false
-    } count _parts > 0;
-
-   
+    } count _parts > 0;   
 
     if (_highestDmg > 0.91) then {} else {
         { _vehicle setHit [_x, _highestDmg]; false } count _parts > 0;
@@ -95,8 +89,19 @@ if ("invulnerable" in _status) then {
 
 };
 
+// Update the vehicle damage status bar
 _vehicle spawn { Sleep 0.05; _this call updateVehicleDamage; };
 [_vehicle, ['noservice'], 5] call addVehicleStatus;
+
+// Debug damage 
+if (isNil "GW_LASTDAMAGEMESSAGE") then { GW_LASTDAMAGEMESSAGE = time - 0.25; };
+if (GW_DEBUG && (time - GW_LASTDAMAGEMESSAGE > 0.25)) then {
+    GW_LASTDAMAGEMESSAGE = time;
+    _str = format['%1 / %2 / %3 / %4', typeof _vehicle, _damage, _selection, (getDammage _vehicle)];
+    systemchat _str;
+    pubVar_systemChat = _str;
+    publicVariable "pubVar_systemChat";
+};
 
 _damage
 

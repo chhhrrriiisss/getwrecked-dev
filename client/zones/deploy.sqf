@@ -88,7 +88,7 @@ _stripActions = {
 	_x call _stripActions;
 	if (simulationEnabled _x) then { _x enableSimulation false; };
 	false
-} count (nearestObjects [ (getMarkerPos "workshopZone_camera"), [], 250]) > 0;
+} count (nearestObjects [ (getMarkerPos "workshopZone_camera"), [], 200]) > 0;
 
 // Trigger get-in event handler
 [_targetVehicle, 'driver', _unit] call handleGetIn;
@@ -136,7 +136,7 @@ GW_DEPLOY_ACTIVE = false;
 _str = if (GW_SPAWN_LOCATION == "downtown") then { "" } else { "the "};
 systemChat format['You deployed to %1%2.', _str, GW_SPAWN_LOCATION];
 
-_strBroadcast = format['%1 deployed to %2%3', GW_PLAYERNAME, _str, GW_SPAWN_LOCATION];
+_strBroadcast = format['%1 deployed to %2%3', name player, _str, GW_SPAWN_LOCATION];
 pubVar_systemChat = _strBroadcast;
 publicVariable "pubVar_systemChat";
 

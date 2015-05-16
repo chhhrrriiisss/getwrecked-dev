@@ -36,6 +36,10 @@ _layerStatic cutRsc ["RscStatic", "PLAIN" , 0.5];
 "dynamicBlur" ppEffectAdjust [0.3]; 
 "dynamicBlur" ppEffectCommit 0.25; 
 
+
+_saveAndCloseButton = (findDisplay 96000) displayCtrl 96003;
+ctrlSetFocus _saveAndCloseButton;
+
 // Menu has been closed, kill everything!
 waitUntil { isNull (findDisplay 96000) };
 

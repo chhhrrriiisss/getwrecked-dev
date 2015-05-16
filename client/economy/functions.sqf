@@ -45,7 +45,7 @@ receiveMoney = {
 
 	// Make everyone aware we got the dosh
 	systemChat format['You earned $%1.', _valueString];
-	pubVar_systemChat = format['%1 earned $%2', GW_PLAYERNAME, _valueString];
+	pubVar_systemChat = format['%1 earned $%2', name player, _valueString];
 	publicVariable "pubVar_systemChat";
 
 	// Alert message

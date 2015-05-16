@@ -46,7 +46,7 @@ class Params
 	};
 
 	// 4
-	class BountyMoney // Percentage value of vehicle recieved from killed vehicles
+	class BountyMoney // Percentage value of vehicle received from killed vehicles
 	{
 		title = "Bounty Money"; 
 		values[] = {0, 25, 50, 75, 100}; 

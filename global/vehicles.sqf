@@ -13,7 +13,7 @@ GW_VEHICLE_LIST = [
 	["C_Offroad_01_F", "Civilian Offroad", [ [0.2, 99999], 3, 5, 2, 1, 5, (0.1 * GW_GAM), 'Low', 1000 ],  'The offroad is an agile, versatile albeit lightly armored utility vehicle.' ],
 	["C_SUV_01_F", "SUV", [ [0.1, 3000] , 3, 4, 1, 2, 4, (0.3 * GW_GAM), 'Low', 1000 ], 'A capable and reliable vehicle with a low radar signature.' ],
 	["C_Van_01_transport_F", "Civilian Truck", [ [0.5, 99999], 2, 7, 2, 2, 5, (0.25 * GW_GAM), 'Medium', 1000 ], 'Ample storage, fuel and ammo capacity, a great workhorse.' ],	
-	["C_Van_01_box_F", "Box Truck", [ [0.5, 99999], 1, 9, 1, 3, 5, (0.25 * GW_GAM), 'Large', 1000 ], 'An excellent choice for an especially special delivery.' ],		
+	["C_Van_01_box_F", "Box Truck", [ [0.5, 99999], 2, 10, 1, 3, 5, (0.25 * GW_GAM), 'Large', 1000 ], 'An excellent choice for an especially special delivery.' ],		
 	["C_Kart_01_F", "Kart", [ [0.03, 350], 2, 3, 1, 1, 1, (0.02 * GW_GAM), 'Tiny', 1000 ], 'Extremely quick and hard to hit which makes it quite unpredictable.' ],	
 
 	// Trucks
@@ -23,8 +23,8 @@ GW_VEHICLE_LIST = [
 	["O_truck_03_ammo_f", "Tempest Ammo", [ [0.1, 99999], 6, 4, 22, 2, 8, (0.3 * GW_GAM), 'Large', 1000 ], 'For those in need of a fair few bullets.' ],
 
 	["B_Truck_01_mover_F", "HEMTT Mover", [ [0.1, 99999], 3, 7, 3, 3, 8, (0.25 * GW_GAM), 'Medium', 1000 ], 'A tough rig that can withstand quite a few hits.' ],
-	["B_Truck_01_transport_F", "HEMTT Transport", [ [0.1, 99999], 2, 9, 5, 3, 8, (0.25 * GW_GAM), 'Large', 1000 ], 'A slightly tougher HEMTT with upgraded storage.' ],
-	["I_Truck_02_transport_F", "Zamak Truck", [ [0.1, 99999], 2, 8, 4, 2, 7, (0.09 * GW_GAM), 'Large', 1000 ], 'Smartly built, this clever rig presents lots of opportunities.' ],
+	["B_Truck_01_transport_F", "HEMTT Transport", [ [0.1, 99999], 3, 9, 5, 3, 8, (0.25 * GW_GAM), 'Large', 1000 ], 'A slightly tougher HEMTT with upgraded storage.' ],
+	["I_Truck_02_transport_F", "Zamak Truck", [ [0.1, 99999], 3, 8, 4, 2, 7, (0.09 * GW_GAM), 'Large', 1000 ], 'Smartly built, this clever rig presents lots of opportunities.' ],
 	// ["O_Truck_03_repair_F", "Tempest Transport", [ [0.1, 99999], 2, 12, 6, 3, 8, (0.25 * GW_GAM), 'Large', 1000 ], 'A behemoth that features excess storage and additional swag.' ],
 
 	// Military

@@ -11,9 +11,9 @@ if (!alive _obj) exitWith {};
 
 _type = typeOf _obj;
 _tag = _obj getVariable ["GW_Tag", ''];
+
 _ref = if (_tag isEqualTo '') then { _type } else { _tag };
 _data = [_ref, GW_LOOT_LIST] call getData; 
-
 if (isNil "_data") exitWith {};
 
 _class = _data select 0;

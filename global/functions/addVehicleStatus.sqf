@@ -38,7 +38,7 @@ if (typename _status == "STRING") then { _status = (call compile _status); };
 		_sL = (_sL - [_x]) + [_x];
 		_aS = (_aS - [_x]) + [_x];
 
-		[_x, (_this select 2)] call triggerVehicleStatus;
+		[_x, (_this select 2), _v] call triggerVehicleStatus;
 
 		false
 	} count (_this select 1) > 0;

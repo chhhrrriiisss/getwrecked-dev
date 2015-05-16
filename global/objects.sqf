@@ -19,7 +19,7 @@ GW_LOOT_LIST = [
 	["Land_Pallet_vertical_F", "Vertical Wooden Pallets", 50, 2, 0, 0, 'VWP', "", 0.1, palletsIcon],
 
 	["land_sportground_fence_f", "Chainlink Panel", 200, 7, 0, 0, 'CHL', "", 0.5, caltropsIcon],
-	["land_wired_fence_4m_f", "EMP Resistant Fencing", 100, 3, 0, 0, 'EMF', "", 0.8, barrierIcon],
+	["land_wired_fence_4m_f", "EMP Resistant Fencing", 100, 3, 0, 0, 'EMF', "", 0.8, emfIcon],
 	["land_mil_wallbig_4m_f", "Military-Grade Concrete", 2400, 25, 0, 0, 'MCP', "", 0.5, barrierIcon],
 	// ["land_wall_indcnc_4_f", "Thick Concrete Wall", 1000, 8, 0, 0, 'TCW', "", 0.5, barrierIcon],
 
@@ -34,14 +34,14 @@ GW_LOOT_LIST = [
 	["launch_RPG32_F", "Rocket Launcher", 750, 9999, 0, 0, 'RPG', "Rocket Launcher", 0.3, rpgIcon, [3,0.03]],
 	["srifle_LRR_LRPS_F", "SR2 Railgun", 750, 9999, 0, 0, 'RLG', "Railgun", 1, railgunIcon, [0,0]],
 	["Land_DischargeStick_01_F", "Flamethrower", 750, 9999, 0, 0, 'FLM', "Flamethrower", 1, flameIcon, [0.5,0.03]],
-	["Land_Pipes_small_F", "Rocket Pods", 750, 9999, 0, 0, 'RPD', "Rocket Pods", 1, lockonIcon, [3,0.045]],
-	["srifle_GM6_F", "Harpoon Launcher", 750, 9999, 0, 0, 'HAR', "Harpoon Launcher", 1, hmgIcon, [10,0]],
+	["Land_Pipes_small_F", "Rocket Pods", 750, 9999, 0, 0, 'RPD', "Rocket Pods", 1, rpdIcon, [3,0.045]],
+	["srifle_GM6_F", "Harpoon Launcher", 750, 9999, 0, 0, 'HAR', "Harpoon Launcher", 1, harIcon, [10,0]],
 
 	// Melee
 	["Land_PalletTrolley_01_khaki_F", "Metal Spikes", 1500, 30, 0, 0, 'FRK', "Medium damage, can capture vehicles", 1, warningIcon, [0,0] ],
-	["Land_Obstacle_Saddle_F", "Concrete Pylon", 1200, 20, 0, 0, 'CRR', "Inflicts massive damage", 1, warningIcon, [0,0] ],
-	["Land_enginecrane_01_f", "Hydraulic Hook", 800, 15, 0, 0, 'HOK', "Light damage, but can snare vehicles", 1, warningIcon, [0,0] ],
-	["Land_WoodPile_large_F", "Wooden Battering Ram", 2000, 40, 0, 0, 'WBR', "An improvised smashing thing.", 1, warningIcon, [0,0] ],
+	["Land_Obstacle_Saddle_F", "Concrete Pylon", 1200, 20, 0, 0, 'CRR', "Inflicts massive damage", 1, crrIcon, [0,0] ],
+	// ["Land_enginecrane_01_f", "Hydraulic Hook", 800, 15, 0, 0, 'HOK', "Light damage, but can snare vehicles", 1, warningIcon, [0,0] ],
+	["Land_WoodPile_large_F", "Wooden Battering Ram", 2000, 40, 0, 0, 'WBR', "An improvised smashing thing.", 1, plywoodIcon, [0,0] ],
 
 
 	// Fuel
@@ -76,8 +76,8 @@ GW_LOOT_LIST = [
 	["Land_FoodContainer_01_F", "Proximity Mines",  5, 500, 0, 0, 'MIN', "Drops a handful of mines", 0.7, minesIcon, [30,0.2] ],
 	["Box_IND_Wps_F", "Shield Generator",  5, 500, 0, 0, 'SHD', "Shield that grants temporary invulnerability", 1, shieldIcon, [60,0] ],
 	["Land_Coil_F", "Magnetic Coil",  5, 6000, 0, 0, 'MAG', "Deploys a magnetic pulse that pulls in vehicles", 1, magneticIcon, [45,0] ],
-	["Land_Sleeping_bag_folded_F", "Teleportation Pad",  5, 500, 0, 0, 'TPD', "Drops a teleportation pad", 0.9, warningIcon, [1,0] ],
-	["Land_WaterBarrel_F", "Electromagnet",  5, 2000, 0, 0, 'ELM', "Magical distance minimizer", 0.9, warningIcon, [60,0] ]
+	["Land_Sleeping_bag_folded_F", "Teleportation Pad",  5, 500, 0, 0, 'TPD', "Drops a teleportation pad", 0.9, tpdIcon, [8,0] ],
+	["Land_WaterBarrel_F", "Electromagnet",  5, 2000, 0, 0, 'ELM', "Magical distance minimizer", 0.9, elmIcon, [60,0] ]
 
 	
 	// ["Land_Sleeping_bag_folded_F", "Limpet Mines",  5, 500, 0, 0, 'LPT', "Drops limpet mines", 0.7, minesIcon],

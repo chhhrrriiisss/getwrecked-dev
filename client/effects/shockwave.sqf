@@ -49,7 +49,11 @@ if (count _objectList == 0) exitWith {};
 	_shockY_F = ceil(random _shockY_F);
 	_shockZ_F = ceil(random _shockZ_F);
 
-	_targetVelocity = [(_objectVel select 0) + (sin _objectDir * _shockX_F),(_objectVel select 1) + (cos _objectDir * _shockY_F),_shockZ_F];
+	_targetVelocity = [
+		([(_objectVel select 0) + (sin _objectDir * _shockX_F), -20, 20] call limitToRange),
+		([(_objectVel select 1) + (cos _objectDir * _shockY_F), -20, 20] call limitToRange),
+		([_shockZ_F, -20, 20] call limitToRange)
+	];
 
 	// Apply velocity to vehicle whether local or remote
 	if (local _x) then {		

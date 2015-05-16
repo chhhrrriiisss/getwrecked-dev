@@ -13,12 +13,14 @@ _vehicle = GW_CURRENTVEHICLE;
 
 _unit = player;
 
+IF (vectorUp _vehicle distance [0,0,1] > 1.4) exitWith {};
+
 // Get all the camera information we need
 GW_CAMERA_HEADING = [(positionCameraToWorld [0,0,0]), (positionCameraToWorld [0,0,1])] call BIS_fnc_vectorDiff;
 GW_TARGET_DIRECTION = [(positionCameraToWorld [0,0,0]), (positionCameraToWorld [0,0,4])] call dirTo;
 GW_MAX = positionCameraToWorld [0,0,2000];
 GW_MIN = positionCameraToWorld [0,0,500];
-GW_ORIGIN = (ASLtoATL getPosASL _vehicle);
+GW_ORIGIN = (ASLtoATL visiblePositionASL _vehicle);
 GW_SCREEN = screenToWorld [0.5, 0.5];
 
 // Determine which target marker to use
@@ -70,7 +72,7 @@ _count = 0;
 	_type = _x select 0;
 	_obj = _x select 1;
 
-	_defaultDir = _obj getVariable ["defaultDirection", 0];
+	_defaultDir = _obj getVariable ["GW_defaultDirection", 0];
 
 	// Custom target offsets for different items
 	_defaultDir = [_type, _defaultDir] call {

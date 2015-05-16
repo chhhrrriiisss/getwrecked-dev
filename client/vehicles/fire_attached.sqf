@@ -178,6 +178,5 @@ if (_success) then {
 	};
 };
 
-GW_WAITUSE = false;
 GW_WAITFIRE = false;
 

@@ -22,7 +22,7 @@ removeallassigneditems _unit;
 _unit addItem "ItemMap";
 _unit assignItem "ItemMap";
 
-GW_PLAYERNAME = (name player);
+name player = (name player);
 
 GW_WARNING_CHANNEL = radioChannelCreate [[1, 0, 0, 1], "Warning Chat", "Warning", [player]]; 
 GW_SUCCESS_CHANNEL = radioChannelCreate [[0.99,0.85,0.23,1], "Success Chat", "Success", [player]]; 
@@ -53,7 +53,7 @@ if (!isNil "GW_DC_EH") then {
 GW_DC_EH = addMissionEventHandler ["HandleDisconnect",{
 
 	// Remove ownership from any vehicles in workshop
-	_n = GW_PLAYERNAME;
+	_n = name player;
 	_o = nearestObjects [getmarkerpos "workshopZone_camera", [], 200];
 
 	pubVar_logDiag = format['%1 disconnected.', _n];
@@ -65,9 +65,6 @@ GW_DC_EH = addMissionEventHandler ["HandleDisconnect",{
 		_owner = _x getVariable ['GW_Owner', ''];	
 
 		if (_owner == _n) then {
-
-			// Delete supply boxes
-			if (_x call isSupply) exitWith { deleteVehicle _x; };
 
 			_x setVariable ['GW_Owner', '', true];
 			_isHidden = _x getVariable ['GW_HIDDEN', false];
@@ -110,7 +107,7 @@ GW_DC_EH = addMissionEventHandler ["HandleDisconnect",{
 
 systemChat 'Player initialization complete.';
 
-pubVar_logDiag = format['Player %1 initialization complete.', GW_PLAYERNAME];
+pubVar_logDiag = format['Player %1 initialization complete.', name player];
 publicVariableServer "pubVar_logDiag";
 
 clientLoadComplete = true;

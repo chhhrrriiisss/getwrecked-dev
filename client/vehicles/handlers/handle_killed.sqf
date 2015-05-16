@@ -10,6 +10,10 @@ _veh = [_this,0, objNull, [objNull]] call filterParam;
 if (isNull _veh) exitWith {};
 if (!local _veh) exitWith {};
 
+_processed = _veh getVariable ['GW_killProcessed', false];
+if (_processed) exitWith {};
+_veh setVariable ['GW_killProcessed', true];
+
 _veh removeEventHandler ["handleDamage", 0];
 _veh removeEventHandler ["killed", 0];
 _veh removeEventHandler ["getIn", 0];
@@ -55,8 +59,8 @@ _veh spawn {
     _killedBy = _veh getVariable ["killedBy", nil];    
     if (isNil "_killedBy") exitWith {};
     
-    _owner = _veh getVariable ["owner", ""];  
-    _veh setVariable ["owner", '', true];     
+    _owner = _veh getVariable ["GW_Owner", ""];  
+    _veh setVariable ["GW_Owner", '', true];     
 
     _killedBy = if (typename _killedBy == "STRING") then { (call compile _killedBy) } else { _killedBy };        
     _newSpawn = _veh getVariable ["newSpawn", false];
@@ -68,7 +72,7 @@ _veh spawn {
     _crew = crew _veh;    
 
     // No money for destroying own vehicle
-    _value = if (_owner isEqualTo (_killedBy select 0)) then { 0 } else { _value }; 
+    _value = if (_owner == (_killedBy select 0)) then { 0 } else { _value }; 
 
     if (_name == "") then { _name = 'A vehicle'; };                
         

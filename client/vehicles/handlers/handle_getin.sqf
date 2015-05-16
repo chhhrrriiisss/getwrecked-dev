@@ -6,11 +6,12 @@
 
 private ['_vehicle', '_position', '_unit'];
 
-_vehicle = _this select 0;   
-_position = _this select 1;
-_unit = _this select 2;	
+_vehicle = [_this,0,objNull, [objNull]] call filterParam;
+_position = [_this,1,"", [""]] call filterParam;
+_unit = [_this,2,objNull, [objNull]] call filterParam;
 
-systemchat format['get in triggered for %1 / %2', typeof _vehicle, _position];	
+if (isNull _vehicle) exitWith {};
+if (isNull _unit) exitWith {};
 
 // If we're a passenger and driver is vacant, move to slowly
 if ( _position != "driver" ) then {
@@ -23,10 +24,10 @@ if (GW_WAITCOMPILE) exitWith {
 	_unit action ["eject", _vehicle];
 };	
 
-[_vehicle] call compileAttached;
+_null = [_vehicle] call compileAttached;
 
 // Set ourselves as the owner
-_vehicle setVariable ["GW_Owner", GW_PLAYERNAME, true];
+_vehicle setVariable ["GW_Owner", name player, true];
 
 // Are we missing handlers? Add them!
 _hasHandlers = _vehicle getVariable ['hasHandlers', false];
@@ -37,7 +38,7 @@ _attached = attachedObjects _vehicle;
 if (count _attached <= 0) exitWith {};
 
 {
-    _x setVariable ["GW_Owner", GW_PLAYERNAME, true];    
+    _x setVariable ["GW_Owner", name player, true];    
 	_hasActions = _x getVariable ["hasActions", false];	
 	_hasHandlers = _x getVariable ["hasHandlers", false];	
 	_hasData = if (isNil { _x getVariable "GW_Data" }) then { false } else { true };

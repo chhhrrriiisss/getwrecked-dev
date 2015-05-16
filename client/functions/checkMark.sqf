@@ -40,7 +40,7 @@ if (_isVehicle) then {
 	};				
 
 	// Tag that sucker
-	if ( ( (_killedBy select 0) == "Nobody") || !((_killedBy select 0) isEqualTo GW_PLAYERNAME && (_killedBy select 1) isEqualTo _m) ) then {
+	if ( ( (_killedBy select 0) == "Nobody") || !((_killedBy select 0) isEqualTo name player && (_killedBy select 1) isEqualTo _m) ) then {
 		[_t, _m] call markAsKilledBy;
 	};
 

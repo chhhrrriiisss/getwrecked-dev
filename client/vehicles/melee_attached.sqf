@@ -17,17 +17,17 @@ _this spawn {
 
 	_v = _this;	
 	_name = _v getVariable ['name', 'current vehicle'];
-	systemchat format['Melee detection active on %1.',_name];
+	if (GW_DEBUG) then { systemchat format['Melee detection active on %1.',_name]; };
 
 	// Loop through every frame and check, disable when vehicle dies or melee toggled OFF
 	waitUntil {
-		Sleep 0.3;
+		Sleep 0.5;
 		_v call collisionCheck;
 		_meleeEnabled = _v getVariable ['GW_MELEE', false];
-		(!alive _v || !_meleeEnabled)
+		(!alive _v || !_meleeEnabled || (_v != GW_CURRENTVEHICLE))
 	};
 
-	systemchat format['Melee detection disabled on %1.', _name];
+	if (GW_DEBUG) then {  systemchat format['Melee detection disabled on %1.', _name]; };
 	_v setVariable ['GW_MELEE', false];
 
 };

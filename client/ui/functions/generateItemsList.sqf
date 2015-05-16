@@ -101,7 +101,7 @@ _filterBy = if (_category > 0) then {
 		
 		_quantityString = if (_quantity > 0) then { 
 			lnbSetData [97001, [((((lnbSize 97001) select 0)) -1), 0], _quantity];
-			format['%1x', _quantity] 
+			(format['%1x', _quantity])
 		} else { "-" };
 
 		// Don't add entries for items with no cost

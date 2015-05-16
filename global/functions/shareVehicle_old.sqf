@@ -11,7 +11,7 @@ _string = [_this,1, "", [""]] call filterParam;
 _data = [_this,2, [], [[]]] call filterParam;
 
 if ((count _data == 0) || _string == "" || _source == "") exitWith {};
-if (_source == GW_PLAYERNAME) exitWith {};
+if (_source == name player) exitWith {};
 
 if (!isDedicated) then {
 

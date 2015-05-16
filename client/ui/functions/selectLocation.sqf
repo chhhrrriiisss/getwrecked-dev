@@ -10,7 +10,6 @@ if (!isNil "GW_SPAWN_LOCATION") then {
 	GW_SPAWN_ACTIVE = false;
 
 	// If we're not the driver then make it happen
-
 	GW_SPAWN_VEHICLE lockDriver false;
 	_driver = driver GW_SPAWN_VEHICLE;
 	if (player != _driver) then {	
@@ -28,18 +27,7 @@ if (!isNil "GW_SPAWN_LOCATION") then {
 		_success = false;
 	};
 
-	if (_success) then {
-
-		{
-			_x enableSimulation true;
-			false
-		} count ([GW_CURRENTZONE] call findAllInZone) > 0;
-
-		// Make sure we record a successful deploy
-		['deploy', GW_SPAWN_VEHICLE, 1] call logStat; 
-	};
-
-	if (!_success) then {
+	if (!_success) exitWith {
 
 		_driver = driver GW_SPAWN_VEHICLE;
 		if (player == _driver) then {	
@@ -50,5 +38,16 @@ if (!isNil "GW_SPAWN_LOCATION") then {
 		GW_SPAWN_VEHICLE lockDriver true;
 
 	};
+
+	if (_success) then {
+
+		{
+			_x enableSimulation true;
+			false
+		} count ([GW_CURRENTZONE] call findAllInZone) > 0;
+
+		// Make sure we record a successful deploy
+		['deploy', GW_SPAWN_VEHICLE, 1] call logStat; 
+	};	
 	
 };

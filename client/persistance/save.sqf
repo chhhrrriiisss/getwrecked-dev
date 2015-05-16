@@ -138,23 +138,29 @@ if ( _len == 0 || _saveTarget == ' ') then {
     _name = _saveTarget;
 };
 
+_name = toUpper(_name);
+
 _abort = false;
 
 // If no save target specified, see if the user wants to give it one
 if (_name == "Untitled") then {
 
-    _result = ['SAVE', _name, 'INPUT'] call createMessage;
+    _result = ['SAVE', _name, 'INPUT', [generateName, randomizeIcon]] call createMessage;
 
-    if (typename _result == "STRING") then {
+    if (typename _result == "STRING" && ({ (count toArray _result == 0) || (_result == "Untitled") } )) then { 
+        _abort = true; 
+        ['Save aborted by user.'] spawn _onExit;            
+    };
 
-        if (_result isEqualTo "") exitWith { 
-            _abort = true; 
-            ['Save aborted by user.'] spawn _onExit;
-        };
+    if (typename _result == "BOOL" && { !_result }) then { 
+        _abort = true;         
+        ['Save aborted by user.'] spawn _onExit;
+         
+    };
 
+    if (!_abort) then {
         _name = _result;
         _saveTarget = _result;     
-        
     };
 };
 
@@ -168,18 +174,8 @@ _attachments = attachedObjects GW_SAVE_VEHICLE;
 
 _attachArray = [];
 
-// Items that are old and should be removed
-_pruneList = [
-    'Land_PenBlack_F',
-    'Land_Barrel_F', // old emp
-    'B_HMG_01_F', // old hmg model
-    'Land_BarrelTrash_F',
-    'Land_New_WiredFence_5m_F',
-    "Land_Sack_F", 
-    "Land_CnCBarrierMedium4_F", 
-    "Land_WaterTank_F" 
-];
-
+// Remove bad items
+GW_SAVE_VEHICLE call cleanAttached;
 
 // Get information about each attached item
 if (count _attachments > 0) then {
@@ -199,7 +195,7 @@ if (count _attachments > 0) then {
          _p = GW_SAVE_VEHICLE worldToModel _p;
         
         // Delete the object if we're having issues with it (or its old)
-        if (!alive _x || (_p distance _pos) > 999999  || (typeOf _x) in _pruneList ) then {
+        if (!alive _x || (_p distance _pos) > 999999) then {
 
            deleteVehicle _x;
 
@@ -224,14 +220,14 @@ if (count _attachments > 0) then {
 };
 
 // Get various meta and random data about the vehicle
-_creator = GW_SAVE_VEHICLE getVariable ['creator', GW_PLAYERNAME];
+_creator = GW_SAVE_VEHICLE getVariable ['creator', name player];
 _prevAmmo = GW_SAVE_VEHICLE getVariable ["ammo", 1];
 _prevFuel = (fuel GW_SAVE_VEHICLE) + (GW_SAVE_VEHICLE getVariable ["fuel", 0]);
 _vehicleBinds = GW_SAVE_VEHICLE getVariable ['GW_Binds', GW_BINDS_ORDER];
 _taunt = GW_SAVE_VEHICLE getVariable ['GW_Taunt', []];
 
 _stats = [];
-{  _stats pushback ([_x, _name] call getStat); FALSE } count GW_STATS_ORDER;
+{  _stats pushback ([_x, toUpper(_name)] call getStat); FALSE } count GW_STATS_ORDER;
 
 _meta = [
     GW_VERSION, // Current version of GW
@@ -243,13 +239,13 @@ _meta = [
     _taunt
 ];
 
-_data = [_class, _name, _paint, [], 0, _attachArray, _meta];    
+_data = [_class, toUpper(_name), _paint, [], 0, _attachArray, _meta];    
 
 if (count str _data > GW_MAX_DATA_SIZE) exitWith {
     ['Vehicle too large to save, please remove items.'] spawn _onExit;
 };
 
-_success = [_saveTarget, _data] call registerVehicle;
+_success = [toUpper(_saveTarget), _data] call registerVehicle;
 GW_LASTLOAD = _saveTarget;
 
 if (_success) then {

@@ -10,10 +10,7 @@ _obj = _this select 0;
 _damage = _this select 2;
 _projectile = _this select 4;
 
-_inWorkshop = if (_obj distance (getMarkerPos "workshopZone_camera") < 300) then { true } else { false };
-
-// Only handle damage outside of the workshop 
-if (_inWorkshop) exitWith { false };
+if (_obj distance (getMarkerPos "workshopZone_camera") < 200) exitWith { false };
 
 // Dont handle damage for weapons or modules
 _tag = _obj getVariable ["GW_Tag", ""];

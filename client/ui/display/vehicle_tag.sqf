@@ -4,20 +4,22 @@
 //      Return: None
 //
 
+private ['_vehicle', '_hostVehicle'];
+
 _vehicle = _this select 0;
 _hostVehicle = if (_vehicle == GW_CURRENTVEHICLE) then { true } else { false };
 
 if (isNull _vehicle) exitWith {};
 if (!alive _vehicle) exitWith {};
 
-_owner = _vehicle getVariable ["owner", ""];
+_owner = _vehicle getVariable ["GW_Owner", ""];
 
 // If it has no owner, just skip it
 if (_owner isEqualTo "") exitWith {};
 
 // Determine if the tag should be shown based off of signature distance
 _dist = GW_CURRENTVEHICLE distance _vehicle;
-_signature = _vehicle getVariable ['signature', 'Low'];
+_signature = _vehicle getVariable ['GW_Signature', 'Low'];
 
 _visibleRange = _signature call {
 	
@@ -36,7 +38,7 @@ _color = [0.99,0.14,0.09, _alpha];
 
 _crew = crew _vehicle;
 _name = _vehicle getVariable ["name", ""];
-_health = _vehicle getVariable ['health', 100]; 
+_health = _vehicle getVariable ['GW_Health', 100]; 
 
 // If its empty or our own vehicle, make it white
 if (count _crew == 0) then {
@@ -47,36 +49,73 @@ if (count _crew == 0) then {
 // Determine if object is visible (based off of multiple points)
 // This is necessary as with large amounts of attached items in the way the vehicle tag sometimes doesnt show at all
 _visible = true;
-{
-	_count = lineIntersectsWith[ATLtoASL (_x select 0), ATLtoASL (GW_CURRENTVEHICLE modelToWorldVisual [0,0,2]), GW_CURRENTVEHICLE, _vehicle];
+_vehicleHeight = ([GW_CURRENTVEHICLE] call getBoundingBox) select 2;
 
-	// If no obstructions, its visible
-	if (count _count == 0) then {
-		_visible = true;
-	};
+// Position that adjusts depending on side we're looking from
+_sourcePoint = GW_CURRENTVEHICLE modelToWorldVisual (boundingCenter GW_CURRENTVEHICLE);
 
-	if (GW_DEBUG) then {
+if (GW_DEBUG) then {
 
-		drawIcon3D [
+	drawIcon3D [
+		blankIcon,
+		colorGreen,
+		_sourcePoint,
+		0,
+		1,
+		1,
+		'x',
+		0,
+		0.035,
+		"PuristaMedium"
+	];
 
-			blankIcon,
-			colorRed,
-			(_x select 0),
-			0,
-			1,
-			1,
-			'x',
-			0,
-			0.035,
-			"PuristaMedium"
-		];
+};
 
-	};
-	false
-} count [ 
-	[ (_vehicle modelToWorldVisual [0,5,0]) ],
-	[ (_vehicle modelToWorldVisual [0,-5,0]) ]
-];
+
+_p = _x;
+_targetPoint = _vehicle modelToWorldVisual (boundingCenter _vehicle);
+_count = lineIntersectsWith[ATLtoASL _targetPoint, ATLtoASL _sourcePoint, GW_CURRENTVEHICLE, _vehicle];
+
+if (GW_DEBUG) then {	
+
+	drawIcon3D [
+
+		blankIcon,
+		colorRed,
+		_targetPoint,
+		0,
+		1,
+		1,
+		'x',
+		0,
+		0.035,
+		"PuristaMedium"
+	];
+
+};
+
+// If no obstructions, its visible
+_visible = if (count _count == 0) then {
+	true
+} else {
+
+	if ({ 
+
+		_friendlyObject = if (!isNull attachedTo _x) then {
+			if ((attachedTo _x isEqualTo _vehicle) || (attachedTo _x isEqualTo GW_CURRENTVEHICLE)) exitWith { true };
+			false
+		};
+
+		if (!_friendlyObject) exitWith {1};
+
+		false
+
+	} count _count isEqualTo 1) exitWith {
+		false
+	};	
+
+	true
+};
 
 // If there's an obstruction, or the vehicle is cloaked/hidden
 _inScope = [GW_TARGET_DIRECTION, _vehicle, 12.5] call checkScope;

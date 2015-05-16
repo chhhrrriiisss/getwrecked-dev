@@ -13,7 +13,6 @@ if (isNull ( _this select 0) || isNull (_this select 1)) exitWith { false };
 _obj = _this select 0;
 _vehicle = _this select 1;
 
-
 // Ok, let's position it behind the vehicle
 _maxLength = ([_vehicle] call getBoundingBox) select 1;
 _pos = _vehicle modelToWorldVisual [0, (-1 * ((_maxLength/2) + 2)), 0];
@@ -21,6 +20,7 @@ _pos set [2, 0];
 
 playSound3D ["a3\sounds_f\sfx\vehicle_drag_end.wss",_vehicle, false, (ASLtoATL visiblePositionASL _vehicle), 10, 1, 50];
 deleteVehicle _obj;
+
 _obj = createVehicle ["containmentArea_02_sand_F", _pos, [], 0, 'CAN_COLLIDE']; // So it doesnt collide when spawned in]
 _obj setVectorUp (surfaceNormal _pos);
 _obj setDir (random 360);
@@ -43,14 +43,12 @@ _obj setDir (random 360);
 GW_HUD_REFRESH = true;
 
 _releaseTime = time;
-_timer = 360;
+_timer = 300;
 _timeout = time + _timer;
 
 // Handlers to trigger effect early
-_obj addEventHandler['HandleDamage', { (_this select 0) setVariable ["triggered", true]; }];
-_obj addEventHandler['killed', {  (_this select 0) setVariable ["triggered", true]; }];
-_obj addEventHandler['Explosion', {	 (_this select 0) setVariable ["triggered", true]; }];
-_obj addEventHandler['Hit', { (_this select 0) setVariable ["triggered", true]; }];
+_obj addEventHandler['HandleDamage', { (_this select 0) setDammage 1; false }];
+_obj addEventHandler['Explosion', {	(_this select 0) setDammage 1; false }];
 
 // Add to targets array
 _existingTargets = _vehicle getVariable ["GW_teleportTargets", []];
@@ -61,80 +59,57 @@ GW_WARNINGICON_ARRAY = GW_WARNINGICON_ARRAY + [_obj];
 GW_DEPLOYLIST = GW_DEPLOYLIST + [_obj];
 
 [_obj, _timeout, _vehicle] spawn {
+
+	private ['_o', '_t', '_v'];
 	
 	_o = _this select 0;
 	_t = _this select 1;
 	_v = _this select 2;
 
-	_triggered = false;
+	waitUntil {	
+	
+		_nearby = (ASLtoATL visiblePositionASL _o) nearEntities [["Car"], 5];
 
-	for "_i" from 0 to 1 step 0 do {
+		{
+			_isVehicle = _x getVariable ['isVehicle', false];
+			_status = _x getVariable ['status', []];
+			if (alive _x && _isVehicle && (_x != GW_CURRENTVEHICLE) && { !('teleport' in _status) } ) exitWith {	
 
-		if (!alive _o || time >= _t || _triggered) exitWith {};
+				playSound3D ["a3\sounds_f\sfx\beep_target.wss", _o, false, (ASLtoATL visiblePositionASL _o), 10, 1, 50];
 
-		_triggered = _o getVariable ["triggered", false];
-		playSound3D ["a3\sounds_f\sfx\beep_target.wss", _o, false, getPos _o, 2, 1, 25]; 
-		Sleep 0.5;
-	};
+				[
+					[
+						_x, 
+						"['teleport']",
+						3
+					],
+					'addVehicleStatus',
+					_x,
+					false
+				] call gw_fnc_mp;
 
-	// If the object is still alive, let's use it
-	if (alive _o && time < _t) then {
-
-		_pos = (ASLtoATL visiblePositionASL _o);
-
-		playSound3D ["a3\sounds_f\weapons\mines\electron_trigger_1.wss", _o, false, _pos, 5, 1, 100]; 
-
-		[
-			[
-				_v,
-				4,
-				0.5
-			],
-			"magnetEffect",
-			true,
-			false
-		] call gw_fnc_mp;
-
-		_v spawn {
-			_timeout = time + 2;
-			_n = 0;
-			waitUntil {
-				Sleep 0.25;
-				_n = _n + 1;
-				[_this, 5, 10] call shockwaveEffect;
-				addCamShake[(random _n), 1, 10];
-				(time > _timeout)
+				false
 			};
-		};		
+			false
+		} count _nearby;		
 
-		Sleep 3 + (random 2);
+		Sleep 0.75;
 
-		playSound3D ["a3\sounds_f\sfx\special_sfx\sparkles_wreck_1.wss", _o, false, _pos, 10, 1, 150];	
-
-		_vel = velocity _v;
-		_dir = vectorDir _v;
-		_up = vectorUp _v;
-
-		_pos set [2, (_pos select 2) + 2];
-		_v setPos _pos;
-		_v setVectorDirAndUp [_dir, _up];
-		_v setVelocity _vel;
-
-		deleteVehicle _o;
-				
-	};
+		(!alive _o || time >= _t)
+	};	
 
 	// Cleanup
-	_o removeAllEventHandlers "Hit";
 	_o removeAllEventHandlers "Explosion";
 	_o removeAllEventHandlers "HandleDamage";
 
-	_detonateTargets = _v getVariable ["GW_teleportTargets", []];
-	_newTargets = _detonateTargets - [_o];
+	_teleportTargets = _v getVariable ["GW_teleportTargets", []];
+	_newTargets = _teleportTargets - [_o];
 	_v setVariable ["GW_teleportTargets", _newTargets];	
 
 	GW_WARNINGICON_ARRAY = GW_WARNINGICON_ARRAY - [_o];
 	GW_DEPLOYLIST = GW_DEPLOYLIST - [_o];
+
+	deleteVehicle _o;
 
 };
 

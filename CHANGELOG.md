@@ -7,8 +7,10 @@ Items without Fixed/Added/Removed proceeding, are typically balance changes
 
 **v0.8.2** [Public alpha release]
 
+- Shockwave velocity limitation
+- Increased audability of most weapon/module effects 
 - Re-write to object manipulation system to avoid collisions in workshop
-- loadVehicle system is now client side to improve reliability 
+- loadVehicle system is now client side to improve reliability (WIP)
 - Improved status effect handler system to improve fps
 - Improved guided missile handling slightly
 - Improved RPG accuracy and speed
@@ -20,6 +22,8 @@ Items without Fixed/Added/Removed proceeding, are typically balance changes
 - Pulse effect to railgun
 - Bags of explosives now do scaled damage depending on distance
 - Vehicle health tag now only shows when player is looking directly at it
+- Fixed - Vehicles spawning simultaneously now are both deleted to av		oid collisions
+- Fixed - Laser firing from center of object
 - Fixed - Memory crash involving object handle damage event handler
 - Fixed - Crash on attaching HMGs/GMGs 
 - Fixed - setVehicleTexture not exiting correctly on server
@@ -31,6 +35,7 @@ Items without Fixed/Added/Removed proceeding, are typically balance changes
 - Fixed - Custom font missing error on input dialog
 - Fixed - Vehicle load UI list should now correctly match current preview
 - Changed - 'Salt flat' is now 'Dry Lake'
+- Added - Random vehicle name generator
 - Added - !copy command for Admins to retrieve vehicles from remote clients
 - Added - Weapon FOV preview when attaching items in the workshop
 - Added - Rocket Pods, Grappling Hook, Teleportation Device, Electromagnet (WIP)
@@ -38,6 +43,7 @@ Items without Fixed/Added/Removed proceeding, are typically balance changes
 - Added - Concrete Pylon, Hydraulic Hook (WIP)
 - Added - Box Truck, Fuel and Ammo and Tempest Trucks to available vehicles 
 - Added - Suspend option to lift vehicle mechanic
+
 
 **v0.8.1** [Closed alpha release]
 

@@ -15,6 +15,6 @@ waitUntil {
 	Sleep 0.5;
 	_heading = [(ASLtoATL visiblePositionASL (_this select 0)),(ASLtoATL visiblePositionASL (_this select 1))] call BIS_fnc_vectorFromXToY;	
 	_velocity = [_heading, 20] call BIS_fnc_vectorMultiply; 
-	(_this select 0) setVelocity _velocity;
+	(_this select 0) setVelocity (_velocity vectorAdd (velocity (_this select 0)));
 	(time > _timeout)
 };

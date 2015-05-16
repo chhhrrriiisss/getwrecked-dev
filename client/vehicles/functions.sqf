@@ -71,26 +71,47 @@ calcSpecial = {
 // Apply all defaults to the vehicle
 setDefaultData = {
 
-	private ["_v"];
+	private ["_v", "_data"];
 
 	_v = _this select 0;
-	_defaultData = _v getVariable ["GW_defaults",[]];
 
-	if (count _defaultData <= 0) exitWith { false };
+	_mass = getMass _v;
+	if (isNil "_mass") then { _mass = 5000; };
+
+	_data = [typeOf _v, GW_VEHICLE_LIST] call getData;
+	if (isNil "_data") exitWith { false };
+	_attr = _data select 2;
+
+	_defaultAmmo = [_attr, 3, 0] call filterParam;
+	_defaultFuel =[_attr, 4, 0] call filterParam;
+	_signature = [_attr, 7, "Low"] call filterParam;
+	_armor = [_attr, 6, 1] call filterParam;
+	_maxWeapons = [_attr, 1,9999] call filterParam;
+	_maxModules = [_attr, 2, 9999] call filterParam;	
+	_massModifier = [(_attr select 0), 0, 1] call filterParam;
+	_maxMass = [(_attr select 0), 1, 99999] call filterParam;
 
 	{
-		if ((_x select 0) == 'mass') then {
-			_v setMass (_x select 1);
-		} else {
+		_v setVariable _x;
+	} count [	    
+	    ['GW_Armor', _armor, true],
+	    ['GW_Signature', _signature, true],
+	    ['GW_Health', 100, true],
+	    ['fuel', 0, false],
+	    ['ammo', 1, false],
+	    ['maxAmmo', _defaultAmmo, false],
+	    ['maxFuel', _defaultFuel, false],
+	    ['maxWeapons', _maxWeapons, false],
+	    ['maxModules', _maxModules, false],
+	    ['weapons', [], false],
+	    ['tactical', [], false],
+	    ['special', [], false],
+	    ['mass', _mass, false],
+	    ['maxMass', _maxMass, false],
+	    ['massModifier', _massModifier, false],
+	    ['lockOns', false, false]
 
-			if (_x select 2) then {
-				_v setVariable [_x select 0, _x select 1, true];
-			} else {
-				_v setVariable [_x select 0, _x select 1];
-			};
-		};
-		false
-	} count _defaultData > 0;
+	] > 0;
 	
 	removeAllActions _v;
 	
@@ -101,6 +122,8 @@ setDefaultData = {
 setVehicleActions = {
 	
 	_vehicle = _this select 0;
+
+	if (!hasInterface) exitWith {};
 
 	_vehicle setVariable ['hasActions', true];
 
@@ -165,7 +188,7 @@ setVehicleActions = {
 
 		[(_this select 0), player] spawn settingsMenu;
 
-	}, [], 0, false, false, "", "( !GW_EDITING && player in _target && !GW_LIFT_ACTIVE && !(GW_PAINT_ACTIVE))"];		
+	}, [], 0, false, false, "", "( !GW_EDITING && ((player distance _target) < 8) && (player in _target) && (GW_CURRENTZONE != 'workshopZone') && !GW_LIFT_ACTIVE && !(GW_PAINT_ACTIVE))"];		
 
 	// Open the settings menu
 	_vehicle addAction[unflipVehicleFormat, {

@@ -1,6 +1,6 @@
 //
 //      Name: logKill
-//      Desc: Handles a successful kill message recieved from client
+//      Desc: Handles a successful kill message received from client
 //      Return: None
 //
 

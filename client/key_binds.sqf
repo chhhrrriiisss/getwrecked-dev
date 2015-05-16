@@ -25,17 +25,11 @@ initBinds = {
 	GW_MU_EH = (findDisplay 46) displayAddEventHandler ["MouseButtonUp", "_this call setMouseUp; false;"];
 
 	setMouseDown = {			
-		if ((_this select 1) == 0) then {  
-
-			GW_LMBDOWN = true; 		
-	
-		};
-		
+		if ((_this select 1) == 0) then { GW_LMBDOWN = true; };		
 	};
 
 	setMouseUp = {		
-		if ((_this select 1) == 0) then {  GW_LMBDOWN = false; };	
-		
+		if ((_this select 1) == 0) then {  GW_LMBDOWN = false; };		
 	};
 
 };

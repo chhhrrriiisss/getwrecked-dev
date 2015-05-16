@@ -108,13 +108,6 @@ class Mission
 		"A3_Signs_F_AD",
 		"A3_Structures_F_EPA_Mil_Scrapyard",
 		"A3_Structures_F_Training",
-		"A3_Structures_F_Civ_Constructions",
-		"A3_Structures_F_Heli_Ind_AirPort",
-		"A3_Structures_F_Civ_Camping",
-		"A3_Structures_F_EPC_Civ_Camping",
-		"A3_Structures_F_EPA_Civ_Camping",
-		"A3_Structures_F_EPB_Civ_Accessories",
-		"A3_Structures_F_Civ_Accessories",
 		"a3_map_altis"
 	};
 	randomSeed=2523513;
@@ -395,7 +388,7 @@ class Mission
 	};
 	class Vehicles
 	{
-		items=628;
+		items=620;
 		class Item0
 		{
 			position[]={14976.409,17.95015,16537.611};
@@ -6484,78 +6477,6 @@ class Mission
 			skill=0.60000002;
 			text="loadCamera_2";
 			init="this setVariable ['GW_LOADING_TARGET', [108838.07,-5985.69,-21211.41] ]; this addEventHandler['handleDamage', { false }]; this enableSimulationGlobal false; this hideObjectGlobal true; ";
-		};
-		class Item620
-		{
-			position[]={14388.12,38.238323,19025.131};
-			azimut=-220.79089;
-			id=632;
-			side="EMPTY";
-			vehicle="Land_Pipes_large_F";
-			skill=0.60000002;
-		};
-		class Item621
-		{
-			position[]={14386.398,38.231964,19027.939};
-			azimut=-131.657;
-			id=633;
-			side="EMPTY";
-			vehicle="Windsock_01_F";
-			skill=0.60000002;
-		};
-		class Item622
-		{
-			position[]={14392.034,38.243198,19030.74};
-			azimut=-131.657;
-			id=634;
-			side="EMPTY";
-			vehicle="Land_FirePlace_F";
-			skill=0.60000002;
-		};
-		class Item623
-		{
-			position[]={14390.288,38.235126,19029.811};
-			azimut=-131.657;
-			id=635;
-			side="EMPTY";
-			vehicle="FirePlace_burning_F";
-			skill=0.60000002;
-		};
-		class Item624
-		{
-			position[]={14392.421,38.248981,19027.947};
-			azimut=-131.657;
-			id=636;
-			side="EMPTY";
-			vehicle="Land_Sunshade_01_F";
-			skill=0.60000002;
-		};
-		class Item625
-		{
-			position[]={14388.617,38.224094,19031.402};
-			azimut=-131.657;
-			id=637;
-			side="EMPTY";
-			vehicle="Land_WoodenLog_F";
-			skill=0.60000002;
-		};
-		class Item626
-		{
-			position[]={14381.831,38.203575,19030.936};
-			azimut=-83.848793;
-			id=638;
-			side="EMPTY";
-			vehicle="Land_WoodPile_large_F";
-			skill=0.60000002;
-		};
-		class Item627
-		{
-			position[]={14382.025,38.210144,19027.523};
-			azimut=-83.848801;
-			id=639;
-			side="EMPTY";
-			vehicle="Land_WoodPile_F";
-			skill=0.60000002;
 		};
 	};
 	class Markers

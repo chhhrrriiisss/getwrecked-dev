@@ -132,6 +132,7 @@ _obj attachTo [_veh];
 
 _timeout = time + 3;
 waitUntil {
+	
 	_attached = if (!isNull attachedTo _obj) then { if ((attachedTo _obj) isEqualTo _veh) exitWith { true }; false } else { false };
 	(_attached || (time > _timeout))
 };
@@ -140,7 +141,7 @@ _obj setVectorDirAndUp _vect;
 _obj setVectorUp [0,0,1];
 
 // Set ownership to prevent non-owner detachment
-_obj setVariable ['GW_Owner', GW_PLAYERNAME, true];
+_obj setVariable ['GW_Owner', name player, true];
 
 // If its being force added ignore message
 if (_forceAttach) then {} else {
@@ -163,11 +164,11 @@ if (_wasSimulated) then {
 };
 
 // If it wasn't simulated, briefly toggle simulation so we see the update
-if (!_wasSimulated) then {
+if (!_wasSimulated) then {	
 	_veh enableSimulation true;
-	_prevPos = (ASLtoATL visiblePositionASL _veh);
 	_timeout = time + 5;
-	waitUntil { Sleep 0.05; (simulationEnabled _veh || time > _timeout) };
+	waitUntil { (simulationEnabled _veh || time > _timeout) };
+	_prevPos = ASLtoATL visiblePositionASL _veh;
 	Sleep 0.1;
 	_veh enableSimulation false;
 	_veh setPos _prevPos;
@@ -191,6 +192,8 @@ if (_isHidden) then {
 // Remove all actions from player
 removeAllActions player;
 player spawn setPlayerActions;
+
+[_veh] call snapToPad;
 
 true
 

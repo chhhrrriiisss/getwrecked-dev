@@ -29,18 +29,21 @@ _hoursAlive = floor(_seconds / 3600);
 _minsAlive = floor((_seconds - (_hoursAlive*3600)) / 60);
 _secsAlive = floor(_seconds % 60);
 _timeAlive = format['%1h : %2m : %3s', ([_hoursAlive, 2] call padZeros), ([_minsAlive, 2] call padZeros), ([_secsAlive, 2] call padZeros)];
-_raw = [typeOf _v, GW_VEHICLE_LIST] call getData;
-if (isNil "_raw") exitWith {};	
-_data = _raw select 2;
-_massModifier = (_data select 0) select 0;
-_maxWeapons = (_data select 1);
-_maxModules = (_data select 2);
+
+
+_massModifier = _v getVariable ['massModifier', 1];
+_maxMass = _v getVariable ['maxMass', 99999];
+_defaultMass = _v getVariable ['mass', 1000];
+_actualMass = [ round ( (getMass _v) / _massModifier), _defaultMass, _maxMass] call limitToRange;
+
+_maxWeapons = _v getVariable ['maxWeapons', 0];
+_maxModules = _v getVariable ['maxModules', 0];
 
 // Array formatting the stats into rows/columns
 _stats = [
 	['', '', ''],
 	['', 'Health', format['%1%2', round ((1-(getDammage _v)) * 100), '%']],
-	['', 'Mass', format['%1kg', round ( (getMass _v) / _massModifier), '%']],
+	['', 'Mass', format['%1kg',  _actualMass]],
 	['', 'Ammo Capacity', format['%1%2', round( (_v getVariable ["maxAmmo", 1]) * 100), '%']],
 	['', 'Fuel Tank', format['%1L', round( (_v getVariable ["maxFuel", 1]) * 100), '%']],
 	['', 'Weapons', 
@@ -69,11 +72,12 @@ _stats = [
 	['', 'Money Earned', format['$%1', [(["moneyEarned", _name] call getStat)] call numberToCurrency] ],
 	['', 'Time Alive',_timeAlive],
 	['', 'Creator', 
-		(_v getVariable ["creator", ""])
+		(_v getVariable ["creator", "Unknown"])
 	],
 	['', '', '']
 ];
 
 {
 	_statsList lnbAddRow['', (_x select 1), (_x select 2)];
-} ForEach _stats;
+	false
+} count _stats > 0;

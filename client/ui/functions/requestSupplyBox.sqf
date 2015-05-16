@@ -39,7 +39,7 @@ if (!isNil "GW_NEW_SUPPLY_BOX" ) then {
 	};	
 
 	GW_NEW_SUPPLY_BOX setVariable ["GW_Inventory", _contents];
-	GW_NEW_SUPPLY_BOX setVariable ["GW_Owner", GW_PLAYERNAME, true];		
+	GW_NEW_SUPPLY_BOX setVariable ["GW_Owner", name player, true];		
 
 	GW_NEW_SUPPLY_BOX spawn newItemsSupplyBox;
 

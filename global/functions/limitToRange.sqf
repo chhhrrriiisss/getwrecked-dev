@@ -6,9 +6,9 @@
 
 private ['_v', '_nV', '_r1', '_r2', '_c'];
 
-_v = _this select 0;
-_r1 = _this select 1;
-_r2 = _this select 2;
+_v = [_this, 0, 0, [0]] call filterParam;
+_r1 = [_this, 1, 0, [0]] call filterParam;
+_r2 = [_this, 2, 0, [0]] call filterParam;
 _c = [_this, 3, false, [false]] call filterParam;
 
 if (_v < _r1) exitWith { 

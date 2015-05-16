@@ -2,6 +2,7 @@ _data = [_this, 0, [], [[]]] call filterParam;
 _sender = [_this, 1, "", [""]] call filterParam;
 
 if (count _data == 0) exitWith {};
+if (_sender == name player) exitWith {};
 
 _vName = (_data select 0) select 1;
 

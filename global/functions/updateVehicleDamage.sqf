@@ -20,6 +20,6 @@ _oD = 3;
     _oD = _oD - _d;
 } count ['palivo', 'motor', 'karoserie'] > 0;
 
-_this setVariable ['health', round ( (_oD / 3) * 100), true];
+_this setVariable ['GW_Health', round ( (_oD / 3) * 100), true];
 
 true

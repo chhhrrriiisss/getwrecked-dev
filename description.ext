@@ -18,6 +18,8 @@ class Header
 	maxPlayers = 12; 
 };
 
+onPauseScript = "onPause.sqf";
+
 #include "params.hpp"
 
 disableChannels[] = {0,2,3,6};

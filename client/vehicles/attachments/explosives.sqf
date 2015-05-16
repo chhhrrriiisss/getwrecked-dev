@@ -53,7 +53,7 @@ _obj attachTo [_holder, [0,0,0.1]];
 };
 
 _releaseTime = time;
-_timer = 60;
+_timer = 120;
 _timeout = time + _timer;
 
 // Handlers to trigger effect early
@@ -111,7 +111,7 @@ GW_DEPLOYLIST = GW_DEPLOYLIST + [_obj];
 
 		_bomb = createVehicle ["Bo_GBU12_LGB", _pos, [], 0, "FLY"];		
 		_bomb setVelocity [0,0,-10];
-		[_pos, 40, 50] call shockwaveEffect;		
+		[_pos, 40, 15] call shockwaveEffect;		
 
 		_nearby = _pos nearEntities [["Car"], 30];	
 
@@ -126,8 +126,6 @@ GW_DEPLOYLIST = GW_DEPLOYLIST + [_obj];
 					_modifier = [1 - (30 / ( _x distance _pos)), 0.5, 1] call limitToRange;					
 					_d = if ('nanoarmor' in _status) then { 0.05 } else { (random (0.2) + 0.6) };
 					_d = _d * _modifier;
-
-					systemChat format['%1 / %2 / %3', (_x distance _pos), _modifier, _d]; 
 
 					if (_d > 0) then {
 

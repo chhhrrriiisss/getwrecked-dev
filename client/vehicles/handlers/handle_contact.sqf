@@ -9,7 +9,7 @@ _vehicle = _this select 0;
 
 if (!local _vehicle) exitWith {};
 
-_inWorkshop = if (_vehicle distance getMarkerPos "workshopZone_camera" < 300) then { true } else { false };
+_inWorkshop = if (_vehicle distance getMarkerPos "workshopZone_camera" < 200) then { true } else { false };
 if (_inWorkshop) exitWith {};
 
 [_vehicle] spawn checkTyres; 

@@ -22,7 +22,7 @@ GW_DISPLAY_EH = addMissionEventHandler ["Draw3D", {
 		if (GW_DEBUG_ARRAY isEqualTo []) exitWith {};
 
 		GW_DEBUG_MONITOR_LAST_UPDATE = time;
-		_totalString = format["[   DEBUG MODE   ] \n\n Time: %1\n Zone: %2\n Player: %3\n FPS: %4\n FPSMIN: %5\n", time, GW_CURRENTZONE, GW_PLAYERNAME, diag_fps, diag_fpsmin];
+		_totalString = format["[   DEBUG MODE   ] \n\n Time: %1\n Zone: %2\n Player: %3\n FPS: %4\n FPSMIN: %5\n", time, GW_CURRENTZONE, name player, [diag_fps, 0] call roundTo, [diag_fpsMIN, 0] call roundTo];
 		{	_totalString = format['%1 \n %2: %3', _totalString, (_x select 0), (_x select 1)];	false	} count GW_DEBUG_ARRAY > 0;
 
 		hintSilent _totalString;
@@ -51,21 +51,26 @@ GW_DISPLAY_EH = addMissionEventHandler ["Draw3D", {
  	// If any of these menus are active, forget about drawing anything else
 	if (GW_DEPLOY_ACTIVE || GW_SPAWN_ACTIVE || GW_SETTINGS_ACTIVE) exitWith {};
 	if (isNil "GW_CURRENTZONE") exitWith {};
-	if (GW_CURRENTZONE == "workshopZone") exitWith {};
-
-	// Player target marker
-	if (GW_INVEHICLE && GW_ISDRIVER && !GW_TIMER_ACTIVE) then { call targetCursor; };	
 
 	// If there's no nearby targets, no point going any further
 	_targets = if (GW_DEBUG) then { ((ASLtoATL visiblePositionASL GW_CURRENTVEHICLE) nearEntities [["Car", "Man"], 1000]) } else { ([GW_CURRENTZONE] call findAllInZone) };	
 	if (count _targets == 0) exitWith {};	
+
+	call drawTags;
+
+	if (GW_CURRENTZONE == "workshopZone") exitWith {};
+
+	[] call statusMonitor;
+
+	// Player target marker
+	if (GW_INVEHICLE && GW_ISDRIVER && !GW_TIMER_ACTIVE) then { call targetCursor; };		
 
 	// Try to lock on to those targets if we have lock ons
 	if (GW_INVEHICLE && GW_ISDRIVER && GW_HASLOCKONS && !GW_NEWSPAWN) then {
 		_targets call targetLockOn;
 	};
 
-	call drawTags;
+	
 	
 		
 }];
