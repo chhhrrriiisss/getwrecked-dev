@@ -60,7 +60,7 @@ GW_DISPLAY_EH = addMissionEventHandler ["Draw3D", {
 
 	if (GW_CURRENTZONE == "workshopZone") exitWith {};
 
-	[] call statusMonitor;
+	call statusMonitor;
 
 	// Player target marker
 	if (GW_INVEHICLE && GW_ISDRIVER && !GW_TIMER_ACTIVE) then { call targetCursor; };		

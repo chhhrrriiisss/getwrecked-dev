@@ -28,7 +28,7 @@ GW_DAMAGE_UPDATE_INTERVAL = 0.1;
 GW_ARMOR_SYSTEM_ENABLED = if ((paramsArray select 5) == 1) then { true } else { false };
 
 // Weapon Damage vs vehicles 
-GW_GDS = 0.03; 
+GW_GDS = 0.0075; 
 WHEEL_COLLISION_DMG_SCALE = 0; 
 COLLISION_DMG_SCALE = 0; 
 FIRE_DMG_SCALE = 8; 
@@ -100,10 +100,10 @@ vehicleDamageData = {
 		if (_this == "M_PG_AT" || _this == "RPD") exitWith { ((random 0.5) + 0.4) };
 		if (_this == "M_Titan_AT" || _this == "GUD" || _this == "MIS") exitWith { (1 + random 0.5) };
 		if (_this == "M_Titan_AA_static" || _this == "RLG") exitWith { (0) };
-		if (_this == "B_127x99_Ball_Tracer_Red" || _this == "LSR") exitWith { 5 };
+		if (_this == "B_127x99_Ball_Tracer_Red" || _this == "LSR") exitWith { 0 };
 		if (_this == "B_127x99_Ball" || _this == "HMG") exitWith { 14 };
 		if (_this == "B_127x99_Ball_Tracer_Yellow") exitWith { 3 };
-		if (_this == "R_TBG32V_F" || _this == "MOR") exitWith { (7 + random 3) };
+		if (_this == "R_TBG32V_F" || _this == "MOR") exitWith { (7 + random 5) };
 		if (_this == "G_40mm_HEDP" || _this == "GMG") exitWith { (5 + random 1) };
 		if (_this == "Bo_GBU12_LGB" || _this == "EXP") exitWith { (4 + random 2) };
 		if (_this == "M_AT") exitWith { 0 };

@@ -69,7 +69,7 @@ _hook setVelocity _velocity;
 
 [_hook, _velocity, _tPos] spawn {
 	_lastPos = (ASLtoATL visiblePositionASL (_this select 0));
-	_timeout = time + 15;
+	_timeout = time + 10;
 	waitUntil {		
 		Sleep 0.25;
 		_lastPos = (ASLtoATL visiblePositionASL (_this select 0));
@@ -79,11 +79,11 @@ _hook setVelocity _velocity;
 	};
 };
 
-_hook spawn { Sleep 15; deleteVehicle _this; };
+_hook spawn { Sleep 10; deleteVehicle _this; };
 
 [_rope, _obj] spawn { 
 
-	_timeout = time + 15;
+	_timeout = time + 10;
 	waitUntil {
 		Sleep 0.1;
 		((time > _timeout) || !(alive (_this select 0)) || !(alive GW_CURRENTVEHICLE))

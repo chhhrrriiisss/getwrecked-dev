@@ -7,6 +7,7 @@ Items without Fixed/Added/Removed proceeding, are typically balance changes
 
 **v0.8.2** [Public alpha release]
 
+- Teleport mechanic adjusted to make it more practical to use
 - Shockwave velocity limitation
 - Increased audability of most weapon/module effects 
 - Re-write to object manipulation system to avoid collisions in workshop
@@ -22,7 +23,10 @@ Items without Fixed/Added/Removed proceeding, are typically balance changes
 - Pulse effect to railgun
 - Bags of explosives now do scaled damage depending on distance
 - Vehicle health tag now only shows when player is looking directly at it
-- Fixed - Vehicles spawning simultaneously now are both deleted to av		oid collisions
+- Fixed - Items detachable on vehicles player does not own
+- Temp Fix - Ownership lost when cancelling deploy timer
+- Fixed - Guided missile dealing no damage
+- Fixed - Vehicles spawning simultaneously now are both deleted to avoid collisions
 - Fixed - Laser firing from center of object
 - Fixed - Memory crash involving object handle damage event handler
 - Fixed - Crash on attaching HMGs/GMGs 

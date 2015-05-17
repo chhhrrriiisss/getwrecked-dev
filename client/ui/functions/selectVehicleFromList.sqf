@@ -47,7 +47,7 @@ if (!_result) exitWith {};
 
 // Find the closest vehicle pad, and request the server spawn a fresh one
 _closest = [saveAreas, (getPosATL player)] call findClosest; 
-_array = [_class,'Untitled','', (getPosATL _closest), 0, []];
+_array = [_class,'Untitled','', (ASLtoATL visiblePositionASL _closest), 0, []];
 [_closest, _array] spawn requestVehicle;
 
 closeDialog 0;

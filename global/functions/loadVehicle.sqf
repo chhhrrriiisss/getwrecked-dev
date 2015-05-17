@@ -126,6 +126,10 @@ _paint = (_data select 2);
         _o = [[0,0,100], (_x select 0), (_x select 2), 0, "CAN_COLLIDE", true] call createObject; 
         _o allowDamage false;
 
+        // Add key bind before attach
+        _k = if (isNil { (_x select 3) }) then { ["-1", "1"] } else { (_x select 3) };            
+        _o setVariable ['GW_KeyBind', _k, true];  
+
         _o attachTo [_newVehicle, [0,0,20]];
         _o attachTo [_newVehicle, (_p vectorAdd (boundingCenter _o))];
        
@@ -134,12 +138,7 @@ _paint = (_data select 2);
         } else {
             [_o, _dir] call setDirTo;          
         };      
-  
-        _o setDammage 0;  
-
-        // Add key bind
-        _k = if (isNil { (_x select 3) }) then { ["-1", "1"] } else { (_x select 3) };            
-        _o setVariable ['GW_KeyBind', _k, true];  
+              
         _o allowDamage true;
 
     };

@@ -35,7 +35,7 @@ _continueButton = ((findDisplay 49) displayCtrl 2) ctrlEnable false;
 	waitUntil {	
 		_respawnButton = (findDisplay 49) displayCtrl 1010;
 		if (player distance (getMarkerPos "workshopZone_camera") > 300) then {
-			_respawnButton ctrlsetText "RETURN TO WORKSHOP";
+			_respawnButton ctrlsetText "RESPAWN AT WORKSHOP";
 		};
 
 		(!isNull findDisplay 49)

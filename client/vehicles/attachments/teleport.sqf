@@ -77,6 +77,8 @@ GW_DEPLOYLIST = GW_DEPLOYLIST + [_obj];
 
 				playSound3D ["a3\sounds_f\sfx\beep_target.wss", _o, false, (ASLtoATL visiblePositionASL _o), 10, 1, 50];
 
+				[_x, 'TPD'] call markAsKilledBy;
+				
 				[
 					[
 						_x, 

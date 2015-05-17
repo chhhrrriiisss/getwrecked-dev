@@ -10,7 +10,6 @@ if (_meleeEnabled) exitWith { _this setVariable ['GW_MELEE', false]; false };
 // No existing melee detection, generate a new one...
 _this setVariable ['GW_MELEE', true];
 
-
 _this spawn {
 	
 	private ['_v', '_name'];

@@ -112,6 +112,7 @@ _powerUpActive = false;
 _lockedActive = false;
 _status = [];
 _lastStatusCount = 0;
+_iconsArray = [];
 
 _layerStatic = ("BIS_layerStatic" call BIS_fnc_rscLayer);
 
@@ -170,9 +171,7 @@ for "_i" from 0 to 1 step 0 do {
 					false
 				} count _vHudBars > 0;
 
-			} else { _layerStatic cutRsc ["RscStatic", "PLAIN" , 1]; };
-
-			
+			} else { _layerStatic cutRsc ["RscStatic", "PLAIN" , 1]; };			
 
 			GW_HUD_VEHICLE_ACTIVE = true;				
 
@@ -247,13 +246,7 @@ for "_i" from 0 to 1 step 0 do {
         };
 
         // Health status (kinda unused right now)
-		_damage = getDammage _vehicle;    
 		_status = GW_VEHICLE_STATUS;
-
-		// Health Status
-	    _actualHealth = ((1 - _damage) * 100) max 0;
-	    if(_actualHealth > 1) then { _actualHealth = floor _actualHealth } else { _actualHealth = ceil _actualHealth };
-	    _actualHealth = [_actualHealth, 0, 100] call limitToRange;
 
 		// Fuel Status
 	    _fuel = fuel _vehicle + (_vehicle getVariable ["fuel", 0]);
@@ -353,8 +346,6 @@ for "_i" from 0 to 1 step 0 do {
 		
 	    };
 
-
-
         if ("tyresPopped" in _status) then {
             [localize "str_gw_wheels_disabled", 1, warningIcon, colorRed, "warning", "beep_warning"] spawn createAlert;   
         };
@@ -391,7 +382,7 @@ for "_i" from 0 to 1 step 0 do {
         };
 
         _weaponsArray = _vehicle getVariable ['weapons', []];
-        _tacticalArray = _vehicle getVariable ['tactical', []];
+        _tacticalArray = _vehicle getVariable ['tactical', []];        
        	
 		// Calculate reload times for each module        
 		_c = 0;
@@ -429,8 +420,19 @@ for "_i" from 0 to 1 step 0 do {
 
 				};
 				
-				_data = [_tag, GW_LOOT_LIST] call getData;
-				_icon = if (!isNil "_data") then { (_data select 9) } else { "" };
+				// Use the cache if we've already found an icon for this tag
+				_icon = nil;
+				{ 
+					if (_tag == (_x select 0)) exitWith { _icon = (_x select 1); false };
+					false
+				} count _iconsArray;
+
+				// Otherwise find the icon using getData
+				_icon = if (isNil "_icon") then {
+					_data = [_tag, GW_LOOT_LIST] call getData; 
+					if (!isNil "_data") exitWith { _iconsArray pushBack [_tag, (_data select 9)]; (_data select 9) };
+					""
+				} else { _icon };		
 
 				_bindKeys = '';
 				{
@@ -455,7 +457,10 @@ for "_i" from 0 to 1 step 0 do {
 				} count _relArray > 0;
 
 				(_vHudIcons select _c) ctrlSetStructuredText parseText ( format["<img size='1.2' align='center' valign='middle' shadow='0' image='%3' /><t size='0.5' shadow='0' valign='middle' align='center' color='#ffc730'> %1</t>", _bindKeys, { if (count toArray _bindKeys > 0) exitWith { 'right' }; 'center' }, _icon] );	
-				(_vHudBars select _c) progressSetPosition _pos;		
+				
+				if (progressPosition (_vHudBars select _c) != _pos) then {
+					(_vHudBars select _c) progressSetPosition _pos;		
+				};
 
 				_c = _c + 1;
 

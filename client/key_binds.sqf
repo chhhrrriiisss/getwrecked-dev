@@ -11,8 +11,7 @@ initBinds = {
 
 	waituntil {!(isNull (findDisplay 46))};
 
-	// Main HUD
-	if (!isNil "GW_KD_EH") then { (findDisplay 46) displayRemoveEventHandler ["KeyDown", GW_KD_EH];	GW_KD_EH = nil;	};
+	if (!isNil "GW_KD_EH") then { (findDisplay 46) displayRemoveEventHandler ["KeyDown", GW_KD_EH]; };
 	GW_KD_EH = (findDisplay 46) displayAddEventHandler ["KeyDown", "_this call checkBinds; false"];
 
 	if (!isNil "GW_KU_EH") then { (findDisplay 46) displayRemoveEventHandler ["KeyUp", GW_KU_EH];	GW_KU_EH = nil;	};
@@ -53,7 +52,7 @@ resetBinds = {
 };
 
 checkBinds = {
-	
+		
 	User1 = actionKeys "User1"; // Grab/drop
 	User2 = actionKeys "User2"; // Attach / detach
 	User3 = actionKeys "User3"; // Rotate CW 
@@ -61,8 +60,6 @@ checkBinds = {
 	User5 = actionKeys "User5"; // Hold Rotate
 	// User6 = actionKeys "User6"; // Tilt Forward
 	// User7 = actionKeys "User7"; // Tilt Backward
-
-
 
 	User20 = actionKeys "User20"; // Settings
 
@@ -119,22 +116,21 @@ checkBinds = {
 
 	if (GW_SETTINGS_ACTIVE || GW_DEPLOY_ACTIVE || GW_SPAWN_ACTIVE || GW_DIALOG_ACTIVE) exitWith {};	
 
-	// Save
-	if (_ctrl && _key == 31) exitWith {
-		[''] spawn saveVehicle;
-	};
-
-	// Preview
-	if (_ctrl && _key == 24) exitWith {
-		[] spawn previewMenu;
-	};
-
 	if (!_inVehicle && GW_CURRENTZONE == "workshopZone") then {
-		if (_key in User5) then { GW_HOLD_ROTATE = true; };		
-	};
 
-	// Editor Keys
-	if ( GW_EDITING && !_inVehicle ) then {
+		// Save
+		if (_ctrl && _key == 31) exitWith {
+			[''] spawn saveVehicle;
+		};
+
+		// Preview
+		if (_ctrl && _key == 24) exitWith {
+			[] spawn previewMenu;
+		};
+	
+		if (_key in User5) then { GW_HOLD_ROTATE = true; };		
+
+		if (!GW_EDITING) exitWith {};
 
 		_object = player getVariable ["GW_EditingObject", nil];
 		if (isNil "_object") exitWith {};
@@ -147,23 +143,9 @@ checkBinds = {
 		if (_key in User7) then { [_object, [5, 0]] spawn tiltObj; }; 
 	};
 
-	// Outside Editor Keys
-	if ( !GW_EDITING && !_inVehicle ) then {
-
-		_object = cursorTarget;
-		if (isNil "_object") exitWith {};
-
-		_useable = _object call isObject;
-		if ( !_useable ) exitWith {};
-		
-		if (_key in User1) then { [_object, player] spawn moveObj; }; 
-		
-	};
-
-
 	if (GW_CURRENTZONE == "workshopZone") exitWith {};
 
-	if (_inVehicle && _isDriver && (GW_CHUTE_ACTIVE || GW_GUIDED_ACTIVE)) then {
+	if (_inVehicle && _isDriver) then {
 
 		if (GW_CHUTE_ACTIVE) then {
 
@@ -191,13 +173,7 @@ checkBinds = {
 			GW_CHUTE_TARGET = _newTarget;
 		};
 
-	};
-
-
-	// In Vehicle Keys
-	if (_inVehicle && _isDriver) then { 
-
-		_status = _vehicle getVariable ["status", []];
+		_status = GW_VEHICLE_STATUS;
 		_canShoot = if (!GW_WAITFIRE && !('cloak' in _status)) then { true } else { false };
 		_canUse = if (!GW_WAITUSE && !('cloak' in _status)) then { true } else { false };
 

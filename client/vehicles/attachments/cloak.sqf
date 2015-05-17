@@ -74,17 +74,13 @@ waitUntil{
 	_prevFuel = fuel _v;
 	_v setFuel 0;
 
-	for "_i" from 0 to 1 step 0 do {
-
-		if (!alive _v || _vA <= 0 || isEngineOn _v || GW_LMBDOWN || fireKeyDown != '') exitWith {};
-
-		Sleep 2;	
+	waitUntil {
+	
+		_status = _v getVariable ["status", []];
 
 		// Take ammo each tick
 		_vA = _v getVariable ["ammo", 0];
-		_vA = _vA - _c;
-		if (_vA < 0) then { _vA = 0; };
-		_v setVariable ["ammo", _vA];
+		_v setVariable ["ammo", ([_vA - _c, 0, 99999] call limitToRange)];
 
 		[
 			[
@@ -95,30 +91,27 @@ waitUntil{
 		"cloakEffect"
 		] call gw_fnc_mp;
 
-		_nearby = _p nearEntities [["car"], 10];
+		_pos = (ASLtoATL visiblePositionASL (_this select 0));
+		_nearby = _pos nearEntities [["car"], 10];
+		if ((_pos select 2) < 0) then { _pos set [2, 0.5]; (_this select 0) setPos _pos; };
+
 		_found = false;
 
-		if (count _nearby > 1) then {
-			{
+		if ({	
+			_found = if (_x != _v) then {
+				_isVehicle = _x getVariable ["isVehicle", false];
+				_crew = count (crew _x);
+				if (_isVehicle && _crew > 0) exitWith { true };
+				false
+			} else { false };
 
-				if (_x != _v) then {
+			if (_found) exitWith {1};
+			false
+		} count _nearby isEqualTo 1) exitWith { true };
+		
+		Sleep 2;	
 
-					_isVehicle = _x getVariable ["isVehicle", false];
-					_crew = count (crew _x);
-
-					if (_isVehicle && _crew > 0) then {
-						_found = true;
-					};
-
-				};
-
-				if (_found) exitWith {};
-
-			} ForEach _nearby;
-		};
-
-		_status = _v getVariable ["status", []];
-		if ( !('cloak' in _status) || _found ) exitWith {};
+		(!alive _v || !alive player || _vA <= 0 || isEngineOn _v || GW_LMBDOWN || fireKeyDown != '' || !('cloak' in _status) || _found)
 
 	};
 
@@ -171,7 +164,6 @@ waitUntil{
 	] call gw_fnc_mp;  
 
 	playSound3D ["a3\sounds_f\sfx\special_sfx\sparkles_wreck_1.wss", _v, false, _p, 2, 1, 150];	
-
 	
 
 };

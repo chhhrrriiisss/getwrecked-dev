@@ -12,7 +12,7 @@ _this spawn {
 	_target = _this select 1;
 
 	_repeats = 0;
-	_round = "M_Titan_AT";
+	_round = "R_TBG32V_F";
 	_soundToPlay = "a3\sounds_f\weapons\Mortar\mortar_05.wss";
 	_fireSpeed = 1;
 	_projectileSpeed = -500;

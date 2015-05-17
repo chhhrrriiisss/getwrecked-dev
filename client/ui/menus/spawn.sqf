@@ -4,6 +4,8 @@
 //      Return: None
 //
 
+private ['_unit', '_pad', '_ownership', '_owner'];
+
 if (GW_SPAWN_ACTIVE) exitWith { closeDialog 0;	GW_SPAWN_ACTIVE = false; };
 GW_SPAWN_ACTIVE = true;
 
@@ -98,7 +100,13 @@ if (time > _timeout) exitWith {
 // Check the vehicle has been saved at least once prior
 _isSaved = GW_SPAWN_VEHICLE getVariable ["isSaved", false];
 _continue = if (!_isSaved) then { (['UNSAVED VEHICLE', 'CONTINUE?', 'CONFIRM'] call createMessage) } else { true };
-if (!_continue) exitWith { GW_SPAWN_ACTIVE = false; };
+
+GW_SPAWN_ACTIVE = if (typename _continue == "BOOL") then {
+    if (!_continue) exitWith { false };
+    true
+} else { false };
+
+if (!GW_SPAWN_ACTIVE) exitWith {};
 
 // Ensure the vehicle is compiled & has handlers
 [GW_SPAWN_VEHICLE] call compileAttached;

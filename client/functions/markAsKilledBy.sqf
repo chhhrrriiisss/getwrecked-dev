@@ -24,4 +24,7 @@ if (!isNil "_driver") then {
 	_driver setVariable['killedBy', format['%1', [name player, _m, (GW_CURRENTVEHICLE getVariable ['name', '']), (typeOf GW_CURRENTVEHICLE) ] ], true];	
 };
 
-if (GW_DEBUG) then { systemChat format['Tagged %1', _v]; };
+if (isNil "GW_LASTTAGGEDMESSAGE") then { GW_LASTTAGGEDMESSAGE = time - 0.3; };
+if (GW_DEBUG && (time - GW_LASTTAGGEDMESSAGE > 0.3)) then {
+	systemChat format['Tagged %1', _v]; 
+};

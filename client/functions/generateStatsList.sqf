@@ -30,6 +30,8 @@ _minsAlive = floor((_seconds - (_hoursAlive*3600)) / 60);
 _secsAlive = floor(_seconds % 60);
 _timeAlive = format['%1h : %2m : %3s', ([_hoursAlive, 2] call padZeros), ([_minsAlive, 2] call padZeros), ([_secsAlive, 2] call padZeros)];
 
+_v call updateVehicleDamage;
+_health = (_v getVariable ['GW_Health', 100]);
 
 _massModifier = _v getVariable ['massModifier', 1];
 _maxMass = _v getVariable ['maxMass', 99999];
@@ -42,7 +44,7 @@ _maxModules = _v getVariable ['maxModules', 0];
 // Array formatting the stats into rows/columns
 _stats = [
 	['', '', ''],
-	['', 'Health', format['%1%2', round ((1-(getDammage _v)) * 100), '%']],
+	['', 'Health', format['%1%2', _health, '%']],
 	['', 'Mass', format['%1kg',  _actualMass]],
 	['', 'Ammo Capacity', format['%1%2', round( (_v getVariable ["maxAmmo", 1]) * 100), '%']],
 	['', 'Fuel Tank', format['%1L', round( (_v getVariable ["maxFuel", 1]) * 100), '%']],

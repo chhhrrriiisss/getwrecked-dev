@@ -22,8 +22,6 @@ removeallassigneditems _unit;
 _unit addItem "ItemMap";
 _unit assignItem "ItemMap";
 
-name player = (name player);
-
 GW_WARNING_CHANNEL = radioChannelCreate [[1, 0, 0, 1], "Warning Chat", "Warning", [player]]; 
 GW_SUCCESS_CHANNEL = radioChannelCreate [[0.99,0.85,0.23,1], "Success Chat", "Success", [player]]; 
 

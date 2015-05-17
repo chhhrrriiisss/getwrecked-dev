@@ -36,6 +36,7 @@ if (!isNil "GW_SPAWN_LOCATION") then {
 
 		['ABORTED!', 2, warningIcon, colorRed, "warning"] spawn createAlert;   
 		GW_SPAWN_VEHICLE lockDriver true;
+		GW_SPAWN_VEHICLE setVariable ['GW_Owner', (name player), true];
 
 	};
 

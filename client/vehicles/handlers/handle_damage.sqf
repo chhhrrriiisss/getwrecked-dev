@@ -15,6 +15,8 @@ if (_vehicle distance (getMarkerPos "workshopZone_camera") < 200) exitWith { fal
 _origDamage = _damage;
 _oldDamage = nil;
 _projectile = _this select 4;
+_scale = 1;
+_armor = 1;
 
 // Prevent wheel damage
 if (_selection find "wheel" != -1) exitWith { false }; 
@@ -58,6 +60,20 @@ if (_selection != "?") then  {
 
 };
 
+// Debug damage 
+if (isNil "GW_LASTDAMAGEMESSAGE") then { GW_LASTDAMAGEMESSAGE = time - 0.25; };
+if (GW_DEBUG && (time - GW_LASTDAMAGEMESSAGE > 0.25)) then {
+
+    GW_LASTDAMAGEMESSAGE = time;
+    _vName = _vehicle getVariable ['name', 'A vehicle'];
+    _health = _vehicle getVariable ['GW_Health', '100'];
+    _str = format['V: %1 A: %2 D: %3 H: %4', _vName, _armor, _scale, (1- (getDammage _vehicle)) * 100 ];
+    systemchat _str;
+    pubVar_systemChat = _str;
+    publicVariable "pubVar_systemChat";
+};
+
+
 // If we're invulnerable, ignore all damage
 _status = _vehicle getVariable ["status", []];
 if ("invulnerable" in _status) then {
@@ -82,26 +98,16 @@ if ("invulnerable" in _status) then {
         false
     } count _parts > 0;   
 
-    if (_highestDmg > 0.91) then {} else {
+    //if (_highestDmg > 0.91) then {} else {
         { _vehicle setHit [_x, _highestDmg]; false } count _parts > 0;
-        _vehicle setDammage _highestDmg;
-    };
+        //_vehicle setDammage _highestDmg;
+    //};
 
 };
 
 // Update the vehicle damage status bar
 _vehicle spawn { Sleep 0.05; _this call updateVehicleDamage; };
 [_vehicle, ['noservice'], 5] call addVehicleStatus;
-
-// Debug damage 
-if (isNil "GW_LASTDAMAGEMESSAGE") then { GW_LASTDAMAGEMESSAGE = time - 0.25; };
-if (GW_DEBUG && (time - GW_LASTDAMAGEMESSAGE > 0.25)) then {
-    GW_LASTDAMAGEMESSAGE = time;
-    _str = format['%1 / %2 / %3 / %4', typeof _vehicle, _damage, _selection, (getDammage _vehicle)];
-    systemchat _str;
-    pubVar_systemChat = _str;
-    publicVariable "pubVar_systemChat";
-};
 
 _damage
 

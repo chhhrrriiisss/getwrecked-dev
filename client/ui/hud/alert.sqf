@@ -53,7 +53,7 @@ _title ctrlCommit 0;
 _inDuration = (_duration / 7.5) max 0.15;
 _outDuration = (_duration / 15) max 0.15;
 
-if (_sound isEqualTo "") then {} else { player say3D _sound; };
+if (_sound == "") then {} else { player say3D _sound; };
 
 _alertGroup spawn {	
 	for "_i" from 0 to 1 step 0 do {

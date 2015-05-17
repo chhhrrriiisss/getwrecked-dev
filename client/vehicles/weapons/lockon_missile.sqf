@@ -81,8 +81,15 @@ if (!alive _lockedTarget) then {
 			} else {
 
 				if (_distanceToTarget < 4) then {
-					_rnd = (random 0.25) + 0.25;
+					_rnd = (random 0.2) + 0.2;
 					_t setDamage ((getDammage _t) + _rnd);
+
+					[
+						_t,
+						"updateVehicleDamage",
+						_t,
+						false
+					] call gw_fnc_mp;
 				};
 			};
 

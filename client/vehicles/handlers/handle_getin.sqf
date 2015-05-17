@@ -27,7 +27,8 @@ if (GW_WAITCOMPILE) exitWith {
 _null = [_vehicle] call compileAttached;
 
 // Set ourselves as the owner
-_vehicle setVariable ["GW_Owner", name player, true];
+_playerName = if (isNull player) then { "" } else { (name player) };
+_vehicle setVariable ["GW_Owner", _playerName, true];
 
 // Are we missing handlers? Add them!
 _hasHandlers = _vehicle getVariable ['hasHandlers', false];
@@ -38,7 +39,7 @@ _attached = attachedObjects _vehicle;
 if (count _attached <= 0) exitWith {};
 
 {
-    _x setVariable ["GW_Owner", name player, true];    
+    _x setVariable ["GW_Owner", _playerName, true];    
 	_hasActions = _x getVariable ["hasActions", false];	
 	_hasHandlers = _x getVariable ["hasHandlers", false];	
 	_hasData = if (isNil { _x getVariable "GW_Data" }) then { false } else { true };
@@ -54,9 +55,10 @@ if (count _attached <= 0) exitWith {};
 	false
 } count (attachedObjects _vehicle) > 0;	
 
-_meleeEnabled = GW_CURRENTVEHICLE getVariable ['GW_MELEE', false];
-if (GW_HASMELEE && !_meleeEnabled) then {
-	GW_CURRENTVEHICLE call meleeAttached;
+_meleeEnabled = _vehicle getVariable ['GW_MELEE', false];
+_hasMelee = _vehicle call hasMelee;
+if (_hasMelee && !_meleeEnabled) then {
+	_vehicle call meleeAttached;
 };
 
 // Set prevVeh reference on player (for stats tracking)

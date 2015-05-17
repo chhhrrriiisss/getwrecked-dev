@@ -83,7 +83,7 @@ if (isNil { (_functionToCall select 0) }) then {
 	_function ctrlEnable true;
 	_function ctrlCommit 0;
 	ctrlSetFocus _function;
-	_functionIcon ctrlSetStructuredText	parseText  ( format["<img size='1.4' color='ffffff' align='center' valign='middle' image='%1' />", (_functionToCall select 1)] );
+	_functionIcon ctrlSetStructuredText	parseText  ( format["<img size='1.4' color='#ffffff' align='center' valign='middle' image='%1' />", (_functionToCall select 1)] );
 	_functionIcon ctrlSetFade 0;
 	_functionIcon ctrlCommit 0;
 

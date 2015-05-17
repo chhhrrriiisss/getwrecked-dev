@@ -4,16 +4,16 @@
 //      Return: None
 //
 
-private ['_abort', '_statusEffect', '_commandToLoop', '_targetVehicle', '_vehicleStatus', '_inVehicle'];
+private ['_loop', '_statusEffect', '_commandToLoop', '_targetVehicle', '_vehicleStatus', '_inVehicle'];
 
-_abort = false;
+_loop = false;
 _statusEffect = _this select 0;
 _maxTimeout = _this select 1;
 _targetVehicle = _this select 2;
 _vehicleStatus = _targetVehicle getVariable ['status', []];
 _inVehicle = player in _targetVehicle;
 
-if ({ if (_x == _statusEffect) exitWith {1}; false } count ["disabled", "tyresPopped", "emp", "forked"] isEqualTo 1) then {
+if ({ if (_x == _statusEffect) exitWith {1}; false } count ["disabled", "tyresPopped", "emp", "forked", "harpoon"] isEqualTo 1) then {
 	['disabled', _targetVehicle, 1] call logStat; 
 };
 
@@ -23,7 +23,11 @@ if ({ if (_x == _statusEffect) exitWith {1}; false } count ["overcharge", "extra
 };
 
 if ("teleport" == _statusEffect) then {
-	[(GW_CURRENTZONE) call findLocationInZone, _targetVehicle] spawn teleportTo;
+
+	_zoneToSend = GW_VALID_ZONES select (floor (random ((count GW_VALID_ZONES) - 1)));
+	_zoneToSend = if ((_zoneToSend select 1) == "safe" || ((random 100) > 50)) then { GW_CURRENTZONE } else { (_zoneToSend select 0) };
+	if (GW_DEBUG) then { systemChat format['%1 teleported to %2.', _targetVehicle, _zoneToSend]; };
+	[format['%1Zone', _zoneToSend] call findLocationInZone, _targetVehicle] spawn teleportTo;
 };
 
 if ("emp" == _statusEffect || "harpoon" == _statusEffect) then {
@@ -46,7 +50,7 @@ if ("emp" == _statusEffect || "harpoon" == _statusEffect) then {
 
 if ("locked" == _statusEffect) then {
 	_condition = { ("locked" in _vehicleStatus) };
-	[_targetVehicle, 9999, 'client\images\lock_halo.paa', _condition, false] spawn createHalo;
+	[_this, 9999, 'client\images\lock_halo.paa', _condition, false] spawn createHalo;
 	playSound "beep_warning";
 };
 
@@ -54,12 +58,12 @@ _commandToLoop = switch (true) do {
 
 	case ("disabled" == _statusEffect): {{
 
-		_targetVehicle sethit ["wheel_1_1_steering", 1];
-		_targetVehicle sethit ["wheel_1_2_steering", 1];
-		_targetVehicle sethit ["wheel_2_1_steering", 1];
-		_targetVehicle sethit ["wheel_2_2_steering", 1];
+		_this sethit ["wheel_1_1_steering", 1];
+		_this sethit ["wheel_1_2_steering", 1];
+		_this sethit ["wheel_2_1_steering", 1];
+		_this sethit ["wheel_2_2_steering", 1];
 
-		[_targetVehicle, 0] spawn slowDown;            
+		[_this, 0] spawn slowDown;            
 
 	}};
 
@@ -67,22 +71,22 @@ _commandToLoop = switch (true) do {
 
 		_random = random 100;
 		
-		if (_inVehicle) then { addCamShake [0.5, 0.25,30]; };
+		if (player in _this) then { addCamShake [0.5, 0.25,30]; };
 
 		if (_random > 70) then {
 
-			_vel = velocity _targetVehicle;
+			_vel = velocity _this;
 			_rnd = (random 4);
 
 			_random = random 100;		
 
-			_targetVehicle setVelocity [_vel select 0, _vel select 1, (_vel select 2) + _rnd];      
+			_this setVelocity [_vel select 0, _vel select 1, (_vel select 2) + _rnd];      
 			
-			if (_inVehicle) then { addCamShake [3, 0.25,10]; };
+			if (player in _this) then { addCamShake [3, 0.25,10]; };
 
 			[
 				[
-					_targetVehicle,
+					_this,
 					0.1,
 					[0,0,0,0.2],
 					2,
@@ -97,38 +101,38 @@ _commandToLoop = switch (true) do {
 
 	case ("tyresPopped" == _statusEffect && !("invTyres" in _vehicleStatus) ): {{
 
-		_targetVehicle sethit ["wheel_1_1_steering", 1];
-		_targetVehicle sethit ["wheel_1_2_steering", 1];
-		_targetVehicle sethit ["wheel_2_1_steering", 1];
-		_targetVehicle sethit ["wheel_2_2_steering", 1];
+		_this sethit ["wheel_1_1_steering", 1];
+		_this sethit ["wheel_1_2_steering", 1];
+		_this sethit ["wheel_2_1_steering", 1];
+		_this sethit ["wheel_2_2_steering", 1];
 
-		[GW_CURRENTVEHICLE, 0.97] spawn slowDown;                 
+		[_this, 0.97] spawn slowDown;                 
 
 	}};
 
 	case ("invTyres" == _statusEffect): {{
 
-		_targetVehicle sethit ["wheel_1_1_steering", 0];
-		_targetVehicle sethit ["wheel_1_2_steering", 0];
-		_targetVehicle sethit ["wheel_2_1_steering", 0];
-		_targetVehicle sethit ["wheel_2_2_steering", 0];        
+		_this sethit ["wheel_1_1_steering", 0];
+		_this sethit ["wheel_1_2_steering", 0];
+		_this sethit ["wheel_2_1_steering", 0];
+		_this sethit ["wheel_2_2_steering", 0];        
 
 	}};
 
 	case ("inferno" == _statusEffect && !("nanoarmor" in _vehicleStatus)): {{
 
 		// Put out fire if we drive in water
-		if (surfaceIsWater (getPosASL _targetVehicle)) then {
+		if (surfaceIsWater (visiblePositionASL _this)) then {
 
-			[_targetVehicle, ['fire', 'inferno']] call removeVehicleStatus;
+			[_this, ['fire', 'inferno']] call removeVehicleStatus;
 
 		} else {                                         
-
-		    _dmg = getDammage _targetVehicle;
+			_status = _this getVariable ['status', []];
+		    _dmg = getDammage _this;
 		    _rnd = (random 7) + 14;
 		    _rnd = (_rnd / 10000) * FIRE_DMG_SCALE;
 		    _newDmg = _dmg + _rnd;
-		    _targetVehicle setDammage _newDmg;
+		    _this setDammage _newDmg;
 		};
 
 		
@@ -137,51 +141,55 @@ _commandToLoop = switch (true) do {
 	case ("fire" == _statusEffect): {{
 
 		// Put out fire if we drive in water
-		if (surfaceIsWater (getPosASL _targetVehicle)) then {
+		if (surfaceIsWater (visiblePositionASL _this)) then {
 
-			[_targetVehicle, ['fire', 'inferno']] call removeVehicleStatus;
+			[_this, ['fire', 'inferno']] call removeVehicleStatus;
 
 		} else {                                         
-
-		    _dmg = getDammage _targetVehicle;
+			_status = _this getVariable ['status', []];
+		    _dmg = getDammage _this;
 		    _rnd = (random 5) + 10;
 		    _rnd = (_rnd / 10000) * FIRE_DMG_SCALE;
-		    _rnd = if ("nanoarmor" in _vehicleStatus) then { (_rnd * 0.1) } else { _rnd };
+		    _rnd = if ("nanoarmor" in _status) then { (_rnd * 0.1) } else { _rnd };
 		    _newDmg = _dmg + _rnd;
-		    _targetVehicle setDammage _newDmg;
+		    _this setDammage _newDmg;
 		};
 
 	}};
 
 	case ("emp" == _statusEffect || "harpoon" == _statusEffect): {{
 		
-		if ("nuke" in _vehicleStatus) then {} else {
-			[_targetVehicle, 0.3] spawn slowDown;   
+		_status = _this getVariable ['status', []];
+		if ("nuke" in _status) then {} else {
+			[_this, 0.3] spawn slowDown;   
 		};
 
-		_special = _targetVehicle getVariable ['special', []];
+		_special = _this getVariable ['special', []];
 		if ('EMF' in _special) then {
-			for "_i" from 0 to (['EMF', _targetVehicle] call hasType) step 1 do {
-				if ((random 100) > 98) exitWith { [_targetVehicle, ['emp']] call removeVehicleStatus; };
+			for "_i" from 0 to (['EMF', _this] call hasType) step 1 do {
+				if ((random 100) > 98) exitWith { [_this, ['emp']] call removeVehicleStatus; };
 			};
 		};
 	}}; 
 
 	default
 	{
-		_abort = true;
+		_loop = true;
 	};
 };
 
-if (_abort) exitWith {};
+if (_loop) exitWith {};
 
 [_statusEffect, _commandToLoop, _maxTimeout, _targetVehicle] spawn {
+
+	private ['_timeout', '_inVehicle', '_status', '_special', '_targetVehicle'];
 	
+	_targetVehicle = (_this select 3);
 	_timeout = time + (_this select 2);
 	_status = (_this select 3) getVariable ['status', []];
 
 	waitUntil {
-		[] call (_this select 1);
+		_targetVehicle call (_this select 1);
 		Sleep 0.25;
 		(!((_this select 0) in _status) || (time > _timeout) )
 	};

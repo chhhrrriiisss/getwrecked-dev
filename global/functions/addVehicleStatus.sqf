@@ -35,10 +35,10 @@ if (typename _status == "STRING") then { _status = (call compile _status); };
 
 	// Add the status, avoiding double-ups
 	{
-		_sL = (_sL - [_x]) + [_x];
-		_aS = (_aS - [_x]) + [_x];
+		if !(_x in _sL) then {	[_x, (_this select 2), _v] call triggerVehicleStatus;	};
 
-		[_x, (_this select 2), _v] call triggerVehicleStatus;
+		_sL = (_sL - [_x]) + [_x];
+		_aS = (_aS - [_x]) + [_x];		
 
 		false
 	} count (_this select 1) > 0;

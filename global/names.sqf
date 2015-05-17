@@ -1,5 +1,6 @@
 GW_subjects = [
 	["Fist", 2],
+	["Box", 1],
 	["Master", 2],
 	["Soldier", 2],
 	["Reflex", 2],
@@ -84,7 +85,13 @@ GW_subjects = [
 	["Pedantic",0],
 	["Sneaky",0],
 	["Terrible",0],
-	["Perilous",0]
+	["Perilous",0],
+	["Practical", 0],
+	["Dependable", 0],
+	["Reliable", 0],
+	["Ironic", 0],
+	["Exceptional", 0]
+
 ];
 
 GW_descriptors = [
@@ -93,7 +100,19 @@ GW_descriptors = [
 	" for "	
 ];
 
+GW_additions = [
+	" and ",
+	" by ",
+	" with "
+];
+
 GW_attributes = [
+	"Deliverance",	
+	"Setback",	
+	"Destruction",	
+	"Wreck",
+	"Akbar",
+	"Fanatic",
 	"Overkill",
 	"Vengeance",
 	"Retribution",
@@ -144,16 +163,24 @@ GW_attributes = [
 	"Delivery",
 	"Arrival",
 	"Calling",
-	"Calling",
 	"Disposal",
 	"Detonation",
 	"Grin",
 	"Gaze",
 	"Manwagon",
-	"Scuttle",
+	"Scuttler",
 	"Wheels",
 	"Success",
 	"Failure",
 	"Accident",
-	"Inspection"
+	"Inspection",
+	"Contradiction",
+	"Irony",
+	"Chaos",
+	"Calamity",
+	"Hilarity",
+	"Pursuit",
+	"Proposal",
+	"Test",
+	"Experiment"
 ];
