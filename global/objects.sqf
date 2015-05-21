@@ -33,7 +33,7 @@ GW_LOOT_LIST = [
 	["launch_NLAW_F", "Guided Missile", 750, 9999, 0, 0, 'GUD', "Guided Missile", 1, guidedIcon, [20,0.15]], 
 	["launch_RPG32_F", "Rocket Launcher", 750, 9999, 0, 0, 'RPG', "Rocket Launcher", 0.3, rpgIcon, [3,0.03]],
 	["srifle_LRR_LRPS_F", "SR2 Railgun", 750, 9999, 0, 0, 'RLG', "Railgun", 1, railgunIcon, [10,0.2]],
-	["Land_DischargeStick_01_F", "Flamethrower", 750, 9999, 0, 0, 'FLM', "Flamethrower", 1, flameIcon, [0.5,0.03]],
+	["Land_DischargeStick_01_F", "Flamethrower", 750, 9999, 0, 0, 'FLM', "Flamethrower", 1, flameIcon, [0.75,0.03]],
 	["Land_Pipes_small_F", "Rocket Pods", 750, 9999, 0, 0, 'RPD', "Rocket Pods", 1, rpdIcon, [3,0.1]],
 	["srifle_GM6_F", "Harpoon Launcher", 750, 9999, 0, 0, 'HAR', "Harpoon Launcher", 1, harIcon, [10,0]],
 

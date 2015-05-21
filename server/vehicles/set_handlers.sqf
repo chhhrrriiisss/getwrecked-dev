@@ -8,6 +8,18 @@ private ['_vehicle'];
 
 _vehicle = _this select 0;
 
+_hasHandlers = _vehicle getVariable ['hasHandlers', false];
+if (_hasHandlers) exitWith { true };
+
+_vehicle removeAllEventHandlers "MPHit";
+_vehicle removeAllEventHandlers "MPKilled";
+_vehicle removeAllEventHandlers "Explosion";
+_vehicle removeAllEventHandlers "HandleDamage";
+_vehicle removeAllEventHandlers "EpeContact";
+_vehicle removeAllEventHandlers "EpeContactStart";
+_vehicle removeAllEventHandlers "GetOut";
+
+
 if (isServer) then {
 
 	if (isNil {_vehicle getVariable "GW_MPHitEH"}) then {	

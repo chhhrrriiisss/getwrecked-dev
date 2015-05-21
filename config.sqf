@@ -28,7 +28,7 @@ GW_DAMAGE_UPDATE_INTERVAL = 0.1;
 GW_ARMOR_SYSTEM_ENABLED = if ((paramsArray select 5) == 1) then { true } else { false };
 
 // Weapon Damage vs vehicles 
-GW_GDS = 0.0075; 
+GW_GDS = 0.03; 
 WHEEL_COLLISION_DMG_SCALE = 0; 
 COLLISION_DMG_SCALE = 0; 
 FIRE_DMG_SCALE = 8; 
@@ -38,10 +38,10 @@ GW_GHS = 4;
 OBJ_COLLISION_DMG_SCALE = 0;
 
 // Melee Damage Frequency
-GW_COLLISION_FREQUENCY = 1.5;
+GW_COLLISION_FREQUENCY = 1;
 
 // Global armor modifier
-GW_GAM = 0.5;
+GW_GAM = 32;
 
 // Lock on properties
 GW_MINLOCKRANGE = 100; // (default: 100)
@@ -96,16 +96,17 @@ vehicleDamageData = {
 
 	_d = _this call {
 
-		if (_this == "R_PG32V_F" || _this == "RPG") exitWith { (1 + random 0.5) };
-		if (_this == "M_PG_AT" || _this == "RPD") exitWith { ((random 0.5) + 0.4) };
-		if (_this == "M_Titan_AT" || _this == "GUD" || _this == "MIS") exitWith { (1 + random 0.5) };
-		if (_this == "M_Titan_AA_static" || _this == "RLG") exitWith { (0) };
+		if (_this == "R_PG32V_F" || _this == "RPG") exitWith { ((random 0.075) + 0.05) };
+		if (_this == "M_Titan_AT_static" || _this == "RPD") exitWith { ((random 0.05) + 0.01) };			
+		if (_this == "M_PG_AT" || _this == "GUD") exitWith { 0 };
+		if (_this == "M_Titan_AT" || _this == "MIS") exitWith { 0 };
+		if (_this == "M_Titan_AA_static" || _this == "RLG") exitWith { ((random 0.5) + 1.5) };
 		if (_this == "B_127x99_Ball_Tracer_Red" || _this == "LSR") exitWith { 0 };
-		if (_this == "B_127x99_Ball" || _this == "HMG") exitWith { 14 };
-		if (_this == "B_127x99_Ball_Tracer_Yellow") exitWith { 3 };
-		if (_this == "R_TBG32V_F" || _this == "MOR") exitWith { (7 + random 5) };
-		if (_this == "G_40mm_HEDP" || _this == "GMG") exitWith { (5 + random 1) };
-		if (_this == "Bo_GBU12_LGB" || _this == "EXP") exitWith { (4 + random 2) };
+		if (_this == "B_127x99_Ball" || _this == "HMG") exitWith { 0.75 };
+		if (_this == "B_127x99_Ball_Tracer_Yellow") exitWith { 0.25 };
+		if (_this == "R_TBG32V_F" || _this == "MOR") exitWith { 0.7 };
+		if (_this == "G_40mm_HEDP" || _this == "GMG") exitWith { ((random 0.05) + 0.27) };
+		if (_this == "Bo_GBU12_LGB" || _this == "EXP") exitWith { 0 };
 		if (_this == "M_AT") exitWith { 0 };
 		0
 	};	
@@ -151,7 +152,6 @@ GW_VALID_ZONES = [
 
 // Objects that cant be cleared by clearPad
 GW_UNCLEARABLE_ITEMS = [
-
     'Land_spp_Transformer_F',
     'Land_HelipadSquare_F',
     'Land_File1_F',
@@ -165,13 +165,10 @@ GW_UNCLEARABLE_ITEMS = [
     'UserTexture1m_F',
     'SignAd_Sponsor_ARMEX_F',
     'Land_Tyres_F'
-
 ];
 
 GW_PROTECTED_ITEMS = [
-
-	'Land_PaperBox_closed_F'
-	
+	'Land_PaperBox_closed_F'	
 ];
 
 // Objects that cant be tilted (due to various bugs)
@@ -237,4 +234,41 @@ GW_TAUNTS_LIST = [
 	'party',
 	'sparta'
 ];
+
+// Specific map configs
+switch (worldName) do {
+	
+	case "Stratis":
+	{
+
+		// Cleanup unwanted buildings from workshop
+		if (isServer) then {
+
+			_objectsToClear = ['Land_Cargo_House_V1_F', 'Land_Cargo_Patrol_V1_F', 'Land_MilOffices_V1_F', 'Land_Shed_Big_F']; 
+			_objects = (getMarkerPos "workshopZone_camera") nearObjects 200;    
+
+			{   
+				_cui = _x getVariable ['GW_CU_IGNORE', false];   
+				if ((typeof _x in _objectsToClear) && !_cui) then { hideObjectGlobal _x; };    
+				false
+			} count _objects; 
+
+			_objectsToClear = nil;
+		};
+
+		// Render distance of effects
+		GW_EFFECTS_RANGE = 3500; // Increasing this may add lag at the workshop (default: 1700)
+
+		// Available arenas and game type
+		GW_VALID_ZONES = [
+			['airbase', 'battle', 'Airbase'],
+			['peninsula', 'battle', 'Peninsula'],
+			['beach', 'battle', 'Beach'],
+			['workshop', 'safe', 'Workshop']
+		];
+
+	};
+
+	default {};
+};
 

@@ -32,7 +32,7 @@ _this spawn {
 		_heading = [ASLtoATL _gPos, ASLtoATL _targetPos] call BIS_fnc_vectorFromXToY;
 		_velocity = [_heading, 50] call BIS_fnc_vectorMultiply; 		
 
-		_rocket = createVehicle ["M_PG_AT", _gPos, [], 0, "FLY"];
+		_rocket = createVehicle ["M_Titan_AT_static", _gPos, [], 0, "FLY"];
 		playSound3D ["a3\sounds_f\weapons\rockets\new_rocket_8.wss", (_this select 2), false, (ASLtoATL visiblePositionASL (_this select 2)), 10, 1, 40]; 
 
 		_rocket setVectorDir _heading;
@@ -47,15 +47,14 @@ _this spawn {
 
 			waitUntil {		
 				Sleep 0.1;
-				_lastPos = (ASLtoATL visiblePositionASL (_this select 0));
-				(_this select 1) set [2, ((_this select 1) select 2) -0.09];				
-				(_this select 0) setVelocity (_this select 1);
+				// _lastPos = (ASLtoATL visiblePositionASL (_this select 0));
+				// (_this select 1) set [2, ((_this select 1) select 2) -0.09];				
+				// (_this select 0) setVelocity (_this select 1);
 				(!alive (_this select 0))
 			};
 
 			[_lastPos, 5, "RPD"] call markNearby;
 			[_lastPos, 10, 10] call shockwaveEffect;
-
 
 		};
 

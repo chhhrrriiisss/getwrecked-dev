@@ -52,9 +52,8 @@ _obj setVariable ["tag", _obj addAction ["", "", "", 0, false, false, "", "
 			};
 
 	       	if (_isSupply) then { 
-	       		_owner =  _target getVariable ['GW_Owner', ''];
-	       		_owner = [_owner, 10] call cropString;
-	       		_name = if (_owner isEqualTo '') then { 'Supply Box' } else { (format['%1`s Supply Box', _owner]) };
+	       		_owner =  _target getVariable ['GW_Owner', ''];	       		
+	       		_name = if (count toArray _owner == 0) then { 'Supply Box' } else { _owner = [_owner, 10] call cropString; (format['%1`s Supply Box', _owner]) };
 	       	};
 
 	       	if (_isPaint) then { 

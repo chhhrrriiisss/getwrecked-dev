@@ -81,8 +81,10 @@ if (!alive _lockedTarget) then {
 			} else {
 
 				if (_distanceToTarget < 4) then {
-					_rnd = (random 0.2) + 0.2;
-					_t setDamage ((getDammage _t) + _rnd);
+
+					if ('invulnerable' in _status) exitWith {};
+					_d = if ('nanoarmor' in _status) then { 0.025 } else { ((random 0.1) + 0.05) };
+					_t setDamage ((getDammage _t) + _d);
 
 					[
 						_t,

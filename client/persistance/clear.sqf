@@ -28,14 +28,17 @@ if (_notify) then { systemChat 'Clearing area...'; };
 _nearby = _targetPos nearObjects 10;
 if (count _nearby == 0) exitWith {};
 
+_itemsDeleted = false;
+_nearbyPlayers = [];
+
 // Check and clear if vehicles nearby
 {      
     _y = _x;
-    _type = typeOf _y;              
+    _type = typeOf _y; 
 
     // Make sure its not a whitelisted item
     switch (true) do {
-
+        case (isPlayer _y && (_y distance _targetPos <= 5)): { _nearbyPlayers pushBack _y; };
         case (_type in GW_UNCLEARABLE_ITEMS): { };
         case (_type in GW_PROTECTED_ITEMS): {
             _relPos = [_targetPos, 10, (random 360)] call BIS_fnc_relPos;
@@ -43,7 +46,8 @@ if (count _nearby == 0) exitWith {};
             player customChat [GW_WARNING_CHANNEL, 'A supply box was moved as it was on the pad.'];  
         };
         default {
-            deleteVehicle _y;
+           deleteVehicle _y;
+           _itemsDeleted = true;
         };
 
     };
@@ -52,6 +56,16 @@ if (count _nearby == 0) exitWith {};
 
 } count _nearby >0;
 
+
 if (_notify) then { systemChat 'Area cleared.'; };
+if (count _nearbyPlayers == 0) exitWith { true };
+if (!_itemsDeleted) exitWith { true };
+    
+{
+    _newPos = [_targetPos, 10, (random 360)] call BIS_fnc_relPos;
+    _newDir = [_newPos, _targetPos] call dirTo;
+    _x setPos _newPos;
+    [_x, _newDir] call setDirTo;
+} count _nearbyPlayers;
 
 true

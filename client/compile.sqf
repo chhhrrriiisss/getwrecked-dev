@@ -232,6 +232,8 @@ magnetizeEffect = compile preprocessFile "client\effects\magnetize.sqf";
 impactEffect = compile preprocessFile "client\effects\impact.sqf";
 teleportTo = compile preprocessFile "client\effects\teleportTo.sqf";
 
+effectIsVisible = compile preprocessFile "client\functions\effectIsVisible.sqf";
+
 // Zone Functions
 returnToZone =  compile preprocessFile "client\functions\returnToZone.sqf";
 setCurrentZone = compile preprocessFile "client\functions\setCurrentZone.sqf";	
@@ -258,6 +260,7 @@ setVariance = compile preprocessFile "client\functions\setVariance.sqf";
 setVelocityLocal = compile preprocessFile "client\functions\setVelocityLocal.sqf";
 inString = compile preprocessFile "client\functions\inString.sqf";
 generateName = compile preprocessFile "client\functions\generateName.sqf";
+
 
 // Vehicle Functions
 markAsKilledBy = compile preprocessFile "client\functions\markAsKilledBy.sqf";

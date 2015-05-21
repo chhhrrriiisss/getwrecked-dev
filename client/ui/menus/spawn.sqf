@@ -19,8 +19,13 @@ _onExit = {
 
 
 // Do we actually have something to deploy?
-_nearby = (ASLtoATL (getPosASL _pad)) nearEntities [["Car"], 8];
-if (count _nearby <= 0 && isNil "GW_LASTLOAD") exitWith { ['You have no vehicle to deploy.'] spawn _onExit; };
+_nearby = (ASLtoATL visiblePositionASL _pad) nearEntities [["Car"], 8];
+if (({
+
+    if (_x != (vehicle player)) exitWith { 1 };
+    false
+
+} count _nearby) isEqualTo 0 || isNil "GW_LASTLOAD") exitWith { ['You have no vehicle to deploy.'] spawn _onExit; };
 
 // Check ownership
 _owner = ( [_pad, 8] call checkNearbyOwnership);

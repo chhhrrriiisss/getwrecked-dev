@@ -7,6 +7,12 @@ Items without Fixed/Added/Removed proceeding, are typically balance changes
 
 **v0.8.2** [Public alpha release]
 
+
+- Melee weapons now take a small amount of damage when used until they break (damage no longer less per item)
+- Weapon damage and vehicle armor pass to help re-balance engagement times and viability
+- Supply boxes should no longer take over the workshop
+- Objects now hold their rotate while attaching them 
+- effectIsVisible dedicated check to minimize unnecessary visual effects being spawned on clientsw
 - Teleport mechanic adjusted to make it more practical to use
 - Shockwave velocity limitation
 - Increased audability of most weapon/module effects 
@@ -16,7 +22,6 @@ Items without Fixed/Added/Removed proceeding, are typically balance changes
 - Improved guided missile handling slightly
 - Improved RPG accuracy and speed
 - Debris effect to bag of explosives
-- Melee weapon damage no longer stacks and damage divided across all attached melee items of the same type 
 - Flamethrower damage reduced slightly, but does additional damage with sustained hits
 - Slightly increased HMG stock damage
 - Refract effect to flame effects
@@ -25,6 +30,10 @@ Items without Fixed/Added/Removed proceeding, are typically balance changes
 - Vehicle health tag now only shows when player is looking directly at it
 - Fixed - Items detachable on vehicles player does not own
 - Temp Fix - Ownership lost when cancelling deploy timer
+- Fixed - Death camera focus mode
+- Fixed - Taunt not triggering on first key press
+- Fixed - 'You have no vehicle to deploy' message not showing for spawn menu check
+- Fixed - Vehicle signatures not being correctly considered in lock time
 - Fixed - Guided missile dealing no damage
 - Fixed - Vehicles spawning simultaneously now are both deleted to avoid collisions
 - Fixed - Laser firing from center of object
@@ -40,6 +49,7 @@ Items without Fixed/Added/Removed proceeding, are typically balance changes
 - Fixed - Vehicle load UI list should now correctly match current preview
 - Changed - 'Salt flat' is now 'Dry Lake'
 - Added - Random vehicle name generator
+- Added - Check to move player forwards if they get stuck when aborting deploy
 - Added - !copy command for Admins to retrieve vehicles from remote clients
 - Added - Weapon FOV preview when attaching items in the workshop
 - Added - Rocket Pods, Grappling Hook, Teleportation Device, Electromagnet (WIP)

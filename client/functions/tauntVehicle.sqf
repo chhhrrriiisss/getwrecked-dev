@@ -18,10 +18,10 @@ if (!isNil "_sound") then {
 	if (_sound == "none") exitWith {};
 
 	// Prevent too much horn spam
-    if (isNil "GW_LASTTAUNT") then {  GW_LASTTAUNT = time;  };   
+    if (isNil "GW_LASTTAUNT") then {  GW_LASTTAUNT = time - 1;  };   
     _timeSince = (time - GW_LASTTAUNT);
 
-	if (_sound in GW_TAUNTS_LIST && (_timeSince > 1)) then {
+	if (_sound in GW_TAUNTS_LIST && (_timeSince > 0.98)) then {
 
 		GW_LASTTAUNT = time;		
 

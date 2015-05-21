@@ -66,6 +66,8 @@ GW_DEPLOYLIST = GW_DEPLOYLIST + [_obj];
 	_t = _this select 1;
 	_v = _this select 2;
 
+	Sleep 3;
+
 	waitUntil {	
 	
 		_nearby = (ASLtoATL visiblePositionASL _o) nearEntities [["Car"], 5];

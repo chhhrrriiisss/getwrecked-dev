@@ -21,7 +21,7 @@ _distanceModifier = (_target distance (vehicle player)) / 500;
 // Targets with a larger signature are easier to lock
 GW_CURRENTVEHICLE = (vehicle player);
 _status = GW_CURRENTVEHICLE getVariable ["status", []];
-_signature = if ('radar' in _status) then { "Large" } else { ( GW_CURRENTVEHICLE getVariable ['GW_Signature', 'Low']) };
+_signature = if ('radar' in _status) then { "Large" } else { ( _target getVariable ['GW_Signature', 'Low']) };
 _adjustedLockTime = switch (_signature) do { case "Large": { (GW_MINLOCKTIME / 3) }; case "Medium": { (GW_MINLOCKTIME * 0.6) }; case "Low": { (GW_MINLOCKTIME * 1) }; case "Tiny": { (GW_MINLOCKTIME * 2) }; default { GW_MINLOCKTIME }; };
 
 _lockTime = time + _adjustedLockTime + (_distanceModifier);

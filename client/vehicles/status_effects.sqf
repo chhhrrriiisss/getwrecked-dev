@@ -6,7 +6,7 @@
 
 private ['_loop', '_statusEffect', '_commandToLoop', '_targetVehicle', '_vehicleStatus', '_inVehicle'];
 
-_loop = false;
+_loop = true;
 _statusEffect = _this select 0;
 _maxTimeout = _this select 1;
 _targetVehicle = _this select 2;
@@ -55,6 +55,16 @@ if ("locked" == _statusEffect) then {
 };
 
 _commandToLoop = switch (true) do { 
+
+	case ("cloak" == _statusEffect): {{
+
+	
+		_p = (ASLtoATL visiblePositionASL _this);
+		if ((_p select 2) < 0) then {
+			_p set [2, 0.5];
+			_this setPos _p;
+		};	
+	}};
 
 	case ("disabled" == _statusEffect): {{
 
@@ -121,6 +131,7 @@ _commandToLoop = switch (true) do {
 
 	case ("inferno" == _statusEffect && !("nanoarmor" in _vehicleStatus)): {{
 
+
 		// Put out fire if we drive in water
 		if (surfaceIsWater (visiblePositionASL _this)) then {
 
@@ -133,12 +144,15 @@ _commandToLoop = switch (true) do {
 		    _rnd = (_rnd / 10000) * FIRE_DMG_SCALE;
 		    _newDmg = _dmg + _rnd;
 		    _this setDammage _newDmg;
+		    _this call updateVehicleDamage;
 		};
 
 		
 	}};
 
 	case ("fire" == _statusEffect): {{
+
+		
 
 		// Put out fire if we drive in water
 		if (surfaceIsWater (visiblePositionASL _this)) then {
@@ -147,12 +161,12 @@ _commandToLoop = switch (true) do {
 
 		} else {                                         
 			_status = _this getVariable ['status', []];
-		    _dmg = getDammage _this;
 		    _rnd = (random 5) + 10;
 		    _rnd = (_rnd / 10000) * FIRE_DMG_SCALE;
-		    _rnd = if ("nanoarmor" in _status) then { (_rnd * 0.1) } else { _rnd };
-		    _newDmg = _dmg + _rnd;
+		    _rnd = if ("nanoarmor" in _status) then { 0.001 } else { _rnd };
+		    _newDmg = (getDammage _this) + _rnd;
 		    _this setDammage _newDmg;
+		    _this call updateVehicleDamage;
 		};
 
 	}};
@@ -174,22 +188,22 @@ _commandToLoop = switch (true) do {
 
 	default
 	{
-		_loop = true;
+		_loop = false;
 	};
 };
 
-if (_loop) exitWith {};
+if (!_loop) exitWith {};
 
 [_statusEffect, _commandToLoop, _maxTimeout, _targetVehicle] spawn {
 
 	private ['_timeout', '_inVehicle', '_status', '_special', '_targetVehicle'];
 	
 	_targetVehicle = (_this select 3);
-	_timeout = time + (_this select 2);
-	_status = (_this select 3) getVariable ['status', []];
+	_timeout = time + (_this select 2);	
 
 	waitUntil {
 		_targetVehicle call (_this select 1);
+		_status = (_this select 3) getVariable ['status', []];
 		Sleep 0.25;
 		(!((_this select 0) in _status) || (time > _timeout) )
 	};

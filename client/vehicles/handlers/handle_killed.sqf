@@ -28,6 +28,7 @@ GW_LASTMESSAGELOGGED = time;
 
 _veh spawn {
 
+
     _veh = _this;   
     _name = _veh getVariable ['name', ""];
 
@@ -58,11 +59,15 @@ _veh spawn {
 
     _killedBy = _veh getVariable ["killedBy", nil];    
     if (isNil "_killedBy") exitWith {};
+
+    
     
     _owner = _veh getVariable ["GW_Owner", ""];  
     _veh setVariable ["GW_Owner", '', true];     
 
-    _killedBy = if (typename _killedBy == "STRING") then { (call compile _killedBy) } else { _killedBy };        
+    _killedBy = if (typename _killedBy == "STRING") then { (call compile _killedBy) } else { _killedBy };       
+    profileNamespace setVariable ['killedBy',_killedBy];
+     
     _newSpawn = _veh getVariable ["newSpawn", false];
 
     // No money for killing new spawns

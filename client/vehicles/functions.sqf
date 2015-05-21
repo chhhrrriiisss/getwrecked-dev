@@ -71,7 +71,7 @@ calcSpecial = {
 // Apply all defaults to the vehicle
 setDefaultData = {
 
-	private ["_v", "_data"];
+	private ["_v", "_data", "_armor", "_defaultAmmo", '_defaultFuel', '_armorValue'];
 
 	_v = _this select 0;
 
@@ -82,33 +82,28 @@ setDefaultData = {
 	if (isNil "_data") exitWith { false };
 	_attr = _data select 2;
 
-	_defaultAmmo = [_attr, 3, 0] call filterParam;
-	_defaultFuel =[_attr, 4, 0] call filterParam;
-	_signature = [_attr, 7, "Low"] call filterParam;
-	_armor = [_attr, 6, 1] call filterParam;
-	_maxWeapons = [_attr, 1,9999] call filterParam;
-	_maxModules = [_attr, 2, 9999] call filterParam;	
-	_massModifier = [(_attr select 0), 0, 1] call filterParam;
-	_maxMass = [(_attr select 0), 1, 99999] call filterParam;
-
+	_armor = [_attr, 6, 1, [0]] call filterParam;
+	_armorValue = getNumber(configFile >> "CfgVehicles" >> (typeOf _v) >> "armor");
+	_armorValue = if (isNil "_armorValue") then { GW_GAM } else { ((_armorValue / GW_GAM) * _armor) };
+	
 	{
 		_v setVariable _x;
 	} count [	    
-	    ['GW_Armor', _armor, true],
-	    ['GW_Signature', _signature, true],
+	    ['GW_Armor', _armorValue, true],
+	    ['GW_Signature', ([_attr, 7, "Low"] call filterParam), true],
 	    ['GW_Health', 100, true],
 	    ['fuel', 0, false],
 	    ['ammo', 1, false],
-	    ['maxAmmo', _defaultAmmo, false],
-	    ['maxFuel', _defaultFuel, false],
-	    ['maxWeapons', _maxWeapons, false],
-	    ['maxModules', _maxModules, false],
+	    ['maxAmmo', ([_attr, 3, 0] call filterParam), false],
+	    ['maxFuel', ([_attr, 4, 0] call filterParam), false],
+	    ['maxWeapons', ([_attr, 1,9999] call filterParam), false],
+	    ['maxModules', ([_attr, 2, 9999] call filterParam), false],
 	    ['weapons', [], false],
 	    ['tactical', [], false],
 	    ['special', [], false],
 	    ['mass', _mass, false],
-	    ['maxMass', _maxMass, false],
-	    ['massModifier', _massModifier, false],
+	    ['maxMass', ([(_attr select 0), 1, 99999] call filterParam), false],
+	    ['massModifier', ([(_attr select 0), 0, 1] call filterParam), false],
 	    ['lockOns', false, false]
 
 	] > 0;

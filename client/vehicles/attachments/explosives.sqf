@@ -124,7 +124,7 @@ GW_DEPLOYLIST = GW_DEPLOYLIST + [_obj];
 					if (_x != (_v)) then { [_x, "EPL"] call markAsKilledBy; };
 
 					_modifier = [1 - (30 / ( _x distance _pos)), 0.5, 1] call limitToRange;					
-					_d = if ('nanoarmor' in _status) then { 0.05 } else { (random (0.2) + 0.6) };
+					_d = if ('nanoarmor' in _status) then { 0.05 } else { (random (0.1) + 0.5) };
 					_d = _d * _modifier;
 
 					if (_d > 0) then {

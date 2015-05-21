@@ -7,10 +7,12 @@ _source = [_this,0, objNull, [objNull, []]] call filterParam;
 _offset = [_this,1, [0,0,0], [[]]] call filterParam;
 _size = [_this,2, 5, [0]] call filterParam;
 
-if (typename _source isEqualTo "OBJECT" && { isNull _source }) exitWith {};
+if (typename _source == "OBJECT" && { isNull _source }) exitWith {};
 if ((_source distance [0,0,0] < 1)) exitWith {};
 
-if ((visiblePositionASL player) distance _source > GW_EFFECTS_RANGE) exitWith {};
+_pos = if (typename _source == "OBJECT") then { (ASLtoATL visiblePositionASL _source) } else { _source };
+_isVisible = [_pos, 0.5] call effectIsVisible;
+if (!_isVisible) exitWith {};
 
 _pos = if (typename _source isEqualTo "ARRAY") then { (_source vectorAdd _offset) } else { (_source modelToWorldVisual _offset) };
 if ((_pos select 2) < 0) then { _pos set [2, 0]; };

@@ -11,7 +11,10 @@ _duration = [_this,1, 1, [0]] call filterParam;
 _scale = [_this,2, 1, [0]] call filterParam;
 
 if (isNull _target || _duration < 0) exitWith {};
-_pos = visiblePositionASL _target;
+
+_pos = (ASLtoATL visiblePositionASL _target);
+_isVisible = [_pos, _duration] call effectIsVisible;
+if (!_isVisible) exitWith {};
 
 _source  = "#particlesource" createvehiclelocal _pos;
 _source setParticleCircle [0, [0, 0, 0]];

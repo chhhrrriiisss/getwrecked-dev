@@ -25,3 +25,5 @@ if ('cloak' in _status) then {
 	] call gw_fnc_mp;  
 
 };	
+
+false

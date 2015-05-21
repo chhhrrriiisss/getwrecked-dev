@@ -176,9 +176,6 @@ if (!isNil "_paint") then {
     [[_newVehicle,_paint],"setVehicleTexture",true,false] call gw_fnc_mp;
 };
 
-// Check for bad weapons/too many parts
-_newVehicle call cleanAttached;
-
 _targetPos = if (!isNil "_target") then { _target } else { (ASLtoATL getPosASL _newVehicle) };
 _newVehicle setPos _targetPos;
 

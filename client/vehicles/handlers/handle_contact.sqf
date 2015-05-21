@@ -19,8 +19,15 @@ if (_inWorkshop) exitWith {};
 
 if (isDedicated) exitWith {};
 
-if (isNil "GW_LAST_CONTACT") then { GW_LAST_CONTACT = time; };
+if (isNil "GW_LAST_MELEE_CONTACT") then { GW_LAST_MELEE_CONTACT = time - 0.4; };
+_meleeEnabled = _vehicle getVariable ['GW_MELEE', false];
 
+if (time - GW_LAST_MELEE_CONTACT > 0.3 && _meleeEnabled) then {
+	GW_LAST_MELEE_CONTACT = time;
+	_vehicle call collisionCheck;
+};
+
+if (isNil "GW_LAST_CONTACT") then { GW_LAST_CONTACT = time - 0.4; };
 if ( (typeOf _vehicle == "C_Kart_01_F" || !isNil {_vehicle getVariable "newSpawn"} ) && GW_ISDRIVER && (time - GW_LAST_CONTACT > 0.3) ) then {
 	GW_LAST_CONTACT = time;
 

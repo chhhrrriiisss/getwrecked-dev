@@ -27,10 +27,6 @@ _obj setVariable ["GW_Tag", _tag, true];
 _obj setVariable ["GW_Owner", '', true];
 _obj setVariable ["GW_Health", _health, true];
 
-if ((_obj call isWeapon) || (_obj call isModule)) then {
-	_obj setVariable ["GW_KeyBind", (_obj getVariable ["GW_KeyBind", ["-1", "1"]]) , true];
-};
-
 if (_obj isKindOf "StaticWeapon" || _isHolder) then { // Static weapons and Weaponholders
 	_obj setVehicleAmmo 0;		
 	_obj lockDriver true;

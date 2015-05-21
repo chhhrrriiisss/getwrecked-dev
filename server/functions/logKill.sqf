@@ -19,7 +19,7 @@ _str = ([_method, GW_LOOT_LIST] call getData) select 1;
 _method = if (!isNil "_str") then { _str } else { "" };
 
 _method = if (count toArray _method > 0) then { (format["'s %1", _method]) } else { "" };
-_string = format["%1 was destroyed by %2%3", _victim, _killer, _method];
+_string = format["%1 was destroyed by %2%3", _victim, (_killersVehicle select 0), _method];
 GW_SERVER_LASTKILL = format['%1/%2/%3', _victim, _killer, _method];
 
 // Log the message on all clients

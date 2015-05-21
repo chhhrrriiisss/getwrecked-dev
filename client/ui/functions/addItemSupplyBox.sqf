@@ -14,7 +14,7 @@ _data = [_tag, GW_LOOT_LIST] call getData;
 if (isNil "_data") exitWith {};
 _class = _data select 0;
 
-
+_box setVariable ["GW_CU_IGNORE", false, true];
 _contents = _box getVariable ["GW_INVENTORY", []];
 _count = [_box] call countItemsSupplyBox;
 

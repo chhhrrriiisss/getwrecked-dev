@@ -74,7 +74,7 @@ if(!isNil "_tx") then {
 	[[_unit,_tx],"setPlayerTexture",true,false] call gw_fnc_mp;
 };
 
-playerPos = (ASLtoATL getPosASL _unit);
+playerPos = (ASLtoATL visiblePositionASL _unit);
 
 // Reset pp
 "dynamicBlur" ppEffectEnable false; 
@@ -85,17 +85,46 @@ _firstSpawn = _unit getVariable ["firstSpawn", false];
 // Not our first time here, use the death camera to watch our last target for a bit
 if (!_firstSpawn) then {
 
+	_killedByNuke = profileNamespace getVariable ['killedByNuke', []];
+	_killedByNuke = if (count _killedByNuke > 0) then { true } else { false };
 	_killedBy = profileNamespace getVariable ['killedBy', nil];
+	_defaultTarget = getMarkerPos format['%1_%2', GW_CURRENTZONE, 'camera'];
+	_prevPos = _unit getVariable ['GW_prevPos', [0,0,0]];
+	_prevPos = if (_prevPos distance [0,0,0] > 1) then { _prevPos } else { _defaultTarget };
 
-	if (!isNil "_killedBy") then {
+	// Killed by something - lets create a camera on them
+	if (!isNil "_killedBy" && !_killedByNuke) then {
 
-		// If killed by exists, trigger camera on killer		
-		[_unit, _killedBy] spawn deathCamera;
+		_killer = [_killedBy select 0, true] call findUnit;
+		_killersVehicle = vehicle _killer;
+
+		// Killer was someone not in a vehicle? Eh?
+		if (_killer == _killersVehicle) exitWith {
+			[_defaultTarget, "default"] spawn deathCamera;
+		};
+
+		// If it was a suicide, or the killers vehicle is also dead, use prevPos
+		if ((_killer == _unit) || (!alive _killersVehicle)) exitWith {
+			[_prevPos, "overview"] spawn deathCamera;
+		};
+
+		// Killer vehicle is alive and ticking
+		[_killersVehicle, "focus"] spawn deathCamera;
 
 	} else {
-		// Not sure if killed by, trigger camera on default location		
-		[_unit, _unit] spawn deathCamera;
+
+		if (_killedByNuke) exitWith {
+			[(profileNamespace getVariable ['killedByNuke', _defaultTarget]), "nukefocus"] spawn deathCamera;
+		};
+		
+		// Use last location, or currentZone_camera
+		[_prevPos, "overview"] spawn deathCamera;
+
 	};
+
+	profileNamespace setVariable ['killedBy', nil];
+	_unit setVariable ["killedBy", nil];
+	_unit setVariable ["GW_prevPos", nil];
 
 	_failSpawn = false;
 	_location = [spawnAreas, ["Car", "Man"]] call findEmpty;

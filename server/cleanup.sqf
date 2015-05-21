@@ -20,9 +20,17 @@ cleanUpCommands = [
 		_a = [];
 		{ 
 			_ignore = _x getVariable ['GW_CU_IGNORE', false];
-			if (isNull (attachedTo _x) && !_ignore) then { _a pushBack _x; };
+			if (isNull (attachedTo _x) && !_ignore) then { 
+				if (_x call isSupplyBox) then {
+					_inv = _x getVariable ['GW_Inventory', []];
+					if (count _inv > 0) exitWith {};				
+					_a pushBack _x; 
+				} else {
+					_a pushBack _x; 
+				};
+			};
 			false
-		} count (nearestObjects [(getmarkerpos "workshopZone_camera"), [], 150]);
+		} count (nearestObjects [(getmarkerpos "workshopZone_camera"), [], 300]);
 		_a
 	}, 240],
 	[{ 

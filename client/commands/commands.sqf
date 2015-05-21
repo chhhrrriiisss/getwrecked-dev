@@ -352,7 +352,7 @@ GW_COMMANDS_LIST = [
 				_argument = GW_LASTLOAD; 
 			};
 
-			[GW_CURRENTVEHICLE modelToWorldVisual [0, 50, 0], _argument] spawn requestVehicle;
+			[GW_CURRENTVEHICLE modelToWorldVisual [0, 30, 0], _argument] spawn requestVehicle;
 		}
 	],
 

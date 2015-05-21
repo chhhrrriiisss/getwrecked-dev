@@ -38,8 +38,9 @@ if (!isNil "GW_NEW_SUPPLY_BOX" ) then {
 		systemChat 'Supply box full, some items may have been lost.'
 	};	
 
-	GW_NEW_SUPPLY_BOX setVariable ["GW_Inventory", _contents];
+	GW_NEW_SUPPLY_BOX setVariable ["GW_Inventory", _contents, true];
 	GW_NEW_SUPPLY_BOX setVariable ["GW_Owner", name player, true];		
+	GW_NEW_SUPPLY_BOX setVariable ["GW_CU_IGNORE", false, true];	
 
 	GW_NEW_SUPPLY_BOX spawn newItemsSupplyBox;
 

@@ -10,8 +10,8 @@ _duration = [_this,1, 1, [0]] call filterParam;
 if (isNull _target || _duration < 0) exitWith {};
 
 _pos = (ASLtoATL visiblePositionASL _target);
-
-if ((ASLtoATL visiblePositionASL player) distance _pos > GW_EFFECTS_RANGE) exitWith {};
+_isVisible = [_pos, _duration] call effectIsVisible;
+if (!_isVisible) exitWith {};
 
 _source = "#particlesource" createVehicle _pos;
 _source setParticleClass "ObjectDestructionFire1Smallx";

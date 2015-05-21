@@ -16,7 +16,7 @@ _vehicle = _this select 2;
 
 // GW_GUIDED_MISSILE Properties
 _repeats = 1;
-_round = "M_Titan_AT";
+_round = "M_PG_AT";
 _soundToPlay = "a3\sounds_f\weapons\Launcher\nlaw_final_2.wss";
 _fireSpeed = 1;
 _projectileSpeed = 70;
@@ -41,68 +41,6 @@ GW_GUIDED_VELOCITY = [GW_GUIDED_HEADING, _projectileSpeed] call BIS_fnc_vectorMu
 
 // Release the hound!
 GW_GUIDED_MISSILE = createVehicle [_round, _gPos, [], 0, "FLY"];
-
-GW_GUIDED_MISSILE addEventHandler ['killed', {
-
-	(_this select 0) removeAllEventHandlers "killed";	
-
-	systemchat format['destroyed! %1', time];
-		
-	// _nearby = _pos nearEntities [["car"], 5];
-	// _triggered = _obj getVariable ["triggered", false];
-
-	// if (count _nearby > 0 || _triggered) then {
-
-	// 	{
-	// 		_status = _x getVariable ['status', []];
-	// 		_isVehicle = _x getVariable ['isVehicle', false];
-	// 		_velocity = (velocity _x);
-	// 		_vel = [0,0,0] distance _velocity;
-
-	// 		// If its a vehicle and its going fast blow it up
-	// 		if (_isVehicle && _vel > 1.5) then {
-
-	// 			if (_x != GW_CURRENTVEHICLE) then { [_x, "MIN"] call checkMark;	};
-
-	// 			playSound3D ["a3\sounds_f\weapons\mines\electron_trigger_1.wss", _obj, false, getPos _obj, 5, 1, 50]; 
-
-	// 			_tPos =  (ASLtoATL getPosASL _x);
-	// 			_tPos set[2, 0];
-	// 			_d = if ('nanoarmor' in _status) then { 0.05 } else { (0.2 + random 0.1) };
-
-	// 			_x setDamage ((getDammage _x) + _d);
-				
-	// 			_bomb = createVehicle ["M_AT", _tPos, [], 0, "CAN_COLLIDE"];		
-	// 			_bomb setVelocity [0,0,-100];
-	// 			Sleep 0.01;			
-
-	// 			[_tPos, 10, 15] call shockwaveEffect;
-
-	// 			deleteVehicle _obj;
-
-	// 		} else {
-	// 			_triggered = false;
-	// 		};
-
-	// 		false
-			
-	// 	} count _nearby > 0;
-
-	// };		
-
-
-	// _rnd = (random 0.22) + 0.22;
-	// 				_t setDamage ((getDammage _t) + _rnd);
-
-	// 				[
-	// 					_t,
-	// 					"updateVehicleDamage",
-	// 					_t,
-	// 					false
-	// 				] call gw_fnc_mp;
-
-}];
-
 GW_GUIDED_MISSILE setVectorUp GW_GUIDED_HEADING; 
 GW_GUIDED_MISSILE setVelocity GW_GUIDED_VELOCITY;
 
@@ -219,7 +157,7 @@ waitUntil {
 
 if (!alive GW_GUIDED_MISSILE && _lastMissilePos distance [0,0,0] > 1) then {
 
-	_nearby = _lastMissilePos nearEntities [["Car"], 10];
+	_nearby = _lastMissilePos nearEntities [["Car"], 7];
 	if (count _nearby == 0) exitWith {};
 
 	{
@@ -229,9 +167,11 @@ if (!alive GW_GUIDED_MISSILE && _lastMissilePos distance [0,0,0] > 1) then {
 
 		// If its a vehicle and its going fast blow it up
 		if (_isVehicle && !('invulnerable' in _status) && _x != GW_CURRENTVEHICLE) then {
+			
+			if ('invulnerable' in _status) exitWith {};
 
 			[_x, "GUD"] call markAsKilledBy;	
-			_d = if ('nanoarmor' in _status) then { 0.05 } else { (0.5 + (random 0.35)) };
+			_d = if ('nanoarmor' in _status) then { 0.05 } else { (0.15 + (random 0.25)) };
 
 			_x setDamage ((getDammage _x) + _d);	
 			[_lastMissilePos, 10, 25] call shockwaveEffect;
@@ -263,7 +203,9 @@ camdestroy _cam;
 player cameraeffect["terminate","back"];
 
 "colorCorrections" ppEffectEnable false; 
+"colorCorrections" ppEffectCommit 0; 
 "radialBlur" ppEffectEnable false;
+"radialBlur" ppEffectCommit 0;
 
 showCinemaBorder true;
 titlecut["","PLAIN DOWN",0];

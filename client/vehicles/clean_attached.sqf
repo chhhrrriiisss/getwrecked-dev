@@ -12,7 +12,7 @@ _maxModules = _vehicle getVariable ['maxModules', 9999];
 	_tag =_x getVariable ['GW_Tag', ''];
 
 	if (true) then {
-		if (count toArray _tag isEqualTo '' || !alive _x) exitWith { deleteVehicle _x; };
+		if (!alive _x) exitWith { deleteVehicle _x; };
 		if (_x call isWeapon) then { if (_currentWeapons < _maxWeapons) then { _currentWeapons = _currentWeapons + 1; } else { deleteVehicle _x; }; };
 		if (_x call isModule) then { if (_currentModules < _maxModules) then { _currentModules = _currentModules + 1; } else { deleteVehicle _x; }; };
 	};

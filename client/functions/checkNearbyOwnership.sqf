@@ -19,6 +19,8 @@ _ownedByMe = false;
 
 {
 	_currentOwner = if (isNull attachedTo _x) then {
+		// Ignore supply boxes so the pads can be cleared
+		if (_x call isSupplyBox) exitWith { '' };
 		(_x getVariable ['GW_Owner', ''])
 	} else {
 		if (isPlayer (attachedTo _x)) exitWith { (name (attachedTo _x)) };

@@ -4,7 +4,7 @@
 //      Return: None
 //
 
-private ['_vehicle', '_status', '_vehVel'];
+private ['_vehicle', '_status', '_vehVel', '_timeout'];
 
 _vehicle = [_this,1, objNull, [objNull]] call filterParam;
 
@@ -75,7 +75,7 @@ waitUntil{
 	_v setFuel 0;
 
 	waitUntil {
-	
+
 		_status = _v getVariable ["status", []];
 
 		// Take ammo each tick
@@ -88,12 +88,13 @@ waitUntil{
 				2,
 				_s
 			],
-		"cloakEffect"
+			"cloakEffect",
+			true,
+			false
 		] call gw_fnc_mp;
 
 		_pos = (ASLtoATL visiblePositionASL (_this select 0));
 		_nearby = _pos nearEntities [["car"], 10];
-		if ((_pos select 2) < 0) then { _pos set [2, 0.5]; (_this select 0) setPos _pos; };
 
 		_found = false;
 

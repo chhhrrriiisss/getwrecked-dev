@@ -39,8 +39,16 @@ if (isNil { _unit getVariable 'snapping' }) then {	_unit setVariable ['snapping'
 _moveInterval = 0.005;
 _snappingInterval = 0.05;
 
-GW_EDITING_TARGET = _unit worldToModelVisual (_obj modelToWorldVisual [0,0,0]);
+GW_EDITING_TARGET = if (isNull attachedTo _obj) then {
+	_d = _obj distance _unit;
+	[0, _d, 0]
+} else {
+	_unit worldToModelVisual (_obj modelToWorldVisual [0,0,0]);
+};
+
 GW_EDITING_TARGET set [2, ([(GW_EDITING_TARGET select 2), 0, 10] call limitToRange)];
+
+_obj setVariable ['GW_relDirection', (getDir _obj)];
 
 GW_EDITING_DIRECTION = _obj call BIS_fnc_getPitchBank;
 _objVector = ([_obj, _unit] call getVectorDirAndUpRelative);
@@ -57,6 +65,8 @@ waitUntil {
 _objVector set [1, [0,0,1]];
 [_obj, _objVector] call setVectorDirAndUpTo;
 
+
+
 for "_i" from 0 to 1 step 0 do {
 
 	if (!alive _unit || !alive _obj || !GW_EDITING || _unit != GW_CURRENTVEHICLE) exitWith {};
@@ -71,14 +81,14 @@ for "_i" from 0 to 1 step 0 do {
 	_height = _objAlt;
 
 	// Adjust object if we're looking above or below it
-	// if (_cameraHeight < (_objAlt - 0.05)) then { _height = _objAlt - 0.05; };
-	// if (_cameraHeight > (_objAlt + 0.05) || (((ASLtoATL visiblePositionASL _obj) select 2) < 0)) then { _height = _objAlt + 0.05;  };
 	_height = [_cameraHeight, 0, 10] call limitToRange;
 	
 	GW_EDITING_TARGET = [([(_objPos select 0), 2] call roundTo),([(_objPos select 1), 2] call roundTo), ([_height, 2] call roundTo)];
 
 	// Set the object position and direction (if changed)
-	_obj attachTo [_unit, GW_EDITING_TARGET];
+	_relDir = _obj getVariable ['GW_relDirection', 0];
+	_obj attachTo [_unit, GW_EDITING_TARGET];	
+	[_obj, _relDir] call setDirTo;
 
 	// Snap object direction to that of vehicle
 	_snapping = _unit getVariable ['snapping', false];	
@@ -94,7 +104,7 @@ for "_i" from 0 to 1 step 0 do {
 		_rearCornerDir = [(_frontDir - 45)] call normalizeAngle;
 		_resultDir = 0;
 
-		_currentDir = [(getDir _obj) - (getDir _unit)] call normalizeAngle;
+		_currentDir = [_relDir - (getDir _unit)] call normalizeAngle;
 
 		if (_currentDir != _frontDir || _currentDir != _sideDir || _currentDir != _rearCornerDir || _currentDir != _forwardCornerDir) then {
 
@@ -113,7 +123,10 @@ for "_i" from 0 to 1 step 0 do {
 
 		};
 
+		_actualDir = ([_resultDir - (getDir player)] call normalizeAngle);
+		_obj setVariable ['GW_relDirection', _resultDir];
 		[_obj, _resultDir] call setDirTo;	
+
 					
 	};
 

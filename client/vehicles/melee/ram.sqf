@@ -13,11 +13,7 @@ if ('invulnerable' in _status || 'cloak' in _status) exitWith { true };
 _vehicle = attachedTo _source;
 _damage = [(random 0.15), 0.05, 0.1] call limitToRange;
 _velocity = (velocity _vehicle) distance [0,0,0];   
-
-_dmg = 0;
-if (_velocity > 4) then {
-    _source setDammage (getDammage _source) + ((random 0.1) + 0.01); 
-};
+_source setDammage (getDammage _source) + ((random 0.1) + 0.01); 
 
 if ((getDammage _source) >= 1) exitWith {
 

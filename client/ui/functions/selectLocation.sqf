@@ -34,6 +34,18 @@ if (!isNil "GW_SPAWN_LOCATION") then {
 			player action ["eject", GW_SPAWN_VEHICLE];
 		};
 
+		player spawn {
+			_timeout = time + 3;
+			waitUntil {
+				Sleep 0.25;
+				((_this == (vehicle _this)) || (time > _timeout))
+			};
+
+			_objs = lineIntersectsWith [ATLtoASL (_this modelToWorldVisual [0,0,1.6]), ATLtoASL (_this modelToWorldVisual [0,5,1.6]), _this, objNull];
+			if (count _objs == 0) exitWith {};
+			_this setPos (_this modelToWorldVisual [0,5,0]);
+		};
+
 		['ABORTED!', 2, warningIcon, colorRed, "warning"] spawn createAlert;   
 		GW_SPAWN_VEHICLE lockDriver true;
 		GW_SPAWN_VEHICLE setVariable ['GW_Owner', (name player), true];

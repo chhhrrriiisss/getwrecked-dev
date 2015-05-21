@@ -22,6 +22,7 @@ _unit = _this select 1;
 _location = _this select 2;
 
 _zoneType = "battle";
+_zoneDisplayName = "";
 _deployData = [];
 
 // Determine the deploy locations and properties
@@ -30,6 +31,7 @@ _targetPosition = if (typename _location == "ARRAY") then { _location } else {
 	{
 		if ((_x select 0) == GW_SPAWN_LOCATION) exitWith {
 			_zoneType = (_x select 1);
+			_zoneDisplayName = (_x select 2);
 		};
 		false
 	} count GW_VALID_ZONES > 0;
@@ -133,10 +135,10 @@ if (_zoneType == "race") then {
 GW_DEPLOY_ACTIVE = false;
 
 // Tell everyone else where we've gone
-_str = if (GW_SPAWN_LOCATION == "downtown") then { "" } else { "the "};
-systemChat format['You deployed to %1%2.', _str, GW_SPAWN_LOCATION];
+_str = if (_zoneDisplayName == "Downtown") then { "" } else { "the "};
+systemChat format['You deployed to %1%2.', _str, _zoneDisplayName];
 
-_strBroadcast = format['%1 deployed to %2%3', name player, _str, GW_SPAWN_LOCATION];
+_strBroadcast = format['%1 deployed to %2%3', name player, _str, _zoneDisplayName];
 pubVar_systemChat = _strBroadcast;
 publicVariable "pubVar_systemChat";
 

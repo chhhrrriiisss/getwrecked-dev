@@ -51,7 +51,7 @@ if (!isNil "GW_DC_EH") then {
 GW_DC_EH = addMissionEventHandler ["HandleDisconnect",{
 
 	// Remove ownership from any vehicles in workshop
-	_n = name player;
+	_n = name (_this select 0);
 	_o = nearestObjects [getmarkerpos "workshopZone_camera", [], 200];
 
 	pubVar_logDiag = format['%1 disconnected.', _n];

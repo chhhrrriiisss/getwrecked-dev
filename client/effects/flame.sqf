@@ -10,8 +10,9 @@ _duration = [_this,1, 1, [0]] call filterParam;
 if (isNull _target || _duration < 0) exitWith {};
 
 _pos = (ASLtoATL visiblePositionASL _target);
+_isVisible = [_pos, _duration] call effectIsVisible;
 
-if ((ASLtoATL visiblePositionASL player) distance _pos > GW_EFFECTS_RANGE) exitWith {};
+if (!_isVisible) exitWith {};
 
 [_target, 1, 0.1] spawn magnetEffect;
 

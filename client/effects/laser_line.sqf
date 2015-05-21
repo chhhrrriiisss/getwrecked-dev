@@ -20,7 +20,8 @@ _this spawn {
 
 	_pos = if (typename _p2 == "OBJECT") then { visiblePositionASL _p2 } else { _p2 };		
 	
-	if ((visiblePositionASL player) distance _pos > GW_EFFECTS_RANGE) exitWith { GW_LINEFFECT_ARRAY = []; };					
+	_isVisible = [_pos, _duration] call effectIsVisible;
+	if (!_isVisible) exitWith { GW_LINEFFECT_ARRAY = []; };	
 				
 	_source = "#particlesource" createVehicleLocal _pos;
 	_source setParticleCircle [0, [0, 0, 0]];

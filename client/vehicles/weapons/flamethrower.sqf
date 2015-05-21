@@ -73,6 +73,7 @@ if (count _nearby < 0) exitWith {};
 
 
 _src addEventHandler['EpeContactStart', {	
+
 	if ((_this select 1) == (vehicle player)) exitWith {};
 
 	(_this select 0) removeEventHandler ['EpeContactStart', 0];
@@ -82,18 +83,11 @@ _src addEventHandler['EpeContactStart', {
 	_status = (_this select 1) getVariable ['status', []];
 	if ('nofire' in _status || 'invulnerable' in _status) exitWith {};
 
-	_d = if ('nanoarmor' in _status) then { 0.001 } else { 0.02 };
-	(_this select 1) setDammage ((getDammage (_this select 1)) + _d);
-
 	[(_this select 1), 'FLM'] call markAsKilledBy;
-	
-	[
-		(_this select 1),
-		"updateVehicleDamage",
-		(_this select 1),
-		false
-	] call gw_fnc_mp;
 
+	_d = if ('nanoarmor' in _status) then { 0 } else { 0.005 };
+	(_this select 1) setDammage ((getDammage (_this select 1)) + _d);	
+	
 }];
 
 _src spawn {
@@ -118,14 +112,14 @@ _src spawn {
 
 [_src, _lifeTime] spawn { 
 
-	Sleep 3.5;
+	Sleep 3;
 
 	_o = _this select 0;
 	_l = _this select 1;
 
 	_timeout = time + _l;
 	waitUntil{
-	if ( time > _timeout || (((getPos _o) select 2) < 0.5) ) exitWith { true };
+	if ( time > _timeout || (((ASLtoATL visiblePositionASL _o) select 2) < 0.5) ) exitWith { true };
 	false
 	};
 

@@ -13,7 +13,7 @@ _vehicle = GW_CURRENTVEHICLE;
 
 _unit = player;
 
-IF (vectorUp _vehicle distance [0,0,1] > 1.4) exitWith {};
+IF (vectorUp _vehicle distance [0,0,1] > 1) exitWith {};
 
 // Get all the camera information we need
 GW_CAMERA_HEADING = [(positionCameraToWorld [0,0,0]), (positionCameraToWorld [0,0,1])] call BIS_fnc_vectorDiff;
@@ -91,7 +91,7 @@ _count = 0;
 	if ( (_dif < _limit) && _type in _allowedWeapons || (_type in GW_LOCKONWEAPONS)) then {	
 
 		// Only add weapons that are mouse bound to active weapons list
-		_bind = _obj getVariable ['GW_KeyBind', []];
+		_bind = _obj getVariable ['GW_KeyBind', ["-1", "1"]];
 		_bind = if (typename _bind == "ARRAY") then { (_bind select 1) } else { _bind };
 
 		GW_AVAIL_WEAPONS pushback [_obj, _type, _bind];

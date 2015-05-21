@@ -13,8 +13,8 @@ if ('invulnerable' in _status || 'cloak' in _status) exitWith { true };
 _vehicle = attachedTo _source;
 _velocity = (velocity _vehicle) distance [0,0,0];	
 _multiplier = [((random (_velocity/100)) + ((_velocity/100) * 0.25)), 0.04, 0.5] call limitToRange;
-
-_damage = [( _multiplier / (['CRR', _vehicle] call hasType) ), 2] call roundTo;
+_damage = if ('nanoarmor' in _status) then { 0.001 } else { _multiplier };
+_source setDammage (getDammage _source) + ((random 0.05) + 0.01); 
 
 [       
     [
