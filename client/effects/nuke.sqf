@@ -190,7 +190,7 @@ if (_dist > _range) then {
 
 	// Get the angle we're getting thrown too
 	_dir = [_crate,_vehicle] call dirTo;
-	_relPos = [_vehicle, _dist, _dir] call BIS_fnc_relPos;
+	_relPos = [_vehicle, _dist, _dir] call relPos;
 
 	// Use vehicle pos to calculate velocity vector
 	_vehPos = getPosATL _vehicle;

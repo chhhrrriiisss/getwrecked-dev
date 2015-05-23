@@ -58,13 +58,13 @@ _validPoints = [];
 		_pointBelow = [(_oPos select 0), (_oPos select 1) , (_oPos select 2) - _height];
 
 		// Left & Right
-		_pointLeft = [_oPos, _width, _oDir] call BIS_fnc_relPos;
-		_pointRight = [_oPos, -_width, _oDir] call BIS_fnc_relPos;
+		_pointLeft = [_oPos, _width, _oDir] call relPos;
+		_pointRight = [_oPos, -_width, _oDir] call relPos;
 
 		// Ahead & Behind
 		_aDir = [_oDir + 90] call normalizeAngle;
-		_pointAhead = [_oPos, _length, _aDir] call BIS_fnc_relPos;
-		_pointBehind = [_oPos, -_length, _aDir] call BIS_fnc_relPos;
+		_pointAhead = [_oPos, _length, _aDir] call relPos;
+		_pointBehind = [_oPos, -_length, _aDir] call relPos;
 
 		// Mirror Point (opposite side of vehicle)
 		_mDist = (_oPos) distance (getPosASL _currentVehicle);
@@ -72,7 +72,7 @@ _validPoints = [];
 		_vehDir = getDir _currentVehicle;
 		_dif = [(_vehDir - _dirTo)] call normalizeAngle;
 		_actual = [ ((_vehDir) - (_dif * -1)) ] call normalizeAngle;
-		_mirror = [_currentVehicle, _mDist, _actual] call BIS_fnc_relPos;
+		_mirror = [_currentVehicle, _mDist, _actual] call relPos;
 		_pointMirror = [_mirror select 0, _mirror select 1, _oPos select 2];
 
 		// Add the points to the array

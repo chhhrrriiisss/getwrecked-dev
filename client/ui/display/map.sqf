@@ -77,7 +77,7 @@ GW_MAP_EH = ((findDisplay 12) displayCtrl 51) ctrlAddEventHandler ["Draw", {
 					// Create a slightly shorter line each time
 					_step = _distance * (_i / _repeats);
 					_source = +_p1;
-					_newDestination = [_source, _step, _dirTo] call BIS_fnc_relPos;
+					_newDestination = [_source, _step, _dirTo] call relPos;
 
 					// Alternate the line colour
 					_currentColor = if ((_i % 2) == 0) then { [0.99,0.82,0.04,1] } else { [0,0,0,1] };

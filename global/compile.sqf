@@ -210,6 +210,7 @@ checkOwner = compile preprocessFile 'global\functions\checkOwner.sqf';
 findLocationInZone = compile preprocessFile "global\functions\findLocationInZone.sqf";
 arrayToJson = compile preprocessFile 'global\functions\arrayToJson.sqf';
 dirTo = compile preprocessFile 'global\functions\dirTo.sqf';
+relPos = compile preprocessFile 'global\functions\relPos.sqf';
 filterParam = compile preprocessFile 'global\functions\filterParam.sqf';
 
 shareVehicle = compile preprocessFile 'global\functions\shareVehicle.sqf';

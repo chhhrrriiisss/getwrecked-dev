@@ -58,7 +58,7 @@ _this spawn {
 				// Get the angle we're getting thrown too
 				_dir = [_vehicle, _X] call dirTo;
 				_dist = if (_dist < (_maxRange / 2)) then { (_dist * 9) } else { (_dist * 3) };
-				_relPos = [_vehicle, _dist, _dir] call BIS_fnc_relPos;
+				_relPos = [_vehicle, _dist, _dir] call relPos;
 
 				// Closer, more height		
 				_relPos set[2, (_dist / 8)];

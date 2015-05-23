@@ -190,4 +190,6 @@ _endTime = time;
 _totalTime = round ((_endTime - _startTime) * (10 ^ 3)) / (10 ^ 3);
 systemchat format['Vehicle loaded in %1.',  (_endTime - _startTime)];
 
+GW_LOADEDVEHICLE = _newVehicle;
+
 true

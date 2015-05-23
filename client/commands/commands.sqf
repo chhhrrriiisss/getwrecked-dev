@@ -352,7 +352,44 @@ GW_COMMANDS_LIST = [
 				_argument = GW_LASTLOAD; 
 			};
 
-			[GW_CURRENTVEHICLE modelToWorldVisual [0, 30, 0], _argument] spawn requestVehicle;
+			[GW_CURRENTVEHICLE modelToWorldVisual [0, 30, 0], _this] spawn requestVehicle;
+
+		}
+	],
+
+	[
+		
+		"loadai",
+		{
+
+			_argument = _this select 0;
+
+			if ( !(serverCommandAvailable "#kick") ) exitWith {
+				systemChat 'You need to be an admin to use that.';
+			};
+
+			_len = count toArray(_argument);
+			if (_len == 0 && isNil "GW_LASTLOAD") exitWith {
+				systemchat 'Please specify vehicle to load.';
+			};
+
+			if (_len == 0) then {
+				_argument = GW_LASTLOAD; 
+			};
+
+			_argument spawn {
+
+					GW_LOADEDVEHICLE = nil;					
+					[GW_CURRENTVEHICLE modelToWorldVisual [0, 30, 0], _this] spawn requestVehicle;
+
+					_timeout = time + 3;
+					waitUntil {
+						((time > _timeout) || (!isNil "GW_LOADEDVEHICLE"))
+					};
+
+					GW_LOADEDVEHICLE execVM 'server\ai\createAI.sqf';
+
+			};
 		}
 	],
 
