@@ -5,14 +5,7 @@
 //      Return: None
 //
 
-if (isNil { GW_CLEANUP_ACTIVE }) then {
-	GW_CLEANUP_ACTIVE = false;
-};
-
-if (GW_CLEANUP_ACTIVE) then {
-	GW_CLEANUP_ACTIVE = false;
-	WaitUntil{ Sleep 1; (isNil { GW_CLEANUP_ACTIVE }) };
-};
+GW_CLEANUP_ACTIVE = false;
 
 // Items to check / Timeout for item
 cleanUpCommands = [
@@ -64,14 +57,16 @@ checkDeadTimeout = compileFinal '
 ';
 
 executeCleanUp = {
-		
+	
+	_manualMode = if (!isNil { _this select 0 }) then { true } else { false };
+
 	{
 		_arr = call (_x select 0);
 		_timeout = _x select 1;
 
 		{
 			_ignore = _x getVariable ['GW_CU_IGNORE', false];
-			if ( ([_x, _timeout] call checkDeadTimeout) && !_ignore ) then {
+			if ( ([_x, _timeout] call checkDeadTimeout) && !_ignore || _manualMode) then {
 				diag_log format['Deleted %1 at %2', typeof _x, time];
 				{ deleteVehicle _x; } foreach (attachedObjects _x);
 				deleteVehicle _x;
@@ -80,7 +75,7 @@ executeCleanUp = {
 
 	} count cleanUpCommands;
 
-	if (isNil { _this select 0 }) exitWith { true };
+	if (!_manualMode) exitWith { true };
 
 	_source = owner (_this select 0);
 
@@ -92,11 +87,6 @@ executeCleanUp = {
 
 	true
 
-};
-
-if (GW_CLEANUP_RATE == 0) exitWith {
-	diag_log 'Cleanup aborted as user specified MANUAL mode';
-	GW_CLEANUP_ACTIVE = false;
 };
 
 _rate = GW_CLEANUP_RATE call {
@@ -111,37 +101,5 @@ _rate = GW_CLEANUP_RATE call {
 GW_CLEANUP_RATE_LOW = _rate select 0; // < 50%
 GW_CLEANUP_RATE_MED = _rate select 1; // >= 50%
 GW_CLEANUP_RATE_HIGH = _rate select 2; // >= 75%
-
-_cleanupTick = 10; 
-
-GW_CLEANUP_ACTIVE = true;
 GW_CLEANUP_TIMEOUT = time;
 
-diag_log format['Cleanup script initialized at %1', time];
-
-for "_i" from 0 to 1 step 0 do {
-	
-	if (!GW_CLEANUP_ACTIVE) exitWith {};
-
-	if (time < GW_CLEANUP_TIMEOUT) then {} else {
-
-		_rate = ((count allUnits) / GW_MAX_PLAYERS) call {
-			_this = [_this, 0, 1] call limitToRange;
-			if (_this >= 0.75) exitWith { GW_CLEANUP_RATE_HIGH };
-			if (_this >= 0.5) exitWith { GW_CLEANUP_RATE_MED };
-			GW_CLEANUP_RATE_LOW
-		};
-
-		GW_CLEANUP_TIMEOUT = time + _rate;
-		diag_log format['Running cleanup script at %1', time];
-
-		[] call executeCleanUp;
-			
-		diag_log format['Cleanup sleeping until %1s', GW_CLEANUP_TIMEOUT];
-	};
-
-	Sleep _cleanupTick;
-};
-
-diag_log format['Cleanup script stopped at %1', time];
-GW_CLEANUP_ACTIVE = nil;

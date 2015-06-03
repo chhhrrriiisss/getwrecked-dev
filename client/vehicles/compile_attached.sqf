@@ -119,7 +119,9 @@ _combinedMass = 0;
 } count _attachedObjects > 0;
 
 // Apply combined mass to vehicle
-_vehicle setMass ([_combinedMass, _defaultMass, _maxMass] call limitToRange);
+_isAi = _vehicle getVariable ['isAi', false];
+_newMass = if (!_isAi) then { ([_combinedMass, _defaultMass, _maxMass] call limitToRange) } else { _defaultMass };
+_vehicle setMass _newMass;
 
 // Calculate and set vehicle value
 _vehicleValue = [(typeOf _vehicle), "", ""] call getCost;

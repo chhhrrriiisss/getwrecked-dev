@@ -40,6 +40,7 @@ disableChannels[] = {0,2,3,6};
 #include "client\ui\dialogs\buy.hpp"
 #include "client\ui\dialogs\settings.hpp"
 #include "client\ui\dialogs\inventory.hpp"
+#include "client\ui\dialogs\race.hpp"
 #include "client\ui\dialogs\message.hpp"
 #include "client\ui\dialogs\timer.hpp"
 

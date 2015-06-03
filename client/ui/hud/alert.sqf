@@ -29,11 +29,11 @@ _text =	format["<img size='%1' align='center' valign='middle' shadow='0' image='
 
 // Get controls and display
 disableSerialization;
-140000 cutRsc ["GW_Alert", "PLAIN"];
+940000 cutRsc ["GW_Alert", "PLAIN"];
 _layerAlert = ("GW_Alert" call BIS_fnc_rscLayer);
 _ui = uiNamespace getVariable "GW_Alert"; 
-_title = _ui displayCtrl 140002;
-_bg = _ui displayCtrl 140001;
+_title = _ui displayCtrl 940002;
+_bg = _ui displayCtrl 940001;
 
 // Create the alert group
 _alertGroup = [

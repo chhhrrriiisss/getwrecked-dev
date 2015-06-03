@@ -13,9 +13,8 @@ if (!alive _target) exitWith {};
 
 if (count toArray _type == 0) exitWith {};
 
-_attributes = _ai getVariable ['GW_aiAttributes', []];
-
-if (count _attributes == 0) exitWith {};
+// _attributes = _ai getVariable ['GW_aiAttributes', []];
+// if (count _attributes == 0) exitWith {};
 	
 switch (_type) do {
 	
@@ -35,7 +34,13 @@ switch (_type) do {
 
 	};
 
+	case "follow":
+	{
 
+
+
+
+	};
 	
 
 };

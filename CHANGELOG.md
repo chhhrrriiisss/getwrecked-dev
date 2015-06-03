@@ -5,6 +5,10 @@ Note: Some changes that are deemed spoilers are hidden from this log
 (WIP) Indicates items that may not be fully functional and are only partially implemented
 Items without Fixed/Added/Removed proceeding, are typically balance changes
 
+**v0.8.3** [Public alpha release]
+
+- Combined cleanup scripts into events loop to improve server fps
+
 **v0.8.2** [Public alpha release]
 
 

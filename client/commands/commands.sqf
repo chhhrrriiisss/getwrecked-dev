@@ -445,6 +445,16 @@ GW_COMMANDS_LIST = [
 		}
 	],
 
+	[
+		
+		"race",
+		{
+
+			if ( !(serverCommandAvailable "#kick") ) exitWith { systemChat 'You need to be an admin to use that.'; };	
+
+			[] execVM 'client\functions\generateRace.sqf';
+		}
+	],
 
 	[
 		

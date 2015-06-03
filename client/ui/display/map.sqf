@@ -70,7 +70,7 @@ GW_MAP_EH = ((findDisplay 12) displayCtrl 51) ctrlAddEventHandler ["Draw", {
 				_distance = _p1 distance _p2;
 				_thickness = 1;
 
-				_repeats = (ceil (_distance / 70)) max 10;
+				_repeats = 3;
 
 				for "_i" from _repeats to 0 step -1 do {
 

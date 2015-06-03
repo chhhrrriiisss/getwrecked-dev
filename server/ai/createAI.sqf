@@ -81,13 +81,28 @@ for "_i" from 0 to 1 step 0 do {
 
 				_objDir = [(getDir _x) - (_vehDir)] call normalizeAngle;
 				_dif = [_objDir - _dirTo] call flattenAngle;
-				if (_dif < 20) then {
+				if (_dif < 40) then {
 
 					_tagData = ['HMG'] call getTagData;
 					_reloadTime = _tagData select 0;
 
 					for "_i" from 0 to 8 step 1 do {
-						[_x, (_currentTarget modelToWorld [0,0,1]), _vehicle] call fireHmg;
+
+						[_x, _currentTarget modelToWorld [0,0,1], _vehicle] call fireHmg;
+
+						[			
+							[
+								_currentTarget,
+								"motor",
+								0.1,
+								nil,
+								"B_127x99_Ball"
+							],
+							"handleDamageVehicle",
+							_currentTarget,
+							false
+						] call gw_fnc_mp;	
+
 						Sleep (_reloadTime / 2);
 					};
 					
