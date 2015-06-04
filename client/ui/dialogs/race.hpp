@@ -566,73 +566,6 @@ class GW_Race
       h = MARGIN_TOP + (GW_BUTTON_HEIGHT) * safezoneH;
     };      
 
-		
-
-    class ConfigurationListBackground : GW_Block
-    {
-      idc = -1;
-      colorBackground[] = {0,0,0,0.5};
-      x = (0.015) * safezoneW + safezoneX;
-      y = (MARGIN_TOP + GW_BUTTON_HEIGHT + GW_BUTTON_GAP_Y) * safezoneH + safezoneY;
-      w = (GW_BUTTON_WIDTH) * safezoneW;
-      h = (GW_BUTTON_HEIGHT * 9) * safezoneH;
-    };  
-
-
-		
-	   class ConfigurationList : GW_ListBox
-    {
-      idc = GW_ConfigurationList_ID;
-      colorBackground[] = GW_BUTTON_BACKGROUND;
-      x = (0.015) * safezoneW + safezoneX;
-      y = (MARGIN_TOP + GW_BUTTON_HEIGHT + GW_BUTTON_GAP_Y) * safezoneH + safezoneY;
-      w = (GW_BUTTON_WIDTH) * safezoneW;
-      h = (GW_BUTTON_HEIGHT * 9) * safezoneH;
-      
-      colorSelectBackground[] = {0,0,0,0};
-      colorSelectBackground2[] = {0,0,0,0};
-
-      colorSelect[] = {1,1,1,1};
-      colorSelect2[] = {1,1,1,1};
-
-      text = "";
-      sizeEx = "0.03";
-      columns[] = {0, 0.15, 0.5, 0.7};
-      drawSideArrows = false;
-      idcLeft = -1;
-      idcRight = -1;
-      rowHeight = GW_BUTTON_HEIGHT * 1.5;
-    
-    };  
-
-    class ConfigurationTitle : GW_RscButtonMenu
-    {
-      idc = -1;
-      text = "CONFIGURATION";
-      onButtonClick = "";
-      x = (0.015) * safezoneW + safezoneX;
-      y = (MARGIN_TOP) * safezoneH + safezoneY;
-      w = (GW_BUTTON_WIDTH) * safezoneW;
-      h = GW_BUTTON_HEIGHT * safezoneH;
-
-      colorFocused[] = {1,1,1,1};
-      color2[] = {1,1,1,1};
-
-      colorBackground[] = GW_BUTTON_BACKGROUND;
-      colorBackgroundFocused[] = GW_BUTTON_BACKGROUND;
-      colorBackground2[] = GW_BUTTON_BACKGROUND;
-
-      class TextPos
-      {
-        left = 0;
-        top = 0.0139;
-        right = 0;
-        bottom = 0;
-      };
-
-    };
-
-
     class FilterList : GW_RscCombo
     {
       idc = GW_FilterList_ID;
@@ -678,7 +611,7 @@ class GW_Race
 
     {
       idc = -1;
-      text = "CREATE";
+      text = "START";
       onButtonClick = "";
       x = (0.4) * safezoneW + safezoneX;
       y = (MARGIN_BOTTOM) * safezoneH + safezoneY;
@@ -746,6 +679,29 @@ class GW_Race
       };
     };
 
+    class ButtonRename : GW_RscButtonMenu
+    {
+      idc = -1;
+      text = "RENAME";
+      onButtonClick = "[] spawn removeVehicle";
+      x = (0.98 - ((GW_BUTTON_WIDTH / 2) * 2) - GW_BUTTON_GAP_X) * safezoneW + safezoneX;
+      y = (MARGIN_BOTTOM) * safezoneH + safezoneY;
+      w = (GW_BUTTON_WIDTH / 2) * safezoneW;
+      h = GW_BUTTON_HEIGHT * safezoneH;
+
+      colorBackgroundFocused[] = {0.99,0.14,0.09,0.65}; 
+      colorBackground2[] = {0.99,0.14,0.09,0.85};
+
+      class TextPos
+      {
+        left = 0;
+        top = 0.0135;
+        right = 0;
+        bottom = 0;
+      };
+
+    };
+
     class ButtonDelete : GW_RscButtonMenu
     {
       idc = -1;
@@ -763,6 +719,86 @@ class GW_Race
       {
         left = 0;
         top = 0.0135;
+        right = 0;
+        bottom = 0;
+      };
+
+    };
+
+     class ButtonStart : GW_RscButtonMenu
+    {
+      idc = -1;
+      text = "CP";
+      onButtonClick = "";
+     x = (0.015) * safezoneW + safezoneX;
+      y = (MARGIN_TOP) * safezoneH + safezoneY;
+      w = (GW_BUTTON_WIDTH / 3) * safezoneW;
+      h = GW_BUTTON_HEIGHT * safezoneH;
+
+      class TextPos
+      {
+        left = 0;
+        top = 0.0135;
+        right = 0;
+        bottom = 0;
+      };
+    };
+
+    class ButtonCP : GW_RscButtonMenu
+    {
+      idc = -1;
+      text = "CP";
+      onButtonClick = "";
+     x = (0.015 + (GW_BUTTON_WIDTH / 3) + (GW_BUTTON_GAP_X * 1)) * safezoneW + safezoneX;
+      y = (MARGIN_TOP) * safezoneH + safezoneY;
+      w = (GW_BUTTON_WIDTH / 3) * safezoneW;
+      h = GW_BUTTON_HEIGHT * safezoneH;
+
+      class TextPos
+      {
+        left = 0;
+        top = 0.0135;
+        right = 0;
+        bottom = 0;
+      };
+    };
+
+    class ButtonFinish : GW_RscButtonMenu
+    {
+      idc = -1;
+      text = "FINISH";
+      onButtonClick = "";
+     x = (0.015 + ((GW_BUTTON_WIDTH / 3) * 2) + (GW_BUTTON_GAP_X * 2)) * safezoneW + safezoneX;
+      y = (MARGIN_TOP) * safezoneH + safezoneY;
+      w = (GW_BUTTON_WIDTH / 3) * safezoneW;
+      h = GW_BUTTON_HEIGHT * safezoneH;
+
+      class TextPos
+      {
+        left = 0;
+        top = 0.0135;
+        right = 0;
+        bottom = 0;
+      };
+    };
+
+     class TooltipLabel : GW_StructuredTextBox
+    {
+      idc = 300020;
+      text = "";
+      onButtonClick = "";
+      x = (0) * safezoneW + safezoneX;
+      y = (0) * safezoneH + safezoneY;
+      w = (GW_BUTTON_WIDTH /2) * safezoneW;
+      h = (GW_BUTTON_HEIGHT ) * safezoneH;
+
+      colorBackgroundFocused[] = {0.99,0.14,0.09,0.75}; 
+      colorBackground2[] = {0.99,0.14,0.09,0.75};
+
+      class TextPos
+      {
+        left = 0;
+        top = 0.015;
         right = 0;
         bottom = 0;
       };
