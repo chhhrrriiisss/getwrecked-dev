@@ -14,8 +14,34 @@ _filterList = ((findDisplay 90000) displayCtrl 90011);
 _mapControl ctrlEnable false;
 _mapControl ctrlCommit 0;
 
-GW_RACE_ARRAY = [];
-GW_RACE_NAME = "CUSTOM RACE";
+_existingRaces = profileNameSpace getVariable ['GW_RACES', nil];
+if (isNil "_existingRaces") then { [] call createDefaultRaces; };
+if (count _existingRaces == 0) then { [] call createDefaultRaces; };
+_existingRaces = profileNameSpace getVariable ['GW_RACES', []];
+
+_raceData = _existingRaces select (floor (random (count _existingRaces)));
+GW_RACE_ARRAY = (_raceData select 1);
+GW_RACE_NAME = (_raceData select 0) select 0;
+
+_startPos = GW_RACE_ARRAY select 0;
+_endPos = GW_RACE_ARRAY select ((count GW_RACE_ARRAY) -1);
+_dir = [_startPos, _endPos] call dirTo;
+_midPos = [_startPos, ((_startPos distance _endPos) / 2), _dir] call relPos;
+_startPosMap = (_mapControl ctrlMapWorldToScreen _startPos);
+_endPosMap = (_mapControl ctrlMapWorldToScreen _endPos);
+_screenYDist = [_startPosMap select 0, _startPosMap select 1, 0] distance [_startPosMap select 0, _endPosMap select 1, 0];
+_screenXDist = [_startPosMap select 0, _startPosMap select 1, 0] distance [_endPosMap select 0, _startPosMap select 1, 0];
+
+_multiplier = if (_screenXDist > _screenYDist) then { (_screenXDist / 0.6) } else { (_screenYDist / 0.3) };
+
+systemChat format['distanceX: %1 distanceY: %2 multiplier:%3', _screenXDist, _screenYDist, (1 * _multiplier) / 10];
+
+
+_mapControl ctrlMapAnimAdd [0.25, (1 * _multiplier) / 10, _midPos];
+ctrlMapAnimCommit _mapControl;
+
+_mapTitle ctrlSetText GW_RACE_NAME;
+_mapTitle ctrlCommit 0;
 
 GW_MARKER_ARRAY = [];
 GW_RACE_EDITING = false;
@@ -27,7 +53,46 @@ GW_MAP_NUMBER = 0;
 GW_MAP_CLOSEST = -1;
 GW_MAP_BETWEEN = -1;
 
+deleteRace = {
+	
+	_raceToDelete = _this;
+
+	_existingRaces = profileNamespace getVariable ['GW_RACES', []];
+	if (count _existingRaces == 0) exitWith {};
+
+	{
+		_meta = _x select 0;
+		_name = _meta select 0;
+		if (_name == _raceToDelete) exitWith { _existingRaces deleteAt _forEachIndex; };
+	} foreach _existingRaces;
+
+	profileNamespace setVariable ['GW_RACES', _existingRaces];
+	saveProfileNamespace;
+		
+};
+
+renameCurrentRace = {
+
+	private ['_result'];
+	
+	_result = ['RENAME RACE', toUpper(GW_RACE_NAME), 'INPUT'] call createMessage;
+	if (typename _result != "STRING") exitWith {};
+	if (_result == GW_RACE_NAME) exitWith {};
+
+	if (GW_RACE_NAME != "CUSTOM RACE") then { GW_RACE_NAME call deleteRace; };
+	GW_RACE_NAME = toUpper (_result);
+	[] call saveCurrentRace;
+
+	disableSerialization;
+	_mapTitle = ((findDisplay 90000) displayCtrl 90012);
+	_mapTitle ctrlSetText GW_RACE_NAME;
+	_mapTitle ctrlCommit 0;
+
+};
+
 clearCurrentRace = {
+	
+	private['_result'];
 	
 	_result = ['CLEAR POINTS?', '', 'CONFIRM'] call createMessage;
 	if (typename _result != "BOOL") exitWith {};
@@ -247,7 +312,7 @@ _mouseMove = _mapControl ctrlAddEventHandler ["MouseMoving", {
 	
 
 	GW_MAP_X = _this select 1; 
-	GW_MAP_Y = _this select 2; 
+	GW_MAP_Y = _this select 2; 	
 
 	if (GW_MAP_DRAG) exitWith {};
 

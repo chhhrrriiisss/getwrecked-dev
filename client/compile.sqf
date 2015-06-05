@@ -131,6 +131,7 @@ listFunctions = compile preprocessFile  'client\persistance\library.sqf';
 listVehicles = compile preprocessFile  'client\persistance\list.sqf';
 createDefaultLibrary = compile preprocessFile 'client\persistance\default.sqf';
 toggleHidden = compile preprocessFile 'client\functions\toggleHidden.sqf';
+createDefaultRaces = compile preprocessFile 'client\persistance\defaultRaces.sqf';
 
 // Setup Functions
 setupLocalVehicle = compile preprocessFile "client\vehicles\local_vehicle_setup.sqf";

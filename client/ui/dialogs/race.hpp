@@ -410,7 +410,7 @@ class RscMapControl {
         coefMax = 1;
         icon = "\A3\ui_f\data\map\mapcontrol\waypointCompleted_ca.paa";
     };
-    moveOnEdges = 0; //1;
+    moveOnEdges = 1; //1;
     x = "SafeZoneXAbs";
     y = "SafeZoneY + 1.5 * ( ( ((safezoneW / safezoneH) min 1.2) / 1.2) / 25)";
     w = "SafeZoneWAbs";
@@ -536,7 +536,7 @@ class GW_Race
     {
         idc = GW_RaceTitle_ID;
         style = ST_CENTER;
-        text = "CUSTOM RACE";
+        text = "";
         font = "PuristaMedium";
 
         x = (0.1) * safezoneW + safezoneX;
@@ -615,7 +615,7 @@ class GW_Race
     {
       idc = -1;
       text = "RENAME";
-      onButtonClick = "closeDialog 0;";
+      onButtonClick = "[] spawn renameCurrentRace";
       x = (0.015 + (GW_BUTTON_WIDTH /2) + GW_BUTTON_GAP_X) * safezoneW + safezoneX;
       y = (MARGIN_TOP) * safezoneH + safezoneY;
       w = (GW_BUTTON_WIDTH/2) * safezoneW;
