@@ -1,5 +1,6 @@
-#define GW_Race_ID 300000
-#define GW_ConfigurationList_ID 300011
+#define GW_Race_ID 90000
+#define GW_RaceTitle_ID 90012
+#define GW_FilterList_ID 90011
 
 #define GW_BUTTON_WIDTH 0.2
 #define GW_BUTTON_HEIGHT 0.035
@@ -129,7 +130,7 @@ class RscMapControl {
     };
     class ActiveMarker {
         color[] = {
-            0.3, 0.1, 0.9, 1
+            0.3, 0.1, 0.9, 0
         };
         size = 50;
     };
@@ -498,6 +499,7 @@ class RscMapControl {
 };
 
 
+
 // Menu
 class GW_Race
 {
@@ -511,19 +513,17 @@ class GW_Race
 	class controlsBackground
 	{
 		
-		class Map : RscMapControl
-    {
-      moveOnEdges = 1;
-      colorBackground[] = {1,1,1,1};
-      idc = 300001; 
-      x = -1 * safezoneW + safezoneX;
-      y = 0 * safezoneH + safezoneY;
-      w = 3 * safezoneW;
-      h = 1 * safezoneH;
-
-
-    };  
- 
+    	class Map : RscMapControl
+        {
+          moveOnEdges = 1;
+          colorBackground[] = {1,1,1,1};
+          idc = 90001; 
+          x = -1 * safezoneW + safezoneX;
+          y = 0 * safezoneH + safezoneY;
+          w = 3 * safezoneW;
+          h = 1 * safezoneH;
+        };  
+     
   
     
 	};
@@ -531,7 +531,21 @@ class GW_Race
 	class controls
 	{
 
-		class ButtonBlank : GW_RscButtonMenu
+
+    class Title : GW_LargeTitle
+    {
+        idc = GW_RaceTitle_ID;
+        style = ST_CENTER;
+        text = "CUSTOM RACE";
+        font = "PuristaMedium";
+
+        x = (0.1) * safezoneW + safezoneX;
+        y = (0.44) * safezoneH + safezoneY;
+        w = 0.8  * safezoneW;
+        h = 0.12  * safezoneH;
+    };
+
+	class ButtonBlank : GW_RscButtonMenu
     {
       idc = -1;
       text = "";
@@ -548,7 +562,7 @@ class GW_Race
 
     class MarginBottom : GW_Block
     {
-      idc = 300002;
+      idc = 90002;
       colorBackground[] = {0,0,0,0.85};
       x = -1;
       y = (MARGIN_BOTTOM + (GW_BUTTON_HEIGHT * 2)) * safezoneH + safezoneY; 
@@ -558,7 +572,7 @@ class GW_Race
 
     class MarginTop : GW_Block
     {
-      idc = 300003;
+      idc = 90003;
       colorBackground[] = {0,0,0,0.85};
       x = -1;
       y = 0 * safezoneH + safezoneY; 
@@ -576,6 +590,48 @@ class GW_Race
       w = (GW_BUTTON_WIDTH) * safezoneW;
       h = GW_BUTTON_HEIGHT * safezoneH;
     };
+
+    class ButtonEdit : GW_RscButtonMenu
+    {
+      idc = -1;
+      text = "EDIT";
+      onButtonClick = "_this call toggleRaceEditing";
+      x = (0.015) * safezoneW + safezoneX;
+      y = (MARGIN_TOP) * safezoneH + safezoneY;
+      w = (GW_BUTTON_WIDTH/2) * safezoneW;
+      h = GW_BUTTON_HEIGHT * safezoneH;
+
+      class TextPos
+      {
+        left = 0;
+        top = 0.0135;
+        right = 0;
+        bottom = 0;
+      };
+
+    };
+
+     class ButtonRename : GW_RscButtonMenu
+    {
+      idc = -1;
+      text = "RENAME";
+      onButtonClick = "closeDialog 0;";
+      x = (0.015 + (GW_BUTTON_WIDTH /2) + GW_BUTTON_GAP_X) * safezoneW + safezoneX;
+      y = (MARGIN_TOP) * safezoneH + safezoneY;
+      w = (GW_BUTTON_WIDTH/2) * safezoneW;
+      h = GW_BUTTON_HEIGHT * safezoneH;
+
+      class TextPos
+      {
+        left = 0;
+        top = 0.0135;
+        right = 0;
+        bottom = 0;
+      };
+
+    };
+
+
     
     class ButtonClose : GW_RscButtonMenu
     {
@@ -679,11 +735,11 @@ class GW_Race
       };
     };
 
-    class ButtonRename : GW_RscButtonMenu
+    class ButtonClear : GW_RscButtonMenu
     {
-      idc = -1;
-      text = "RENAME";
-      onButtonClick = "[] spawn removeVehicle";
+      idc = 90018;
+      text = "CLEAR";
+      onButtonClick = "[] spawn clearCurrentRace";
       x = (0.98 - ((GW_BUTTON_WIDTH / 2) * 2) - GW_BUTTON_GAP_X) * safezoneW + safezoneX;
       y = (MARGIN_BOTTOM) * safezoneH + safezoneY;
       w = (GW_BUTTON_WIDTH / 2) * safezoneW;
@@ -725,66 +781,9 @@ class GW_Race
 
     };
 
-     class ButtonStart : GW_RscButtonMenu
-    {
-      idc = -1;
-      text = "CP";
-      onButtonClick = "";
-     x = (0.015) * safezoneW + safezoneX;
-      y = (MARGIN_TOP) * safezoneH + safezoneY;
-      w = (GW_BUTTON_WIDTH / 3) * safezoneW;
-      h = GW_BUTTON_HEIGHT * safezoneH;
-
-      class TextPos
-      {
-        left = 0;
-        top = 0.0135;
-        right = 0;
-        bottom = 0;
-      };
-    };
-
-    class ButtonCP : GW_RscButtonMenu
-    {
-      idc = -1;
-      text = "CP";
-      onButtonClick = "";
-     x = (0.015 + (GW_BUTTON_WIDTH / 3) + (GW_BUTTON_GAP_X * 1)) * safezoneW + safezoneX;
-      y = (MARGIN_TOP) * safezoneH + safezoneY;
-      w = (GW_BUTTON_WIDTH / 3) * safezoneW;
-      h = GW_BUTTON_HEIGHT * safezoneH;
-
-      class TextPos
-      {
-        left = 0;
-        top = 0.0135;
-        right = 0;
-        bottom = 0;
-      };
-    };
-
-    class ButtonFinish : GW_RscButtonMenu
-    {
-      idc = -1;
-      text = "FINISH";
-      onButtonClick = "";
-     x = (0.015 + ((GW_BUTTON_WIDTH / 3) * 2) + (GW_BUTTON_GAP_X * 2)) * safezoneW + safezoneX;
-      y = (MARGIN_TOP) * safezoneH + safezoneY;
-      w = (GW_BUTTON_WIDTH / 3) * safezoneW;
-      h = GW_BUTTON_HEIGHT * safezoneH;
-
-      class TextPos
-      {
-        left = 0;
-        top = 0.0135;
-        right = 0;
-        bottom = 0;
-      };
-    };
-
      class TooltipLabel : GW_StructuredTextBox
     {
-      idc = 300020;
+      idc = 90020;
       text = "";
       onButtonClick = "";
       x = (0) * safezoneW + safezoneX;

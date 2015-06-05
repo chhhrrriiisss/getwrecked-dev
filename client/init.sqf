@@ -32,6 +32,21 @@ if (isNil "_lib") then {
 _last = profileNamespace getVariable ['GW_LASTLOAD', nil];
 GW_LASTLOAD = if (isNil "_last") then {  profileNamespace setVariable ['GW_LASTLOAD', '']; saveProfileNamespace; '' } else { _last };
 
+// Check for custom races
+_races = profileNamespace getVariable ['GW_RACES', nil];
+if (isNil "_races") then {   
+
+	_defaultRaces = [
+
+		// [ ["HIGHWAY", 'SLI', 'Altis'], [""] ],
+		// [ ["TEST2", 'SLI', 'Altis'], [""] ]		
+	];
+
+	profileNamespace setVariable ['GW_RACES', _defaultRaces]; 
+	saveProfileNamespace;  
+};
+
+
 // Prepare player, display and key binds
 [player] call playerInit;
 

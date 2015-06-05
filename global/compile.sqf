@@ -212,6 +212,7 @@ arrayToJson = compile preprocessFile 'global\functions\arrayToJson.sqf';
 dirTo = compile preprocessFile 'global\functions\dirTo.sqf';
 relPos = compile preprocessFile 'global\functions\relPos.sqf';
 filterParam = compile preprocessFile 'global\functions\filterParam.sqf';
+insertAt = compile preprocessFile 'global\functions\insertAt.sqf';
 
 shareVehicle = compile preprocessFile 'global\functions\shareVehicle.sqf';
 copyVehicle = compile preprocessFile 'global\functions\copyVehicle.sqf';
