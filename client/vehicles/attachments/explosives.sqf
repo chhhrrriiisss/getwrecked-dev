@@ -113,7 +113,7 @@ GW_DEPLOYLIST = GW_DEPLOYLIST + [_obj];
 		_bomb setVelocity [0,0,-10];
 		[_pos, 40, 15] call shockwaveEffect;		
 
-		_nearby = _pos nearEntities [["Car"], 30];	
+		_nearby = _pos nearEntities [["Car", "Tank"], 30];	
 
 		if (count _nearby > 0) then {
 			{

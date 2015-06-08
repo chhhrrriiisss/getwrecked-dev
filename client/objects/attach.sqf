@@ -19,7 +19,7 @@ if (_isSupply) exitWith { false };
 
 // Check there's actually a vehicle within range
 _position = (ASLtoATL getPosASL _orig);
-_nearby = _position nearEntities [["car"], 8];
+_nearby = _position nearEntities [["Car", "Tank"], 8];
 
 if (_forceAttach) then {
 	waitUntil{ count _nearby > 0};

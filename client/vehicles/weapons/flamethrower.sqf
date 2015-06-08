@@ -66,7 +66,7 @@ _src setVectorDir _heading;
 _src setVelocity _velocity;
 
 _vehiclePos = (ASLtoATL getPosASL _vehicle);
-_nearby = _vehiclePos nearEntities [["Car"], 50];
+_nearby = _vehiclePos nearEntities [["Car", "Tank"], 50];
 
 if (count _nearby < 0) exitWith {};
 

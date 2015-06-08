@@ -33,7 +33,7 @@ _this spawn {
 		_range = 50;
 		_object = _this;
 		_pos = ASLtoATL visiblePositionASL _object;
-		_nearby =  _pos nearEntities [["Car"], _range];		
+		_nearby =  _pos nearEntities [["Car", "Amored"], _range];		
 		
 		{
 			_isVehicle = _x getVariable ['isVehicle', false];

@@ -31,7 +31,7 @@ class RscMapControl {
         0.969, 0.957, 0.949, 1
     };
     colorOutside[] = {
-        0.467, 0.631, 0.851, 1
+        0, 0, 0, 1
     };
     colorText[] = {
         0, 0, 0, 1
@@ -584,7 +584,7 @@ class GW_Race
     {
       idc = GW_FilterList_ID;
       colorBackground[] = {0,0,0,0.7};
-      onLBSelChanged  = "";
+      onLBSelChanged  = "(_this select 1) call selectRace";
       x = (0.015) * safezoneW + safezoneX;
       y = (MARGIN_BOTTOM) * safezoneH + safezoneY;
       w = (GW_BUTTON_WIDTH) * safezoneW;
@@ -656,19 +656,19 @@ class GW_Race
 
     class StripeTile : GW_Stripe_Box
     {    
-      idc = -1;     
+      idc = 90014;     
       x = (0.4) * safezoneW + safezoneX;
       y = (MARGIN_BOTTOM) * safezoneH + safezoneY;
       w = GW_BUTTON_WIDTH * safezoneW;
       h = GW_BUTTON_HEIGHT * safezoneH;
     };  
 
-    class ButtonLoad : GW_RscButtonMenu
+    class ButtonStart : GW_RscButtonMenu
 
     {
-      idc = -1;
+      idc = 90015;
       text = "START";
-      onButtonClick = "";
+      onButtonClick = "GW_RACE_ID call startRace";
       x = (0.4) * safezoneW + safezoneX;
       y = (MARGIN_BOTTOM) * safezoneH + safezoneY;
       w = GW_BUTTON_WIDTH * safezoneW;
@@ -698,9 +698,9 @@ class GW_Race
 
     class ButtonPrev : GW_RscButtonMenu
     {
-      idc = -1;
+      idc = 90017;
       text = "&#60;";
-      onButtonClick = "";
+      onButtonClick = "(GW_RACE_ID -1) call selectRace";
       x = (0.4 - ( (GW_BUTTON_WIDTH / 3) + GW_BUTTON_GAP_X)) * safezoneW + safezoneX;
       y = (MARGIN_BOTTOM) * safezoneH + safezoneY;
       w = (GW_BUTTON_WIDTH / 3) * safezoneW;
@@ -718,9 +718,9 @@ class GW_Race
 
     class ButtonNext : GW_RscButtonMenu
     {
-      idc = -1;
+      idc = 90016;
       text = "&#62;";
-      onButtonClick = "";
+      onButtonClick = "(GW_RACE_ID +1) call selectRace";
       x = (0.4 + GW_BUTTON_WIDTH + GW_BUTTON_GAP_X) * safezoneW + safezoneX;
       y = (MARGIN_BOTTOM) * safezoneH + safezoneY;
       w = (GW_BUTTON_WIDTH / 3) * safezoneW;
@@ -735,32 +735,9 @@ class GW_Race
       };
     };
 
-    class ButtonClear : GW_RscButtonMenu
-    {
-      idc = 90018;
-      text = "CLEAR";
-      onButtonClick = "[] spawn clearCurrentRace";
-      x = (0.98 - ((GW_BUTTON_WIDTH / 2) * 2) - GW_BUTTON_GAP_X) * safezoneW + safezoneX;
-      y = (MARGIN_BOTTOM) * safezoneH + safezoneY;
-      w = (GW_BUTTON_WIDTH / 2) * safezoneW;
-      h = GW_BUTTON_HEIGHT * safezoneH;
-
-      colorBackgroundFocused[] = {0.99,0.14,0.09,0.65}; 
-      colorBackground2[] = {0.99,0.14,0.09,0.85};
-
-      class TextPos
-      {
-        left = 0;
-        top = 0.0135;
-        right = 0;
-        bottom = 0;
-      };
-
-    };
-
     class ButtonDelete : GW_RscButtonMenu
     {
-      idc = -1;
+      idc = 90018;
       text = "Delete";
       onButtonClick = "[] spawn removeVehicle";
       x = (0.98 - (GW_BUTTON_WIDTH / 2)) * safezoneW + safezoneX;

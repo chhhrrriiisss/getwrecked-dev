@@ -30,7 +30,7 @@ _ex setVelocity [0,0,_speed];
 
 [_p, 25, 10] call shockwaveEffect;
 
-_nearby = _p nearEntities [["Car"], 10];
+_nearby = _p nearEntities [["Car", "Tank"], 10];
 if (count _nearby == 0) exitWith {};
 
 

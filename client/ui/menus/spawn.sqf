@@ -11,7 +11,7 @@ GW_SPAWN_ACTIVE = true;
 
 _pad = _this select 0;
 _unit = _this select 1;
-
+ 
 _onExit = {
     systemChat (_this select 0);
     GW_SPAWN_ACTIVE = false;
@@ -19,7 +19,7 @@ _onExit = {
 
 
 // Do we actually have something to deploy?
-_nearby = (ASLtoATL visiblePositionASL _pad) nearEntities [["Car"], 8];
+_nearby = (ASLtoATL visiblePositionASL _pad) nearEntities [["Car", "Tank"], 8];
 if (({
 
     if (_x != (vehicle player)) exitWith { 1 };
@@ -124,13 +124,16 @@ if (!_firstCompile || !_hasActions) exitWith {
      ["Vehicle is not ready to deploy."] spawn _onExit;
 };
 
+_allZones = (call GW_AREAS);
+
 // If we've deployed somewhere previously, show that
-GW_SPAWN_LOCATION = if (!isNil "GW_LASTLOCATION") then { GW_LASTLOCATION } else {  ((GW_VALID_ZONES select (random (count GW_VALID_ZONES -1))) select 0) };
+GW_SPAWN_LOCATION = if (!isNil "GW_LASTLOCATION") then { GW_LASTLOCATION } else {  ((_allZones select (random (count _allZones -1))) select 0) };
 _displayName = '';
+_type = 'battle';
 _startIndex = 0;
 {
-    if ((_x select 0) == GW_SPAWN_LOCATION) exitWith { _startIndex = _foreachindex; _displayName = (_x select 2); };
-} Foreach GW_VALID_ZONES;
+    if ((_x select 0) == GW_SPAWN_LOCATION) exitWith { _startIndex = _foreachindex; _displayName = (_x select 2); _type = (_x select 1); };
+} Foreach _allZones;
 
 disableSerialization;
 if(!(createDialog "GW_Spawn")) exitWith { GW_SPAWN_ACTIVE = false; };
@@ -139,7 +142,7 @@ _layerStatic = ("BIS_layerStatic" call BIS_fnc_rscLayer);
 _layerStatic cutRsc ["RscStatic", "PLAIN" , 1];
 
 [_startIndex] call generateSpawnList;
-[GW_SPAWN_LOCATION, _displayName] spawn previewLocation;
+[GW_SPAWN_LOCATION, _displayName,_type] spawn previewLocation;
 
 99999 cutText ["", "BLACK IN", 0.35];  
 

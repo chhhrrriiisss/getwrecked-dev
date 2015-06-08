@@ -28,7 +28,7 @@ GW_PAINT_CANCEL = false;
 _paintAction = _unit addAction[paintVehicleFormat, {
 
 	_unit = _this select 0;
-	_nearby = (ASLtoATL getPosASL _unit) nearEntities [["Car"], 10];
+	_nearby = (ASLtoATL getPosASL _unit) nearEntities [["Car", "Tank"], 10];
 
 	if ([(_nearby select 0), _unit, false] call checkOwner) then {
 		_unit setVariable ['GW_paintTarget', (_nearby select 0)];

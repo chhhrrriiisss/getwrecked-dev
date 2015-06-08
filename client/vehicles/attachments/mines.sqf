@@ -58,7 +58,7 @@ _this spawn {
 			// Wait a quarter of a second between checks
 			Sleep 0.25;
 
-			_nearby = _pos nearEntities [["car"], 5];
+			_nearby = _pos nearEntities [["Car", "Tank"], 5];
 			_triggered = _obj getVariable ["triggered", false];
 
 			if (count _nearby > 0 || _triggered) then {

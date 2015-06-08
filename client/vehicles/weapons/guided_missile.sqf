@@ -157,7 +157,7 @@ waitUntil {
 
 if (!alive GW_GUIDED_MISSILE && _lastMissilePos distance [0,0,0] > 1) then {
 
-	_nearby = _lastMissilePos nearEntities [["Car"], 7];
+	_nearby = _lastMissilePos nearEntities [["Car", "Tank"], 7];
 	if (count _nearby == 0) exitWith {};
 
 	{

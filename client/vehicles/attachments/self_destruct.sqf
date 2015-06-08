@@ -35,7 +35,7 @@ _this spawn {
 
 	// Prevent invulnerability from stopping it
 	_vehicle setVariable ["status", [], true];
-	_nearby = _pos nearEntities [["Car"], 30];
+	_nearby = _pos nearEntities [["Car", "Tank"], 30];
 
 	{
 		if (_x != _vehicle) then { 

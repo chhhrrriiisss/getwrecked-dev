@@ -4,44 +4,113 @@ if (isNil "GW_GENERATOR_ACTIVE") then { GW_GENERATOR_ACTIVE = false; };
 if (GW_GENERATOR_ACTIVE) exitWith {};
 GW_GENERATOR_ACTIVE = true;
 
+GW_RACE_ACTIVE = false;
+
 disableSerialization;
 if(!(createDialog "GW_Race")) exitWith { GW_GENERATOR_ACTIVE = false; }; //Couldn't create the menu
 
+getAllRaces = {
+	_rcs = profileNamespace getVariable ['GW_RACES', []];
+	if (count _rcs == 0) exitWith { 
+		[] call createDefaultRaces; 
+		(profileNamespace getVariable ['GW_RACES', []])
+	};
+	_rcs
+};
+
+startRace = {
+	
+	if (GW_RACE_ACTIVE) exitWith { systemchat 'You cant host more than one race at a time.'; };
+	GW_RACE_ACTIVE = true;
+
+	_id = [_this, 0, (count _existingRaces) - 1] call limitToRange;
+
+	_selectedRace = (call getAllRaces) select _id;
+	_points = _selectedRace select 1;
+	_name = (_selectedRace select 0) select 0;
+	_host = name player;
+	GW_ACTIVE_RACES pushback [_name, 'race', _name, _host];
+
+	closeDialog 0;
+	
+	_name spawn {
+		Sleep 20;
+		{ if ((_x select 0) == _this) exitWith { GW_ACTIVE_RACES deleteAt _foreachIndex; }; } foreach GW_ACTIVE_RACES;
+		GW_RACE_ACTIVE = false;
+	};
+
+};
+
+
+selectRace = {
+	
+	_existingRaces = call getAllRaces;
+
+	_selection = [_this, 0, (count _existingRaces) - 1, true] call limitToRange;
+
+	_raceData = _existingRaces select _selection;
+	GW_RACE_ARRAY = (_raceData select 1);
+	GW_RACE_NAME = (_raceData select 0) select 0;
+	GW_RACE_ID = _selection;
+
+	_mapTitle = ((findDisplay 90000) displayCtrl 90012);
+	_mapTitle ctrlSetText GW_RACE_NAME;
+	_mapTitle ctrlCommit 0;
+
+	[] call focusCurrentRace;
+
+};
+
+generateRaceList = {
+	
+	_selected = [_this, 0, 0, [0]] call filterParam;
+
+	disableSerialization;
+	_filterList = ((findDisplay 90000) displayCtrl 90011);
+	lbClear _filterList;
+
+	_existingRaces = call getAllRaces;
+
+	{
+		_meta = _x select 0;
+		_name = _meta select 0;
+		lbAdd [90011,  format[' %1', _name] ];
+		lbSetData [90011, _forEachIndex, _name];	
+	} foreach _existingRaces;
+
+	lbSetCurSel [90011, _selected];
+
+};
+
+focusCurrentRace = {
+	_mapControl = ((findDisplay 90000) displayCtrl 90001);
+	_startPos = GW_RACE_ARRAY select 0;
+	_endPos = GW_RACE_ARRAY select ((count GW_RACE_ARRAY) -1);
+	_dir = [_startPos, _endPos] call dirTo;
+	_midPos = [_startPos, ((_startPos distance _endPos) / 2), _dir] call relPos;
+	_startPosMap = (_mapControl ctrlMapWorldToScreen _startPos);
+	_endPosMap = (_mapControl ctrlMapWorldToScreen _endPos);
+	_screenYDist = [_startPosMap select 0, _startPosMap select 1, 0] distance [_startPosMap select 0, _endPosMap select 1, 0];
+	_screenXDist = [_startPosMap select 0, _startPosMap select 1, 0] distance [_endPosMap select 0, _startPosMap select 1, 0];
+	_multiplier = if (_screenXDist > _screenYDist) then { (_screenXDist / 0.5) } else { (_screenYDist / 0.3) };
+	_mapControl ctrlMapAnimAdd [0.25, (1 * _multiplier), _midPos];
+	ctrlMapAnimCommit _mapControl;
+};
+
+
 _mapControl = ((findDisplay 90000) displayCtrl 90001);
 _mapTitle = ((findDisplay 90000) displayCtrl 90012);
-_filterList = ((findDisplay 90000) displayCtrl 90011);
-
 _mapControl ctrlEnable false;
 _mapControl ctrlCommit 0;
 
-_existingRaces = profileNameSpace getVariable ['GW_RACES', nil];
-if (isNil "_existingRaces") then { [] call createDefaultRaces; };
-if (count _existingRaces == 0) then { [] call createDefaultRaces; };
-_existingRaces = profileNameSpace getVariable ['GW_RACES', []];
+_existingRaces = call getAllRaces;
 
-_raceData = _existingRaces select (floor (random (count _existingRaces)));
-GW_RACE_ARRAY = (_raceData select 1);
-GW_RACE_NAME = (_raceData select 0) select 0;
+GW_RACE_NAME = '';
+GW_RACE_DATA = [];
+GW_RACE_ID = 0;
 
-_startPos = GW_RACE_ARRAY select 0;
-_endPos = GW_RACE_ARRAY select ((count GW_RACE_ARRAY) -1);
-_dir = [_startPos, _endPos] call dirTo;
-_midPos = [_startPos, ((_startPos distance _endPos) / 2), _dir] call relPos;
-_startPosMap = (_mapControl ctrlMapWorldToScreen _startPos);
-_endPosMap = (_mapControl ctrlMapWorldToScreen _endPos);
-_screenYDist = [_startPosMap select 0, _startPosMap select 1, 0] distance [_startPosMap select 0, _endPosMap select 1, 0];
-_screenXDist = [_startPosMap select 0, _startPosMap select 1, 0] distance [_endPosMap select 0, _startPosMap select 1, 0];
-
-_multiplier = if (_screenXDist > _screenYDist) then { (_screenXDist / 0.6) } else { (_screenYDist / 0.3) };
-
-systemChat format['distanceX: %1 distanceY: %2 multiplier:%3', _screenXDist, _screenYDist, (1 * _multiplier) / 10];
-
-
-_mapControl ctrlMapAnimAdd [0.25, (1 * _multiplier) / 10, _midPos];
-ctrlMapAnimCommit _mapControl;
-
-_mapTitle ctrlSetText GW_RACE_NAME;
-_mapTitle ctrlCommit 0;
+_selection = (floor (random (count _existingRaces)));
+_selection call generateRaceList;
 
 GW_MARKER_ARRAY = [];
 GW_RACE_EDITING = false;
@@ -53,12 +122,14 @@ GW_MAP_NUMBER = 0;
 GW_MAP_CLOSEST = -1;
 GW_MAP_BETWEEN = -1;
 
+
 deleteRace = {
 	
+	private ['_raceToDelete', '_existingRaces', '_meta', '_name'];
+
 	_raceToDelete = _this;
 
-	_existingRaces = profileNamespace getVariable ['GW_RACES', []];
-	if (count _existingRaces == 0) exitWith {};
+	_existingRaces = call getAllRaces;
 
 	{
 		_meta = _x select 0;
@@ -106,9 +177,19 @@ clearCurrentRace = {
 toggleRaceEditing = {
 	
 	disableSerialization;
-	_mapControl = ((findDisplay 90000) displayCtrl 90001);
-	_mapTitle = ((findDisplay 90000) displayCtrl 90012);
-	_clearButton = ((findDisplay 90000) displayCtrl 90018);
+	_display = (findDisplay 90000);
+	_mapControl = (_display displayCtrl 90001);
+	_mapTitle = (_display displayCtrl 90012);
+
+	_nonEditorControls = [
+		(_display displayCtrl 90011),
+		(_display displayCtrl 90018),
+		(_display displayCtrl 90017),
+		(_display displayCtrl 90016),
+		(_display displayCtrl 90015),
+		(_display displayCtrl 90014)
+	];
+
 	_mapEnabled = ctrlEnabled _mapControl;
 	_editButton = _this select 0;
 
@@ -124,19 +205,26 @@ toggleRaceEditing = {
 		_editButton ctrlEnable true;
 		_editButton ctrlCommit 0;
 
-		_clearButton ctrlSetFade 0;
-		_clearButton ctrlCommit 0;
+		{
+			_x ctrlSetFade 0;
+			_x ctrlCommit 0;
+		} foreach _nonEditorControls;
+
+		[] call focusCurrentRace;
+		[] call saveCurrentRace;
 
 	} else {
 
 		_mapTitle ctrlSetFade 1;
 		_mapTitle ctrlCommit 0.25;
 
-		_editButton ctrlSetText 'DONE';
+		_editButton ctrlSetText 'SAVE';
 		_editButton ctrlCommit 0;
 
-		_clearButton ctrlSetFade 1;
-		_clearButton ctrlCommit 0;
+		{
+			_x ctrlSetFade 1;
+			_x ctrlCommit 0;
+		} foreach _nonEditorControls;
 
 	};
 
@@ -167,16 +255,6 @@ saveCurrentRace = {
 };
 
 
-createRacePath = {
-	
-	//systemchat format['checking %1 / %2', time, GW_RACE_ARRAY];
-
-	if ( (GW_MAP_X == -1 && GW_MAP_Y == -1) || !GW_RACE_EDITING) exitWith {};
-	_currentPos = ((findDisplay 90000) displayCtrl 90001) ctrlMapScreenToWorld [GW_MAP_X, GW_MAP_Y];	
-	_lastPos = if (count GW_RACE_ARRAY > 0) then { (GW_RACE_ARRAY select ((count GW_RACE_ARRAY) -1)) } else { [0,0,0] };
-	GW_RACE_ARRAY set [GW_MAP_NUMBER, _currentPos];		
-};
-
 closestMarkerToMouse = {
 	
 	private ['_tolerance', '_closest', '_currentPos', '_pointPos', '_currentPosMap', '_pointPosMap'];
@@ -194,13 +272,11 @@ closestMarkerToMouse = {
 
 	_closest = -1;
 
+	// Find the closest point to current mouse position
 	{				
 		_pointPosMap = _mapControl ctrlMapWorldToScreen _x;
 		_pointPos = if (_useMap) then { _pointPosMap } else { _x };
-
-		if (_currentPos distance _pointPos < _tolerance) exitwith {
-			_closest = _foreachIndex;
-		};
+		if (_currentPos distance _pointPos < _tolerance) exitwith {	_closest = _foreachIndex; };
 	} foreach GW_RACE_ARRAY;
 
 	_closest
@@ -213,17 +289,12 @@ _mouseDblClick = _mapControl ctrlAddEventHandler ["MouseButtonDblClick", {
 	_currentPos = _mapControl ctrlMapScreenToWorld [GW_MAP_X, GW_MAP_Y];	
 	_raceLength = count GW_RACE_ARRAY;
 
-	if (_raceLength == 0) exitWith {
-		GW_RACE_EDITING = true;
-	};
-
-	if (_raceLength > 2 && GW_RACE_EDITING) then {		
-		GW_RACE_EDITING = false;
-	};
-
-	if ((GW_RACE_ARRAY select (_raceLength -1)) distance _currentPos < 30) then {
+	// Delete nearby markers on double click
+	if ((GW_RACE_ARRAY select (_raceLength -1)) distance _currentPos < 30 && (count GW_RACE_ARRAY) > 2) then {
 		GW_RACE_ARRAY deleteAt (_raceLength -1);
 	};
+
+	// Add a marker at current location
 	GW_RACE_ARRAY pushback _currentPos;
 
 }];
@@ -236,8 +307,6 @@ _mouseUp = _mapControl ctrlAddEventHandler ["MouseButtonUp", {
 	_mapControl = ((findDisplay 90000) displayCtrl 90001);	
 	_currentPos =_mapControl ctrlMapScreenToWorld [GW_MAP_X, GW_MAP_Y];
 	_raceLength = count GW_RACE_ARRAY;
-
-	[] call saveCurrentRace;
 
 	if ((_this select 1) == 0 && GW_MAP_BETWEEN > 0) exitWith {
 		if (surfaceIsWater _currentPos) exitWith {};
@@ -271,7 +340,7 @@ _mouseDown = _mapControl ctrlAddEventHandler ["MouseButtonDown", {
 		disableSerialization;
 		_mapControl = ((findDisplay 90000) displayCtrl 90001);	
 
-		if (GW_MAP_CLOSEST >= 0) exitWith {
+		if (GW_MAP_CLOSEST >= 0 && (_this select 1) == 0) exitWith {
 
 			GW_MAP_CLOSEST spawn {
 
@@ -281,13 +350,12 @@ _mouseDown = _mapControl ctrlAddEventHandler ["MouseButtonDown", {
 				_pos = _prevPos;
 
 				waitUntil {
-					Sleep 0.05;
 					_pos = _mapControl ctrlMapScreenToWorld [GW_MAP_X, GW_MAP_Y];					
 					if (!surfaceIsWater _pos) then { GW_RACE_ARRAY set [_this, _pos]; };
 					(!GW_LMBDOWN)
 				};
 
-				_pos = _pos findEmptyPosition [10,75,"O_truck_03_ammo_f"];
+				_pos = _pos findEmptyPosition [5,25,"O_truck_03_ammo_f"];
 				_pos = if (count _pos == 0) then { player say3D "beep_light"; _prevPos } else { _pos };
 				GW_RACE_ARRAY set [_this, _pos];
 
@@ -298,28 +366,15 @@ _mouseDown = _mapControl ctrlAddEventHandler ["MouseButtonDown", {
 
 }];
 
-_mouseHold = _mapControl ctrlAddEventHandler ["MouseHolding", {  
-
+_mouseHold = _mapControl ctrlAddEventHandler ["MouseHolding", { 
 	_tooltip = (findDisplay 90000) displayCtrl 90020;
 	_tooltip ctrlSetFade 0;
 	_tooltip ctrlCommit 0.2;
 }];
 
-
-
-_mouseMove = _mapControl ctrlAddEventHandler ["MouseMoving", {  
-	
-	
-
+_mouseMove = _mapControl ctrlAddEventHandler ["MouseMoving", { 	
 	GW_MAP_X = _this select 1; 
 	GW_MAP_Y = _this select 2; 	
-
-	if (GW_MAP_DRAG) exitWith {};
-
-	if (count GW_RACE_ARRAY == 0) exitWith {};
-	
-	_this call createRacePath;
-
 }];
 
 drawSegment = {
@@ -349,7 +404,7 @@ drawSegment = {
 
 _mapKeyDown = _mapControl ctrlAddEventHandler ["KeyDown", {  
 	
-	if (!GW_RACE_EDITING && (_this select 1) == 211 && GW_MAP_CLOSEST >= 0) exitWith {
+	if (!GW_RACE_EDITING && (_this select 1) == 211 && GW_MAP_CLOSEST >= 0 && (count GW_RACE_ARRAY) > 2) exitWith {
 		GW_RACE_ARRAY deleteAt GW_MAP_CLOSEST;
 	};
 
@@ -364,7 +419,7 @@ _mapDraw = _mapControl ctrlAddEventHandler ["Draw", {
 	GW_MAP_CLOSEST = [0.05] call closestMarkerToMouse;
 
 	disableSerialization;
-	_mapControl = ((findDisplay 90000) displayCtrl 90001);
+	_mapControl = (_this select 0);
 	_mousePos = _mapControl ctrlMapScreenToWorld [GW_MAP_X, GW_MAP_Y];	
 	 GW_MAP_BETWEEN = -1;
 
@@ -398,6 +453,8 @@ _mapDraw = _mapControl ctrlAddEventHandler ["Draw", {
 			_segmentSize = 300;
 
 			_prevPos = _lastPos;
+
+			_segments = [];
 
 			for "_i" from 0 to _dist step 100 do {	
 
@@ -436,13 +493,16 @@ _mapDraw = _mapControl ctrlAddEventHandler ["Draw", {
 
 				_c = if (_surfaceIsWater && !_found) then { '(1,0,0,1)' } else { '(0.99,0.85,0.23,1)' };
 
-				[_prevPos, _nextPos,_c] call drawSegment;
-
+				_segments pushBack [_prevPos, _nextPos,_c];			
+			
 				if (_dirDif > 90) exitWith {};
 
 				_prevPos = _nextPos;
 
 			};
+
+			if (count _segments == 0) exitWith { [_lastPos, _currentPos] call drawSegment; };
+			{ [(_x select 0), (_x select 1), (_x select 2)] call drawSegment; false } count _segments;
 		
 		};
 
@@ -526,11 +586,7 @@ _mapDraw = _mapControl ctrlAddEventHandler ["Draw", {
 
 }];
 
-
 Sleep 0.1;
-// TitleText [format["Left click to ."], "PLAIN DOWN"];
-// openMap [true, false];
-//onMapSingleClick "";
 
 // Menu has been closed, kill everything!
 waitUntil { isNull (findDisplay 90000) };

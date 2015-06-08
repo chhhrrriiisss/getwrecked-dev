@@ -70,7 +70,7 @@ GW_DEPLOYLIST = GW_DEPLOYLIST + [_obj];
 
 	waitUntil {	
 	
-		_nearby = (ASLtoATL visiblePositionASL _o) nearEntities [["Car"], 5];
+		_nearby = (ASLtoATL visiblePositionASL _o) nearEntities [["Car", "Tank"], 5];
 
 		{
 			_isVehicle = _x getVariable ['isVehicle', false];

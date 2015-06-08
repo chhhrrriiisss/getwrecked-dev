@@ -16,9 +16,13 @@ if (!alive _vehicle) exitWith { GW_WAITCOMPILE = false; };
 	
 _attachedObjects = attachedObjects _vehicle;
 
-_vehicle lock true;
-_vehicle lockDriver true;
-_vehicle lockCargo true;
+_isAi = _vehicle getVariable ['isAI', false];
+
+if (!_isAi) then {
+	_vehicle lock true;
+	_vehicle lockDriver true;
+	_vehicle lockCargo true;
+};
 
 // Gather any previous values on the vehicle
 _prevAmmo = _vehicle getVariable ["ammo", nil];
@@ -119,7 +123,7 @@ _combinedMass = 0;
 } count _attachedObjects > 0;
 
 // Apply combined mass to vehicle
-_isAi = _vehicle getVariable ['isAi', false];
+_isAi = _vehicle getVariable ['isAI', false];
 _newMass = if (!_isAi) then { ([_combinedMass, _defaultMass, _maxMass] call limitToRange) } else { _defaultMass };
 _vehicle setMass _newMass;
 

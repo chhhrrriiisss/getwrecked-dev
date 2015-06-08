@@ -132,39 +132,18 @@ class Mission
 	};
 	class Groups
 	{
-		items=12;
+		items=1;
 		class Item0
 		{
 			side="CIV";
 			class Vehicles
 			{
-				items=1;
+				items=12;
 				class Item0
 				{
-					position[]={14315.657,36.887131,18976.699};
-					azimut=348.42001;
+					position[]={14397.739,38.25,19026.396};
+					azimut=584.461;
 					id=0;
-					side="CIV";
-					vehicle="C_man_pilot_F";
-					player="PLAYER COMMANDER";
-					leader=1;
-					skill=0.60000002;
-					init="_null = [this] execVM 'client\player_init.sqf'; this setVariable[""texture"", ""cognition"", true];";
-					description="Driver (Cognition)";
-				};
-			};
-		};
-		class Item1
-		{
-			side="CIV";
-			class Vehicles
-			{
-				items=1;
-				class Item0
-				{
-					position[]={14429.643,38.279045,18989.941};
-					azimut=213.59399;
-					id=1;
 					side="CIV";
 					vehicle="C_man_pilot_F";
 					player="PLAY CDG";
@@ -173,57 +152,43 @@ class Mission
 					init="_null = [this] execVM 'client\player_init.sqf'; this setVariable[""texture"", ""haywire"", true];";
 					description="Driver (Haywire Electronics)";
 				};
-			};
-		};
-		class Item2
-		{
-			side="CIV";
-			class Vehicles
-			{
-				items=1;
-				class Item0
+				class Item1
 				{
-					position[]={14424.053,38.224144,18996.012};
-					azimut=247.92;
+					position[]={14351.639,37.519878,19014.281};
+					azimut=280.06799;
+					id=1;
+					side="CIV";
+					vehicle="C_man_pilot_F";
+					player="PLAY CDG";
+					skill=0.60000002;
+					init="_null = [this] execVM 'client\player_init.sqf'; this setVariable[""texture"", ""terminal"", true];";
+					description="Driver (Terminal Ballistics)";
+				};
+				class Item2
+				{
+					position[]={14335.466,37.190918,19001.266};
+					azimut=283.884;
 					id=2;
 					side="CIV";
 					vehicle="C_man_pilot_F";
 					player="PLAY CDG";
-					leader=1;
-					skill=0.60000002;
-					init="_null = [this] execVM 'client\player_init.sqf'; this setVariable[""texture"", ""crisp"", true];";
-					description="Driver (Crisp)";
-				};
-			};
-		};
-		class Item3
-		{
-			side="CIV";
-			class Vehicles
-			{
-				items=1;
-				class Item0
-				{
-					position[]={14335.466,37.190918,19001.266};
-					azimut=283.884;
-					id=3;
-					side="CIV";
-					vehicle="C_man_pilot_F";
-					player="PLAY CDG";
-					leader=1;
 					skill=0.60000002;
 					init="_null = [this] execVM 'client\player_init.sqf'; this setVariable[""texture"", ""gastrol"", true];";
 					description="Driver (Gastrol)";
 				};
-			};
-		};
-		class Item4
-		{
-			side="CIV";
-			class Vehicles
-			{
-				items=1;
-				class Item0
+				class Item3
+				{
+					position[]={14315.657,36.887131,18976.699};
+					azimut=348.42001;
+					id=3;
+					side="CIV";
+					vehicle="C_man_pilot_F";
+					player="PLAYER COMMANDER";
+					skill=0.60000002;
+					init="_null = [this] execVM 'client\player_init.sqf'; this setVariable[""texture"", ""cognition"", true];";
+					description="Driver (Cognition)";
+				};
+				class Item4
 				{
 					position[]={14298.784,36.838047,18967.701};
 					azimut=-139.57947;
@@ -231,146 +196,83 @@ class Mission
 					side="CIV";
 					vehicle="C_man_pilot_F";
 					player="PLAY CDG";
-					leader=1;
 					skill=0.60000002;
 					init="_null = [this] execVM 'client\player_init.sqf'; this setVariable[""texture"", ""slytech"", true];";
 					description="Driver (Slytech)";
 				};
-			};
-		};
-		class Item5
-		{
-			side="CIV";
-			class Vehicles
-			{
-				items=1;
-				class Item0
+				class Item5
 				{
-					position[]={14445.683,38.442276,18972.613};
-					azimut=245.97301;
+					position[]={14406.915,38.25,19014.834};
+					azimut=190.00476;
 					id=5;
 					side="CIV";
 					vehicle="C_man_pilot_F";
 					player="PLAY CDG";
-					leader=1;
-					skill=0.60000002;
-					init="_null = [this] execVM 'client\player_init.sqf'; this setVariable[""texture"", ""veneer"", true];";
-					description="Driver (Veneer)";
-				};
-			};
-		};
-		class Item6
-		{
-			side="CIV";
-			class Vehicles
-			{
-				items=1;
-				class Item0
-				{
-					position[]={14457.526,38.536922,18959.395};
-					azimut=271.23499;
-					id=6;
-					side="CIV";
-					vehicle="C_man_pilot_F";
-					player="PLAY CDG";
-					leader=1;
-					skill=0.60000002;
-					init="_null = [this] execVM 'client\player_init.sqf'; this setVariable[""texture"", ""tank"", true];";
-					description="Driver (Tank)";
-				};
-			};
-		};
-		class Item7
-		{
-			side="CIV";
-			class Vehicles
-			{
-				items=1;
-				class Item0
-				{
-					position[]={14351.639,37.519878,19014.281};
-					azimut=280.06799;
-					id=7;
-					side="CIV";
-					vehicle="C_man_pilot_F";
-					player="PLAY CDG";
-					leader=1;
-					skill=0.60000002;
-					init="_null = [this] execVM 'client\player_init.sqf'; this setVariable[""texture"", ""terminal"", true];";
-					description="Driver (Terminal Ballistics)";
-				};
-			};
-		};
-		class Item8
-		{
-			side="CIV";
-			class Vehicles
-			{
-				items=1;
-				class Item0
-				{
-					position[]={14397.739,38.25,19026.396};
-					azimut=584.46149;
-					id=8;
-					side="CIV";
-					vehicle="C_man_pilot_F";
-					player="PLAY CDG";
-					leader=1;
-					skill=0.60000002;
-					init="_null = [this] execVM 'client\player_init.sqf'; this setVariable[""texture"", ""haywire"", true];";
-					description="Driver (Haywire Electronics)";
-				};
-			};
-		};
-		class Item9
-		{
-			side="CIV";
-			class Vehicles
-			{
-				items=1;
-				class Item0
-				{
-					position[]={14351.263,36.989548,18951.215};
-					azimut=113.61381;
-					id=9;
-					side="CIV";
-					vehicle="C_man_pilot_F";
-					player="PLAY CDG";
-					leader=1;
-					skill=0.60000002;
-					init="_null = [this] execVM 'client\player_init.sqf'; this setVariable[""texture"", ""gastrol"", true];";
-					description="Driver (Gastrol)";
-				};
-			};
-		};
-		class Item10
-		{
-			side="CIV";
-			class Vehicles
-			{
-				items=1;
-				class Item0
-				{
-					position[]={14406.915,38.25,19014.834};
-					azimut=190.00476;
-					id=10;
-					side="CIV";
-					vehicle="C_man_pilot_F";
-					player="PLAY CDG";
-					leader=1;
 					skill=0.60000002;
 					init="_null = [this] execVM 'client\player_init.sqf'; this setVariable[""texture"", ""slytech"", true];";
 					description="Driver (Slytech)";
 				};
-			};
-		};
-		class Item11
-		{
-			side="CIV";
-			class Vehicles
-			{
-				items=1;
-				class Item0
+				class Item6
+				{
+					position[]={14424.053,38.224144,18996.012};
+					azimut=247.92;
+					id=6;
+					side="CIV";
+					vehicle="C_man_pilot_F";
+					player="PLAY CDG";
+					skill=0.60000002;
+					init="_null = [this] execVM 'client\player_init.sqf'; this setVariable[""texture"", ""crisp"", true];";
+					description="Driver (Crisp)";
+				};
+				class Item7
+				{
+					position[]={14429.643,38.279045,18989.941};
+					azimut=213.59399;
+					id=7;
+					side="CIV";
+					vehicle="C_man_pilot_F";
+					player="PLAY CDG";
+					skill=0.60000002;
+					init="_null = [this] execVM 'client\player_init.sqf'; this setVariable[""texture"", ""haywire"", true];";
+					description="Driver (Haywire Electronics)";
+				};
+				class Item8
+				{
+					position[]={14445.683,38.442276,18972.613};
+					azimut=245.97301;
+					id=8;
+					side="CIV";
+					vehicle="C_man_pilot_F";
+					player="PLAY CDG";
+					skill=0.60000002;
+					init="_null = [this] execVM 'client\player_init.sqf'; this setVariable[""texture"", ""veneer"", true];";
+					description="Driver (Veneer)";
+				};
+				class Item9
+				{
+					position[]={14457.526,38.536922,18959.395};
+					azimut=271.23499;
+					id=9;
+					side="CIV";
+					vehicle="C_man_pilot_F";
+					player="PLAY CDG";
+					skill=0.60000002;
+					init="_null = [this] execVM 'client\player_init.sqf'; this setVariable[""texture"", ""tank"", true];";
+					description="Driver (Tank)";
+				};
+				class Item10
+				{
+					position[]={14351.263,36.989548,18951.215};
+					azimut=113.61381;
+					id=10;
+					side="CIV";
+					vehicle="C_man_pilot_F";
+					player="PLAY CDG";
+					skill=0.60000002;
+					init="_null = [this] execVM 'client\player_init.sqf'; this setVariable[""texture"", ""gastrol"", true];";
+					description="Driver (Gastrol)";
+				};
+				class Item11
 				{
 					position[]={14369.403,37.511395,18959.719};
 					azimut=500.35709;
@@ -378,7 +280,6 @@ class Mission
 					side="CIV";
 					vehicle="C_man_pilot_F";
 					player="PLAY CDG";
-					leader=1;
 					skill=0.60000002;
 					init="_null = [this] execVM 'client\player_init.sqf'; this setVariable[""texture"", ""tank"", true];";
 					description="Driver (Tank)";

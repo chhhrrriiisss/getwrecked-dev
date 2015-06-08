@@ -41,7 +41,7 @@ if (!_owner) exitWith {
 
 // Find the closest valid vehicle on pad
 _targetPos = getPosASL _target;
-_nearby = (position _target) nearEntities [["Car"], 8];
+_nearby = (position _target) nearEntities [["Car", "Tank"], 8];
 
 if ( count _nearby == 0) exitWith {
     ['No vehicle to save!'] call _onExit;

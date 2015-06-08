@@ -380,7 +380,7 @@ GW_COMMANDS_LIST = [
 			_argument spawn {
 
 					GW_LOADEDVEHICLE = nil;					
-					[GW_CURRENTVEHICLE modelToWorldVisual [0, 30, 0], _this] spawn requestVehicle;
+					[GW_CURRENTVEHICLE modelToWorldVisual [0, 500, 0], _this] spawn requestVehicle;
 
 					_timeout = time + 3;
 					waitUntil {

@@ -174,7 +174,7 @@ _unit setVariable ['name player', name player, true];
 
 waitUntil {
 	
-	_currentPos = (ASLtoATL (getPosASL player));
+	_currentPos = (ASLtoATL visiblePositionASL player);
 	_vehicle = (vehicle player);
 	_inVehicle = !(player == _vehicle);
 	_isDriver = (player == (driver _vehicle));

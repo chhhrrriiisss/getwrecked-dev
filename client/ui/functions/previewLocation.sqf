@@ -4,11 +4,24 @@
 //      Return: None
 //
 
-private ['_location', '_pos'];
+private ['_location', '_pos', '_typeOfZone'];
 
 _location = _this select 0;
+_typeOfZone = _this select 2;
 
-_pos = getMarkerPos format['%1%2_%3', GW_SPAWN_LOCATION, 'zone', 'camera'];
+_pos = switch(_typeOfZone) do {
+
+	case "race": {
+		(GW_RACE_ARRAY select 0)
+	};
+	case "battle": {
+		(getMarkerPos format['%1%2_%3', GW_SPAWN_LOCATION, 'zone', 'camera'])
+	};
+	default {
+		[random 1000, random 1000,0]
+	};
+};
+
 _pos set [2, 20];
 
 // If this is the first time, create the camera

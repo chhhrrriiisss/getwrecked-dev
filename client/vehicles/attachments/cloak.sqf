@@ -94,7 +94,7 @@ waitUntil{
 		] call gw_fnc_mp;
 
 		_pos = (ASLtoATL visiblePositionASL (_this select 0));
-		_nearby = _pos nearEntities [["car"], 10];
+		_nearby = _pos nearEntities [["Car", "Tank"], 10];
 
 		_found = false;
 

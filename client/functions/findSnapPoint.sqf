@@ -16,7 +16,7 @@ _resultPos = _currentPos;
 _resultDir = _currentDir;
 
 // Any valid vehicles nearby?
-_nearby = (ASLtoATL _currentPos) nearEntities [["Car"], 8];
+_nearby = (ASLtoATL _currentPos) nearEntities [["Car", "Tank"], 8];
 if (count _nearby <= 0) exitWith { [_resultPos, _resultDir] };
 
 _isVehicle = false;

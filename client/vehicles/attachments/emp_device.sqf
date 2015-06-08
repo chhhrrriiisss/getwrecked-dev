@@ -12,7 +12,7 @@ _vehicle = [_this,1, objNull, [objNull]] call filterParam;
 if (isNull _obj || isNull _vehicle) exitWith {};
 
 _pos = (ASLtoATL getPosASL _vehicle);
-_vehs = _pos nearEntities [["car"], 40];
+_vehs = _pos nearEntities [["Car", "Tank"], 40];
 
 [
 	[
