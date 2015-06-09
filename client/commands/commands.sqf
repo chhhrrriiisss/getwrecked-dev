@@ -378,6 +378,7 @@ GW_COMMANDS_LIST = [
 			};
 
 			_argument spawn {
+					_oldLoad = GW_LASTLOAD;
 
 					GW_LOADEDVEHICLE = nil;					
 					[GW_CURRENTVEHICLE modelToWorldVisual [0, 500, 0], _this] spawn requestVehicle;
@@ -386,8 +387,10 @@ GW_COMMANDS_LIST = [
 					waitUntil {
 						((time > _timeout) || (!isNil "GW_LOADEDVEHICLE"))
 					};
+					
+					[GW_LOADEDVEHICLE, 1] execVM 'server\ai\createAI.sqf';
 
-					GW_LOADEDVEHICLE execVM 'server\ai\createAI.sqf';
+					GW_LASTLOAD = _oldLoad;
 
 			};
 		}
