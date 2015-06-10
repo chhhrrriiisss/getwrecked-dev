@@ -174,7 +174,7 @@ if (!alive GW_GUIDED_MISSILE && _lastMissilePos distance [0,0,0] > 1) then {
 			_d = if ('nanoarmor' in _status) then { 0.05 } else { (0.15 + (random 0.25)) };
 
 			_armor = _x getVariable ['GW_Armor', 1];
-			_d = [(_d / (_armor / 4)), 0, _d] call limitToRange;
+			_d = [(_d / (_armor / 8)), 0, _d] call limitToRange;
 
 			_x setDamage ((getDammage _x) + _d);	
 			[_lastMissilePos, 10, 25] call shockwaveEffect;

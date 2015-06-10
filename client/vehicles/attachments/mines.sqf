@@ -81,7 +81,7 @@ _this spawn {
 						_d = if ('nanoarmor' in _status) then { 0.05 } else { (0.2 + random 0.1) };
 
 						_armor = _x getVariable ['GW_Armor', 1];
-						_d = [(_d / (_armor / 4)), 0, _d] call limitToRange;
+						_d = [(_d / (_armor / 8)), 0, _d] call limitToRange;
 
 						_x setDamage ((getDammage _x) + _d);
 						

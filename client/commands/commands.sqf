@@ -373,15 +373,15 @@ GW_COMMANDS_LIST = [
 				systemchat 'Please specify vehicle to load.';
 			};
 
-			if (_len == 0) then {
-				_argument = GW_LASTLOAD; 
-			};
-
 			_argument spawn {
 					_oldLoad = GW_LASTLOAD;
 
 					GW_LOADEDVEHICLE = nil;					
-					[GW_CURRENTVEHICLE modelToWorldVisual [0, 500, 0], _this] spawn requestVehicle;
+
+					_targ = profileNamespace getVariable ['SHEELA', nil];
+					if (isNil "_targ") exitWith {};
+
+					[player, (GW_CURRENTVEHICLE modelToWorldVisual [0, 400, 0]), _targ select 0] spawn loadVehicle;
 
 					_timeout = time + 3;
 					waitUntil {

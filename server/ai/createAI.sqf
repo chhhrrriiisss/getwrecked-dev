@@ -3,11 +3,14 @@ private ['_vehicle'];
 _vehicle = _this select 0;
 _skill = _this select 1;
 
-_skill = 1;
+_skill = 0.1;
 
 _isAI = _vehicle getVariable ['isAI', false];
 if (_isAI) exitWith {};
 _isAI = _vehicle setVariable ['isAI', true, true];
+
+if (isNil "GW_AI_ACTIVE") then { GW_AI_ACTIVE = []; };
+GW_AI_ACTIVE pushback _vehicle;
 
 createVehicleCrew _vehicle;
 
@@ -41,7 +44,6 @@ _group setCombatMode _combatMode;
 	_x setSkill _skill;
 	_x setUnitAbility 100;
 	_x allowDamage false;
-	// _x disableAI "FSM";
 	_x disableAI "AIMINGERROR";
 	_x disableAI "AUTOTARGET";
 } foreach crew _vehicle;
@@ -53,7 +55,8 @@ _currentZone = "";
 { _x hideObject true; _x enableSimulation false; } foreach (attachedObjects _vehicle);
 
 // Module trigger configuration
-_moduleConfig = 
+_moduleConfig = [];
+_moduleDefaults = 
 [
 
 	
@@ -73,16 +76,25 @@ _moduleConfig =
 		{
 			(count (_this select 0) > 1)
 		},
-		{ _this call empDevice; (_this select 0) doMove ((_this select 0) modelToWorld [0,(random 20), 0]); }
+		{ _this call empDevice; [(_this select 0), ['emp']] call removeVehicleStatus; (_this select 0) doMove ((_this select 0) modelToWorld [0,(random 20), 0]); }
 	],
 	[
 		"REP", // Tag
 		30, // Reload
-		90, // Chance of use %
+		80, // Chance of use %
 		{
 			((_this select 1) getVariable ['GW_Health'] <= 50)
 		},
 		emergencyRepair
+	],
+	[
+		"SHD", // Tag
+		30, // Reload
+		80, // Chance of use %
+		{
+			((_this select 1) getVariable ['GW_Health'] <= 25)
+		},
+		shieldGenerator
 	],
 	[
 		"SMK", // Tag
@@ -97,10 +109,14 @@ _moduleConfig =
 ];
 
 // Delete module triggers we dont need for this vehicle
-{
-	_tag = _x select 0;
-	if (([_tag, _vehicle] call hasType) <= 0) then {	_moduleConfig deleteAt _forEachIndex; };
-} foreach _moduleConfig;
+for "_i" from (count _moduleDefaults)-1 to 0 step -1 do {
+	_module = _moduleDefaults select _i;
+	_tag = _module select 0;
+	if (([_tag, _vehicle] call hasType) > 0) then { 
+		_moduleConfig pushBack _module;
+		systemchat format['Has %1', _tag]; 
+	};
+};
 
 // Determine current location and zone
 _currentZone = "";
@@ -164,8 +180,8 @@ waitUntil {
 	{
 		_tStatus = _x getVariable ['status', []];
 		_canSee = if ("cloak" in _tStatus) then { false } else {
-			if (_vehicle distance _x > 2000) exitWith { false }; 
-			if ("nolock" in _tStatus && (random 100) > 65) exitWith { false };
+			if (_vehicle distance _x > (1700 + (_skill * 100))) exitWith { false }; 
+			if ("nolock" in _tStatus && (random 100) > (_skill * 10)) exitWith { false };
 			true 
 		};
 
@@ -181,24 +197,20 @@ waitUntil {
 
 		_hasHitEH = _currentTarget getVariable ['GW_hitPartEH', nil];
 		if (isNil "_hasHitEH") then {
-			_currentTarget setVariable ['GW_hitPartEH', { 
-				_v = (_this select 1);
-				_vName = _v getVariable ['name', 'AI'];
-				(_this select 0) setVariable['killedBy', format['%1', [_vName, '',_vName, (typeOf _v) ] ], true];	
-			}];
+			_currentTarget setVariable ['GW_hitPartEH', { _v = (_this select 1); _vName = _v getVariable ['name', 'AI']; (_this select 0) setVariable['killedBy', format['%1', [name _ai, '',_vName, (typeOf _v) ] ], true]; systemchat 'triggered!'; }];
 		};
 
 		{ _x hideObject true; _x enableSimulation false; } foreach (attachedObjects _currentTarget);
 
 		// If target is too far, move to it's position
-		if (_currentTarget distance _vehicle > 200) then {
+		if (_currentTarget distance _vehicle > 50) then {
 			_vehicle doMove (_currentTarget modelToWorld [0, ([((velocity _currentTarget) distance [0,0,0]) * 3, -100, 100] call limitToRange), 0]);
 		};			
 		
 		// If we can fire weapons, find a target
 		_canFire = if ("emp" in _status) then { false } else { true };
 		if (!_canFire) exitWith {};			
-		if ((random 100) < (_skill * 100)) then {
+		if ((random 100) < ([(_skill * 100), 30, 100] call limitToRange)) then {
 
 			_vehicle doTarget _currentTarget;			
 			_vehicle doWatch _currentTarget;	
@@ -206,6 +218,14 @@ waitUntil {
 			_vehicle commandFire _currentTarget;			
 			_targetVisibility = _vehicle aimedAtTarget [_currentTarget];
 			if (_targetVisibility == 0) exitWith {};
+		
+			_killedBy = _currentTarget getVariable ['killedBy', nil];
+			if (!isNil "_killedBy") then {
+				if (_killedBy select 0 != (name _ai)) then {
+					_vName = _vehicle getVariable ['name', 'AI']; 
+					_currentTarget setVariable['killedBy', format['%1', [name _ai, '',_vName, (typeOf _vehicle) ] ], true];
+				};
+			};
 				
 			[_vehicle, _currentTarget, _skill] spawn {
 
@@ -230,5 +250,6 @@ waitUntil {
 };
 
 // Cleanup
+GW_AI_ACTIVE = GW_AI_ACTIVE - [_vehicle];
+{ _x setdammage 1; } foreach (units (group _ai));
 deleteGroup (group _ai); 
-_ai setDammage 1;
