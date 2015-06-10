@@ -77,12 +77,17 @@ playSound3D ["a3\sounds_f\sfx\special_sfx\sparkles_wreck_3.wss", _obj, false, _p
 	
 } count _vehs > 0;
 
-// Small static effect for epicness
-_layerStatic = ("BIS_layerStatic" call BIS_fnc_rscLayer);
-_layerStatic cutRsc ["RscStatic", "PLAIN" , 2];
+
 
 _isAI = _vehicle getVariable ['isAI', false];
-if (!_isAI) then { ["EMP ACTIVATED ", 1, empIcon, colorWhite, "warning"] spawn createAlert; };
+if (!_isAI) then { 
+
+	// Small static effect for epicness
+	_layerStatic = ("BIS_layerStatic" call BIS_fnc_rscLayer);
+	_layerStatic cutRsc ["RscStatic", "PLAIN" , 2];
+
+	["EMP ACTIVATED ", 1, empIcon, colorWhite, "warning"] spawn createAlert; 
+};
 
 true
 

@@ -70,8 +70,8 @@ _this spawn {
 
 	playSound3D ["a3\sounds_f\sfx\special_sfx\sparkles_wreck_2.wss", _obj, false, _oPos, 2, 1, 50];	
 
-	[(ATLtoASL _oPos), (ATLtoASL _tPos), "RLG"] call markIntersects;
-	//[(ATLtoASL _oPos), (ATLtoASL _tPos), GW_CURRENTVEHICLE, 0.1, "RLG"] call damageIntersects;
+	[(ATLtoASL _oPos), (ATLtoASL _tPos), "RLG"] call markIntersects;				
+	[(ATLtoASL _oPos), (ATLtoASL _tPos), GW_CURRENTVEHICLE, 0.1, "RLG"] call damageIntersects;
 	
 	_bullet setVectorDir _heading; 
 	_bullet setVelocity _velocity; 

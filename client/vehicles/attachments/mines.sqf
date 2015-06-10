@@ -76,9 +76,12 @@ _this spawn {
 
 						playSound3D ["a3\sounds_f\weapons\mines\electron_trigger_1.wss", _obj, false, getPos _obj, 5, 1, 50]; 
 
-						_tPos =  (ASLtoATL getPosASL _x);
+						_tPos =  (ASLtoATL visiblePositionASL _x);
 						_tPos set[2, 0];
 						_d = if ('nanoarmor' in _status) then { 0.05 } else { (0.2 + random 0.1) };
+
+						_armor = _x getVariable ['GW_Armor', 1];
+						_d = [(_d / (_armor / 4)), 0, _d] call limitToRange;
 
 						_x setDamage ((getDammage _x) + _d);
 						

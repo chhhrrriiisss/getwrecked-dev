@@ -11,10 +11,10 @@ _obj = [_this,0, objNull, [objNull]] call filterParam;
 if (isNull _obj) exitWith { false };
 
 _oPos = (ASLtoATL getPosASL _obj);
-_veh = (vehicle player);
+_veh = attachedTo _obj; 
 
 _status = _veh getVariable ["status",[]];
-_isAI = _veh getVariable ["isAI", false];
+_isAI = _obj getVariable ["isAI", false];
 _statusList = [];
 
 // Reset locked targets

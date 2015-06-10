@@ -56,15 +56,7 @@ _currentZone = "";
 _moduleConfig = 
 [
 
-	[
-		"EMP", 
-		10,
-		75, 
-		{
-			(count (_this select 0) > 1)
-		},
-		empDevice
-	],
+	
 	[
 		"MAG", // Tag
 		15, // Reload
@@ -73,6 +65,15 @@ _moduleConfig =
 			(count (_this select 0) > 1)
 		},
 		magneticCoil
+	],
+	[
+		"EMP", 
+		10,
+		75, 
+		{
+			(count (_this select 0) > 1)
+		},
+		{ _this call empDevice; (_this select 0) doMove ((_this select 0) modelToWorld [0,(random 20), 0]); }
 	],
 	[
 		"REP", // Tag
@@ -178,6 +179,15 @@ waitUntil {
 	// If we have a target, lets try move or shoot to it
 	if (!isNull _currentTarget) then {
 
+		_hasHitEH = _currentTarget getVariable ['GW_hitPartEH', nil];
+		if (isNil "_hasHitEH") then {
+			_currentTarget setVariable ['GW_hitPartEH', { 
+				_v = (_this select 1);
+				_vName = _v getVariable ['name', 'AI'];
+				(_this select 0) setVariable['killedBy', format['%1', [_vName, '',_vName, (typeOf _v) ] ], true];	
+			}];
+		};
+
 		{ _x hideObject true; _x enableSimulation false; } foreach (attachedObjects _currentTarget);
 
 		// If target is too far, move to it's position
@@ -190,14 +200,23 @@ waitUntil {
 		if (!_canFire) exitWith {};			
 		if ((random 100) < (_skill * 100)) then {
 
-			_vehicle doTarget _currentTarget;
-			_vehicle doWatch _currentTarget;
+			_vehicle doTarget _currentTarget;			
+			_vehicle doWatch _currentTarget;	
 			_vehicle doFire _currentTarget;
-			_vehicle commandFire _currentTarget;		
+			_vehicle commandFire _currentTarget;			
+			_targetVisibility = _vehicle aimedAtTarget [_currentTarget];
+			if (_targetVisibility == 0) exitWith {};
+				
+			[_vehicle, _currentTarget, _skill] spawn {
 
-			_vName = _vehicle getVariable ['name', 'AI'];
-			_currentTarget setVariable['killedBy', format['%1', [_vName, '',_vName, (typeOf _vehicle) ] ], true];	
-			
+				_s = _this select 2;
+
+				for "_i" from 0 to 5 + (_s * 10) step 1 do {
+					(_this select 0) fireAtTarget [_this select 1, (currentWeapon (_this select 0))];
+					Sleep ([0.25 - (_s / 10), 0.1, 0.25] call limitToRange);
+				};
+
+			};			
 		};
 
 	} else {

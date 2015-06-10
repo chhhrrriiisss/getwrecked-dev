@@ -106,7 +106,7 @@ switch (_type) do {
 
 	case "slideDown":
 	{
-		[_alertGroup, [['y', '0', '0.05', _outDuration]], "quad"] spawn createTween;
+		[_alertGroup, [['fade', 0, 1, _outDuration], ['y', '0', '0.05', _outDuration]], "quad"] spawn createTween;
 	};
 	
 	default

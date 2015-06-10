@@ -97,10 +97,7 @@ if ("invulnerable" in _status) then {
         false
     } count _parts > 0;   
 
-    //if (_highestDmg > 0.91) then {} else {
-        { _vehicle setHit [_x, _highestDmg]; false } count _parts > 0;
-        //_vehicle setDammage _highestDmg;
-    //};
+    { _vehicle setHit [_x, _highestDmg]; false } count _parts > 0;  
 
 };
 

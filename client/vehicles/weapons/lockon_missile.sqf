@@ -84,6 +84,10 @@ if (!alive _lockedTarget) then {
 
 					if ('invulnerable' in _status) exitWith {};
 					_d = if ('nanoarmor' in _status) then { 0.025 } else { ((random 0.1) + 0.05) };
+
+					_armor = _t getVariable ['GW_Armor', 1];
+					_d = [(_d / (_armor / 4)), 0, _d] call limitToRange;
+
 					_t setDamage ((getDammage _t) + _d);
 
 					[

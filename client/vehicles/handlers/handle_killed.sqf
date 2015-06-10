@@ -33,7 +33,7 @@ _veh spawn {
     _name = _veh getVariable ['name', ""];
 
     // Log a death for this vehicle
-    ['death', _name, 1] call logStat;   
+    if (!isServer) then { ['death', _name, 1] call logStat;  };
 
     // Kill the crew & nearby players  
     _crew = crew _veh;
@@ -58,9 +58,7 @@ _veh spawn {
     };
 
     _killedBy = _veh getVariable ["killedBy", nil];    
-    if (isNil "_killedBy") exitWith {};
-
-    
+    if (isNil "_killedBy") exitWith {};    
     
     _owner = _veh getVariable ["GW_Owner", ""];  
     _veh setVariable ["GW_Owner", '', true];     
