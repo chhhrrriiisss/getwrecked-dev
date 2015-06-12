@@ -373,26 +373,19 @@ GW_COMMANDS_LIST = [
 				systemchat 'Please specify vehicle to load.';
 			};
 
-			_argument spawn {
-					_oldLoad = GW_LASTLOAD;
+			[		
+				[
+					(GW_CURRENTVEHICLE modelToWorldVisual [0, 200, 0]),
+					_argument,
+					1
+				],
+				"createAI",
+				false,
+				false
+			] call gw_fnc_mp;
 
-					GW_LOADEDVEHICLE = nil;					
-
-					_targ = profileNamespace getVariable ['SHEELA', nil];
-					if (isNil "_targ") exitWith {};
-
-					[player, (GW_CURRENTVEHICLE modelToWorldVisual [0, 400, 0]), _targ select 0] spawn loadVehicle;
-
-					_timeout = time + 3;
-					waitUntil {
-						((time > _timeout) || (!isNil "GW_LOADEDVEHICLE"))
-					};
-					
-					[GW_LOADEDVEHICLE, 1] execVM 'server\ai\createAI.sqf';
-
-					GW_LASTLOAD = _oldLoad;
-
-			};
+			// [(GW_CURRENTVEHICLE modelToWorldVisual [0, 200, 0]), _argument, 1] execVM 'server\ai\createAI.sqf';
+			
 		}
 	],
 

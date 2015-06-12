@@ -87,7 +87,8 @@ class Mission
 		"A3_Structures_F_Heli_Furniture",
 		"A3_Structures_F_EPC_Civ_Camping",
 		"A3_Structures_F_EPA_Civ_Camping",
-		"A3_Structures_F_EPB_Civ_Accessories"
+		"A3_Structures_F_EPB_Civ_Accessories",
+		"A3_Structures_F_System"
 	};
 	addOnsAuto[]=
 	{
@@ -108,6 +109,7 @@ class Mission
 		"A3_Signs_F_AD",
 		"A3_Structures_F_EPA_Mil_Scrapyard",
 		"A3_Structures_F_Training",
+		"A3_Structures_F_System",
 		"a3_map_altis"
 	};
 	randomSeed=2523513;
@@ -289,7 +291,7 @@ class Mission
 	};
 	class Vehicles
 	{
-		items=620;
+		items=622;
 		class Item0
 		{
 			position[]={14976.409,17.95015,16537.611};
@@ -6378,6 +6380,22 @@ class Mission
 			skill=0.60000002;
 			text="loadCamera_2";
 			init="this setVariable ['GW_LOADING_TARGET', [108838.07,-5985.69,-21211.41] ]; this addEventHandler['handleDamage', { false }]; this enableSimulationGlobal false; this hideObjectGlobal true; ";
+		};
+		class Item620
+		{
+			position[]={14420.502,38.251675,18989.125};
+			id=632;
+			side="EMPTY";
+			vehicle="Land_ClutterCutter_small_F";
+			skill=0.60000002;
+		};
+		class Item621
+		{
+			position[]={14424.007,38.253693,18991.549};
+			id=633;
+			side="EMPTY";
+			vehicle="Land_ClutterCutter_medium_F";
+			skill=0.60000002;
 		};
 	};
 	class Markers

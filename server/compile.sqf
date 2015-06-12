@@ -23,6 +23,10 @@ setVehicleRespawn = compile preprocessFile "server\vehicles\vehicle_respawn.sqf"
 setupVehicle = compile preprocessFile "server\vehicles\setup_vehicle.sqf";
 // loadVehicle = compile preprocessFile "server\functions\loadVehicle.sqf";
 
+// AI
+call compile preprocessFile "server\ai\config.sqf";
+createAI = compile preprocessFile "server\ai\createAI.sqf";
+
 pubVar_fnc_logDiag = compile preprocessFile "server\functions\pubVar_logDiag.sqf";
 "pubVar_logDiag" addPublicVariableEventHandler { (_this select 1) call pubVar_fnc_logDiag };
 

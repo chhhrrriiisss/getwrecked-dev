@@ -91,6 +91,7 @@ if (!_firstSpawn) then {
 	_defaultTarget = getMarkerPos format['%1_%2', GW_CURRENTZONE, 'camera'];
 	_prevPos = _unit getVariable ['GW_prevPos', [0,0,0]];
 	_prevPos = if (_prevPos distance [0,0,0] > 1) then { _prevPos } else { _defaultTarget };
+	_prevPos = [(_prevPos select 0), (_prevPos select 1), ([(_prevPos select 2), 0, 100] call limitToRange) ];
 
 	// Killed by something - lets create a camera on them
 	if (!isNil "_killedBy" && !_killedByNuke) then {

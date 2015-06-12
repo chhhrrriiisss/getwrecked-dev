@@ -225,6 +225,26 @@ padZeros = compile preprocessFile 'global\functions\padZeros.sqf';
 dirToVector = compile preprocessFile 'global\functions\dirToVector.sqf';
 roundTo = compile preprocessFile 'global\functions\roundTo.sqf';
 
+// Module Functions
+smokeBomb = compile preprocessFile "client\vehicles\attachments\smoke_bomb.sqf";
+verticalThruster = compile preprocessFile "client\vehicles\attachments\thruster.sqf";
+nitroBoost = compile preprocessFile "client\vehicles\attachments\nitro_boost.sqf";
+emergencyRepair = compile preprocessFile "client\vehicles\attachments\emergency_repair.sqf";
+empDevice = compile preprocessFile "client\vehicles\attachments\emp_device.sqf";
+selfDestruct = compile preprocessFile "client\vehicles\attachments\self_destruct.sqf";
+emergencyParachute = compile preprocessFile "client\vehicles\attachments\emergency_parachute.sqf";
+oilSlick = compile preprocessFile "client\vehicles\attachments\oil_slick.sqf";
+dropCaltrops = compile preprocessFile "client\vehicles\attachments\caltrops.sqf";
+dropMines = compile preprocessFile 'client\vehicles\attachments\mines.sqf';
+dropExplosives = compile preprocessFile "client\vehicles\attachments\explosives.sqf";
+dropTeleport = compile preprocessFile "client\vehicles\attachments\teleport.sqf";
+dropJammer = compile preprocessFile "client\vehicles\attachments\frequency_jammer.sqf";
+shieldGenerator = compile preprocessFile "client\vehicles\attachments\shield_generator.sqf";
+cloakingDevice = compile preprocessFile "client\vehicles\attachments\cloak.sqf";
+magneticCoil = compile preprocessFile "client\vehicles\attachments\magnetic_coil.sqf";
+dropLimpets = compile preprocessFile 'client\vehicles\attachments\limpet_mines.sqf';
+activateElectromagnet = compile preprocessFile 'client\vehicles\attachments\electromagnet.sqf';
+
 // Vehicle Functions 
 call compile preprocessFile 'client\vehicles\functions.sqf';
 compileAttached = compile preprocessFile "client\vehicles\compile_attached.sqf";

@@ -26,9 +26,12 @@ _this spawn {
 	   	_eject = true;
 	};
 
-	for "_i" from _timeout to 0 step -1 do {
-		['SELF DESTRUCT', 1.5, warningIcon, colorRed, 'slideDown'] spawn createAlert;
-		Sleep 0.3;
+	_isAi = _vehicle getVariable ['isAI', false];
+	if (!_isAi) then {
+		for "_i" from _timeout to 0 step -1 do {
+			['SELF DESTRUCT', 1.5, warningIcon, colorRed, 'slideDown'] spawn createAlert;
+			Sleep 0.3;
+		};
 	};
 
 	_pos = (ASLtoATL getPosATL _vehicle);

@@ -10,7 +10,7 @@ if (isNull _victim) exitWith {};
 // Disable hud
 GW_HUD_ACTIVE = false;
 
-9999 cutText ["", "BLACK OUT", 0.5];  
+9999 cutText ["", "BLACK OUT", 0.3];  
 
 _prevVehicle = _victim getVariable ["GW_prevVeh", nil];
 
@@ -18,6 +18,7 @@ _prevVehicle = _victim getVariable ["GW_prevVeh", nil];
 if (!isNil "_prevVehicle") then {
     ['death', _prevVehicle, 1, true] call logStat;
 };
+
 
 
 if(true) exitWith{};

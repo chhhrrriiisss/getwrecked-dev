@@ -1,5 +1,7 @@
 respawn = "BASE"; 
 respawndelay = 1;  
+respawnTemplates[] = {"Base"}; 
+respawnDialog = 0;
 
 author="SLI";
 OnLoadName = "GET WRECKED";

@@ -77,6 +77,10 @@ GW_SUPPLY_ACTIVE = 0; // Dont change this
 GW_SUPPLY_MAX = 30; // Maximum number of supply drops active at once (default: 30)
 GW_SUPPLY_CLEANUP = (3*60); // Timeout before cleaning up supply drop (default: (3*60) )
 
+// AI
+GW_AI_MAX = 3;
+GW_AI_ACTIVE = [];
+
 // Misc
 GW_MAX_DATA_SIZE = 8000; // Max packet size (in characters) that can be loaded (loadVehicle or saveVehicle will not work if this is too large)
 
@@ -143,6 +147,7 @@ objectDamageData = {
 };
 
 GW_AREAS = {	
+	private ['_allZones'];
 	_allZones = +GW_VALID_ZONES;
 	_allZones append GW_ACTIVE_RACES;
 	_allZones
@@ -160,6 +165,7 @@ GW_VALID_ZONES = [
 	['workshop', 'safe', 'Workshop']
 ];
 
+// Active races and race hosts
 GW_ACTIVE_RACES = [
 
 ];

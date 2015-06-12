@@ -127,7 +127,7 @@ GW_DEPLOYLIST = GW_DEPLOYLIST + [_obj];
 					_d = if ('nanoarmor' in _status) then { 0.05 } else { (random (0.1) + 0.5) };
 
 					_armor = _x getVariable ['GW_Armor', 1];
-					_d = [(_d / (_armor / 6)), 0, _d] call limitToRange;
+					_d = [(_d / (_armor / 15)), 0, _d] call limitToRange;
 
 					_d = _d * _modifier;
 
