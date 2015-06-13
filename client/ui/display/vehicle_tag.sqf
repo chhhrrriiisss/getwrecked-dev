@@ -131,6 +131,25 @@ if ( !_visible || ('cloak' in _status) || ('nolock' in _status) || !_inScope ) t
 	_alpha = _alpha + 0.05;
 };
 
+_isAI = _vehicle getVariable ['isAI', false];
+if (_visible && _isAI && GW_LMBDOWN) then {
+
+	if (isNil "GW_LAST_THREAT_TRIGGER") then {
+		GW_LAST_THREAT_TRIGGER = time - 5;
+	};
+
+	if (time - GW_LAST_THREAT_TRIGGER < 5) exitWith {};
+	GW_LAST_THREAT_TRIGGER = time;
+
+	[
+		[_vehicle, GW_CURRENTVEHICLE],
+		'fireAtTargetAI',
+		_vehicle,
+		false
+	] call gw_fnc_mp;	
+
+};
+
 if ( (_pos select 2) < 1) then { _pos set[2, 1]; };
 
 

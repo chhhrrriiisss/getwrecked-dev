@@ -30,7 +30,7 @@ _prevFuel = (fuel _vehicle) + (_vehicle getVariable ["fuel", 0]);
 [_vehicle] call setDefaultData;
 
 // Check for max limits or old items and prune
-if (GW_CURRENTZONE == "workshopZone") then { _vehicle call cleanAttached; };
+if (GW_CURRENTZONE == "workshopZone" || isServer) then { _vehicle call cleanAttached; };
 
 _attachedValue = 0;
 _maxMass = _vehicle getVariable ['maxMass', 99999];
@@ -136,7 +136,7 @@ _vehicle setVariable ["GW_Value", _totalValue];
 [_vehicle] call setVehicleActions;
 
 // Automatically max out fuel/ammo if we're in the workshop
-if (GW_CURRENTZONE == "workshopZone") then {
+if (GW_CURRENTZONE == "workshopZone" || isServer) then {
 
 	_maxAmmo = _vehicle getVariable ["maxAmmo", 1];
 	_vehicle setVariable ["ammo", _maxAmmo];
@@ -169,7 +169,7 @@ if (GW_CURRENTZONE == "workshopZone") then {
 	};
 };
 
-if (GW_CURRENTZONE != "workshopZone") then {
+if (GW_CURRENTZONE != "workshopZone" && !isServer) then {
 	_vehicle lockDriver false;
 	_vehicle lock false;
 };

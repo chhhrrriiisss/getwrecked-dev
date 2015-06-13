@@ -55,6 +55,9 @@ if (hasInterface) then {
 
 		true
 	};
+	
+} else {
+	logDebug = { true };
 };
 
 // Custom checks for object/vehicles

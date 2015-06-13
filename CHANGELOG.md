@@ -8,6 +8,11 @@ Items without Fixed/Added/Removed proceeding, are typically balance changes
 **v0.8.3** [Public alpha release]
 
 - Combined cleanup scripts into events loop to improve server fps
+- Guided missile, lock-on, railgun, mines and explosive damage now affected by target armor
+- Notifications and alerts should now fade a bit more smoothly
+- Removed respawn scoreboard flashing on death screen
+- Fixed - Owner not being set on vehicle creation to lock terminal correctly
+- Fixed - Vehicle lock halo not showing
 
 **v0.8.2** [Public alpha release]
 

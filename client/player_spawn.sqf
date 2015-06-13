@@ -37,6 +37,9 @@ GW_LIFT_ACTIVE = false;
 GW_SPAWN_ACTIVE = false;
 GW_DIALOG_ACTIVE = false;
 
+// Get rid of previous locked targets 
+GW_LOCKED_TARGETS = [];
+
 // Force hud refresh
 GW_HUD_ACTIVE = false;
 

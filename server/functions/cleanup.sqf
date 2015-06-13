@@ -28,6 +28,8 @@ cleanUpCommands = [
 	}, 240],
 	[{ 
 		_a = [];
+		_allVehicles = (allMissionObjects "Car");
+		_allVehicles append (allMissionObjects "Tank");
 		_workshop = (getmarkerpos "workshopZone_camera");
 		{ 
 			_minDist = if ((_x distance _workshop) < 300) then { 75 } else { 10 };
@@ -36,7 +38,7 @@ cleanUpCommands = [
 			{ if (alive _X) exitWith { _crew = true; }; false } count (crew _x);
 			if (_vS isEqualTo [] && !_crew) then { _a pushBack _x; } else { _x setVariable ["GW_CU", nil]; };	
 			false
-		} count (allMissionObjects "Car");
+		} count _allVehicles;
 		_a
 	}, 60],
 	[{ (allMissionObjects "#destructioneffects") }, 10],

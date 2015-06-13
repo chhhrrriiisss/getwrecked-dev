@@ -42,5 +42,6 @@ if (GW_LEADERBOARD_ENABLED) then {
 	call compile preprocessFile "server\functions\leaderboard.sqf";
 };
 
+GW_CURRENTZONE = "workshopZone";
 
 

@@ -2,7 +2,7 @@
 //    
 //		Vehicle Configuration
 //      // [0] Class  [1] Display Name [2] (0) 0 Mass Modifier  1 Mass Limit  (1) Max Weapons  (2) Max Modules (3) Max Ammo  (4) Max Fuel  (5) Armor Rating (6) Armor Modifier (7) Radar Signature (8) ? [3] Description
-//
+//w
 
 GW_VEHICLE_LIST = [	
 	
@@ -33,7 +33,9 @@ GW_VEHICLE_LIST = [
 	["B_MRAP_01_F", "Hunter", [ [1.75, 99999], 4, 4, 2, 1, 8, 1.09, 'Medium', 3500 ], 'An armoured jack of all trades.', true ],
 	["O_MRAP_02_F", "Ifrit", [ [1.5, 99999], 5, 3, 2, 0.75, 7, 1.13, 'Large', 1000 ], 'Trades speed for upgraded armor and marginally better looks.', true ],
 
-	["B_APC_Tracked_01_AA_F", "Cheetah", [ [1.5, 99999], 5, 3, 2, 0.75, 7, 1.13, 'Large', 1000 ], 'Ass-kicking wheeled vehicle of death.', false ]
+	// AI Only
+
+	["B_APC_Tracked_01_AA_F", "Cheetah", [ [1.5, 99999], 5, 3, 2, 0.75, 20, 0.3, 'Large', 1000 ], 'Ass-kicking wheeled vehicle of death.', false ]
 	
 ];
 

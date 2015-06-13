@@ -9,10 +9,9 @@ private['_class', '_name', '_camo', '_source', '_o', '_k', '_raw'];
 _player = _this select 0;
 _target = _this select 1;
 _raw = _this select 2;
-
 _ai = [_this, 3, false, [false]] call filterParam;
 
-if (isNull _player || (count _target == 0) || (count _raw == 0)) exitWith {};
+if ( (isNull _player && !_ai) || (count _target == 0) || (count _raw == 0)) exitWith {};
 
 diag_log format['%1 request to load %2 [ %3 ]', name _player, _target, (count _raw)];
 
