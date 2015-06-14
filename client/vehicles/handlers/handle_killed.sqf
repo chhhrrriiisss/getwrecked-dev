@@ -71,11 +71,11 @@ _veh spawn {
     // No money for killing new spawns
     _rawValue = _veh getVariable ['GW_Value', 200];
     _wanted = _veh getVariable ['GW_WantedValue', 0];
-    _value =  if (_newSpawn) then { 0 } else { ((_rawValue + _wanted) * GW_KILL_VALUE) };
+    _valueOfKill =  if (_newSpawn) then { 0 } else { ((_rawValue + _wanted) * GW_KILL_VALUE) };
     _crew = crew _veh;    
-
+    
     // No money for destroying own vehicle
-    _value = if (_owner == (_killedBy select 0)) then { 0 } else { _value }; 
+    _valueOfKill = if (_owner == (_killedBy select 0)) then { 0 } else { _valueOfKill }; 
 
     if (_name == "") then { _name = 'A vehicle'; };                
         
@@ -84,7 +84,7 @@ _veh spawn {
             _name,
             (_killedBy select 0), // Killer
             [(_killedBy select 2), (_killedBy select 3)], // Killer's vehicle
-            _value,
+            _valueOfKill,
             (_killedBy select 1) // Method
         ],
         "logKill",

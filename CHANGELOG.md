@@ -13,6 +13,7 @@ Items without Fixed/Added/Removed proceeding, are typically balance changes
 - Removed respawn scoreboard flashing on death screen
 - Fixed - Owner not being set on vehicle creation to lock terminal correctly
 - Fixed - Vehicle lock halo not showing
+- Added - Auto height snapping of similar types to object manipulation
 
 **v0.8.2** [Public alpha release]
 

@@ -14,7 +14,7 @@ _this spawn {
 
 	if (!alive _vehicle) exitWith { false };
 
-	_pos = ASLtoATL visiblePositionASL _vehicle;
+	_pos = ASLtoATL getPosASL _vehicle;
 
 	playSound3D ["a3\sounds_f\vehicles\armor\APC\APC2\int_engine_start.wss", _vehicle, false, _pos, 3, 1, 250];
 
@@ -32,15 +32,15 @@ _this spawn {
 
 		_range = 50;
 		_object = _this;
-		_pos = ASLtoATL visiblePositionASL _object;
-		_nearby =  _pos nearEntities [["Car", "Amored"], _range];		
+		_pos = ASLtoATL getPosASL _object;
+		_nearby =  _pos nearEntities [["Car"], _range];		
 		
 		{
 			_isVehicle = _x getVariable ['isVehicle', false];
 
-			if (_isVehicle) then {
+			if (_isVehicle && _x != _object) then {
 
-				_dist = _pos distance (ASLtoATL visiblePositionASL _x);
+				_dist = _pos distance (ASLtoATL getPosASL _x);
 
 				if (_dist < _range && _x != GW_CURRENTVEHICLE) then {
 

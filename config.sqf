@@ -15,7 +15,7 @@ GW_GAME_MODE = (paramsArray select 0);
 GW_ITEM_COST = (paramsArray select 7);
 
 // Spawn timer in seconds (default: 30)
-GW_RESPAWN_DELAY = (paramsArray select 1);
+GW_RESPAWN_DELAY = 120;
 
 // Object respawn settings (default: 3, .5)
 GW_OBJECT_ABANDON_DELAY = 3;
@@ -99,7 +99,7 @@ vehicleDamageData = {
 	private ['_d'];
 
 	_d = _this call {
-	
+		if (_this == "B_65x39_Caseless") exitWith { ((random 0.25) + 0.75) };
 		if (_this == "B_35mm_AA_Tracer_Yellow" ||
 			_this == "B_35mm_AA_Tracer_Red" ||
 			_this == "B_35mm_AA_Tracer_Green" || 
@@ -128,6 +128,7 @@ objectDamageData = {
 	private ['_d'];
 
 	_d = _this call {
+		if (_this == "B_65x39_Caseless") exitWith { ((random 5) + 5) };
 		if (_this == "680Rnd_35mm_AA_shells_Tracer_Yellow") exitWith { ((random 5) + 5) };
 		if (_this == "R_PG32V_F" || _this == "RPG") exitWith { 10 };
 		if (_this == "M_PG_AT" || _this == "RPD") exitWith { 8 };

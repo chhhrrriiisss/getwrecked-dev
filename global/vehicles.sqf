@@ -35,8 +35,10 @@ GW_VEHICLE_LIST = [
 
 	// AI Only
 
-	["B_APC_Tracked_01_AA_F", "Cheetah", [ [1.5, 99999], 5, 3, 2, 0.75, 20, 0.3, 'Large', 1000 ], 'Ass-kicking wheeled vehicle of death.', false ]
-	
+	["B_APC_Tracked_01_AA_F", "Cheetah", [ [1.5, 99999], 10, 10, 2, 0.75, 20, 0.3, 'Large', 1000 ], 'Ass-kicking wheeled vehicle of death.', false ],
+	["B_APC_Tracked_01_CRV_F", "Bobcat", [ [1.5, 99999], 10, 10, 2, 0.75, 20, 0.7, 'Large', 1000 ], 'Ass-kicking wheeled vehicle of death.', false ],
+	["I_APC_tracked_03_cannon_F", "Mora", [ [1.5, 99999], 10, 10, 2, 0.75, 20, 0.9, 'Medium', 1000 ], 'Ass-kicking wheeled vehicle of death.', false ]
+
 ];
 
 // Default locked vehicles
@@ -62,6 +64,8 @@ GW_LOCKED_ITEMS = [
 	"C_Van_01_box_F",
 	"C_Offroad_01_F",
 
-	"B_APC_Tracked_01_AA_F"
+	"B_APC_Tracked_01_AA_F",
+	"B_APC_Tracked_01_CRV_F",
+	"I_APC_tracked_03_cannon_F"
 
 ];

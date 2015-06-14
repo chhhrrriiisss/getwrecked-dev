@@ -389,6 +389,35 @@ GW_COMMANDS_LIST = [
 		}
 	],
 
+	[
+		
+		"clearai",
+		{
+
+			_argument = _this select 0;
+
+			if ( !(serverCommandAvailable "#kick") ) exitWith {
+				systemChat 'You need to be an admin to use that.';
+			};
+
+			[
+				[
+					[],
+					{
+						{
+							_x setdammage 1;
+						} foreach GW_AI_ACTIVE;
+					}
+				], 
+				"BIS_fnc_spawn",
+				false,
+				false
+			] call gw_fnc_mp;
+
+			// [(GW_CURRENTVEHICLE modelToWorldVisual [0, 200, 0]), _argument, 1] execVM 'server\ai\createAI.sqf';
+			
+		}
+	],
 
 	[
 		
