@@ -27,7 +27,7 @@ if (isNil "_shooter") then {
 
 	switch (_tx) do {
 		
-		case "slytech": { _unit addheadgear "H_RacingHelmet_1_white_F"; };
+		case "tyraid": { _unit addheadgear "H_RacingHelmet_1_white_F"; };
 		case "crisp": { _unit addheadgear "H_RacingHelmet_1_red_F"; };
 		case "gastrol": { _unit addheadgear "H_RacingHelmet_1_black_F"; };
 		case "haywire": { _unit addheadgear "H_RacingHelmet_1_black_F"; };

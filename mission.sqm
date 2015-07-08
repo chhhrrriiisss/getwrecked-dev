@@ -194,8 +194,8 @@ class Mission
 					player="PLAY CDG";
 					leader=1;
 					skill=0.60000002;
-					init="_null = [this] execVM 'client\player_init.sqf'; this setVariable[""texture"", ""slytech"", true];";
-					description="Driver (Slytech)";
+					init="_null = [this] execVM 'client\player_init.sqf'; this setVariable[""texture"", ""tyraid"", true];";
+					description="Driver (Tyraid)";
 				};
 			};
 		};
@@ -321,7 +321,7 @@ class Mission
 					leader=1;
 					skill=0.60000002;
 					init="_null = [this] execVM 'client\player_init.sqf'; this setVariable[""texture"", ""slytech"", true];";
-					description="Driver (Slytech)";
+					description="Driver (Tyraid)";
 				};
 			};
 		};
@@ -3725,7 +3725,7 @@ class Mission
 			vehicle="SignAd_Sponsor_ARMEX_F";
 			skill=0.60000002;
 			text="buySign_13";
-			init="[this, ""slytech""] call GW_fnc_initTerminal;";
+			init="[this, ""tyraid""] call GW_fnc_initTerminal;";
 		};
 		class Item329
 		{
@@ -4812,7 +4812,7 @@ class Mission
 			vehicle="SignAd_Sponsor_ARMEX_F";
 			skill=0.60000002;
 			text="buySign_14";
-			init="[this, ""slytech""] call GW_fnc_initTerminal;";
+			init="[this, ""tyraid""] call GW_fnc_initTerminal;";
 		};
 		class Item447
 		{
@@ -6111,7 +6111,7 @@ class Mission
 			vehicle="SignAd_Sponsor_ARMEX_F";
 			skill=0.60000002;
 			text="buySign_20";
-			init="[this, ""slytech""] call GW_fnc_initTerminal;";
+			init="[this, ""tyraid""] call GW_fnc_initTerminal;";
 		};
 		class Item582
 		{

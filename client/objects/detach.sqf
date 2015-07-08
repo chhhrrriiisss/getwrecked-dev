@@ -56,7 +56,18 @@ if (_wasSimulated) then {
 
 removeAllActions _obj;
 
-[localize "str_gw_object_detached", 1, successIcon, nil, "slideDown", ""] spawn createAlert;
+[		
+	[
+		_obj,
+		'remove',
+		30
+	],
+	"playSoundAll",
+	true,
+	false
+] call gw_fnc_mp;
+
+//[localize "str_gw_object_detached", 1, successIcon, nil, "slideDown", ""] spawn createAlert;
 [_obj, _unit] spawn moveObj;
 
 // Re-compile vehicle information

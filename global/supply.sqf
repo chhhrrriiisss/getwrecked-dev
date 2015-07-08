@@ -36,7 +36,7 @@ GW_SUPPLY_TYPES = [
 				false
 			] call gw_fnc_mp;	 
 
-			[ format['RECEIVED $%1!', ([_amount] call numberToCurrency)], 2, successIcon, nil, "slideDown"] spawn createAlert; 
+			["MoneyEarned",[format['You received $%1.', ([_amount] call numberToCurrency)]]] call bis_fnc_showNotification;
 		}
 	],
 

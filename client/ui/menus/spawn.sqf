@@ -4,7 +4,7 @@
 //      Return: None
 //
 
-private ['_unit', '_pad', '_ownership', '_owner'];
+private ['_unit', '_pad', '_ownership', '_owner', '_typeOf', '_displayName'];
 
 if (GW_SPAWN_ACTIVE) exitWith { closeDialog 0;	GW_SPAWN_ACTIVE = false; };
 GW_SPAWN_ACTIVE = true;
@@ -126,13 +126,26 @@ if (!_firstCompile || !_hasActions) exitWith {
 
 _allZones = (call GW_AREAS);
 
-// If we've deployed somewhere previously, show that
-GW_SPAWN_LOCATION = if (!isNil "GW_LASTLOCATION") then { GW_LASTLOCATION } else {  ((_allZones select (random (count _allZones -1))) select 0) };
+// Find a valid non-workshop location to show initially
+findRandomLocation = {    
+    _rnd = (_this call BIS_fnc_selectRandom);
+    if ((_rnd select 0) == "workshop") exitWith { (_this call findRandomLocation) };
+    (_rnd select 0)
+};
+
+GW_SPAWN_LOCATION = _allZones call findRandomLocation;
+
+// Use the last deployed location if it isn't the workshop
+if (!isNil "GW_LASTLOCATION") then { 
+    if (GW_LASTLOCATION == "workshop") exitWith {}; 
+    GW_SPAWN_LOCATION = GW_LASTLOCATION;
+};
+
 _displayName = '';
-_type = 'battle';
+_typeOf = 'battle';
 _startIndex = 0;
 {
-    if ((_x select 0) == GW_SPAWN_LOCATION) exitWith { _startIndex = _foreachindex; _displayName = (_x select 2); _type = (_x select 1); };
+    if ((_x select 0) == GW_SPAWN_LOCATION) exitWith { _startIndex = _foreachindex; _displayName = (_x select 2); _typeOf = (_x select 1); };
 } Foreach _allZones;
 
 disableSerialization;
@@ -142,7 +155,7 @@ _layerStatic = ("BIS_layerStatic" call BIS_fnc_rscLayer);
 _layerStatic cutRsc ["RscStatic", "PLAIN" , 1];
 
 [_startIndex] call generateSpawnList;
-[GW_SPAWN_LOCATION, _displayName,_type] spawn previewLocation;
+[GW_SPAWN_LOCATION, _displayName,_typeOf] spawn previewLocation;
 
 99999 cutText ["", "BLACK IN", 0.35];  
 

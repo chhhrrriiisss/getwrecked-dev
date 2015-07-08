@@ -5,18 +5,24 @@ Note: Some changes that are deemed spoilers are hidden from this log
 (WIP) Indicates items that may not be fully functional and are only partially implemented
 Items without Fixed/Added/Removed proceeding, are typically balance changes
 
-**v0.8.3** [Public alpha release]
+**v0.8.3** [1.47 Compatiblity + public alpha release]
 
 - Combined cleanup scripts into events loop to improve server fps
 - Guided missile, lock-on, railgun, mines and explosive damage now affected by target armor
 - Notifications and alerts should now fade a bit more smoothly
+- Updated filterParam and allPlayers functions to use new engine equivalents (faster)
 - Removed respawn scoreboard flashing on death screen
+- 'Slytech' is now 'Tyraid'
+- Fixed - Lingering vehicle HUD on deployment abort
 - Fixed - Owner not being set on vehicle creation to lock terminal correctly
 - Fixed - Vehicle lock halo not showing
+- Added - New audio SFX to attach/detach objects in workshop
 - Added - Auto height snapping of similar types to object manipulation
+- Added - Group management (accessed with 'U', WIP)
+- Added - Race generator to vehicle service terminal
+
 
 **v0.8.2** [Public alpha release]
-
 
 - Melee weapons now take a small amount of damage when used until they break (damage no longer less per item)
 - Weapon damage and vehicle armor pass to help re-balance engagement times and viability

@@ -77,7 +77,7 @@ _eventsList = [
 		// Script to run on TRUE condition
 		{ 
 
-			_rate = ( (count (call allPlayers)) / GW_MAX_PLAYERS) call {
+			_rate = ( (count (allPlayers)) / GW_MAX_PLAYERS) call {
 				_this = [_this, 0, 1] call limitToRange;
 				if (_this >= 0.75) exitWith { GW_CLEANUP_RATE_HIGH };
 				if (_this >= 0.5) exitWith { GW_CLEANUP_RATE_MED };
