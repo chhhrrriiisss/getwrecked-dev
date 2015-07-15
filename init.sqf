@@ -54,8 +54,8 @@ if (X_Client || X_JIP) then {
 
 };
 
-if (isServer) then {      
-
+if (isServer) then {     
+    
     call compile preprocessFile "server\compile.sqf";   
     [] execVM 'server\init.sqf'; 
 

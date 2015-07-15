@@ -10,6 +10,9 @@
 // Currently non-functional
 GW_LEADERBOARD_ENABLED = false;
 
+// Use grouping/team system
+GW_GROUPS_ENABLED = false;
+
 // Game mode setting (0 = Standard, 1 = Creative)
 GW_GAME_MODE = (paramsArray select 0);
 GW_ITEM_COST = (paramsArray select 7);
@@ -157,13 +160,15 @@ GW_AREAS = {
 // Available arenas and game type
 GW_VALID_ZONES = [
 	
+	['workshop', 'safe', 'Workshop'],
+	//
 	['swamp', 'battle', 'Swamp'],
 	['airfield', 'battle', 'Airfield'],
 	['downtown', 'battle', 'Downtown'],
 	['wasteland', 'battle', 'Wasteland'],
-	['drylake', 'battle', 'Dry Lake'],
+	['drylake', 'battle', 'Dry Lake']
 	// ['highway', 'race'], 
-	['workshop', 'safe', 'Workshop']
+	
 ];
 
 // Active races and race hosts

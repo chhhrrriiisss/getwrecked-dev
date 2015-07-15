@@ -56,6 +56,11 @@ setTerminalActions = {
 			[(_this select 3), (_this select 1)] spawn spawnMenu;
 		}, _var,7, false, false, "", "( !GW_EDITING && ((player distance _target) < 12) )"];
 
+		// Race
+		_obj addAction[raceFormat, { 
+			[] execVM 'client\ui\menus\race.sqf';
+		}, _var,7, false, false, "", "( !GW_EDITING && ((player distance _target) < 12) )"];
+
 		// Load Vehicle
 		_obj addAction[loadPadFormat, {
 			[(_this select 3)] spawn previewMenu;

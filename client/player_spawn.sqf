@@ -202,7 +202,7 @@ waitUntil {
 		};
 
 		// Set view distance depending on where we are
-		if (GW_CURRENTZONE == "workshopZone" && (!GW_PREVIEW_CAM_ACTIVE && !GW_DEATH_CAMERA_ACTIVE)) then {
+		if (GW_CURRENTZONE == "workshopZone" && (!GW_PREVIEW_CAM_ACTIVE && !GW_DEATH_CAMERA_ACTIVE && !GW_RACE_CAM_ACTIVE)) then {
 			if (viewDistance != 400) then { setViewDistance 400; };
 		} else {
 			if (viewDistance != GW_EFFECTS_RANGE) then { setViewDistance GW_EFFECTS_RANGE; };

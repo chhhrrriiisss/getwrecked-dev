@@ -49,7 +49,8 @@ receiveMoney = {
 	publicVariable "pubVar_systemChat";
 
 	// Alert message
-	[format['RECEIVED $%1', _valueString], 2, successIcon, nil, "slideDown"] spawn createAlert;   
+	["MoneyEarned",[format['You received $%1.', _valueString]]] call bis_fnc_showNotification;
+	//[format['RECEIVED $%1', _valueString], 2, successIcon, nil, "slideDown"] spawn createAlert;   
 
 	// And audio because it's funny
 	[		
@@ -101,8 +102,7 @@ showTransaction = {
 	
 	// Only show transactions in the workshop zone (hud changes when in vehicle)
 	if (_amount > 0 && GW_CURRENTZONE != "workshopZone") exitWith {
-		_str = format['RECEIVED $%1', ([_amount] call numberToCurrency)];
-		[_str, 2, successIcon, nil, "slideDown"] spawn createAlert;     
+		["MoneyEarned",[format['You received $%1.', ([_amount] call numberToCurrency)]]] call bis_fnc_showNotification;
 		GW_TRANSACTION_ANIM = false;
 	};
 
