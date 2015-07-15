@@ -5,8 +5,8 @@
 //
 
 private ['_vehicle', '_hostVehicle'];
+params ['_vehicle'];
 
-_vehicle = _this select 0;
 _hostVehicle = if (_vehicle == GW_CURRENTVEHICLE) then { true } else { false };
 
 if (isNull _vehicle) exitWith {};
@@ -146,7 +146,7 @@ if (_visible && _isAI && GW_LMBDOWN) then {
 		'fireAtTargetAI',
 		_vehicle,
 		false
-	] call gw_fnc_mp;	
+	] call bis_fnc_mp;	
 
 };
 

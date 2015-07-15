@@ -7,11 +7,8 @@
 private ["_obj"];
 
 _this spawn {
-
-	_obj = _this select 0;
-	_target = _this select 1;
-	_vehicle = _this select 2;
-
+	
+	params ['_obj', '_target', '_vehicle'];
 	_repeats = 1;
 	_projectileSpeed = 2000;
 
@@ -24,7 +21,7 @@ _this spawn {
 		"playSoundAll",
 		true,
 		false
-	] call gw_fnc_mp;	
+	] call bis_fnc_mp;	
 
 	_vel= velocity _vehicle;
 	_totalVel = [0,0,0] distance _vel;
@@ -40,7 +37,7 @@ _this spawn {
 			0.1
 		],
 		"magnetEffect"
-	] call gw_fnc_mp;
+	] call bis_fnc_mp;
 
 	_dir = [GW_TARGET_DIRECTION] call normalizeAngle;
 

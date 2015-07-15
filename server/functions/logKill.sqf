@@ -42,7 +42,7 @@ if (!isNil "_killerTarget") then {
         "assignKill",
         _killerTarget,
         false 
-    ] call gw_fnc_mp;  
+    ] call bis_fnc_mp;  
     
 };	
 

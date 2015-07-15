@@ -22,7 +22,7 @@ if (!local _obj) then {
 		'setObjectOwner',
 		false,
 		false
-	] call gw_fnc_mp;	
+	] call bis_fnc_mp;	
 
 	_timeout = time + 2;
 	waitUntil {(local _obj || time > _timeout)};

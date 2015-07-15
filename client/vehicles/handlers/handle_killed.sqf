@@ -90,6 +90,6 @@ _veh spawn {
         "logKill",
         false,
         false 
-    ] call gw_fnc_mp;       
+    ] call bis_fnc_mp;       
   
 };

@@ -4,9 +4,8 @@
 //      Return: None
 //
 
-private ['_startIndex'];
-
-_startIndex = _this select 0;
+private ['_startIndex', '_type', '_name'];
+params ['_startIndex'];
 
 disableSerialization;
 _spawnList = ((findDisplay 52000) displayCtrl 52002);

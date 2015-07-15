@@ -56,7 +56,7 @@ _vehicle setVariable["status", [], true];
     "setVehicleHandlers",
     _vehicle,
     false 
-] call gw_fnc_mp;
+] call bis_fnc_mp;
 
 clearWeaponCargoGlobal _vehicle;
 clearMagazineCargoGlobal _vehicle;

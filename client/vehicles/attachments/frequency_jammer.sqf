@@ -37,7 +37,7 @@ playSound3D ["a3\sounds_f\sfx\vehicle_drag_end.wss",_vehicle, false, getPosATL _
 // 	"setObjectSimulation",
 // 	false,
 // 	false 
-// ] call gw_fnc_mp;
+// ] call bis_fnc_mp;
 
 // _releaseTime = time;
 // _timer = 60;

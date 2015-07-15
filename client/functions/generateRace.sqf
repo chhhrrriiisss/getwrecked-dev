@@ -191,7 +191,7 @@ toggleRaceEditing = {
 	];
 
 	_mapEnabled = ctrlEnabled _mapControl;
-	_editButton = _this select 0;
+	params ['_editButton'];
 
 	_mapControl ctrlEnable !_mapEnabled;
 	_mapControl ctrlCommit 0;
@@ -380,9 +380,7 @@ _mouseMove = _mapControl ctrlAddEventHandler ["MouseMoving", {
 drawSegment = {
 
 	private ['_p1','_p2', '_map', '_dist', '_dirTo', '_midPos'];
-
-	_p1 = _this select 0;
-	_p2 = _this select 1;
+	params ['_p1', '_p2'];
 	_color = [_this, 2, '(0.99,0.85,0.23,1)', ['']] call filterParam;
 
 	disableSerialization;

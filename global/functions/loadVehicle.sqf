@@ -5,10 +5,8 @@
 //
 
 private['_class', '_name', '_camo', '_source', '_o', '_k', '_raw'];
+params ['_player', '_target', '_raw'];
 
-_player = _this select 0;
-_target = _this select 1;
-_raw = _this select 2;
 _ai = [_this, 3, false, [false]] call filterParam;
 
 if ( (isNull _player && !_ai) || (count _target == 0) || (count _raw == 0)) exitWith {};
@@ -86,7 +84,7 @@ _newVehicle setVectorUp [0,0,1];
     "setupVehicle",
     false,
     false 
-] call gw_fnc_mp;
+] call bis_fnc_mp;
 
 // Wait for it to be configured properly
 _timeout = time + 5;
@@ -103,7 +101,7 @@ waitUntil {
     "setObjectSimulation",
     false,
     false 
-] call gw_fnc_mp;
+] call bis_fnc_mp;
 
 // Get paint (if exists)
 _paint = (_data select 2);
@@ -155,7 +153,7 @@ _paint = (_data select 2);
     "setObjectSimulation",
     false,
     false 
-] call gw_fnc_mp;
+] call bis_fnc_mp;
 
 _timeout = time + 2;
 waitUntil { Sleep 0.1; ((time > _timeout) || (simulationEnabled _newVehicle)) };
@@ -168,11 +166,11 @@ waitUntil { Sleep 0.1; ((time > _timeout) || (simulationEnabled _newVehicle)) };
     "setupLocalVehicle",
     _newVehicle,
     false 
-] call gw_fnc_mp;
+] call bis_fnc_mp;
 
 // Apply texture
 if (!isNil "_paint") then {
-    [[_newVehicle,_paint],"setVehicleTexture",true,false] call gw_fnc_mp;
+    [[_newVehicle,_paint],"setVehicleTexture",true,false] call bis_fnc_mp;
 };
 
 _targetPos = if (!isNil "_target") then { _target } else { (ASLtoATL getPosASL _newVehicle) };

@@ -119,7 +119,7 @@ _wasSimulated = (simulationEnabled _veh);
 	"setObjectSimulation",
 	false,
 	false 
-] call gw_fnc_mp;
+] call bis_fnc_mp;
 
 _timeout = time + 3;
 waitUntil{
@@ -129,6 +129,23 @@ waitUntil{
 
 _vect = [_obj, _veh] call getVectorDirAndUpRelative;
 _obj attachTo [_veh];
+
+_snd = if (_obj call isWeapon || _obj call isModule) then { 
+	(format['wrench%1', ceil(random 5)])
+} else { 
+	(format['hit%1', (ceil(random 4)) + 1])
+};
+
+[		
+	[
+		_obj,
+		_snd,
+		60
+	],
+	"playSoundAll",
+	true,
+	false
+] call bis_fnc_mp;
 
 _timeout = time + 3;
 waitUntil {
@@ -159,7 +176,7 @@ if (_wasSimulated) then {
 		"setObjectSimulation",
 		false,
 		false 
-	] call gw_fnc_mp;
+	] call bis_fnc_mp;
 
 };
 

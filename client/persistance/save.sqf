@@ -10,7 +10,7 @@ if (GW_SETTINGS_ACTIVE || GW_PREVIEW_CAM_ACTIVE) exitWith {};
 if (GW_WAITSAVE) exitWith {  systemChat 'Save currently in progress. Please wait.'; };
 GW_WAITSAVE = true;
 
-_saveTarget = _this select 0;
+params ['_saveTarget'];
 
 _onExit = {
     systemChat (_this select 0);
@@ -78,7 +78,7 @@ if (!simulationEnabled GW_SAVE_VEHICLE) then {
         "setObjectSimulation",
         false,
         false 
-    ] call gw_fnc_mp;
+    ] call bis_fnc_mp;
 };
 
 // Wait for simulation enabled and vehicle compiled

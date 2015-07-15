@@ -10,8 +10,7 @@ if (isNull ( _this select 0) || isNull (_this select 1)) exitWith { false };
 
 [] spawn cleanDeployList;
 
-_obj = _this select 0;
-_vehicle = _this select 1;
+params ['_obj', '_vehicle'];
 
 playSound3D ["a3\sounds_f\sfx\vehicle_drag_end.wss",_vehicle, false, getPosATL _vehicle, 2, 1, 50];
 
@@ -30,7 +29,8 @@ _holder = createVehicle ["Land_PenBlack_F", _pos, [], 0, 'CAN_COLLIDE']; // So i
 _obj attachTo [_holder, [0,0,0.1]];
 
 [_obj, _holder, _vehicle] spawn { 
-	_o = _this select 0;
+
+	params ['_o'];
 
 	_timeout = time + 10;
 	waitUntil {
@@ -74,9 +74,7 @@ GW_DEPLOYLIST = GW_DEPLOYLIST + [_obj];
 
 [_obj, _timeout, _vehicle] spawn {
 	
-	_o = _this select 0;
-	_t = _this select 1;
-	_v = _this select 2;
+	params ['_o', '_t', '_v'];
 
 	_triggered = false;
 
@@ -107,7 +105,7 @@ GW_DEPLOYLIST = GW_DEPLOYLIST + [_obj];
 			"setObjectSimulation",
 			false,
 			false 
-		] call gw_fnc_mp;
+		] call bis_fnc_mp;
 
 		_bomb = createVehicle ["Bo_GBU12_LGB", _pos, [], 0, "FLY"];		
 		_bomb setVelocity [0,0,-10];
@@ -140,7 +138,7 @@ GW_DEPLOYLIST = GW_DEPLOYLIST + [_obj];
 							"updateVehicleDamage",
 							_x,
 							false
-						] call gw_fnc_mp; 
+						] call bis_fnc_mp; 
 
 					};
 

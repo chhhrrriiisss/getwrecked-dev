@@ -101,7 +101,7 @@ for "_i" from 0 to 1 step 0 do {
 							"handleDamageVehicle",
 							_currentTarget,
 							false
-						] call gw_fnc_mp;	
+						] call bis_fnc_mp;	
 
 						Sleep (_reloadTime / 2);
 					};

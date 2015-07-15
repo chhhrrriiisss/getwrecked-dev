@@ -8,8 +8,7 @@ private ['_gun', '_target', '_vehicle'];
 
 _this spawn {
 
-	_gun = _this select 0;
-	_target = _this select 1;
+	params ['_gun', '_target'];
 
 	_repeats = 0;
 	_round = "R_TBG32V_F";

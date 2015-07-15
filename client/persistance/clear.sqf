@@ -5,8 +5,8 @@
 //
 
 private['_target', '_nearby'];
+params ['_target'];
 
-_target = _this select 0;
 _notify = [_this,1, true, [false]] call filterParam; 
 _targetPos = [0,0,0];
 

@@ -80,9 +80,8 @@ findAITarget = {
 fireAtTargetAI = {
 	
 	private ['_v', '_t', '_s'];
-
-	_v = _this select 0;
-	_t = _this select 1;
+	params ['_v', '_t'];
+	
 	_s = _v getVariable ['GW_Skill', 1];
 
 	for "_i" from 0 to 5 + (_s * 10) step 1 do {
@@ -136,7 +135,7 @@ GW_AI_MODULE_DEFAULTS =
 					"playSoundAll",
 					true,
 					false
-				] call gw_fnc_mp;
+				] call bis_fnc_mp;
 
 				Sleep 1;
 

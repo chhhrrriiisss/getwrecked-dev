@@ -3,9 +3,7 @@
 //      Return: None
 //
 
-private ["_vehicle"];
-
-_vehicle = _this select 0;
+params ["_vehicle"];
 
 [_vehicle] spawn checkTyres; 
 
@@ -21,7 +19,7 @@ if ('cloak' in _status) then {
 		"removeVehicleStatus",
 		_vehicle,
 		false 
-	] call gw_fnc_mp;  
+	] call bis_fnc_mp;  
 
 };	
 

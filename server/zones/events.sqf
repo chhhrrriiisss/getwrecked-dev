@@ -77,7 +77,7 @@ _eventsList = [
 		// Script to run on TRUE condition
 		{ 
 
-			_rate = ( (count (call allPlayers)) / GW_MAX_PLAYERS) call {
+			_rate = ( (count allPlayers) / GW_MAX_PLAYERS) call {
 				_this = [_this, 0, 1] call limitToRange;
 				if (_this >= 0.75) exitWith { GW_CLEANUP_RATE_HIGH };
 				if (_this >= 0.5) exitWith { GW_CLEANUP_RATE_MED };
@@ -103,7 +103,7 @@ waitUntil {
 	if (!GW_EVENTS_ACTIVE) exitWith {};	
 
 	// Adjust timeout based on number of active players on server
-	_timeout = ( (count allUnits) - (count (['workshopZone'] call findAllInZone)) ) call {
+	_timeout = ( (count allPlayers) - (count (['workshopZone'] call findAllInZone)) ) call {
 		if (_this > 8) exitWith { (GW_EVENTS_FREQUENCY select 2) };
 		if (_this >= 4) exitWith { (GW_EVENTS_FREQUENCY select 1) };
 		(GW_EVENTS_FREQUENCY select 0)

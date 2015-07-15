@@ -5,9 +5,7 @@
 //
 
 private ['_location', '_pos', '_typeOfZone'];
-
-_location = _this select 0;
-_typeOfZone = _this select 2;
+params ['_location', '_nil', '_typeOfZone'];
 
 _pos = switch(_typeOfZone) do {
 
@@ -15,7 +13,7 @@ _pos = switch(_typeOfZone) do {
 		(GW_RACE_ARRAY select 0)
 	};
 	case "battle": {
-		(getMarkerPos format['%1%2_%3', GW_SPAWN_LOCATION, 'zone', 'camera'])
+		(getMarkerPos format['%1%2_%3', GW_SPAWN_LOCATION, 'Zone', 'camera'])
 	};
 	default {
 		[random 1000, random 1000,0]

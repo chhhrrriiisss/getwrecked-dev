@@ -41,7 +41,7 @@ _this spawn {
 		3
 		],
 	"magnetEffect"
-	] call gw_fnc_mp;
+	] call bis_fnc_mp;
 
 	_nearby = _pos nearEntities[["Car"], _range];
 
@@ -99,7 +99,7 @@ _this spawn {
 						"setVelocityLocal",
 						_x,
 						false 
-					] call gw_fnc_mp;  
+					] call bis_fnc_mp;  
 					
 				};
 

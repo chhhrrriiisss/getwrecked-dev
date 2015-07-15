@@ -4,13 +4,13 @@
 //      Return: None
 //
 private ['_allZones', '_currentIndex', '_type'];
+params ['_value'];
 
 disableSerialization;
 
-_value = _this select 0;
 _newValue = 0;
 
-_allZones = (call GW_AREAS);
+_allZones = GW_VALID_ZONES;
 
 _currentIndex = 0;
 {

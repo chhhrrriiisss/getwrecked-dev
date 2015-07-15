@@ -6,8 +6,7 @@
 
 private ['_gun', '_target', '_vehicle', '_m', '_v', '_t'];
 
-_gun = _this select 0;
-_vehicle = _this select 2;
+params ['_gun', '_nil', '_vehicle'];
 
 _repeats = 1;
 _round = "M_Titan_AT";
@@ -50,9 +49,8 @@ if (!alive _lockedTarget) then {
 
 		Sleep 0.75;
 
-		_mis = _this select 0;
-		_v = _this select 1;
-		_t = _this select 2;
+		params ['_mis', '_v', '_t'];
+		
 		_timeout = time + 10;
 
 		for "_i" from 0 to 1 step 0 do {
@@ -95,7 +93,7 @@ if (!alive _lockedTarget) then {
 						"updateVehicleDamage",
 						_t,
 						false
-					] call gw_fnc_mp;
+					] call bis_fnc_mp;
 				};
 			};
 

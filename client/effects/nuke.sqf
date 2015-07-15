@@ -145,8 +145,7 @@ if (_dist > _range) then {
 
 	[_vehicle, _crate] spawn {
 
-		_v = _this select 0;
-		_t = _this select 1;
+		params ['_v', '_t'];
 		_d = (_v distance _t);
 
 		for "_i" from 0 to (15*(_d / 100)) do {

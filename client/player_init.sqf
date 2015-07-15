@@ -5,8 +5,8 @@
 //
 
 waitUntil{!isNil { clientCompileComplete } };
+params ['_unit'];
 
-_unit = _this select 0;
 if (!local _unit) exitWith {};
 if (!isNil { _unit getVariable 'localInit'} ) exitWith {};
 _unit setVariable['localInit', true];

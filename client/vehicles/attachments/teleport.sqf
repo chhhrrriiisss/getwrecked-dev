@@ -10,8 +10,7 @@ if (isNull ( _this select 0) || isNull (_this select 1)) exitWith { false };
 
 [] spawn cleanDeployList;
 
-_obj = _this select 0;
-_vehicle = _this select 1;
+params ['_obj', '_vehicle'];
 
 // Ok, let's position it behind the vehicle
 _maxLength = ([_vehicle] call getBoundingBox) select 1;
@@ -34,7 +33,7 @@ _obj setDir (random 360);
 	"setObjectSimulation",
 	false,
 	false 
-] call gw_fnc_mp;
+] call bis_fnc_mp;
 
 // Recompile the vehicle to account for dropping one bag
 [_this select 2] call compileAttached;
@@ -60,11 +59,7 @@ GW_DEPLOYLIST = GW_DEPLOYLIST + [_obj];
 
 [_obj, _timeout, _vehicle] spawn {
 
-	private ['_o', '_t', '_v'];
-	
-	_o = _this select 0;
-	_t = _this select 1;
-	_v = _this select 2;
+	params ['_o', '_t', '_v'];
 
 	Sleep 3;
 
@@ -90,7 +85,7 @@ GW_DEPLOYLIST = GW_DEPLOYLIST + [_obj];
 					'addVehicleStatus',
 					_x,
 					false
-				] call gw_fnc_mp;
+				] call bis_fnc_mp;
 
 				false
 			};

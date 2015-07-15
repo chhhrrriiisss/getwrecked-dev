@@ -7,9 +7,9 @@
 private ['_loop', '_statusEffect', '_commandToLoop', '_targetVehicle', '_vehicleStatus', '_inVehicle'];
 
 _loop = true;
-_statusEffect = _this select 0;
-_maxTimeout = _this select 1;
-_targetVehicle = _this select 2;
+
+params ['_statusEffect', '_maxTimeout', '_targetVehicle'];
+
 _vehicleStatus = _targetVehicle getVariable ['status', []];
 _inVehicle = player in _targetVehicle;
 
@@ -103,7 +103,7 @@ _commandToLoop = switch (true) do {
 					-1
 				],
 				"smokeEffect"
-			] call gw_fnc_mp;    
+			] call bis_fnc_mp;    
 
 		};
 

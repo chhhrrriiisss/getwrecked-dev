@@ -119,8 +119,7 @@ isHolder = {
 
 // Trigger function for a supply box effects
 supplyDropEffect = {	
-	_crate = _this select 0;
-	_id = _this select 1;
+	params ['_crate', '_id'];
 	(_this select 0) spawn ((GW_SUPPLY_TYPES select _id) select 3);	
 	playsound "upgrade";
 };
@@ -199,7 +198,6 @@ findClosest = compile preprocessFile 'global\functions\findClosest.sqf';
 findEmpty = compile preprocessFile 'global\functions\findEmpty.sqf';
 findUnit = compile preprocessFile 'global\functions\findUnit.sqf';
 findVehicle = compile preprocessFile 'global\functions\findVehicle.sqf';
-allPlayers = compile preprocessFile 'global\functions\allPlayers.sqf';
 getBoundingBox = compile preprocessFile 'global\functions\getBoundingBox.sqf';
 getData = compile preprocessFile 'global\functions\getData.sqf';
 snapToPad = compile preprocessFile 'global\functions\snapToPad.sqf';

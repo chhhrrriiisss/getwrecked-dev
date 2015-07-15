@@ -9,8 +9,7 @@ _this spawn {
 
 	if (isNil { _this select 1}) exitWith { false };
 	
-	_object = _this select 0;
-	_vehicle = _this select 1;
+	params ['_object', '_vehicle'];
 
 	if (!alive _vehicle) exitWith { false };
 
@@ -55,7 +54,7 @@ _this spawn {
 						"magnetizeEffect",
 						_x,
 						false
-					] call gw_fnc_mp;				
+					] call bis_fnc_mp;				
 
 				};
 
@@ -74,7 +73,7 @@ _this spawn {
 		    0.1
 		],
 		"magnetEffect"
-	] call gw_fnc_mp;
+	] call bis_fnc_mp;
 
 	_timeout = time + 5;
 	_n = 0;

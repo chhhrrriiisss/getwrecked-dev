@@ -44,7 +44,7 @@ if (count _objects == 0) exitWith {};
 				"updateVehicleDamage",
 				_x,
 				false
-			] call gw_fnc_mp;
+			] call bis_fnc_mp;
 
 		};
 	};

@@ -51,7 +51,7 @@ _vehicle setVariable ['GW_Owner', (name _ai), true];
 _vehicle setVariable ['GW_Skill', _skill];
 _vehicle setVariable ['GW_WantedValue', (_aiToCreate select 1)];
 
-// Set default target
+// Set default target 
 _currentTarget = _vehicle call findAITarget;
 _vehicle setVariable ['GW_Target', _currentTarget];
 if (!isNull _currentTarget) then { 

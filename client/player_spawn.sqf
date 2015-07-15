@@ -46,7 +46,7 @@ GW_HUD_ACTIVE = false;
 _tx = _unit getVariable ["texture", ""];
 
 if (_tx == "") then {
-	_tx = "slytech";
+	_tx = "tyraid";
 };
 
 // Auto remove racing helmets for people without the DLC
@@ -57,7 +57,7 @@ if (_hasDLC) then {
 
 	switch (_tx) do {
 		
-		case "slytech": { _unit addheadgear "H_RacingHelmet_1_white_F"; };
+		case "tyraid": { _unit addheadgear "H_RacingHelmet_1_white_F"; };
 		case "crisp": { _unit addheadgear "H_RacingHelmet_1_red_F"; };
 		case "gastrol": { _unit addheadgear "H_RacingHelmet_1_black_F"; };
 		case "haywire": { _unit addheadgear "H_RacingHelmet_1_black_F"; };
@@ -74,7 +74,7 @@ if (_hasDLC) then {
 	
 if(!isNil "_tx") then {
 	_unit setVariable ["GW_Sponsor", _tx];
-	[[_unit,_tx],"setPlayerTexture",true,false] call gw_fnc_mp;
+	[[_unit,_tx],"setPlayerTexture",true,false] call bis_fnc_mp;
 };
 
 playerPos = (ASLtoATL visiblePositionASL _unit);

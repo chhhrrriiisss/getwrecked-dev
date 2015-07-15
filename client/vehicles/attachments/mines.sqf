@@ -4,18 +4,14 @@
 //      Return: None
 //
 
-private ["_obj", "_vehicle"];
-
-_obj = _this select 0;
-_vehicle = _this select 1;
+params ["_obj", "_vehicle"];
 
 if (isNull _obj || isNull _vehicle) exitWith { false };
 if (!alive _vehicle) exitWith { false };
 
 _this spawn {
-
-	_obj = _this select 0;
-	_vehicle = _this select 1;
+	
+	params ['_obj', '_vehicle'];
 
 	_pos = (ASLtoATL getPosASL _vehicle);
 
@@ -31,7 +27,7 @@ _this spawn {
 	// Drops a detector that causes the mine to explode 
 	dropTrigger = {
 
-		_obj = _this select 0;
+		params ['_obj'];
 		_pos = (ASLtoATL getPosASL _obj);
 		_pos set[2, 0];
 
@@ -122,8 +118,7 @@ _this spawn {
 	// Drops the actual mine at the target location
 	dropMine = {
 
-		_oPos = _this select 0;
-		_oDir = _this select 1;
+		params ['_oPos', '_oDir'];
 
 		_type = "Land_FoodContainer_01_F";
 		_oPos = [_oPos, 5, 5, 0] call setVariance;
@@ -141,7 +136,7 @@ _this spawn {
 			"setObjectSimulation",
 			false,
 			false 
-		] call gw_fnc_mp;
+		] call bis_fnc_mp;
 
 		playSound3D ["a3\sounds_f\weapons\other\sfx9.wss", GW_CURRENTVEHICLE, false, (ASLtoATL visiblePositionASL GW_CURRENTVEHICLE), 6, 1, 50];
 

@@ -15,7 +15,7 @@ _result = objNull;
 _exit = false;
 
 _arr = if (!_isAI) then {
-	(call allPlayers)
+	allPlayers
 } else {
 	allUnits
 };

@@ -10,12 +10,14 @@
 //     Permission must be sought from the Author for its commercial use, any modification or use of a non-public release obtained via the mission cache
 //     
 
+//TEST
+
 X_Server = false;
 X_Client = false;
 X_JIP = false;
 
 // Used to determine if saved vehicles are out-of-date
-GW_VERSION = 83;
+GW_VERSION = 82;
 
 if (isServer) then { X_Server = true };
 if (!isDedicated) then { X_Client = true };
@@ -33,7 +35,7 @@ MISSION_ROOT = call {
 call compile preprocessFile "global\compile.sqf";
 [] execVM "briefing.sqf";
 
-hint "v0.8.3 DEV";
+hint "v0.8.2c RC7";
 
 99999 cutText [localize "str_gw_loading", "BLACK", 0.01]; 
 
