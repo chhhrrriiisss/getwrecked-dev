@@ -2,12 +2,11 @@
 
 ## Vehicle Combat Sandbox for Arma 3 ##
 
-[getwrecked.info](http://getwrecked.info)
-[@getwreckeda3]](http://twitter.com/getwreckeda3)
-
 Get Wrecked challenges players to create, customize, drive, survive and of course, destroy. Construct wheeled, armoured behemoths using a variety of building parts, then fight to the death in a race zone of choice. It's a creative vehicle combat sandbox for Arma 3. It's currently designed for small games of up to 12 players and is in an alpha release state.
 
+[www.getwrecked.info](http://getwrecked.info)
 <br />
+[@getwreckeda3]](http://twitter.com/getwreckeda3)
 
 ## Quick start
 
@@ -31,7 +30,7 @@ This mod and its content (excluding those already attributed therein) are under 
 Attribution-NonCommercial-NoDerivatives 4.0 International
 Permission must be sought from the Author for its commercial use, any modification or use of a non-public release obtained via the mission cache
 
-**Additional scripts:**
+**Additional scripts (added post MANW):**
 
 Nuclear Explosion by [Moerderhoschi](http://www.armaholic.com/page.php?id=23963)
 
