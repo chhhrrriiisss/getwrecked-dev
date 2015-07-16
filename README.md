@@ -6,7 +6,7 @@ Get Wrecked challenges players to create, customize, drive, survive and of cours
 
 [www.getwrecked.info](http://getwrecked.info)
 <br />
-[@getwreckeda3]](http://twitter.com/getwreckeda3)
+[@getwreckeda3](http://twitter.com/getwreckeda3)
 
 ## Quick start
 

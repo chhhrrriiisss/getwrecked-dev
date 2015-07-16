@@ -1,9 +1,9 @@
 # [Get Wrecked](http://getwrecked.info) Changelog
 ## Last Updated: [15-07-2015] ##
 
-Note: Some changes that are deemed spoilers are hidden from this log 
-(WIP) Indicates items that may not be fully functional and are only partially implemented
-Items without Fixed/Added/Removed proceeding, are typically balance changes
+Note: Some changes that are deemed spoilers are hidden from this log. 
+(WIP) Indicates items that may not be fully functional and are only partially implemented.
+Items without Fixed/Added/Removed proceeding are typically balance changes.
 
 **v0.8.2c** [1.48 Compatibility - Public alpha release]
 
