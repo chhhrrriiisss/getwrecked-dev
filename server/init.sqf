@@ -8,7 +8,6 @@
 
 _startTime = time;
 
-
 [] call GWS_fnc_initObjects;
 [] call GWS_fnc_initSupplyAndPaint;
 [] call GWS_fnc_initBoundary;
@@ -25,8 +24,7 @@ _startTime = time;
 west setFriend [civilian, 0];
 east setFriend [civilian, 0];
 
-// Initialize BIS grouping
-if (GW_GROUPS_ENABLED) then { ["Initialize"] call BIS_fnc_dynamicGroups; };
+//[] spawn initCleanup;
 
 serverSetupComplete = compileFinal "true";
 publicVariable "serverSetupComplete";

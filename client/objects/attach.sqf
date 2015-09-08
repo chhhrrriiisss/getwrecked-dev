@@ -157,25 +157,12 @@ waitUntil {
 _obj setVectorDirAndUp _vect;
 _obj setVectorUp [0,0,1];
 
-// Play attachment sound on nearby clients
-_stem = if ((_obj call isWeapon) || (_obj call isModule)) then { 'wrench' } else { 'hit' };
-[		
-	[
-		_obj,
-		format['%1%2', _stem, ceil (random 5)],
-		30
-	],
-	"playSoundAll",
-	true,
-	false
-] call gw_fnc_mp;
-
 // Set ownership to prevent non-owner detachment
 _obj setVariable ['GW_Owner', name player, true];
 
 // If its being force added ignore message
 if (_forceAttach) then {} else {
-	//[localize "str_gw_object_attached", 1, successIcon, nil, "slideDown", ""] spawn createAlert;	
+	[localize "str_gw_object_attached", 1, successIcon, nil, "slideDown", ""] spawn createAlert;	
 };
 
 

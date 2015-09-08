@@ -187,14 +187,14 @@ class Mission
 				class Item0
 				{
 					position[]={14406.915,38.25,19014.834};
-					azimut=190.00476;
+					azimut=190.005;
 					id=2;
 					side="CIV";
 					vehicle="C_man_pilot_F";
 					player="PLAY CDG";
 					leader=1;
 					skill=0.60000002;
-					init="_null = [this] execVM 'client\player_init.sqf'; this setVariable[""texture"", ""slytech"", true];";
+					init="_null = [this] execVM 'client\player_init.sqf'; this setVariable[""texture"", ""tyraid"", true];";
 					description="Driver (Tyraid)";
 				};
 			};
@@ -313,14 +313,14 @@ class Mission
 				class Item0
 				{
 					position[]={14298.784,36.838047,18967.701};
-					azimut=-139.57947;
+					azimut=-139.57899;
 					id=8;
 					side="CIV";
 					vehicle="C_man_pilot_F";
 					player="PLAY CDG";
 					leader=1;
 					skill=0.60000002;
-					init="_null = [this] execVM 'client\player_init.sqf'; this setVariable[""texture"", ""slytech"", true];";
+					init="_null = [this] execVM 'client\player_init.sqf'; this setVariable[""texture"", ""tyraid"", true];";
 					description="Driver (Tyraid)";
 				};
 			};

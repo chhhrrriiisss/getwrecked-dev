@@ -51,9 +51,9 @@ class GW_Alert
 			};
 
 			x = (ALERT_X) * safezoneW + safezoneX;
-			y = ((ALERT_Y + GW_BUTTON_HEIGHT) - (GW_BUTTON_HEIGHT * 0.9)) * safezoneH + safezoneY;
+			y = ((ALERT_Y + GW_BUTTON_HEIGHT) - (0.0025 + (GW_BUTTON_HEIGHT / 2))) * safezoneH + safezoneY;
 			w = (GW_ALERT_WIDTH * 1.25) * safezoneW;
-			h = (GW_ALERT_HEIGHT * 1.25) * safezoneH;
+			h = (GW_ALERT_HEIGHT) * safezoneH;
 
 			align = "center";
 
@@ -67,7 +67,7 @@ class GW_Alert
 			text = "";
 		};
 
-		class Alert_BackgroundMain : GW_StructuredTextBox
+		class Alert_Background : GW_StructuredTextBox
 		{
 			access = 0;
 			idc = 940001;
@@ -83,10 +83,8 @@ class GW_Alert
 			x = (ALERT_X) * safezoneW + safezoneX;
 			y = (ALERT_Y) * safezoneH + safezoneY;
 			w = (GW_ALERT_WIDTH * 1.25) * safezoneW;
-			h = (GW_ALERT_HEIGHT * 1.25) * safezoneH;
+			h = (GW_ALERT_HEIGHT * 2) * safezoneH;
 		};
-		
-		
 				
 	};
 };

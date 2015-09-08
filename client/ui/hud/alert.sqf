@@ -24,8 +24,8 @@ if (count _colour > 0) then {
 	_fontColour = _colour;
 };
 
-_iconSize = if (_icon == blankIcon) then { 0 } else { 1.28 };
-_text =	format["<img size='%1' align='center' valign='middle' shadow='0' image='%2' />  <t size='0.68' align='center'>%3</t>  ", _iconSize, _icon, _text];
+_iconSize = if (_icon == blankIcon) then { 0 } else { 1.4 };
+_text =	format["<img size='%1' align='center' valign='middle' shadow='0' image='%2' />  <t size='0.8' align='center'>%3</t>  ", _iconSize, _icon, _text];
 
 // Get controls and display
 disableSerialization;
