@@ -1,10 +1,11 @@
 // Current Checkpoints
 {	
+	if (count GW_CHECKPOINTS == 0 && count GW_CHECKPOINTS_COMPLETED == 0) exitWith { false };
 	_completedArray = (_x select 1);
 	_totalCheckpoints = (count GW_CHECKPOINTS) + (count GW_CHECKPOINTS_COMPLETED);
 	_currentCheckpoint = [(_totalCheckpoints - (count GW_CHECKPOINTS)) + 1, 0, _totalCheckpoints] call limitToRange;
 
-	systemchat format['%1 / %2', _totalCheckpoints, _currentCheckpoint];
+	// systemchat format['%1 / %2', _totalCheckpoints, _currentCheckpoint];
 
 	_arr = (_x select 0);
 	{		
@@ -13,18 +14,19 @@
 
 		_dist = (GW_CURRENTVEHICLE distance _pos);
 		_alpha = [1 - (_dist / 1000), 0.05, 1] call limitToRange;
-		_alpha = if (_completedArray) then { (_alpha / 3) } else { (_alpha / 2) };
+		_alpha = if ((_forEachIndex == _currentCheckpoint && _completedArray) || !_completedArray) then { _alpha } else { 0 };
 		// _alpha = if (_completedArray) then { _alpha } else {			
 		// 	if (_forEachIndex > 0) exitWith { (_alpha/2) };
 		// 	_alpha
 		// };
 
 		_size = [2.5 - (_dist / 100), 1.2, 2.5] call limitToRange;
-		_fontSize = if (_completedArray) then { ([(0.06 - (_dist / 10000)), (0.03), (0.06)] call limitToRange)  } else { (0.025) };
+		_fontSize = if (_completedArray) then { ([(0.06 - (_dist / 10000)), (0.03), (0.06)] call limitToRange)  } else { (0.032) };
 		_pos set [2, ([(_dist / 15), 0, 4] call limitToRange)];
 
 		// Only render current checkpoint for in-progress array
 		if (_forEachIndex > 2 && !_completedArray) exitWith {};
+
 
 		// Change icon for completed checkpoints
 		_icon = if (_completedArray) then { blankIcon } else { 				

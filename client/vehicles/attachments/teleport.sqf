@@ -20,7 +20,7 @@ _pos set [2, 0];
 playSound3D ["a3\sounds_f\sfx\vehicle_drag_end.wss",_vehicle, false, (ASLtoATL visiblePositionASL _vehicle), 10, 1, 50];
 deleteVehicle _obj;
 
-_obj = createVehicle ["containmentArea_02_sand_F", _pos, [], 0, 'CAN_COLLIDE']; // So it doesnt collide when spawned in]
+_obj = createVehicle ["containmentArea_02_forest_F", _pos, [], 0, 'CAN_COLLIDE']; // So it doesnt collide when spawned in]
 _obj setVectorUp (surfaceNormal _pos);
 _obj setDir (random 360);
 

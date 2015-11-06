@@ -5,13 +5,26 @@ Note: Some changes that are deemed spoilers are hidden from this log.
 (WIP) Indicates items that may not be fully functional and are only partially implemented.
 Items without Fixed/Added/Removed proceeding are typically balance changes.
 
-**v0.8.3** [Closed alpha release]
+**v0.8.5** [Closed alpha release]
 
+- Added 'Loading' text to vehicle preview
 - Added 'Crash Test Dummy' texture for dev builds
 - Increased global damage scale slightly
 - Decreased ammo requirements of some weapons
 - Decreased breakage frequency for melee weapons
 - Fixed 'Beach' zone on stratis with bad boundary detection
+- Fixed occasional missing items on vehicle load
+- Fixed 'Slytech' missing texture bug
+
+**v0.8.3 - v0.8.4** [Closed alpha release]
+
+- Added 'Loading' text to vehicle preview
+- Added 'Crash Test Dummy' texture for dev builds
+- Increased global damage scale slightly
+- Decreased ammo requirements of some weapons
+- Decreased breakage frequency for melee weapons
+- Fixed 'Beach' zone on stratis with bad boundary detection
+- Fixed occasional missing items on vehicle load
 - Fixed 'Slytech' missing texture bug
 
 **v0.8.2c** [1.48 Compatibility - Public alpha release]

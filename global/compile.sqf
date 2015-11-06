@@ -276,3 +276,4 @@ spawnAreas = ['spawnArea'] call findAllObjects;
 buySigns = ['buySign'] call findAllObjects;
 vehicleTerminals = ['vehicleTerminal'] call findAllObjects;
 nitroPads = ['nitroPad'] call findAllObjects;
+flamePads = ['flamePad'] call findAllObjects;
