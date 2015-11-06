@@ -1,11 +1,16 @@
 // Creates a series of checkpoints, waits for player to enter correctly 
 
+
 // _points = [_this, 0, [], [[]]] call bis_fnc_param;
 _points = [
-	(vehicle player) modelToWorldVisual [0, 30, 0],
-	(vehicle player) modelToWorldVisual [50, 100, 0],
-	(vehicle player) modelToWorldVisual [200, 200, 0]
+	(vehicle player) modelToWorldVisual [0, 50, 0]
 ];
+
+for "_i" from 1 to ((random 4)+4) step 1 do {
+	_p = GW_CURRENTVEHICLE modelToWorldVisual [0 + ((random 50) - 25), 75*_i, 0];
+	_p set [2, 0];
+	_points set [_i, _p];
+};
 
 _points = [_this, 0, _points, [[]]] call bis_fnc_param;
 
@@ -16,6 +21,33 @@ if (count _points == 0) exitWith {
 _cpArray = [];
 _dirNext = 0;
 _totalCheckpoints = count _points;
+
+// Clear any pre-existing icon checkpoints
+if (count GW_CHECKPOINTS > 0) then { {  deletevehicle _x; } foreach GW_CHECKPOINTS;};
+GW_CHECKPOINTS = [];
+GW_CHECKPOINTS_COMPLETED = [];
+
+// Create checkpoint halo as a guide
+[GW_CURRENTVEHICLE, 9999, 'client\images\checkpoint_halo2.paa',{ 
+
+_rT = _this select 0;
+_rB = _this select 1;
+
+if (count GW_CHECKPOINTS == 0) exitWith { false };
+_cP = GW_CHECKPOINTS select 0;
+
+_dirTo = [([GW_CURRENTVEHICLE, _cP] call dirTo) - (getDir GW_CURRENTVEHICLE)] call normalizeAngle;
+_dirToRB = [_dirTo + 180] call normalizeAngle;
+
+[_rT, [-90,0,_dirTo]] call setPitchBankYaw;
+[_rB, [90,0,_dirToRB]] call setPitchBankYaw;
+
+// _rT setDir _dirTo;
+// _rB setDir _dirTo;
+
+((alive GW_CURRENTVEHICLE) || (count GW_CHECKPOINTS > 0))
+
+}, false, [0,2,0.5]] spawn createHalo;
 
 // Create CP markers at each point
 {
@@ -32,22 +64,33 @@ _totalCheckpoints = count _points;
 
 	_l = "UserTexture10m_F" createVehicleLocal _x; 
 	_l setObjectTextureGlobal [0,"client\images\stripes_fade.paa"]; 
-	_offsetPos = (_cp modelToWorldVisual [5,-4.8,0]);
+	_offsetPos = (_cp modelToWorldVisual [10,-4.8,0]);
 	_offsetPos set [2, 0.1];
 	_l setPos _offsetPos;
 	_l setVectorUp (surfaceNormal _offsetPos);
 	[_l, [-90,0,[(_dirNext+180)] call normalizeAngle]] call setPitchBankYaw;  
 
+	_cen = "UserTexture10m_F" createVehicleLocal _x;   
+	_cen setObjectTextureGlobal [0,"client\images\stripes_fade.paa"]; 
+	_offsetPos = (_cp modelToWorldVisual [0,-4.8,0]);
+	_offsetPos set [2, 0.1];
+	_cen setPos _offsetPos;
+	_cen setVectorUp (surfaceNormal _offsetPos);
+	[_cen, [-90,0,[(_dirNext+180)] call normalizeAngle]] call setPitchBankYaw;  
+
 	_r = "UserTexture10m_F" createVehicleLocal _x;   
 	_r setObjectTextureGlobal [0,"client\images\stripes_fade.paa"]; 
-	_offsetPos = (_cp modelToWorldVisual [-5,-4.8,0]);
+	_offsetPos = (_cp modelToWorldVisual [-10,-4.8,0]);
 	_offsetPos set [2, 0.1];
 	_r setPos _offsetPos;
 	_r setVectorUp (surfaceNormal _offsetPos);
 	[_r, [-90,0,[(_dirNext+180)] call normalizeAngle]] call setPitchBankYaw;  
 
 	
-	_cpArray pushBack [_cp, _dirNext, [_cp, _c, _l, _r]];
+	_cpArray pushBack [_cp, _dirNext, [_cp, _c, _l, _cen, _r]];
+
+	hideObject _cp;
+
 } foreach _points;
 
 _result = ['START', 5, false, true] call createTimer;
@@ -66,7 +109,7 @@ _startTime = time;
 
 for "_i" from 0 to 1 step 0 do {
 
-	if (count _cpArray == 0 || time > _timeout) exitWith {};
+	if (count _cpArray == 0 || time > _timeout || !alive GW_CURRENTVEHICLE) exitWith {};
 
 	_targetCp = (_cpArray select 0) select 0;
 	if ((GW_CURRENTVEHICLE distance _targetCp) < _distTolerance) then {
@@ -80,7 +123,17 @@ for "_i" from 0 to 1 step 0 do {
 		_group = ((_cpArray select 0) select 2);
 		{ deleteVehicle _x; } foreach _group;
 
+		_currentTime = time - _startTime;
+		_seconds = floor (_currentTime);	
+		_milLeft = floor ( abs ( floor( _currentTime ) - _currentTime) * 10);
+		_hoursLeft = floor(_seconds / 3600);
+		_minsLeft = floor((_seconds - (_hoursLeft*3600)) / 60);
+		_secsLeft = floor(_seconds % 60);
+		_timeStamp = format['+%1:%2:%3:%4', ([_hoursLeft, 2] call padZeros), ([_minsLeft, 2] call padZeros), ([_secsLeft, 2] call padZeros), ([_milLeft, 2] call padZeros)];
+
+		GW_CHECKPOINTS_COMPLETED pushback [(getpos ((_cpArray select 0) select 0)), _timeStamp];
 		_cpArray deleteAt 0;
+		GW_CHECKPOINTS deleteAt 0;
 		hint format['Reached checkpoint %1/%2!', _totalCheckpoints - (count _cpArray), _totalCheckpoints, time];
 		GW_CURRENTVEHICLE say "blipCheckpoint";
 
@@ -89,7 +142,6 @@ for "_i" from 0 to 1 step 0 do {
 	};
 
 	_timeLeft = [_maxTime - (time - _startTime), 0, 99999] call limitToRange;
-	systemchat format['timeleft: %1', _timeLeft];
 
 	if (_timeLeft <= (_maxTime * 0.3) ) then {
 
@@ -111,8 +163,15 @@ for "_i" from 0 to 1 step 0 do {
 };
 
 if ((count _cpArray) == 0 && time <= (_timeout + 0.1) ) then {
-	hint format['Race complete! (%1s)', ([time - _startTime, 2] call roundTo)];
+	hint format['Race complete! (%1s)', ([time - _startTime, 2] call roundTo)];	
 	//_result = ['START', 5, false] call createTimer;
+
+	[] spawn { 
+		Sleep 3;
+		GW_CHECKPOINTS = [];
+		GW_CHECKPOINTS_COMPLETED = [];
+	};
+
 } else {
 	hint format['Race failed! (Timeout)', time];
 	GW_CURRENTVEHICLE say "siren";
@@ -123,6 +182,8 @@ if ((count _cpArray) == 0 && time <= (_timeout + 0.1) ) then {
 		(vehicle player) call destroyInstantly;		
 	};
 };
+
+
 
 // Cleanup
 {

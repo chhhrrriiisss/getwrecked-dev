@@ -71,9 +71,38 @@ _nameArray = toArray (_name);
 _name = [_name, 28, ''] call cropString; 
 
 // Fade out
-_title ctrlShow false;	
-_title ctrlSetText '';	
+_title ctrlShow true;	
+_title ctrlSetText 'LOADING';	
 _title ctrlCommit 0;
+
+[] spawn {
+	
+	disableSerialization;
+	_title = ((findDisplay 42000) displayCtrl 42001);	
+	_text = 'LOADING';
+	_title ctrlSetText _text;
+	_title ctrlCommit 0;
+	_timeout = time + 15;
+
+	waitUntil {
+
+		_text = _text call {
+			if (_this == 'LOADING') exitWith { 'LOADING.' };
+			if (_this == 'LOADING.') exitWith { 'LOADING..' };
+			if (_this == 'LOADING..') exitWith { 'LOADING...' };
+			'LOADING'
+		};
+
+		_title ctrlSetText _text;
+		_title ctrlCommit 0;
+
+		Sleep 0.25;
+
+		(!isNil "GW_PREVIEW_VEHICLE" || loadError || (time > _timeout) )
+
+	};
+
+};
 
 45000 cutText ["", "BLACK OUT", 0.2];  
 

@@ -40,7 +40,7 @@ _eventsList = [
 			} count GW_VALID_ZONES > 0;
 
 			_length = random ((count _activeZones) -1);
-			_selectedZone = _activeZones select (round _length);
+			_selectedZone = _activeZones select (floor _length);
 			diag_log format['Supply box triggered for %2 at %1.', time, _selectedZone];
 
 			// Don't create a new one if we're already at maximum

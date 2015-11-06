@@ -1,28 +1,63 @@
 // Current Checkpoints
-if (count GW_CHECKPOINTS > 0) then {
-	_count = 0;
+{	
+	_completedArray = (_x select 1);
+	_totalCheckpoints = (count GW_CHECKPOINTS) + (count GW_CHECKPOINTS_COMPLETED);
+	_currentCheckpoint = [(_totalCheckpoints - (count GW_CHECKPOINTS)) + 1, 0, _totalCheckpoints] call limitToRange;
 
-	{
-		
-		if (!alive _x || isNull _x) then {
-			GW_CHECKPOINTS = GW_CHECKPOINTS - [_x];
-		} else {
+	systemchat format['%1 / %2', _totalCheckpoints, _currentCheckpoint];
 
-			if (typename _x == "OBJECT" && {alive _x}) then {	        	
-        		_pos =  _x modelToWorldVisual [0, 0, 8];
-        		_count = _count + 1;
-        		_markerID = format['CP %1', _count];
+	_arr = (_x select 0);
+	{		
 
-        		// Only render current checkpoint
-        		if (_count >= 2) exitWith {};
-        		drawIcon3D [checkpointMarkerIcon,[255,255,255,_alpha],_pos,2.25,2.25,2, '', 0, 0.03, "PuristaMedium"];		      
-        	};
+		_pos =  if (typename _x == "OBJECT") then { _x modelToWorldVisual [0, 0, 8]; } else { (_x select 0) };
 
-    	};
+		_dist = (GW_CURRENTVEHICLE distance _pos);
+		_alpha = [1 - (_dist / 1000), 0.05, 1] call limitToRange;
+		_alpha = if (_completedArray) then { (_alpha / 3) } else { (_alpha / 2) };
+		// _alpha = if (_completedArray) then { _alpha } else {			
+		// 	if (_forEachIndex > 0) exitWith { (_alpha/2) };
+		// 	_alpha
+		// };
 
-		false
-	} count GW_CHECKPOINTS > 0;
-};	   
+		_size = [2.5 - (_dist / 100), 1.2, 2.5] call limitToRange;
+		_fontSize = if (_completedArray) then { ([(0.06 - (_dist / 10000)), (0.03), (0.06)] call limitToRange)  } else { (0.025) };
+		_pos set [2, ([(_dist / 15), 0, 4] call limitToRange)];
+
+		// Only render current checkpoint for in-progress array
+		if (_forEachIndex > 2 && !_completedArray) exitWith {};
+
+		// Change icon for completed checkpoints
+		_icon = if (_completedArray) then { blankIcon } else { 				
+			if (_forEachIndex == 0 && (count GW_CHECKPOINTS_COMPLETED) == 0) exitWith {	startMarkerIcon	};
+			if (_forEachIndex == ((count GW_CHECKPOINTS)-1) ) exitWith { finishMarkerIcon };
+			checkpointMarkerIcon 	
+		};
+
+		// Display distance and checkpoint index information
+		_index = if (_completedArray) then { (_x select 1) } else { 
+
+			if (_forEachIndex > 0) exitWith { '' };
+			_dist = if (_dist > 5000) then { format['%1km', [_dist / 1000, 0] call roundTo ] } else { format['%1m', [_dist, 0] call roundTo ]};
+			(format['%1/%2 [%3]',_currentCheckpoint, _totalCheckpoints, _dist]) 
+		};
+
+
+
+		drawIcon3D [_icon,[255,255,255,_alpha],_pos,_size * 1.03,_size * 1.03,0, _index,0, _fontSize, "PuristaMedium"];	
+
+		if (_completedArray) then {} else {
+			drawIcon3D [markerBoxIcon,[255,255,255,_alpha],_pos,_size,_size,0, '',0, 0.03, "PuristaMedium"];
+		};
+
+	} foreach _arr;	  
+
+	false
+
+} count [
+	[GW_CHECKPOINTS, false],
+	[GW_CHECKPOINTS_COMPLETED, true]
+];
+
 
 // Locked target icons
 if (count GW_LOCKEDTARGETS > 0) then {
