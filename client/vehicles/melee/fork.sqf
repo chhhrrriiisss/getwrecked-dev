@@ -14,7 +14,7 @@ if ('invulnerable' in _status || 'cloak' in _status) exitWith { true };
 _vehicle = attachedTo _source;
 _vP = _vehicle worldToModelVisual (_target modelToWorldVisual [0,0,0]);				
 _damage = if ('nanoarmor' in _status) then { 0.001 } else { ((random 0.05) + 0.025) };
-_source setDammage (getDammage _source) + ((random 0.1) + 0.01); 
+_source setDammage (getDammage _source) + ((random 0.07) + 0.01); 
 
 [       
     [

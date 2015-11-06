@@ -24,7 +24,7 @@ GW_DISPLAY_EH = addMissionEventHandler ["Draw3D", {
 		GW_DEBUG_MONITOR_LAST_UPDATE = time;
 		_totalString = format["[   DEBUG MODE   ] \n\n Time: %1\n Zone: %2\n Player: %3\n FPS: %4\n FPSMIN: %5\n", time, GW_CURRENTZONE, name player, [diag_fps, 0] call roundTo, [diag_fpsMIN, 0] call roundTo];
 		{	_totalString = format['%1 \n %2: %3', _totalString, (_x select 0), (_x select 1)];	false	} count GW_DEBUG_ARRAY > 0;
-
+		
 		hintSilent _totalString;
 	};
 

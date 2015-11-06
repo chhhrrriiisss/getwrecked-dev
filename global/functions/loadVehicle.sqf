@@ -181,7 +181,7 @@ if (GW_PREVIEW_CAM_ACTIVE) then { GW_PREVIEW_CAM_TARGET = _newVehicle; GW_PREVIE
 _newVehicle lockDriver true;
 _newVehicle lockCargo true;
 _newVehicle setDammage 0;
-{  _x setDammage 0; false } count (attachedObjects _newVehicle) > 0;
+{  _x setDammage 0; _x enableSimulationGlobal true; false } count (attachedObjects _newVehicle) > 0;
 
 _endTime = time;
 _totalTime = round ((_endTime - _startTime) * (10 ^ 3)) / (10 ^ 3);

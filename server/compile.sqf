@@ -11,6 +11,7 @@ logKill = compile preprocessFile "server\functions\logKill.sqf";
 // Zone Functions
 initEvents = compile preprocessFile "server\zones\events.sqf";
 createSupplyDrop = compile preprocessFile "server\zones\createSupplyDrop.sqf";
+createRace = compile preprocessFile "server\zones\createRace.sqf";
 
 // Utility
 call compile preprocessFile "server\functions\cleanup.sqf";

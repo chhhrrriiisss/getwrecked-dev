@@ -20,6 +20,7 @@ _timeValue =  [_this,1, 3, [0]] call filterParam;
 
 GW_TIMER_VALUE = time + _timeValue;
 _showButton = [_this,2, true, [false]] call filterParam;
+_soundEnabled = [_this,3, false, [false]] call filterParam;
 
 // Global function to cancel the current timer
 cancelCurrentTimer = {	
@@ -44,7 +45,8 @@ if (!_showButton) then {
 };
 
 _exitWith = false;
-
+_sleepTime = 0.1;
+_lastSecond = 0;
 
 for "_i" from 0 to 1 step 0 do {
 
@@ -63,7 +65,14 @@ for "_i" from 0 to 1 step 0 do {
 	_text ctrlSetText _timeLeft;
 	_text ctrlCommit 0;
 
-	Sleep 0.05;
+	if (_soundEnabled) then {
+		if (_seconds != _lastSecond) then {
+			_lastSecond = _seconds;
+			GW_CURRENTVEHICLE say "beepTarget";
+		};
+	};
+
+	Sleep _sleepTime;
 
 };
 

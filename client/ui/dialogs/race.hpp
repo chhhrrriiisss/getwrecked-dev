@@ -1,6 +1,8 @@
 #define GW_Race_ID 90000
 #define GW_RaceTitle_ID 90012
 #define GW_FilterList_ID 90011
+#define GW_Edit_ID 90020
+#define GW_Rename_ID 90021
 
 #define GW_BUTTON_WIDTH 0.2
 #define GW_BUTTON_HEIGHT 0.035
@@ -593,7 +595,7 @@ class GW_Race
 
     class ButtonEdit : GW_RscButtonMenu
     {
-      idc = -1;
+      idc = GW_Edit_ID;
       text = "EDIT";
       onButtonClick = "_this call toggleRaceEditing";
       x = (0.015) * safezoneW + safezoneX;
@@ -613,7 +615,7 @@ class GW_Race
 
      class ButtonRename : GW_RscButtonMenu
     {
-      idc = -1;
+      idc = GW_Rename_ID;
       text = "RENAME";
       onButtonClick = "[] spawn renameCurrentRace";
       x = (0.015 + (GW_BUTTON_WIDTH /2) + GW_BUTTON_GAP_X) * safezoneW + safezoneX;

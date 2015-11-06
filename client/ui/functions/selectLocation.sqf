@@ -17,7 +17,7 @@ if (!isNil "GW_SPAWN_LOCATION") then {
 	};
 
 	// Create a countdown timer with an abort option
-	_result = ['ABORT', 5, true] call createTimer;
+	_result = ['ABORT', 5, true, true] call createTimer;
 	_success = false;
 
 	if (_result) then {	

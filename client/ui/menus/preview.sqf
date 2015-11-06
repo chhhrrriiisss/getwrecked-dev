@@ -92,6 +92,7 @@ if (!isNil "GW_PREVIEW_SELECTED" && !isNil "GW_PREVIEW_VEHICLE") then {
 	GW_PREVIEW_VEHICLE allowDamage false;
 	GW_PREVIEW_VEHICLE setPos _loadAreaPosition;
 
+	// If vehicle is accidently thrown, reset position after 2 seconds
 	[GW_PREVIEW_VEHICLE, _loadAreaPosition] spawn {
 			Sleep 2;
 

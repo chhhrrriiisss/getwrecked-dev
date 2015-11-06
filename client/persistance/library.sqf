@@ -108,7 +108,7 @@ if (_action == 'delete') exitWith {
 	_found = false;
 
 	{
-		if (_x == _target) exitWith {
+		if (toUpper _x == toUpper _target) exitWith {
 			_found = true;
 		};
 	} ForEach _raw;
@@ -122,6 +122,7 @@ if (_action == 'delete') exitWith {
 		profileNameSpace setVariable[_target, nil]; 
 		profileNameSpace setVariable['GW_LIBRARY', _newData]; 
 		saveProfileNamespace;	
+		GW_LIBRARY = _newData;
 
 		systemChat format['Deleted from list: %1', _target];
 

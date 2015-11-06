@@ -17,6 +17,13 @@ if (!isNil "GW_PREVIEW_VEHICLE") then {
 	[GW_PREVIEW_VEHICLE] call clearPad;
 };
 
+// If library is blank
+if (isNil "GW_LIBRARY" || { (count GW_LIBRARY == 0) } ) exitWith {	
+	_title ctrlSetText 'NO VEHICLES FOUND';
+	_title ctrlCommit 0;
+	45000 cutText ["", "BLACK IN", 0.35];  
+};
+
 // Target the vehicle from the list
 _num = [_this select 0, 0, ((count GW_LIBRARY) - 1), true] call limitToRange;
 _selected = GW_LIBRARY select _num;	

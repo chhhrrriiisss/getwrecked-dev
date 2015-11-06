@@ -1,3 +1,4 @@
+
 private ['_vehicle', '_currentWeapons', '_currentModules', '_maxModules', '_maxWeapons'];
 
 _vehicle = _this;
@@ -8,7 +9,7 @@ _maxWeapons = _vehicle getVariable ['maxWeapons', 9999];
 _maxModules = _vehicle getVariable ['maxModules', 9999];
 
 {
-	// Delete anything that hasn't got a valid tag
+
 	_tag =_x getVariable ['GW_Tag', ''];
 
 	if (true) then {
@@ -20,5 +21,3 @@ _maxModules = _vehicle getVariable ['maxModules', 9999];
 	false
 
 } count (attachedObjects _vehicle) > 0;
-
-

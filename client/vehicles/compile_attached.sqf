@@ -42,7 +42,7 @@ _combinedMass = 0;
 	_obj = _x;
 	
 	if (!alive _obj || !(_obj call isObject)) then {
-		deleteVehicle _obj;
+		//deleteVehicle _obj;
 	} else {
 
 		// Get all the data we need
@@ -136,6 +136,7 @@ _vehicle setVariable ["GW_Value", _totalValue];
 [_vehicle] call setVehicleActions;
 
 // Automatically max out fuel/ammo if we're in the workshop
+if (isNil "GW_CURRENTZONE") then { GW_CURRENTZONE == "workshopZone" };
 if (GW_CURRENTZONE == "workshopZone" || isServer) then {
 
 	_maxAmmo = _vehicle getVariable ["maxAmmo", 1];

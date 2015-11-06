@@ -9,6 +9,8 @@ GW_CLEANUP_ACTIVE = false;
 
 // Items to check / Timeout for item
 cleanUpCommands = [
+
+	// Supply boxes and unattended parts
 	[{ 
 		_a = [];
 		{ 
@@ -26,6 +28,8 @@ cleanUpCommands = [
 		} count (nearestObjects [(getmarkerpos "workshopZone_camera"), [], 300]);
 		_a
 	}, 240],
+
+	// Empty and unclaimed vehicles
 	[{ 
 		_a = [];
 		_allVehicles = (allMissionObjects "Car");
@@ -41,6 +45,39 @@ cleanUpCommands = [
 		} count _allVehicles;
 		_a
 	}, 60],
+
+	// Wildlife cleanup
+	[{ 
+		_a = [];
+		_agentTypes = [
+			"Rabbit_F",
+			"Snake_random_F",
+			"ButterFly_random",
+			"Bird",
+			"Cicada",
+			"DragonFly",
+			"HoneyBee",
+			"HouseFly",
+			"Insect",
+			"Kestrel_Random_F",
+			"Mosquito",
+			"SeaGull",
+			"Tuna_F",
+			"Turtle_F",
+			"CatShark_F"
+		];
+
+		{
+			if (_agentTypes find (typeOf agent _x) >= 0) then {
+				_a pushBack (agent _x);
+			};
+			false
+		} count agents;
+
+		_a
+
+	}, 10],
+	
 	[{ (allMissionObjects "#destructioneffects") }, 10],
 	[{ (allMissionObjects "#smokesource") }, 10],
 	[{ (allMissionObjects "Default") }, 10],

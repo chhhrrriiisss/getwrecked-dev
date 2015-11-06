@@ -19,7 +19,12 @@ if ({ if (_x == _statusEffect) exitWith {1}; false } count ["disabled", "tyresPo
 
 if ({ if (_x == _statusEffect) exitWith {1}; false } count ["overcharge", "extradamage", "nanoarmor", "jammer", "fire", "invulnerable"] isEqualTo 1) then {
 	if !(_inVehicle) exitWith {};
-	[] call desaturateScreen;
+	
+	// Desaturate screen
+	"colorCorrections" ppEffectEnable true; 
+	"colorCorrections" ppEffectAdjust [1, 0.3, 0, [1,1,1,-0.1], [1,1,1,2], [-0.5,0,-1,5]]; 
+	"colorCorrections" ppEffectCommit 1;
+
 };
 
 if ("teleport" == _statusEffect) then {

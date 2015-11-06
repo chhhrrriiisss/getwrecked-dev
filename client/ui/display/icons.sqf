@@ -1,3 +1,29 @@
+// Current Checkpoints
+if (count GW_CHECKPOINTS > 0) then {
+	_count = 0;
+
+	{
+		
+		if (!alive _x || isNull _x) then {
+			GW_CHECKPOINTS = GW_CHECKPOINTS - [_x];
+		} else {
+
+			if (typename _x == "OBJECT" && {alive _x}) then {	        	
+        		_pos =  _x modelToWorldVisual [0, 0, 8];
+        		_count = _count + 1;
+        		_markerID = format['CP %1', _count];
+
+        		// Only render current checkpoint
+        		if (_count >= 2) exitWith {};
+        		drawIcon3D [checkpointMarkerIcon,[255,255,255,_alpha],_pos,2.25,2.25,2, '', 0, 0.03, "PuristaMedium"];		      
+        	};
+
+    	};
+
+		false
+	} count GW_CHECKPOINTS > 0;
+};	   
+
 // Locked target icons
 if (count GW_LOCKEDTARGETS > 0) then {
 	{

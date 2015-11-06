@@ -71,9 +71,11 @@ if (_hasDLC) then {
 } else {
 	_unit addHeadgear "H_PilotHelmetHeli_B";
 };
-	
+
 if(!isNil "_tx") then {
 	_unit setVariable ["GW_Sponsor", _tx];
+
+	if (GW_DEV_BUILD) then { _tx = 'test'; };
 	[[_unit,_tx],"setPlayerTexture",true,false] call bis_fnc_mp;
 };
 

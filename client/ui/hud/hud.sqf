@@ -9,12 +9,6 @@ private ['_b', '_k', '_bindKeys', '_tag'];
 if (GW_HUD_ACTIVE) exitWith {};
 GW_HUD_ACTIVE = true;
 
-desaturateScreen = {
-	"colorCorrections" ppEffectEnable true; 
-	"colorCorrections" ppEffectAdjust [1, 0.3, 0, [1,1,1,-0.1], [1,1,1,2], [-0.5,0,-1,5]]; 
-	"colorCorrections" ppEffectCommit 1;
-};
-
 disableSerialization;
 
 12000 cutRsc ["GW_HUD_Vehicle", "PLAIN"];
@@ -131,7 +125,6 @@ for "_i" from 0 to 1 step 0 do {
 	// Open the default HUD
 	if (!GW_HUD_NORMAL_ACTIVE && (!GW_PREVIEW_CAM_ACTIVE || !GW_TIMER_ACTIVE) ) then {
 		GW_HUD_NORMAL_ACTIVE = true;
-
 		[[_hudMoney, _hudTransaction], [['fade', 1, 0, 1.2], ['y', '0', '0.1', 1.2]], "quad"] spawn createTween;
 		
 	};
@@ -178,7 +171,9 @@ for "_i" from 0 to 1 step 0 do {
 			// Fade Out Player HUD 
 			[[_hudMoney, _hudTransaction], [['fade', 0, 1, 0]], "quad"] spawn createTween;
 
-			// Fade in Vehicle HUD 
+			// Fade in Vehicle HUD, if 3rd person camera
+			if (cameraView == "Internal") exitWith {};
+
 			[[_vHudIcon, _vHudFuel, _vHudAmmo, _vHudHealth, _vHudMoney, _vHudNotification], [['fade', 1, 0, 0.1]], "quad"] spawn createTween;
 			_vHudIcon ctrlSetStructuredText parseText ( format["<img size='2.4' align='center' valign='top' image='%1' />", [typeOf _vehicle] call getVehiclePicture] );
 			_vHudIcon ctrlCommit 0;
@@ -191,7 +186,7 @@ for "_i" from 0 to 1 step 0 do {
 
 				false
 			} count _moduleList > 0;		
-
+			
 		};
 
 	} else {		

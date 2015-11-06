@@ -64,6 +64,34 @@ class CfgSounds
 {
 	sounds[] = {};
 
+	class siren
+	{
+		name = "siren";
+		sound[] = {"@a3\sounds_f\sfx\siren.wss", 1, 1};
+		titles[] = {};
+	};
+
+	class electronTrigger
+	{
+		name = "electronTrigger";
+		sound[] = {"@a3\sounds_f\weapons\mines\electron_trigger_1.wss", 0.75, 1};
+		titles[] = {};
+	};
+
+	class beepTarget
+	{
+		name = "beepTarget";
+		sound[] = {"@a3\sounds_f\sfx\beep_target.wss", 0.75, 1};
+		titles[] = {};
+	};
+
+	class blipCheckpoint
+	{
+		name = "blipCheckpoint";
+		sound[] = {"@a3\sounds_f\sfx\blip1.wss", 0.75, 1};
+		titles[] = {};
+	};
+
 	// Made by Sli
 	class nitro
 	{

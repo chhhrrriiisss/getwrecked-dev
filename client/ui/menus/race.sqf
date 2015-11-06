@@ -1,22 +1,4 @@
-//
-//      Name: raceMenu
-//      Desc: Allows a user to select or edit a race
-//      Return: None
-//
-
-params ['_pad', '_unit'];
-
-_onExit = {
-    systemChat (_this select 0);
-    GW_SPAWN_ACTIVE = false;
-    GW_GENERATOR_ACTIVE = false;
-    false
-};
-
-_isVehicleReady = [_pad, _unit] call vehicleReadyCheck;
-if (!_isVehicleReady) exitWith {};
-
-closeDialog 0;
+closedialog 0;
 
 if (isNil "GW_GENERATOR_ACTIVE") then { GW_GENERATOR_ACTIVE = false; };	
 if (GW_GENERATOR_ACTIVE) exitWith {};
@@ -24,16 +6,25 @@ GW_GENERATOR_ACTIVE = true;
 
 GW_RACE_ACTIVE = false;
 
+params ['_pad', '_unit'];
+
+_isVehicleReady = [_pad, _unit] call vehicleReadyCheck;
+if (!_isVehicleReady) exitWith { GW_GENERATOR_ACTIVE = false; };
+	
+
 disableSerialization;
-if(!(createDialog "GW_Race")) exitWith { ['Error opening dialog.'] spawn _onExit; }; //Couldn't create the menu
- 
+if(!(createDialog "GW_Race")) exitWith { GW_GENERATOR_ACTIVE = false; }; //Couldn't create the menu
+
 getAllRaces = {
 	_rcs = profileNamespace getVariable ['GW_RACES', []];
 	if (count _rcs == 0) exitWith { 
 		[] call createDefaultRaces; 
 		(profileNamespace getVariable ['GW_RACES', []])
 	};
-	_rcs
+
+	_totalRaces = +_rcs;
+	_totalRaces append GW_ACTIVE_RACES;
+	_totalRaces
 };
 
 startRace = {
@@ -41,23 +32,21 @@ startRace = {
 	if (GW_RACE_ACTIVE) exitWith { systemchat 'You cant host more than one race at a time.'; };
 	GW_RACE_ACTIVE = true;
 
+	_existingRaces = (call getAllRaces);
 	_id = [_this, 0, (count _existingRaces) - 1] call limitToRange;
 
 	_selectedRace = (call getAllRaces) select _id;
 	_points = _selectedRace select 1;
 	_name = (_selectedRace select 0) select 0;
 	_host = name player;
-	GW_ACTIVE_RACES pushback [_name, 'race', _name, _host];
-
-	GW_SPAWN_LOCATION = _name;
-
-	[] spawn selectLocation;
+	_selectedRace pushback _host;
+	GW_ACTIVE_RACES pushback _selectedRace;
 
 	closeDialog 0;
 	
 	_name spawn {
 		Sleep 20;
-		{ if ((_x select 0) == _this) exitWith { GW_ACTIVE_RACES deleteAt _foreachIndex; }; } foreach GW_ACTIVE_RACES;
+		GW_ACTIVE_RACES = [];
 		GW_RACE_ACTIVE = false;
 	};
 
@@ -73,7 +62,23 @@ selectRace = {
 	_raceData = _existingRaces select _selection;
 	GW_RACE_ARRAY = (_raceData select 1);
 	GW_RACE_NAME = (_raceData select 0) select 0;
+	GW_RACE_HOST = [_raceData, 2, "NONE", [""]] call bis_fnc_param;
 	GW_RACE_ID = _selection;
+
+	_startButton = ((findDisplay 90000) displayCtrl 90015);
+	_startText = if (GW_RACE_HOST == "NONE") then { 'START' } else { 'JOIN' };	
+	_startButton ctrlSetText _startText;
+	_startButton ctrlCommit 0;	
+
+	_buttonFade = if (GW_RACE_HOST == "NONE") then { 0 } else { 1 };
+	_editButton = ((findDisplay 90000) displayCtrl 90020);
+	_renameButton = ((findDisplay 90000) displayCtrl 90021);
+	_deleteButton = ((findDisplay 90000) displayCtrl 90018);
+
+	{
+		_x ctrlSetFade _buttonFade;
+		_x ctrlCommit 0;
+	} foreach [_editButton, _renameButton, _deleteButton];
 
 	_mapTitle = ((findDisplay 90000) displayCtrl 90012);
 	_mapTitle ctrlSetText GW_RACE_NAME;
@@ -119,6 +124,7 @@ focusCurrentRace = {
 	ctrlMapAnimCommit _mapControl;
 };
 
+
 _mapControl = ((findDisplay 90000) displayCtrl 90001);
 _mapTitle = ((findDisplay 90000) displayCtrl 90012);
 _mapControl ctrlEnable false;
@@ -142,6 +148,7 @@ GW_MAP_Y = -1;
 GW_MAP_NUMBER = 0;
 GW_MAP_CLOSEST = -1;
 GW_MAP_BETWEEN = -1;
+
 
 deleteRace = {
 	

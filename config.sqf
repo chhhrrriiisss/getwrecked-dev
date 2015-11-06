@@ -6,6 +6,8 @@
 //
 //
 
+GW_DEV_BUILD = true;
+
 // Leaderboard stats tracking (default: false)
 // Currently non-functional
 GW_LEADERBOARD_ENABLED = false;

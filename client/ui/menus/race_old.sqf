@@ -1,4 +1,22 @@
-closedialog 0;
+//
+//      Name: raceMenu
+//      Desc: Allows a user to select or edit a race
+//      Return: None
+//
+
+params ['_pad', '_unit'];
+
+_onExit = {
+    systemChat (_this select 0);
+    GW_SPAWN_ACTIVE = false;
+    GW_GENERATOR_ACTIVE = false;
+    false
+};
+
+_isVehicleReady = [_pad, _unit] call vehicleReadyCheck;
+if (!_isVehicleReady) exitWith {};
+
+closeDialog 0;
 
 if (isNil "GW_GENERATOR_ACTIVE") then { GW_GENERATOR_ACTIVE = false; };	
 if (GW_GENERATOR_ACTIVE) exitWith {};
@@ -7,8 +25,8 @@ GW_GENERATOR_ACTIVE = true;
 GW_RACE_ACTIVE = false;
 
 disableSerialization;
-if(!(createDialog "GW_Race")) exitWith { GW_GENERATOR_ACTIVE = false; }; //Couldn't create the menu
-
+if(!(createDialog "GW_Race")) exitWith { ['Error opening dialog.'] spawn _onExit; }; //Couldn't create the menu
+ 
 getAllRaces = {
 	_rcs = profileNamespace getVariable ['GW_RACES', []];
 	if (count _rcs == 0) exitWith { 
@@ -30,6 +48,10 @@ startRace = {
 	_name = (_selectedRace select 0) select 0;
 	_host = name player;
 	GW_ACTIVE_RACES pushback [_name, 'race', _name, _host];
+
+	GW_SPAWN_LOCATION = _name;
+
+	[] spawn selectLocation;
 
 	closeDialog 0;
 	
@@ -97,7 +119,6 @@ focusCurrentRace = {
 	ctrlMapAnimCommit _mapControl;
 };
 
-
 _mapControl = ((findDisplay 90000) displayCtrl 90001);
 _mapTitle = ((findDisplay 90000) displayCtrl 90012);
 _mapControl ctrlEnable false;
@@ -121,7 +142,6 @@ GW_MAP_Y = -1;
 GW_MAP_NUMBER = 0;
 GW_MAP_CLOSEST = -1;
 GW_MAP_BETWEEN = -1;
-
 
 deleteRace = {
 	

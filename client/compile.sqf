@@ -33,6 +33,7 @@ GW_STATS_ORDER = ["kill", "death", "destroyed", "mileage", "moneyEarned", "timeA
 GW_INVULNERABLE = true;
 GW_DEPLOYLIST = [];
 GW_LOCKEDTARGETS = [];
+GW_CHECKPOINTS = [];
 GW_LASTMESSAGELOGGED = time;
 GW_DEBUG = false;
 GW_BUY_ACTIVE = false;
@@ -243,7 +244,7 @@ setVariance = compile preprocessFile "client\functions\setVariance.sqf";
 setVelocityLocal = compile preprocessFile "client\functions\setVelocityLocal.sqf";
 inString = compile preprocessFile "client\functions\inString.sqf";
 generateName = compile preprocessFile "client\functions\generateName.sqf";
-
+vehicleReadyCheck = compile preprocessFile "client\functions\vehicleReadyCheck.sqf";
 
 // Vehicle Functions
 markAsKilledBy = compile preprocessFile "client\functions\markAsKilledBy.sqf";
@@ -377,8 +378,8 @@ keyCodes = [
 	['Num *', 55],
 	['Num -', 74],
 	['Num Enter', 156],
-	['R Ctrl', 29],
-	['L Ctrl', 157],
+	['L Ctrl', 29],
+	['R Ctrl', 157],
 	['L Win', 220],
 	['R Win', 219],
 	['L Alt', 56],

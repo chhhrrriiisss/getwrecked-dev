@@ -36,3 +36,11 @@ _wallOutside setVectorDirAndUp [(_this select 4), _normal];
 
 _wallInside setObjectTextureGlobal [0,"client\images\stripes_fade.paa"];
 _wallOutside setObjectTextureGlobal [0,"client\images\stripes_fade.paa"];
+
+_wallInside enableSimulationGlobal false;
+_wallOutside enableSimulationGlobal false;
+
+if (!isDedicated) exitWith {};
+
+_wallInside hideObject true;
+_wallOutside hideObject true;
