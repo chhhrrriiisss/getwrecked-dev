@@ -225,6 +225,7 @@ flattenAngle = compile preprocessFile 'global\functions\flattenAngle.sqf';
 padZeros = compile preprocessFile 'global\functions\padZeros.sqf';
 dirToVector = compile preprocessFile 'global\functions\dirToVector.sqf';
 roundTo = compile preprocessFile 'global\functions\roundTo.sqf';
+formatTimeStamp = compile preprocessFile 'global\functions\formatTimeStamp.sqf';
 
 // Module Functions
 smokeBomb = compile preprocessFile "client\vehicles\attachments\smoke_bomb.sqf";

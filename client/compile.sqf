@@ -47,6 +47,7 @@ GW_SETTINGS_ACTIVE = false;
 GW_SPAWN_ACTIVE = false;
 GW_DEPLOY_ACTIVE = false;
 GW_TIMER_ACTIVE = false;
+GW_TITLE_ACTIVE = false;
 GW_LOADING_ACTIVE = false;
 GW_DIALOG_ACTIVE = false;
 GW_GUIDED_ACTIVE = false;
@@ -116,11 +117,13 @@ createHalo = compile preprocessFile "client\ui\hud\halo.sqf";
 createTween = compile preprocessFile "client\ui\hud\tween.sqf";
 createMessage = compile preprocessFile "client\ui\dialogs\message.sqf";
 createTimer = compile preprocessFile "client\ui\dialogs\timer.sqf";
+createTitle = compile preprocessFile "client\ui\dialogs\title.sqf";
 
 // Zone
 deployVehicle = compile preprocessFile 'client\zones\deploy.sqf';
 servicePoint = compile preprocessFile 'client\zones\vehicle_point.sqf';
 nitroPad =  compile preprocessFile 'client\zones\nitro_pad.sqf';
+flamePad = compile preprocessFile 'client\zones\flame_pad.sqf';
 
 // Persistance Functions
 paintVehicle = compile preprocessFile 'client\customization\paint_vehicle.sqf';
@@ -210,6 +213,7 @@ sparkEffect = compile preprocessFile "client\effects\spark.sqf";
 nitroEffect = compile preprocessFile "client\effects\nitro.sqf";
 muzzleEffect = compile preprocessFile "client\effects\muzzle.sqf";
 flameEffect = compile preprocessFile "client\effects\flame.sqf";
+infernoEffect = compile preprocessFile "client\effects\inferno.sqf";
 nukeEffect = compile preprocessFile "client\effects\nuke.sqf";
 shockwaveEffect = compile preprocessFile "client\effects\shockwave.sqf";
 forkEffect = compile preprocessFile "client\effects\fork.sqf";

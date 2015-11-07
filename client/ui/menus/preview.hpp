@@ -58,12 +58,12 @@ class GW_Menu
 			h = (GW_BUTTON_HEIGHT * 9) * safezoneH;
 		};	
 
+
+
 	};
 
 	class controls
 	{
-
-		
 		class Title : GW_LargeTitle
 		{
 			idc = GW_VehicleName_ID;

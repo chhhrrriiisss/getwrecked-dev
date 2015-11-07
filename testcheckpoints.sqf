@@ -6,7 +6,7 @@ _points = [
 	(vehicle player) modelToWorldVisual [0, 50, 0]
 ];
 
-for "_i" from 1 to ((random 4)+4) step 1 do {
+for "_i" from 1 to 2 step 1 do {
 	_p = GW_CURRENTVEHICLE modelToWorldVisual [0 + ((random 50) - 25), 75*_i, 0];
 	_p set [2, 0];
 	_points set [_i, _p];
@@ -93,9 +93,13 @@ _dirToRB = [_dirTo + 180] call normalizeAngle;
 
 } foreach _points;
 
+GW_CURRENTVEHICLE engineOn false;
+GW_CURRENTVEHICLE setFuel 0;
 _result = ['START', 5, false, true] call createTimer;
 if (!_result) exitWith { hint 'Race aborted'; };
 GW_CURRENTVEHICLE say "electronTrigger";
+GW_CURRENTVEHICLE setFuel 1;
+GW_CURRENTVEHICLE engineOn true;
 
 _maxTime = [_this, 1, 15, [0]] call bis_fnc_param;
 _timeout = time + _maxTime;
@@ -123,15 +127,10 @@ for "_i" from 0 to 1 step 0 do {
 		_group = ((_cpArray select 0) select 2);
 		{ deleteVehicle _x; } foreach _group;
 
-		_currentTime = time - _startTime;
-		_seconds = floor (_currentTime);	
-		_milLeft = floor ( abs ( floor( _currentTime ) - _currentTime) * 10);
-		_hoursLeft = floor(_seconds / 3600);
-		_minsLeft = floor((_seconds - (_hoursLeft*3600)) / 60);
-		_secsLeft = floor(_seconds % 60);
-		_timeStamp = format['+%1:%2:%3:%4', ([_hoursLeft, 2] call padZeros), ([_minsLeft, 2] call padZeros), ([_secsLeft, 2] call padZeros), ([_milLeft, 2] call padZeros)];
+		_timeStamp = (time - _startTime) call formatTimeStamp;
+		_timeStamp = format['+%1', _timeStamp];
 
-		GW_CHECKPOINTS_COMPLETED pushback [(getpos ((_cpArray select 0) select 0)), _timeStamp];
+		GW_CHECKPOINTS_COMPLETED pushback [(getpos ((_cpArray select 0) select 0)), _timeStamp, 1];
 		_cpArray deleteAt 0;
 		GW_CHECKPOINTS deleteAt 0;
 		hint format['Reached checkpoint %1/%2!', _totalCheckpoints - (count _cpArray), _totalCheckpoints, time];
@@ -145,15 +144,8 @@ for "_i" from 0 to 1 step 0 do {
 
 	if (_timeLeft <= (_maxTime * 0.3) ) then {
 
-		_left = (_timeout - time);
-		_seconds = floor (_left);	
-		_milLeft = floor ( abs ( floor( _left ) - _left) * 10);
-		_hoursLeft = floor(_seconds / 3600);
-		_minsLeft = floor((_seconds - (_hoursLeft*3600)) / 60);
-		_secsLeft = floor(_seconds % 60);
-		_timeLeft = format['-%1:%2:%3:%4', ([_hoursLeft, 2] call padZeros), ([_minsLeft, 2] call padZeros), ([_secsLeft, 2] call padZeros), ([_milLeft, 2] call padZeros)];
-
-		hint _timeLeft;
+		_timeLeft = (_timeout - time) call formatTimeStamp;
+		hint format['-%1', _timeLeft];
 		GW_CURRENTVEHICLE say "beepTarget";
 
 	};
@@ -164,6 +156,14 @@ for "_i" from 0 to 1 step 0 do {
 
 if ((count _cpArray) == 0 && time <= (_timeout + 0.1) ) then {
 	hint format['Race complete! (%1s)', ([time - _startTime, 2] call roundTo)];	
+
+	_timeStamp = (time - _startTime) call formatTimeStamp;
+	_text = format["<t size='3.5' color='#ffffff' align='center' valign='middle'>+%1</t>", _timeStamp];
+	["SPECTATE", _text, 10] execVM 'client\ui\dialogs\title.sqf';
+	[] execVM 'testflycamera.sqf';
+
+	GW_CURRENTVEHICLE say "electronTrigger";
+	GW_CURRENTVEHICLE say "summon";
 	//_result = ['START', 5, false] call createTimer;
 
 	[] spawn { 

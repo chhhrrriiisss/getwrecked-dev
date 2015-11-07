@@ -14,41 +14,45 @@
 
 		_dist = (GW_CURRENTVEHICLE distance _pos);
 		_alpha = [1 - (_dist / 1000), 0.05, 1] call limitToRange;
-		_alpha = if ((_forEachIndex == _currentCheckpoint && _completedArray) || !_completedArray) then { _alpha } else { 0 };
-		// _alpha = if (_completedArray) then { _alpha } else {			
-		// 	if (_forEachIndex > 0) exitWith { (_alpha/2) };
-		// 	_alpha
-		// };
+		_alpha = if (_completedArray) then { 
+			_prevAlpha = (_x select 2);
+			_prevAlpha = [_prevAlpha - 0.005, 0, 1] call limitToRange;
+			_x set [2, _prevAlpha];
+			_prevAlpha
+		} else { _alpha };
 
-		_size = [2.5 - (_dist / 100), 1.2, 2.5] call limitToRange;
-		_fontSize = if (_completedArray) then { ([(0.06 - (_dist / 10000)), (0.03), (0.06)] call limitToRange)  } else { (0.032) };
-		_pos set [2, ([(_dist / 15), 0, 4] call limitToRange)];
+		if (_alpha <= 0) then {} else {
 
-		// Only render current checkpoint for in-progress array
-		if (_forEachIndex > 2 && !_completedArray) exitWith {};
+			// _alpha = if (_completedArray) then { _alpha } else {			
+			// 	if (_forEachIndex > 0) exitWith { (_alpha/2) };
+			// 	_alpha
+			// };
 
+			_size = [2.5 - (_dist / 100), 1.2, 2.5] call limitToRange;
+			_fontSize = if (_completedArray) then { ([(0.06 - (_dist / 10000)), (0.03), (0.06)] call limitToRange)  } else { (0.032) };
+			_pos set [2, ([(_dist / 15), 0, 4] call limitToRange)];
 
-		// Change icon for completed checkpoints
-		_icon = if (_completedArray) then { blankIcon } else { 				
-			if (_forEachIndex == 0 && (count GW_CHECKPOINTS_COMPLETED) == 0) exitWith {	startMarkerIcon	};
-			if (_forEachIndex == ((count GW_CHECKPOINTS)-1) ) exitWith { finishMarkerIcon };
-			checkpointMarkerIcon 	
-		};
+			// Only render current checkpoint for in-progress array
+			if (_forEachIndex > 2 && !_completedArray) exitWith {};
 
-		// Display distance and checkpoint index information
-		_index = if (_completedArray) then { (_x select 1) } else { 
+			// Change icon for completed checkpoints
+			_icon = if (_completedArray) then { okIcon } else { 				
+				if (_forEachIndex == 0 && (count GW_CHECKPOINTS_COMPLETED) == 0) exitWith {	startMarkerIcon	};
+				if (_forEachIndex == ((count GW_CHECKPOINTS)-1) ) exitWith { finishMarkerIcon };
+				checkpointMarkerIcon 	
+			};
 
-			if (_forEachIndex > 0) exitWith { '' };
-			_dist = if (_dist > 5000) then { format['%1km', [_dist / 1000, 0] call roundTo ] } else { format['%1m', [_dist, 0] call roundTo ]};
-			(format['%1/%2 [%3]',_currentCheckpoint, _totalCheckpoints, _dist]) 
-		};
+			// Display distance and checkpoint index information
+			_index = if (_completedArray) then { (_x select 1) } else { 
 
+				if (_forEachIndex > 0) exitWith { '' };
+				_dist = if (_dist > 5000) then { format['%1km', [_dist / 1000, 0] call roundTo ] } else { format['%1m', [_dist, 0] call roundTo ]};
+				(format['%1/%2 [%3]',_currentCheckpoint, _totalCheckpoints, _dist]) 
+			};
 
+			drawIcon3D [_icon,[255,255,255,_alpha],_pos,_size * 1.03,_size * 1.03,0, _index,0, _fontSize, "PuristaMedium"];			
+			drawIcon3D [markerBoxIcon,[255,255,255,_alpha],_pos,_size,_size,0, '',0, 0.03, "PuristaMedium"];		
 
-		drawIcon3D [_icon,[255,255,255,_alpha],_pos,_size * 1.03,_size * 1.03,0, _index,0, _fontSize, "PuristaMedium"];	
-
-		if (_completedArray) then {} else {
-			drawIcon3D [markerBoxIcon,[255,255,255,_alpha],_pos,_size,_size,0, '',0, 0.03, "PuristaMedium"];
 		};
 
 	} foreach _arr;	  
@@ -189,15 +193,25 @@ if (!isNil "GW_CURRENTZONE") then {
 			[1, refuelAreas, refuelIcon, [activeIconA, activeIconB, activeIconC], "REFUEL" ]
 		] > 0;
 
-		// Check we're not in range of a nitro pad
+		// Check we're not in range of a nitro/flame pad
 		if (GW_INVEHICLE && GW_ISDRIVER) then {
 			{
-				if (_x distance (vehicle player) < 6) exitWith {
+				if (_x distance GW_CURRENTVEHICLE < 6) exitWith {
 					[_x, GW_CURRENTVEHICLE] call nitroPad;
 					false
 				};
 				false
 			} count nitroPads;
+
+			{
+				if (_x distance GW_CURRENTVEHICLE < 8) exitWith {
+
+					[_x, GW_CURRENTVEHICLE] call flamePad;
+
+					false
+				};
+				false
+			} count flamePads;
 		};
 
 	};

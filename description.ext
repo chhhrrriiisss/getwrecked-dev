@@ -45,6 +45,7 @@ disableChannels[] = {0,2,3,6};
 #include "client\ui\dialogs\race.hpp"
 #include "client\ui\dialogs\message.hpp"
 #include "client\ui\dialogs\timer.hpp"
+#include "client\ui\dialogs\title.hpp"
 
 class CfgFunctions
 {
@@ -63,6 +64,13 @@ class RscTitles
 class CfgSounds
 {
 	sounds[] = {};
+
+	class summon
+	{
+		name = "summon";
+		sound[] = {"\client\sounds\summon_short.ogg", 1, 1};
+		titles[] = {};
+	};
 
 	class siren
 	{
