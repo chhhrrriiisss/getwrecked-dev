@@ -39,16 +39,36 @@ startRace = {
 	_points = _selectedRace select 1;
 	_name = (_selectedRace select 0) select 0;
 	_host = name player;
+
+	// Check a race with that name is not currently running
+	_exists = false;
+	{
+		if (((_x select 0) select 0) == _name) exitWith { _exists = true; };
+		if (((_x select 1) select 0) distance (_points select 0) < 100) exitWith { _exists = true; };
+	} foreach GW_ACTIVE_RACES;
+
+	if (_exists) exitWith {
+		systemchat 'A race in that area is already active.';
+	};
+
 	_selectedRace pushback _host;
 	GW_ACTIVE_RACES pushback _selectedRace;
 
+	// Sync race to all clients
+	systemchat 'Syncing race data to other clients.';
+	publicVariable "GW_ACTIVE_RACES";
+
+
+
 	closeDialog 0;
-	
-	_name spawn {
-		Sleep 20;
-		GW_ACTIVE_RACES = [];
-		GW_RACE_ACTIVE = false;
-	};
+
+	// Send player to zone and begin waiting period
+
+
+	// If we manage to get sufficient players, send checkpoint trigger to all clients
+
+
+	// Otherwise blow everyone up and start again
 
 };
 
@@ -62,7 +82,7 @@ selectRace = {
 	_raceData = _existingRaces select _selection;
 	GW_RACE_ARRAY = (_raceData select 1);
 	GW_RACE_NAME = (_raceData select 0) select 0;
-	GW_RACE_HOST = [_raceData, 2, "NONE", [""]] call bis_fnc_param;
+	GW_RACE_HOST = [_raceData, 2, "NONE", [""]] call filterParam;
 	GW_RACE_ID = _selection;
 
 	_startButton = ((findDisplay 90000) displayCtrl 90015);

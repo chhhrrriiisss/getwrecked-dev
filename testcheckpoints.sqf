@@ -47,7 +47,7 @@ _dirToRB = [_dirTo + 180] call normalizeAngle;
 
 ((alive GW_CURRENTVEHICLE) || (count GW_CHECKPOINTS > 0))
 
-}, false, [0,2,0.5]] spawn createHalo;
+}, false, [0,2,0.5], true] spawn createHalo;
 
 // Create CP markers at each point
 {
@@ -134,9 +134,7 @@ for "_i" from 0 to 1 step 0 do {
 		_cpArray deleteAt 0;
 		GW_CHECKPOINTS deleteAt 0;
 		hint format['Reached checkpoint %1/%2!', _totalCheckpoints - (count _cpArray), _totalCheckpoints, time];
-		GW_CURRENTVEHICLE say "blipCheckpoint";
-
-		
+		GW_CURRENTVEHICLE say "blipCheckpoint";		
 
 	};
 
@@ -157,13 +155,15 @@ for "_i" from 0 to 1 step 0 do {
 if ((count _cpArray) == 0 && time <= (_timeout + 0.1) ) then {
 	hint format['Race complete! (%1s)', ([time - _startTime, 2] call roundTo)];	
 
-	_timeStamp = (time - _startTime) call formatTimeStamp;
-	_text = format["<t size='3.5' color='#ffffff' align='center' valign='middle'>+%1</t>", _timeStamp];
-	["SPECTATE", _text, 10] execVM 'client\ui\dialogs\title.sqf';
-	[] execVM 'testflycamera.sqf';
-
 	GW_CURRENTVEHICLE say "electronTrigger";
 	GW_CURRENTVEHICLE say "summon";
+
+	_timeStamp = (time - _startTime) call formatTimeStamp;
+	_text = format["<br /><t size='3.3' color='#ffffff' align='center' valign='middle' shadow='0'>+%1</t>", _timeStamp];
+
+	["RETURN TO WORKSHOP", _text, FALSE, { GW_TITLE_ACTIVE = false; GW_CURRENTVEHICLE setDammage 1; }] execVM 'client\ui\dialogs\title.sqf';
+	[] execVM 'testfinishcamera.sqf';
+
 	//_result = ['START', 5, false] call createTimer;
 
 	[] spawn { 

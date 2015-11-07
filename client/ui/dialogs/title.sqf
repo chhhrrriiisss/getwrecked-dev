@@ -17,15 +17,11 @@ private ['_buttonString', '_timeValue', '_showButton'];
 
 _buttonString = [_this,0, "CANCEL", [""]] call filterParam;
 _textString =  [_this,1, "", [""]] call filterParam;
-_condition =  [_this,2, { true }, [{}]] call filterParam;
-_showButton = [_this,3, true, [false]] call filterParam;
+_showButton = [_this,2, true, [false]] call filterParam;
+_endFunction = [_this,3, { GW_TITLE_ACTIVE = false; }, [{}, ""]] call filterParam;
+_condition = {true};
 
 // _soundEnabled = [_this,3, false, [false]] call filterParam;
-
-// Global function to cancel the current timer
-cancelCurrentTitle = {	
-	GW_TITLE_ACTIVE = false;
-};
 
 disableSerialization;
 if(!(createDialog "GW_TitleScreen")) exitWith { GW_TITLE_ACTIVE = false; }; 
@@ -51,16 +47,15 @@ _text ctrlCommit 0;
 
 for "_i" from 0 to 1 step 0 do {
 	if (isNull (findDisplay 95000) || (time > _timeout) || !(call _condition) || !GW_TITLE_ACTIVE) exitWith {};
-	Sleep 0.5;
+	Sleep 0.1;
 };
 
 // Timer over, tidy up
 showChat true;
-_exitWith = if (GW_TITLE_ACTIVE && time > _timeout) then { true } else { false };
 GW_TITLE_ACTIVE = false;
-closeDialog 0;
+closeDialog 95000;
 
-_exitWith
+call _endFunction;
 
 
 

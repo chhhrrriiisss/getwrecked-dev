@@ -86,7 +86,7 @@ class GW_TitleScreen
 		{
 			idc = GW_TitleScreen_Button_ID;
 			text = "ABORT";
-			onButtonClick = "[] spawn cancelCurrentTitle";
+			onButtonClick = "closeDialog 0;";
 
 			x = (0.4) * safezoneW + safezoneX;
 			y = (MARGIN_BOTTOM) * safezoneH + safezoneY;
