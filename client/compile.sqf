@@ -122,7 +122,10 @@ createTimer = compile preprocessFile "client\ui\dialogs\timer.sqf";
 createTitle = compile preprocessFile "client\ui\dialogs\title.sqf";
 
 // Zone
-deployVehicle = compile preprocessFile 'client\zones\deploy.sqf';
+preVehicleDeploy = compile preprocessFile 'client\zones\preVehicleDeploy.sqf';
+initVehicleDeploy = compile preprocessFile 'client\zones\initVehicleDeploy.sqf';
+deployBattle = compile preprocessFile 'client\zones\deploy_battle.sqf';
+deployRace = compile preprocessFile 'client\zones\deploy_race.sqf';
 servicePoint = compile preprocessFile 'client\zones\vehicle_point.sqf';
 nitroPad =  compile preprocessFile 'client\zones\nitro_pad.sqf';
 flamePad = compile preprocessFile 'client\zones\flame_pad.sqf';

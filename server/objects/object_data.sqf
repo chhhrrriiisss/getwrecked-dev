@@ -17,7 +17,7 @@ if (_isHolder) then {
 
 if (_obj isKindOf "StaticWeapon" || _isHolder) then { // Static weapons and Weaponholders
 	_obj setVehicleAmmo 0;		
-	_obj lockDriver true;
+	_obj lock true;
 	_obj lockCargo true;
 	_obj lockTurret [[0], true];
 	_obj lockTurret [[0,0], true];

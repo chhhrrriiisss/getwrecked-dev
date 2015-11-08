@@ -20,7 +20,6 @@ _isAi = _vehicle getVariable ['isAI', false];
 
 if (!_isAi) then {
 	_vehicle lock true;
-	_vehicle lockDriver true;
 	_vehicle lockCargo true;
 };
 
@@ -171,7 +170,6 @@ if (GW_CURRENTZONE == "workshopZone" || isServer) then {
 };
 
 if (GW_CURRENTZONE != "workshopZone" && !isServer) then {
-	_vehicle lockDriver false;
 	_vehicle lock false;
 };
 

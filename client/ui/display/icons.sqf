@@ -14,12 +14,14 @@
 
 		_dist = (GW_CURRENTVEHICLE distance _pos);
 		_alpha = [1 - (_dist / 1000), 0.05, 1] call limitToRange;
+
 		_alpha = if (_completedArray) then { 
 			_prevAlpha = (_x select 2);
 			_prevAlpha = [_prevAlpha - 0.005, 0, 1] call limitToRange;
 			_x set [2, _prevAlpha];
 			_prevAlpha
 		} else { _alpha };
+		_alpha = if (_forEachIndex == 0 && !_completedArray) then { 1 } else { _alpha };
 
 		if (_alpha <= 0) then {} else {
 
@@ -42,6 +44,28 @@
 				checkpointMarkerIcon 	
 			};
 
+			
+			// Offscreen marker render
+			// _dT = [(positionCameraToWorld [0,0,0]), _pos] call dirTo;
+			// _dif = [GW_TARGET_DIRECTION - _dT] call flattenAngle;
+			// _offScreen = if ((abs _dif) > 45 && !_completedArray && _forEachIndex == 0) exitWith { 
+			
+
+			// 	_rot = 0;
+			// 	_xPos = if (_dif < 0) then { _rot = 270; 0.9352 } else { _rot = 90; -0.352 };
+			// 	_yPos = [1 - ( ((positionCameraToWorld [0,0,0]) select 2) / (_pos select 2) ), safeZoneY, (safeZoneY + safeZoneH)] call limitToRange;
+				
+			// 	hint format['POS: %1', _xPos];
+
+			// 	_pos = screenToWorld [_xPos * (safezoneW + safezoneX), _yPos * (safezoneH + safezoneY)];
+			// 	_icon = format['%1%2', MISSION_ROOT, 'client\images\checkpoint_halo2.paa'];
+			// 	_index = "";
+			// 	_size = 5;
+
+			// 	drawIcon3D [_icon,[255,255,255,_alpha],_pos,_size,_size,_rot, _index,0, _fontSize, "PuristaMedium"];		
+
+			// };
+			
 			// Display distance and checkpoint index information
 			_index = if (_completedArray) then { (_x select 1) } else { 
 

@@ -1,5 +1,25 @@
 // Creates a series of checkpoints, waits for player to enter correctly 
 
+_abortSequence = {
+	
+	_toDelete = _this;
+
+	GW_CURRENTVEHICLE say "siren";
+	[GW_CURRENTVEHICLE, 9999, 'client\images\lock_halo.paa',{ (alive GW_CURRENTVEHICLE) }, false] spawn createHalo;
+
+	// Empty _cpArray
+	{
+		{
+			deleteVehicle _x;
+		} foreach (_x select 2);
+	} foreach _toDelete;
+
+
+	[] spawn {
+		Sleep (2 + random 5);
+		(vehicle player) call destroyInstantly;		
+	};
+};
 
 // _points = [_this, 0, [], [[]]] call bis_fnc_param;
 _points = [
@@ -51,52 +71,59 @@ _dirToRB = [_dirTo + 180] call normalizeAngle;
 
 // Create CP markers at each point
 {
-	_cp = "Sign_sphere100cm_F" createVehicleLocal _x;
-	_dirNext = if (_forEachIndex == (count _points - 1)) then { _dirNext } else { ([_x, _points select (_forEachIndex + 1)] call dirTo) };
-	_cp setDir _dirNext;
 
-	_c = "Sign_Circle_F" createVehicleLocal _x;
-	_c setPos [_x select 0, _x select 1, (_x select 2) - 5];
+	_objArray = [];
+	_cPos = _x;
+
+	_cp = "Sign_sphere100cm_F" createVehicleLocal _cPos;
+	_dirNext = if (_forEachIndex == (count _points - 1)) then { _dirNext } else { ([_cPos, _points select (_forEachIndex + 1)] call dirTo) };
+	_cp setDir _dirNext;
+	hideObject _cp;
+	_objArray pushBack _cp;
+
+	_c = "Sign_Circle_F" createVehicleLocal _cPos;
+	_c setPos [_cPos select 0, _cPos select 1, (_cPos select 2) - 5];
 	_c setDir _dirNext;
+	_objArray pushBack _c;
 
 	// Add to checkpoint 3d icons array
 	GW_CHECKPOINTS pushBack _c;
 
-	_l = "UserTexture10m_F" createVehicleLocal _x; 
-	_l setObjectTextureGlobal [0,"client\images\stripes_fade.paa"]; 
-	_offsetPos = (_cp modelToWorldVisual [10,-4.8,0]);
-	_offsetPos set [2, 0.1];
-	_l setPos _offsetPos;
-	_l setVectorUp (surfaceNormal _offsetPos);
-	[_l, [-90,0,[(_dirNext+180)] call normalizeAngle]] call setPitchBankYaw;  
+	{
+		_t = "UserTexture10m_F" createVehicleLocal _cPos; 
+		_t setObjectTextureGlobal [0,"client\images\stripes_fade.paa"]; 
+		_offsetPos = (_cp modelToWorldVisual _x);
+		_offsetPos set [2, 0.1];
+		_t setPos _offsetPos;		
 
-	_cen = "UserTexture10m_F" createVehicleLocal _x;   
-	_cen setObjectTextureGlobal [0,"client\images\stripes_fade.paa"]; 
-	_offsetPos = (_cp modelToWorldVisual [0,-4.8,0]);
-	_offsetPos set [2, 0.1];
-	_cen setPos _offsetPos;
-	_cen setVectorUp (surfaceNormal _offsetPos);
-	[_cen, [-90,0,[(_dirNext+180)] call normalizeAngle]] call setPitchBankYaw;  
+		if ((surfaceNormal _offsetPos) distance [0,0,1] > 0.1) then {
+			hideObject _t;
+		} else {
+			[_t, [-90,0,[(_dirNext+180)] call normalizeAngle]] call setPitchBankYaw;  
+		};
 
-	_r = "UserTexture10m_F" createVehicleLocal _x;   
-	_r setObjectTextureGlobal [0,"client\images\stripes_fade.paa"]; 
-	_offsetPos = (_cp modelToWorldVisual [-10,-4.8,0]);
-	_offsetPos set [2, 0.1];
-	_r setPos _offsetPos;
-	_r setVectorUp (surfaceNormal _offsetPos);
-	[_r, [-90,0,[(_dirNext+180)] call normalizeAngle]] call setPitchBankYaw;  
+		_objArray pushBack _t;
 
+	} foreach [
+		[10,-4.8,0],
+		[0,-4.8,0],
+		[-10,-4.8,0]
+
+	];
 	
-	_cpArray pushBack [_cp, _dirNext, [_cp, _c, _l, _cen, _r]];
-
-	hideObject _cp;
+	_cpArray pushBack [_cp, _dirNext, _objArray];
 
 } foreach _points;
 
 GW_CURRENTVEHICLE engineOn false;
 GW_CURRENTVEHICLE setFuel 0;
 _result = ['START', 5, false, true] call createTimer;
-if (!_result) exitWith { hint 'Race aborted'; };
+if (!_result) exitWith { 
+	hint 'Race aborted'; 
+	_cpArray call _abortSequence;
+};
+
+
 GW_CURRENTVEHICLE say "electronTrigger";
 GW_CURRENTVEHICLE setFuel 1;
 GW_CURRENTVEHICLE engineOn true;
@@ -174,13 +201,7 @@ if ((count _cpArray) == 0 && time <= (_timeout + 0.1) ) then {
 
 } else {
 	hint format['Race failed! (Timeout)', time];
-	GW_CURRENTVEHICLE say "siren";
-	[GW_CURRENTVEHICLE, 9999, 'client\images\lock_halo.paa',{ (alive GW_CURRENTVEHICLE) }, false] spawn createHalo;
-
-	[] spawn {
-		Sleep (2 + random 5);
-		(vehicle player) call destroyInstantly;		
-	};
+	_cpArray call _abortSequence;
 };
 
 

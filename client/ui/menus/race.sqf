@@ -58,14 +58,19 @@ startRace = {
 	systemchat 'Syncing race data to other clients.';
 	publicVariable "GW_ACTIVE_RACES";
 
-
-
 	closeDialog 0;
 
 	// Send player to zone and begin waiting period
-
+	[GW_SPAWN_VEHICLE, player, _selectedRace] spawn deployRace;
+	GW_SPAWN_ACTIVE = false;
 
 	// If we manage to get sufficient players, send checkpoint trigger to all clients
+
+	[] spawn {
+		Sleep 60;
+		GW_RACE_ACTIVE = false;
+		GW_ACTIVE_RACES = [];
+	};
 
 
 	// Otherwise blow everyone up and start again

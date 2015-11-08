@@ -29,7 +29,7 @@ GW_LAST_TARGET = [_vehicle, diag_tickTime];
 
 // Prevent access temporarily
 if (!_isAI) then {
-    _vehicle lockDriver true;
+    _vehicle lock true;
     _vehicle lockCargo true;
     _vehicle lockTurret [[0], true];
 };

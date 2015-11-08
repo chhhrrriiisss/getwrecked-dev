@@ -29,7 +29,7 @@ _obj setVariable ["GW_Health", _health, true];
 
 if (_obj isKindOf "StaticWeapon" || _isHolder) then { // Static weapons and Weaponholders
 	_obj setVehicleAmmo 0;		
-	_obj lockDriver true;
+	_obj lock true;
 	_obj lockCargo true;
 	{_obj lockturret [[_x],true]} forEach [0,1,2];
 };

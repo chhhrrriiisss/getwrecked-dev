@@ -49,6 +49,33 @@ GW_COMMANDS_LIST = [
 
 	[
 		
+		"compile",
+		{
+
+			params ['_argument'];	
+
+			if ( !(serverCommandAvailable "#kick") ) exitWith {
+				systemChat 'You need to be an admin to use that.';
+			};
+
+			call compile preprocessFile "global\compile.sqf";
+
+			if (X_Client || X_JIP) then {
+				call compile preprocessFile "client\compile.sqf";  
+				call compile preprocessFile 'client\ui\compile.sqf';
+			};
+
+			if (X_Server) then {
+				call compile preprocessFile "server\compile.sqf";  
+			};
+
+			systemChat 'Re-compile complete.';
+
+		}
+	],
+
+	[
+		
 		"supply",
 		{
 
@@ -352,7 +379,7 @@ GW_COMMANDS_LIST = [
 				_argument = GW_LASTLOAD; 
 			};
 
-			[GW_CURRENTVEHICLE modelToWorldVisual [0, 30, 0], _this] spawn requestVehicle;
+			[GW_CURRENTVEHICLE modelToWorldVisual [0, 30, 0], _argument] spawn requestVehicle;
 
 		}
 	],

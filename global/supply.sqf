@@ -69,10 +69,11 @@ GW_SUPPLY_TYPES = [
 		randomSign,
 		{	
 			_crate = _this;			
-			_vehicle = (vehicle player);
-			_vehicle setVariable ['status', [], true];
-
 			
+			if (GW_CURRENTZONE == "globalZone") exitWith {};
+
+			_vehicle = (vehicle player);
+			_vehicle setVariable ['status', [], true];			
 
 			_pos = (ASLtoATL getPosASL _vehicle);
 			_newPos = GW_CURRENTZONE call findLocationInZone;
@@ -194,7 +195,7 @@ GW_SUPPLY_TYPES = [
 			_vehicle setVariable ['status', [], true];
 
 			[_vehicle, ['overcharge'], _maxTime] call addVehicleStatus;
-			[_vehicle, _maxTime, 'client\images\power_halo.paa', _condition] spawn createHalo;
+			[_vehicle, _maxTime, 'client\images\power_halo.paa', _condition, true, [0,0,0.5], false] spawn createHalo;
 			[_vehicle, 'client\images\vehicle_textures\fire\fire.jpg', _maxTime, _condition] spawn swapVehicleTexture;
 			['OVERCHARGE', _maxTime, speedSupplyIcon] spawn createNotification;
 		}
@@ -212,7 +213,7 @@ GW_SUPPLY_TYPES = [
 			_vehicle setVariable ['status', [], true];
 			
 			[_vehicle, ['nanoarmor'], _maxTime] call addVehicleStatus;
-			[_vehicle, _maxTime, 'client\images\power_halo.paa', _condition] spawn createHalo;
+			[_vehicle, _maxTime, 'client\images\power_halo.paa', _condition, true, [0,0,0.5], false] spawn createHalo;
 			[_vehicle, 'client\images\vehicle_textures\special\armor.jpg', _maxTime, _condition] spawn swapVehicleTexture;
 			['NANO ARMOR', _maxTime, armorSupplyIcon, _condition] spawn createNotification;
 		}

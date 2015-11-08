@@ -6,6 +6,7 @@
 
 private ['_distance', '_cl', '_playerDir', '_angleDif', '_dif'];
 
+
 // If zone is specified, instead of raw data, find it
 _data = if (typename (_this select 1) == "STRING") then {
 	

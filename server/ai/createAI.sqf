@@ -39,7 +39,6 @@ createVehicleCrew _vehicle;
 
 // Set AI attributes and skill
 _vehicle lock true;
-_vehicle lockDriver true;
 _ai = driver _vehicle;
 
 // Set AI's name to last name to avoid remote name calls not finding it

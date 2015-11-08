@@ -12,11 +12,21 @@ _vehiclesOnly = [_this, 1, false, [false]] call filterParam;
 if (_zone isEqualTo "") exitWith { [] };
 if (count allUnits isEqualTo 0) exitWith { [] };
 
+
 _arr = [];
+_isGlobal = if (_zone == "globalZone") then { true } else { false };
 
 {
-	// If the unit is alive and within the zone AND a player
-	if (alive _x && ([(ASLtoATL getPosASL _x), _zone] call checkInZone)) then {
+	// If the unit is alive
+	if (alive _x) then {
+
+		// If we're checking global, look for zone immunity
+		_zoneImmune = (vehicle _x) getVariable ['GW_ZoneImmune', false];
+		if (_isGlobal && !_zoneImmune) exitWith {};
+
+		// Otherwise check the position
+		_inZone = if (_isGlobal) then { true } else { ([(ASLtoATL getPosASL _x), _zone] call checkInZone) };
+		if (!_inZone) exitWith {};
 
 		_inVehicle = if ((vehicle _x) == _x) then { false } else { _x = vehicle _x; true };
 

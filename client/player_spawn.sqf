@@ -210,7 +210,8 @@ waitUntil {
 			if (viewDistance != GW_EFFECTS_RANGE) then { setViewDistance GW_EFFECTS_RANGE; };
 		};
 
-		if ( count GW_CURRENTZONE_DATA > 0) then {
+		_zoneImmune = GW_CURRENTVEHICLE getVariable ['GW_ZoneImmune', false];
+		if (count GW_CURRENTZONE_DATA > 0 && !_zoneImmune) then {
 
 			_inZone = [_currentPos, GW_CURRENTZONE_DATA ] call checkInZone;
 

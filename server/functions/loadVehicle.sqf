@@ -150,7 +150,7 @@ _newVehicle call cleanAttached;
 _targetPos = if (!isNil "_target") then { _target } else { (ASLtoATL getPosASL _newVehicle) };
 _newVehicle setPos _targetPos;
 
-_newVehicle lockDriver true;
+_newVehicle lock true;
 _newVehicle lockCargo true;
 _newVehicle setDammage 0;
 {  _x setDammage 0; false } count (attachedObjects _newVehicle) > 0;

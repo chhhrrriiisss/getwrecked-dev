@@ -178,7 +178,7 @@ _newVehicle setPos _targetPos;
 
 if (GW_PREVIEW_CAM_ACTIVE) then { GW_PREVIEW_CAM_TARGET = _newVehicle; GW_PREVIEW_VEHICLE = _newVehicle; };
 
-_newVehicle lockDriver true;
+_newVehicle lock true;
 _newVehicle lockCargo true;
 _newVehicle setDammage 0;
 {  _x setDammage 0; _x enableSimulationGlobal true; false } count (attachedObjects _newVehicle) > 0;

@@ -21,6 +21,7 @@ _timeValue =  [_this,1, 3, [0]] call filterParam;
 GW_TIMER_VALUE = time + _timeValue;
 _showButton = [_this,2, true, [false]] call filterParam;
 _soundEnabled = [_this,3, false, [false]] call filterParam;
+_functionOnComplete = [_this,4, { true }, [{}]] call filterParam;
 
 // Global function to cancel the current timer
 cancelCurrentTimer = {	
@@ -78,7 +79,11 @@ for "_i" from 0 to 1 step 0 do {
 
 // Timer over, tidy up
 showChat true;
-_exitWith = if (GW_TIMER_ACTIVE && time > GW_TIMER_VALUE) then { true } else { false };
+_exitWith = if (GW_TIMER_ACTIVE && time > GW_TIMER_VALUE) then { 
+	[] call _functionOnComplete;
+	true 
+} else { false };
+
 GW_TIMER_ACTIVE = false;
 closeDialog 0;
 
