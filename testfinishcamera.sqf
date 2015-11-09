@@ -32,6 +32,8 @@ waitUntil {
 	(time > _timeout)
 };
 
+9999 cutText ["", "BLACK OUT", 0.5];
+
 _camPos = getPos _cam;
 _r = [(_camPos distance GW_CURRENTVEHICLE),10,30] call limitToRange;
 _phi = 1;
@@ -42,10 +44,13 @@ _rz = [(_camPos select 2) * (sin _phi),7,20] call limitToRange;
 _cam camSetRelPos [_rx, _ry, _rz];
 _cam camCommit 1;
 
+
 _timeout = time + 1;
 waitUntil {
 	(time > _timeout)
 };
+
+9999 cutText ["", "BLACK IN", 1];
 
 _timeout = time + 9999;
 waitUntil {

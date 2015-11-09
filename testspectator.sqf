@@ -13,6 +13,8 @@ GW_SPECTATOR_ACTIVE = true;
 disableSerialization;
 if(!(createDialog "GW_Spectator")) exitWith { GW_SPECTATOR_ACTIVE = false; }; 
 
+9999 cutText ["", "BLACK IN", 1];
+
 // 9999 cutText ["", "BLACK IN", 1.5];  
 GW_SPECTATOR_TARGET = [_this,0, GW_CURRENTVEHICLE, [objNull, []]] call filterParam;
 

@@ -66,8 +66,11 @@ if (_raceHost == (name player)) then {
 			if (random 100 < (20 - (_forEachIndex * 2))) exitWith {};
 			_supplyCount = _supplyCount + 1;			
 
-			// Random position
-			_pos = _x vectorAdd [(random 100), (random 100), 0];
+			// Random position, between this and next point
+			_nextPos = _racePoints select (_forEachIndex + 1);
+			_dirNext = [_x, _nextPos] call dirTo;
+			_distNext = _x distance _nextPos;
+			_pos = ([_x, random _distNext, _dirNext] call relPos) vectorAdd [((random 150) - 75), ((random 150) - 75), 0];
 			_pos set [2, 0];
 
 			// Care packages at least 50% of the time
