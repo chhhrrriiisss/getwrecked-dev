@@ -3,7 +3,7 @@ params ['_pad', '_unit'];
 _onExit = {
     systemChat (_this select 0);
     GW_SPAWN_ACTIVE = false;
-    GW_GENERATOR_ACTIVE = false;
+    GW_RACE_GENERATOR_ACTIVE = false;
     false
 };
 

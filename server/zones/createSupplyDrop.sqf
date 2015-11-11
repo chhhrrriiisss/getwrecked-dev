@@ -12,7 +12,7 @@ private ['_pos', '_para', '_source', '_part', '_spawnedItems'];
 #define GAP 0.11
 
 _pos = [_this,0, [0,0,0], [[]]] call filterParam;
-_paradrop = [_this,1,false,[false]] call filterParam;
+_para = [_this,1,false,[false]] call filterParam;
 _type = [_this,2,"",[""]] call filterParam;
 
 if (_pos distance [0,0,0] < 100) exitWith {};
@@ -20,7 +20,7 @@ if (GW_SUPPLY_ACTIVE >= GW_SUPPLY_MAX) exitWith {};
 
 _spawnedItems = [];
 
-if (_paradrop) then {
+if (_para) then {
 	_pos set [2, (random 250) + 70];
 };
 
@@ -212,12 +212,10 @@ _source setDir (random 360);
 	false
 } count _spawnedItems > 0;
 
-
 _para = createVehicle ["I_parachute_02_F", [0,0,0], [], 0, "FLY"];
 _para addEventHandler['handleDamage', { false }];
 _para attachTo [_source, [0,0,1]];
 _para setVectorUp [0,0,1];
-if (_paradrop) then { _para hideObjectGlobal true; };
 
 // Tidy up and particle effects
 0 = [_source, _para] spawn { 

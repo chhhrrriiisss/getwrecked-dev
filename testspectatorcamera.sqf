@@ -8,10 +8,15 @@ private ["_c", "_timeout", "_pos"];
 
 if (GW_SPECTATOR_ACTIVE) exitWith {};	
 GW_HUD_ACTIVE = false;
+GW_HUD_LOCK = true;
 GW_SPECTATOR_ACTIVE = true;
+
+9999 cutText ["", "BLACK IN", 1]; 
 
 disableSerialization;
 if(!(createDialog "GW_Spectator")) exitWith { GW_SPECTATOR_ACTIVE = false; }; 
+
+disableUserInput TRUE;
 
 // 9999 cutText ["", "BLACK IN", 1.5];  
 GW_SPECTATOR_TARGET = [_this,0, GW_CURRENTVEHICLE, [objNull, []]] call filterParam;
@@ -65,6 +70,9 @@ GW_SPECTATOR_ACTIVE = false;
 "colorCorrections" ppEffectEnable false;
 "filmGrain" ppEffectEnable false;
 closeDialog 0;
+disableUserInput false;
+GW_HUD_ACTIVE = true;
+GW_HUD_LOCK = false;
 
 // At least 2 metres away
 // _rndX = ((random 50) - 25) + 2;

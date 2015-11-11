@@ -14,7 +14,7 @@ if (!isNil "GW_MAP_EH") then {
 
 GW_MAP_EH = ((findDisplay 12) displayCtrl 51) ctrlAddEventHandler ["Draw", {
 	
-	if (GW_GENERATOR_ACTIVE) exitWith {};
+	if (GW_RACE_GENERATOR_ACTIVE) exitWith {};
 		
 	_vehicle = (vehicle player);
 	_scale = 1;

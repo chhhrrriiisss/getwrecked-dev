@@ -11,23 +11,22 @@ if (GW_TITLE_ACTIVE) then {
 
 // Close the hud if its open
 GW_HUD_ACTIVE = false;
-GW_TITLE_ACTIVE = true;
+GW_HUD_LOCK = true;
 
-private ['_buttonString', '_timeValue', '_showButton'];
+private ['_buttonString', '_timeValue', '_canAbort'];
 
-_buttonString = [_this,0, "CANCEL", [""]] call filterParam;
-_textString =  [_this,1, "", [""]] call filterParam;
-_showButton = [_this,2, true, [false]] call filterParam;
-_endFunction = [_this,3, { GW_TITLE_ACTIVE = false; }, [{}, ""]] call filterParam;
-_condition = {true};
+_textString =  [_this,0, "", ["", {}]] call filterParam;
+_buttonString = [_this,1, "CANCEL", [""]] call filterParam;
+_canAbort = [_this,2, true, [false]] call filterParam;
+_condition = [_this,3, { true }, [{}, ""]] call filterParam;
+_maxTime = [_this,4, 60, [0]] call filterParam;
 
 // _soundEnabled = [_this,3, false, [false]] call filterParam;
-
 disableSerialization;
 if(!(createDialog "GW_TitleScreen")) exitWith { GW_TITLE_ACTIVE = false; }; 
 showChat false;
 
-_timeout = time + 9999;
+_timeout = time + _maxTime;
 
 disableSerialization;
 _text = ((findDisplay 95000) displayCtrl 95001);
@@ -37,25 +36,32 @@ _btn ctrlShow true;
 _btn ctrlSetText _buttonString;
 _btn ctrlCommit 0;	
 
-if (!_showButton) then {
+if (!_canAbort) then {
 	_btn ctrlShow false;
 	_btn CtrlCommit 0;
+	disableUserInput true;
 };
 
-_text ctrlSetStructuredText parseText ( _textString );
-_text ctrlCommit 0;
-
 for "_i" from 0 to 1 step 0 do {
+
 	if (isNull (findDisplay 95000) || (time > _timeout) || !(call _condition) || !GW_TITLE_ACTIVE) exitWith {};
+
+	_textValue = if (typename _textString == "STRING") then { _textString } else { ([time, _timeout] call _textString) };
+	_text ctrlSetStructuredText parseText ( _textValue );
+	_text ctrlCommit 0;
+
 	Sleep 0.1;
 };
 
 // Timer over, tidy up
 showChat true;
 GW_TITLE_ACTIVE = false;
+GW_HUD_ACTIVE = true;
+GW_HUD_LOCK = false;
 closeDialog 95000;
+disableUserInput false;
 
-call _endFunction;
+
 
 
 

@@ -4,7 +4,7 @@
 //      Return: None
 //
 
-if (GW_WAITALERT || GW_SETTINGS_ACTIVE) exitWith {};
+if (GW_WAITALERT || GW_SETTINGS_ACTIVE || GW_HUD_LOCK) exitWith {};
 GW_WAITALERT = true;
 
 private ['_text', '_duration', '_icon', '_colour', '_type'];
@@ -42,10 +42,12 @@ _alertGroup = [
 ];
 
 // Initially, fade everything out
+_bg ctrlSetPosition [0.405 * safeZoneW + safeZoneX, 0.2 * safeZoneH + safeZoneY];
 _bg ctrlSetBackgroundColor _bgColour;
 _bg ctrlSetFade 1;
 _bg ctrlCommit 0;
 
+_title ctrlSetPosition [0.405 * safeZoneW + safeZoneX, 0.217 * safeZoneH + safeZoneY];
 _title ctrlSetTextColor _fontColour;
 _title ctrlSetFade 1;
 _title ctrlCommit 0;

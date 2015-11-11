@@ -188,8 +188,20 @@ if ((count _cpArray) == 0 && time <= (_timeout + 0.1) ) then {
 	_timeStamp = (time - _startTime) call formatTimeStamp;
 	_text = format["<br /><t size='3.3' color='#ffffff' align='center' valign='middle' shadow='0'>+%1</t>", _timeStamp];
 
-	["RETURN TO WORKSHOP", _text, FALSE, { GW_TITLE_ACTIVE = false; 9999 cutText ["", "BLACK OUT", 1]; Sleep 1; [] execVM 'testspectator.sqf'; }] execVM 'client\ui\dialogs\title.sqf';
+	_scriptDone = [_text, "SPECTATE", true, { true }, 10] spawn createTitle;
 	[] execVM 'testfinishcamera.sqf';
+
+	_timeout = time + 10;
+	waitUntil {
+		Sleep 0.1;
+		((time > _timeout) || (scriptDone _scriptDone))
+	};
+
+	9999 cutText ["", "BLACK OUT", 1]; 
+	Sleep 1; 
+	[] execVM 'testspectatorcamera.sqf';
+	
+	// [] execVM 'testfinishcamera.sqf';
 
 	//_result = ['START', 5, false] call createTimer;
 

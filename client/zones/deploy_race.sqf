@@ -14,10 +14,11 @@ GW_DEPLOY_ACTIVE = true;
 _targetName = _vehicleToDeploy getVariable ['name', ''];
 GW_LASTLOAD = _targetName;
 
-
-_success = [_vehicleToDeploy, _unit] call preVehicleDeploy;
-
-if (!_success) exitWith { GW_DEPLOY_ACTIVE = false; false };
+_success = [_vehicleToDeploy, _unit, true] call preVehicleDeploy;
+if (!_success) exitWith {
+	GW_DEPLOY_ACTIVE = false; 
+	false 
+};
 
 // Determine the start checkpoint
 _racePoints = _targetRace select 1;
@@ -25,6 +26,12 @@ _raceName = (_targetRace select 0) select 0;
 _raceHost = _targetRace select 2;
 _startPosition = _racePoints select 0;
 _firstPosition = _racePoints select 1;
+_raceStatus = [_targetRace, 3, -1, [0]] call filterParam;
+
+if (_raceStatus == -1) exitWith {
+	systemChat 'Error joining race [Bad status code]';
+	GW_DEPLOY_ACTIVE = false;
+};
 
 // Find a position, 30m back from first checkpoint and begin alignment
 _dirTo = [_startPosition, _firstPosition] call dirTo;
@@ -47,67 +54,53 @@ _vehicleToDeploy setVariable ['GW_ZoneImmune', true, true];
 [_vehicleToDeploy] call initVehicleDeploy;
 ['globalZone'] call setCurrentZone;
 
-[_racePoints, 9999] execVM 'testcheckpoints.sqf';
-
 // If we are the host, create supply boxes along the route
-if (_raceHost == (name player)) then {
-	_maxSupply = 15;
-	_supplyCount = 0;
-	{
-		// Limit maximum number of supply drops
-		if (_supplyCount >= _maxSupply) exitWith {};
+// if (_raceHost == (name player)) then {
+// 	_maxSupply = 15;
+// 	_supplyCount = 0;
+// 	{
+// 		// Limit maximum number of supply drops
+// 		if (_supplyCount >= _maxSupply) exitWith {};
 
-		// Dont put crates at the last checkpoint
-		if (_forEachIndex == ((count _racePoints)-1)) exitWith {}; 
+// 		// Dont put crates at the last checkpoint
+// 		if (_forEachIndex == ((count _racePoints)-1)) exitWith {}; 
 
-		for "_i" from 0 to (random 3) step 1 do { 
+// 		for "_i" from 0 to (random 3) step 1 do { 
 
-			// Only a chance of a crate, increasing with proximity to end
-			if (random 100 < (20 - (_forEachIndex * 2))) exitWith {};
-			_supplyCount = _supplyCount + 1;			
+// 			// Only a chance of a crate, increasing with proximity to end
+// 			if (random 100 < (20 - (_forEachIndex * 2))) exitWith {};
+// 			_supplyCount = _supplyCount + 1;			
 
-			// Random position, between this and next point
-			_nextPos = _racePoints select (_forEachIndex + 1);
-			_dirNext = [_x, _nextPos] call dirTo;
-			_distNext = _x distance _nextPos;
-			_pos = ([_x, random _distNext, _dirNext] call relPos) vectorAdd [((random 150) - 75), ((random 150) - 75), 0];
-			_pos set [2, 0];
+// 			// Random position, between this and next point
+// 			_nextPos = _racePoints select (_forEachIndex + 1);
+// 			_dirNext = [_x, _nextPos] call dirTo;
+// 			_distNext = _x distance _nextPos;
+// 			_pos = ([_x, random _distNext, _dirNext] call relPos) vectorAdd [((random 150) - 75), ((random 150) - 75), 0];
+// 			_pos set [2, 0];
 
-			// Care packages at least 50% of the time
-			_type = if (random 100 > 50) then { "care" } else { "" };
-			[
-				[_pos, true, _type],
-				'createSupplyDrop',
-				false,
-				false
-			] call bis_fnc_mp;	
+// 			// Care packages at least 50% of the time
+// 			_type = if (random 100 > 50) then { "care" } else { "" };
+// 			[
+// 				[_pos, false, _type],
+// 				'createSupplyDrop',
+// 				false,
+// 				false
+// 			] call bis_fnc_mp;	
 
-		};
+// 		};
 
-	} foreach _racePoints;
-};
-// _unit action ["engineoff", _targetVehicle];
-// _targetPosition set [2, 5];
-// _targetVehicle setPos _targetPosition;
-// _targetVehicle setDir (random 360);
-// [format['%1Zone', GW_SPAWN_LOCATION]] call setCurrentZone;
+// 	} foreach _racePoints;
+// };
 
 // Everything is ok, return true
 GW_DEPLOY_ACTIVE = false;
 
-// Tell everyone else where we've gone
-// _str = if (_zoneDisplayName == "Downtown") then { "" } else { "the "};
-// systemChat format['You deployed to %1%2.', _str, _zoneDisplayName];
-
-// _strBroadcast = format['%1 deployed to %2%3', name player, _str, _zoneDisplayName];
-// pubVar_systemChat = _strBroadcast;
-// publicVariable "pubVar_systemChat";
-
-// // Log on server
-// pubVar_logDiag = _strBroadcast;
-// publicVariableServer "pubVar_logDiag";
-
 // Record a successful deployment
 ['deploy', GW_SPAWN_VEHICLE, 1] call logStat; 
 
-true
+GW_HUD_ACTIVE = false;
+GW_HUD_LOCK = true;
+
+[_targetRace] execVM 'client\zones\race_status.sqf';
+
+TRUE

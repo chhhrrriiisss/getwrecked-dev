@@ -17,7 +17,7 @@ X_Client = false;
 X_JIP = false;
 
 // Used to determine if saved vehicles are out-of-date
-GW_VERSION = 83;
+GW_VERSION = 85;
 
 if (isServer) then { X_Server = true };
 if (!isDedicated) then { X_Client = true };
@@ -35,7 +35,7 @@ MISSION_ROOT = call {
 call compile preprocessFile "global\compile.sqf";
 [] execVM "briefing.sqf";
 
-hint "v0.8.3 DEV";
+hint "v0.8.5 DEV";
 
 99999 cutText [localize "str_gw_loading", "BLACK", 0.01]; 
 

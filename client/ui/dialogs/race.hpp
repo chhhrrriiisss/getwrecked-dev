@@ -3,6 +3,7 @@
 #define GW_FilterList_ID 90011
 #define GW_Edit_ID 90020
 #define GW_Rename_ID 90021
+#define GW_New_ID 90022
 
 #define GW_BUTTON_WIDTH 0.2
 #define GW_BUTTON_HEIGHT 0.035
@@ -589,8 +590,30 @@ class GW_Race
       onLBSelChanged  = "(_this select 1) call selectRace";
       x = (0.015) * safezoneW + safezoneX;
       y = (MARGIN_BOTTOM) * safezoneH + safezoneY;
-      w = (GW_BUTTON_WIDTH) * safezoneW;
+      w = ((GW_BUTTON_WIDTH * 0.66) ) * safezoneW;
       h = GW_BUTTON_HEIGHT * safezoneH;
+    };
+
+    class ButtonNew : GW_RscButtonMenu
+    {
+      idc = GW_New_ID;
+      text = "+";
+      onButtonClick = "_this call createNewRace";
+      x = (0.015 + (GW_BUTTON_WIDTH* 0.66) + (GW_BUTTON_GAP_X)) * safezoneW + safezoneX;
+      y = (MARGIN_BOTTOM) * safezoneH + safezoneY;
+      w = (GW_BUTTON_WIDTH * 0.33) * safezoneW;
+      h = GW_BUTTON_HEIGHT * safezoneH;
+
+      size = 0.04;
+
+      class TextPos
+      {
+        left = 0;
+        top = 0.0135;
+        right = 0;
+        bottom = 0;
+      };
+
     };
 
     class ButtonEdit : GW_RscButtonMenu
@@ -670,7 +693,7 @@ class GW_Race
     {
       idc = 90015;
       text = "START";
-      onButtonClick = "GW_RACE_ID call startRace";
+      onButtonClick = "GW_RACE_ID spawn startRace";
       x = (0.4) * safezoneW + safezoneX;
       y = (MARGIN_BOTTOM) * safezoneH + safezoneY;
       w = GW_BUTTON_WIDTH * safezoneW;
@@ -741,7 +764,7 @@ class GW_Race
     {
       idc = 90018;
       text = "Delete";
-      onButtonClick = "[] spawn removeVehicle";
+      onButtonClick = "[] spawn deleteRace";
       x = (0.98 - (GW_BUTTON_WIDTH / 2)) * safezoneW + safezoneX;
       y = (MARGIN_BOTTOM) * safezoneH + safezoneY;
       w = (GW_BUTTON_WIDTH / 2) * safezoneW;

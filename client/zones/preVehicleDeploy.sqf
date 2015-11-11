@@ -1,3 +1,10 @@
+//
+//      Name: preVehicleDeploy
+//      Desc: Abort sequence prior to deployment
+//      Return: None
+//
+
+
 params ['_vehicleToDeploy', '_unit'];
 private ['_driver', '_vehicleToDeploy', '_success', '_unit'];
 
@@ -7,7 +14,8 @@ _driver = driver _vehicleToDeploy;
 if (_unit != _driver) then { _unit moveInDriver _vehicleToDeploy; };
 
 // Create a countdown timer with an abort option
-_success = ['ABORT', 5, true] call createTimer;
+_canAbort =  [_this, 2, true, [false]] call filterParam;
+_success = ['ABORT', 5, _canAbort] call createTimer;
 
 if (!_success) exitWith {
 
@@ -23,9 +31,14 @@ if (!_success) exitWith {
 			((_this == (vehicle _this)) || (time > _timeout))
 		};
 
+		// Refresh HUD
+		GW_HUD_ACTIVE = false;
+		
 		_objs = lineIntersectsWith [ATLtoASL (_this modelToWorldVisual [0,0,1.6]), ATLtoASL (_this modelToWorldVisual [0,5,1.6]), _this, objNull];
 		if (count _objs == 0) exitWith {};
 		_this setPos (_this modelToWorldVisual [0,5,0]);
+
+		
 	};
 
 	// Notify and re-lock driver seat then retain ownership

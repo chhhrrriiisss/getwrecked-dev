@@ -190,7 +190,7 @@ waitUntil {
 	};
 
 	// Restore the HUD if we're somewhere that needs it
-	if (GW_DEATH_CAMERA_ACTIVE || GW_PREVIEW_CAM_ACTIVE || GW_SPECTATOR_ACTIVE || GW_TIMER_ACTIVE || GW_TITLE_ACTIVE || GW_GUIDED_ACTIVE || GW_SETTINGS_ACTIVE || GW_LOADING_ACTIVE || visibleMap) then {} else {
+	if (GW_DEATH_CAMERA_ACTIVE || GW_PREVIEW_CAM_ACTIVE || GW_SPECTATOR_ACTIVE || GW_TIMER_ACTIVE || GW_TITLE_ACTIVE || GW_GUIDED_ACTIVE || GW_SETTINGS_ACTIVE || GW_LOADING_ACTIVE || visibleMap || GW_HUD_LOCK) then {} else {
 		if (!GW_HUD_ACTIVE) then {	
 			[] spawn drawHud;
 		};

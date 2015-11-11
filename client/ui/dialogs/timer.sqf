@@ -13,13 +13,13 @@ if (GW_TIMER_ACTIVE) then {
 GW_HUD_ACTIVE = false;
 GW_TIMER_ACTIVE = true;
 
-private ['_buttonString', '_timeValue', '_showButton'];
+private ['_buttonString', '_timeValue', '_canAbort'];
 
 _buttonString = [_this,0, "CANCEL", [""]] call filterParam;
 _timeValue =  [_this,1, 3, [0]] call filterParam;
 
 GW_TIMER_VALUE = time + _timeValue;
-_showButton = [_this,2, true, [false]] call filterParam;
+_canAbort = [_this,2, true, [false]] call filterParam;
 _soundEnabled = [_this,3, false, [false]] call filterParam;
 _functionOnComplete = [_this,4, { true }, [{}]] call filterParam;
 
@@ -40,9 +40,17 @@ _btn ctrlShow true;
 _btn ctrlCommit 0;
 
 // Allows the timer to be cancelled via button
-if (!_showButton) then {
+if (!_canAbort) then {
+
 	_btn ctrlShow false;
 	_btn ctrlCommit 0;
+
+	disableUserInput true;
+	_timeValue spawn {
+		Sleep _this;
+		disableUserInput false;
+	};
+
 };
 
 _exitWith = false;

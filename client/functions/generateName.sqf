@@ -1,12 +1,16 @@
-private ['_name', '_des', '_att'];
+private ['_name', '_des', '_att', '_isRaceName'];
 
 if (isNil "GW_GENERATOR_ACTIVE") then { GW_GENERATOR_ACTIVE = false; };
 if (GW_GENERATOR_ACTIVE) exitWith { true };
 GW_GENERATOR_ACTIVE = true;
 
+_isRaceName = [_this, 0, false, [false]] call filterParam;
+
 _sub = GW_subjects select (floor (random (count GW_subjects)));
 _des = GW_descriptors select (floor (random (_sub select 1)));
 _att = GW_attributes select (floor (random (count GW_attributes)));
+
+if (_isRaceName) exitWith { GW_GENERATOR_ACTIVE = false; _att };
 
 _add = if ((random 100) > 75) then { 
 	(format['%1%2', GW_additions select (floor (random (count GW_additions))),  GW_attributes select (floor (random (count GW_attributes)))])

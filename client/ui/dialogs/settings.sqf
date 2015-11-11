@@ -66,7 +66,6 @@ waitUntil { (isNull (findDisplay 92000) || (!alive GW_SETTINGS_VEHICLE)) };
 
 // Stop the preview camera
 GW_PREVIEW_CAM_ACTIVE = false;
-GW_SETTINGS_VEHICLE = nil;
 GW_SETTINGS_ACTIVE = false;
 GW_SETTINGS_READY = false;
 

@@ -7,9 +7,12 @@ Items without Fixed/Added/Removed proceeding are typically balance changes.
 
 **v0.8.3 - v0.8.5** [Closed alpha release]
 
+- Added 'New race' button to Race Generator
 - Added FlamePads to map
 - Added 'Loading' text to vehicle preview
 - Added 'Crash Test Dummy' texture for dev builds
+- Alert UI moved away from targetCursor to reduce visual clutter
+- Improved caltrops effect script
 - Increased global damage scale slightly
 - Decreased ammo requirements of some weapons
 - Decreased breakage frequency for melee weapons

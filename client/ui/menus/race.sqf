@@ -1,39 +1,103 @@
 closedialog 0;
 
-if (isNil "GW_GENERATOR_ACTIVE") then { GW_GENERATOR_ACTIVE = false; };	
-if (GW_GENERATOR_ACTIVE) exitWith {};
-GW_GENERATOR_ACTIVE = true;
+if (isNil "GW_RACE_GENERATOR_ACTIVE") then { GW_RACE_GENERATOR_ACTIVE = false; };	
+if (GW_RACE_GENERATOR_ACTIVE) exitWith {};
+GW_RACE_GENERATOR_ACTIVE = true;
 
 GW_RACE_ACTIVE = false;
 
 params ['_pad', '_unit'];
 
 _isVehicleReady = [_pad, _unit] call vehicleReadyCheck;
-if (!_isVehicleReady) exitWith { GW_GENERATOR_ACTIVE = false; };
+if (!_isVehicleReady) exitWith { GW_RACE_GENERATOR_ACTIVE = false; };
 	
 
 disableSerialization;
-if(!(createDialog "GW_Race")) exitWith { GW_GENERATOR_ACTIVE = false; }; //Couldn't create the menu
+if(!(createDialog "GW_Race")) exitWith { GW_RACE_GENERATOR_ACTIVE = false; }; //Couldn't create the menu
+
+showChat false;
+
+checkRaceStatus = {
+	
+	_r = [_this, 0, "", [""]] call filterParam;
+	_s = [_this, 1, -2, [0]] call filterParam;
+
+	private ['_r', '_s'];
+
+	if (count toArray _r == 0) exitWith { -1 };
+
+	// Just querying current status
+	if (_s == -2) exitWith {
+
+		_s = -1;
+		{
+			if (_r == ((_X select 0) select 0)) exitWith { _s = (_x select 3); };
+		} foreach GW_ACTIVE_RACES;
+
+	};
+
+	// Setting the race to the current status
+	{
+		if (_r == ((_X select 0) select 0)) exitWith { _x set [3, _s]; };
+	} foreach GW_ACTIVE_RACES;
+
+	_s
+
+};
+
+calculateDistance = {
+	params ['_array'];
+	private ['_array'];
+
+	_d = 0;
+	{
+		if (_foreachIndex == ((count _array) - 1)) exitWith {};
+		_d = _d + (_x distance (_array select (_foreachIndex + 1)));
+	} foreach _array;	
+
+	_d = if (_d > 1000) then { format['%1km', [_d / 1000, 1] call roundTo ] } else { format['%1m', [_d, 1] call roundTo ]};
+
+	_d
+
+};
+
+
 
 getAllRaces = {
 	_rcs = profileNamespace getVariable ['GW_RACES', []];
-	if (count _rcs == 0) exitWith { 
+	_rcs = if (count _rcs == 0) then {
 		[] call createDefaultRaces; 
 		(profileNamespace getVariable ['GW_RACES', []])
-	};
+	} else { _rcs };
 
-	_totalRaces = +_rcs;
-	_totalRaces append GW_ACTIVE_RACES;
+	_libraryRaces = +_rcs;
+
+	// Get a quick reference array including active race names
+	_activeRaces = [];
+	{ _activeRaces pushback ((_x select 0) select 0);	} foreach GW_ACTIVE_RACES;
+
+	// Hide races in library that are the same as active races
+	{
+		_name = (_x select 0) select 0;
+		if (_name in _activeRaces) then { _libraryRaces deleteAt _foreachIndex; };
+	} foreach _libraryRaces;
+
+	// Merge the two arrays and return
+	_totalRaces = +GW_ACTIVE_RACES;
+	_totalRaces append _libraryRaces;
 	_totalRaces
 };
 
 startRace = {
 	
+	
+
 	if (GW_RACE_ACTIVE) exitWith { systemchat 'You cant host more than one race at a time.'; };
 	GW_RACE_ACTIVE = true;
 
 	_existingRaces = (call getAllRaces);
-	_id = [_this, 0, (count _existingRaces) - 1] call limitToRange;
+	_id = [_this, 0, [0]] call filterParam;;
+	_id = [abs _id, 0, (count _existingRaces)-1] call limitToRange;
 
 	_selectedRace = (call getAllRaces) select _id;
 	_points = _selectedRace select 1;
@@ -47,11 +111,21 @@ startRace = {
 		if (((_x select 1) select 0) distance (_points select 0) < 100) exitWith { _exists = true; };
 	} foreach GW_ACTIVE_RACES;
 
+	// Calculate total distance for this race
+	_distance = [_points] call calculateDistance;
+
 	if (_exists) exitWith {
 		systemchat 'A race in that area is already active.';
 	};
 
+	_result = ['START RACE?', format['%1 [%2]', _name, _distance], 'CONFIRM'] call createMessage;
+	if (!_result) exitWith { GW_RACE_ACTIVE = false; };	
+	
 	_selectedRace pushback _host;
+
+	_status = 0; // "Waiting for players"
+	_selectedRace pushback _status;
+
 	GW_ACTIVE_RACES pushback _selectedRace;
 
 	// Sync race to all clients
@@ -61,10 +135,13 @@ startRace = {
 	closeDialog 0;
 
 	// Send player to zone and begin waiting period
-	[GW_SPAWN_VEHICLE, player, _selectedRace] spawn deployRace;
+	_success = [GW_SPAWN_VEHICLE, player, _selectedRace] call deployRace;
 	GW_SPAWN_ACTIVE = false;
 
-	// If we manage to get sufficient players, send checkpoint trigger to all clients
+	if (!_success) exitWith {
+		GW_RACE_ACTIVE = false;
+		GW_ACTIVE_RACES = [];
+	};
 
 	[] spawn {
 		Sleep 60;
@@ -87,6 +164,7 @@ selectRace = {
 	_raceData = _existingRaces select _selection;
 	GW_RACE_ARRAY = (_raceData select 1);
 	GW_RACE_NAME = (_raceData select 0) select 0;
+	
 	GW_RACE_HOST = [_raceData, 2, "NONE", [""]] call filterParam;
 	GW_RACE_ID = _selection;
 
@@ -101,6 +179,7 @@ selectRace = {
 	_deleteButton = ((findDisplay 90000) displayCtrl 90018);
 
 	{
+		_x ctrlShow true;
 		_x ctrlSetFade _buttonFade;
 		_x ctrlCommit 0;
 	} foreach [_editButton, _renameButton, _deleteButton];
@@ -108,6 +187,14 @@ selectRace = {
 	_mapTitle = ((findDisplay 90000) displayCtrl 90012);
 	_mapTitle ctrlSetText GW_RACE_NAME;
 	_mapTitle ctrlCommit 0;
+
+	// If default map, hide delete button
+	_isDefault = (_raceData select 0) select 3;
+	if (_isDefault) then {
+		_deleteButton ctrlShow false;
+		_deleteButton ctrlSetFade 1;
+		_deleteButotn ctrlCommit 0;
+	};
 
 	[] call focusCurrentRace;
 
@@ -126,8 +213,16 @@ generateRaceList = {
 	{
 		_meta = _x select 0;
 		_name = _meta select 0;
-		lbAdd [90011,  format[' %1', _name] ];
+		_host =  [_x, 2, "", [""]] call filterParam;
+
+		if ((count toArray _host) > 0) then { 
+			_host = format[' [%1]', _host];
+		};
+
+		lbAdd [90011,  format[' %1%2', _name,_host] ];
 		lbSetData [90011, _forEachIndex, _name];	
+
+
 	} foreach _existingRaces;
 
 	lbSetCurSel [90011, _selected];
@@ -147,6 +242,19 @@ focusCurrentRace = {
 	_multiplier = if (_screenXDist > _screenYDist) then { (_screenXDist / 0.5) } else { (_screenYDist / 0.3) };
 	_mapControl ctrlMapAnimAdd [0.25, (1 * _multiplier), _midPos];
 	ctrlMapAnimCommit _mapControl;
+};
+
+createNewRace = {
+	
+	_existingRaces = call getAllRaces;
+	_raceName = toUpper([true] call generateName);
+	_existingRaces pushBack [[_raceName,(name player),worldName], [[22845.5,18443,0],[23190.5,17340.5,0],[24414.8,18932.3,0]]];
+	profileNamespace setVariable ['GW_RACES', _existingRaces];
+	saveProfileNamespace;
+
+	[((count _existingRaces) -1)] call generateRaceList;
+	// [(_existingRaces select ((count _existingRaces) -1))] call selectRace;
+
 };
 
 
@@ -179,7 +287,10 @@ deleteRace = {
 	
 	private ['_raceToDelete', '_existingRaces', '_meta', '_name'];
 
-	_raceToDelete = _this;
+	_raceToDelete = GW_RACE_NAME;
+
+	_result = [format['DELETE %1?', _raceToDelete], '', 'CONFIRM'] call createMessage;
+	if (!_result) exitWith {};	
 
 	_existingRaces = call getAllRaces;
 
@@ -191,6 +302,8 @@ deleteRace = {
 
 	profileNamespace setVariable ['GW_RACES', _existingRaces];
 	saveProfileNamespace;
+
+	[((count _existingRaces) -1)] call generateRaceList;
 		
 };
 
@@ -202,7 +315,7 @@ renameCurrentRace = {
 	if (typename _result != "STRING") exitWith {};
 	if (_result == GW_RACE_NAME) exitWith {};
 
-	if (GW_RACE_NAME != "CUSTOM RACE") then { GW_RACE_NAME call deleteRace; };
+	//if (GW_RACE_NAME != "CUSTOM RACE") then { GW_RACE_NAME call deleteRace; };
 	GW_RACE_NAME = toUpper (_result);
 	[] call saveCurrentRace;
 
@@ -239,7 +352,8 @@ toggleRaceEditing = {
 		(_display displayCtrl 90017),
 		(_display displayCtrl 90016),
 		(_display displayCtrl 90015),
-		(_display displayCtrl 90014)
+		(_display displayCtrl 90014),
+		(_display displayCtrl 90022)
 	];
 
 	_mapEnabled = ctrlEnabled _mapControl;
@@ -649,5 +763,7 @@ _mapControl ctrlRemoveEventHandler ["MouseMoving", _mouseMove];
 _mapControl ctrlRemoveEventHandler ["MouseButtonDblClick", _mouseDblClick]; 
 _mapControl ctrlRemoveEventHandler ["Draw", _mapDraw];
 
-GW_GENERATOR_ACTIVE = false;
+GW_RACE_GENERATOR_ACTIVE = false;
+
+showChat true;
 

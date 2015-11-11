@@ -109,17 +109,17 @@ generateTauntsList = compile preprocessFile "client\ui\functions\generateTauntsL
 setTaunt = compile preprocessFile "client\ui\functions\setTaunt.sqf";
 
 // Add the name to the settings stats column
-generateName = {
+// generateName = {
 	
-	private ['_title', '_name'];
+// 	private ['_title', '_name'];
 
-	disableSerialization;
-	_title = ((findDisplay 92000) displayCtrl 92003);
-	_name = GW_SETTINGS_VEHICLE getVariable ["name", ""];
-	_name = [_name, 10, '...'] call cropString;
-	_title ctrlSetText toUpper(_name);
-	_title ctrlCommit 0;
-};
+// 	disableSerialization;
+// 	_title = ((findDisplay 92000) displayCtrl 92003);
+// 	_name = GW_SETTINGS_VEHICLE getVariable ["name", ""];
+// 	_name = [_name, 10, '...'] call cropString;
+// 	_title ctrlSetText toUpper(_name);
+// 	_title ctrlCommit 0;
+// };
 
 // Resets a bind row and saves
 clearBind = {

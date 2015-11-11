@@ -54,7 +54,6 @@ call addReservedIndex;
 
 // Loop through vehicle binds
 {
-
 	_tag = (_x select 0);
 	_key = (_x select 1);
 

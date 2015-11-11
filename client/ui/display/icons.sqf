@@ -57,7 +57,7 @@
 				
 			// 	hint format['POS: %1', _xPos];
 
-			// 	_pos = screenToWorld [_xPos * (safezoneW + safezoneX), _yPos * (safezoneH + safezoneY)];
+			// 	_pos = screenToWorld [_xPos * safezoneW + safezoneX, _yPos * safezoneH + safezoneY];
 			// 	_icon = format['%1%2', MISSION_ROOT, 'client\images\checkpoint_halo2.paa'];
 			// 	_index = "";
 			// 	_size = 5;
