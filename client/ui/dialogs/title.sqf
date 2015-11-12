@@ -4,47 +4,96 @@
 //      Return: None
 //
 
-if (GW_TITLE_ACTIVE) then {
-	GW_TITLE_ACTIVE = false;
-	closeDialog 95000;
+if (GW_TITLE_ACTIVE) exitWith { 
+	systemchat 'Title already active.'; 
+	false
 };
+
+GW_TITLE_ACTIVE = true;
+GW_TITLE_BUTTON_VISIBLE = false;
 
 // Close the hud if its open
 GW_HUD_ACTIVE = false;
 GW_HUD_LOCK = true;
 
-private ['_buttonString', '_timeValue', '_canAbort'];
+private ['_buttonString', '_timeValue', '_canAbort', '_timeout'];
 
 _textString =  [_this,0, "", ["", {}]] call filterParam;
 _buttonString = [_this,1, "CANCEL", [""]] call filterParam;
-_canAbort = [_this,2, true, [false]] call filterParam;
+
+_abortParameters =  [_this,2, [true, true], [[]]] call filterParam;
+_canAbort = [_abortParameters,0, true, [false]] call filterParam;
+_buttonCondition = [_abortParameters,1, { true }, [{}]] call filterParam;
+
 _condition = [_this,3, { true }, [{}, ""]] call filterParam;
 _maxTime = [_this,4, 60, [0]] call filterParam;
+_showBorders = [_this,5, true, [false]] call filterParam;
+functionOnComplete = [_this, 6, {	systemchat 'Button function original!'; true }, [{}]] call filterParam;
+
+_exitWith = false;
 
 // _soundEnabled = [_this,3, false, [false]] call filterParam;
 disableSerialization;
-if(!(createDialog "GW_TitleScreen")) exitWith { GW_TITLE_ACTIVE = false; }; 
-showChat false;
+
+closeDialog 95000;
+if(!(createDialog "GW_TitleScreen")) exitWith { systemchat 'Error - couldnt create title.'; GW_TITLE_ACTIVE = false; false }; 
+showChat true;
 
 _timeout = time + _maxTime;
 
 disableSerialization;
 _text = ((findDisplay 95000) displayCtrl 95001);
 _btn = ((findDisplay 95000) displayCtrl 95002);
+_marginBottom = ((findDisplay 95000) displayCtrl 95003);
+_marginTop = ((findDisplay 95000) displayCtrl 95004);
+_margins = [_marginTop, _marginBottom];
 
 _btn ctrlShow true;
 _btn ctrlSetText _buttonString;
 _btn ctrlCommit 0;	
 
+// Show button if we can cancel this title
 if (!_canAbort) then {
-	_btn ctrlShow false;
-	_btn CtrlCommit 0;
 	disableUserInput true;
+};
+
+if (call _buttonCondition) then {
+	_btn ctrlEnable true;
+	_btn ctrlShow true;
+	_btn CtrlCommit 0;	
+} else {
+	_btn ctrlEnable false;
+	_btn ctrlShow false;
+	_btn CtrlCommit 0;	
+};
+
+// Hide/show top and bottom margins
+if (!_showBorders) then {
+
+	{
+		_x ctrlSetFade 1;
+		_x ctrlCommit 0;
+	} foreach _margins;
+
+} else {
+
+	{
+		_x ctrlSetFade 0;
+		_x ctrlCommit 0;
+	} foreach _margins;
+
 };
 
 for "_i" from 0 to 1 step 0 do {
 
-	if (isNull (findDisplay 95000) || (time > _timeout) || !(call _condition) || !GW_TITLE_ACTIVE) exitWith {};
+	if ( (isNull (findDisplay 95000)) || (time > _timeout) || !(call _condition) || !GW_TITLE_ACTIVE) exitWith {};
+
+	if (call _buttonCondition) then {
+		disableUserInput false;
+		_btn ctrlEnable true;
+		_btn ctrlShow true;
+		_btn CtrlCommit 0;
+	};
 
 	_textValue = if (typename _textString == "STRING") then { _textString } else { ([time, _timeout] call _textString) };
 	_text ctrlSetStructuredText parseText ( _textValue );
@@ -55,12 +104,18 @@ for "_i" from 0 to 1 step 0 do {
 
 // Timer over, tidy up
 showChat true;
+
+_exitWith = if (GW_TITLE_ACTIVE && time > _timeout || !(call _condition) ) then { 
+	true 
+} else { false };
+
 GW_TITLE_ACTIVE = false;
 GW_HUD_ACTIVE = true;
 GW_HUD_LOCK = false;
 closeDialog 95000;
 disableUserInput false;
 
+_exitWith
 
 
 

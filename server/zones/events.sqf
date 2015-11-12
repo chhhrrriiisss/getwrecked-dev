@@ -40,6 +40,7 @@ _eventsList = [
 			} count GW_VALID_ZONES > 0;
 
 			_selectedZone = _activeZones call BIS_fnc_selectRandom;
+			if (isNil "_selectedZone") exitWith { false };
 			diag_log format['Supply box triggered for %2 at %1.', time, _selectedZone];
 ;
 			// Don't create a new one if we're already at maximum

@@ -30,9 +30,11 @@ checkRaceStatus = {
 	if (_s == -2) exitWith {
 
 		_s = -1;
-		{
-			if (_r == ((_X select 0) select 0)) exitWith { _s = (_x select 3); };
+		{			
+			if (_r == ((_X select 0) select 0)) exitWith { _s = [_x, 3, -1, [0]] call filterParam; };
 		} foreach GW_ACTIVE_RACES;
+
+		_s
 
 	};
 
@@ -40,6 +42,9 @@ checkRaceStatus = {
 	{
 		if (_r == ((_X select 0) select 0)) exitWith { _x set [3, _s]; };
 	} foreach GW_ACTIVE_RACES;
+
+	// Update that value
+	publicVariable "GW_ACTIVE_RACES";
 
 	_s
 
@@ -88,9 +93,7 @@ getAllRaces = {
 	_totalRaces
 };
 
-startRace = {
-	
-	
+startRace = {	
 
 	if (GW_RACE_ACTIVE) exitWith { systemchat 'You cant host more than one race at a time.'; };
 	GW_RACE_ACTIVE = true;
@@ -103,6 +106,7 @@ startRace = {
 	_points = _selectedRace select 1;
 	_name = (_selectedRace select 0) select 0;
 	_host = name player;
+	_raceStatus = [_name] call checkRaceStatus;
 
 	// Check a race with that name is not currently running
 	_exists = false;
@@ -114,62 +118,123 @@ startRace = {
 	// Calculate total distance for this race
 	_distance = [_points] call calculateDistance;
 
+	// If we're targetting a race that's already running, go straight to deploy
 	if (_exists) exitWith {
-		systemchat 'A race in that area is already active.';
+
+		// Race is a new one
+		if (_raceStatus == -1) exitWith {
+			systemchat 'A race in that area is already active.';
+		};
+
+		if (_raceStatus >= 2) exitWith {
+			systemchat 'Race active and not joinable';
+		};
+
+		// Send player to zone and begin waiting period for races that are already active
+		_success = [GW_SPAWN_VEHICLE, player, _selectedRace] call deployRace;
+		GW_SPAWN_ACTIVE = false;
+
+		if (!_success) exitWith {
+			systemchat 'Deployment cancelled.';
+			GW_RACE_ACTIVE = false;
+			GW_HUD_ACTIVE = true;
+			GW_HUD_LOCK = false;
+		};
 	};
 
+	// Confirmation in case of mis-click
 	_result = ['START RACE?', format['%1 [%2]', _name, _distance], 'CONFIRM'] call createMessage;
 	if (!_result) exitWith { GW_RACE_ACTIVE = false; };	
 	
 	_selectedRace pushback _host;
-
-	_status = 0; // "Waiting for players"
-	_selectedRace pushback _status;
-
 	GW_ACTIVE_RACES pushback _selectedRace;
+
+	// Get index of race for reference
+	_raceID = -1;
+	{ 
+		if (_name == ((_x select 0) select 0)) exitWith { _raceID = _foreachIndex; };
+	} foreach GW_ACTIVE_RACES;
 
 	// Sync race to all clients
 	systemchat 'Syncing race data to other clients.';
 	publicVariable "GW_ACTIVE_RACES";
 
+	// Initialize race thread on server
+	[
+		[_name],
+		'createRace',
+		false,
+		false
+	] call bis_fnc_mp;	
+
 	closeDialog 0;
+
+	// Wait for server to update race to 'waiting'
+	_timeout = time + 5;
+	waitUntil {
+		Sleep 1;
+		['WAITING FOR SERVER...', 0.5, warningIcon, nil, "slideUp"] spawn createAlert; 
+		( (([_name] call checkRaceStatus) == 0) || (time > _timeout) )
+	};
+
+	
+	if (time > _timeout) exitWith {
+
+		systemchat 'Failed to start race';
+
+		GW_RACE_ACTIVE = false;
+		GW_ACTIVE_RACES deleteAt _raceID;
+		GW_HUD_ACTIVE = true;
+		GW_HUD_LOCK = false;
+
+		Sleep 1;
+		['FAILED TO START!',1, warningIcon, colorRed, "slideUp"] spawn createAlert; 
+	};	
+
+	systemchat 'Server starting race.';
+
+	GW_HUD_ACTIVE = false;
+	GW_HUD_LOCK = true;
 
 	// Send player to zone and begin waiting period
 	_success = [GW_SPAWN_VEHICLE, player, _selectedRace] call deployRace;
 	GW_SPAWN_ACTIVE = false;
 
 	if (!_success) exitWith {
+		systemchat 'Deployment cancelled.';
 		GW_RACE_ACTIVE = false;
-		GW_ACTIVE_RACES = [];
+		GW_HUD_ACTIVE = true;
+		GW_HUD_LOCK = false;
 	};
-
-	[] spawn {
-		Sleep 60;
-		GW_RACE_ACTIVE = false;
-		GW_ACTIVE_RACES = [];
-	};
-
-
-	// Otherwise blow everyone up and start again
 
 };
 
 
 selectRace = {
 	
+	private ['_existingRaces', '_selection', '_raceData', '_raceStatus', '_raceMeta', '_isDefault'];
+
 	_existingRaces = call getAllRaces;
 
 	_selection = [_this, 0, (count _existingRaces) - 1, true] call limitToRange;
 
 	_raceData = _existingRaces select _selection;
-	GW_RACE_ARRAY = (_raceData select 1);
-	GW_RACE_NAME = (_raceData select 0) select 0;
 	
+	GW_RACE_ARRAY = (_raceData select 1);
+	GW_RACE_NAME = (_raceData select 0) select 0;	
 	GW_RACE_HOST = [_raceData, 2, "NONE", [""]] call filterParam;
 	GW_RACE_ID = _selection;
 
 	_startButton = ((findDisplay 90000) displayCtrl 90015);
-	_startText = if (GW_RACE_HOST == "NONE") then { 'START' } else { 'JOIN' };	
+	_raceStatus = [GW_RACE_NAME] call checkRaceStatus;
+
+	_startText = _raceStatus call {
+		if (_this == -1) exitWith { 'START' };
+		if (_this == 0) exitWith { 'JOIN' };
+		If (_this == 2) exitWith { 'LOCKED' };
+		'START'
+	};
+
 	_startButton ctrlSetText _startText;
 	_startButton ctrlCommit 0;	
 
@@ -180,6 +245,7 @@ selectRace = {
 
 	{
 		_x ctrlShow true;
+		_x ctrlEnable true;
 		_x ctrlSetFade _buttonFade;
 		_x ctrlCommit 0;
 	} foreach [_editButton, _renameButton, _deleteButton];
@@ -189,14 +255,19 @@ selectRace = {
 	_mapTitle ctrlCommit 0;
 
 	// If default map, hide delete button
-	_isDefault = (_raceData select 0) select 3;
+	_raceMeta = _raceData select 0;
+	_isDefault = [_raceMeta, 3, false, [false]] call filterParam;
+
 	if (_isDefault) then {
 		_deleteButton ctrlShow false;
+		_deleteButton ctrlEnable false;
 		_deleteButton ctrlSetFade 1;
-		_deleteButotn ctrlCommit 0;
+		_deleteButton ctrlCommit 0;
 	};
 
 	[] call focusCurrentRace;
+
+
 
 };
 
@@ -287,12 +358,14 @@ deleteRace = {
 	
 	private ['_raceToDelete', '_existingRaces', '_meta', '_name'];
 
-	_raceToDelete = GW_RACE_NAME;
+	_raceToDelete = [_this, 0, GW_RACE_NAME, [""]] call filterParam;
 
-	_result = [format['DELETE %1?', _raceToDelete], '', 'CONFIRM'] call createMessage;
+	_result = if (isNil {_this select 0}) then { ([format['DELETE %1?', _raceToDelete], '', 'CONFIRM'] call createMessage) } else { true };
 	if (!_result) exitWith {};	
 
 	_existingRaces = call getAllRaces;
+
+	systemchat format['%1 / %2', _raceToDelete, GW_RACE_NAME];
 
 	{
 		_meta = _x select 0;
@@ -311,13 +384,20 @@ renameCurrentRace = {
 
 	private ['_result'];
 	
-	_result = ['RENAME RACE', toUpper(GW_RACE_NAME), 'INPUT'] call createMessage;
+	_originalName = GW_RACE_NAME;
+	_result = ['RENAME RACE', toUpper(GW_RACE_NAME), 'INPUT'] call createMessage;	
+
 	if (typename _result != "STRING") exitWith {};
 	if (_result == GW_RACE_NAME) exitWith {};
 
 	//if (GW_RACE_NAME != "CUSTOM RACE") then { GW_RACE_NAME call deleteRace; };
+		
+
 	GW_RACE_NAME = toUpper (_result);
 	[] call saveCurrentRace;
+
+	// Delete previous race entry
+	[_originalName] call deleteRace;
 
 	disableSerialization;
 	_mapTitle = ((findDisplay 90000) displayCtrl 90012);

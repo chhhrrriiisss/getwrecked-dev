@@ -4,10 +4,7 @@
 //      Return: None
 //
 
-
-
 _target = [_this,0, objNull, [objNull]] call filterParam;
-systemchat format['popped: %1', _target];
 
 if (isNull _target) exitWith { false };
 if (!alive _target) exitWith { false };

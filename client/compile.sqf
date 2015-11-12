@@ -285,6 +285,9 @@ pubVar_fnc_status = compile preprocessFile "client\functions\pubvar_status.sqf";
 pubVar_fnc_systemChat = compile preprocessFile "client\functions\pubvar_systemchat.sqf";
 "pubVar_systemChat" addPublicVariableEventHandler {(_this select 1) call pubVar_fnc_systemChat};
 
+pubVar_fnc_globalTitle = compile preprocessFile "client\functions\pubVar_globalTitle.sqf";
+"pubVar_globalTitle" addPublicVariableEventHandler {(_this select 1) call pubVar_fnc_globalTitle};
+
 // MP Functions
 pubVar_fnc_setHidden = compile preprocessFile "client\functions\pubVar_setHidden.sqf";
 "pubVar_setHidden" addPublicVariableEventHandler { (_this select 1) call pubVar_fnc_setHidden };

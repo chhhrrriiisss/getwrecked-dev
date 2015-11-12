@@ -1,5 +1,4 @@
 // Creates a series of checkpoints, waits for player to enter correctly 
-
 _abortSequence = {
 	
 	_toDelete = _this;
@@ -32,11 +31,19 @@ for "_i" from 1 to 2 step 1 do {
 	_points set [_i, _p];
 };
 
-_points = [_this, 0, _points, [[]]] call bis_fnc_param;
+private ['_points', '_targetRace', '_startPosition', '_raceStatus', '_raceName'];
 
-if (count _points == 0) exitWith {
-	hint 'Could not start - bad point data';
-};
+_targetRace = [_this, 0, [], [[]]] call bis_fnc_param;
+if (count _targetRace == 0) exitWith { hint 'Could not start - invalid race'; };
+
+_points = [_targetRace, 1, _points, [[]]] call bis_fnc_param;
+if (count _points == 0) exitWith { hint 'Could not start - bad point data'; };
+
+_raceName = (_targetRace select 0) select 0;
+_raceHost = _targetRace select 2;
+_startPosition = _points select 0;
+_firstPosition = _points select 1;
+_raceStatus = [_targetRace, 3, -1, [0]] call filterParam;
 
 _cpArray = [];
 _dirNext = 0;
@@ -115,15 +122,7 @@ _dirToRB = [_dirTo + 180] call normalizeAngle;
 
 } foreach _points;
 
-GW_CURRENTVEHICLE engineOn false;
-GW_CURRENTVEHICLE setFuel 0;
-_result = ['START', 5, false, true] call createTimer;
-if (!_result) exitWith { 
-	hint 'Race aborted'; 
-	_cpArray call _abortSequence;
-};
-
-
+// Otherwise just start
 GW_CURRENTVEHICLE say "electronTrigger";
 GW_CURRENTVEHICLE setFuel 1;
 GW_CURRENTVEHICLE engineOn true;
@@ -145,11 +144,11 @@ for "_i" from 0 to 1 step 0 do {
 	_targetCp = (_cpArray select 0) select 0;
 	if ((GW_CURRENTVEHICLE distance _targetCp) < _distTolerance) then {
 
+		// Requires correct orientation?
 		_correctDir = (_cpArray select 0) select 1;
 		_currentDir = getDir GW_CURRENTVEHICLE;
 		_difDir = abs ([_currentDir - _correctDir] call flattenAngle);
-
-		if (_difDir > _dirTolerance) exitWith {};
+		//if (_difDir > _dirTolerance) exitWith {};
 
 		_group = ((_cpArray select 0) select 2);
 		{ deleteVehicle _x; } foreach _group;
@@ -188,18 +187,18 @@ if ((count _cpArray) == 0 && time <= (_timeout + 0.1) ) then {
 	_timeStamp = (time - _startTime) call formatTimeStamp;
 	_text = format["<br /><t size='3.3' color='#ffffff' align='center' valign='middle' shadow='0'>+%1</t>", _timeStamp];
 
-	_scriptDone = [_text, "SPECTATE", true, { true }, 10] spawn createTitle;
+	_done = [_text, "SPECTATE", false, { true }, 10] spawn createTitle;
 	[] execVM 'testfinishcamera.sqf';
 
 	_timeout = time + 10;
 	waitUntil {
 		Sleep 0.1;
-		((time > _timeout) || (scriptDone _scriptDone))
+		((time > _timeout) || (scriptDone _done))
 	};
 
-	9999 cutText ["", "BLACK OUT", 1]; 
-	Sleep 1; 
-	[] execVM 'testspectatorcamera.sqf';
+	// 9999 cutText ["", "BLACK OUT", 1]; 
+	// Sleep 1; 
+	// [] execVM 'testspectatorcamera.sqf';
 	
 	// [] execVM 'testfinishcamera.sqf';
 

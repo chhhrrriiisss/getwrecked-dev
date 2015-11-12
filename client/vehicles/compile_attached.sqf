@@ -170,7 +170,7 @@ if (GW_CURRENTZONE == "workshopZone" || isServer) then {
 };
 
 if (GW_CURRENTZONE != "workshopZone" && !isServer) then {
-	_vehicle lock false;
+	_vehicle setVehicleLock "UNLOCKED";
 };
 
 GW_WAITCOMPILE = false;

@@ -764,7 +764,7 @@ class GW_Race
     {
       idc = 90018;
       text = "Delete";
-      onButtonClick = "[] spawn deleteRace";
+      onButtonClick = "[] spawn deleteRace;";
       x = (0.98 - (GW_BUTTON_WIDTH / 2)) * safezoneW + safezoneX;
       y = (MARGIN_BOTTOM) * safezoneH + safezoneY;
       w = (GW_BUTTON_WIDTH / 2) * safezoneW;

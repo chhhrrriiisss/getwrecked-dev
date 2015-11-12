@@ -44,5 +44,6 @@ if (GW_LEADERBOARD_ENABLED) then {
 };
 
 GW_CURRENTZONE = "workshopZone";
+GW_ACTIVE_RACES = [];
 
 

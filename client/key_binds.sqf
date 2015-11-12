@@ -70,6 +70,7 @@ checkBinds = {
 
 	if (GW_SHOOTER_ACTIVE) exitWIth { false };
 
+
 	// Conditionals
 	_vehicle = GW_CURRENTVEHICLE;
 	_inVehicle = GW_INVEHICLE;
@@ -86,7 +87,7 @@ checkBinds = {
 		GW_DEBUG = if (GW_DEBUG) then { false } else { true };
 	};
 
-	if (GW_TIMER_ACTIVE) exitWith {};
+	if (GW_TIMER_ACTIVE || GW_TITLE_ACTIVE) exitWith {};
 
 	if (GW_BUY_ACTIVE) then {
 		if (_key in [2,3,4,5,6,7,8,9,10,11]) exitWith {		

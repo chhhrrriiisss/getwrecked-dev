@@ -167,7 +167,7 @@ paintVehicleFormat = "<img size='3' color='#ffffff' shadow='0' image='" + ICON_R
 
 // Terminal formatting
 createVehFormat = "<img size='3' color='#ffffff' shadow='0' image='" + MISSION_ROOT + "client\images\icons\menus\create.paa' align='left' /> <t size='1.1' shadow='0' align='left'>CREATE  </t>";
-spawnInFormat = "<img size='3' color='#ffffff' shadow='0' image='" + MISSION_ROOT + "client\images\icons\menus\spawnin.paa' align='left' /> <t size='1.1' shadow='0' align='left'>DEPLOY  </t>";
+spawnInFormat = "<img size='3' color='#ffffff' shadow='0' image='" + MISSION_ROOT + "client\images\icons\menus\spawnin.paa' align='left' /> <t size='1.1' shadow='0' align='left'>BATTLE  </t>";
 raceFormat = "<img size='3' color='#ffffff' shadow='0' image='" + MISSION_ROOT + "client\images\icons\menus\race.paa' align='left' /> <t size='1.1' shadow='0' align='left'>RACE  </t>";
 clearPadFormat = "<img size='3' color='#ffffff' shadow='0' image='" + MISSION_ROOT + "client\images\icons\menus\clear.paa' align='left' /> <t size='1.1' shadow='0' align='left'>CLEAR  </t>";
 savePadFormat = "<img size='3' color='#ffffff' shadow='0' image='" + MISSION_ROOT + "client\images\icons\menus\save.paa' align='left' /> <t size='1.1' shadow='0' align='left'>SAVE  </t>";

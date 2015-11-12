@@ -262,6 +262,7 @@ checkEject = compile preprocessFile 'global\functions\checkEject.sqf';
 
 // Zone Functions
 checkInZone = compile preprocessFile 'global\functions\checkInZone.sqf';
+checkRaceStatus = compile preprocessFile 'global\functions\checkRaceStatus.sqf';
 
 // Network Functions
 gw_fnc_mp = compileFinal preprocessFile 'global\functions\network\fn_mp.sqf';

@@ -1,5 +1,5 @@
 //
-//      Name: timer
+//      Name: createTimer
 //      Desc: Used for customizing keybinds, checking stats and renaming/unflipping the vehicle
 //      Return: None
 //
@@ -22,6 +22,7 @@ GW_TIMER_VALUE = time + _timeValue;
 _canAbort = [_this,2, true, [false]] call filterParam;
 _soundEnabled = [_this,3, false, [false]] call filterParam;
 _functionOnComplete = [_this,4, { true }, [{}]] call filterParam;
+_showBorders = [_this,5, true, [false]] call filterParam;
 
 // Global function to cancel the current timer
 cancelCurrentTimer = {	
@@ -34,6 +35,10 @@ if(!(createDialog "GW_Timer")) exitWith { GW_TIMER_ACTIVE = false; };
 disableSerialization;
 _text = ((findDisplay 94000) displayCtrl 94001);
 _btn = ((findDisplay 94000) displayCtrl 94002);
+_marginBottom = ((findDisplay 94000) displayCtrl 94003);
+_marginTop = ((findDisplay 94000) displayCtrl 94004);
+_margins = [_marginTop, _marginBottom];
+
 
 _btn ctrlSetText _buttonString;
 _btn ctrlShow true;
@@ -50,6 +55,23 @@ if (!_canAbort) then {
 		Sleep _this;
 		disableUserInput false;
 	};
+
+};
+
+// Hide/show top and bottom margins
+if (!_showBorders) then {
+
+	{
+		_x ctrlSetFade 1;
+		_x ctrlCommit 0;
+	} foreach _margins;
+
+} else {
+
+	{
+		_x ctrlSetFade 0;
+		_x ctrlCommit 0;
+	} foreach _margins;
 
 };
 
@@ -77,7 +99,14 @@ for "_i" from 0 to 1 step 0 do {
 	if (_soundEnabled) then {
 		if (_seconds != _lastSecond) then {
 			_lastSecond = _seconds;
-			GW_CURRENTVEHICLE say "beepTarget";
+
+			if ( _left <= (_timeValue* 0.5)) then {
+				GW_CURRENTVEHICLE say "beepTarget";
+				Sleep 0.05;
+				GW_CURRENTVEHICLE say "beepTarget";
+			} else {
+				GW_CURRENTVEHICLE say "beepTarget";
+			};
 		};
 	};
 

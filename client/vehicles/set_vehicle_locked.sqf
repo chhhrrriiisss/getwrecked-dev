@@ -34,7 +34,7 @@ _vehicle lockTurret [[0,0], true];
 if (_lock) exitWith {
 
 	if (!lockedDriver _vehicle) then {
-		_vehicle lock true;
+		_vehicle setVehicleLock "LOCKED";
 	};
 
 };
@@ -43,7 +43,7 @@ if (_lock) exitWith {
 if (!_lock) exitWith {
 
 	if (lockedDriver _vehicle) then {
-		_vehicle lock false;
+		_vehicle setVehicleLock "UNLOCKED";
 	};
 
 };

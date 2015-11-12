@@ -30,7 +30,7 @@ class GW_Timer
 	
 		class MarginBottom : GW_Block
 		{
-			idc = -1;
+			idc = 94003;
 			colorBackground[] = {0,0,0,0.85};
 			x = -1;
 			y = (MARGIN_BOTTOM + (GW_BUTTON_HEIGHT * 2)) * safezoneH + safezoneY; 
@@ -40,7 +40,7 @@ class GW_Timer
 
 		class MarginTop : GW_Block
 		{
-			idc = -1;
+			idc = 94004;
 			colorBackground[] = {0,0,0,0.85};
 			x = -1;
 			y = 0 * safezoneH + safezoneY; 

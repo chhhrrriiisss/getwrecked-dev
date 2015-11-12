@@ -17,6 +17,9 @@ _stripActions = {
 	true	
 };
 
+// Clean vehicle of invalid parts
+_vehicle call cleanAttached;
+
 // Get rid of excess addActions
 { 
 	_x call _stripActions;
@@ -58,6 +61,6 @@ _vehicle setVariable ['GW_HIDDEN', nil, true];
 _vehicle setVariable ['GW_WantedValue', 0];
 
 // Unlock driver, apply temp invulnerable status
-_vehicle lock false;
+_vehicle setVehicleLock "UNLOCKED";
 [_vehicle, 2] spawn dustCircle;
 [_vehicle, ['invulnerable', 'nolock', 'nofire', 'nofork'], 10] call addVehicleStatus;

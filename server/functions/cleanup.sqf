@@ -40,7 +40,12 @@ cleanUpCommands = [
 			_vS = (ASLtoATL getPosASL _x) nearEntities [["Man"], _minDist];
 			_crew = false;
 			{ if (alive _X) exitWith { _crew = true; }; false } count (crew _x);
-			if (_vS isEqualTo [] && !_crew) then { _a pushBack _x; } else { _x setVariable ["GW_CU", nil]; };	
+			if (_vS isEqualTo [] && !_crew) then { 
+
+				_a pushBack _x; 
+
+			} else { _x setVariable ["GW_CU", nil]; };	
+
 			false
 		} count _allVehicles;
 		_a
@@ -108,7 +113,7 @@ executeCleanUp = {
 			if ( ([_x, _timeout] call checkDeadTimeout) && !_ignore || _manualMode) then {
 				diag_log format['Deleted %1 at %2', typeof _x, time];
 				{ deleteVehicle _x; } foreach (attachedObjects _x);
-				deleteVehicle _x;
+				deleteVehicle _x; 
 			};
 		} count _arr > 0;	
 

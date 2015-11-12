@@ -146,7 +146,6 @@ GW_attributes = [
 	"Speed",
 	"Doom",
 	"Demise",
-	"Defecation",
 	"Fury",
 	"Bastard",
 	"Examination",
