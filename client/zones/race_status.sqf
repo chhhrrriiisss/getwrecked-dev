@@ -10,11 +10,11 @@ _raceStatus = [_raceName] call checkRaceStatus;
 _raceHost = _targetRace select 2;
 
 _success = 
-["<br /><t size='3' color='#ffffff' align='center'>WAITING FOR PLAYERS</t>", 
+["<br /><br /><t size='3' color='#ffffff' align='center'>WAITING FOR PLAYERS</t>", 
 	"START", 
 	[false, { (([GW_CURRENTRACE] call checkRaceStatus) == 1) }], // When TRUE show button
 	{  
-		( (([GW_CURRENTRACE] call checkRaceStatus) != 2) ) // While TRUE keep title up
+		_rS = [GW_CURRENTRACE] call checkRaceStatus; ((_rS != 2) && (_rS != -1))  // While TRUE keep title up
 	}, 
 	60,
 	true, 
@@ -24,36 +24,33 @@ _success =
 	}
 ] call createTitle;
 
-
-
-systemchat format['Success: %1', _success];
-
 _raceStatus = [_raceName] call checkRaceStatus;
-if (!_success && _raceStatus == 0 || _raceStatus == 1) exitWith {	
+if ((!_success && _raceStatus == 0) || _raceStatus == 1) exitWith {	
 	GW_CURRENTVEHICLE call destroyInstantly;
 };
 
-if (_raceStatus == -1) exitWith {
+if (_raceStatus != 2) exitWith {
 
 	waitUntil { Sleep 0.1; (isNull (findDisplay 95000)) };
-	["<br /><t size='3' color='#ffffff' align='center'>RACE ABORTED</t>", "START", [false, { false }] , { true }, 60, true] call createTitle;
+	["<br /><br /><t size='3' color='#ffffff' align='center'>RACE ABORTED</t>", "START", [false, { false }] , { true }, 5, true] call createTitle;
 	GW_CURRENTVEHICLE call destroyInstantly;
-	GW_CURRENTVEHICLE spawn { 
-		Sleep 1;
-		{ deleteVehicle _x; } foreach attachedObjects _this;
-		deleteVehicle _this;
-	};	
 
 };
 
 if (_raceStatus >= 2) exitWith {
 
 	waitUntil { Sleep 0.1; (isNull (findDisplay 95000)) };
+
+	_maxTime = 15;
+
 	[_targetRace, 9999] execVM 'testcheckpoints.sqf';
+	['TEST', 15, false] call createTimer;
+
+	GW_CURRENTVEHICLE say "electronTrigger";
 
 	GW_HUD_ACTIVE = true;
 	GW_HUD_LOCK = false;
-	
+
 };
 
 GW_CURRENTVEHICLE call destroyInstantly;

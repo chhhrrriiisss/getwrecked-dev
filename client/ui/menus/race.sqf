@@ -127,7 +127,12 @@ startRace = {
 		};
 
 		if (_raceStatus >= 2) exitWith {
-			systemchat 'Race active and not joinable';
+			systemchat 'Race active and spectate only';
+
+			closeDialog 0;
+
+			[] execVM 'testspectatorcamera.sqf';
+
 		};
 
 		// Send player to zone and begin waiting period for races that are already active
@@ -231,7 +236,7 @@ selectRace = {
 	_startText = _raceStatus call {
 		if (_this == -1) exitWith { 'START' };
 		if (_this == 0) exitWith { 'JOIN' };
-		If (_this == 2) exitWith { 'LOCKED' };
+		If (_this == 2) exitWith { 'SPECTATE' };
 		'START'
 	};
 

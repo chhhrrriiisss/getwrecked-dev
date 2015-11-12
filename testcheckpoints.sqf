@@ -123,7 +123,6 @@ _dirToRB = [_dirTo + 180] call normalizeAngle;
 } foreach _points;
 
 // Otherwise just start
-GW_CURRENTVEHICLE say "electronTrigger";
 GW_CURRENTVEHICLE setFuel 1;
 GW_CURRENTVEHICLE engineOn true;
 
@@ -184,17 +183,26 @@ if ((count _cpArray) == 0 && time <= (_timeout + 0.1) ) then {
 	GW_CURRENTVEHICLE say "electronTrigger";
 	GW_CURRENTVEHICLE say "summon";
 
-	_timeStamp = (time - _startTime) call formatTimeStamp;
-	_text = format["<br /><t size='3.3' color='#ffffff' align='center' valign='middle' shadow='0'>+%1</t>", _timeStamp];
+	
 
-	_done = [_text, "SPECTATE", false, { true }, 10] spawn createTitle;
-	[] execVM 'testfinishcamera.sqf';
+	[
+		[((_raceName call getRaceID) select 1), GW_CURRENTVEHICLE],
+		'endRace',
+		false,
+		false
+	] call bis_fnc_mp;	
 
-	_timeout = time + 10;
-	waitUntil {
-		Sleep 0.1;
-		((time > _timeout) || (scriptDone _done))
-	};
+	// _timeStamp = (time - _startTime) call formatTimeStamp;
+	// _text = format["<br /><t size='3.3' color='#ffffff' align='center' valign='middle' shadow='0'>+%1</t>", _timeStamp];
+
+	// _done = [_text, "SPECTATE", false, { true }, 10] spawn createTitle;
+	// [] execVM 'testfinishcamera.sqf';
+
+	// _timeout = time + 10;
+	// waitUntil {
+	// 	Sleep 0.1;
+	// 	((time > _timeout) || (scriptDone _done))
+	// };
 
 	// 9999 cutText ["", "BLACK OUT", 1]; 
 	// Sleep 1; 

@@ -16,6 +16,7 @@ Items without Fixed/Added/Removed proceeding are typically balance changes.
 - Increased global damage scale slightly
 - Decreased ammo requirements of some weapons
 - Decreased breakage frequency for melee weapons
+- New system that uses server to determine empty setpos locations
 - Halo effect now hugs ground when vehicle is airborne
 - Fixed vehicle spawn protection status being applied twice on deploy
 - Fixed 'Beach' zone on stratis with bad boundary detection

@@ -25,6 +25,8 @@ purchaseList = compile preprocessFile "client\ui\functions\purchaseList.sqf";
 generateCategoryList = compile preprocessFile "client\ui\functions\generateCategoryList.sqf";	
 changeCategory = compile preprocessFile "client\ui\functions\changeCategory.sqf";	
 
+
+
 // Displays and restores purchase button text
 showPurchaseMessage = {
 
@@ -150,3 +152,6 @@ addReservedIndex = {
 
 // Starts the locking process on the target
 acquireTarget = compile preprocessFile "client\ui\functions\acquireTarget.sqf";
+
+// Lock title screens
+toggleDisplayLock = compile preprocessFile "client\ui\functions\toggleDisplayLock.sqf";	

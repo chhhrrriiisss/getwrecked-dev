@@ -54,7 +54,7 @@ _btn ctrlCommit 0;
 
 // Show button if we can cancel this title
 if (!_canAbort) then {
-	disableUserInput true;
+	[95000, true] call toggleDisplayLock;	
 };
 
 if (call _buttonCondition) then {
@@ -89,7 +89,7 @@ for "_i" from 0 to 1 step 0 do {
 	if ( (isNull (findDisplay 95000)) || (time > _timeout) || !(call _condition) || !GW_TITLE_ACTIVE) exitWith {};
 
 	if (call _buttonCondition) then {
-		disableUserInput false;
+		[95000, false] call toggleDisplayLock;	
 		_btn ctrlEnable true;
 		_btn ctrlShow true;
 		_btn CtrlCommit 0;
@@ -113,7 +113,10 @@ GW_TITLE_ACTIVE = false;
 GW_HUD_ACTIVE = true;
 GW_HUD_LOCK = false;
 closeDialog 95000;
-disableUserInput false;
+
+if (!_canAbort) then {
+	[95000, false] call toggleDisplayLock;	
+};
 
 _exitWith
 

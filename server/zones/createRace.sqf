@@ -8,20 +8,16 @@ params ['_raceToInit', '_timeout'];
 private ['_raceToInit', '_timeout', '_raceName', '_racePoints', '_raceHost', '_startPosition', '_firstPosition'];
 
 _targetRace = [];
-_id = 0;
-{
-	if (_raceToInit == ((_x select 0) select 0) ) exitWith {
-		_targetRace = _x;
-		_id = _forEachIndex;
-	};
-} foreach GW_ACTIVE_RACES;
+_raceInfo = _raceToInit call getRaceID;
+_targetRace = _raceInfo select 0;
+_id = _raceInfo select 1;
 
 if (count _targetRace == 0) exitWith { systemchat 'Error bad race data or no race found'; };
 
 _meta = (_targetRace select 0);
 _raceName = _meta select 0;
-_minPlayers =  [_meta, 3, 1, [0]] call filterParam;
-_maxTimeout = [_meta, 4, 120, [0]] call filterParam;
+_minPlayers =  [_meta, 3, 2, [0]] call filterParam;
+_maxTimeout = [_meta, 4, 240, [0]] call filterParam;
 _racePoints = _targetRace select 1;
 _raceHost = _targetRace select 2;
 _startPosition = _racePoints select 0;
@@ -86,6 +82,8 @@ waitUntil {
 	((time > _timeout) || _raceStatus == 2)
 };
 
+GW_ACTIVE_RACE_VEHICLES set [_id, _v];
+
 // If race has enough players, auto-start
 _raceStatus = [_raceName] call checkRaceStatus;	
 if (_raceStatus == 1) then {
@@ -141,18 +139,18 @@ if (time > _timeout && _raceStatus == 0) exitWith {
 _timeout = time + _maxTimeout;
 waitUntil {
 	Sleep 0.5;
-	(time > _timeout)
+	( (time > _timeout) || (_raceStatus == 3) )
 };
 
-// Set race status to complete
-[_raceName, 3] call checkRaceStatus;
+// // Set race status to complete
+// [_raceName, 3] call checkRaceStatus;
 
-// 15 seconds of camera, then end race
-_timeout = time + 10;
-waitUntil {
-	Sleep 1;
-	(time > _timeout)
-};
+// // 15 seconds of camera, then end race
+// _timeout = time + 10;
+// waitUntil {
+// 	Sleep 1;
+// 	(time > _timeout)
+// };
 
 GW_ACTIVE_RACES deleteAt _id;
 publicVariable "GW_ACTIVE_RACES";

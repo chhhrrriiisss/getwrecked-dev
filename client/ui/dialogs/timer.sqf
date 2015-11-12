@@ -32,29 +32,27 @@ cancelCurrentTimer = {
 disableSerialization;
 if(!(createDialog "GW_Timer")) exitWith { GW_TIMER_ACTIVE = false; }; 
 
-disableSerialization;
 _text = ((findDisplay 94000) displayCtrl 94001);
 _btn = ((findDisplay 94000) displayCtrl 94002);
 _marginBottom = ((findDisplay 94000) displayCtrl 94003);
 _marginTop = ((findDisplay 94000) displayCtrl 94004);
 _margins = [_marginTop, _marginBottom];
 
-
 _btn ctrlSetText _buttonString;
 _btn ctrlShow true;
 _btn ctrlCommit 0;
+//showChat false;
 
 // Allows the timer to be cancelled via button
 if (!_canAbort) then {
 
+	//disableUserInput true;
 	_btn ctrlShow false;
-	_btn ctrlCommit 0;
+	_btn ctrlCommit 0;	
 
-	disableUserInput true;
-	_timeValue spawn {
-		Sleep _this;
-		disableUserInput false;
-	};
+	[94000, true] call toggleDisplayLock;	
+
+	//( (findDisplay 94000) displayAddEventHandler ["KeyDown", { true }] )
 
 };
 
@@ -122,7 +120,13 @@ _exitWith = if (GW_TIMER_ACTIVE && time > GW_TIMER_VALUE) then {
 } else { false };
 
 GW_TIMER_ACTIVE = false;
+//disableUserInput false;
 closeDialog 0;
+
+// if (!_canAbort) then {
+// 	(findDisplay 94000) displayRemoveEventHandler ["KeyDown", _ID];
+// };
+if (!_canAbort) then { [94000, false] call toggleDisplayLock; };
 
 _exitWith
 

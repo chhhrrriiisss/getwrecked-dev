@@ -37,4 +37,4 @@ _emptyArr = [];
 if (count _emptyArr == 0) exitWith { _empty };
 
 // Return a random one from the list of empty ones
-(_emptyArr select (random ((count _emptyArr) - 1)));
+(_emptyArr call BIS_fnc_selectRandom)

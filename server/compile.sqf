@@ -12,6 +12,7 @@ logKill = compile preprocessFile "server\functions\logKill.sqf";
 initEvents = compile preprocessFile "server\zones\events.sqf";
 createSupplyDrop = compile preprocessFile "server\zones\createSupplyDrop.sqf";
 createRace = compile preprocessFile "server\zones\createRace.sqf";
+endRace = compile preprocessFile "server\zones\endRace.sqf";
 
 // Utility
 call compile preprocessFile "server\functions\cleanup.sqf";
@@ -35,7 +36,7 @@ pubVar_fnc_logDiag = compile preprocessFile "server\functions\pubVar_logDiag.sqf
 setVisibleAttached = compile preprocessFile "server\functions\setVisibleAttached.sqf";
 setObjectSimulation = compile preprocessFile "server\functions\setObjectSimulation.sqf";
 setSimulationVisibility =  compile preprocessFile "server\functions\setSimulationVisibility.sqf";
-
+setPosEmpty = compile preprocessFile "server\functions\setPosEmpty.sqf";
 setObjectOwner = compile preprocessFile "server\functions\setObjectOwner.sqf";
 
 // Leaderboard
@@ -45,5 +46,6 @@ if (GW_LEADERBOARD_ENABLED) then {
 
 GW_CURRENTZONE = "workshopZone";
 GW_ACTIVE_RACES = [];
+GW_ACTIVE_RACE_VEHICLES = [];
 
 

@@ -132,18 +132,36 @@ if (!_firstSpawn) then {
 	_unit setVariable ["killedBy", nil];
 	_unit setVariable ["GW_prevPos", nil];
 
-	_failSpawn = false;
-	_location = [spawnAreas, ["Car", "Man"]] call findEmpty;
+	// _failSpawn = false;
+	// _location = [spawnAreas, ["Car", "Man"]] call findEmpty;
 
-	// If we've failed to find an empty one, just use the first in the list
-	_pos = if (typename _location == "ARRAY") then { _failSpawn = true; (ASLtoATL getPosASL (spawnAreas select 0)) } else { _unit setDir (getDir _location); (ASLtoATL getPosASL _location) };
-	_unit setPosATL _pos;	
-	
+	// // If we've failed to find an empty one, just use the first in the list
+	// _pos = if (typename _location == "ARRAY") then { _failSpawn = true; (ASLtoATL getPosASL (spawnAreas select 0)) } else { _unit setDir (getDir _location); (ASLtoATL getPosASL _location) };
+	// _unit setPosATL _pos;	
 
-	if (!isNil "GW_LASTLOAD" && !_failSpawn) then {
-		_closest = [saveAreas, _pos] call findClosest; 
-		[(ASLtoATL getPosASL _closest), GW_LASTLOAD] spawn requestVehicle;
+	_unit spawn {
+
+		_p = getPos _this;
+		_timeout = time + 5;
+		waitUntil {
+			_d = (getPos _this) distance _p;
+			((time > _timeout) || (_d > 1))
+		};
+
+		_fail = if ( ((getpos _this) distance (getMarkerPos "respawn_civilian")) <= 3) then { true } else { false };
+		if (!isNil "GW_LASTLOAD" && !_fail) then {
+			_closest = [saveAreas, (getpos _this)] call findClosest; 
+			[(ASLtoATL getPosASL _closest), GW_LASTLOAD] spawn requestVehicle;
+		};
+
 	};
+
+	[
+		["[spawnAreas,['Car', 'Man'], 8]",_unit],
+		'setPosEmpty',
+		false,
+		false
+	] call bis_fnc_mp;		
 
 } else {	
 

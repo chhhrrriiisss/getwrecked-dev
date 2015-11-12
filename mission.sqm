@@ -6616,14 +6616,14 @@ class Mission
 		items=163;
 		class Item0
 		{
-			position[]={14378.656,38.18771,19027.5};
+			position[]={14361.789,37.952122,19033.373};
 			name="respawn_civilian";
 			type="Empty";
 			angle=-119.77219;
 		};
 		class Item1
 		{
-			position[]={14381.321,38.206337,19026.857};
+			position[]={14363.756,38.060627,19034.125};
 			name="respawn_west";
 			type="Empty";
 		};
@@ -7370,7 +7370,7 @@ class Mission
 		};
 		class Item107
 		{
-			position[]={14379.957,38.194931,19028.592};
+			position[]={14362.157,38.016441,19035.225};
 			name="respawn_guerrila";
 			type="Empty";
 		};
