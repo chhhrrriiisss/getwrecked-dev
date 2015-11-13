@@ -4,7 +4,6 @@
 #define GW_Edit_ID 90020
 #define GW_Rename_ID 90021
 #define GW_New_ID 90022
-#define GW_Cancel_ID 90023
 
 #define GW_BUTTON_WIDTH 0.2
 #define GW_BUTTON_HEIGHT 0.035
@@ -760,7 +759,7 @@ class GW_Race
         bottom = 0;
       };
     };
-
+    
     class ButtonDelete : GW_RscButtonMenu
     {
       idc = 90018;

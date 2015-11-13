@@ -21,9 +21,9 @@ if ({ if (_x == _statusEffect) exitWith {1}; false } count ["overcharge", "extra
 	if !(_inVehicle) exitWith {};
 	
 	// Desaturate screen
-	"colorCorrections" ppEffectEnable true; 
-	"colorCorrections" ppEffectAdjust [1, 0.3, 0, [1,1,1,-0.1], [1,1,1,2], [-0.5,0,-1,5]]; 
-	"colorCorrections" ppEffectCommit 1;
+	// "colorCorrections" ppEffectEnable true; 
+	// "colorCorrections" ppEffectAdjust [1, 0.3, 0, [1,1,1,-0.1], [1,1,1,2], [-0.5,0,-1,5]]; 
+	// "colorCorrections" ppEffectCommit 1;
 
 };
 

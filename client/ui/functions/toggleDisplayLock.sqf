@@ -1,3 +1,9 @@
+//
+//      Name: toggleDisplayLock
+//      Desc: 
+//      Return: 
+//
+
 params ['_displayID', '_lock'];
 private ['_displayID', '_lock'];
 
@@ -11,6 +17,7 @@ if (_lock) exitWith {
 
 if (!_lock) exitWith {
 	_ID = GW_LOCKED_DISPLAYS find _displayID;
+	if (_ID == -1) exitWith { true };
 	(findDisplay _displayID) displayRemoveEventHandler ["KeyDown", _ID];
 	GW_LOCKED_DISPLAYS deleteAt _ID;
 	true

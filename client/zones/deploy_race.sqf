@@ -30,22 +30,40 @@ _raceHost = _targetRace select 2;
 _startPosition = _racePoints select 0;
 _firstPosition = _racePoints select 1;
 _raceStatus = [_targetRace, 3, -1, [0]] call filterParam;
+_raceID = (_raceName call getRaceID) select 1;
 
-// Find a position, 30m back from first checkpoint and begin alignment
+// Get direction to first checkpoint
 _dirTo = [_startPosition, _firstPosition] call dirTo;
-_dirOpp = [_dirTo + 180] call normalizeAngle;
-_initPosition = [_startPosition, 30, _dirOpp] call relPos;
 
-_initPosition set [2, 5];
-_vehicleToDeploy setPos _initPosition;
-_vehicleToDeploy setDir _dirTo;
+// Add a listener, so setDir is updated once we have a new position
+_currentPos = getPos _vehicleToDeploy;
+[_vehicleToDeploy, _startPosition] spawn {
+	
+	_v = _this select 0;
+	_p = getPos _v;
+	_timeout = time + 5;
+	waitUntil {
+		_d = (getPos _v) distance _p;
+		((time > _timeout) || (_d > 1))
+	};
 
-// If location is null (debug) dont deploy 
-if ( (_initPosition distance [0,0,0]) <= 1000) exitWith {
-	systemChat 'No valid deploy location available.';
-	GW_DEPLOY_ACTIVE = false;
-	false
+	if (_p distance (getpos _v) <= 3) exitWith {
+		systemChat 'No valid deploy location available.';
+		GW_DEPLOY_ACTIVE = false;
+	};
+
+	_d = [(getPos _v), (_this select 1)] call dirTo;
+	_v setDir _d;
+
 };
+
+// Get server to place us at an empty grid position
+[
+	[format["[((GW_ACTIVE_RACES select %1) select 4),['Car', 'Man'], 8]", _raceID],_vehicleToDeploy],
+	'setPosEmpty',
+	false,
+	false
+] call bis_fnc_mp;	
 
 // Clean up all deployables owned by this player (particularily bad for races due to clogging up checkpoints)
 {

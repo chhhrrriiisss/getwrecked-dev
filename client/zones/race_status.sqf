@@ -1,3 +1,9 @@
+//
+//      Name: raceStatus
+//      Desc: 
+//      Return: 
+//
+
 private ['_targetRace', '_racePoints', '_raceName'];
 
 _targetRace = [_this, 0, [], [[]]] call filterParam;
@@ -12,14 +18,20 @@ _raceHost = _targetRace select 2;
 _success = 
 ["<br /><br /><t size='3' color='#ffffff' align='center'>WAITING FOR PLAYERS</t>", 
 	"START", 
-	[false, { (([GW_CURRENTRACE] call checkRaceStatus) == 1) }], // When TRUE show button
+	[
+		false, 
+		{ 
+			(([GW_CURRENTRACE] call checkRaceStatus) == 1)  // When TRUE show button
+		}
+	], 
 	{  
-		_rS = [GW_CURRENTRACE] call checkRaceStatus; ((_rS != 2) && (_rS != -1))  // While TRUE keep title up
+		_rS = [GW_CURRENTRACE] call checkRaceStatus; 
+		((_rS != 2) && (_rS != -1))  // While TRUE keep title up
 	}, 
 	60,
 	true, 
 	{ 	
-		[GW_CURRENTRACE, 2] call checkRaceStatus; systemchat 'Button function!'; // Button function
+		[GW_CURRENTRACE, 2] call checkRaceStatus; // Button function
 		true 
 	}
 ] call createTitle;
@@ -32,7 +44,7 @@ if ((!_success && _raceStatus == 0) || _raceStatus == 1) exitWith {
 if (_raceStatus != 2) exitWith {
 
 	waitUntil { Sleep 0.1; (isNull (findDisplay 95000)) };
-	["<br /><br /><t size='3' color='#ffffff' align='center'>RACE ABORTED</t>", "START", [false, { false }] , { true }, 5, true] call createTitle;
+	["<br /><br /><t size='3' color='#ffffff' align='center'>RACE ABORTED</t>", "START", [false, { false }], { true }, 5, true] call createTitle;
 	GW_CURRENTVEHICLE call destroyInstantly;
 
 };
@@ -41,14 +53,18 @@ if (_raceStatus >= 2) exitWith {
 
 	waitUntil { Sleep 0.1; (isNull (findDisplay 95000)) };
 
-	_maxTime = 15;
-
+	_maxTime = if (GW_DEBUG) then { 1} else { 15 };
 	[_targetRace, 9999] execVM 'testcheckpoints.sqf';
-	['TEST', 15, false] call createTimer;
+	_success = ['ABORT', _maxTime, [false, false], true] call createTimer;
+
+	if (!_success) exitWith {
+		waitUntil { Sleep 0.1; (isNull (findDisplay 94000)) };
+		GW_CURRENTVEHICLE call destroyInstantly;
+	};
 
 	GW_CURRENTVEHICLE say "electronTrigger";
 
-	GW_HUD_ACTIVE = true;
+	GW_HUD_ACTIVE = false;
 	GW_HUD_LOCK = false;
 
 };

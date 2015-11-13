@@ -1,28 +1,32 @@
-	_r = [_this, 0, "", [""]] call filterParam;
-	_s = [_this, 1, -2, [0]] call filterParam;
+//
+//		checkRaceStatus
+//
 
-	private ['_r', '_s'];
+_r = [_this, 0, "", [""]] call filterParam;
+_s = [_this, 1, -2, [0]] call filterParam;
 
-	if (count toArray _r == 0) exitWith { -1 };
+private ['_r', '_s'];
 
-	// Just querying current status
-	if (_s == -2) exitWith {
+if (count toArray _r == 0) exitWith { -1 };
 
-		_s = -1;
-		{			
-			if (_r == ((_X select 0) select 0)) exitWith { _s = [_x, 3, -1, [0]] call filterParam; };
-		} foreach GW_ACTIVE_RACES;
+// Just querying current status
+if (_s == -2) exitWith {
 
-		_s
-
-	};
-
-	// Setting the race to the current status
-	{
-		if (_r == ((_X select 0) select 0)) exitWith { _x set [3, _s]; };
+	_s = -1;
+	{			
+		if (_r == ((_X select 0) select 0)) exitWith { _s = [_x, 3, -1, [0]] call filterParam; };
 	} foreach GW_ACTIVE_RACES;
 
-	// Update that value
-	publicVariable "GW_ACTIVE_RACES";
-
 	_s
+
+};
+
+// Setting the race to the current status
+{
+	if (_r == ((_X select 0) select 0)) exitWith { _x set [3, _s]; };
+} foreach GW_ACTIVE_RACES;
+
+// Update that value
+publicVariable "GW_ACTIVE_RACES";
+
+_s

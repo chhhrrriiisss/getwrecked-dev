@@ -1,3 +1,9 @@
+//
+//      Name: race
+//      Desc: 
+//      Return: 
+//
+
 closedialog 0;
 
 if (isNil "GW_RACE_GENERATOR_ACTIVE") then { GW_RACE_GENERATOR_ACTIVE = false; };	
@@ -11,44 +17,10 @@ params ['_pad', '_unit'];
 _isVehicleReady = [_pad, _unit] call vehicleReadyCheck;
 if (!_isVehicleReady) exitWith { GW_RACE_GENERATOR_ACTIVE = false; };
 	
-
 disableSerialization;
 if(!(createDialog "GW_Race")) exitWith { GW_RACE_GENERATOR_ACTIVE = false; }; //Couldn't create the menu
 
 showChat false;
-
-checkRaceStatus = {
-	
-	_r = [_this, 0, "", [""]] call filterParam;
-	_s = [_this, 1, -2, [0]] call filterParam;
-
-	private ['_r', '_s'];
-
-	if (count toArray _r == 0) exitWith { -1 };
-
-	// Just querying current status
-	if (_s == -2) exitWith {
-
-		_s = -1;
-		{			
-			if (_r == ((_X select 0) select 0)) exitWith { _s = [_x, 3, -1, [0]] call filterParam; };
-		} foreach GW_ACTIVE_RACES;
-
-		_s
-
-	};
-
-	// Setting the race to the current status
-	{
-		if (_r == ((_X select 0) select 0)) exitWith { _x set [3, _s]; };
-	} foreach GW_ACTIVE_RACES;
-
-	// Update that value
-	publicVariable "GW_ACTIVE_RACES";
-
-	_s
-
-};
 
 calculateDistance = {
 	params ['_array'];
@@ -65,8 +37,6 @@ calculateDistance = {
 	_d
 
 };
-
-
 
 getAllRaces = {
 	_rcs = profileNamespace getVariable ['GW_RACES', []];
@@ -230,6 +200,7 @@ selectRace = {
 	GW_RACE_HOST = [_raceData, 2, "NONE", [""]] call filterParam;
 	GW_RACE_ID = _selection;
 
+
 	_startButton = ((findDisplay 90000) displayCtrl 90015);
 	_raceStatus = [GW_RACE_NAME] call checkRaceStatus;
 
@@ -249,8 +220,8 @@ selectRace = {
 	_deleteButton = ((findDisplay 90000) displayCtrl 90018);
 
 	{
-		_x ctrlShow true;
 		_x ctrlEnable true;
+		// _x ctrlShow true;		
 		_x ctrlSetFade _buttonFade;
 		_x ctrlCommit 0;
 	} foreach [_editButton, _renameButton, _deleteButton];
@@ -263,9 +234,10 @@ selectRace = {
 	_raceMeta = _raceData select 0;
 	_isDefault = [_raceMeta, 3, false, [false]] call filterParam;
 
-	if (_isDefault) then {
-		_deleteButton ctrlShow false;
-		_deleteButton ctrlEnable false;
+	if (_isDefault || _raceStatus >= 0) then {		
+
+
+		_deleteButton ctrlEnable false;	
 		_deleteButton ctrlSetFade 1;
 		_deleteButton ctrlCommit 0;
 	};

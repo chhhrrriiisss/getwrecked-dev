@@ -36,6 +36,8 @@ GW_EDITING = false;
 GW_LIFT_ACTIVE = false;
 GW_SPAWN_ACTIVE = false;
 GW_DIALOG_ACTIVE = false;
+GW_HUD_LOCK = false;
+GW_HUD_ACTIVE = true;
 
 // Get rid of previous locked targets 
 GW_LOCKED_TARGETS = [];

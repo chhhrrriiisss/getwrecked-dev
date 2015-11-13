@@ -141,6 +141,12 @@ GW_COMMANDS_LIST = [
 						systemChat 'Library reset successfully.';				
 					};
 
+					if (_this == "RACES") exitWith {
+						profileNamespace SetVariable ['GW_RACES', nil];	
+						systemChat 'Races library reset successfully.';				
+					};
+
+
 					true	
 				};
 

@@ -45,11 +45,12 @@ GW_DISPLAY_EH = addMissionEventHandler ["Draw3D", {
 
 	_currentDir = direction player;
 	_currentPos = getPosASL player;
-
-	call drawIcons;
-	  
+		
  	// If any of these menus are active, forget about drawing anything else
-	if (GW_DEPLOY_ACTIVE || GW_SPAWN_ACTIVE || GW_SETTINGS_ACTIVE) exitWith {};
+	if (GW_DEPLOY_ACTIVE || GW_SPAWN_ACTIVE || GW_SETTINGS_ACTIVE || GW_TIMER_ACTIVE || GW_TITLE_ACTIVE) exitWith {};
+
+	call drawIcons;	  
+
 	if (isNil "GW_CURRENTZONE") exitWith {};
 
 	// If there's no nearby targets, no point going any further

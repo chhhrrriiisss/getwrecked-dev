@@ -4,6 +4,7 @@
 //      Return: None
 //
 
+params ['_spectatorList'];
 private ["_c", "_timeout", "_pos"];
 
 if (GW_SPECTATOR_ACTIVE) exitWith {};	
@@ -11,30 +12,54 @@ GW_HUD_ACTIVE = false;
 GW_HUD_LOCK = true;
 GW_SPECTATOR_ACTIVE = true;
 
-9999 cutText ["", "BLACK IN", 1]; 
+9999 cutText ["", "BLACK IN", 0.5]; 
 
 disableSerialization;
 if(!(createDialog "GW_Spectator")) exitWith { GW_SPECTATOR_ACTIVE = false; }; 
 
-disableUserInput TRUE;
+showChat true;
+
+{	
+	if (_x == (vehicle player) || { isNull _x } || { !alive _x }) then {
+		_spectatorList deleteAt _forEachIndex;
+	};
+} foreach _spectatorList;
+
+GW_SPECTATOR_TARGETS = if ((count _spectatorList) == 0) then { allPlayers } else { _spectatorList };
 
 // 9999 cutText ["", "BLACK IN", 1.5];  
-GW_SPECTATOR_TARGET = [_this,0, GW_CURRENTVEHICLE, [objNull, []]] call filterParam;
+
+GW_SPECTATOR_TARGET = GW_SPECTATOR_TARGETS call BIS_fnc_selectRandom;
+
+swapSpectator = {
+	
+	_targ = [_this, 0, 1, [0,objNull]] call filterParam;
+	
+	if (typename _targ == "OBJECT") exitWith { 
+		if ( (GW_SPECTATOR_TARGETS find _targ) == -1) exitWith {};
+		GW_SPECTATOR_TARGET = _targ;
+	}; 
+
+	_index = GW_SPECTATOR_TARGETS find GW_SPECTATOR_TARGET;
+	_index = [(_index + _targ), 0,((count GW_SPECTATOR_TARGETS) -1), true] call limitToRange;
+	GW_SPECTATOR_TARGET = GW_SPECTATOR_TARGETS select _index;
+};
 
 _r = 20;
 _phi = 1;
 _theta = random 360;
 _rx = _r * (sin _theta) * (cos _phi);
 _ry = _r * (cos _theta) * (cos _phi);
-_rz = 12 * (sin _phi);
+_rz = 7;
 
 _pos = if (typename GW_SPECTATOR_TARGET == "OBJECT") then { (ASLtoATL visiblePositionASL GW_SPECTATOR_TARGET) } else { GW_SPECTATOR_TARGET };
 _c = "camera" camCreate _pos;
 _c camSetTarget GW_SPECTATOR_TARGET;
+_c cameraeffect["internal","back"];
 _c camSetRelPos [_rx, _ry , _rz];
-_c camCommit 5;
+_c camCommit 2;
 
-_timeout = time + 5;
+_timeout = time + 2;
 waitUntil {
 	((time > _timeout) || isNull (findDisplay 104000))
 };
@@ -43,20 +68,20 @@ _timeout = time + 99999;
 _currentTarget = GW_SPECTATOR_TARGET;
 
 waitUntil {
-
+	
+	systemchat format['%1 / %2', GW_SPECTATOR_TARGET, time];
+	if (!alive GW_SPECTATOR_TARGET) then { GW_SPECTATOR_TARGET = GW_SPECTATOR_TARGETS call BIS_fnc_selectRandom; };
 	if (_currentTarget != GW_SPECTATOR_TARGET) then {
 		_c camSetTarget GW_SPECTATOR_TARGET;
-		_c camCommit 5;
+		_c camCommit 2;
 		_currentTarget = GW_SPECTATOR_TARGET;
 	};	
 
-	_theta = _theta + 0.001;
+	_theta = _theta + 0.05;
 	_theta = _theta mod 360;
 
-	_r = _r + 0.00015;
-
 	_rx = _r * (sin _theta) * (cos _phi);
-	_ry = _r * (cos _theta) * (cos _phi);
+	_ry = _r * (cos _theta) * (cos _phi);	
 
 	_c camSetRelPos [_rx, _ry, _rz];
 	_c camCommit 0;
@@ -64,13 +89,13 @@ waitUntil {
 	((time > _timeout) || (!GW_SPECTATOR_ACTIVE) || isNull (findDisplay 104000))
 };	
 
+systemchat 'spectator camera ended';
 player cameraeffect["terminate","back"];
 camdestroy _c;
 GW_SPECTATOR_ACTIVE = false;
 "colorCorrections" ppEffectEnable false;
 "filmGrain" ppEffectEnable false;
 closeDialog 0;
-disableUserInput false;
 GW_HUD_ACTIVE = true;
 GW_HUD_LOCK = false;
 

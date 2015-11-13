@@ -20,6 +20,11 @@ _timeValue =  [_this,1, 3, [0]] call filterParam;
 
 GW_TIMER_VALUE = time + _timeValue;
 _canAbort = [_this,2, true, [false]] call filterParam;
+
+_abortParameters =  [_this,2, [true, true], [[]]] call filterParam;
+_canAbort = [_abortParameters,0, true, [false]] call filterParam;
+_showButton = [_abortParameters,1, true, [false]] call filterParam;
+
 _soundEnabled = [_this,3, false, [false]] call filterParam;
 _functionOnComplete = [_this,4, { true }, [{}]] call filterParam;
 _showBorders = [_this,5, true, [false]] call filterParam;
@@ -43,17 +48,15 @@ _btn ctrlShow true;
 _btn ctrlCommit 0;
 //showChat false;
 
-// Allows the timer to be cancelled via button
+// Allows the timer to be cancelled via esc
 if (!_canAbort) then {
+	[94000, true] call toggleDisplayLock;	
+};
 
-	//disableUserInput true;
+// Button is not visible
+if (!_showButton) then {
 	_btn ctrlShow false;
 	_btn ctrlCommit 0;	
-
-	[94000, true] call toggleDisplayLock;	
-
-	//( (findDisplay 94000) displayAddEventHandler ["KeyDown", { true }] )
-
 };
 
 // Hide/show top and bottom margins
@@ -123,10 +126,7 @@ GW_TIMER_ACTIVE = false;
 //disableUserInput false;
 closeDialog 0;
 
-// if (!_canAbort) then {
-// 	(findDisplay 94000) displayRemoveEventHandler ["KeyDown", _ID];
-// };
-if (!_canAbort) then { [94000, false] call toggleDisplayLock; };
+[94000, false] call toggleDisplayLock;
 
 _exitWith
 

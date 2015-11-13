@@ -52,11 +52,6 @@ _btn ctrlShow true;
 _btn ctrlSetText _buttonString;
 _btn ctrlCommit 0;	
 
-// Show button if we can cancel this title
-if (!_canAbort) then {
-	[95000, true] call toggleDisplayLock;	
-};
-
 if (call _buttonCondition) then {
 	_btn ctrlEnable true;
 	_btn ctrlShow true;
@@ -66,6 +61,12 @@ if (call _buttonCondition) then {
 	_btn ctrlShow false;
 	_btn CtrlCommit 0;	
 };
+
+// Show button if we can cancel this title
+if (!_canAbort) then {
+	[95000, true] call toggleDisplayLock;	
+};
+
 
 // Hide/show top and bottom margins
 if (!_showBorders) then {
@@ -88,8 +89,7 @@ for "_i" from 0 to 1 step 0 do {
 
 	if ( (isNull (findDisplay 95000)) || (time > _timeout) || !(call _condition) || !GW_TITLE_ACTIVE) exitWith {};
 
-	if (call _buttonCondition) then {
-		[95000, false] call toggleDisplayLock;	
+	if (call _buttonCondition) then {		
 		_btn ctrlEnable true;
 		_btn ctrlShow true;
 		_btn CtrlCommit 0;
@@ -114,9 +114,7 @@ GW_HUD_ACTIVE = true;
 GW_HUD_LOCK = false;
 closeDialog 95000;
 
-if (!_canAbort) then {
-	[95000, false] call toggleDisplayLock;	
-};
+[95000, false] call toggleDisplayLock;	
 
 _exitWith
 

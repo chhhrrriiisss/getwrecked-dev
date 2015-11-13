@@ -1,3 +1,9 @@
+//
+//      Name: testCheckpoints
+//      Desc: 
+//      Return: 
+//
+
 // Creates a series of checkpoints, waits for player to enter correctly 
 _abortSequence = {
 	
@@ -13,11 +19,6 @@ _abortSequence = {
 		} foreach (_x select 2);
 	} foreach _toDelete;
 
-
-	[] spawn {
-		Sleep (2 + random 5);
-		(vehicle player) call destroyInstantly;		
-	};
 };
 
 // _points = [_this, 0, [], [[]]] call bis_fnc_param;
@@ -33,7 +34,8 @@ for "_i" from 1 to 2 step 1 do {
 
 private ['_points', '_targetRace', '_startPosition', '_raceStatus', '_raceName'];
 
-_targetRace = [_this, 0, [], [[]]] call bis_fnc_param;
+_targetRace = [_this, 0, [], [[], ""]] call bis_fnc_param;
+_targetRace = if ((typename _targetRace) == "STRING") then { ((_targetRace call getRaceID) select 0) } else { _targetRace };
 if (count _targetRace == 0) exitWith { hint 'Could not start - invalid race'; };
 
 _points = [_targetRace, 1, _points, [[]]] call bis_fnc_param;
@@ -41,6 +43,7 @@ if (count _points == 0) exitWith { hint 'Could not start - bad point data'; };
 
 _raceName = (_targetRace select 0) select 0;
 _raceHost = _targetRace select 2;
+
 _startPosition = _points select 0;
 _firstPosition = _points select 1;
 _raceStatus = [_targetRace, 3, -1, [0]] call filterParam;
@@ -57,22 +60,22 @@ GW_CHECKPOINTS_COMPLETED = [];
 // Create checkpoint halo as a guide
 [GW_CURRENTVEHICLE, 9999, 'client\images\checkpoint_halo2.paa',{ 
 
-_rT = _this select 0;
-_rB = _this select 1;
+	_rT = _this select 0;
+	_rB = _this select 1;
 
-if (count GW_CHECKPOINTS == 0) exitWith { false };
-_cP = GW_CHECKPOINTS select 0;
+	if (count GW_CHECKPOINTS == 0) exitWith { false };
+	_cP = GW_CHECKPOINTS select 0;
 
-_dirTo = [([GW_CURRENTVEHICLE, _cP] call dirTo) - (getDir GW_CURRENTVEHICLE)] call normalizeAngle;
-_dirToRB = [_dirTo + 180] call normalizeAngle;
+	_dirTo = [([GW_CURRENTVEHICLE, _cP] call dirTo) - (getDir GW_CURRENTVEHICLE)] call normalizeAngle;
+	_dirToRB = [_dirTo + 180] call normalizeAngle;
 
-[_rT, [-90,0,_dirTo]] call setPitchBankYaw;
-[_rB, [90,0,_dirToRB]] call setPitchBankYaw;
+	[_rT, [-90,0,_dirTo]] call setPitchBankYaw;
+	[_rB, [90,0,_dirToRB]] call setPitchBankYaw;
 
-// _rT setDir _dirTo;
-// _rB setDir _dirTo;
+	// _rT setDir _dirTo;
+	// _rB setDir _dirTo;
 
-((alive GW_CURRENTVEHICLE) || (count GW_CHECKPOINTS > 0))
+	((alive GW_CURRENTVEHICLE) || (count GW_CHECKPOINTS > 0))
 
 }, false, [0,2,0.5], true] spawn createHalo;
 
@@ -177,13 +180,14 @@ for "_i" from 0 to 1 step 0 do {
 
 };
 
+_raceID =  ((_raceName call getRaceID) select 1);
+_vehiclesArray = (GW_ACTIVE_RACES select _raceID) select 4;
+
 if ((count _cpArray) == 0 && time <= (_timeout + 0.1) ) then {
 	hint format['Race complete! (%1s)', ([time - _startTime, 2] call roundTo)];	
 
 	GW_CURRENTVEHICLE say "electronTrigger";
 	GW_CURRENTVEHICLE say "summon";
-
-	
 
 	[
 		[((_raceName call getRaceID) select 1), GW_CURRENTVEHICLE],
@@ -192,11 +196,13 @@ if ((count _cpArray) == 0 && time <= (_timeout + 0.1) ) then {
 		false
 	] call bis_fnc_mp;	
 
+	[] execVM 'testfinishcamera.sqf';
+
 	// _timeStamp = (time - _startTime) call formatTimeStamp;
 	// _text = format["<br /><t size='3.3' color='#ffffff' align='center' valign='middle' shadow='0'>+%1</t>", _timeStamp];
 
 	// _done = [_text, "SPECTATE", false, { true }, 10] spawn createTitle;
-	// [] execVM 'testfinishcamera.sqf';
+	
 
 	// _timeout = time + 10;
 	// waitUntil {
@@ -223,6 +229,22 @@ if ((count _cpArray) == 0 && time <= (_timeout + 0.1) ) then {
 	_cpArray call _abortSequence;
 };
 
+if (alive GW_CURRENTVEHICLE) then {
+
+	_timeStamp = (time - _startTime) call formatTimeStamp;
+
+	// Show title if we have a time or DNC
+	waitUntil { Sleep 0.1; (isNull (findDisplay 95000)) };
+	[ format["<br /><t size='3.3' color='#ffffff' align='center' valign='middle' shadow='0'>+%1</t>", _timeStamp], "SPECTATE", [false, { true }] , { true }, 9999, true, { closeDialog 0; true }] call createTitle;
+
+	GW_FLYBY_ACTIVE = FALSE;
+
+	9999 cutText ["", "BLACK OUT", 0.5];
+	Sleep 0.5;
+
+	[_vehiclesArray] execVM 'testspectatorcamera.sqf';
+
+};
 
 // Cleanup
 {

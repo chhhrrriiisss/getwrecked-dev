@@ -16,7 +16,7 @@ if (count _targetRace == 0) exitWith { systemchat 'Error bad race data or no rac
 
 _meta = (_targetRace select 0);
 _raceName = _meta select 0;
-_minPlayers =  [_meta, 3, 2, [0]] call filterParam;
+_minPlayers =  [_meta, 3, 1, [0]] call filterParam; // 1 for testing (2 default)
 _maxTimeout = [_meta, 4, 240, [0]] call filterParam;
 _racePoints = _targetRace select 1;
 _raceHost = _targetRace select 2;
@@ -25,15 +25,38 @@ _firstPosition = _racePoints select 1;
 _raceStatus = [_targetRace, 3, -1, [0]] call filterParam;
 
 // Clear up start position of any stray vehicles
-_objects = _startPosition nearEntities [["Car", "Tank"], 100];
+_objects = nearestObjects [_startPosition, [], 100];
 {	
 	{ deleteVehicle _x; } foreach (attachedObjects _x);
 	deleteVehicle _x;
 } foreach _objects;
 
+// Generate 12 unique start positions at first checkpoint
+_gridPositions = [];
+_invert = -1;
+_gap = 2;
+_size = 1;
+_startDistance = 50;
+
+_dirTo = [_startPosition, _firstPosition] call dirTo;
+_dirOpp = [_dirTo + 180] call normalizeAngle;
+_initPosition = [([_startPosition, _startDistance, _dirOpp] call relPos), (_gap/2), 90] call relPos;
+
+for "_i" from 0 to 11 step 1 do {
+
+	_invert = _invert * -1;
+	_a = [_dirTo + (90 * _invert)] call normalizeAngle;
+	_p = [_initPosition, (_gap * _i) + (_size * _i), _a] call relPos;
+	_p set [2, 5];
+	_gridPositions pushBack _p;
+
+};
+
+(GW_ACTIVE_RACES select _id) set [4, _gridPositions];
+publicVariable "GW_ACTIVE_RACES";
+
 // Then set race status to 'waiting phase' + SYNC
 [_raceName, 0] call checkRaceStatus;
-publicVariable "GW_ACTIVE_RACES";
 
 // Wait for 60 seconds or players > minPlayers
 _timeout = time + 15;
@@ -47,6 +70,7 @@ waitUntil {
 	{
 		_isVehicle = _x getVariable ['isVehicle', false];
 		_hasDriver = !isNull (driver _x);
+		_hasDriver = true;
 		if (!_isVehicle || !_hasDriver || !alive _x) then { _v deleteAt _forEachIndex; };
 	} foreach _v;
 
@@ -82,7 +106,8 @@ waitUntil {
 	((time > _timeout) || _raceStatus == 2)
 };
 
-GW_ACTIVE_RACE_VEHICLES set [_id, _v];
+(GW_ACTIVE_RACES select _id) set [5, _v];
+publicVariable "GW_ACTIVE_RACES";
 
 // If race has enough players, auto-start
 _raceStatus = [_raceName] call checkRaceStatus;	
@@ -135,13 +160,6 @@ if (time > _timeout && _raceStatus == 0) exitWith {
 // 	} foreach _racePoints;
 // };
 
-// Wait for MAX timeout OR ALL players completed
-_timeout = time + _maxTimeout;
-waitUntil {
-	Sleep 0.5;
-	( (time > _timeout) || (_raceStatus == 3) )
-};
-
 // // Set race status to complete
 // [_raceName, 3] call checkRaceStatus;
 
@@ -152,9 +170,6 @@ waitUntil {
 // 	(time > _timeout)
 // };
 
-GW_ACTIVE_RACES deleteAt _id;
-publicVariable "GW_ACTIVE_RACES";
-systemchat 'Race complete.';
 
 
 

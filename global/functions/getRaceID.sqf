@@ -1,3 +1,10 @@
+//
+//      Name: getRaceID
+//      Desc: Return index reference and object of race from name
+//      Return: Object (The location) or [0,0,0] if none found
+//
+
+private ['_targetRace', '_id'];
 
 _targetRace = [];
 _id = -1;

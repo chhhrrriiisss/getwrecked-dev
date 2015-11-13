@@ -18,6 +18,6 @@ _this spawn {
 
 	// Kill all crew and nearby players
 	{ _x setDammage 1; false } count (crew _this) > 0;
-	{ _x setDammage 1; false }count ((ASLtoATL getPosASL _this) nearEntities ["Man", 3]) > 0;
+	{ if (_x == (vehicle _x)) then { _x setDammage 1; }; false } count ((ASLtoATL getPosASL _this) nearEntities ["Man", 3]) > 0;
 
 };
