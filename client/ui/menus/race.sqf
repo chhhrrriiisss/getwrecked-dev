@@ -74,8 +74,16 @@ startRace = {
 
 	_selectedRace = (call getAllRaces) select _id;
 	_points = _selectedRace select 1;
-	_name = (_selectedRace select 0) select 0;
-	_host = name player;
+	_meta = (_selectedRace select 0);
+	_name = _meta select 0;
+
+	_minPlayers = if (GW_DEBUG) then { 1 } else { 2 };
+	_meta set [3, _minPlayers];
+
+	_maxWaitPeriod = if (GW_DEBUG) then { 15 } else { 60 };
+	_meta set [4, _maxWaitPeriod];
+
+	_host = (name player);
 	_raceStatus = [_name] call checkRaceStatus;
 
 	// Check a race with that name is not currently running
@@ -100,10 +108,11 @@ startRace = {
 			systemchat 'Race active and spectate only';
 
 			closeDialog 0;
-
 			[] execVM 'testspectatorcamera.sqf';
 
 		};
+
+		closeDialog 0;
 
 		// Send player to zone and begin waiting period for races that are already active
 		_success = [GW_SPAWN_VEHICLE, player, _selectedRace] call deployRace;
@@ -121,6 +130,7 @@ startRace = {
 	_result = ['START RACE?', format['%1 [%2]', _name, _distance], 'CONFIRM'] call createMessage;
 	if (!_result) exitWith { GW_RACE_ACTIVE = false; };	
 	
+	//_selectedRace pushback _host;
 	_selectedRace pushback _host;
 	GW_ACTIVE_RACES pushback _selectedRace;
 
@@ -131,7 +141,7 @@ startRace = {
 	} foreach GW_ACTIVE_RACES;
 
 	// Sync race to all clients
-	systemchat 'Syncing race data to other clients.';
+	systemchat 'Syncing race data to other clients...';
 	publicVariable "GW_ACTIVE_RACES";
 
 	// Initialize race thread on server
@@ -155,8 +165,6 @@ startRace = {
 	
 	if (time > _timeout) exitWith {
 
-		systemchat 'Failed to start race';
-
 		GW_RACE_ACTIVE = false;
 		GW_ACTIVE_RACES deleteAt _raceID;
 		GW_HUD_ACTIVE = true;
@@ -166,8 +174,6 @@ startRace = {
 		['FAILED TO START!',1, warningIcon, colorRed, "slideUp"] spawn createAlert; 
 	};	
 
-	systemchat 'Server starting race.';
-
 	GW_HUD_ACTIVE = false;
 	GW_HUD_LOCK = true;
 
@@ -176,7 +182,6 @@ startRace = {
 	GW_SPAWN_ACTIVE = false;
 
 	if (!_success) exitWith {
-		systemchat 'Deployment cancelled.';
 		GW_RACE_ACTIVE = false;
 		GW_HUD_ACTIVE = true;
 		GW_HUD_LOCK = false;
@@ -264,7 +269,7 @@ generateRaceList = {
 		_host =  [_x, 2, "", [""]] call filterParam;
 
 		if ((count toArray _host) > 0) then { 
-			_host = format[' [%1]', _host];
+			_host = format[' [ACTIVE, %1]', _host];
 		};
 
 		lbAdd [90011,  format[' %1%2', _name,_host] ];

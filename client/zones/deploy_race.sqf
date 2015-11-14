@@ -14,7 +14,7 @@ GW_DEPLOY_ACTIVE = true;
 _targetName = _vehicleToDeploy getVariable ['name', ''];
 GW_LASTLOAD = _targetName;
 
-_success = [_vehicleToDeploy, _unit, true] call preVehicleDeploy;
+_success = [_vehicleToDeploy, _unit] call preVehicleDeploy;
 if (!_success) exitWith {
 	GW_DEPLOY_ACTIVE = false; 
 	false 
@@ -55,12 +55,14 @@ _currentPos = getPos _vehicleToDeploy;
 	_d = [(getPos _v), (_this select 1)] call dirTo;
 	_v setDir _d;
 
+	(driver _v) setVariable ['GW_prevPos', (getPos _v)];
+
 };
 
 // Get server to place us at an empty grid position
 [
-	[format["[((GW_ACTIVE_RACES select %1) select 4),['Car', 'Man'], 8]", _raceID],_vehicleToDeploy],
-	'setPosEmpty',
+	[format["[((GW_ACTIVE_RACES select %1) select 4),['Car', 'Man'], 8]", _raceID],_vehicleToDeploy, false],
+	'setPosEmpty',	
 	false,
 	false
 ] call bis_fnc_mp;	

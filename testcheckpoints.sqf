@@ -58,7 +58,7 @@ GW_CHECKPOINTS = [];
 GW_CHECKPOINTS_COMPLETED = [];
 
 // Create checkpoint halo as a guide
-[GW_CURRENTVEHICLE, 9999, 'client\images\checkpoint_halo2.paa',{ 
+[GW_CURRENTVEHICLE, 9999, 'client\images\checkpoint_halo.paa',{ 
 
 	_rT = _this select 0;
 	_rB = _this select 1;
@@ -89,11 +89,13 @@ GW_CHECKPOINTS_COMPLETED = [];
 	_dirNext = if (_forEachIndex == (count _points - 1)) then { _dirNext } else { ([_cPos, _points select (_forEachIndex + 1)] call dirTo) };
 	_cp setDir _dirNext;
 	hideObject _cp;
+	_cp enableSimulationGlobal false;
 	_objArray pushBack _cp;
 
 	_c = "Sign_Circle_F" createVehicleLocal _cPos;
 	_c setPos [_cPos select 0, _cPos select 1, (_cPos select 2) - 5];
 	_c setDir _dirNext;
+	_c enableSimulationGlobal false;
 	_objArray pushBack _c;
 
 	// Add to checkpoint 3d icons array
@@ -112,6 +114,7 @@ GW_CHECKPOINTS_COMPLETED = [];
 			[_t, [-90,0,[(_dirNext+180)] call normalizeAngle]] call setPitchBankYaw;  
 		};
 
+		_t enableSimulationGlobal false;
 		_objArray pushBack _t;
 
 	} foreach [
@@ -126,8 +129,9 @@ GW_CHECKPOINTS_COMPLETED = [];
 } foreach _points;
 
 // Otherwise just start
-GW_CURRENTVEHICLE setFuel 1;
-GW_CURRENTVEHICLE engineOn true;
+// GW_CURRENTVEHICLE setFuel 1;
+// GW_CURRENTVEHICLE engineOn true;
+// [GW_CURRENTVEHICLE, ["noshoot", "nouse"], 9999] call addVehicleStatus;
 
 _maxTime = [_this, 1, 15, [0]] call bis_fnc_param;
 _timeout = time + _maxTime;
@@ -145,6 +149,11 @@ for "_i" from 0 to 1 step 0 do {
 
 	_targetCp = (_cpArray select 0) select 0;
 	if ((GW_CURRENTVEHICLE distance _targetCp) < _distTolerance) then {
+
+		// Remove shooting/use restrictions after first WP
+		// if ((count GW_CHECKPOINTS_COMPLETED) == 0) then {
+		// 	[GW_CURRENTVEHICLE, ["noshoot", "nouse"]] call removeVehicleStatus;
+		// };
 
 		// Requires correct orientation?
 		_correctDir = (_cpArray select 0) select 1;
@@ -181,7 +190,9 @@ for "_i" from 0 to 1 step 0 do {
 };
 
 _raceID =  ((_raceName call getRaceID) select 1);
-_vehiclesArray = (GW_ACTIVE_RACES select _raceID) select 4;
+
+_vehiclesArray = [GW_ACTIVE_RACES, _raceID, [], [[]]] call filterParam;
+_vehiclesArray = [_vehiclesArray, 4, allPlayers, [[]]] call filterParam;
 
 if ((count _cpArray) == 0 && time <= (_timeout + 0.1) ) then {
 	hint format['Race complete! (%1s)', ([time - _startTime, 2] call roundTo)];	
@@ -190,7 +201,7 @@ if ((count _cpArray) == 0 && time <= (_timeout + 0.1) ) then {
 	GW_CURRENTVEHICLE say "summon";
 
 	[
-		[((_raceName call getRaceID) select 1), GW_CURRENTVEHICLE],
+		[_raceName, GW_CURRENTVEHICLE],
 		'endRace',
 		false,
 		false
@@ -217,12 +228,9 @@ if ((count _cpArray) == 0 && time <= (_timeout + 0.1) ) then {
 	// [] execVM 'testfinishcamera.sqf';
 
 	//_result = ['START', 5, false] call createTimer;
-
-	[] spawn { 
-		Sleep 3;
-		GW_CHECKPOINTS = [];
-		GW_CHECKPOINTS_COMPLETED = [];
-	};
+		
+	GW_CHECKPOINTS = [];
+	GW_CHECKPOINTS_COMPLETED = [];	
 
 } else {
 	hint format['Race failed! (Timeout)', time];
@@ -240,8 +248,8 @@ if (alive GW_CURRENTVEHICLE) then {
 	GW_FLYBY_ACTIVE = FALSE;
 
 	9999 cutText ["", "BLACK OUT", 0.5];
-	Sleep 0.5;
 
+	waitUntil { Sleep 0.5; (isNull (findDisplay 95000)) };
 	[_vehiclesArray] execVM 'testspectatorcamera.sqf';
 
 };

@@ -131,7 +131,7 @@ GW_ACTIVE_WEAPONS = [];
 
 // Are we actually able to shoot?
 _status = _vehicle getVariable ["status", []];
-_canShoot = if (!GW_SETTINGS_ACTIVE && (count GW_AVAIL_WEAPONS > 0) && !GW_WAITFIRE && !('cloak' in _status) && GW_CURRENTZONE != "workshopZone" && !GW_SPECTATOR_ACTIVE && !GW_TITLE_ACTIVE) then { true } else { false };
+_canShoot = if (!GW_SETTINGS_ACTIVE && (count GW_AVAIL_WEAPONS > 0) && !GW_WAITFIRE && !('cloak' in _status) && !('noshoot' in _status) && GW_CURRENTZONE != "workshopZone" && !GW_SPECTATOR_ACTIVE && !GW_TITLE_ACTIVE) then { true } else { false };
 
 ['Can Shoot', true] call logDebug;
 

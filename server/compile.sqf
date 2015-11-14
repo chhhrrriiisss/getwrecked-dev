@@ -13,6 +13,7 @@ initEvents = compile preprocessFile "server\zones\events.sqf";
 createSupplyDrop = compile preprocessFile "server\zones\createSupplyDrop.sqf";
 createRace = compile preprocessFile "server\zones\createRace.sqf";
 endRace = compile preprocessFile "server\zones\endRace.sqf";
+removeFromRace = compile preprocessFile "server\zones\removeFromRace.sqf";
 
 // Utility
 call compile preprocessFile "server\functions\cleanup.sqf";

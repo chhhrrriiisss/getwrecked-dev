@@ -21,9 +21,6 @@ class Header
 };
 
 onPauseScript = "onPause.sqf";
-
-#include "params.hpp"
-
 disableChannels[] = {0,2,3,6};
 
 // Control types

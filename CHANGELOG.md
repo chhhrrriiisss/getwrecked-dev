@@ -19,6 +19,7 @@ Items without Fixed/Added/Removed proceeding are typically balance changes.
 - New system that uses server to determine empty setpos locations
 - Reduced particle effect drop frequency on verticalThruster to improve FPS
 - Halo effect now hugs ground when vehicle is airborne
+- Fixed Player going unconscious when hitting supply boxes or vehicles
 - Fixed vehicle spawn protection status being applied twice on deploy
 - Fixed 'Beach' zone on stratis with bad boundary detection
 - Fixed occasional missing items on vehicle load

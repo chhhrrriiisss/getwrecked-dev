@@ -89,7 +89,7 @@ class GW_Spectator
 
 		{
 			idc = 104004;
-			text = "ORBIT MODE";
+			text = "";
 			onButtonClick = "[] call GW_MODE_SPECTATOR;";
 			x = (0.4) * safezoneW + safezoneX;
 			y = (MARGIN_BOTTOM) * safezoneH + safezoneY;

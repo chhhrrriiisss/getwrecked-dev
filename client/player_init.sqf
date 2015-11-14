@@ -82,6 +82,9 @@ GW_DC_EH = addMissionEventHandler ["HandleDisconnect",{
 	// Remove old event handlers
 	{ _p removeAllEventHandlers _x;	} foreach ['killed', 'handleDamage', 'respawn'];
 
+	// Delete all placed deployables
+	{ deleteVehicle _x; } foreach GW_DEPLOYLIST;
+
 	// Kill the unit
 	_p setDammage 1;
 

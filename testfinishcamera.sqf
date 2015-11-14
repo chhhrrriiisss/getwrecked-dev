@@ -62,11 +62,11 @@ waitUntil {
 	_r = _r + 0.0001;
 	_rz = _rz + 0.0001;
 
-	((time > _timeout) || !GW_FLYBY_ACTIVE|| !alive GW_CURRENTVEHICLE)
+	((time > _timeout) || !GW_FLYBY_ACTIVE || GW_SPECTATOR_ACTIVE || !alive GW_CURRENTVEHICLE)
 
 };
 
-player cameraeffect["terminate","back"];
+if (!GW_SPECTATOR_ACTIVE) then { player cameraeffect["terminate","back"]; };
 camdestroy _cam;
 GW_FLYBY_ACTIVE = false;
 "colorCorrections" ppEffectEnable false;

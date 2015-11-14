@@ -13,8 +13,8 @@ GW_DEV_BUILD = true;
 GW_LEADERBOARD_ENABLED = false;
 
 // Game mode setting (0 = Standard, 1 = Creative)
-GW_GAME_MODE = (paramsArray select 0);
-GW_ITEM_COST = (paramsArray select 7);
+GW_GAME_MODE = 0;
+GW_ITEM_COST = 1;
 
 // Spawn timer in seconds (default: 30)
 GW_RESPAWN_DELAY = 120;
@@ -27,10 +27,10 @@ GW_OBJECT_DEAD_DELAY = .5;
 GW_DAMAGE_UPDATE_INTERVAL = 0.1;
 
 // Enable vehicle armor to balance all vehicles (default: true)
-GW_ARMOR_SYSTEM_ENABLED = if ((paramsArray select 5) == 1) then { true } else { false };
+GW_ARMOR_SYSTEM_ENABLED = true;
 
 // Weapon Damage vs vehicles 
-GW_GDS = 0.04; 
+GW_GDS = 0.05; 
 WHEEL_COLLISION_DMG_SCALE = 0; 
 COLLISION_DMG_SCALE = 0; 
 FIRE_DMG_SCALE = 8; 
@@ -52,7 +52,7 @@ GW_MINLOCKTIME = 3; // Minimum amount of time to lock onto a target (default: 3)
 GW_LOCKON_TOLERANCE = 10; // Difference in angle needed to acquire target (default: 10)
 
 // Deployable items
-GW_MAXDEPLOYABLES = (paramsArray select 6); // Per player (default :50)
+GW_MAXDEPLOYABLES = 50; // Per player (default :50)
 
 // Render distance of effects
 GW_EFFECTS_RANGE = 2000; // Increasing this may add lag at the workshop (default: 1700)
@@ -61,14 +61,14 @@ GW_EFFECTS_RANGE = 2000; // Increasing this may add lag at the workshop (default
 GW_EJECT_FAILURE = 15;
 
 // Default player start balance
-GW_INIT_BALANCE = (paramsArray select 2); // (Default: 5000)
+GW_INIT_BALANCE = 5000; // (Default: 5000)
 
 // Value modifier for killed vehicles
-GW_KILL_VALUE = ((paramsArray select 4) / 100); // How much of the vehicles value should the killer get? (default: 0.5)
+GW_KILL_VALUE = 0.5; // How much of the vehicles value should the killer get? (default: 0.5)
 GW_KILL_EMPTY_VALUE = 0.1;
 
 // Money earnt in zone
-GW_IN_ZONE_VALUE = (paramsArray select 3);
+GW_IN_ZONE_VALUE = 200;
 
 // Limit for supply boxes
 GW_INVENTORY_LIMIT = 100; // (Default: 40)
@@ -87,7 +87,7 @@ GW_AI_ACTIVE = [];
 GW_MAX_DATA_SIZE = 8000; // Max packet size (in characters) that can be loaded (loadVehicle or saveVehicle will not work if this is too large)
 
 // Cleanup timer settings
-GW_CLEANUP_RATE = (paramsArray select 8);
+GW_CLEANUP_RATE = 3;
 
 /*	
 	If you edit below here, I hope you know what you're doing...

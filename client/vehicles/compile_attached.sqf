@@ -169,7 +169,7 @@ if (GW_CURRENTZONE == "workshopZone" || isServer) then {
 	};
 };
 
-if (GW_CURRENTZONE != "workshopZone" && !isServer) then {
+if (GW_CURRENTZONE != "workshopZone" && !isDedicated) then {
 	_vehicle setVehicleLock "UNLOCKED";
 };
 

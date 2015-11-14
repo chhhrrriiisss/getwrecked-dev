@@ -27,6 +27,8 @@ _parameters = call compile _parameters;
 _arr = [_parameters,0, [], [[]]] call filterParam;
 if (count _arr == 0) exitWith { false };
 
+_randomSelection = [_this,2, true, [false]] call filterParam;
+
 _search = [_parameters,1, ["Car"], [[]]] call filterParam;
 _range = [_parameters,2, 15, [0]] call filterParam;
 
@@ -54,7 +56,7 @@ _emptyArr = [];
 if (count _emptyArr == 0) exitWith { false };
 
 // Return a random one from the list of empty ones
-_selectedLocation = _emptyArr call BIS_fnc_selectRandom;
+_selectedLocation = if (_randomSelection) then { (_emptyArr call BIS_fnc_selectRandom) } else { (_emptyArr select 0) };
 
 if (typename _selectedLocation == "OBJECT") exitWith {
 	_target setDir (getDir _selectedLocation);

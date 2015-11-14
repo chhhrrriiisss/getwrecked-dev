@@ -19,6 +19,19 @@ if (!isNil "_prevVehicle") then {
     ['death', _prevVehicle, 1, true] call logStat;
 };
 
+if (!isNil "GW_CURRENTRACE") then {	
 
+	if (([GW_CURRENTRACE] call checkRaceStatus) == -1) exitWith {};
+
+	[
+		[GW_CURRENTRACE, GW_CURRENTVEHICLE],
+		'removeFromRace',
+		false,
+		false
+	] call bis_fnc_mp;	
+
+	GW_CURRENTRACE = nil;
+
+};
 
 if(true) exitWith{};

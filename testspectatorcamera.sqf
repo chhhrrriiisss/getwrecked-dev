@@ -8,25 +8,27 @@ params ['_spectatorList'];
 private ["_c", "_timeout", "_pos"];
 
 if (GW_SPECTATOR_ACTIVE) exitWith {};	
+GW_SPECTATOR_ACTIVE = true;
+
 GW_HUD_ACTIVE = false;
 GW_HUD_LOCK = true;
-GW_SPECTATOR_ACTIVE = true;
 
 9999 cutText ["", "BLACK IN", 0.5]; 
 
 disableSerialization;
 if(!(createDialog "GW_Spectator")) exitWith { GW_SPECTATOR_ACTIVE = false; }; 
 
-showChat true;
+showChat false;
+[104000, true] call toggleDisplayLock;
 
-{	
-	if (_x == (vehicle player) || { isNull _x } || { !alive _x }) then {
-		_spectatorList deleteAt _forEachIndex;
-	};
-} foreach _spectatorList;
+// {	
+// 	if (isNull _x || { !alive _x }) then {
+// 		_spectatorList deleteAt _forEachIndex;
+// 	};
+// } foreach _spectatorList;
 
-GW_SPECTATOR_TARGETS = if ((count _spectatorList) == 0) then { allPlayers } else { _spectatorList };
-
+// GW_SPECTATOR_TARGETS = if ((count _spectatorList) == 0) then { allPlayers } else { _spectatorList };
+GW_SPECTATOR_TARGETS = allPlayers;
 // 9999 cutText ["", "BLACK IN", 1.5];  
 
 GW_SPECTATOR_TARGET = GW_SPECTATOR_TARGETS call BIS_fnc_selectRandom;
@@ -44,6 +46,11 @@ swapSpectator = {
 	_index = [(_index + _targ), 0,((count GW_SPECTATOR_TARGETS) -1), true] call limitToRange;
 	GW_SPECTATOR_TARGET = GW_SPECTATOR_TARGETS select _index;
 };
+
+_title = (finddisplay 104000) displayCtrl 104004;
+_name = name (driver GW_SPECTATOR_TARGET);
+_title ctrlSetText format['SPECTATING: %1', _name];
+_title ctrlCommit 0;
 
 _r = 20;
 _phi = 1;
@@ -69,12 +76,20 @@ _currentTarget = GW_SPECTATOR_TARGET;
 
 waitUntil {
 	
-	systemchat format['%1 / %2', GW_SPECTATOR_TARGET, time];
+	if (GW_HUD_ACTIVE) then {
+		GW_HUD_ACTIVE = false;
+		GW_HUD_LOCK = true;
+	};
+
 	if (!alive GW_SPECTATOR_TARGET) then { GW_SPECTATOR_TARGET = GW_SPECTATOR_TARGETS call BIS_fnc_selectRandom; };
 	if (_currentTarget != GW_SPECTATOR_TARGET) then {
 		_c camSetTarget GW_SPECTATOR_TARGET;
 		_c camCommit 2;
 		_currentTarget = GW_SPECTATOR_TARGET;
+
+		_name = name (driver GW_SPECTATOR_TARGET);
+		_title ctrlSetText format['SPECTATING: %1', _name];
+		_title ctrlCommit 0;
 	};	
 
 	_theta = _theta + 0.05;
@@ -89,15 +104,21 @@ waitUntil {
 	((time > _timeout) || (!GW_SPECTATOR_ACTIVE) || isNull (findDisplay 104000))
 };	
 
-systemchat 'spectator camera ended';
 player cameraeffect["terminate","back"];
 camdestroy _c;
-GW_SPECTATOR_ACTIVE = false;
+
 "colorCorrections" ppEffectEnable false;
 "filmGrain" ppEffectEnable false;
 closeDialog 0;
-GW_HUD_ACTIVE = true;
+
+showChat true;
+[104000, false] call toggleDisplayLock;
+
+GW_HUD_ACTIVE = false;
 GW_HUD_LOCK = false;
+GW_SPECTATOR_ACTIVE = false;
+
+systemchat 'Note: Respawn to return to workshop. [TEMP, DEV]';
 
 // At least 2 metres away
 // _rndX = ((random 50) - 25) + 2;

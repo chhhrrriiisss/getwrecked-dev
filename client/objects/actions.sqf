@@ -83,6 +83,8 @@ setSupplyAction = {
 	_obj = [_this,0, objNull, [objNull]] call filterParam;
 	if (isNull _obj) exitWith {};
 
+	player disableCollisionWith _obj;
+
 	removeAllActions _obj;
 	
 	// Custom move effect for supply boxes
@@ -153,6 +155,8 @@ setMoveAction = {
 	_obj = [_this,0, objNull, [objNull]] call filterParam;
 	if (isNull _obj) exitWith {};
 
+	player disableCollisionWith _obj;
+
 	removeAllActions _obj;
 	
 	_obj addAction[moveObjectFormat, {
@@ -168,6 +172,8 @@ setMoveAction = {
 
 	[_obj] spawn setTagAction;
 
+
+
 	true
 };
 
@@ -176,6 +182,8 @@ setDetachAction = {
 
 	_obj = [_this,0, objNull, [objNull]] call filterParam;
 	if (isNull _obj) exitWith {};
+
+	player disableCollisionWith _obj;
 
 	removeAllActions _obj;
 

@@ -1,4 +1,11 @@
 GW_COMMANDS_LIST = [
+	
+	[
+		"spectate",
+		{
+			[] execVM 'testspectatorcamera.sqf';
+		}
+	],
 
 	[
 		

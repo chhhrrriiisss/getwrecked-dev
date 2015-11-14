@@ -94,6 +94,7 @@ _this spawn {
 		_o setPosATL [(_oPos select 0), (_oPos select 1), -1.3];
 		_o setDir _oDir;
 
+	
 		//_o allowDamage true;
 	};
 

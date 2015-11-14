@@ -292,6 +292,19 @@ pubVar_fnc_globalTitle = compile preprocessFile "client\functions\pubVar_globalT
 pubVar_fnc_setHidden = compile preprocessFile "client\functions\pubVar_setHidden.sqf";
 "pubVar_setHidden" addPublicVariableEventHandler { (_this select 1) call pubVar_fnc_setHidden };
 
+pubVar_fnc_updateActiveRaces = {
+
+	//systemchat 'Running pubVar_fnc_updateActiveRaces';
+
+	if (GW_RACE_GENERATOR_ACTIVE) then {
+		closeDialog 0;
+		systemchat 'Race list updated, please re-open race menu. [TEMP, DEV]';		
+	};
+
+};
+
+"GW_ACTIVE_RACES" addPublicVariableEventHandler { call pubVar_fnc_updateActiveRaces };
+
 // Chat command interceptor
 [] call compile preProcessFilelineNumbers "client\commands\init.sqf";
 

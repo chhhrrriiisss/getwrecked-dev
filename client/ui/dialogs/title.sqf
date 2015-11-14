@@ -110,7 +110,7 @@ _exitWith = if (GW_TITLE_ACTIVE && time > _timeout || !(call _condition) ) then 
 } else { false };
 
 GW_TITLE_ACTIVE = false;
-GW_HUD_ACTIVE = true;
+GW_HUD_ACTIVE = false;
 GW_HUD_LOCK = false;
 closeDialog 95000;
 

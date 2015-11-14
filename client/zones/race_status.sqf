@@ -15,14 +15,31 @@ GW_CURRENTRACE = _raceName;
 _raceStatus = [_raceName] call checkRaceStatus;
 _raceHost = _targetRace select 2;
 
+_buttonString = "ABORT";
+_buttonFunction = {
+	closeDialog 0;
+	false
+};
+_buttonCondition = { true };
+
+// If we're the host show 'start' button when enough players
+if (_raceHost == (name player)) then { 
+	
+	_buttonString = "START";
+	_buttonFunction = { 	
+		[GW_CURRENTRACE, 2] call checkRaceStatus; // Button function
+		true 
+	};
+
+	_buttonCondition = { (([GW_CURRENTRACE] call checkRaceStatus) == 1)  }; // When TRUE show button
+};
+
 _success = 
 ["<br /><br /><t size='3' color='#ffffff' align='center'>WAITING FOR PLAYERS</t>", 
-	"START", 
+	_buttonString, 
 	[
 		false, 
-		{ 
-			(([GW_CURRENTRACE] call checkRaceStatus) == 1)  // When TRUE show button
-		}
+		_buttonCondition
 	], 
 	{  
 		_rS = [GW_CURRENTRACE] call checkRaceStatus; 
@@ -30,21 +47,18 @@ _success =
 	}, 
 	60,
 	true, 
-	{ 	
-		[GW_CURRENTRACE, 2] call checkRaceStatus; // Button function
-		true 
-	}
+	_buttonFunction
 ] call createTitle;
 
 _raceStatus = [_raceName] call checkRaceStatus;
 if ((!_success && _raceStatus == 0) || _raceStatus == 1) exitWith {	
-	GW_CURRENTVEHICLE call destroyInstantly;
+	GW_CURRENTVEHICLE call destroyInstantly;		
 };
 
 if (_raceStatus != 2) exitWith {
 
 	waitUntil { Sleep 0.1; (isNull (findDisplay 95000)) };
-	["<br /><br /><t size='3' color='#ffffff' align='center'>RACE ABORTED</t>", "START", [false, { false }], { true }, 5, true] call createTitle;
+	["<br /><br /><t size='3' color='#ffffff' align='center'>RACE ABORTED</t>", "", [false, { false }], { true }, 5, true] call createTitle;
 	GW_CURRENTVEHICLE call destroyInstantly;
 
 };
@@ -61,6 +75,8 @@ if (_raceStatus >= 2) exitWith {
 		waitUntil { Sleep 0.1; (isNull (findDisplay 94000)) };
 		GW_CURRENTVEHICLE call destroyInstantly;
 	};
+
+	GW_CURRENTVEHICLE call compileAttached;
 
 	GW_CURRENTVEHICLE say "electronTrigger";
 
