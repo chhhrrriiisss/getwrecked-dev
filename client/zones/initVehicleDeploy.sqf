@@ -7,6 +7,12 @@
 params ['_vehicle'];
 private ['_vehicle', '_unit'];
 
+//
+//      Name: initVehicleDeploy
+//      Desc: Initialize vehicle once deployed
+//      Return: None
+//
+
 _unit = driver _vehicle;
 _unit action ["engineoff", _vehicle];
 

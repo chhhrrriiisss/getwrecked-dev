@@ -9,7 +9,7 @@ if (isNil "GW_STATUS_MONITOR_LAST_UPDATE") then { GW_STATUS_MONITOR_LAST_UPDATE 
 // Invulnerability toggle
 GW_INVULNERABLE = false;
 if (GW_CURRENTZONE == "workshopZone" || (GW_INVEHICLE && GW_CURRENTZONE != "workshopZone")) then { GW_INVULNERABLE = true; };
-if (!GW_INVEHICLE || (time - GW_STATUS_MONITOR_LAST_UPDATE < 0.3)) exitWith {};
+if (!GW_INVEHICLE || (time - GW_STATUS_MONITOR_LAST_UPDATE < 0.75)) exitWith {};
 GW_STATUS_MONITOR_LAST_UPDATE = time;
 
 // Toggle simulation back if we lose it for any reason

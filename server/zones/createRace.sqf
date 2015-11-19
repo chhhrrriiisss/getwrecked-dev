@@ -15,16 +15,17 @@ if (_dif < 2) exitWith {
 };
 GW_LAST_RACE_REQUEST = time;
 
-params ['_raceToInit', '_timeout'];
+params ['_raceRequest','_timeout'];
 private ['_raceToInit', '_timeout', '_raceName', '_racePoints', '_raceHost', '_startPosition', '_firstPosition'];
 
-_targetRace = [];
-_raceInfo = _raceToInit call getRaceID;
-_targetRace = _raceInfo select 0;
-_id = _raceInfo select 1;
+_raceToInit = [_raceRequest, 0, "", [""]] call filterParam;
+if (count toArray _raceToInit == 0) exitWith { diag_log 'Error bad race data or no race found'; };
 
+// Compile the string to a workable array
+_targetRace = call compile _raceToInit;
 if (count _targetRace == 0) exitWith { diag_log 'Error bad race data or no race found'; };
 
+// Get race information
 _meta = (_targetRace select 0);
 _raceName = _meta select 0;
 _minPlayers =  [_meta, 3, 2, [0]] call filterParam; // 1 for testing (2 default)
@@ -63,8 +64,10 @@ for "_i" from 0 to 11 step 1 do {
 
 };
 
-// Then set race status to 'waiting phase' + SYNC
-(GW_ACTIVE_RACES select _id) set [4, _gridPositions];
+// Push array to active races and add start positions
+// Then set race status to 'waiting phase' + SYNC 
+_targetRace set [4, _gridPositions];
+GW_ACTIVE_RACES pushback _targetRace;
 [_raceName, 0] call checkRaceStatus;
 
 // Announce race to all players

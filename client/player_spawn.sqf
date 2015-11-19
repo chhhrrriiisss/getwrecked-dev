@@ -134,13 +134,6 @@ if (!_firstSpawn) then {
 	_unit setVariable ["killedBy", nil];
 	_unit setVariable ["GW_prevPos", nil];
 
-	// _failSpawn = false;
-	// _location = [spawnAreas, ["Car", "Man"]] call findEmpty;
-
-	// // If we've failed to find an empty one, just use the first in the list
-	// _pos = if (typename _location == "ARRAY") then { _failSpawn = true; (ASLtoATL getPosASL (spawnAreas select 0)) } else { _unit setDir (getDir _location); (ASLtoATL getPosASL _location) };
-	// _unit setPosATL _pos;	
-
 	_unit spawn {
 
 		_p = getPos _this;
@@ -176,7 +169,11 @@ if (!_firstSpawn) then {
 // Wait for the death camera to be active before setting the current zone
 _timeout = time + 3;
 waitUntil { (time > _timeout) || GW_DEATH_CAMERA_ACTIVE };
-['workshopZone'] call setCurrentZone;
+
+// Set current zone
+_curZone = ([player] call findCurrentZone);
+[_curZone] call setCurrentZone;
+if (_curZone == "workshopZone") then { ["workshopZone"] spawn buildZoneBoundary; };
 
 // Clear/Unsimulate unnecessary items near workshop
 {
@@ -184,7 +181,6 @@ waitUntil { (time > _timeout) || GW_DEATH_CAMERA_ACTIVE };
 	if ( (isPlayer _x || _x isKindOf "car") && !_i) then { _x enableSimulation true; } else { _x enableSimulation false; };
 	false
 } count (nearestObjects [ (getMarkerPos "workshopZone_camera"), [], 200]) > 0;
-
 
 // Reset killed by as we need to start fresh
 profileNamespace setVariable ['killedBy', nil];
@@ -196,7 +192,7 @@ waitUntil {Sleep 0.1; !isNil "serverSetupComplete"};
 
 _unit spawn setPlayerActions;
 
-_unit setVariable ['name player', name player, true];
+_unit setVariable ['name', name player, true];
 
 waitUntil {
 	
@@ -230,6 +226,7 @@ waitUntil {
 			if (viewDistance != GW_EFFECTS_RANGE) then { setViewDistance GW_EFFECTS_RANGE; };
 		};
 
+		// Ignore out of bounds checks for zoneImmune vehicles
 		_zoneImmune = GW_CURRENTVEHICLE getVariable ['GW_ZoneImmune', false];
 		if (count GW_CURRENTZONE_DATA > 0 && !_zoneImmune) then {
 

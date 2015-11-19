@@ -4,7 +4,6 @@
 //      Return: None
 //
 
-
 params ['_vehicleToDeploy', '_unit'];
 private ['_driver', '_vehicleToDeploy', '_success', '_unit'];
 
@@ -15,7 +14,7 @@ if (_unit != _driver) then { _unit moveInDriver _vehicleToDeploy; };
 
 // Create a countdown timer with an abort option
 _canAbort =  [_this, 2, true, [false]] call filterParam;
-_success = ['ABORT', 5, _canAbort] call createTimer;
+_success = ['ABORT', 5, _canAbort, true] call createTimer;
 
 if (!_success) exitWith {
 

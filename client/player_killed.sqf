@@ -14,6 +14,11 @@ GW_HUD_ACTIVE = false;
 
 _prevVehicle = _victim getVariable ["GW_prevVeh", nil];
 
+// Remove boundaries for the current zone (just dont bother with workshop or race deaths)
+if ( !(GW_CURRENTZONE in ["workshopZone", "globalZone"]) )  then {
+	[GW_CURRENTZONE] spawn removeZoneBoundary;
+};
+
 // Log the death for the last vehicle we were in
 if (!isNil "_prevVehicle") then {
     ['death', _prevVehicle, 1, true] call logStat;

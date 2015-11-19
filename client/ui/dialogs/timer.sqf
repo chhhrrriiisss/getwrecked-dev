@@ -11,6 +11,7 @@ if (GW_TIMER_ACTIVE) then {
 
 // Close the hud if its open
 GW_HUD_ACTIVE = false;
+GW_HUD_LOCK = true;
 GW_TIMER_ACTIVE = true;
 
 private ['_buttonString', '_timeValue', '_canAbort'];
@@ -101,13 +102,7 @@ for "_i" from 0 to 1 step 0 do {
 		if (_seconds != _lastSecond) then {
 			_lastSecond = _seconds;
 
-			if ( _left <= (_timeValue* 0.5)) then {
-				GW_CURRENTVEHICLE say "beepTarget";
-				Sleep 0.05;
-				GW_CURRENTVEHICLE say "beepTarget";
-			} else {
-				GW_CURRENTVEHICLE say "beepTarget";
-			};
+			GW_CURRENTVEHICLE say "beepTarget";
 		};
 	};
 
@@ -123,6 +118,8 @@ _exitWith = if (GW_TIMER_ACTIVE && time > GW_TIMER_VALUE) then {
 } else { false };
 
 GW_TIMER_ACTIVE = false;
+GW_HUD_ACTIVE = false;
+GW_HUD_LOCK = false;
 //disableUserInput false;
 closeDialog 0;
 

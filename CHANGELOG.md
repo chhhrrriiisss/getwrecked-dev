@@ -6,19 +6,20 @@ Note: Some changes that are deemed spoilers are hidden from this log.
 Items without Fixed/Added/Removed proceeding are typically balance changes.
 
 **v0.8.3 - v0.8.5** [Closed alpha release]
-
+w
 - Added 'New race' button to Race Generator
 - Added FlamePads to map
 - Added 'Loading' text to vehicle preview
 - Added 'Crash Test Dummy' texture for dev builds
 - Alert UI moved away from targetCursor to reduce visual clutter
 - Improved caltrops effect script
-- Increased global damage scale slightly
+- Increased global damage scale by x2 (0.04 > 0.08)
 - Decreased ammo requirements of some weapons
 - Decreased breakage frequency for melee weapons
 - New system that uses server to determine empty setpos locations
 - Reduced particle effect drop frequency on verticalThruster to improve FPS
 - Halo effect now hugs ground when vehicle is airborne
+- New system to dynamically spawn zone boundaries (client, local) on deploy to FPS across client and server
 - Fixed Player going unconscious when hitting supply boxes or vehicles
 - Fixed vehicle spawn protection status being applied twice on deploy
 - Fixed 'Beach' zone on stratis with bad boundary detection
@@ -45,7 +46,7 @@ Items without Fixed/Added/Removed proceeding are typically balance changes.
 - Weapon damage and vehicle armor pass to help re-balance engagement times and viability
 - Supply boxes should no longer take over the workshop
 - Objects now hold their rotate while attaching them 
-- effectIsVisible dedicated check to minimize unnecessary visual effects being spawned on clientsw
+- effectIsVisible dedicated check to minimize unnecessary visual effects being spawned on clients
 - Teleport mechanic adjusted to make it more practical to use
 - Shockwave velocity limitation
 - Increased audability of most weapon/module effects 

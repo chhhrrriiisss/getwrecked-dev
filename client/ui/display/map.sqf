@@ -5,8 +5,6 @@
 //
 
 // Map Icons
-// waitUntil{sleep 0.22; !isNull ((findDisplay 12) displayCtrl 51)};
-
 if (!isNil "GW_MAP_EH") then {
 	((findDisplay 12) displayCtrl 51) ctrlRemoveEventHandler ["Draw", GW_MAP_EH];
 	GW_MAP_EH = nil;
@@ -56,7 +54,7 @@ GW_MAP_EH = ((findDisplay 12) displayCtrl 51) ctrlAddEventHandler ["Draw", {
 
 	// Draw map boundaries, provided they exist
 	if (!isNil "GW_ZONE_BOUNDARIES") then {
-
+		
 		{	
 			_name = _x select 0;
 			_points = _x select 1;
@@ -83,7 +81,7 @@ GW_MAP_EH = ((findDisplay 12) displayCtrl 51) ctrlAddEventHandler ["Draw", {
 
 					// Alternate the line colour
 					_currentColor = if ((_i % 2) == 0) then { [0.99,0.82,0.04,1] } else { [0,0,0,1] };
-		
+
 					(_this select 0) drawLine [
 						_source,
 						_newDestination,

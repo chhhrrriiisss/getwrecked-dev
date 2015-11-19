@@ -55,7 +55,6 @@ GW_executeCommand = {
 
 		if (!_commandFound) exitWith {
 			systemchat format['Command %1 not found.', _chatString];
-			true
 		};
 
 		// Add command to history if found
@@ -92,19 +91,19 @@ GW_COMMANDS_SETUP = [] spawn {
 			// Up
 			if ((_this select 1) == 200) exitWith { 
 
-				_textToInsert = [GW_COMMANDS_HISTORY, ((count GW_COMMANDS_HISTORY) -1), "", [""]] call filterParam;
+				GW_COMMANDS_HISTORY select ((count GW_COMMANDS_HISTORY) -1);
+				_textToInsert = GW_COMMANDS_HISTORY select ((count GW_COMMANDS_HISTORY) -1);
 				if (count toArray _textToInsert == 0) exitWith { false };
 
 				((finddisplay 24) displayctrl 101) ctrlSetText _textToInsert;
 
-				true 
+				false 
 			};
 
 			// Down
-			if ((_this select 1) == 208) exitWith { true };
+			if ((_this select 1) == 208) exitWith { false };
 
 			if ((_this select 1) == 28) exitWith {
-
 				_equal = false;
 				
 				_chatArr = toArray GW_COMMANDS_STRING;
@@ -116,7 +115,7 @@ GW_COMMANDS_SETUP = [] spawn {
 					_equal = true;
 					closeDialog 0;
 					(findDisplay 24) closeDisplay 1;
-					(finddisplay 24 displayctrl 101) ctrlSetText "";
+					
 					[_chatArr] call GW_executeCommand;
 				};
 				

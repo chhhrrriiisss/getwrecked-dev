@@ -116,6 +116,7 @@ startRace = {
 
 		// Send player to zone and begin waiting period for races that are already active
 		_success = [GW_SPAWN_VEHICLE, player, _selectedRace] call deployRace;
+		_success = true;
 		GW_SPAWN_ACTIVE = false;
 
 		if (!_success) exitWith {
@@ -132,21 +133,20 @@ startRace = {
 	
 	//_selectedRace pushback _host;
 	_selectedRace pushback _host;
-	GW_ACTIVE_RACES pushback _selectedRace;
+	// GW_ACTIVE_RACES pushback _selectedRace;
 
-	// Get index of race for reference
-	_raceID = -1;
-	{ 
-		if (_name == ((_x select 0) select 0)) exitWith { _raceID = _foreachIndex; };
-	} foreach GW_ACTIVE_RACES;
+	// // Get index of race for reference
+	// _raceID = -1;
+	// { 
+	// 	if (_name == ((_x select 0) select 0)) exitWith { _raceID = _foreachIndex; };
+	// } foreach GW_ACTIVE_RACES;
 
 	// Sync race to all clients
-	systemchat 'Syncing race data to other clients...';
-	publicVariable "GW_ACTIVE_RACES";
+	systemchat 'Sending race data to server...';
 
 	// Initialize race thread on server
 	[
-		[_name],
+		[format['%1', _selectedRace]],
 		'createRace',
 		false,
 		false
@@ -166,7 +166,15 @@ startRace = {
 	if (time > _timeout) exitWith {
 
 		GW_RACE_ACTIVE = false;
-		GW_ACTIVE_RACES deleteAt _raceID;
+
+		// Find and delete added race entry 9if exists)
+		{ 
+			if (_name == ((_x select 0) select 0)) exitWith { 
+				GW_ACTIVE_RACES deleteAt _foreachIndex;
+				publicVariable "GW_ACTIVE_RACES";
+			};
+		} foreach GW_ACTIVE_RACES;
+
 		GW_HUD_ACTIVE = true;
 		GW_HUD_LOCK = false;
 

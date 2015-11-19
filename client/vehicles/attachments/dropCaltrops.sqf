@@ -23,35 +23,6 @@ _this spawn {
 	if (_newAmmo < 0) then { _newAmmo = 0; };
 	_vehicle setVariable["ammo", _newAmmo];
 
-	// Loops through active caltrops to detect nearby vehicles, then cleans up when done
-	// createCaltropDetector = {
-		
-	// 	GW_CALTROP_DETECTOR = true;
-
-	// 	_timeout = time + 60;
-	// 	for "_i" from 0 to 1 step 0 do {
-
-	// 		if (time > _timeout || isNil "GW_CALTROP_DETECTOR" || (count GW_CALTROP_ARRAY == 0)) exitWith {};
-
-
-	// 		{
-	// 			[(_x select 1), (_x select 2)] spawn popIntersects;	
-	// 			if (GW_DEBUG) then { [(_x select 1), (_x select 2), 1] spawn debugLine; };			
-	// 		} Foreach GW_CALTROP_ARRAY;
-	// 		Sleep 0.05;
-	// 	};	
-
-	// 	{
-	// 		_o = _x select 0;		
-	// 		GW_WARNINGICON_ARRAY = GW_WARNINGICON_ARRAY - [_o];
-	// 		GW_DEPLOYLIST = GW_DEPLOYLIST - [_o];
-	// 		deleteVehicle _o;		
-	// 	} Foreach GW_CALTROP_ARRAY;
-
-	// 	GW_CALTROP_ARRAY = [];
-	// 	GW_CALTROP_DETECTOR = nil;
-	// };
-
 	// Drop a caltrop at the specified location
 	dropDebris = {
 
@@ -76,7 +47,34 @@ _this spawn {
 			_o2 = (_this select 1);	
 			_isVehicle = _o2 getVariable ["isVehicle", false];
 			if (!_isVehicle) exitWith {};
-			[_o2] call shredTyres; 
+
+			[
+				[_o2],
+				'shredTyres',
+				_o2,
+				false
+			] call bis_fnc_mp;	
+
+		}];		
+
+		_o addEventHandler ['Killed', { 		
+
+			{
+				_isVehicle = _x getVariable ["isVehicle", false];
+				if (_isVehicle) then {
+
+					systemchat 'Killed triggered';
+
+					[
+						[_x],
+						'shredTyres',
+						_x,
+						false
+					] call bis_fnc_mp;	
+				};
+
+				false
+			} count ((ASLtoATL visiblePositionASL (_this select 0)) nearEntities [["Car"], 3]);
 
 		}];			
 		
@@ -88,14 +86,11 @@ _this spawn {
 		detach _o;			
 		deleteVehicle _host;
 
-
-
 		_oPos = getPos _o;
-		_o setPosATL [(_oPos select 0), (_oPos select 1), -1.3];
+		_o setPos [(_oPos select 0), (_oPos select 1), -1.3];
 		_o setDir _oDir;
-
-	
-		//_o allowDamage true;
+			
+		_o allowDamage true;
 	};
 
 	playSound3D ["a3\sounds_f\sfx\vehicle_drag_end.wss", GW_CURRENTVEHICLE, false, (ASLtoATL visiblePositionASL GW_CURRENTVEHICLE), 2, 1, 50];
