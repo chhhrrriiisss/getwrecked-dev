@@ -14,7 +14,7 @@ if (isNil "GW_LASTBIND_TRIGGER") then {
 	GW_LASTBIND_TRIGGER = time;
 };
 
-if (time < (GW_LASTBIND_TRIGGER + 0.03)) exitWith {};
+if (time < (GW_LASTBIND_TRIGGER + 0.25)) exitWith {};
 GW_LASTBIND_TRIGGER = time;
 
 // Invalid row selected (like a category header for example)
@@ -33,7 +33,7 @@ if (!isNil "GW_MOUSEX" && !isNil "GW_MOUSEY" && { GW_MOUSEX > 0.4 } ) then {
 	if (!(_tag in GW_WEAPONSARRAY)) exitWith {};
 
 	_mouseBindState = lnbData [92001, [_index, 3]];
-	_mouseBindState = if (typename _mouseBindState == "STRING") then { _mouseBindState } else { (str _mouseBindState) };
+	_mouseBindState = if (_mouseBindState isEqualType "") then { _mouseBindState } else { (str _mouseBindState) };
 	_mouseBindState = if (_mouseBindState == "1") then { systemchat 'Mouse fire disabled.'; [mouseInactiveIcon, "0"] } else { systemchat 'Mouse fire enabled.'; [mouseActiveIcon, "1"] };
 	lnbSetData [92001, [_index, 3], (_mouseBindState select 1)];
 	lnbSetPicture[92001, [_index, 3], (_mouseBindState select 0)];
@@ -50,21 +50,22 @@ if (!isNil "GW_MOUSEX" && !isNil "GW_MOUSEY" && { GW_MOUSEX > 0.4 } ) then {
 	// Retrieve the object reference (and any existing bind)
 	_obj = missionNamespace getVariable [format['%1', [_index,0]], nil];
 
-	GW_TARGETICON_ARRAY pushback _obj;
-
-	_pos = if (!isNil "_obj") then { getPosASL _obj } else { [0,0,0] };
-	_points = [_pos, (getPosASL (vehicle player))];
+	// If we're working with a global bind (not a vehicle setting)
+	_isGlobalBind = if (_obj == player) then { true } else { 
+		GW_TARGETICON_ARRAY pushback _obj;
+		false 
+	};	
 
 	GW_KEYBIND_ACTIVE = true;
 
 	// Wait for a key press
-	waitUntil{ 		
+	waitUntil{
 		( (time > _timeout) || !isNil "GW_KEYDOWN" || !isNil { GW_SETTING_CANCEL } )
 	};
 
 	GW_KEYBIND_ACTIVE = false;
 
-	GW_TARGETICON_ARRAY = GW_TARGETICON_ARRAY - [_obj];
+	if (!_isGlobalBind) then { GW_TARGETICON_ARRAY = GW_TARGETICON_ARRAY - [_obj]; };
 
 	// If the key was pressed
 	if (!isNil "GW_KEYDOWN" && time < _timeout && isNil "GW_SETTING_CANCEL") then {

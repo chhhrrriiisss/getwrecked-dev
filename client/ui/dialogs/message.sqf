@@ -60,6 +60,7 @@ disableSerialization;
 if(!(createDialog "GW_Dialog")) exitWith {}; //Couldn't create the menu
 
 GW_DIALOG_ACTIVE = true;
+GW_DIALOG_KD_EH = (findDisplay 93000) displayAddEventHandler ["KeyDown", "if ((_this select 1) == 28) exitWith { [] call confirmCurrentDialog; }; if ((_this select 1) == 1) exitWith { [] call cancelCurrentDialog; }; false;"];
 
 disableSerialization;
 _title = ((findDisplay 93000) displayCtrl 93002);
@@ -131,6 +132,8 @@ _title ctrlSetText toUpper(_dialogString);
 _title ctrlCommit 0;
 
 waitUntil { (isNull (findDisplay 93000) || !GW_DIALOG_ACTIVE) };
+
+(findDisplay 93000) displayRemoveEventHandler ["KeyDown", GW_DIALOG_KD_EH];
 
 GW_DIALOG_ACTIVE = false;
 

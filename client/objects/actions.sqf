@@ -25,7 +25,7 @@ setTerminalActions = {
 	_obj setVariable ["hasActions", true];
 
 	// If it's a vehicle terminal
-	if (typeOf _obj == "SignAd_Sponsor_ARMEX_F" && typename _var == "STRING") exitWith {
+	if (typeOf _obj == "SignAd_Sponsor_ARMEX_F" && _var isEqualType "") exitWith {
 
 		_obj setVariable ['company', _var];
 
@@ -37,7 +37,7 @@ setTerminalActions = {
 	};
 
 	// If it's a vehicle terminal
-	if (typeOf _obj == "Land_spp_Transformer_F" || (typeOf _obj == "SignAd_Sponsor_ARMEX_F" && typename _var == "OBJECT") ) exitWith {
+	if (typeOf _obj == "Land_spp_Transformer_F" || (typeOf _obj == "SignAd_Sponsor_ARMEX_F" && _var isEqualType objNull) ) exitWith {
 
 		_obj setVariable ['GW_Target', _var];		
 

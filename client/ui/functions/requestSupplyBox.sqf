@@ -11,12 +11,13 @@ if (count _inventory <= 0) exitWith {};
 
 // Is there an existing box nearby?
 _objs = nearestObjects [getPos player, [], 8];
+
 GW_NEW_SUPPLY_BOX = nil;
 {
-	_isSupply = _x getVariable ["isSupply", false];
+	_isSupply = (_x call isSupplyBox);
 	_isOwner = [_x, player, false] call checkOwner;
 
-	if (_isSupply && _isOwner && local _x) exitWith {
+	if (_isSupply && _isOwner) exitWith {
 		GW_NEW_SUPPLY_BOX = _x;
 	};
 	false

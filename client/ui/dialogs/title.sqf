@@ -95,7 +95,7 @@ for "_i" from 0 to 1 step 0 do {
 		_btn CtrlCommit 0;
 	};
 
-	_textValue = if (typename _textString == "STRING") then { _textString } else { ([time, _timeout] call _textString) };
+	_textValue = if (_textString isEqualType "") then { _textString } else { ([time, _timeout] call _textString) };
 	_text ctrlSetStructuredText parseText ( _textValue );
 	_text ctrlCommit 0;
 

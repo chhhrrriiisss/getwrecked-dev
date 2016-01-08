@@ -35,29 +35,31 @@ MISSION_ROOT = call {
 call compile preprocessFile "global\compile.sqf";
 [] execVM "briefing.sqf";
 
-hint "v0.8.5 DEV";
+hint "v0.8.5 RC1";
 
 99999 cutText [localize "str_gw_loading", "BLACK", 0.01]; 
-
-// Zone boundaries
-[] call parseZones;
 
 if (X_Client || X_JIP) then {
    
    [] spawn {  
 
         call compile preprocessFile "client\compile.sqf";  
-        waitUntil {!isNull player};               
-        [] execVM 'client\init.sqf'; 
+        waitUntil {!isNull player && !isNil "clientCompileComplete"};               
+        [] execVM 'client\init.sqf';
 
     };
 
 };
 
-if (isServer) then {      
+if (X_Server) then {      
 
-    call compile preprocessFile "server\compile.sqf";   
-    [] execVM 'server\init.sqf'; 
+	[] spawn {
+
+	    call compile preprocessFile "server\compile.sqf";   
+	    waitUntil {!isNil "serverCompileComplete"};      
+	    [] execVM 'server\init.sqf';
+
+	};
 
 };
 

@@ -9,7 +9,7 @@ _tauntsList = (findDisplay 92000) displayCtrl 92006;
 lnbClear _tauntsList;
 
 _currentTaunt = GW_SETTINGS_VEHICLE getVariable ['GW_Taunt', ''];
-_currentTaunt = if (typename _currentTaunt == "ARRAY") then { '' } else { _currentTaunt };
+_currentTaunt = if (_currentTaunt isEqualType []) then { '' } else { _currentTaunt };
 
 _index = 0;
 

@@ -14,7 +14,7 @@ _currentValue = lnbData [97001, [_index, 0]];
 _currentValue = if (count toArray _currentValue <= 0) then { '1' } else { _currentValue };
 _result = ['ENTER QUANTITY', _currentValue, 'INPUT'] call createMessage;
 
-if (typename _result == "STRING") then {
+if (_result isEqualType "") then {
 
 	if (count toArray _result > 0) then {
 

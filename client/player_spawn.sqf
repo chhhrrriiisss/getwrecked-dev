@@ -38,6 +38,8 @@ GW_SPAWN_ACTIVE = false;
 GW_DIALOG_ACTIVE = false;
 GW_HUD_LOCK = false;
 GW_HUD_ACTIVE = true;
+GW_INVEHICLE = false;
+GW_INDRIVER = false;
 
 // Get rid of previous locked targets 
 GW_LOCKED_TARGETS = [];
@@ -173,6 +175,7 @@ waitUntil { (time > _timeout) || GW_DEATH_CAMERA_ACTIVE };
 // Set current zone
 _curZone = ([player] call findCurrentZone);
 [_curZone] call setCurrentZone;
+
 if (_curZone == "workshopZone") then { ["workshopZone"] spawn buildZoneBoundary; };
 
 // Clear/Unsimulate unnecessary items near workshop
@@ -194,64 +197,49 @@ _unit spawn setPlayerActions;
 
 _unit setVariable ['name', name player, true];
 
-waitUntil {
+// Trigger Lazy Update settings
+GW_minUpdateFrequency = 1;
+GW_maxUpdateFrequency = 0.5;
+GW_updateDistance = 1.5;
+GW_updateAimpoint = 0.1;
+GW_cooldown = false;
+
+GW_lastUpdate = time - GW_minUpdateFrequency;
+
+GW_lastPosition = [0,0,0];
+GW_lastAimpoint = [0,0,0];
+
+if (!isNil "GW_MM_EH") then { (findDisplay 46) displayRemoveEventHandler ["MouseMoving", GW_MM_EH]; };	
+GW_MM_EH = (findDisplay 46) displayAddEventHandler ["MouseMoving", "[_this, 'mouse'] call triggerLazyUpdate; false;"];
+
+// Looped items that only require a periodic refresh
+[nil, 'manual'] call triggerLazyUpdate;
+
+// Functions that require a regular refresh
+waitUntil {		
 	
-	_currentPos = (ASLtoATL visiblePositionASL player);
-	_vehicle = (vehicle player);
-	_inVehicle = !(player == _vehicle);
-	_isDriver = (player == (driver _vehicle));
+	Sleep 0.25;
 
-	if (visibleMap) then {
-		GW_HUD_ACTIVE = false;
-	};
+	if (GW_CURRENTZONE != "workshopZone" && GW_INVEHICLE) then {
 
-	// Restore the HUD if we're somewhere that needs it
-	if (GW_DEATH_CAMERA_ACTIVE || GW_PREVIEW_CAM_ACTIVE || GW_SPECTATOR_ACTIVE || GW_TIMER_ACTIVE || GW_TITLE_ACTIVE || GW_GUIDED_ACTIVE || GW_SETTINGS_ACTIVE || GW_LOADING_ACTIVE || visibleMap || GW_HUD_LOCK) then {} else {
-		if (!GW_HUD_ACTIVE) then {	
-			[] spawn drawHud;
-		};
-	};
-	
-	// Adds actions to nearby objects & vehicles
-	if (!isNil "GW_CURRENTZONE") then {
-
-		if (GW_CURRENTZONE == "workshopZone" && !_inVehicle && !GW_EDITING) then {		
-			[_currentPos] spawn checkNearbyActions;
-		};
-
-		// Set view distance depending on where we are
-		if (GW_CURRENTZONE == "workshopZone" && (!GW_PREVIEW_CAM_ACTIVE && !GW_DEATH_CAMERA_ACTIVE)) then {
-			if (viewDistance != 400) then { setViewDistance 400; };
-		} else {
-			if (viewDistance != GW_EFFECTS_RANGE) then { setViewDistance GW_EFFECTS_RANGE; };
-		};
-
-		// Ignore out of bounds checks for zoneImmune vehicles
-		_zoneImmune = GW_CURRENTVEHICLE getVariable ['GW_ZoneImmune', false];
-		if (count GW_CURRENTZONE_DATA > 0 && !_zoneImmune) then {
-
-			_inZone = [_currentPos, GW_CURRENTZONE_DATA ] call checkInZone;
-
-			if (_inZone) then {
-				_unit setVariable ["outofbounds", false];	
-			} else {
-				_outOfBounds = _unit getVariable ["outofbounds", false];	
-				if ( !_outOfBounds && !GW_DEATH_CAMERA_ACTIVE) then {
-					// Activate the incentivizer
-					[_unit] spawn returnToZone;
-				};
-			};
-
-		} else {
-			_unit setVariable ["outofbounds", false];	
-		};	
+		// Vehicle status + position updates
+		[] call statusMonitor;
 
 	};
 
-	Sleep 0.5;
-
-	(!alive _unit)
-
+	!alive player
 };
+
+inGameUISetEventHandler['PrevAction', '[_this, "scroll"] call triggerLazyUpdate; false'];
+inGameUISetEventHandler['NextAction', '[_this, "scroll"] call triggerLazyUpdate; false'];
+
+// Prevent weapon disassembly
+inGameUISetEventHandler ["Action", "
+	
+	if (isNil '_this') exitWith { false };
+	if ((_this select 3) in ['DisAssemble', 'Take', 'Put', 'Inventory', 'Get In Gunner']) then {
+		true
+	}
+"];
 
 if (true) exitWith {};

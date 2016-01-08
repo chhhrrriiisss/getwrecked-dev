@@ -15,7 +15,7 @@ if (!_isVisible) exitWith {};
 
 _source = "#particlesource" createVehicle _pos;
 _source setParticleClass "ObjectDestructionFire1Smallx";
-_source setDropInterval 0.05;
+_source setDropInterval 0.075;
 _source attachTo [_target];
 
 _source2 = "#particlesource" createVehicleLocal _pos;
@@ -23,7 +23,7 @@ _source2 setParticleParams [["\A3\data_f\ParticleEffects\Universal\Universal", 1
 [0, 0, 0.5], 0, 1.277, 1, 0.025, [1, 2, 4, 6], [[0, 0, 0, 0.7],[0, 0, 0, 0.5], [0, 0, 0, 0.25], [1, 1, 1, 0]],
 [0.2], 1, 0.04, "", "", _target];
 _source2 setParticleRandom [2, [0.3, 0.3, 0.3], [1.5, 1.5, 1], 20, 0.2, [0, 0, 0, 0.1], 0, 0, 360];
-_source2 setDropInterval 0.5;
+_source2 setDropInterval 0.75;
 _source2 attachTo [_target];
 
 _scale = 0.1;
@@ -31,7 +31,7 @@ _scale = 0.1;
 _source3  = "#particlesource" createvehiclelocal _pos;
 _source3 setParticleCircle [0, [0, 0, 0]];
 _source3 setParticleRandom [0.2, [15 * _scale, 15 * _scale, 0], [0, 0, 0], 1, 0.5, [0, 0, 0, 0], 0, 0];
-_source3 setDropInterval 0.01;
+_source3 setDropInterval 0.02;
 _source3 attachTo [_target];
 
 _source3 setParticleParams

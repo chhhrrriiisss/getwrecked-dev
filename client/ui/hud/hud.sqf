@@ -434,8 +434,8 @@ for "_i" from 0 to 1 step 0 do {
 
 						_exit = if (_tag == "EPL") then { true } else { false };
 						_b = (_x select 1) getVariable ["GW_KeyBind", ["-1", "1"]];
-						_b = if (typename _b != "ARRAY") then { [str _b, "1"] } else { _b };
-						_k = if (typename (_b select 0) != "STRING") then { 
+						_b = if !(_b isEqualType []) then { [str _b, "1"] } else { _b };
+						_k = if !((_b select 0) isEqualType "") then { 
 							"-1"
 						} else { 
 							if ((_b select 0) == "-1") exitWith { "-1" };

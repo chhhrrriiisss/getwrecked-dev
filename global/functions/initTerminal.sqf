@@ -16,13 +16,13 @@ if (!isServer) exitWith {};
 _obj enableSimulationGlobal false;
 _obj addEventHandler['handleDamage', { false }];
 
-if (typeOf _obj == "SignAd_Sponsor_ARMEX_F" && typename _var == "OBJECT") exitWith {
+if (typeOf _obj == "SignAd_Sponsor_ARMEX_F" && _var isEqualType objNull) exitWith {
 	_obj setObjectTextureGlobal [0, "client\images\signage\vehicleserviceterminal.jpg"]; 
 	_p = (ASLtoATL getPosASL _obj);
 	_p set [2, -0.7]; 
 	_obj setPos _p;
 };
 
-if (typeOf _obj == "SignAd_Sponsor_ARMEX_F" && typename _var == "STRING") exitWith {
+if (typeOf _obj == "SignAd_Sponsor_ARMEX_F" && _var isEqualType "") exitWith {
 	_obj setObjectTextureGlobal [0, format["client\images\signage\%1.jpg",_var] ]; 
 };

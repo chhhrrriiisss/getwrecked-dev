@@ -8,6 +8,7 @@ private['_action', '_target'];
 
 _action = [_this,0, "", [""]] call filterParam;
 _target = [_this,1, "", [""]] call filterParam;
+_secondTarget = [_this,2, "", [""]] call filterParam;
 
 if (_action == "") exitWith {};
 
@@ -102,33 +103,72 @@ if (_action == 'add') exitWith {
 // Delete target vehicle
 if (_action == 'delete') exitWith {
 
-	_raw = profileNamespace getVariable ['GW_LIBRARY', []];
+	_raw = [] call getVehicleLibrary;
 	if (count _raw == 0) exitWith { systemChat 'List is empty.'; };
 
 	_found = false;
 
 	{
 		if (toUpper _x == toUpper _target) exitWith {
+
 			_found = true;
+			_raw deleteAt _forEachIndex;
+
+			[_target, nil] call setVehicleData;
+			[format['GW_%1', _target], nil] call setVehicleData;
+
+			//profileNameSpace setVariable[_target, nil]; 
+			// profileNameSpace setVariable[format['GW_%1',_target], nil]; 
+			profileNameSpace setVariable['GW_LIBRARY', _raw]; 
+			saveProfileNamespace;	
+			GW_LIBRARY = _raw;
+
 		};
+
+	} ForEach _raw;
+
+	if (!_found) exitWith { systemChat 'Couldnt find in list.';  };	
+
+	if (_found) then {		
+		systemChat format['Deleted from list: %1', _target];
+	};
+
+};
+
+// Rename target vehicle
+if (_action == 'rename') exitWith {
+
+	_raw = [] call getVehicleLibrary;
+	if (count _raw == 0) exitWith { systemChat 'List is empty.'; };
+
+	_found = false;
+
+	{
+		if (toUpper _x == toUpper _target) exitWith {
+
+			_found = true;
+
+			// Set library entry to new name
+			_raw set [_forEachIndex, _secondTarget];
+
+			// Retrieve target data and set to new target
+			_curData = ([_target] call getVehicleData);
+			(_curData select 0) set [1, _secondTarget];
+			[_secondTarget, _curData] call setVehicleData;
+			[_target, nil] call setVehicleData;
+
+		};
+
 	} ForEach _raw;
 
 	if (!_found) exitWith { systemChat 'Couldnt find in list.';  };	
 
 	if (_found) then {
-
-		_newData = _raw - [_target];
-
-		profileNameSpace setVariable[_target, nil]; 
-		profileNameSpace setVariable['GW_LIBRARY', _newData]; 
-		saveProfileNamespace;	
-		GW_LIBRARY = _newData;
-
-		systemChat format['Deleted from list: %1', _target];
-
+		systemChat format['Renamed: %1 > %2', _target, _secondTarget];
 	};
 
 };
+
 
 
 

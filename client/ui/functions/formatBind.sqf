@@ -7,7 +7,7 @@
 private ['_i', '_k', '_dK'];
 params ['_i', '_k'];
 
-_k = if (typename _k == "STRING") then { (parseNumber(_k)) } else { _k };
+_k = if (_k isEqualType "") then { (parseNumber(_k)) } else { _k };
 _dK = if (_k < 0) then { "" } else { [_k] call codeToKey };
 _dK = if ( (count toArray _dK) == 0) then { "" } else { format['[ %1 ]', _dK] };
 

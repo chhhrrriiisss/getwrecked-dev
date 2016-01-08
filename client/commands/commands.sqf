@@ -31,7 +31,7 @@ GW_COMMANDS_LIST = [
 
 				_result = ['ENTER AMOUNT', '0', 'INPUT'] call createMessage;
 
-				if (typename _result == "STRING") then {
+				if (_result isEqualType "") then {
 
 					if (count toArray _result > 0) then {
 
@@ -111,19 +111,19 @@ GW_COMMANDS_LIST = [
 		"reset",
 		{
 
-			params ['_argument'];			
-
-			_argument = if (isNil "_argument" || _argument == '' || _argument == ' ') then { 'all' } else { _argument };
+			_argument = [_this, 0, "ALL", [""]] call filterParam;
+			if (count toArray _argument == 0) then { _argument = "ALL"; };
 			_argument = toUpper(_argument);
 
 			0 = [_argument] spawn {
 
-				_result = [format['RESET %1?', (_this select 0)], '', 'CONFIRM'] call createMessage;
+				_string = _this select 0;
+				_result = [format['RESET %1?', _string], '', 'CONFIRM'] call createMessage;
 
-				if (typename _result != "BOOL") exitWith {};
+				if !(_result isEqualType true) exitWith {};
 				if (!_result) exitWith {};
 
-				(_this select 0) call {
+				_string call {
 
 					if (_this == "ALL") exitWith {
 						profileNamespace setVariable ['GW_BALANCE', GW_INIT_BALANCE];
@@ -153,11 +153,16 @@ GW_COMMANDS_LIST = [
 						systemChat 'Races library reset successfully.';				
 					};
 
+					if (_this == "BINDS") exitWith {
+						profileNamespace setVariable ['GW_BINDS', nil];
+						systemChat 'Global keybinds reset successfully.';				
+					};
+
 
 					true	
 				};
 
-					saveProfileNamespace;
+				saveProfileNamespace;
 				
 			};		
 					
@@ -184,7 +189,7 @@ GW_COMMANDS_LIST = [
 
 				_result = ['ENTER AMOUNT', '0', 'INPUT'] call createMessage;
 
-				if (typename _result == "STRING") then {
+				if (_result isEqualType "") then {
 
 					if (count toArray _result > 0) then {
 
@@ -271,7 +276,7 @@ GW_COMMANDS_LIST = [
 
 	[
 		
-		"list",
+		"library",
 		{
 
 			params ['_argument'];
@@ -292,7 +297,7 @@ GW_COMMANDS_LIST = [
 
 					_result = ['VEHICLE TO DELETE', '', 'INPUT'] call createMessage;
 
-					if (typename _result == "STRING") then {
+					if (_result isEqualType "") then {
 
 						if (count toArray _result > 0) then {		
 

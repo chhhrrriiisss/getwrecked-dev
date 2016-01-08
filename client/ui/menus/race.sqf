@@ -377,7 +377,7 @@ renameCurrentRace = {
 	_originalName = GW_RACE_NAME;
 	_result = ['RENAME RACE', toUpper(GW_RACE_NAME), 'INPUT'] call createMessage;	
 
-	if (typename _result != "STRING") exitWith {};
+	if !(_result isEqualType "") exitWith {};
 	if (_result == GW_RACE_NAME) exitWith {};
 
 	//if (GW_RACE_NAME != "CUSTOM RACE") then { GW_RACE_NAME call deleteRace; };
@@ -401,7 +401,7 @@ clearCurrentRace = {
 	private['_result'];
 	
 	_result = ['CLEAR POINTS?', '', 'CONFIRM'] call createMessage;
-	if (typename _result != "BOOL") exitWith {};
+	if !(_result isEqualType true) exitWith {};
 	if (!_result) exitWith {};
 
 	GW_RACE_ARRAY = []; 

@@ -19,12 +19,7 @@ if (!_owner) exitWith {
     systemchat "Someone else is using this terminal.";
 };
 
-// Get list of all vehicles
-GW_LIBRARY = profileNamespace getVariable ['GW_LIBRARY', []];
-
-// Check the library isn't corrupted and exists
-_resetLibrary = if (isNil "GW_LIBRARY") then { true } else { if (count GW_LIBRARY == 0) exitWith { true }; false };
-if (_resetLibrary) then { ['LIBRARY RESET!', 2, warningIcon, colorRed, "slideDown"] spawn createAlert;  GW_LIBRARY = [] call createDefaultLibrary; };
+GW_LIBRARY = [] call getVehicleLibrary;
 
 disableSerialization;
 if(!(createDialog "GW_Menu")) exitWith {}; 
@@ -52,7 +47,7 @@ if (_startIndex == -1) then { _startIndex = 0; };
 
 // Determine start position for camera and execute
 _startPos = [tempAreas, ["Car"], 15] call findEmpty;
-_startPos = if (typename _startPos == "ARRAY") then { _startPos } else { (ASLtoATL getPosASL _startPos) };
+_startPos = if (_startPos isEqualType []) then { _startPos } else { (ASLtoATL getPosASL _startPos) };
 _startPos set [2,1.1];
 
 [_startPos, 7, 0.0005, 1, 1.1] spawn cameraPreview;

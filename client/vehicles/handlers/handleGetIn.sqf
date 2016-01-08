@@ -13,6 +13,9 @@ _unit = [_this,2,objNull, [objNull]] call filterParam;
 if (isNull _vehicle) exitWith {};
 if (isNull _unit) exitWith {};
 
+GW_INVEHICLE = true;
+GW_ISDRIVER = if (_position == "driver") then { true } else { false };
+
 // If we're a passenger and driver is vacant, move to slowly
 if ( _position != "driver" ) then {
 	_unit action ["eject", _vehicle];

@@ -11,42 +11,42 @@ _filterList = ((findDisplay 42000) displayCtrl 42003);
 
 lnbClear _filterList;
 
+GW_LIBRARY = [] call getVehicleLibrary;
+
 _count = 0;
 {
 	
-	_data = ( profileNamespace getVariable [ _x, []] ) select 0;
+	_data = [_x] call getVehicleData;
+	_data = _data select 0;
+	_error = false;
+	_name = 'NOT AVAILABLE';
 
-	if (!isNil "_data") then {
+	// If data is properly formatted
+	if (count _data > 0) then {		
 
-		_error = false;
-		_name = 'NOT AVAILABLE';
+		// Name is valid
+		if (count toArray (_data select 1) > 0) then {
 
-		// If data is properly formatted
-		if (count _data > 0) then {				
+			_name = [toUpper (_data select 1), 28, ''] call cropString;
+			
+			lbAdd[42003, format[' %1', _name] ];	
+			lbSetData[42003, (lbSize 42003)-1, _count];
 
-			// Name is valid
-			if (count toArray (_data select 1) > 0) then {
-
-				_name = [toUpper (_data select 1), 28, ''] call cropString;
-				
-				lbAdd[42003, format[' %1', _name] ];	
-				lbSetData[42003, (lbSize 42003)-1, _count];
-
-				_count = _count + 1;	
-
-			} else {
-				_error = true;		
-			};
+			_count = _count + 1;	
 
 		} else {
 			_error = true;		
 		};
 
-		if (_error) then {
-			['delete', _x] spawn listFunctions;
-		};				
-
+	} else {
+		_error = true;		
 	};
+
+	// if (_error) then {
+	// 	['delete', _x] spawn listFunctions;
+	// };				
+
+
 
 	false		
 

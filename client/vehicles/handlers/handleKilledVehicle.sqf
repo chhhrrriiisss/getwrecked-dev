@@ -63,7 +63,7 @@ _veh spawn {
     _owner = _veh getVariable ["GW_Owner", ""];  
     _veh setVariable ["GW_Owner", '', true];     
 
-    _killedBy = if (typename _killedBy == "STRING") then { (call compile _killedBy) } else { _killedBy };       
+    _killedBy = if (_killedBy isEqualType "") then { (call compile _killedBy) } else { _killedBy };       
     profileNamespace setVariable ['killedBy',_killedBy];
      
     _newSpawn = _veh getVariable ["newSpawn", false];

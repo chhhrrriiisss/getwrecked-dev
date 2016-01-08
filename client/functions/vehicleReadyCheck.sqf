@@ -93,7 +93,7 @@ if (time > _timeout) exitWith {
 _isSaved = GW_SPAWN_VEHICLE getVariable ["isSaved", false];
 _continue = if (!_isSaved) then { (['UNSAVED VEHICLE', 'CONTINUE?', 'CONFIRM'] call createMessage) } else { true };
 
-GW_SPAWN_ACTIVE = if (typename _continue == "BOOL") then {
+GW_SPAWN_ACTIVE = if (_continue isEqualType true) then {
     if (!_continue) exitWith { false };
     true
 } else { false };

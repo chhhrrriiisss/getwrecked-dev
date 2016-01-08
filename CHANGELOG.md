@@ -1,17 +1,16 @@
 # [Get Wrecked](http://getwrecked.info) Changelog
-## Last Updated: [07-11-2015] ##
+## Last Updated: [18-12-2015] ##
 
 Note: Some changes that are deemed spoilers are hidden from this log. 
 (WIP) Indicates items that may not be fully functional and are only partially implemented.
 Items without Fixed/Added/Removed proceeding are typically balance changes.
 
-**v0.8.3 - v0.8.5** [Closed alpha release]
-w
-- Added 'New race' button to Race Generator
+**v0.8.2 - v0.8.5** [Closed alpha release]
+
 - Added FlamePads to map
 - Added 'Loading' text to vehicle preview
 - Added 'Crash Test Dummy' texture for dev builds
-- Alert UI moved away from targetCursor to reduce visual clutter
+- Alert UI moved further upwards to reduce screen clutter
 - Improved caltrops effect script
 - Increased global damage scale by x2 (0.04 > 0.08)
 - Decreased ammo requirements of some weapons
@@ -19,12 +18,28 @@ w
 - New system that uses server to determine empty setpos locations
 - Reduced particle effect drop frequency on verticalThruster to improve FPS
 - Halo effect now hugs ground when vehicle is airborne
-- New system to dynamically spawn zone boundaries (client, local) on deploy to FPS across client and server
+- New method to dynamically spawn zone boundaries (client and local) on deploy to boost server FPS
+- Typename comparisons updated to new isEqualType command (faster)
+- Changed player proximity action refresh to a new lazy-update method
+- New vehicle save name method to avoid profileNameSpace conflicts
+- Renaming a vehicle now correctly deletes old named entry (no more cloning!)
+- Global keybinds (settings, rotate keys) can now be set in the vehicle settings menu
+- Changing keybinds no longer requires vehicle to be saved at the workshop
+- Sponsorship money now triggered by server side events check
+- Redesigned default vehicle 'Fresh Meat' to make it a bit more noob friendly
+- Fixed Hitting ESC/Enter should now correctly confirm or cancel dialog message boxes
+- Fixed You can no longer disassemble static weapons
 - Fixed Player going unconscious when hitting supply boxes or vehicles
 - Fixed vehicle spawn protection status being applied twice on deploy
 - Fixed 'Beach' zone on stratis with bad boundary detection
 - Fixed occasional missing items on vehicle load
 - Fixed 'Slytech' missing texture bug
+- Fixed some vehicle items tending not to load under low server fps
+- Fixed Items shifting position when saved multiple times 
+- Fixed Purchasing multiple items should now correctly use nearby supply boxes owned by player
+
+* Known issues *
+- FilterParam occasionally throwing errors due to changes in 1.54 to param
 
 **v0.8.2c** [1.48 Compatibility - Public alpha release]
 

@@ -10,7 +10,6 @@ _startTime = time;
 
 [] call GWS_fnc_initObjects;
 [] call GWS_fnc_initSupplyAndPaint;
-// [] call GWS_fnc_initBoundary;
 [] call GWS_fnc_initNitroAndFlame;
 [] spawn initEvents;
 
@@ -20,11 +19,11 @@ _startTime = time;
 	false
 } count (nearestObjects [(getmarkerpos "workshopZone_camera"), [], 200]) > 0;
 
+//[] spawn initCleanup;
+
 // Make AI attack civlian players
 west setFriend [civilian, 0];
 east setFriend [civilian, 0];
-
-//[] spawn initCleanup;
 
 serverSetupComplete = compileFinal "true";
 publicVariable "serverSetupComplete";

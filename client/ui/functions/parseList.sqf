@@ -54,7 +54,7 @@ _register = [];
 			_icon = mouseActiveIcon;
 
 			_state = "1";
-			if (typename _bind == "ARRAY") then { 
+			if (_bind isEqualType []) then { 
 				if ((_bind select 1) == "0") then { _icon = mouseInactiveIcon; _state = "0"; }; 			
 			};
 
@@ -62,7 +62,7 @@ _register = [];
 			_list lnbSetPicture[[_row, 3], _icon];
 		};
 
-		_key = if (typename _bind == "ARRAY") then { (_bind select 0) } else { _bind };
+		_key = if (_bind isEqualType []) then { (_bind select 0) } else { _bind };
 		[_row, _key] call formatBind; 		
 		
 

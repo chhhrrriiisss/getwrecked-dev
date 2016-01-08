@@ -19,7 +19,7 @@ GW_PREVIEW_CAM_RANGE = [_this,1, 10, [0]] call filterParam;
 GW_PREVIEW_CAM_THETA = [_this,2, 0, [0]] call filterParam;
 GW_PREVIEW_CAM_PHI = [_this,3, 1, [0]] call filterParam;
 GW_PREVIEW_CAM_HEIGHT = [_this,4, 1, [0]] call filterParam;
-GW_PREVIEW_CAM_POS = if (typename GW_PREVIEW_CAM_TARGET == "OBJECT") then { (getPosASL GW_PREVIEW_CAM_TARGET) } else { GW_PREVIEW_CAM_TARGET };
+GW_PREVIEW_CAM_POS = if (GW_PREVIEW_CAM_TARGET isEqualType objNull) then { (getPosASL GW_PREVIEW_CAM_TARGET) } else { GW_PREVIEW_CAM_TARGET };
 GW_PREVIEW_CAM_POS set[2, GW_PREVIEW_CAM_HEIGHT];
 
 // Create the camera
@@ -29,7 +29,7 @@ GW_PREVIEW_CAM cameraeffect["internal","back"];
 GW_PREVIEW_CAM camCommit 0;
 
 // Determine orbit position
-_theta = if (typename GW_PREVIEW_CAM_THETA == "STRING") then {  _th = parseNumber (GW_PREVIEW_CAM_THETA); GW_PREVIEW_CAM_THETA = 0; _th } else { random 360 };
+_theta = if (GW_PREVIEW_CAM_THETA isEqualType "") then {  _th = parseNumber (GW_PREVIEW_CAM_THETA); GW_PREVIEW_CAM_THETA = 0; _th } else { random 360 };
 _r = 7;
 _phi = 1;
 _rx = _r * (sin _theta) * (cos _phi);
@@ -49,7 +49,7 @@ for "_i" from 0 to 1 step 0 do {
 	// If there's a target available
 	if (!isNil "GW_PREVIEW_CAM_TARGET") then {	
 
-		_pos = if (typename GW_PREVIEW_CAM_TARGET == "OBJECT") then { (getPosASL GW_PREVIEW_CAM_TARGET) } else { GW_PREVIEW_CAM_TARGET };
+		_pos = if (GW_PREVIEW_CAM_TARGET isEqualType objNull) then { (getPosASL GW_PREVIEW_CAM_TARGET) } else { GW_PREVIEW_CAM_TARGET };
 		
 		GW_PREVIEW_CAM_POS = if (_pos distance GW_PREVIEW_CAM_POS > 15) then {
 			99999 cutText ["", "BLACK IN", 0.35];  
@@ -66,7 +66,7 @@ for "_i" from 0 to 1 step 0 do {
 
 	if (!isNil "GW_PREVIEW_CAM_POS") then {
 
-		if (typename GW_PREVIEW_CAM_POS != "OBJECT") then {
+		if ( !(GW_PREVIEW_CAM_POS isEqualType objNull) ) then {
 
 			// Loop, while updating orbit position
 			_tx = GW_PREVIEW_CAM_POS select 0;
@@ -96,7 +96,7 @@ showChat true;
 GW_PREVIEW_CAM_ACTIVE = false;
 GW_PREVIEW_CAM_TARGET = nil;
 _rndLoc = [tempAreas, ["Car", "Man"], 15] call findEmpty;
-GW_PREVIEW_CAM_POS = if (typename _rndLoc == "ARRAY") then { _rndLoc } else { (ASLtoATL getPosASL _rndLoc) };
+GW_PREVIEW_CAM_POS = if (_rndLoc isEqualType []) then { _rndLoc } else { (ASLtoATL getPosASL _rndLoc) };
 player cameraeffect["terminate","back"];
 camdestroy GW_PREVIEW_CAM;
 titlecut["","PLAIN DOWN",0.1];

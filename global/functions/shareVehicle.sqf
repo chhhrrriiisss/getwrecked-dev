@@ -3,7 +3,7 @@ _target = [_this,1, [], ["", []]] call filterParam;
 
 if (_name isEqualTo "") exitWith {};
 
-_library = profileNamespace getVariable ['GW_LIBRARY', []];
+_library = [] call getVehicleLibrary;
 if (count _library == 0) exitWith {};
 
 _ref = nil;

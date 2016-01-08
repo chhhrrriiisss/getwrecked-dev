@@ -53,8 +53,6 @@ _name = if (count toArray _name == 0) then { "UNTITLED" } else { _name };
 _statsTitle ctrlSetText _name;
 _statsTitle ctrlCommit 0;
 
-systemChat 'Note: Key binds are saved only when the vehicle is saved.';
-
 // Wait a second before activating taunt preview
 [] spawn {	
 	Sleep 1;

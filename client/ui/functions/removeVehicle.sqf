@@ -14,7 +14,7 @@ if (!isNil "GW_PREVIEW_VEHICLE") then {
 		['delete',currentName] call listFunctions;
 
 		// Refresh the library
-		GW_LIBRARY = profileNamespace getVariable ['GW_LIBRARY', []];
+		GW_LIBRARY = [] call getVehicleLibrary;
 
 		// Regenerate the list
 		[] call generateFilterList;

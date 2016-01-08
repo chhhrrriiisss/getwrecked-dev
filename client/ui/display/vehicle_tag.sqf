@@ -15,7 +15,7 @@ if (!alive _vehicle) exitWith {};
 _owner = _vehicle getVariable ["GW_Owner", ""];
 
 // If it has no owner, just skip it
-if (_owner isEqualTo "") exitWith {};
+if (count toArray _owner == 0) exitWith {};
 
 // Determine if the tag should be shown based off of signature distance
 _dist = GW_CURRENTVEHICLE distance _vehicle;
@@ -100,16 +100,9 @@ _visible = if (count _count == 0) then {
 } else {
 
 	if ({ 
-
-		_friendlyObject = if (!isNull attachedTo _x) then {
-			if ((attachedTo _x isEqualTo _vehicle) || (attachedTo _x isEqualTo GW_CURRENTVEHICLE)) exitWith { true };
-			false
-		};
-
+		_friendlyObject = if (!isNull attachedTo _x) then { if (((attachedTo _x) == _vehicle) || ((attachedTo _x) == GW_CURRENTVEHICLE)) exitWith { true };	false };
 		if (!_friendlyObject) exitWith {1};
-
 		false
-
 	} count _count isEqualTo 1) exitWith {
 		false
 	};	
@@ -118,12 +111,11 @@ _visible = if (count _count == 0) then {
 };
 
 // If there's an obstruction, or the vehicle is cloaked/hidden
-_inScope = [GW_TARGET_DIRECTION, _vehicle, 12.5] call checkScope;
-_status = _vehicle getVariable ["status", []];
+_status = GW_VEHICLE_STATUS;
 _lastSeen = _vehicle getVariable ['lastSeen', nil];
-if (_hostVehicle) then { _visible = true; _inScope = true; };
+if (_hostVehicle) then { _visible = true; };
 
-if ( !_visible || ('cloak' in _status) || ('nolock' in _status) || !_inScope ) then {
+if ( !_visible || ('cloak' in _status) || ('nolock' in _status)) then {
 	if (isNil "_lastSeen") then { _vehicle setVariable ['lastSeen', time]; _lastSeen = time; };
 	_alpha = _alpha - (0.5 * (time - _lastSeen));
 } else {	
@@ -131,28 +123,27 @@ if ( !_visible || ('cloak' in _status) || ('nolock' in _status) || !_inScope ) t
 	_alpha = _alpha + 0.05;
 };
 
-_isAI = _vehicle getVariable ['isAI', false];
-if (_visible && _isAI && GW_LMBDOWN) then {
+// _isAI = _vehicle getVariable ['isAI', false];
+// if (_visible && _isAI && GW_LMBDOWN) then {
 
-	if (isNil "GW_LAST_THREAT_TRIGGER") then {
-		GW_LAST_THREAT_TRIGGER = time - 5;
-	};
+// 	if (isNil "GW_LAST_THREAT_TRIGGER") then {
+// 		GW_LAST_THREAT_TRIGGER = time - 5;
+// 	};
 
-	if (time - GW_LAST_THREAT_TRIGGER < 5) exitWith {};
-	GW_LAST_THREAT_TRIGGER = time;
+// 	if (time - GW_LAST_THREAT_TRIGGER < 5) exitWith {};
+// 	GW_LAST_THREAT_TRIGGER = time;
 
-	[
-		[_vehicle, GW_CURRENTVEHICLE],
-		'fireAtTargetAI',
-		_vehicle,
-		false
-	] call bis_fnc_mp;	
+// 	[
+// 		[_vehicle, GW_CURRENTVEHICLE],
+// 		'fireAtTargetAI',
+// 		_vehicle,
+// 		false
+// 	] call bis_fnc_mp;	
 
-};
+// };
 
 if ( (_pos select 2) < 1) then { _pos set[2, 1]; };
-
-
+	
 _maxLength = 3.8 * ( (300 - _dist) / 300);
 _length = (_maxLength * (_health / 100));
 

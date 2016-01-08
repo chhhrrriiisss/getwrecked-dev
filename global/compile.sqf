@@ -6,6 +6,10 @@
 //
 //
 
+if (isNIl "GW_ZONE_MANIFEST") THEN {
+	GW_ZONE_MANIFEST = [];
+};
+
 // Icon Compile
 call compile preprocessFile 'config.sqf';
 
@@ -292,8 +296,8 @@ _benchmarkArray = [];
 	false 
 } count globalFunctions;
 
-
-
+// Zone boundaries
+[] call parseZones;
 
 // Pre-compile location arrays
 reloadAreas = ['reloadArea'] call findAllObjects;

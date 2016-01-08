@@ -5,6 +5,17 @@
 //
 
 params ['_z'];
+
+// Also update server on our location
+if (alive player) then {
+	pubVar_setZone = [player, _z];
+	publicVariableServer "pubVar_setZone";
+};
+
+if (isServer) then {
+	[player, _z] call pubVar_fnc_setZone;
+};
+
 if (_z == "") exitWith {};
 
 {

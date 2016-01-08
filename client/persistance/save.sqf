@@ -147,12 +147,12 @@ if (_name == "Untitled") then {
 
     _result = ['SAVE', _name, 'INPUT', [generateName, randomizeIcon]] call createMessage;
 
-    if (typename _result == "STRING" && ({ (count toArray _result == 0) || (_result == "Untitled") } )) then { 
+    if (_result isEqualType ""  && ({ (count toArray _result == 0) || (_result == "Untitled") } )) then { 
         _abort = true; 
         ['Save aborted by user.'] spawn _onExit;            
     };
 
-    if (typename _result == "BOOL" && { !_result }) then { 
+    if (_result isEqualType true && { !_result }) then { 
         _abort = true;         
         ['Save aborted by user.'] spawn _onExit;
          
@@ -164,7 +164,7 @@ if (_name == "Untitled") then {
     };
 };
 
-if (typename _saveTarget != "STRING") then { ['Please choose another vehicle name.'] spawn _onExit; _abort = true; };
+if ( !(_saveTarget isEqualType "") ) then { ['Please choose another vehicle name.'] spawn _onExit; _abort = true; };
 if (_abort) exitWith {};
 
 _startTime = time;
@@ -181,18 +181,8 @@ GW_SAVE_VEHICLE call cleanAttached;
 if (count _attachments > 0) then {
    
     {     
-        _p = (ASLtoATL getPosASL _x);
-
-        // If its a static weapon, or just wierd, correctly get the reference position
-        if (_x isKindOf "StaticWeapon") then { 
-            _boundingCenter = boundingCenter _x;
-            _actualCenter = [-(_boundingCenter select 0), -(_boundingCenter select 1), -(_boundingCenter select 2)];
-            _pos = (_x modelToWorld _actualCenter);
-
-            _p = _pos;
-        };
-        
-         _p = GW_SAVE_VEHICLE worldToModel _p;
+        _p = getPosWorld _x;
+        _p = GW_SAVE_VEHICLE worldToModel (ASLtoAGL _p);
         
         // Delete the object if we're having issues with it (or its old)
         if (!alive _x || (_p distance _pos) > 999999) then {
@@ -245,7 +235,7 @@ if (count str _data > GW_MAX_DATA_SIZE) exitWith {
     ['Vehicle too large to save, please remove items.'] spawn _onExit;
 };
 
-_success = [toUpper(_saveTarget), _data] call registerVehicle;
+_success = [toUpper(_saveTarget), [_data]] call registerVehicle;
 GW_LASTLOAD = _saveTarget;
 
 if (_success) then {

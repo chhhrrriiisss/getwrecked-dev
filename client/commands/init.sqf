@@ -16,7 +16,7 @@ GW_executeCommand = {
 
 	private ["_chatArr","_seperator","_commandDone","_command","_argument", "_index"];
 
-		_chatArr = [_this,0,[]] call filterParam;
+		_chatArr = [_this,0,[], [[]]] call filterParam;
 
 		_chatString = toString(_chatArr);
 

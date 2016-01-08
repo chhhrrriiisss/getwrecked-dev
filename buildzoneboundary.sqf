@@ -58,7 +58,7 @@ _found = false;
 {
 	if ((_x select 0) == _zoneName) exitWith { _found = true; };
 } foreach GW_ACTIVE_BOUNDARIES;
-if (_found) exitWith {  systemchat 'zone boundary already active'; };
+if (_found) exitWith { };
 
 _pointsArray = [];
 
@@ -67,7 +67,7 @@ _pointsArray = [];
 } foreach GW_ZONE_BOUNDARIES;
 
 // Abort if no point data to work with
-if (count _pointsArray == 0) exitWith {  systemchat 'no point data';  };
+if (count _pointsArray == 0) exitWith {};
 
 _c = 0;
 _bA = [];

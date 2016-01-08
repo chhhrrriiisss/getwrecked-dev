@@ -2,7 +2,7 @@ params ['_o', '_v'];
 
 if (!alive _v) exitWith {};
 
-_pos = if (typename _o == "OBJECT") then { (ASLtoATL visiblePositionASL _o) } else { _o };
+_pos = if (_o isEqualType objnull) then { (ASLtoATL visiblePositionASL _o) } else { _o };
 
 playSound3D ["a3\sounds_f\weapons\mines\electron_trigger_1.wss", _o, false, _pos, 5, 1, 100]; 
 

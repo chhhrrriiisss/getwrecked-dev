@@ -44,7 +44,7 @@ if (isNil "_meta") then {} else {
 
     if (!isnil "_version") then {
 
-        _version = if (typename _version == "ARRAY") then { 0 } else { _version };
+        _version = if (_version isEqualTo []) then { 0 } else { _version };
 
         if (_version < GW_VERSION) then {
             player customChat [GW_WARNING_CHANNEL, localize "str_gw_version_mismatch"];        

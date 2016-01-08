@@ -15,7 +15,7 @@ params ['_argument'];
 _newPreview = _argument;
 _type = typename _argument;
 
-if ((_type != "STRING") && (_type != "SCALAR")) exitWith {};
+if ( !(_type isEqualType "") && !(_type isEqualType 0) ) exitWith {};
 
 if (_type == "STRING") then {
 

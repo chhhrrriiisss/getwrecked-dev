@@ -60,7 +60,7 @@ _vehicleToDeploy spawn {
 	[ ([_this] call findCurrentZone) ] call setCurrentZone;
 
 	// Enable simulation for all relevant vehicles in target zone
-	{ 	_x enableSimulation true; false  } count ([_currentZone] call findAllInZone) > 0;
+	{ 	(vehicle _x) enableSimulation true; false  } count ([_currentZone, { (_this == (driver (vehicle _this))) }, true] call findAllInZone) > 0;
 
 	// Initialize vehicle
 	[_this] call initVehicleDeploy;
@@ -87,7 +87,7 @@ _vehicleToDeploy spawn {
 	GW_HUD_ACTIVE = false;
 };
 
-[format["<br /><t size='3' color='#ffffff' align='center'>%1</t>", "DEPLOYING..."], "", [false, { false }] , { GW_DEPLOY_ACTIVE }, 5, true] spawn createTitle;
+[format["<br /><t size='3' color='#ffffff' align='center'>%1</t>", "DEPLOYING..."], "", [false, { false }] , { (GW_DEPLOY_ACTIVE && isNil "GW_BOUNDARY_BUILD") }, 10, true] spawn createTitle;
 
 // Request server deploy using those deploy targets
 [

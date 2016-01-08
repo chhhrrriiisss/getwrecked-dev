@@ -12,7 +12,7 @@ if (_vehicle distance (getMarkerPos "workshopZone_camera") < 200) exitWith { fal
 _origDamage = _damage;
 _oldDamage = nil;
 _scale = 1;
-_armor = 1;
+_armor = 1;   
 
 // Prevent wheel damage
 if (_selection find "wheel" != -1) exitWith { false }; 

@@ -21,7 +21,7 @@ if (!_owner) exitWith {
 _error = false;
 
 // Ensure we actually have a position to work with
-if (typename _target == 'OBJECT') then {  _targetPos = (ASLtoATL getPosASL _target); } else {   _targetPos = _target; };
+if (_target isEqualType objNull) then {  _targetPos = (ASLtoATL getPosASL _target); } else {   _targetPos = _target; };
 
 if (_notify) then { systemChat 'Clearing area...'; };
 

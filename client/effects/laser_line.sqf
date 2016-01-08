@@ -19,7 +19,7 @@ _this spawn {
 	_p1 = (_packet select 0);
 	_p2 = (_packet select 1);
 
-	_pos = if (typename _p2 == "OBJECT") then { visiblePositionASL _p2 } else { _p2 };		
+	_pos = if (_p2 isEqualType Objnull) then { visiblePositionASL _p2 } else { _p2 };		
 	
 	_isVisible = [_pos, _duration] call effectIsVisible;
 	if (!_isVisible) exitWith { GW_LINEFFECT_ARRAY = []; };	

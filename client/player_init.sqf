@@ -26,7 +26,7 @@ GW_WARNING_CHANNEL = radioChannelCreate [[1, 0, 0, 1], "Warning Chat", "Warning"
 GW_SUCCESS_CHANNEL = radioChannelCreate [[0.99,0.85,0.23,1], "Success Chat", "Success", [player]]; 
 
 // Default Zone
-['workshopZone'] call setCurrentZone;
+[([player] call findCurrentZone)] call setCurrentZone;
 
 _unit setVariable ["firstSpawn", true];
 
@@ -85,10 +85,16 @@ GW_DC_EH = addMissionEventHandler ["HandleDisconnect",{
 	// Delete all placed deployables
 	{ deleteVehicle _x; } foreach GW_DEPLOYLIST;
 
+	// Tell the server to delete us from the manifest
+	["remove"] call setCurrentZone;
+
 	// Kill the unit
 	_p setDammage 1;
 
 }];
+
+// Cache boundary information
+[] call cacheZoneBoundary;
 
 // Player set up
 [_unit] spawn playerSpawn;

@@ -22,11 +22,7 @@ systemchat 'Server is ready to go!';
 
 // Check for an existing library
 _newPlayer = false;
-_lib = profileNamespace getVariable ['GW_LIBRARY', nil];
-if (isNil "_lib") then {   
-	_newPlayer = true;
-	[] call createDefaultLibrary;	
-};
+_lib = [] call getVehicleLibrary;
 
 // Check for a last loaded vehicle
 _last = profileNamespace getVariable ['GW_LASTLOAD', nil];
@@ -34,20 +30,16 @@ GW_LASTLOAD = if (isNil "_last") then {  profileNamespace setVariable ['GW_LASTL
 
 // Check for custom races
 _races = profileNamespace getVariable ['GW_RACES', nil];
-if (isNil "_races") then {   
-	[] call createDefaultRaces;		
-};
+_raceVersion = profileNamespace getVariable ['GW_RACE_VERSION', 0];
 
+if (_raceVersion < GW_VERSION || isNil "_races") then {
+	profileNamespace setVariable ['GW_RACE_VERSION', GW_VERSION];	
+	[] call createDefaultRaces;
+
+};
 
 // Prepare player, display and key binds
 [player] call playerInit;
 
 // Start simulation toggling
 [] spawn simulationManager;
-
-if (_newPlayer) then {
-	player globalChat localize "str_gw_welcome";
-	player globalChat localize "str_gw_welcome_guide";
-};
-
-

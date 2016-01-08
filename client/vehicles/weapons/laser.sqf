@@ -7,7 +7,7 @@
 params ['_obj', '_target', '_vehicle'];
 
 _oPos = _obj modelToWorldVisual [0,0,0];
-_tPos = if (typename _target == 'OBJECT') then { (ASLtoATL visiblePositionASL _target) } else { _target };
+_tPos = if (_target isEqualTo objNull) then { (ASLtoATL visiblePositionASL _target) } else { _target };
 
 [_obj] spawn muzzleEffect;
 
@@ -27,7 +27,7 @@ playSound3D ["a3\sounds_f\sfx\special_sfx\sparkles_wreck_2.wss", _obj, false, _o
 
 	_projectileSpeed = 1000;
 	_oPos = (_this select 0) modelToWorldVisual [0,0,0];
-	_tPos = if (typename (_this select 1) == 'OBJECT') then { (ASLtoATL visiblePositionASL (_this select 01)) } else { (_this select 1) };
+	_tPos = if ((_this select 1) isEqualTo objNull) then { (ASLtoATL visiblePositionASL (_this select 01)) } else { (_this select 1) };
 	_sourcePos = _tPos;
 
 	[(ATLtoASL _oPos), (ATLtoASL _tPos), "LSR"] call markIntersects;	
@@ -39,7 +39,7 @@ playSound3D ["a3\sounds_f\sfx\special_sfx\sparkles_wreck_2.wss", _obj, false, _o
 
 		[(_this select 0)] spawn muzzleEffect;
 
-		_tPos = if (typename (_this select 1) == 'OBJECT') then { (ASLtoATL visiblePositionASL (_this select 01)) } else { (_this select 1) };
+		_tPos = if ((_this select 1) isEqualTo objNull) then { (ASLtoATL visiblePositionASL (_this select 01)) } else { (_this select 1) };
 
 		_heading = [_oPos,_tPos] call BIS_fnc_vectorFromXToY;
 		_velocity = [_heading, _projectileSpeed] call BIS_fnc_vectorMultiply; 

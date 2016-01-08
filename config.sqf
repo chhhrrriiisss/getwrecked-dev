@@ -55,7 +55,8 @@ GW_LOCKON_TOLERANCE = 10; // Difference in angle needed to acquire target (defau
 GW_MAXDEPLOYABLES = 50; // Per player (default :50)
 
 // Render distance of effects
-GW_EFFECTS_RANGE = 2000; // Increasing this may add lag at the workshop (default: 1700)
+GW_WORKSHOP_VISUAL_RANGE = 300;
+GW_EFFECTS_RANGE = 1000; // Increasing this may add lag at the workshop/airfield (default: 1000)
 
 // % Chance of eject system failing
 GW_EJECT_FAILURE = 15;

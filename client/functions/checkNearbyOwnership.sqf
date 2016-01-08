@@ -9,7 +9,7 @@ private ['_t', '_r', '_p'];
 _t = [_this,0,objNull,[[], objNull]] call filterParam;
 _r = [_this,1,1,[0]] call filterParam;
 
-_p = if (typename _t == "OBJECT") then { (ASLtoATL visiblePositionASL _t) } else { _t };
+_p = if (_t isEqualType objNull) then { (ASLtoATL visiblePositionASL _t) } else { _t };
 
 _objs = nearestObjects [_p, [], _r];
 if (count _objs == 0) exitWith { true };

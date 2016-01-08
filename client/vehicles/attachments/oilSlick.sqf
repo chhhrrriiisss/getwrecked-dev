@@ -28,7 +28,7 @@ createOilDetector = {
 			_o = (_x select 0);
 			_t = (_x select 1);
 
-			_p = if (typename _o == "OBJECT") then { getPosATL _o } else { _o };
+			_p = if (_o isEqualType objNull) then { getPosATL _o } else { _o };
 			_p set [2, 1];		
 
 			if ( ((ASLtoATL _p) distance [0,0,0]) < 100 || ((ASLtoATL _lastPos) distance [0,0,0]) < 100) then {} else {
@@ -54,7 +54,7 @@ createOilDetector = {
 		_t = (_x select 1);
 		if (_t < (time - 30)) then {
 
-			if (typename _o == "OBJECT") then {
+			if (_o isEqualTo objNull) then {
 				deleteVehicle _o; 
 				GW_WARNINGICON_ARRAY = GW_WARNINGICON_ARRAY - [_o];
 				GW_DEPLOYLIST = GW_DEPLOYLIST - [_o];			

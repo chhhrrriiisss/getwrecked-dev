@@ -20,7 +20,7 @@ GW_DEATH_CAMERA_ACTIVE = true;
 	if (GW_DEATH_CAMERA_ACTIVE) then { GW_DEATH_CAMERA_ACTIVE = false;	};
 };
 
-_targetPosition = if (typename _target == "OBJECT") then { (ASLtoATL visiblePositionASL _target) } else { _target };
+_targetPosition = if (_target isEqualType objNull) then { (ASLtoATL visiblePositionASL _target) } else { _target };
 _cam = "camera" camCreate [_targetPosition select 0, _targetPosition select 1, 30];
 
 _timeout = time + GW_RESPAWN_DELAY;

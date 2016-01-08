@@ -17,4 +17,8 @@ _actual = ((_oD / 3) * 100) min ((1-(getDammage _this)) * 100);
 
 _this setVariable ['GW_Health', (round _actual), true];
 
+// Apply vehicle damage to driver
+_vehDamage = getDammage _this;
+if ((GetDammage (driver _this)) != (_vehDamage)) then { (driver _this) setDammage _vehDamage; };
+
 true

@@ -64,7 +64,6 @@ if (isNil "GW_TARGET_DIRECTION") then {	GW_TARGET_DIRECTION = 0; };
 		// If conditions werent met, cleanup
 		if (_fail) then {
 
-
 			if (!isNil "GW_ACQUIREDTARGET") then {
 				if (_x == GW_ACQUIREDTARGET) then {
 					GW_ACQUIREDTARGET = nil;
@@ -139,8 +138,7 @@ if (!GW_ACQUIRE_ACTIVE && !(_closest in GW_LOCKEDTARGETS) && !_isCloaked && (cou
 if (count GW_LOCKEDTARGETS > 0) then {
 
 	_lockedTarget = GW_LOCKEDTARGETS select 0;
-	_inScope = [GW_TARGET_DIRECTION, _lockedTarget, GW_LOCKON_TOLERANCE] call checkScope;
-	
+	_inScope = [GW_TARGET_DIRECTION, _lockedTarget, GW_LOCKON_TOLERANCE] call checkScope;	
 
 	// If the target is still alive and within view scope
 	_lostTarget = if (alive _lockedTarget && _inScope) then {

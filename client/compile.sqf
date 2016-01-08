@@ -89,6 +89,13 @@ playerInit = compile preprocessFile 'client\player_init.sqf';
 playerKilled = compile preprocessFile 'client\player_killed.sqf';
 playerSpawn = compile preprocessFile 'client\player_spawn.sqf';
 playerRespawn = compile preprocessFile 'client\player_respawn.sqf';
+
+// Player loop periodically updates nearby actions/interactions
+playerLoop = compile preprocessFile 'client\player_loop.sqf';
+
+// Periodically triggers the player loop above using mouse input/key input rather than running on a set interval
+triggerLazyUpdate = compile preprocessFile 'client\functions\triggerLazyUpdate.sqf';
+
 cameraPreview = compile preprocessFile 'client\ui\cameras\preview_camera.sqf';
 deathCamera = compile preprocessFile "client\ui\cameras\death_camera.sqf";
 previewCamera = compile preprocessFile "client\ui\cameras\preview_camera.sqf";
@@ -141,9 +148,16 @@ registerVehicle = compile preprocessFile  'client\persistance\add.sqf';
 saveVehicle = compile preprocessFile  'client\persistance\save.sqf';
 listFunctions = compile preprocessFile  'client\persistance\library.sqf';
 listVehicles = compile preprocessFile  'client\persistance\list.sqf';
-createDefaultLibrary = compile preprocessFile 'client\persistance\default.sqf';
+getVehicleLibrary = compile preprocessFile 'client\persistance\getVehicleLibrary.sqf';
+getVehicleData = compile preprocessFile 'client\persistance\getVehicleData.sqf';
+setVehicleData = compile preprocessFile 'client\persistance\setVehicleData.sqf';
 toggleHidden = compile preprocessFile 'client\functions\toggleHidden.sqf';
 createDefaultRaces = compile preprocessFile 'client\persistance\defaultRaces.sqf';
+
+// Global keybind functions
+listGlobalBinds = compile preprocessFile 'client\persistance\listGlobalBinds.sqf';
+setGlobalBind = compile preprocessFile 'client\persistance\setGlobalBind.sqf';
+getGlobalBind = compile preprocessFile 'client\persistance\getGlobalBind.sqf';
 
 // Setup Functions
 setupLocalVehicle = compile preprocessFile "client\vehicles\local_vehicle_setup.sqf";
@@ -235,6 +249,10 @@ returnToZone =  compile preprocessFile "client\functions\returnToZone.sqf";
 setCurrentZone = compile preprocessFile "client\functions\setCurrentZone.sqf";	
 buildZoneBoundary = compile preprocessFile "client\functions\buildZoneBoundary.sqf";	
 removeZoneBoundary = compile preprocessFile "client\functions\removeZoneBoundary.sqf";	
+cacheZoneBoundary = compile preprocessFile "client\functions\cacheZoneBoundary.sqf";	
+
+// Sponsorship
+giveSponsor = compile preprocessFile "client\functions\giveSponsor.sqf";	
 
 // UI
 generateStatsList = compile preprocessFile "client\functions\generateStatsList.sqf";
@@ -417,5 +435,7 @@ keyCodes = [
 	['App ', 221]
 
 ];
+
+clientInit = compile preprocessFile "server\init.sqf";
 
 clientCompileComplete = true;

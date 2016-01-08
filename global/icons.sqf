@@ -143,6 +143,7 @@ speedSign = MISSION_ROOT + 'client\images\signage\supply_speed.jpg';
 jammerSign = MISSION_ROOT + 'client\images\signage\supply_jammer.jpg';
 
 // Action Menu Formatting
+settingsIcon = ICON_ROOT + 'menus\settings.paa';
 settingsVehicleFormat = "<img size='3' color='#ffffff' shadow='0' image='" + ICON_ROOT + "menus\settings.paa' align='left' /> <t size='1.1' shadow='0' align='left'>SETTINGS  </t>";
 unflipVehicleFormat = "<img size='3' color='#ffffff' shadow='0' image='" + ICON_ROOT + "menus\rotatecw.paa' align='left' /> <t size='1.1' shadow='0' align='left'>UNFLIP  </t>";
 moveVehicleFormat = "<img size='3' color='#ffffff' shadow='0' image='" + ICON_ROOT + "menus\move.paa' align='left' /> <t size='1.1' shadow='0' align='left'>LIFT  </t>";

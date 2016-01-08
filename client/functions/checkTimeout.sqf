@@ -29,8 +29,8 @@ _count = 0;
 
 		_applyTimeout = if (_timeLeft > 0) then {
 
-			if (_timeLeft > 0 && { typename _source == "ARRAY" } && { (_source select 0) == _type || (_source select 1) == _type }) exitWith { true };
-			if (_timeLeft > 0 && { typename _source == "STRING" } && { _source == _type }) exitWith { true };
+			if (_timeLeft > 0 && { _source isEqualType [] } && { (_source select 0) == _type || (_source select 1) == _type }) exitWith { true };
+			if (_timeLeft > 0 && { _source isEqualType "" } && { _source == _type }) exitWith { true };
 			false
 
 		} else {
@@ -57,6 +57,5 @@ _count = 0;
 } count GW_WAITLIST > 0;
 
 _state set[2, _numberOfType];
-
 
 _state

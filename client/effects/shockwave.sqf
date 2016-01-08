@@ -9,10 +9,10 @@ _target = [_this, 0, objNull, [objNull, []]] call filterParam;
 _radius =  [_this, 1, 20, [0]] call filterParam;
 _force =  [_this, 2, 25, [0]] call filterParam;
 
-_exit = if (typename _target == "OBJECT") then { if (isNull _target) exitWith { true }; false } else { false };
+_exit = if (_target isEqualType objnull) then { if (isNull _target) exitWith { true }; false } else { false };
 if (_exit) exitWith {};
 
-_sourcePos = if (typename _target == "OBJECT") then { (ASLtoATL visiblePositionASL _target) } else { _target };
+_sourcePos = if (_target isEqualType objnull) then { (ASLtoATL visiblePositionASL _target) } else { _target };
 
 _objectList = _sourcePos nearEntities [["Car", "Man"], (_this select 1)];
 

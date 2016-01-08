@@ -42,7 +42,7 @@ findAITarget = {
 	if (isNil "_currentZone") exitWith { objNull };
 	_this setVariable ['GW_Zone', _currentZone];
 
-	_targetsInZone = [_currentZone] call findAllInZone;	
+	_targetsInZone = [_currentZone, { true }, true] call findAllInZone;	
 	_validTargets = [];
 
 	{

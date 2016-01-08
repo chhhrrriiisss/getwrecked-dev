@@ -19,7 +19,7 @@ if (!local _vehicle) exitWith {
 	] call bis_fnc_mp; 
 };
 
-if (typename _status == "STRING") then { _status = (call compile _status); };
+if (_status isEqualType "") then { _status = (call compile _status); };
 
 [_vehicle, _status, _duration] spawn {
 	

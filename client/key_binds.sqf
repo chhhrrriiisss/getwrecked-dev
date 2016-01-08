@@ -47,29 +47,37 @@ resetBinds = {
 		keyDown = false;
 	};
 
+	if ((_this select 1) in (actionKeys "showMap")) then {
+		GW_HUD_ACTIVE = false;	
+		GW_HUD_LOCK = true;
+	};	
+
+	if (!visibleMap && GW_HUD_LOCK) then {
+		GW_HUD_ACTIVE = false;	
+		GW_HUD_LOCK = false;
+	};	
+
 	GW_HOLD_ROTATE = false;
 	GW_KEYDOWN = nil;
 };
 
 checkBinds = {
-		
-	User1 = actionKeys "User1"; // Grab/drop
-	User2 = actionKeys "User2"; // Attach / detach
-	User3 = actionKeys "User3"; // Rotate CW 
-	User4 = actionKeys "User4"; // Rotate CCW
-	User5 = actionKeys "User5"; // Hold Rotate
-	// User6 = actionKeys "User6"; // Tilt Forward
-	// User7 = actionKeys "User7"; // Tilt Backward
+	
+	[_this, 'key'] call triggerLazyUpdate;
 
-	User20 = actionKeys "User20"; // Settings
+	_grabKey = ['GRAB'] call getGlobalBind;
+	_attachKey = ['ATTACH'] call getGlobalBind;
+	_rotateCWKey = ['ROTATECW'] call getGlobalBind;
+	_rotateCCWKey = ['ROTATECCW'] call getGlobalBind;
+	_holdRotateKey = ['HOLD'] call getGlobalBind;
+	_settingsKey = ['SETTINGS'] call getGlobalBind;
 
 	_key = _this select 1; // The key that was pressed
 	_shift = _this select 2; 
 	_ctrl = _this select 3; 
 	_alt = _this select 4; 
 
-	if (GW_SHOOTER_ACTIVE) exitWIth { false };
-
+	if (GW_SHOOTER_ACTIVE) exitWIth { false };	
 
 	// Conditionals
 	_vehicle = GW_CURRENTVEHICLE;
@@ -100,7 +108,7 @@ checkBinds = {
 	};	
 
 	// Windows key
-	if (_key in User20 && (_inVehicle && _isDriver) ) then {
+	if (_key == _settingsKey && (_inVehicle && _isDriver) ) then {
 
 		if (!GW_SETTINGS_ACTIVE) then {
 			[_vehicle, player] spawn settingsMenu;
@@ -129,19 +137,19 @@ checkBinds = {
 			[] spawn previewMenu;
 		};
 	
-		if (_key in User5) then { GW_HOLD_ROTATE = true; };		
+		if (_key == _holdRotateKey) then { GW_HOLD_ROTATE = true; };		
 
 		if (!GW_EDITING) exitWith {};
 
 		_object = player getVariable ["GW_EditingObject", nil];
 		if (isNil "_object") exitWith {};
 		
-		if (_key in User1) then { [player, _object] spawn dropObj; }; 
-		if (_key in User2) then { [player, _object] spawn attachObj; }; 
-		if (_key in User3) then { [_object, 4.5] spawn rotateObj; };
-		if (_key in User4) then { [_object, -4.5] spawn rotateObj; };	
-		if (_key in User6) then { [_object, [-5, 0]] spawn tiltObj; }; 
-		if (_key in User7) then { [_object, [5, 0]] spawn tiltObj; }; 
+		if (_key == _grabKey) then { [player, _object] spawn dropObj; }; 
+		if (_key == _attachKey) then { [player, _object] spawn attachObj; }; 
+		if (_key == _rotateCWKey) then { [_object, 4.5] spawn rotateObj; };
+		if (_key == _rotateCCWKey) then { [_object, -4.5] spawn rotateObj; };	
+		// if (_key in User6) then { [_object, [-5, 0]] spawn tiltObj; }; 
+		// if (_key in User7) then { [_object, [5, 0]] spawn tiltObj; }; 
 	};
 
 	if (GW_CURRENTZONE == "workshopZone") exitWith {};
@@ -197,14 +205,14 @@ checkBinds = {
 					
 
 					// Make sure we're working with a properly formatted array bind
-					if (typename _bind == "ARRAY") then {} else {						
-						_k = if (typename _bind != "STRING") then { (str _bind) } else { _bind };
+					if (_bind isEqualType []) then {} else {						
+						_k = if ( !(_bind isEqualType "") ) then { (str _bind) } else { _bind };
 						_bind = [_k, "1"];
 						if (!_isVehicleBind) then { _obj setVariable ["GW_KeyBind", _bind, true]; };	
 					};
 
 					// Get the keycode we are working with
-					_keyCode = if ((typename (_bind select 0)) != "SCALAR") then { (parseNumber (_bind select 0)) } else { (_bind select 0) };
+					_keyCode = if ( !((_bind select 0) isEqualType 0) ) then { (parseNumber (_bind select 0)) } else { (_bind select 0) };
 						
 					_exitEarly = false;	
 

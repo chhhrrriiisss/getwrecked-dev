@@ -14,7 +14,7 @@ _range = 400;
 
 [_gun] spawn muzzleEffect;
 
-_targetPos = if (typename _target == 'OBJECT') then { getPosASL _target } else { _target };
+_targetPos = if (_target isEqualTo objNull) then { getPosASL _target } else { _target };
 _gPos = _gun selectionPosition "otochlaven";
 _gPos = _gun modelToWorld [-0.15,1.7,-0.72];
 

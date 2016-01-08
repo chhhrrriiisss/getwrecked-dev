@@ -33,7 +33,7 @@ if (_isHolder) then {
 
 if (!_isHolder) then {
 	_newObj = createVehicle [_type, _pos, [], 0, _collide];
-	if (typename _dir == "ARRAY") then { [_newObj, _dir] call setPitchBankYaw; } else { _newObj setDir _dir; };
+	if (_dir isEqualType []) then { [_newObj, _dir] call setPitchBankYaw; } else { _newObj setDir _dir; };
 };
 
 

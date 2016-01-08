@@ -16,6 +16,51 @@ if (GW_EVENTS_ACTIVE) then {
 };
 
 _eventsList = [
+	
+	[	
+		"sponsorship",
+		100,
+		{
+			if (isNil "GW_LASTPAYCHECK") then {  GW_LASTPAYCHECK = time; };
+
+			// Players are in zone and it's been at least 120 seconds since last payment
+			if ((time - GW_LASTPAYCHECK > 10) && (count (['workshopZone'] call findAllInZone) < (count allUnits)) ) exitWith { true };
+			false
+
+		},
+		{
+			_activeZones = [];
+			{
+				if ((_x select 1) isEqualTo "battle") then {
+					_zoneName = format['%1%2', (_x select 0), 'Zone'];
+					_inZone = ([_zoneName] call findAllInZone);
+					if (count _inZone > 0) exitWith {
+						
+						{
+							_lastPos = _x getVariable ['lastPos', [0,0,0]];
+							_currentPos = getPosASL _x;
+							_hasMoved = if ((_currentPos distance _lastPos) > 100) then { true } else { false };
+							_x setVariable ['lastPos', _currentPos];
+
+							if (_hasMoved) then {
+								[		
+									[],
+									"giveSponsor",
+									_x,
+									false
+								] call bis_fnc_mp;	 								
+							};
+
+							false
+						} count _inZone > 0;
+
+					};
+				};									
+				false
+			} count GW_VALID_ZONES > 0;
+
+		}
+	],
 
 	[
 		"supply", // Name of event
@@ -41,8 +86,9 @@ _eventsList = [
 
 			_selectedZone = _activeZones call BIS_fnc_selectRandom;
 			if (isNil "_selectedZone") exitWith { false };
+			if (_selectedZone == "workshopZone") exitWith { false };
 			diag_log format['Supply box triggered for %2 at %1.', time, _selectedZone];
-;
+
 			// Don't create a new one if we're already at maximum
 			if (GW_SUPPLY_ACTIVE >= GW_SUPPLY_MAX) exitWith { false };
 

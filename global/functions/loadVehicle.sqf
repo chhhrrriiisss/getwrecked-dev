@@ -50,13 +50,16 @@ if (count _data == 0) exitWith {
     false
 };
 
+_class  = [_data, 0, _raw, [""]] call filterParam;
+_name  = [_data, 1, "UNTITLED", [""]] call filterParam;
+_paint  = [_data, 2, "", [""]] call filterParam;
 _savedAttachments = [_data, 5, [], [[]]] call filterParam;
 _startTime = time;
 
 [_target, false] call clearPad;
 
 if (!_ai) then {
-    systemChat format['Loading... %1', (_data select 1)];
+    systemChat format['Loading... %1', _name];
 };
 
 // Create it
@@ -66,11 +69,11 @@ if (_vehPos distance [0,0,0] <= 200) exitWith {
     false
 };
 
-_heightAboveTerrain = 2;
+_heightAboveTerrain = 3;
 _vehPosATL = (ASLtoATL getPosASL _vehPos);
 _vehPosATL set[2, _heightAboveTerrain];
 
-_newVehicle = createVehicle [(_data select 0), _vehPosATL, [], 0, "CAN_COLLIDE"];
+_newVehicle = createVehicle [_class, _vehPosATL, [], 0, "CAN_COLLIDE"];
 _newVehicle setPos _vehPosATL;
 _newVehicle setDir 0;
 _newVehicle setVectorUp [0,0,1];
@@ -79,7 +82,7 @@ _newVehicle setVectorUp [0,0,1];
 [       
     [
         _newVehicle,
-        (_data select 1)
+        _name
     ],
     "setupVehicle",
     false,
@@ -103,9 +106,6 @@ waitUntil {
     false 
 ] call bis_fnc_mp;
 
-// Get paint (if exists)
-_paint = (_data select 2);
-
 // Loop through and create attached objects
 {
 
@@ -113,7 +113,7 @@ _paint = (_data select 2);
 
         // Retrieve position (and convert if needed)
         _p = _x select 1;
-        if (typename _p == "STRING") then {
+        if (_p isEqualType "") then {
             _p = call compile _p;
         };               
 
@@ -127,10 +127,13 @@ _paint = (_data select 2);
         _k = if (isNil { (_x select 3) }) then { ["-1", "1"] } else { (_x select 3) };            
         _o setVariable ['GW_KeyBind', _k, true];  
 
+        // _p = (getPosASL _newVehicle) vectorAdd _p;
+        // _aP = _newVehicle worldToModel (ASLtoAGL _p);
+
         _o attachTo [_newVehicle, [0,0,20]];
-        _o attachTo [_newVehicle, (_p vectorAdd (boundingCenter _o))];
+        _o attachTo [_newVehicle, _p];
        
-        if (typename _dir == "ARRAY") then {
+        if (_dir isEqualType []) then {
             [_o, (_x select 2)] call setPitchBankYaw;   
         } else {
             [_o, _dir] call setDirTo;          

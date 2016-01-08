@@ -10,7 +10,7 @@
 	_arr = (_x select 0);
 	{		
 
-		_pos =  if (typename _x == "OBJECT") then { _x modelToWorldVisual [0, 0, 8]; } else { (_x select 0) };
+		_pos =  if (_x isEqualType objNull) then { _x modelToWorldVisual [0, 0, 8]; } else { (_x select 0) };
 
 		_dist = (GW_CURRENTVEHICLE distance _pos);
 		_alpha = [1 - (_dist / 1000), 0.05, 1] call limitToRange;
@@ -33,6 +33,7 @@
 			_size = [2.5 - (_dist / 100), 1.2, 2.5] call limitToRange;
 			_fontSize = if (_completedArray) then { ([(0.06 - (_dist / 10000)), (0.03), (0.06)] call limitToRange)  } else { (0.032) };
 			_pos set [2, ([(_dist / 15), 0, 4] call limitToRange)];
+			_colour = [255,255,255,_alpha];
 
 			// Only render current checkpoint for in-progress array
 			if (_forEachIndex > 2 && !_completedArray) exitWith {};
@@ -43,28 +44,6 @@
 				if (_forEachIndex == ((count GW_CHECKPOINTS)-1) ) exitWith { finishMarkerIcon };
 				checkpointMarkerIcon 	
 			};
-
-			
-			// Offscreen marker render
-			// _dT = [(positionCameraToWorld [0,0,0]), _pos] call dirTo;
-			// _dif = [GW_TARGET_DIRECTION - _dT] call flattenAngle;
-			// _offScreen = if ((abs _dif) > 45 && !_completedArray && _forEachIndex == 0) exitWith { 
-			
-
-			// 	_rot = 0;
-			// 	_xPos = if (_dif < 0) then { _rot = 270; 0.9352 } else { _rot = 90; -0.352 };
-			// 	_yPos = [1 - ( ((positionCameraToWorld [0,0,0]) select 2) / (_pos select 2) ), safeZoneY, (safeZoneY + safeZoneH)] call limitToRange;
-				
-			// 	hint format['POS: %1', _xPos];
-
-			// 	_pos = screenToWorld [_xPos * safezoneW + safezoneX, _yPos * safezoneH + safezoneY];
-			// 	_icon = format['%1%2', MISSION_ROOT, 'client\images\checkpoint_halo2.paa'];
-			// 	_index = "";
-			// 	_size = 5;
-
-			// 	drawIcon3D [_icon,[255,255,255,_alpha],_pos,_size,_size,_rot, _index,0, _fontSize, "PuristaMedium"];		
-
-			// };
 			
 			// Display distance and checkpoint index information
 			_index = if (_completedArray) then { (_x select 1) } else { 
@@ -75,7 +54,7 @@
 			};
 
 			drawIcon3D [_icon,[255,255,255,_alpha],_pos,_size * 1.03,_size * 1.03,0, _index,0, _fontSize, "PuristaMedium"];			
-			drawIcon3D [markerBoxIcon,[255,255,255,_alpha],_pos,_size,_size,0, '',0, 0.03, "PuristaMedium"];		
+			drawIcon3D [markerBoxIcon,_colour,_pos,_size,_size,0, '',0, 0.03, "PuristaMedium"];		
 
 		};
 
@@ -88,14 +67,13 @@
 	[GW_CHECKPOINTS_COMPLETED, true]
 ];
 
-
 // Locked target icons
 if (count GW_LOCKEDTARGETS > 0) then {
 	{
 		if (!alive _x || isNull _x) then {
 			GW_LOCKEDTARGETS = GW_LOCKEDTARGETS - [_x];
 		} else {
-			if (typename _x == "OBJECT" && {alive _x}) then {	        	
+			if (_x isEqualType objNull && {alive _x}) then {	        	
         		_pos =  (ASLtoATL visiblePositionASL _x);
         		drawIcon3D [lockedIcon,colorRed,_pos,2.25,2.25,2, 'LOCKED', 0, 0.03, "PuristaMedium"];		      
         	};
@@ -110,10 +88,8 @@ if (count GW_TARGETICON_ARRAY > 0) then {
 	{
 		if (!alive _x || isNull _x) then {
 			GW_TARGETICON_ARRAY = GW_TARGETICON_ARRAY - [_x];
-		} else {
-			if (typename _x == "OBJECT" && {alive _x}) then {
-				drawIcon3D [lockingIcon,[0.99,0.14,0.09,1], (_x modelToWorldVisual [0,0,0]), 2.5,2.5,0, '', 0, 0.04, "PuristaMedium"];
-			};
+		} else {			
+			drawIcon3D [lockingIcon,[0.99,0.14,0.09,1], (_x modelToWorldVisual [0,0,0]), 2.5,2.5,0, '', 0, 0.04, "PuristaMedium"];			
 		};
 
 		false
@@ -125,8 +101,8 @@ if (count GW_LINEFFECT_ARRAY > 0) then {
 	{
 		_p1 = _x select 0;
 		_p2 = _x select 1;
-		if (typename _p1 == "OBJECT") then { _p1 = (ASLtoATL visiblePositionASL _p1); };				
-		if (typename _p2 == "OBJECT") then { _p2 = (ASLtoATL visiblePositionASL _p2); };	
+		if (_p1 isEqualType objNull) then { _p1 = (ASLtoATL visiblePositionASL _p1); };				
+		if (_p2 isEqualType objNull) then { _p2 = (ASLtoATL visiblePositionASL _p2); };	
 
 		if ((_x select 2) == "LSR") then { _p1 set [2, (_p1 select 2) + 0.48]; };
 
@@ -143,7 +119,7 @@ if (count GW_WARNINGICON_ARRAY > 0) then {
 
 		} else {	
 
-			if (typename _x == "OBJECT" && { alive _x } && { _x distance GW_CURRENTVEHICLE < 300 }) then {
+			if (_x isEqualType objNull && { alive _x } && { _x distance GW_CURRENTVEHICLE < 300 }) then {
 
 				// Some objects need the warning icon in a slightly different place
 				_offset = switch (typeof _x) do { case "Land_New_WiredFence_5m_F": { [0,0,2.2] }; case "Land_FoodContainer_01_F": { [0,0,0.5] }; case "Land_Sacks_heap_F": { [0,0,2] }; default { [0,0,0] }; };

@@ -4,39 +4,31 @@
 //      Return: Bool (Success)
 //
 
+private ['_string', '_data'];
+
 _string = [_this,0, "", [""]] call filterParam;
 _data = [_this,1, [], [[]]] call filterParam;
 
 if (_string == "" || count _data == 0) exitWith { false };
 
-// Save that data to an open slot
-profileNameSpace setVariable[_string,[_data]];
-saveProfileNamespace;
+// Save vehicle data
+[_string, _data] call setVehicleData;
 
 // Save to reference library
-_lib = profileNamespace getVariable [ 'GW_LIBRARY', nil];
+_lib = [] call getVehicleLibrary;
 
-// If the library does exist
-if (!isNil "_lib") then {
+_exists = false;
 
-    _exists = false;
+{
+    if (_x == _string) exitWith {
+        _exists = true;
+    };
+} ForEach _lib;
 
-    {
-        if (_x == _string) then {
-            _exists = true;
-        };
-
-    } ForEach _lib;
-
-    // If the name doesnt already exist
-    if (!_exists) then {
-        _lib = _lib + [_string];
-    };   
-
-}  else {
-
-    _lib = [];
-};
+// If the name doesnt already exist
+if (!_exists) then {
+    _lib pushback _string;
+};   
 
 // Save that data to an open slot
 profileNameSpace setVariable['GW_LIBRARY', _lib];

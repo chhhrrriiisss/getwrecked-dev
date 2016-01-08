@@ -8,7 +8,7 @@ private ['_distance', '_cl', '_playerDir', '_angleDif', '_dif'];
 
 
 // If zone is specified, instead of raw data, find it
-_data = if (typename (_this select 1) == "STRING") then {
+_data = if ((_this select 1) isEqualType "") then {
 	
 	// Find the respective data for the zone
 	_d = [];	
@@ -25,7 +25,7 @@ _data = if (typename (_this select 1) == "STRING") then {
 	(_this select 1)
 };
 
-if (count _data isEqualTo []) exitWith { false };
+if ((count _data) isEqualTo 0) exitWith { false };
 
 _distance = 99999;
 _cl = [0,0,0];

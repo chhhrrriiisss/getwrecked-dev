@@ -7,7 +7,7 @@
 private ["_class", "_hitPoints", "_cfgVehicle", "_hitPointsCfg", "_nbHitPoints", "_hitPoint", "_i"];
 _class = _this;
 
-if (typeName _class == "OBJECT") then {  _class = typeOf _class; };
+if (_class isEqualType objNull) then {  _class = typeOf _class; };
 
 _hitPoints = [];
 _cfgVehicle = configFile >> "CfgVehicles" >> _class;

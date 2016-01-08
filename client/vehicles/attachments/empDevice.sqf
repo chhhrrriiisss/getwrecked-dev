@@ -86,7 +86,7 @@ if (!_isAI) then {
 	_layerStatic = ("BIS_layerStatic" call BIS_fnc_rscLayer);
 	_layerStatic cutRsc ["RscStatic", "PLAIN" , 2];
 
-	["EMP ACTIVATED ", 1, empIcon, colorWhite, "warning"] spawn createAlert; 
+	["EMP ACTIVATED ", 1, empIcon, nil, "warning"] spawn createAlert; 
 };
 
 true

@@ -27,7 +27,7 @@ if (_fuel > 1) then {
 };
 
 _oPos = _obj modelToWorldVisual [0,-4,0];
-_tPos = if (typename _target == 'OBJECT') then { (ASLtoATL getPosASL _target) } else { _target };
+_tPos = if (_target isEqualTo objNull) then { (ASLtoATL getPosASL _target) } else { _target };
 
 _heading = [_oPos,_tPos] call BIS_fnc_vectorFromXToY;
 _velocity = [_heading, _projectileSpeed] call BIS_fnc_vectorMultiply; 

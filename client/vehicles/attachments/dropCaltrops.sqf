@@ -41,10 +41,11 @@ _this spawn {
 
 		_o allowDamage false;
 
-		_o addEventHandler ['EpeContact', { 
-
+		_o addEventHandler ['EpeContactStart', {
+		
 			_o1 = (_this select 0);
 			_o2 = (_this select 1);	
+
 			_isVehicle = _o2 getVariable ["isVehicle", false];
 			if (!_isVehicle) exitWith {};
 

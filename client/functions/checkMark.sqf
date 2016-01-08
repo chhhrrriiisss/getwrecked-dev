@@ -15,7 +15,7 @@ if (_isVehicle) then {
 
 	_killedBy = _t getVariable ["killedBy", nil ];
 	_killedBy = if (isNil "_killedBy") then { ["Nobody", ""] } else { 
-		if (typename _killedBy == "STRING") exitWith { (call compile _killedBy) };
+		if (_killedBy isEqualType "") exitWith { (call compile _killedBy) };
 		_killedBy
 	};
 	

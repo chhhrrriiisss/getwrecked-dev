@@ -81,11 +81,11 @@ tweenProperty = {
 	isRelative = {
 		_valueToChange = _this select 0;
 
-		if (typeName _startValue == "STRING") then { 	
+		if (_startValue isEqualType "") then { 	
 			_startValue = _valueToChange + parseNumber ( _startValue );
 		};
 
-		if (typeName _endValue == "STRING") then { 			
+		if (_endValue isEqualType "") then { 			
 			_endValue = _valueToChange + parseNumber ( _endValue );
 		};
 	};
@@ -168,18 +168,18 @@ filterArray = {
 	{
 		disableSerialization;
 
-		if (typeName _x == "ARRAY") then {
+		if (_x isEqualType []) then {
 			[_x, _properties] spawn filterArray;		
 		};
 
-		if (typeName _x == "CONTROL") then {
+		if (_x isEqualType controlNull) then {
 			[_x, _properties, 'quad'] call tweenControl;
 		};
 
 	} ForEach _array;
 };
 
-if (typeName _controls == "CONTROL") then {
+if (_controls isEqualType controlNull) then {
 	_null = [_controls, _properties, 'quad'] call tweenControl;
 } else {
 	_null = [_controls, _properties] call filterArray;

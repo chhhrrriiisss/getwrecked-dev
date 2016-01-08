@@ -11,7 +11,7 @@ _vehicle = [_this,0, objNull, [objNull]] call filterParam;
 if (isNull _vehicle) exitWith {};
 
 _sound = _vehicle getVariable ['GW_Taunt', 'none'];
-_sound = if (typename _sound == "ARRAY") then { "none" } else { _sound };
+_sound = if (_sound isEqualType []) then { "none" } else { _sound };
 
 if (!isNil "_sound") then {
 

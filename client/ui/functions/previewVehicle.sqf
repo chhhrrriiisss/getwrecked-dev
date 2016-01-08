@@ -35,18 +35,17 @@ _newPreviewCameraPosition = nil;
 
 if (isNil "_position") then {		
 	_newLocation = [tempAreas, ["Car"], 15] call findEmpty;
-	_newPreviewCameraPosition = if (typeName _newLocation == "ARRAY") then { _newLocation } else { (ASLtoATL getPosASL _newLocation) };
+	_newPreviewCameraPosition = if (_newLocation isEqualType []) then { _newLocation } else { (ASLtoATL getPosASL _newLocation) };
 	_newPreviewCameraPosition set [2, 1.1];	
 } else {
 	_newPreviewCameraPosition = _position;
 };
 
 // Get data for selected
-_raw = profileNamespace getVariable [ _selected, []];
-if (isNil "_raw") exitWith {};
+_raw = [_selected] call getVehicleData;
+if (count _raw == 0) exitWith {};
 
 _data = _raw select 0;
-if (isNil "_data") exitWith {};
 
 _name = '';
 

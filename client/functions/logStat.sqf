@@ -15,8 +15,8 @@ if (_statToLog == "" && !_forceSave) exitWith {};
 _index = (GW_STATS_ORDER find _statToLog);
 if (_index == -1 && !_forceSave) exitWith { false };
 
-_vehicleIsAlive = if (typename _vehicle == "OBJECT") then { if (alive _vehicle) exitWith { true }; false } else { false };
-_vehicleName = if (typename _vehicle == "STRING") then { _vehicle } else { if (_vehicleIsAlive) exitWith { _vehicle getVariable ['name', ''] };	nil };
+_vehicleIsAlive = if (_vehicle isEqualType objNull) then { if (alive _vehicle) exitWith { true }; false } else { false };
+_vehicleName = if (_vehicle isEqualType "") then { _vehicle } else { if (_vehicleIsAlive) exitWith { _vehicle getVariable ['name', ''] };	nil };
 
 if (isNil "_vehicleName" && !_forceSave) exitWith { false };
 

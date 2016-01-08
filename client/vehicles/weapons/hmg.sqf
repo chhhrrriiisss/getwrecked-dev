@@ -14,7 +14,7 @@ _range = 300;
 
 [_gun] spawn muzzleEffect;
 
-_targetPos = if (typename _target == 'OBJECT') then { (_target modelToWorldVisual [0,0,0.5]) } else { _target };
+_targetPos = if (_target isEqualTo objNull) then { (_target modelToWorldVisual [0,0,0.5]) } else { _target };
 _gPos = _gun modelToWorldVisual [0, 3, -0.7];
 
 _heading = [_gPos, _targetPos] call BIS_fnc_vectorFromXToY;

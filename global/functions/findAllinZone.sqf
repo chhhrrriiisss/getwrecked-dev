@@ -7,11 +7,25 @@
 private ['_zone', '_arr', '_zoneCenter', '_vehiclesOnly'];
 
 _zone = [_this, 0, "", [""]] call filterParam;
-_vehiclesOnly = [_this, 1, false, [false]] call filterParam;
+_filterToApply = [_this, 1, { true }, [{}]] call filterParam;
+_useManifest = [_this, 2, true, [false]] call filterParam;
 
 if (_zone isEqualTo "") exitWith { [] };
-if (count allUnits isEqualTo 0) exitWith { [] };
 
+if (_useManifest) exitWith {
+
+	_unitsInZone = [];
+
+	{
+		if ((_x select 1) == _zone) then { _unitsInZone pushback (_x select 0);	};
+		false
+	} count GW_ZONE_MANIFEST > 0;
+
+	_unitsInZone
+
+};
+
+if (count allUnits isEqualTo 0) exitWith { [] };
 
 _arr = [];
 _isGlobal = if (_zone == "globalZone") then { true } else { false };
@@ -28,13 +42,12 @@ _isGlobal = if (_zone == "globalZone") then { true } else { false };
 		_inZone = if (_isGlobal) then { true } else { ([(ASLtoATL getPosASL _x), _zone] call checkInZone) };
 		if (!_inZone) exitWith {};
 
-		_inVehicle = if ((vehicle _x) == _x) then { false } else { _x = vehicle _x; true };
+		// Check the vehicle matches the filter
+		_condition = _x call _filterToApply;
+		if (!_condition) exitWith {};
 
-		// If we're only looking for vehicles, do nothing
-		if (_vehiclesOnly && !_inVehicle) then {} else {
-			_arr pushback _x;
-		};
-
+		_arr pushback _x;
+	
 	}; 
 
 	false	

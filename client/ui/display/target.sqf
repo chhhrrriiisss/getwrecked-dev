@@ -10,26 +10,25 @@ if (isNull GW_CURRENTVEHICLE) exitWith {};
 if (!alive GW_CURRENTVEHICLE) exitWith {};
 
 _vehicle = GW_CURRENTVEHICLE;
-
 _unit = player;
 
 IF (vectorUp _vehicle distance [0,0,1] > 1) exitWith {};
 
 // Get all the camera information we need
-GW_CAMERA_HEADING = [(positionCameraToWorld [0,0,0]), (positionCameraToWorld [0,0,1])] call BIS_fnc_vectorDiff;
+// GW_CAMERA_HEADING = [(positionCameraToWorld [0,0,0]), (positionCameraToWorld [0,0,1])] call BIS_fnc_vectorDiff;
+/*GW_MAX = positionCameraToWorld [0,0,2000];*/
 GW_TARGET_DIRECTION = [(positionCameraToWorld [0,0,0]), (positionCameraToWorld [0,0,4])] call dirTo;
-GW_MAX = positionCameraToWorld [0,0,2000];
 GW_MIN = positionCameraToWorld [0,0,500];
 GW_ORIGIN = (ASLtoATL visiblePositionASL _vehicle);
-GW_SCREEN = screenToWorld [0.5, 0.5];
 
 // Determine which target marker to use
 // Resolution of aim and ballistics is still very much a WIP
 GW_TARGET = GW_MIN;
 _terrainIntersect = terrainIntersect [(positionCameraToWorld [0,0,0]), GW_MIN];
+// _terrainIntersect = true;
 _heightAboveTerrain = (GW_ORIGIN) select 2;
 
-if (_terrainIntersect || _heightAboveTerrain > 3) then { GW_TARGET = GW_SCREEN; };
+if (_terrainIntersect || _heightAboveTerrain > 3) then { GW_TARGET = (screenToWorld [0.5, 0.5]); };
 if (GW_DEBUG) then { [GW_ORIGIN, GW_TARGET, 0.1] spawn debugLine; };
 
 GW_TARGET = positionCameraToWorld [0,0,200];
@@ -66,6 +65,14 @@ _allowedWeapons = [
 	'RPD'
 ];
 
+getWeaponIcon = {
+
+	if (_this in ["HMG", "RLG", "LSR", "LMG"]) exitWith { hmgTargetIcon };
+	if (_this in ["RPG", "MIS", "GUD", "FLM", "RPD"]) exitWith { rpgTargetIcon };
+	if (_this in ["MOR", "GMG", "HAR"]) exitWith { rangeTargetIcon };
+	noTargetIcon
+};
+
 _count = 0;
 {
 
@@ -92,29 +99,14 @@ _count = 0;
 
 		// Only add weapons that are mouse bound to active weapons list
 		_bind = _obj getVariable ['GW_KeyBind', ["-1", "1"]];
-		_bind = if (typename _bind == "ARRAY") then { (_bind select 1) } else { _bind };
+		_bind = if (_bind isEqualType []) then { (_bind select 1) } else { _bind };
 
 		GW_AVAIL_WEAPONS pushback [_obj, _type, _bind];
 		_col = [1,1,1,0.75];
 
 		// Decide on the icon to use for each weapon
-		_icon = _type call {
+		_icon = _type call getWeaponIcon;
 
-			if (_this == "HMG") exitWith { hmgTargetIcon };
-			if (_this == "RLG") exitWith { hmgTargetIcon };
-			if (_this == "LSR") exitWith { hmgTargetIcon };
-			if (_this == "RPG") exitWith { rpgTargetIcon };
-			if (_this == "MIS") exitWith { rpgTargetIcon };
-			if (_this == "GUD") exitWith { rpgTargetIcon };
-			if (_this == "MOR") exitWith { rangeTargetIcon };
-			if (_this == "GMG") exitWith { rangeTargetIcon };
-			if (_this == "FLM") exitWith { rpgTargetIcon };
-			if (_this == "HAR") exitWith { rangeTargetIcon };
-			if (_this == "LMG") exitWith { hmgTargetIcon };
-			if (_this == "RPD") exitWith { rpgTargetIcon };
-			noTargetIcon
-		};
-		
 		_count = _count + 1;		
 
 	};

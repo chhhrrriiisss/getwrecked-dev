@@ -104,6 +104,53 @@ call addReservedIndex;
 
 } count _bindsList;
 
+_list lnbAddRow["GLOBAL", "", ""];
+call addReservedIndex;
+
+_globalBindsList = [] call listGlobalBinds;
+
+{
+
+	_tag = _x select 0;
+	_key = _x select 1;
+
+	_data = _tag call {
+		if (_this == "SETTINGS") exitWith { [settingsIcon, "Settings"] };
+		if (_this == "GRAB") exitWith { [moveIcon, "Grab / Drop"] };
+		if (_this == "ATTACH") exitWith { [attachIcon, "Attach / Detach"] };
+		if (_this == "ROTATECW") exitWith { [rotateCWIcon, "Rotate CW"] };
+		if (_this == "ROTATECCW") exitWith { [rotateCCWIcon, "Rotate CCW"] };
+		if (_this == "HOLD") exitWith { [cameraRotateIcon, "Hold Rotate"] };
+		[]
+	};
+
+	if (true) then {
+
+		if (count _data == 0) exitWith {};
+
+		_icon = _data select 0;
+		_string = _data select 1;
+
+		if (count toArray _string == 0) exitWith {};
+	
+		_list lnbAddRow["", _string, ""];
+		_row = ((((lnbSize 92001) select 0)) -1);
+		
+		if (!isNil "_key") then { [_row, _key] call formatBind; };
+
+		if (!isNil "_icon") then {
+			_list lnbSetPicture[[_row, 0], _icon];
+		};
+
+		_list lnbSetData[[_row, 1], _tag];
+
+		// Plug the vehicle to the mission namespace so we can use it when saving the binds
+		_idString = format['%1', [_row,0]];
+		missionNamespace setVariable [_idString, player];
+	};
+
+} count _globalBindsList;
+
 // Always add a blank row to pad bottom
 _list lnbAddRow["", "", " "];		
 call addReservedIndex;

@@ -26,25 +26,25 @@ _target = [_this,0, [0,0,0], [objNull, []]] call filterParam;
 _loadTarget = [_this,1, [], ["", []]] call filterParam;
 _forceServerLoad = [_this,2, false, [false]] call filterParam;
 
-if (typename _target == 'OBJECT') then {
+if (_target isEqualType objNull) then {
     _target = (ASLtoATL getPosASL _target);
 };
 
 _data = [];
-_raw = [];
 
 // If the request actually contains vehicle data, use that rather than checking library
-if ( typename _loadTarget == "ARRAY") then { _raw = _loadTarget; } else {
-    _raw = profileNamespace getVariable [ _loadTarget, nil];
-    if (!isNil "_raw") then { _raw = (_raw select 0); } else {  _raw = []; };
+_raw = if ( _loadTarget isEqualType []) then { _loadTarget } else {
+    ([_loadTarget] call getVehicleData)  
 };
 
 // Check that vehicle name actually exists
-if (count _raw <= 0 && (typename _loadTarget != "ARRAY")) exitWith {
+if (count _raw <= 0 && !(_loadTarget isEqualType []) ) exitWith {
     loadError = true;
     systemChat 'No vehicle found.';
     GW_WAITLOAD = false;
 };
+
+_data = _raw select 0;
 
 // Find an empty temporary location to spawn a new car
 _temp = [tempAreas, ["Car"], 8] call findEmpty;
@@ -59,7 +59,7 @@ if ( (_temp distance [0,0,0]) <= 200) exitWith {
 if (_forceServerLoad) exitWith {
 
     [
-        [player, _target, _raw],
+        [player, _target, (_raw select 0)],
         'loadVehicle',
         false,
         false
@@ -69,7 +69,7 @@ if (_forceServerLoad) exitWith {
     loadError = false;
 };  
 
-_done = [player, _target, _raw] spawn loadVehicle;
+_done = [player, _target, (_raw select 0)] spawn loadVehicle;
 
 _timeout = time + 15;
 waitUntil {    
@@ -77,7 +77,7 @@ waitUntil {
 };
 
 // Make it easier to spawn this vehicle next time
-if (typename _loadTarget != "ARRAY" && time < _timeout) then {
+if ( !(_loadTarget isEqualType []) && time < _timeout) then {
     GW_LASTLOAD = _loadTarget;
     profileNamespace setVariable ['GW_LASTLOAD', GW_LASTLOAD];
     saveProfileNamespace;   

@@ -5,11 +5,7 @@
 //
 
 if (isNil "GW_STATUS_MONITOR_LAST_UPDATE") then { GW_STATUS_MONITOR_LAST_UPDATE = time; };
-
-// Invulnerability toggle
-GW_INVULNERABLE = false;
-if (GW_CURRENTZONE == "workshopZone" || (GW_INVEHICLE && GW_CURRENTZONE != "workshopZone")) then { GW_INVULNERABLE = true; };
-if (!GW_INVEHICLE || (time - GW_STATUS_MONITOR_LAST_UPDATE < 0.75)) exitWith {};
+if (time - GW_STATUS_MONITOR_LAST_UPDATE < 1) exitWith {};
 GW_STATUS_MONITOR_LAST_UPDATE = time;
 
 // Toggle simulation back if we lose it for any reason
@@ -29,7 +25,7 @@ _hasMoved = false;
 if (_remainder == 0 && (typeOf GW_CURRENTVEHICLE != "Steerable_Parachute_F")) then {
 	
 	_prevPos = GW_CURRENTVEHICLE getVariable ['GW_prevPos', nil];
-	_currentPos = ASLtoATL getPosASL GW_CURRENTVEHICLE;
+	_currentPos = ASLtoATL visiblePositionASL GW_CURRENTVEHICLE;
 
 	// If there's position data stored and we're not at the workshop
 	if (!isNil "_prevPos") then {
@@ -52,22 +48,6 @@ if (_remainder == 0 && (typeOf GW_CURRENTVEHICLE != "Steerable_Parachute_F")) th
 
 };
 
-// Every 2 minutes, give sponsorship money, if we've moved
-if (isNil "GW_LASTPAYCHECK") then {  GW_LASTPAYCHECK = time; };
-if (time - GW_LASTPAYCHECK > 120 && _hasMoved) then {
-
-	GW_LASTPAYCHECK = time;
-	_wantedValue = GW_CURRENTVEHICLE getVariable ["GW_WantedValue", 0]; 
-	_totalValue = GW_IN_ZONE_VALUE + (_wantedValue);
-	_totalValue call changeBalance;
-	_totalValueString = [_totalValue] call numberToCurrency;
-	systemchat format['You earned $%1. Next payment in two minutes.', _totalValueString];
-	['moneyEarned', GW_CURRENTVEHICLE, _totalValue] call logStat;   
-	_wantedValue = _wantedValue + 50;
-	GW_CURRENTVEHICLE setVariable ["GW_WantedValue", _wantedValue];
-	GW_CURRENTVEHICLE say3D "money";
-};
-
 // If we're not disabled to any extent (or we've not been to a pad for 3 seconds)
 if ({ if (_x in GW_VEHICLE_STATUS) exitWith {1}; false } count ["emp", "disabled", "noservice"] isEqualTo 0) then { 
 
@@ -79,6 +59,7 @@ if ({ if (_x in GW_VEHICLE_STATUS) exitWith {1}; false } count ["emp", "disabled
 	};
 };	
 
+// Check tyres aren't disabled
 [GW_CURRENTVEHICLE] spawn checkTyres;
 
 // Give a little bit of fuel if it looks like we're out

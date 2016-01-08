@@ -73,7 +73,7 @@ _combinedMass = 0;
 			// Binds only for active modules and weapons
 			_bind = if (_isWeapon || _isModule) then {
 				_bind = _obj getVariable ['GW_KeyBind', ["-1", "1"]];
-				_bind = if (typename _bind == "ARRAY") then { (_bind select 1) } else { _bind };	
+				_bind = if (_bind isEqualTo []) then { (_bind select 1) } else { _bind };	
 				_bind
 			} else { [] };	
 

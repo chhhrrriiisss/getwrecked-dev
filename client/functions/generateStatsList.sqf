@@ -21,10 +21,10 @@ lnbClear _statsList;
 _name = _v getVariable ['name', ''];
 
 _dist = ["mileage", _name] call getStat;
-_dist = if (typename _dist == "ARRAY") then { 0 } else { _dist };
+_dist = if (_dist isEqualType []) then { 0 } else { if (_dist isEqualType "") exitWith { parseNumber _dist }; _dist };
 _dist = if (_dist > 5000) then { format['%1km', [_dist / 1000, 1] call roundTo ] } else { format['%1m', [_dist, 1] call roundTo ]};
 _seconds = ["timeAlive", _name] call getStat;
-_seconds = if (typename _seconds == "ARRAY") then { 0 } else { _seconds };
+_seconds = if !(_seconds isEqualType 0) then { 0 } else { _seconds };
 _hoursAlive = floor(_seconds / 3600);
 _minsAlive = floor((_seconds - (_hoursAlive*3600)) / 60);
 _secsAlive = floor(_seconds % 60);
