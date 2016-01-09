@@ -163,8 +163,9 @@ GW_VALID_ZONES = [
 	['swamp', 'battle', 'Swamp'],
 	['airfield', 'battle', 'Airfield'],
 	['downtown', 'battle', 'Downtown'],
+	// ['field', 'battle', 'Killing Field'],
 	['wasteland', 'battle', 'Wasteland'],
-	['drylake', 'battle', 'Dry Lake'],
+	['saltflat', 'battle', 'Salt Flat'],
 	// ['highway', 'race'], 
 	['workshop', 'safe', 'Workshop']
 ];

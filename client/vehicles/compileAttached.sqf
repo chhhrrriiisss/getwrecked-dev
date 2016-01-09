@@ -87,10 +87,20 @@ _combinedMass = 0;
 				// Calculate the relative angle of the weapon
 				_vehDir =  getDir _vehicle;
 				_wepDir = getDir _obj;
-				if (_isHolder) then { _wepDir = _wepDir + 90; };
 
-				_dif = [_wepDir - _vehDir] call normalizeAngle;
-				_obj setVariable ['GW_defaultDirection', _dif];
+				// Custom target offsets for different items
+				_dirOffset = _tag call {
+					if (_this in ["LSR", "FLM"]) exitWith { 180 };
+					if (_this in ["RPD"]) exitWith { -90 };
+					0		
+				};
+
+				if (_isHolder) then { _dirOffset = 90; };
+
+				_actualDir = [_wepDir - _vehDir] call normalizeAngle;
+				_defaultDir = [_actualDir + _dirOffset] call normalizeAngle;
+
+				_obj setVariable ['GW_defaultDirection', _defaultDir];
 
 				if (_tag in GW_LOCKONWEAPONS) then { _vehicle setVariable["lockOns", true];	};
 			};		

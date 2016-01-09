@@ -156,9 +156,12 @@ call compile preprocessFile "client\customization\supply_box.sqf";
 // Vehicle Functions 
 call compile preprocessFile 'client\vehicles\functions.sqf';
 
+// Function compiler
+functionCompiler = compile preprocessFile "global\functions\functionCompiler.sqf";
+
 performanceTest = compile preprocessFile 'global\functions\performanceTest.sqf';
 
-globalFunctions = [
+GW_globalFunctions = [
 	
 	// Vehicle event handlers
 	['setVehicleHandlers', 'server\vehicles\'],	
@@ -283,18 +286,8 @@ globalFunctions = [
 
 ];
 
-// Batch compile functions
-_globalDir = 'global\functions\';
-_compileState = if (GW_DEV_BUILD) then { 'compile' } else { 'compileFinal' };
-
-_benchmarkArray = [];
-
-{	
-	_dir = if (isNil { (_x select 1) }) then { _globalDir } else { (_x select 1) };
-	_format = format["%1 = %3 preprocessFile '%2%1.sqf';", (_x select 0), _dir, _compileState]; 
-	call compile _format;
-	false 
-} count globalFunctions;
+// Batch compile all functions
+[GW_globalFunctions, 'global\functions\', GW_DEV_BUILD] call functionCompiler;
 
 // Zone boundaries
 [] call parseZones;

@@ -10,14 +10,15 @@ Items without Fixed/Added/Removed proceeding are typically balance changes.
 - Added FlamePads to map
 - Added 'Loading' text to vehicle preview
 - Added 'Crash Test Dummy' texture for dev builds
-- Alert UI moved further upwards to reduce screen clutter
-- Improved caltrops effect script
+- Added New zone on Altis ''
+- Caltrops now more reliable and destroyed after first collision
 - Increased global damage scale by x2 (0.04 > 0.08)
 - Decreased ammo requirements of some weapons
 - Decreased breakage frequency for melee weapons
+- Alert UI moved further upwards to reduce screen clutter
+- Halo effect now follows ground when vehicle is airborne
 - New system that uses server to determine empty setpos locations
 - Reduced particle effect drop frequency on verticalThruster to improve FPS
-- Halo effect now hugs ground when vehicle is airborne
 - New method to dynamically spawn zone boundaries (client and local) on deploy to boost server FPS
 - Typename comparisons updated to new isEqualType command (faster)
 - Changed player proximity action refresh to a new lazy-update method
@@ -27,11 +28,15 @@ Items without Fixed/Added/Removed proceeding are typically balance changes.
 - Changing keybinds no longer requires vehicle to be saved at the workshop
 - Sponsorship money now triggered by server side events check
 - Redesigned default vehicle 'Fresh Meat' to make it a bit more noob friendly
+- Fixed HUD not fading in correctly if deploying in first person
+- Fixed Incorrect offset on muzzle effect
+- Fixed Unsaved vehicle prompt should now correctly show only for edited or non-loaded vehicles
+- Fixed Renaming a Race to a blank string would break the interface
 - Fixed Hitting ESC/Enter should now correctly confirm or cancel dialog message boxes
 - Fixed You can no longer disassemble static weapons
 - Fixed Player going unconscious when hitting supply boxes or vehicles
-- Fixed vehicle spawn protection status being applied twice on deploy
-- Fixed 'Beach' zone on stratis with bad boundary detection
+- Fixed Vehicle spawn protection status being applied twice on deploy
+- Fixed 'Beach' zone on Stratis with bad boundary detection
 - Fixed occasional missing items on vehicle load
 - Fixed 'Slytech' missing texture bug
 - Fixed some vehicle items tending not to load under low server fps
@@ -39,7 +44,7 @@ Items without Fixed/Added/Removed proceeding are typically balance changes.
 - Fixed Purchasing multiple items should now correctly use nearby supply boxes owned by player
 
 * Known issues *
-- FilterParam occasionally throwing errors due to changes in 1.54 to param
+- FilterParam occasionally throwing errors due to changes in 1.54 to param, turn off -showscripterrors to remove these [TEMP]
 
 **v0.8.2c** [1.48 Compatibility - Public alpha release]
 

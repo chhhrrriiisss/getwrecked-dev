@@ -16,7 +16,7 @@ _range = 60;
 [_gun] spawn muzzleEffect;
 
 _targetPos = if (_target isEqualTo objNull) then { getPosASL _target } else { _target };
-_gPos = _gun modelToWorldVisual [1,0,-0.7];
+_gPos = _gun modelToWorldVisual [2.5,0,-0.7];
 if (GW_DEBUG) then { [_gPos, _targetPos, 3] spawn debugLine; };
 
 _targetPos = [_targetPos, 0.2, 0.2, 0] call setVariance;

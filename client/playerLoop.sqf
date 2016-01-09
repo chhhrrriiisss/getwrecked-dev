@@ -47,6 +47,8 @@ if (!isNil "GW_CURRENTZONE") then {
 		player setVariable ["outofbounds", false];	
 	};	
 
+	// Check if near edge-of-zone sections and render them
+
 };
 
 // Debugging

@@ -11,15 +11,14 @@ if (isNil "GW_LASTLOCK_CHECK") then {
 if (time - GW_LASTLOCK_CHECK <= 0.1) exitWith { true };
 GW_LASTLOCK_CHECK = time;
 
-private ['_pos', '_icon', '_limit', '_vehDir'];
+private ['_icon', '_limit', '_vehDir'];
 
 _nearbyTargets = _this;
 if (count _nearbyTargets == 0) exitWith {};
 
 // Some required conditions
 _vehicle = GW_CURRENTVEHICLE;
-_pos = (ASLtoATL visiblePositionASL _vehicle);
-_isCloaked = if ('cloak' in (_vehicle getVariable ["status", []]) ) then { true } else { false };
+if ('cloak' in GW_VEHICLE_STATUS) exitWith {};
 
 // Make sure we have these variables established
 if (isNil "GW_VALIDTARGETS") then { GW_VALIDTARGETS = []; };
@@ -29,6 +28,7 @@ if (isNil "GW_TARGET_DIRECTION") then {	GW_TARGET_DIRECTION = 0; };
 
 // Checks for valid targets within range
 {	
+	_x = (vehicle _x);
 	_isVehicle = _x getVariable ["isVehicle", false];
 	_crew = crew _x;
 
@@ -123,7 +123,7 @@ _closest = GW_CURRENTVEHICLE;
 
 
 // Start locking closest target if we havent already
-if (!GW_ACQUIRE_ACTIVE && !(_closest in GW_LOCKEDTARGETS) && !_isCloaked && (count GW_LOCKEDTARGETS == 0)) then {
+if (!GW_ACQUIRE_ACTIVE && !(_closest in GW_LOCKEDTARGETS) && (count GW_LOCKEDTARGETS == 0)) then {
 
 	_status = _closest getVariable ["status", []];
 

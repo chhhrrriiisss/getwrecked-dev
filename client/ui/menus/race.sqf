@@ -379,11 +379,9 @@ renameCurrentRace = {
 
 	if !(_result isEqualType "") exitWith {};
 	if (_result == GW_RACE_NAME) exitWith {};
+	if (count toArray _result == 0) exitWith {}; 		
 
-	//if (GW_RACE_NAME != "CUSTOM RACE") then { GW_RACE_NAME call deleteRace; };
-		
-
-	GW_RACE_NAME = toUpper (_result);
+	GW_RACE_NAME = [toUpper (_result), 10] call cropString;
 	[] call saveCurrentRace;
 
 	// Delete previous race entry

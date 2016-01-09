@@ -176,7 +176,9 @@ waitUntil { (time > _timeout) || GW_DEATH_CAMERA_ACTIVE };
 _curZone = ([player] call findCurrentZone);
 [_curZone] call setCurrentZone;
 
-if (_curZone == "workshopZone") then { ["workshopZone"] spawn buildZoneBoundary; };
+if (_curZone == "workshopZone") then { 
+	["workshopZone"] call buildZoneBoundary; 
+};
 
 // Clear/Unsimulate unnecessary items near workshop
 {

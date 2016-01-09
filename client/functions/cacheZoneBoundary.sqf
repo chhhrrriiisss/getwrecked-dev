@@ -19,7 +19,6 @@
 		_p2 = ATLtoASL( _pointsArray select _next );
 
 		_dirTo = [_p1, _p2] call dirTo;
-
 		_dirIn = [(_dirTo - 90)] call normalizeAngle;
 		_dirOut = [(_dirTo + 90)] call normalizeAngle;
 

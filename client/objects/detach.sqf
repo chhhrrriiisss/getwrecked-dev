@@ -76,5 +76,8 @@ removeAllActions _obj;
 // Snap the vehicle back to the closest save point
 [_veh] call snapToPad;
 
+// Mark as unsaved
+_veh setVariable ['isSaved', false];
+
 true
 

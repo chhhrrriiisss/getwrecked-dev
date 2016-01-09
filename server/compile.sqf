@@ -54,7 +54,7 @@ pubVar_fnc_setZone = {
 
 	_found = false;
 	{
-		// Use unit ID to track same player unit (vs object which changes)
+		// Use unit ID to track same player unit (vs object which can change on death)
 		if ((_x select 2) == _id) exitWith { 
 
 			_found = true; 
@@ -63,6 +63,8 @@ pubVar_fnc_setZone = {
 				GW_ZONE_MANIFEST deleteAt _forEachIndex;
 			};
 
+			// Update unit and zone
+			_x set [0, _unit]; 
 			_x set [1, _zone]; 
 
 		};

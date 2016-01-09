@@ -4,6 +4,8 @@
 //      Return: None
 //
 
+
+
 if(!hasInterface) exitWith {};
 	
 // Main HUD
@@ -13,6 +15,7 @@ if (!isNil "GW_DISPLAY_EH") then {
 };
 
 GW_DISPLAY_EH = addMissionEventHandler ["Draw3D", {
+	
 	
 	// Auto close inventories
 	disableSerialization;
@@ -28,7 +31,7 @@ GW_DISPLAY_EH = addMissionEventHandler ["Draw3D", {
 	GW_NEWSPAWN = GW_CURRENTVEHICLE getVariable ["newSpawn", false];
 
 	_currentDir = direction player;
-	_currentPos = visiblePositionASL player;
+	GW_CURRENTPOS = (ASLtoATL visiblePositionASL GW_CURRENTVEHICLE);
 
  	// If any of these menus are active, forget about drawing anything else
 	if (GW_DEPLOY_ACTIVE || GW_SPAWN_ACTIVE || GW_SETTINGS_ACTIVE || GW_TIMER_ACTIVE || GW_TITLE_ACTIVE) exitWith {};
@@ -43,10 +46,10 @@ GW_DISPLAY_EH = addMissionEventHandler ["Draw3D", {
 	};		
 
 	// If there's no nearby targets, no point going any further
-	_targets = if (GW_DEBUG) then { ((ASLtoATL visiblePositionASL GW_CURRENTVEHICLE) nearEntities [["Car", "Man", "Tank"], 1000]) } else { ([_currentZone, {true}, true] call findAllInZone) };	
+	_targets = if (GW_DEBUG) then { ((ASLtoATL visiblePositionASL GW_CURRENTVEHICLE) nearEntities [["Car", "Man", "Tank"], 1000]) } else { ([GW_CURRENTZONE, {true}, true] call findAllInZone) };
 	if (count _targets == 0) exitWith {};	
 
-	call drawTags;
+	[_targets] call drawTags;
 
 	if (GW_CURRENTZONE == "workshopZone") exitWith {};	
 	

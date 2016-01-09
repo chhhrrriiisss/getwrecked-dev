@@ -1,13 +1,20 @@
+params ['_arr'];
+private ['_arr'];
+
 // Show player/vehicle tags for nearby units
 _vehicleRendered = false;
-{
-	_isVehicle = _x getVariable ['isVehicle', false];
+{	
+	_inVehicle = if (_x == (driver (vehicle _x))) then { true } else { false };
 
-	if (_isVehicle) then {
+	if (_inVehicle) then {
+
+		_isVehicle = (vehicle _x) getVariable ['isVehicle', false];
+		if (!_isVehicle) exitWith {};
+
+		_x = (vehicle _x);
 
 		_name = _x getVariable ["name", ''];
-		_owner = _x getVariable ["GW_Owner",''];		
-		
+		_owner = _x getVariable ["GW_Owner",''];
 
 		// Only render tags we can see
 		if ( !(_owner isEqualTo '') && _isVehicle && GW_CURRENTZONE != "workshopZone") then {
@@ -31,12 +38,12 @@ _vehicleRendered = false;
 	} else {
 
 		if (!isPlayer _x) exitWith {};
-		if (_x == player || !alive _x) exitWith {};
+		if ( (_x == player || !alive _x) && !GW_DEBUG  ) exitWith {};
 		if (_x == (vehicle _x)) then { // (isPlayer _x)
 
 			_name = (name _x);
 			_pos = _x modelToWorldVisual [0, 0, 2.2];
-			_dist = _currentPos distance _pos;
+			_dist = GW_CURRENTPOS distance _pos;
 			
 			drawIcon3D [
 				blankIcon,
@@ -56,4 +63,4 @@ _vehicleRendered = false;
 	};
 
 	false
-} count _targets > 0;
+} count _arr > 0;

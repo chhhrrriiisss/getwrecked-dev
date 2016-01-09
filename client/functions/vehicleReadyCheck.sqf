@@ -1,3 +1,9 @@
+//
+//      Name: vehicleReadyCheck
+//      Desc: Check vehicle is owned by us, ready to deploy and compiled correctly
+//      Return: Bool (ready or not)
+//
+
 params ['_pad', '_unit'];
 
 _onExit = {
@@ -36,7 +42,6 @@ _ownership = false;
 } count _nearby > 0;
 
 if (isNil "GW_SPAWN_VEHICLE") exitWith { 
-
     if (_ownership) then {
         ['No valid vehicle found. Try load or save again.'] call _onExit;
     } else {
@@ -98,7 +103,9 @@ GW_SPAWN_ACTIVE = if (_continue isEqualType true) then {
     true
 } else { false };
 
-if (!GW_SPAWN_ACTIVE) exitWith {};
+if (!GW_SPAWN_ACTIVE) exitWith {   
+     ["Aborted by user."] call _onExit;
+};
 
 // Ensure the vehicle is compiled & has handlers
 [GW_SPAWN_VEHICLE] call compileAttached;

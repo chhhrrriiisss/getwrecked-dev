@@ -65,6 +65,32 @@ GW_COMMANDS_LIST = [
 				systemChat 'You need to be an admin to use that.';
 			};
 
+			if (count toArray _argument > 0) exitWith {
+
+				_defaultPath = 'global\functions\';
+				_fnc = [];
+				{
+					if ((_x select 0) == _argument) exitWith {
+						_fnc = _x;
+					};
+				} foreach GW_globalFunctions;	
+
+				if (count _fnc == 0) then {
+					_defaultPath = 'client\functions\';
+					{
+						if ((_x select 0) == _argument) exitWith {
+							_fnc = _x;
+						};
+					} foreach GW_clientFunctions;	
+				};
+
+				// Function not found, abort
+				if (count _fnc == 0) exitWith {};
+
+				[[_fnc], _defaultPath, TRUE] call functionCompiler;
+				systemchat format['%1 recompiled successfully.', (_fnc select 0)];
+			};
+
 			call compile preprocessFile "global\compile.sqf";
 
 			if (X_Client || X_JIP) then {

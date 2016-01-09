@@ -12,7 +12,7 @@ _fireSpeed = 0.35;
 _projectileSpeed = 600;
 _range = 300;
 
-[_gun] spawn muzzleEffect;
+[_gun, [0,1.6,-0.5]] spawn muzzleEffect;
 
 _targetPos = if (_target isEqualTo objNull) then { (_target modelToWorldVisual [0,0,0.5]) } else { _target };
 _gPos = _gun modelToWorldVisual [0, 3, -0.7];

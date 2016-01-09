@@ -12,7 +12,7 @@ _fireSpeed = 0.3;
 _projectileSpeed = 250;
 _range = 400;
 
-[_gun] spawn muzzleEffect;
+[_gun, [0,1.6,-0.5]] spawn muzzleEffect;
 
 _targetPos = if (_target isEqualTo objNull) then { getPosASL _target } else { _target };
 _gPos = _gun selectionPosition "otochlaven";

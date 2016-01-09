@@ -4,9 +4,7 @@
 //      Return: Number
 //
 
-params ['_angle'];
+if ((_this select 0) < -180) exitWith { ((_this select 0) + 360) };
+if ((_this select 0) > 180) exitWith { ((_this select 0) - 360) };
 
-if (_angle < -180) then { _angle = _angle + 360; };
-if (_angle > 180) then { _angle = _angle - 360; };
-
-_angle
+(_this select 0)

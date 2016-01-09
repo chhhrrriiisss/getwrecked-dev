@@ -172,7 +172,7 @@ for "_i" from 0 to 1 step 0 do {
 			[[_hudMoney, _hudTransaction], [['fade', 0, 1, 0]], "quad"] spawn createTween;
 
 			// Fade in Vehicle HUD, if 3rd person camera
-			if (cameraView == "Internal") exitWith {};
+			//if (cameraView == "Internal") exitWith {};
 
 			[[_vHudIcon, _vHudFuel, _vHudAmmo, _vHudHealth, _vHudMoney, _vHudNotification], [['fade', 1, 0, 0.1]], "quad"] spawn createTween;
 			_vHudIcon ctrlSetStructuredText parseText ( format["<img size='2.4' align='center' valign='top' image='%1' />", [typeOf _vehicle] call getVehiclePicture] );

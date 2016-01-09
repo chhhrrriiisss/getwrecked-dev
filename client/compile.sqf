@@ -27,6 +27,30 @@ GW_BINDS_ORDER = [
 	["TELP", ""]
 ];
 
+// List of weapons that are fired when left clicking
+GW_FIREABLE_WEAPONS = [
+	'HMG',
+	'MOR',
+	'GMG',
+	'MIS',
+	'RPG',
+	'LSR',
+	'RLG',
+	'FLM',
+	'HAR',
+	'GUD',
+	'LMG',
+	'RPD'
+];
+
+// Returns correct icon for weapon tag
+getWeaponIcon = {
+	if (_this in ["HMG", "RLG", "LSR", "LMG"]) exitWith { hmgTargetIcon };
+	if (_this in ["RPG", "MIS", "GUD", "FLM", "RPD"]) exitWith { rpgTargetIcon };
+	if (_this in ["MOR", "GMG", "HAR"]) exitWith { rangeTargetIcon };
+	noTargetIcon
+};
+
 GW_INVEHICLE = false;
 GW_ISDRIVER = false;
 GW_STATS_ORDER = ["kill", "death", "destroyed", "mileage", "moneyEarned", "timeAlive", "deploy", "disabled", "outofbounds"];
@@ -84,51 +108,58 @@ GW_TAGLIST = [];
 GW_ANIMCOUNT = 0;
 GW_LASTTICK = 0;
 
-// Player
-playerInit = compile preprocessFile 'client\player_init.sqf';
-playerKilled = compile preprocessFile 'client\player_killed.sqf';
-playerSpawn = compile preprocessFile 'client\player_spawn.sqf';
-playerRespawn = compile preprocessFile 'client\player_respawn.sqf';
+GW_clientFunctions = [
 
-// Player loop periodically updates nearby actions/interactions
-playerLoop = compile preprocessFile 'client\player_loop.sqf';
+	['playerInit', 'client\'],
+	['playerSpawn', 'client\'],
+	['playerKilled', 'client\'],
+	['playerRespawn', 'client\'],
+	['playerLoop', 'client\'],
+	['triggerLazyUpdate', nil],
+	['previewCamera', 'client\ui\cameras\'],
+	['deathCamera', 'client\ui\cameras\'],
 
-// Periodically triggers the player loop above using mouse input/key input rather than running on a set interval
-triggerLazyUpdate = compile preprocessFile 'client\functions\triggerLazyUpdate.sqf';
+	['setPlayerTexture', nil],
 
-cameraPreview = compile preprocessFile 'client\ui\cameras\preview_camera.sqf';
-deathCamera = compile preprocessFile "client\ui\cameras\death_camera.sqf";
-previewCamera = compile preprocessFile "client\ui\cameras\preview_camera.sqf";
-setPlayerTexture = compile preprocessFile 'client\functions\setPlayerTexture.sqf';
+	['drawTags', 'client\ui\display\'],
+	['drawIcons', 'client\ui\display\'],
+	['drawMap', 'client\ui\display\'],
+	['drawDisplay', 'client\ui\display\'],
+	['vehicleTag', 'client\ui\display\'],
+	['targetLockOn', 'client\ui\display\'],
+	['targetCursor', 'client\ui\display\'],
+	['mouseHandler', 'client\ui\display\'],
+
+	['drawHud', 'client\ui\hud\'],
+	['drawServiceIcon', nil],
+
+	['settingsMenu', 'client\ui\dialogs\'],
+	['newMenu', 'client\ui\dialogs\'],
+	['buyMenu', 'client\ui\dialogs\'],
+	['inventoryMenu', 'client\ui\dialogs\'],
+	['spawnMenu', 'client\ui\menus\'],
+	['previewMenu', 'client\ui\menus\'],
+
+	['createAlert', 'client\ui\hud\'],
+	['createNotification', 'client\ui\hud\'],
+	['createHalo', 'client\ui\hud\'],
+	['createTween', 'client\ui\hud\'],
+
+	['createMessage', 'client\ui\dialogs\'],
+	['createTimer', 'client\ui\dialogs\'],
+	['createTitle', 'client\ui\dialogs\']
+
+];
+
+// Batch compile all functions
+[GW_clientFunctions, 'client\functions\', GW_DEV_BUILD] call functionCompiler;
+
+// Key bind functions
 call compile preprocessfile "client\key_binds.sqf";
 
-// UI
+// Compile UI Specific functions
 call compile preprocessFile 'client\ui\compile.sqf';
-drawTags = compile preprocessfile "client\ui\display\tags.sqf";
-drawIcons = compile preprocessfile "client\ui\display\icons.sqf";
-drawMap = compile preprocessfile "client\ui\display\map.sqf";
-drawDisplay = compile preprocessfile "client\ui\display\display.sqf";
-drawHud = compile preprocessFile "client\ui\hud\hud.sqf";
-vehicleTag = compile preprocessFile 'client\ui\display\vehicle_tag.sqf';
-targetLockOn = compile preprocessFile 'client\ui\display\lockon.sqf';
-targetCursor = compile preprocessFile 'client\ui\display\target.sqf';
-mouseHandler = compile preprocessFile 'client\ui\display\mouse_handler.sqf';
-settingsMenu = compile preprocessFile "client\ui\dialogs\settings.sqf";
-newMenu = compile preprocessFile "client\ui\dialogs\new.sqf";
-buyMenu = compile preprocessFile "client\ui\dialogs\buy.sqf";
-inventoryMenu = compile preprocessFile "client\ui\dialogs\inventory.sqf";
-spawnMenu = compile preprocessFile "client\ui\menus\spawn.sqf";
-previewMenu = compile preprocessFile "client\ui\menus\preview.sqf";
-drawServiceIcon = compile preprocessFile "client\functions\drawServiceIcon.sqf";
 
-// HUD Functions
-createAlert = compile preprocessFile "client\ui\hud\alert.sqf";
-createNotification = compile preprocessFile "client\ui\hud\notification.sqf";
-createHalo = compile preprocessFile "client\ui\hud\halo.sqf";
-createTween = compile preprocessFile "client\ui\hud\tween.sqf";
-createMessage = compile preprocessFile "client\ui\dialogs\message.sqf";
-createTimer = compile preprocessFile "client\ui\dialogs\timer.sqf";
-createTitle = compile preprocessFile "client\ui\dialogs\title.sqf";
 
 // Zone
 preVehicleDeploy = compile preprocessFile 'client\zones\preVehicleDeploy.sqf';

@@ -20,8 +20,6 @@ _buttonString = [_this,0, "CANCEL", [""]] call filterParam;
 _timeValue =  [_this,1, 3, [0]] call filterParam;
 
 GW_TIMER_VALUE = time + _timeValue;
-_canAbort = [_this,2, true, [false]] call filterParam;
-
 _abortParameters =  [_this,2, [true, true], [[]]] call filterParam;
 _canAbort = [_abortParameters,0, true, [false]] call filterParam;
 _showButton = [_abortParameters,1, true, [false]] call filterParam;

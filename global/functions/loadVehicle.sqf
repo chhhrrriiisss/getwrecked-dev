@@ -78,6 +78,11 @@ _newVehicle setPos _vehPosATL;
 _newVehicle setDir 0;
 _newVehicle setVectorUp [0,0,1];
 
+// If the vehicle has been loaded from a library (not freshly spawned)
+if !(_class isEqualType _raw) then {
+    _newVehicle setVariable ['isSaved', true];
+};
+
 // Setup vehicle on server
 [       
     [

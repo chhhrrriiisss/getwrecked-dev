@@ -50,7 +50,7 @@ _startPos = [tempAreas, ["Car"], 15] call findEmpty;
 _startPos = if (_startPos isEqualType []) then { _startPos } else { (ASLtoATL getPosASL _startPos) };
 _startPos set [2,1.1];
 
-[_startPos, 7, 0.0005, 1, 1.1] spawn cameraPreview;
+[_startPos, 7, 0.0005, 1, 1.1] spawn previewCamera;
 [_startIndex, _startPos] spawn previewVehicle;
 
 _layerStatic = ("BIS_layerStatic" call BIS_fnc_rscLayer);

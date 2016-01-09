@@ -35,14 +35,11 @@ if (_index == -1) exitWith {
 	false
 };
 
-// Build zone perimeter (if it doesn't exist) while we're waiting for server to move us
-[_zoneName] spawn buildZoneBoundary;
-
 // Add a listener incase server setPosEmpty fails
 _vehicleToDeploy spawn {
 
 	_p = getPos _this;
-	_timeout = time + 5;
+	_timeout = time + 15;
 	waitUntil {
 		_d = (getPos _this) distance _p;
 		((time > _timeout) || (_d > 1))
@@ -87,7 +84,8 @@ _vehicleToDeploy spawn {
 	GW_HUD_ACTIVE = false;
 };
 
-[format["<br /><t size='3' color='#ffffff' align='center'>%1</t>", "DEPLOYING..."], "", [false, { false }] , { (GW_DEPLOY_ACTIVE && isNil "GW_BOUNDARY_BUILD") }, 10, true] spawn createTitle;
+GW_BOUNDARY_BUILD = nil;
+[format["<br /><t size='3' color='#ffffff' align='center'>%1</t>", "DEPLOYING..."], "", [false, { false }] , { isNil "GW_BOUNDARY_BUILD" }, 10, true, { true }] spawn createTitle;
 
 // Request server deploy using those deploy targets
 [
@@ -96,5 +94,12 @@ _vehicleToDeploy spawn {
 	false,
 	false
 ] call bis_fnc_mp;	
+
+// Remove any previous boundary if it differs from current (caching this way allows players to deploy quickly back to same location)
+{
+	if ((_x select 0) != _zoneName && (_x select 0) != "workshopZone") then { [(_x select 0)] call removeZoneBoundary; };
+} foreach GW_ACTIVE_BOUNDARIES;
+
+GW_BOUNDARY_BUILD = [_zoneName] call buildZoneBoundary;
 
 true
