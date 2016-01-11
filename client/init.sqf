@@ -24,6 +24,13 @@ systemchat 'Server is ready to go!';
 _newPlayer = false;
 _lib = [] call getVehicleLibrary;
 
+// Check if hints are enabled
+_hintsEnabled = profileNamespace getVariable ['GW_HINTS', nil];
+GW_HINTS_ENABLED = if (isNil "_hintsEnabled") then {
+	profileNamespace setVariable ['GW_HINTS', true];
+	true
+} else { _hintsEnabled };
+
 // Check for a last loaded vehicle
 _last = profileNamespace getVariable ['GW_LASTLOAD', nil];
 GW_LASTLOAD = if (isNil "_last") then {  profileNamespace setVariable ['GW_LASTLOAD', '']; saveProfileNamespace; '' } else { _last };

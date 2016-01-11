@@ -5,16 +5,11 @@
 //		Return: None
 //
 
-_target = [_this, 0, objNull, [objNull, []]] call filterParam;
-_radius =  [_this, 1, 20, [0]] call filterParam;
-_force =  [_this, 2, 25, [0]] call filterParam;
+_target = if ((_this select 0) isEqualType objNull) then { (ASLtoATL visiblePositionASL (_this select 1)) } else { (_this select 0) };
+_radius = if ((_this select 1) isEqualType 0) then { (_this select 1) } else { 20 };
+_force =  if ((_this select 2) isEqualType 0) then { (_this select 2) } else { 25 };
 
-_exit = if (_target isEqualType objnull) then { if (isNull _target) exitWith { true }; false } else { false };
-if (_exit) exitWith {};
-
-_sourcePos = if (_target isEqualType objnull) then { (ASLtoATL visiblePositionASL _target) } else { _target };
-
-_objectList = _sourcePos nearEntities [["Car", "Man"], (_this select 1)];
+_objectList = _target nearEntities [["Car", "Man"], (_this select 1)];
 
 if (count _objectList == 0) exitWith {};
 
@@ -26,9 +21,9 @@ if (count _objectList == 0) exitWith {};
 	_objectMass = if (isNil { getMass _x }) then { 1000 } else { (getmass _x) };
 	if (_objectMass == 0) then { _objectMass = 2; };
 		
-	_distance = _x distance _sourcePos;
+	_distance = _x distance _target;
 
-	_dis = _sourcePos vectorDiff (ASLtoATL visiblePositionASL _x);
+	_dis = _target vectorDiff (ASLtoATL visiblePositionASL _x);
 	_shockX = sqrt((_this select 2) - (_dis select 0))*2;
 	_shockY = sqrt((_this select 2) - (_dis select 1))*2;
 	_shockZ = ((_this select 2) - _distance)/2;

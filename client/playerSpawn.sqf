@@ -20,6 +20,8 @@ removeGoggles _unit;
 removeAllPrimaryWeaponItems _unit;
 removeallassigneditems _unit;
 
+_unit enableFatigue false;
+
 _unit addItem "ItemMap";
 _unit assignItem "ItemMap";
 

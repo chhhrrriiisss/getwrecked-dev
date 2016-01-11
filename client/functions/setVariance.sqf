@@ -5,6 +5,7 @@
 //
 
 params ['_pos'];
+
 _rangeX = [_this, 1, 0, [0]] call filterParam;
 _rangeY  = [_this, 2, 0, [0]] call filterParam;
 _rangeZ  = [_this, 3, 0, [0]] call filterParam;

@@ -45,6 +45,11 @@ disableChannels[] = {0,2,3,6};
 #include "client\ui\dialogs\timer.hpp"
 #include "client\ui\dialogs\title.hpp"
 
+class CfgCommands {
+   allowedHTMLLoadURIs[] += {
+      "http://www.bistudio.com/newsfeed/arma3_news.php*";
+   };
+};
 
 class CfgFunctions
 {

@@ -10,17 +10,17 @@ Get Wrecked challenges players to create, customize, drive, survive and of cours
 
 ## Quick start
 
-Get Wrecked is technically not a mod since it only requires a mission file. If you just want to play, the easiest way is to just find a server that's currently hosting the mod and join it. You don't need to start the Arma 3 client with any funky parameters. There is a [server list available on the website](http://getwrecked.info#play).
+Get Wrecked is not exactly a "mod" given it only requires a mission file. If you just want to play, the easiest way is to just find a server that's currently hosting the mission and join it. You don't need to start the Arma 3 client with any funky parameters, but making sure other mods are disabled first is wise move. There is a [server list available on the website](http://getwrecked.info#play).
 
-If you're looking to host a game yourself, it is strongly recommended to use a dedicated server to run Get Wrecked. Simply  [download the mission.pbo](http://getwrecked.info#download) and add it to your Arma3/MpMissions folder on your server. 
+If you're looking to host a game yourself, it is strongly recommended to use a dedicated server to run Get Wrecked as aspects of the game mode can impact a client when they are also hosting. Simply [download the mission.pbo](http://getwrecked.info#download) and add it to your Arma3/MpMissions folder on your server. I highly recommend [TADST](http://www.armaholic.com/page.php?id=11655) as it is quick and very configurable way to to run a server.
 
 ## Guide
 
-This isn't your typical infantry shooter and if you're coming from more mil-sim orientated game modes the initial learning curve can be a little challenging. A short guide introducing the basics is [available on the website](http://getwrecked.info#guide). [Orangesherbet](http://twitch.tv/orangesherbet) also has an [excellent tutorial video](https://www.youtube.com/watch?v=KL3aYOJD0fY&feature=youtu.be&a=) that introduces the basics, shows some game-play and also offers some tips for survival.
+This isn't your typical infantry shooter and if you're coming from more mil-sim orientated game modes you're in for a surprise. A short guide is [available on the website](http://getwrecked.info#guide). [Orangesherbet](http://twitch.tv/orangesherbet) also has an [excellent tutorial video](https://www.youtube.com/watch?v=KL3aYOJD0fY&feature=youtu.be&a=) that introduces the basics, shows some game-play and also offers some tips for survival.
 
 ## Customization
 
-Several aspects of the game mode can be customized. These include starting money, kill rewards, armor system and respawn timers. If you are running a one-off session, you can access them as an admin via the parameters tab in the lobby.  If you are reasonably SQF literate, you may also edit [config.sqf](https://github.com/chrisnic/getwrecked-dev/blob/master/config.sqf) to your preference and then re-compile the .pbo. Seek help if you are not sure what you are doing as any errors here may cause the mission to stop working.
+Several aspects of the game mode can/will be customizable. These include starting money, kill rewards, the armor system and respawn timers. If you are reasonably SQF literate, you may also edit [config.sqf](https://github.com/chrisnic/getwrecked-dev/blob/master/config.sqf) to your preference and then re-compile the .pbo. Seek help if you are not sure what you are doing as any errors here may cause the mission to stop working. 
 
 ## License
 

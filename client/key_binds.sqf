@@ -77,6 +77,9 @@ checkBinds = {
 	_ctrl = _this select 3; 
 	_alt = _this select 4; 
 
+	// Tilde key for cancelling hints
+	if (_key == 41) exitWith { hint ''; };
+
 	if (GW_SHOOTER_ACTIVE) exitWIth { false };	
 
 	// Conditionals

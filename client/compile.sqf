@@ -144,6 +144,7 @@ GW_clientFunctions = [
 	['createNotification', 'client\ui\hud\'],
 	['createHalo', 'client\ui\hud\'],
 	['createTween', 'client\ui\hud\'],
+	['createHint', 'client\ui\hud\'],
 
 	['createMessage', 'client\ui\dialogs\'],
 	['createTimer', 'client\ui\dialogs\'],

@@ -109,6 +109,38 @@ GW_COMMANDS_LIST = [
 
 	[
 		
+		"help",
+		{
+
+			params ['_argument'];	
+
+			_hintsEnabled = profileNamespace getVariable ['GW_HINTS', true];
+
+			if (_hintsEnabled) then {
+
+				_string = _this select 0;
+				_result = [format['HIDE ALL HINTS %1?', _string], '', 'CONFIRM'] call createMessage;
+				if !(_result isEqualType true) exitWith {};
+
+				if (_result) then {
+					profileNamespace setVariable ['GW_HINTS', false];
+					GW_HINTS_ENABLED = false;
+					systemchat 'Hints disabled - use !help again to toggle on.';
+				};
+
+			} else {
+
+				profileNamespace setVariable ['GW_HINTS', true];
+				GW_HINTS_ENABLED = true;
+				systemchat 'Hints enabled - use !help again to toggle off.';
+
+			};
+					
+		}
+	],
+
+	[
+		
 		"supply",
 		{
 
@@ -156,7 +188,13 @@ GW_COMMANDS_LIST = [
 						profileNamespace setVariable ['GW_UNLOCKED_ITEMS', nil]; 
 						profileNamespace SetVariable ['GW_LIBRARY', nil];
 						profileNamespace setVariable ['GW_FIXDLC', nil];	
+						profileNamespace setVariable ['GW_HINTS_ENABLED', nil];	
 						systemChat 'Profile reset successfully.';
+					};
+
+					if (_this == "HINTS") exitWith {
+						profileNamespace setVariable ['GW_HINTS_ENABLED', nil];	
+						systemChat 'Money reset successfully.';			
 					};
 
 					if (_this == "MONEY") exitWith {

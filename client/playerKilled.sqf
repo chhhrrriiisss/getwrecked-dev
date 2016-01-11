@@ -7,8 +7,9 @@
 _victim = [_this,0, objNull, [objNull]] call filterParam;
 if (isNull _victim) exitWith {};
 
-// Disable hud
+// Disable hud + lock until spawned
 GW_HUD_ACTIVE = false;
+GW_HUD_LOCK = true;
 
 9999 cutText ["", "BLACK OUT", 0.3];  
 

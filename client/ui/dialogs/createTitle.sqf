@@ -21,7 +21,8 @@ private ['_buttonString', '_timeValue', '_canAbort', '_timeout'];
 _textString =  [_this,0, "", ["", {}]] call filterParam;
 _buttonString = [_this,1, "CANCEL", [""]] call filterParam;
 
-_abortParameters =  [_this,2, [true, true], [[]]] call filterParam;
+_abortParameters = if ((_this select 2) isEqualType []) then { (_this select 2) } else { [true, { true }] };
+
 _canAbort = [_abortParameters,0, true, [false]] call filterParam;
 _buttonCondition = [_abortParameters,1, { true }, [{}]] call filterParam;
 
