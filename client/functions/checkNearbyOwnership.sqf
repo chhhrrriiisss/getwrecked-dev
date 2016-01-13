@@ -5,8 +5,9 @@
 //
 
 private ['_t', '_r', '_p'];
-	
-_t = [_this,0,objNull,[[], objNull]] call filterParam;
+
+if (isNil { (_this select 0) }) exitWith {};
+_t = _this select 0;
 _r = [_this,1,1,[0]] call filterParam;
 
 _p = if (_t isEqualType objNull) then { (ASLtoATL visiblePositionASL _t) } else { _t };

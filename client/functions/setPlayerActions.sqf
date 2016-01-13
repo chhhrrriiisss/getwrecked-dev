@@ -16,7 +16,7 @@ _unit addAction[liftVehicleFormat, {
 
 // Show changes to vehicle
 _unit addAction[showVehicleFormat, {	
-	([(_this select 0), 8, true] call validNearby) call toggleHidden;
+	([(_this select 0), 8, 360] call validNearby) call toggleHidden;
 }, [], 0, false, false, "", "( (GW_CURRENTZONE == 'workshopZone') && 
 
 	{
@@ -31,7 +31,7 @@ _unit addAction[showVehicleFormat, {
 
 // Hide changes to vehicle
 _unit addAction[hideVehicleFormat, {	
-	([(_this select 0), 8, true] call validNearby) call toggleHidden;
+	([(_this select 0), 8, 360] call validNearby) call toggleHidden;
 }, [], 0, false, false, "", "( (GW_CURRENTZONE == 'workshopZone') && 
 
 	{

@@ -11,6 +11,7 @@ GW_INVENTORY_BOX = [_this,0, objNull, [objNull]] call filterParam;
 
 if (isNull GW_INVENTORY_BOX) exitWith {};
 
+
 disableSerialization;
 if(!(createDialog "GW_Inventory")) exitWith { GW_INVENTORY_ACTIVE = false; }; //Couldn't create the menu
 
@@ -19,6 +20,7 @@ if(!(createDialog "GW_Inventory")) exitWith { GW_INVENTORY_ACTIVE = false; }; //
 "dynamicBlur" ppEffectEnable true;
 "dynamicBlur" ppEffectAdjust [0.3]; 
 "dynamicBlur" ppEffectCommit 0.25; 
+
 
 // Menu has been closed, kill everything!
 waitUntil { isNull (findDisplay 98000) };

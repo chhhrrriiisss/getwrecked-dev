@@ -359,7 +359,7 @@ for "_i" from 0 to 1 step 0 do {
         };
  
         if ("locked" in _status) then {
-            [localize "str_gw_lock_detected", 1, rpgTargetIcon, [0,0,0,1], "slideup", "beep_warning"]  execVM 'client\ui\hud\alert_new.sqf';   
+            [localize "str_gw_lock_detected", 1, rpgTargetIcon, colorRed, "slideup", "beep_warning"]  execVM 'client\ui\hud\alert_new.sqf';   
         };
 
         if ("emp" in _status) then {

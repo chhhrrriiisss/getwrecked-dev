@@ -94,7 +94,7 @@ GW_AVAIL_WEAPONS = [];
 		GW_AVAIL_WEAPONS pushback [_obj, _type, _bind];
 
 		// Only fire mouse bound weapons
-		if (GW_LMBDOWN) THEN {
+		if (GW_LMBDOWN) exitWith {
 
 			_bind = _obj getVariable ['GW_KeyBind', ["-1", "1"]];
 			_bind = if (_bind isEqualType []) then { (_bind select 1) } else { _bind };	

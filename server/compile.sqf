@@ -79,7 +79,7 @@ pubVar_fnc_setZone = {
 	if (time - GW_LAST_MANIFEST_UPDATE < 1) exitWith {};
 	GW_LAST_MANIFEST_UPDATE = time;
 
-	systemchat format['Manifest updated at %1', time];
+	if (GW_DEBUG) then { systemchat format['Manifest updated at %1', time]; };
 
 	publicVariable "GW_ZONE_MANIFEST";
 };	

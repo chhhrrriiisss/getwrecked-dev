@@ -16,7 +16,7 @@ _index = if (isNIl {_this select 0}) then { 0 } else { (_this select 0) };
 // Retrieve vehicle data
 _vehicleName = GW_SETTINGS_VEHICLE getVariable ['name', ''];
 _raw = [_vehicleName] call getVehicleData;
-_objectArray = (_raw select 0) select 5;
+_objectArray = if (isNil { ((_raw select 0) select 5) }) then { [] } else { ((_raw select 0) select 5) };
 
 _applyBindToObject = {
 	
@@ -24,9 +24,15 @@ _applyBindToObject = {
 	_tolerance = 0.5;
 
 	{	
-		_class = (_x select 0);
+		// Retrieve class from data array (to ensure correct class on weapon holders)
+        _class = _x select 0;
+
+        // Retrieve class from data array (to ensure correct class on weapon holders)
+        _tag = (_this select 1) getVariable ['GW_Tag', ''];
+        _objClass = ([_tag, GW_LOOT_LIST] call getData) select 0;
+
 		_pos = if ((_x select 1) isEqualType "") then { call compile (_x select 1) } else { (_x select 1) };
-		if ((_class == typeOf (_this select 1)) && (_objPos distance _pos) < _tolerance) exitWith {
+		if ((_class == _objClass) && (_objPos distance _pos) < _tolerance) exitWith {
 			_x set [3, (_this select 2)];
 		};
 	} foreach (_this select 0);

@@ -74,8 +74,9 @@ class GW_Inventory
 			x = (NEW_X) * safezoneW + safezoneX;
 			y = (NEW_Y + (GW_BUTTON_HEIGHT) + GW_BUTTON_GAP_Y)* safezoneH + safezoneY;
 			w = (GW_BUTTON_WIDTH) * safezoneW;
-			h = ((GW_BUTTON_HEIGHT * 9) - (GW_BUTTON_GAP_Y)) * safezoneH;
+			h = ((GW_BUTTON_HEIGHT * 8) - (GW_BUTTON_GAP_Y * 1)) * safezoneH;
 			
+
 			text = "";
 			sizeEx = "0.035";
 			columns[] = {0.03, 0.12, 0.25, 0.52, 0.76};
@@ -84,7 +85,7 @@ class GW_Inventory
 			idcRight = -1;
 			rowHeight = GW_BUTTON_HEIGHT * 2;
 			
-			onLBDblClick = "_this spawn removeItemSupplyBox;";
+			onLBDblClick = "_this spawn grabItemSupplyBox;";
 		
 		};
 
@@ -124,7 +125,7 @@ class GW_Inventory
 			h = GW_BUTTON_HEIGHT * safezoneH;
 		};  
 
-		class Take : GW_RscButtonMenu
+		class Remove : GW_RscButtonMenu
 		{
 			idc = 98002;
 

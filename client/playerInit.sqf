@@ -108,10 +108,8 @@ GW_DC_EH = addMissionEventHandler ["HandleDisconnect",{
 // Cache boundary information
 [] call cacheZoneBoundary;
 
-// {
-// 	[(_x select 0), (_x select 2)] spawn buildZoneBoundary;
-// } foreach GW_ZONE_BOUNDARIES;
-
+// Begin building workshop boundary ASAP
+['workshopZone'] call buildZoneBoundary;
 
 // Player set up
 [_unit] spawn playerSpawn;

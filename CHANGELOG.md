@@ -7,7 +7,6 @@ Items without Fixed/Added/Removed proceeding are typically balance changes.
 
 **v0.8.2 - v0.8.5** [Closed alpha release]
 
-
 - Added FlamePads to map
 - Added 'Loading' text to vehicle preview
 - Added 'Crash Test Dummy' texture for dev builds
@@ -29,6 +28,10 @@ Items without Fixed/Added/Removed proceeding are typically balance changes.
 - Sponsorship money now triggered by server side events check
 - Redesigned default vehicle 'Fresh Meat' to make it a bit more noob friendly
 - Unit/Vehicle stance info is now hidden from HUD
+- New command !boundary which toggles visible zone boundaries on/off (may improve Client FPS)
+- Removed a number of buildings in Downtown Kavala to improve FPS in that zone
+- Caching on GW_WARNINGICON_ARRAY to eliminate unnecessary repeat position finding per frame
+- Damage between Races / Battle zones can now be adjusted in config.sqf
 - Fixed HUD not fading in correctly if deploying in first person
 - Fixed Incorrect offset on muzzle effect
 - Fixed Unsaved vehicle prompt should now correctly show only for edited or non-loaded vehicles

@@ -1,37 +1,25 @@
-createBoundary = {
+//
+//      Name: buildZoneBoundary
+//      Desc: Handles mass generation of boundaries along pre-defined points
+//      Return: None
+//
 
-	//
-	//      Name: createBoundary
-	//      Desc: Create a two-sided boundary texture at specified position
-	//      Return: Boundaries (inside and out)
-	//
+addBoundary = {
 
-	_source = +(_this select 0);
-	_step = (_this select 1);
+	private ['_target', '_dir', '_vector'];
 
-	_source set[2, 0];				
-	_newDestination = [_source, _step, (_this select 2)] call relPos;
+	_target = _this select 0;
+	_dir = _this select 1;
+	_normal = _this select 2;
 
-	_isWater = (surfaceIsWater _newDestination);
+	_wallInside = "UserTexture10m_F" createVehicleLocal _target; 
+	_wallOutside = "UserTexture10m_F" createVehicleLocal _target; 
 
-	_normal = if (_isWater) then {
-		_newDestination = ATLtoASL (_newDestination);
-		_newDestination set[2, 0];
-		[0,0,1]
-	} else {
-	 	(surfaceNormal _newDestination)
-	};
-		
-	_wallInside = "UserTexture10m_F" createVehicleLocal _newDestination; 
-	_wallOutside = "UserTexture10m_F" createVehicleLocal _newDestination; 
+	_wallInside setPosASL _target;
+	_wallOutside setPosASL _target;	
 
-	if (_isWater) then {
-		_wallInside setPosASL _newDestination;
-		_wallOutside setPosASL _newDestination;
-	};
-
-	_wallInside setVectorDirAndUp [(_this select 3), _normal];
-	_wallOutside setVectorDirAndUp [(_this select 4), _normal];
+	_wallInside setVectorDirAndUp [(_dir select 0), _normal];
+	_wallOutside setVectorDirAndUp [(_dir select 1), _normal];
 
 	_wallInside setObjectTexture [0,"client\images\stripes_fade.paa"];
 	_wallOutside setObjectTexture [0,"client\images\stripes_fade.paa"];
@@ -43,7 +31,10 @@ createBoundary = {
 
 };
 
-_zoneName = [_this, 0, "", [""]] call filterParam;
+private ['_zoneName', '_index', '_pointsArray', '_active', '_c', '_bA'];
+
+if !((_this select 0) isEqualType "") exitWith {};
+_zoneName = _this select 0;
 
 // Bad zone name
 if (count toArray _zoneName == 0) exitWith {};
@@ -51,50 +42,42 @@ if (count toArray _zoneName == 0) exitWith {};
 // Global zone doesn't need a boundary
 if (_zoneName == "globalZone") exitWith { systemchat 'bad zone'; };
 
-if (isNil "GW_ACTIVE_BOUNDARIES") then { GW_ACTIVE_BOUNDARIES = []; };
-
 // Dont build a boundary for a zone that's already built
-_found = false;
+_active = false;
 {
-	if ((_x select 0) == _zoneName) exitWith { _found = true; };
-} foreach GW_ACTIVE_BOUNDARIES;
-if (_found) exitWith { };
+	if ((_x select 0) == _zoneName && count (_x select 3) > 0) exitWith { _active = true; };
+} foreach GW_ZONE_BOUNDARIES;
+if (_active) exitWith { };
 
 _pointsArray = [];
+_index = -1;
 
 {
-	if ((_x select 0) == _zoneName) exitWith { _pointsArray = (_x select 1); };
+	if ((_x select 0) == _zoneName) exitWith { _index = _foreachindex; _pointsArray = (_x select 2); };
 } foreach GW_ZONE_BOUNDARIES;
+
+// Bad zone index/not found
+if (_index == -1) exitWith {};
 
 // Abort if no point data to work with
 if (count _pointsArray == 0) exitWith {};
 
-_c = 0;
 _bA = [];
 
-{
-	_p1 = ATLtoASL( _x );
-	_next = if (_c == (count _pointsArray - 1)) then { 0 } else { _c + 1 };
-	_p2 = ATLtoASL( _pointsArray select _next );
+{	
+	_pos = _x select 0;
+	_dirAndUp = _x select 1;
 
-	_dirTo = [_p1, _p2] call dirTo;
-
-	_dirIn = [(_dirTo - 90)] call normalizeAngle;
-	_dirOut = [(_dirTo + 90)] call normalizeAngle;
-
-	_distance = _p1 distance _p2;
-
-	for "_i" from 0 to _distance step 5 do {
-		_b = [_p1, (-2.5 + _i), _dirTo, ([_dirIn,0,0] call dirToVector), ([_dirOut, 0,0] call dirToVector)] call createBoundary;
-		_bA pushback (_b select 0);
-		_bA pushback (_b select 1);
-	};	
-
-	_c = _c + 1;
+	_wallInside = "UserTexture10m_F" createVehicleLocal _pos; 
+	if (surfaceIsWater _pos) then { _wallInside setPosASL _pos; };
+	_wallInside setVectorDirAndUp _dirAndUp;
+	_wallInside setObjectTexture [0,"client\images\stripes_fade.paa"];
+	_wallInside enableSimulation false;
+	_bA pushBack _wallInside;
 
 	false
 } count _pointsArray > 0;
 
-GW_ACTIVE_BOUNDARIES pushback [_zoneName, _bA];
+(GW_ZONE_BOUNDARIES select _index) set [3, _bA];
 
 systemchat format['%1 boundaries added.', _zonename];

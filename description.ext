@@ -47,7 +47,7 @@ disableChannels[] = {0,2,3,6};
 
 class CfgCommands {
    allowedHTMLLoadURIs[] += {
-      "http://www.bistudio.com/newsfeed/arma3_news.php*";
+      "http://www.bistudio.com/newsfeed/arma3_news.php*"
    };
 };
 

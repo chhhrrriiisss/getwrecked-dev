@@ -6,11 +6,15 @@
 //
 //
 
+// Set to true for enhanced debugging/logging
 GW_DEV_BUILD = true;
 
 // Leaderboard stats tracking (default: false)
 // Currently non-functional
 GW_LEADERBOARD_ENABLED = false;
+
+// Whether or not zone boundaries should be visible (turning this OFF can improve client FPS)
+GW_BOUNDARIES_ENABLED = true;
 
 // Game mode setting (0 = Standard, 1 = Creative)
 GW_GAME_MODE = 0;
@@ -31,6 +35,8 @@ GW_ARMOR_SYSTEM_ENABLED = true;
 
 // Weapon Damage vs vehicles 
 GW_GDS = 0.08; 
+GW_GDS_RACE = 0.2;
+
 WHEEL_COLLISION_DMG_SCALE = 0; 
 COLLISION_DMG_SCALE = 0; 
 FIRE_DMG_SCALE = 8; 
@@ -122,7 +128,8 @@ vehicleDamageData = {
 		0
 	};	
 	
-	(_d * GW_GDS)
+	_globalDamage = if (GW_CURRENTZONE == "globalZone") then { GW_GDS_RACE } else { GW_GDS };
+	(_d * _globalDamage)
 };
 
 // Returns damage of projectile vs object
@@ -264,6 +271,42 @@ GW_TAUNTS_LIST = [
 // Specific map configs
 switch (worldName) do {
 	
+	case "Altis":
+	{
+
+		if (isServer) then {
+
+			// Cleanup lag inducing clusterfuck of houses in Kavala
+			_objects = (getMarkerPos "downtownZone_camera") nearObjects 1500;  
+			_objectsToHide = [
+				"Land_WIP_F",
+				"Land_Offices_01_V1_F",
+				"Land_i_Barracks_V2_F",
+				"Land_Unfinished_Building_01_F",
+				"Land_i_House_Small_02_V2_F", 
+				"Land_u_Shop_02_V1_F", 
+				"Land_i_Shop_02_V1_F",
+				"Land_i_Shop_01_V1_F",
+				"Land_Chapel_V1_F",
+				"Land_i_House_Big_02_V1_F",
+				"Land_i_House_Big_02_V2_F",
+				"Land_i_House_Big_01_V2_F",
+				"Land_i_Addon_02_V1_F"
+			];
+
+			_c = 0;
+			{      
+				if (typeof _x in _objectsToHide) then {
+					_x hideObjectGlobal true; 					
+					_c = _c + 1;
+				};
+				_x enableSimulationGlobal false; 
+				false
+			} count _objects; 
+		};
+	};
+
+
 	case "Stratis":
 	{
 

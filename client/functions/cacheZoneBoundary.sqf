@@ -1,8 +1,10 @@
 //
-//      Name: cacheBoundary
+//      Name: cacheZoneBoundary
 //      Desc: Create position and dir information for zone boundaries
 //      Return: None
 //
+
+private ['_bA', '_c', '_zoneName', '_pointsArray'];
 
 {
 
@@ -25,33 +27,29 @@
 		_distance = _p1 distance _p2;
 
 		for "_i" from 0 to _distance step 5 do {
-			_b = [_p1, (-2.5 + _i), _dirTo, ([_dirIn,0,0] call dirToVector), ([_dirOut, 0,0] call dirToVector)] call {
-
+			_b = [_p1, (-2.5 + _i), _dirTo, ([_dirIn,0,0] call dirToVector)] call {
 
 				_source = +(_this select 0);
 				_step = (_this select 1);
 
 				_source set[2, 0];				
-				_newDestination = [_source, _step, (_this select 2)] call relPos;
-
-				_isWater = (surfaceIsWater _newDestination);
+				_newDestination = [_source, _step, (_this select 2)] call relPos;	
+				_isWater = (surfaceIsWater _newDestination);			
 
 				_normal = if (_isWater) then {
-					_newDestination = ATLtoASL (_newDestination);
+					_newDestination = ATLtoASL (_newDestination);	
 					_newDestination set[2, 0];
 					[0,0,1]
 				} else {
 				 	(surfaceNormal _newDestination)
 				};
-					
-				_newVectorDirAndUp = [(_this select 3), _normal];
 		
-				[_newDestination, _newVectorDirAndUp]
+				[_newDestination, [(_this select 3), _normal]]
 
 			};
 
 			_bA pushback _b;
-			//_bA pushback (_b select 1);
+
 		};	
 
 		_c = _c + 1;
@@ -60,6 +58,8 @@
 	} count _pointsArray > 0;
 
 	_x set [2, _bA];
+	_x set [3, []];
+	// _x set [3, false];
 
 	false
 

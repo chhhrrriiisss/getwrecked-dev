@@ -154,7 +154,7 @@ class GW_ListBox {
 	autoScrollDelay = 5;
 	autoScrollRewind = 0;
 
-	tooltip = ""; // Tooltip text
+	tooltip = "TEST";
 	tooltipColorShade[] = {0,0,0,1}; // Tooltip background color
 	tooltipColorText[] = {1,1,1,1}; // Tooltip text color
 	tooltipColorBox[] = {1,1,1,1}; // Tooltip frame color
@@ -358,6 +358,8 @@ class GW_RscButtonMenu : GW_RscButton {
 	periodOver = 1.2;
 	size= 0.035;
 	SizeEx = "(0.018 / (getResolution select 5))";
+
+	toolTip = "";
 
 	toolTipColorText[] = {1, 1, 1, 1};
 	toolTipColorBox[] = {0, 0, 0, 0};

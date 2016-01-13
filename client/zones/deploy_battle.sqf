@@ -54,13 +54,17 @@ _vehicleToDeploy spawn {
 
 	// If success, set new current zone
 	_currentZone =  ([_this] call findCurrentZone);
-	[ ([_this] call findCurrentZone) ] call setCurrentZone;
+	[ _currentZone ] call setCurrentZone;
 
 	// Enable simulation for all relevant vehicles in target zone
 	{ 	(vehicle _x) enableSimulation true; false  } count ([_currentZone, { (_this == (driver (vehicle _this))) }, true] call findAllInZone) > 0;
 
 	// Initialize vehicle
 	[_this] call initVehicleDeploy;
+
+	// Set vehicle dir to centre of map
+	_dirTo = [_this, getMarkerPos format['%1_camera', _currentZone]] call dirTo;
+	_this setDir _dirTo;
 
 	// Tell everyone else where we've gone
 	_str = if (GW_SPAWN_LOCATION == "Downtown") then { "" } else { "the "};
@@ -85,7 +89,16 @@ _vehicleToDeploy spawn {
 };
 
 GW_BOUNDARY_BUILD = nil;
-[format["<br /><t size='3' color='#ffffff' align='center'>%1</t>", "DEPLOYING..."], "", [false, { false }] , { isNil "GW_BOUNDARY_BUILD" }, 10, true, { true }] spawn createTitle;
+
+[
+	format["<br /><t size='3' color='#ffffff' align='center'>%1</t>", "DEPLOYING..."], 
+	"", 
+	[false, { false }],
+	{ isNil "GW_BOUNDARY_BUILD" }, 
+	10, 
+	true, 
+	{ true }
+] spawn createTitle;
 
 // Request server deploy using those deploy targets
 [
@@ -97,9 +110,9 @@ GW_BOUNDARY_BUILD = nil;
 
 // Remove any previous boundary if it differs from current (caching this way allows players to deploy quickly back to same location)
 {
-	if ((_x select 0) != _zoneName && (_x select 0) != "workshopZone") then { [(_x select 0)] call removeZoneBoundary; };
-} foreach GW_ACTIVE_BOUNDARIES;
+	if ((_x select 0) != _zoneName && (_x select 0) != "workshopZone" && count (_x select 3) > 0) then { [(_x select 0)] call removeZoneBoundary; };
+} foreach GW_ZONE_BOUNDARIES;
 
-GW_BOUNDARY_BUILD = [_zoneName] call buildZoneBoundary;
+[_zoneName] call buildZoneBoundary;
 
 true

@@ -11,6 +11,8 @@ if (isNull _victim) exitWith {};
 GW_HUD_ACTIVE = false;
 GW_HUD_LOCK = true;
 
+["workshopZone"] call setCurrentZone;
+
 9999 cutText ["", "BLACK OUT", 0.3];  
 
 _prevVehicle = _victim getVariable ["GW_prevVeh", nil];

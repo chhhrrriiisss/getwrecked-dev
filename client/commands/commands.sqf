@@ -8,6 +8,30 @@ GW_COMMANDS_LIST = [
 	],
 
 	[
+		"boundary",
+		{
+
+			if (GW_BOUNDARIES_ENABLED) then {
+
+				{
+					[(_x select 0)] call removeZoneBoundary;
+				} foreach GW_ZONE_BOUNDARIES;
+				GW_BOUNDARIES_ENABLED = false;
+				systemchat 'Zone boundaries disabled. Use !boundary to re-enable.';
+
+			} else {
+
+				GW_BOUNDARIES_ENABLED = true;
+				['workshopZone'] call buildZoneBoundary;
+				[GW_CURRENTZONE] call buildZoneBoundary;		
+				systemchat 'Zone boundaries enabled.';		
+
+			};
+
+		}
+	],
+
+	[
 		
 		"changebalance",
 		{

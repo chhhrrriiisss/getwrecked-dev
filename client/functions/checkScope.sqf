@@ -6,8 +6,8 @@
 
 private ['_source', '_target', '_tolerance'];
 
-_source = [_this,0, 0, [0,objNull]] call filterParam;
-_target = [_this,1, 0, [0,objNull]] call filterParam;
+_source = (_this select 0);
+_target = (_this select 0);
 _tolerance = [_this,2, 90, [0]] call filterParam;
 
 // Get angles from source to target

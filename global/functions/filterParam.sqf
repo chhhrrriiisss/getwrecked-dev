@@ -29,7 +29,6 @@ private ['_arr'];
 // 	(_this select 2)
 // };
 
-
 _arr = +_this;
 _this = _arr deleteAt 0;
 

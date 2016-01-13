@@ -178,7 +178,7 @@ waitUntil { (time > _timeout) || GW_DEATH_CAMERA_ACTIVE };
 _curZone = ([player] call findCurrentZone);
 [_curZone] call setCurrentZone;
 
-if (_curZone == "workshopZone") then { 
+if (_curZone == "workshopZone" && GW_BOUNDARIES_ENABLED) then { 
 	["workshopZone"] call buildZoneBoundary; 
 };
 
@@ -202,12 +202,11 @@ _unit spawn setPlayerActions;
 _unit setVariable ['name', name player, true];
 
 // Trigger Lazy Update settings
-GW_minUpdateFrequency = 1;
-GW_maxUpdateFrequency = 0.5;
+GW_minUpdateFrequency = 1.5;
+GW_maxUpdateFrequency = 1;
 GW_updateDistance = 1.5;
 GW_updateAimpoint = 0.1;
 GW_cooldown = false;
-
 GW_lastUpdate = time - GW_minUpdateFrequency;
 
 GW_lastPosition = [0,0,0];

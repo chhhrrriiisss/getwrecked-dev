@@ -39,7 +39,12 @@ if (count _contents == 0) exitWith {
 		_name = _data select 1;
 		_icon = _data select 9;
 
-		_list lnbAddRow[format['%1x', _quantity],"", _name, ""];
+
+		_index = _list lnbAddRow[format['%1x', _quantity],"", _name, ""];
+
+		systemchat format['%1', _index];
+		lbSetTooltip [98001, _index, "TESSSST"];
+
 		lnbSetData [98001, [((((lnbSize 98001) select 0)) -1), 0], _class];
 
 		// Do we have an icon we can use?
@@ -49,5 +54,15 @@ if (count _contents == 0) exitWith {
 
 	};
 } foreach _contents;
+
+_button = ((findDisplay 98000) displayCtrl 98002);
+
+_button ctrlSetTooltip "TEST";
+_button lbSetTooltip [9999, "TESSSSSST"];
+
+
+// _list ctrlSetTooltip "ThisIsAGoodTip";
+
+// _list lbSetTooltip [9999, "TESSSSSST"];
 
 _list lnbSetCurSelRow _forceIndex;

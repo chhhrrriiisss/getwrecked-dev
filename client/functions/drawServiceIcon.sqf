@@ -10,6 +10,8 @@ _distance = _pos distance GW_CURRENTVEHICLE;
 _size = (1 - ((_distance / _maxVisibleRange) * 0.6)) * 1.4;
 _alpha = (_maxVisibleRange - _distance) / (_maxVisibleRange);
 
+_type = if (isNil "_type") then { "" } else { _type };
+
 if (_alpha <= 0) exitWith {};
 
 _colour = [1,1,1,_alpha];

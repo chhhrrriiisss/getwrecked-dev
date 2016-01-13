@@ -186,7 +186,7 @@ checkBinds = {
 		};
 
 		_status = GW_VEHICLE_STATUS;
-		_canShoot = if (!GW_WAITFIRE && !('cloak' in _status) && !('noshoot' in _status)) then { true } else { false };
+		_canShoot = if (!('cloak' in _status) && !('noshoot' in _status)) then { true } else { false };
 		_canUse = if (!GW_WAITUSE && !('cloak' in _status) && !('nouse' in _status)) then { true } else { false };
 
 		['Can Use', true] call logDebug;

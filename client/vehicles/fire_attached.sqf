@@ -4,7 +4,7 @@
 //		Return: None
 //
 
-if (GW_WAITFIRE) exitWith { };
+// if (GW_WAITFIRE) exitWith {};
 
 GW_WAITFIRE = true;
 

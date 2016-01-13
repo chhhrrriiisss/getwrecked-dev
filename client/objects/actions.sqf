@@ -57,9 +57,9 @@ setTerminalActions = {
 		}, _var,7, false, false, "", "( !GW_EDITING && ((player distance _target) < 12) )"];
 
 		// Race
-		// _obj addAction[raceFormat, { 
-		// 	[(_this select 3), (_this select 1)] execVM 'client\ui\menus\race.sqf';
-		// }, _var,7, false, false, "", "( !GW_EDITING && ((player distance _target) < 12) )"];
+		_obj addAction[raceFormat, { 
+			[(_this select 3), (_this select 1)] execVM 'client\ui\menus\race.sqf';
+		}, _var,7, false, false, "", "( !GW_EDITING && ((player distance _target) < 12) )"];
 
 		// Load Vehicle
 		_obj addAction[loadPadFormat, {

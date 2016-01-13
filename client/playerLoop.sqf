@@ -1,4 +1,6 @@
-['Interaction Update', (format['%1', ([time, 2] call roundTo)])] call logDebug;
+if (isNil "GW_INT_MONITOR_LAST_UPDATE") then { GW_INT_MONITOR_LAST_UPDATE = time; };
+['Interaction Update', (format['%1', ([time - GW_INT_MONITOR_LAST_UPDATE, 2] call roundTo)])] call logDebug;
+GW_INT_MONITOR_LAST_UPDATE = time;
 
 GW_CURRENTPOS = (ASLtoATL visiblePositionASL player);
 
