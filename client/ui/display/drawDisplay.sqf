@@ -21,6 +21,20 @@ GW_DISPLAY_EH = addMissionEventHandler ["Draw3D", {
 	disableSerialization;
     if (!isNull (findDisplay 602)) then  { closeDialog 602; };
 
+    // Set color of GUI groups interface
+    if (!isNull (findDisplay 60490)) then  { 
+    	_ctrl = ((findDisplay 60490) displayCtrl 9377);
+    	_ctrl ctrlSetBackgroundColor [0,0,0,0.8];
+		_ctrl ctrlCommit 0;
+
+		// _ctrl lbSetColor [ 1,[1,1,1,1]];
+
+
+		// // _ctrl ctrlSetFade 1;
+		// _ctrl ctrlCommit 0;
+
+    };
+
 	// Get all the conditions we need
 	GW_CURRENTVEHICLE = (vehicle player);		
 	GW_VEHICLE_STATUS = GW_CURRENTVEHICLE getVariable ["status", []];

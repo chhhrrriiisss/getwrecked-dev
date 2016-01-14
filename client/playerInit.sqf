@@ -28,20 +28,7 @@ GW_SUCCESS_CHANNEL = radioChannelCreate [[0.99,0.85,0.23,1], "Success Chat", "Su
 // Default Zone
 [([player] call findCurrentZone)] call setCurrentZone;
 
-// Hide unit/stance info
-{
-	private ["_rsc","_idcs"];
-	_rsc = _x;
-	_idcs = [configfile >> "RscInGameUI" >> _rsc, 1, true] call BIS_fnc_displayControls; 
-	{
-		((uiNameSpace getVariable _rsc) displayCtrl _x) ctrlSetPosition [0, 0, 0, 0];
-		((uiNameSpace getVariable _rsc) displayCtrl _x) ctrlSetFade 1;
-		((uiNameSpace getVariable _rsc) displayCtrl _x) ctrlCommit 0;
-	} forEach _idcs;
-} forEach ["RscStanceInfo","RscUnitInfo", "RscUnitVehicle"];
-
 _unit setVariable ["firstSpawn", true];
-
 _unit addeventhandler ["respawn", { _this spawn playerRespawn; }];  
 _unit addeventhandler ["killed",{ _this spawn playerKilled;  }];
 _unit addeventhandler ["handleDamage",{ 

@@ -61,6 +61,7 @@ mouseActiveIcon = ICON_ROOT + "menus\mouseActive.paa";
 mouseInactiveIcon = ICON_ROOT + "menus\mouseInactive.paa";
 hornIcon = ICON_ROOT + "menus\horn.paa";
 randomizeIcon = ICON_ROOT + "menus\randomize.paa";
+groupIcon = ICON_ROOT + "menus\group.paa";
 
 markerBoxIcon = ICON_ROOT + "menus\markerBox.paa";
 finishMarkerIcon = ICON_ROOT + "menus\finishMarker.paa";

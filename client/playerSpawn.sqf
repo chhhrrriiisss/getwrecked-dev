@@ -16,6 +16,9 @@ if (GW_BOUNDARIES_ENABLED) then {
 	[] spawn { ["workshopZone"] call buildZoneBoundary;  };
 };
 
+// Hide unwanted hud elements
+showHUD [true,false,false,false,false,false,false,true];
+
 removeAllActions _unit;
 removeAllWeapons _unit;
 removeVest _unit;

@@ -20,6 +20,29 @@ systemchat 'Server is ready to go!';
 	99999 cutText ["","PLAIN", 0.6];
 };
 
+// Initialize group system
+missionNamespace setVariable ["bis_dynamicGroups_respawnKeyDown", nil];
+["InitializePlayer", [player]] call bis_fnc_dynamicGroups; 
+
+// Remove default keybinding for dynamic groups (why there isn't already an option for this I have no idea...)
+[] spawn {
+	
+	waitUntil{ 
+		_init = missionNamespace getVariable "bis_dynamicGroups_respawnKeyDown";
+		(!isNull (findDisplay 46) && !isNil "_init")
+	};
+	
+	_keys = uiNamespace getVariable ["BIS_dynamicGroups_key", [0,0]];
+	_down = _keys select 0;
+	_up = _keys select 1;
+
+	systemchat format['%1 / %2', _down, _up];
+
+	(findDisplay 46) displayRemoveEventHandler ["KeyDown", _down];
+	(findDisplay 46) displayRemoveEventHandler ["KeyUp", _up];
+
+};
+
 // Check for an existing library
 _newPlayer = false;
 _lib = [] call getVehicleLibrary;

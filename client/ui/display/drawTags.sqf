@@ -1,3 +1,5 @@
+if (true) exitWith {};
+
 params ['_arr'];
 private ['_arr'];
 

@@ -238,11 +238,13 @@ GW_COMMANDS_LIST = [
 
 					if (_this == "RACES") exitWith {
 						profileNamespace SetVariable ['GW_RACES', nil];	
+						profileNamespace setVariable ['GW_RACE_VERSION', nil];
 						systemChat 'Races library reset successfully.';				
 					};
 
 					if (_this == "BINDS") exitWith {
 						profileNamespace setVariable ['GW_BINDS', nil];
+						profileNamespace setVariable ['GW_BINDS_VERSION', nil];
 						systemChat 'Global keybinds reset successfully.';				
 					};
 

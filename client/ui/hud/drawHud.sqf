@@ -124,6 +124,7 @@ for "_i" from 0 to 1 step 0 do {
 
 	// Open the default HUD
 	if (!GW_HUD_NORMAL_ACTIVE && (!GW_PREVIEW_CAM_ACTIVE || !GW_TIMER_ACTIVE) ) then {
+
 		GW_HUD_NORMAL_ACTIVE = true;
 		[[_hudMoney, _hudTransaction], [['fade', 1, 0, 1.2], ['y', '0', '0.1', 1.2]], "quad"] spawn createTween;
 		
@@ -131,6 +132,7 @@ for "_i" from 0 to 1 step 0 do {
 
 	// Close the default HUD
 	if (GW_HUD_NORMAL_ACTIVE && (GW_PREVIEW_CAM_ACTIVE || GW_TIMER_ACTIVE) ) then {
+
 		GW_HUD_NORMAL_ACTIVE = false;
 		[[_hudMoney, _hudTransaction], [['fade', 1, 0, 0], ['y', '0', '-0.1', 1.2]], "quad"] spawn createTween;
 	};

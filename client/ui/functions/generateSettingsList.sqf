@@ -116,6 +116,7 @@ _globalBindsList = [] call listGlobalBinds;
 
 	_data = _tag call {
 		if (_this == "SETTINGS") exitWith { [settingsIcon, "Settings"] };
+		if (_this == "GROUPS") exitWith { [groupIcon, "Group Management"] };
 		if (_this == "GRAB") exitWith { [moveIcon, "Grab / Drop"] };
 		if (_this == "ATTACH") exitWith { [attachIcon, "Attach / Detach"] };
 		if (_this == "ROTATECW") exitWith { [rotateCWIcon, "Rotate CW"] };

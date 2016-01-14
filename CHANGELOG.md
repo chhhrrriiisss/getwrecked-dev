@@ -30,9 +30,12 @@ Items without Fixed/Added/Removed proceeding are typically balance changes.
 - Unit/Vehicle stance info is now hidden from HUD
 - New command !boundary which toggles visible zone boundaries on/off (may improve Client FPS)
 - Removed a number of buildings in Downtown Kavala to improve FPS in that zone
-- Caching on GW_WARNINGICON_ARRAY to eliminate unnecessary repeat position finding per frame
+- Caching on entries in drawIcons to eliminate unnecessary repeat position finding per frame
 - Damage now differs between Battle / Race zones
 - Magnetic Coil now 50% less power/range in race zones
+- Group system added - Use [Insert] to access group management (friendly fire is still enabled)
+- Group global keybind added (open settings menu on any vehicle to configure)
+- Override for default keybind with groups system
 - Fixed HUD not fading in correctly if deploying in first person
 - Fixed Incorrect offset on muzzle effect
 - Fixed Unsaved vehicle prompt should now correctly show only for edited or non-loaded vehicles
@@ -48,8 +51,8 @@ Items without Fixed/Added/Removed proceeding are typically balance changes.
 - Fixed Purchasing multiple items should now correctly use nearby supply boxes owned by player
 
 * Known issues *
-- Occasional param errors due to changes in 1.54 turn off -showscripterrors to remove these [TEMP]
-- Race Mode is in pre-alpha, largely incomplete and only working in a demonstrative capacity
+- Occasional param errors due to changes in 1.54 turn off -showscripterrors to remove these
+- Race Mode is WIP, largely incomplete and only working in a demonstrative capacity
 - FPS Slowdowns while using Race Mode are common
 - Bugs with races/checkpoints are common while using the Race Mode
 

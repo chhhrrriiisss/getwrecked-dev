@@ -59,11 +59,22 @@ resetBinds = {
 
 	GW_HOLD_ROTATE = false;
 	GW_KEYDOWN = nil;
+
+	_groupsKey = ['GROUPS'] call getGlobalBind;
+
+	// if (_key == _groupsKey) then {
+	// 	['OnKeyUp', _this] call dynamicGroups;
+	// };
 };
 
 checkBinds = {
 	
 	[_this, 'key'] call triggerLazyUpdate;
+
+	_key = _this select 1; // The key that was pressed
+	_shift = _this select 2; 
+	_ctrl = _this select 3; 
+	_alt = _this select 4; 
 
 	_grabKey = ['GRAB'] call getGlobalBind;
 	_attachKey = ['ATTACH'] call getGlobalBind;
@@ -71,11 +82,11 @@ checkBinds = {
 	_rotateCCWKey = ['ROTATECCW'] call getGlobalBind;
 	_holdRotateKey = ['HOLD'] call getGlobalBind;
 	_settingsKey = ['SETTINGS'] call getGlobalBind;
+	_groupsKey = ['GROUPS'] call getGlobalBind;
 
-	_key = _this select 1; // The key that was pressed
-	_shift = _this select 2; 
-	_ctrl = _this select 3; 
-	_alt = _this select 4; 
+	if (_key == _groupsKey) then {
+		([] call BIS_fnc_displayMission) createDisplay "RscDisplayDynamicGroups";
+	};	
 
 	// Tilde key for cancelling hints
 	if (_key == 41) exitWith { hint ''; };
