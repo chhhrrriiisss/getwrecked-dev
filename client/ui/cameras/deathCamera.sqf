@@ -9,10 +9,11 @@ private ["_cam", "_victim", "_killer", "_centerCamera"];
 _target = if (!isNil { _this select 0 }) then { (_this select 0) } else { (getMarkerPos "workshopZone_camera") };
 _type = [_this,1, "default", [""]] call filterParam;
 
-// Reset kill stats
-GW_DEATH_CAMERA_ACTIVE = true;
-
 9999 cutText ["", "BLACK IN", 1.5];  
+
+// Reset kill stats
+IF (GW_DEATH_CAMERA_ACTIVE) exitWith {};
+GW_DEATH_CAMERA_ACTIVE = true;
 
 // Create a timer dialog
 [] spawn {

@@ -23,6 +23,8 @@ _this spawn {
 	if (_newAmmo < 0) then { _newAmmo = 0; };
 	_vehicle setVariable["ammo", _newAmmo];
 
+	isFirstDrop = true;
+
 	// Drop a caltrop at the specified location
 	dropDebris = {
 
@@ -35,7 +37,11 @@ _this spawn {
 		_o setDir _oDir;
 
 		GW_DEPLOYLIST pushBack _o;
-		GW_WARNINGICON_ARRAY pushback _o;
+
+		if (isFirstDrop) then {
+			isFirstDrop = false;
+			GW_WARNINGICON_ARRAY pushback _o;
+		};		
 
 		playSound3D ["a3\sounds_f\weapons\other\sfx9.wss", GW_CURRENTVEHICLE, false, (ASLtoATL visiblePositionASL GW_CURRENTVEHICLE), 2, 1, 50];
 

@@ -9,6 +9,18 @@ private ['_list', '_weaponsList', '_tacticalList'];
 disableSerialization;
 _list = ((findDisplay 92000) displayCtrl 92001);
 
+
+// Select the previous row after list refresh
+// [_list, _index] spawn {
+
+// 	Sleep 0.05;
+// 	disableSerialization;
+// 	//(_this select 0) lnbSetCurSelRow (_this select 1);
+
+// };
+
+_selectedRow = lnbCurSelRow _list;
+
 ctrlShow[92001, true]; 
 
 lnbClear _list;
@@ -157,3 +169,5 @@ _list lnbAddRow["", "", " "];
 call addReservedIndex;
 
 _list ctrlSetTooltip "Double click, then press key to set bind.";
+
+_list lnbSetCurSelRow _selectedRow;

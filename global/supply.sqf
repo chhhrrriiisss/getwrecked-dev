@@ -103,7 +103,7 @@ GW_SUPPLY_TYPES = [
 			_vehicle = (vehicle player);
 			_vehicle setVariable ['status', [], true];		
 
-			_vehiclesInZone = [_currentZone, { (_this == (driver (vehicle _this))) }, true] call findAllInZone;
+			_vehiclesInZone = [GW_CURRENTZONE, { (_this == (driver (vehicle _this))) }, true] call findAllInZone;
 
 			_newPos = (getPos _vehicle);
 
@@ -140,7 +140,7 @@ GW_SUPPLY_TYPES = [
 		randomSign,
 		{	
 			_crate = _this;
-			_vehiclesInZone = [_currentZone, { (_this == (driver (vehicle _this))) }, true] call findAllInZone;
+			_vehiclesInZone = [GW_CURRENTZONE, { (_this == (driver (vehicle _this))) }, true] call findAllInZone;
 
 			{
 				[       
@@ -260,7 +260,7 @@ GW_SUPPLY_TYPES = [
 
 			_crate = _this;
 			_vehicle = (vehicle player);
-			_vehiclesInZone = [_currentZone, { (_this == (driver (vehicle _this))) }, true] call findAllInZone;
+			_vehiclesInZone = [GW_CURRENTZONE, { (_this == (driver (vehicle _this))) }, true] call findAllInZone;
 
 			{
 				[		

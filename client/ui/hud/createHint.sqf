@@ -20,18 +20,6 @@ _colour = [_this,3, [], [[]]] call filterParam;
 _type =  [_this,4, "default", [""]] call filterParam;
 _sound =  [_this,5, "beep_light", [""]] call filterParam;
 
-// Hint background color
-
-
-
-	// _idcs = [configfile >> "RscHintGroup", 1, true] call BIS_fnc_displayControls; 
-	// systemchat str _idcs;
-	// {
-	// 	((uiNameSpace getVariable "RscHintGroup") displayCtrl _x) ctrlSetBackgroundColor [0,0,0,0];
-	// 	((uiNameSpace getVariable "RscHintGroup") displayCtrl _x) ctrlCommit 0;
-
-	// } forEach _idcs;
-
 
 _fontSize = 1;
 
@@ -52,17 +40,21 @@ _body = format['<br /> %1 <br /><br /> %2 <br /><br /> %3 <br /> <br />', _heade
 
 hint parseText _body;
 
-// Hide unit/stance info
-{
-	private ["_rsc","_idcs"];
-	_rsc = _x;
-	_idcs = [configfile >> "RscInGameUI" >> _rsc, 1, true] call BIS_fnc_displayControls; 
-	{
-		((findDisplay 301) displayCtrl _x) ctrlSetPosition [0, 0, 0, 0];
-		((findDisplay 301) displayCtrl _x) ctrlSetBackgroundColor [0,0,0,0];
-		((findDisplay 301) displayCtrl _x) ctrlCommit 0;
-	} forEach _idcs;
-} forEach ["RscHint"];
+// // Hide unit/stance info
+// {
+// 	private ["_rsc","_idcs"];
+// 	_rsc = _x;
+// 	_idcs = [configfile >> "RscInGameUI" >> _rsc, 1, true] call BIS_fnc_displayControls; 
+// 	{
+// 		((findDisplay 301) displayCtrl _x) ctrlSetPosition [0, 0, 0, 0];
+// 		((findDisplay 301) displayCtrl _x) ctrlSetBackgroundColor [0,0,0,0];
+// 		((findDisplay 301) displayCtrl _x) ctrlCommit 0;
+// 	} forEach _idcs;
+// } forEach ["RscHint"];
+
+((findDisplay 301) displayCtrl 101) ctrlSetBackgroundColor [0,0,0,0];
+((findDisplay 301) displayCtrl 101) ctrlSetFade 1;
+((findDisplay 301) displayCtrl 101) ctrlCommit 0;
 
 
 

@@ -1,4 +1,3 @@
-
 {
 	_arr = _x select 0;
 	_code = _x select 1;

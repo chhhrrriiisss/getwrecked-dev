@@ -7,11 +7,11 @@
 private ['_source', '_target', '_tolerance'];
 
 _source = (_this select 0);
-_target = (_this select 0);
+_target = (_this select 1);
 _tolerance = [_this,2, 90, [0]] call filterParam;
 
 // Get angles from source to target
-_sourceDir = if (_source isEqualType 0) then { _source } else { (direction _source); };
+_sourceDir = if (_source isEqualType 0) then { _source } else { (getDir _source); };
 _sourceObj = if (_source isEqualType objNull) then { _source } else { (vehicle player) };
 _targetDir = if (_target isEqualType 0) then { _target } else { ([_sourceObj, _target] call dirTo) };
 

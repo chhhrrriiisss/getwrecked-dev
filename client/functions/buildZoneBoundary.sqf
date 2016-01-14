@@ -57,6 +57,10 @@ _bA = [];
 	_wallInside setVectorDirAndUp _dirAndUp;
 	_wallInside setObjectTexture [0,"client\images\stripes_fade.paa"];
 	_wallInside enableSimulation false;
+
+	// Ignore flag for cleanup script (doesnt apply in dedicated since these are only spawned client side)
+	_wallInside setVariable ['GW_CU_IGNORE', true];
+
 	_bA pushBack _wallInside;
 
 	false

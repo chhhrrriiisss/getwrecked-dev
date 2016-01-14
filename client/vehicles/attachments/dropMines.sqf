@@ -24,6 +24,8 @@ _this spawn {
 	if (_newAmmo < 0) then { _newAmmo = 0; };
 	_vehicle setVariable["ammo", _newAmmo];
 
+	isFirstDrop = true;
+
 	// Drops a detector that causes the mine to explode 
 	dropTrigger = {
 
@@ -122,11 +124,34 @@ _this spawn {
 
 		_type = "Land_FoodContainer_01_F";
 		_oPos = [_oPos, 5, 5, 0] call setVariance;
-		_oPos set[2, -0.4];
 
 		_o = createVehicle [_type, _oPos, [], 0, "CAN_COLLIDE"];
-		_o enableSimulation false;
-		_o setPosATL _oPos;
+		_host = createVehicle ["Land_PenBlack_F", _oPos, [], 0, "CAN_COLLIDE"];		
+		_host setVectorUp (vectorUp (GW_CURRENTVEHICLE));
+		_o attachTo [_host, [0,0,0]];
+		_o setDir _oDir;
+		_o allowDamage false;
+		
+		// Help limit warningIcon array spam by only showing first warning icon for a group
+		if (isFirstDrop) then {
+			isFirstDrop = false;
+			GW_WARNINGICON_ARRAY pushback _o;			
+		};
+
+		GW_DEPLOYLIST pushback _o;
+
+		// After timeout or we're on the ground, delete source 
+		_timeout = time + 5;
+		waitUntil {
+			(((getPos _host) select 2) < 0.5) || (time > _timeout)
+		};
+		detach _o;			
+		deleteVehicle _host;
+
+		_oPos = getPos _o;
+		_o setPos [(_oPos select 0), (_oPos select 1), -0.33];
+			
+		_o allowDamage true;
 
 		[		
 			[
@@ -140,9 +165,6 @@ _this spawn {
 
 		playSound3D ["a3\sounds_f\weapons\other\sfx9.wss", GW_CURRENTVEHICLE, false, (ASLtoATL visiblePositionASL GW_CURRENTVEHICLE), 6, 1, 50];
 
-		GW_WARNINGICON_ARRAY pushback _o;
-		GW_DEPLOYLIST pushback _o;
-
 		// Wait half a second before arming
 		Sleep 0.5;
 
@@ -153,25 +175,23 @@ _this spawn {
 
 	playSound3D ["a3\sounds_f\sfx\vehicle_drag_end.wss", GW_CURRENTVEHICLE, false,(ASLtoATL visiblePositionASL GW_CURRENTVEHICLE), 8, 1, 50];
 
-	for "_i" from 0 to 3 step 1 do {
+	for "_i" from 0 to 4 step 1 do {
 		
 		_rnd = random 100;
 		_vel = [0,0,0] distance (velocity _vehicle);
 		_alt = (ASLtoATL getPosASL _vehicle) select 2;
 
-		if (_alt < 2) then {
+	
+		[] spawn cleanDeployList;
+		
+		// Ok, let's position it behind the vehicle
+		_maxLength = ([_vehicle] call getBoundingBox) select 1;
+		_oPos = _vehicle modelToWorldVisual [0, (-1 * ((_maxLength/2) + 2)), 0];
+		_oDir = random 360;
 
-			[] spawn cleanDeployList;
-			
-			// Ok, let's position it behind the vehicle
-			_maxLength = ([_vehicle] call getBoundingBox) select 1;
-			_oPos = _vehicle modelToWorldVisual [0, (-1 * ((_maxLength/2) + 2)), 0];
-			_oPos set[2,0];
-			_oDir = random 360;
+		[_oPos, _oDir] spawn dropMine;
 
-			[_oPos, _oDir] spawn dropMine;
-
-		};
+	
 
 		Sleep 0.3;
 

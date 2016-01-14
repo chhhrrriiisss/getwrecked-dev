@@ -36,10 +36,14 @@ missionNamespace setVariable ["bis_dynamicGroups_respawnKeyDown", nil];
 	_down = _keys select 0;
 	_up = _keys select 1;
 
-	systemchat format['%1 / %2', _down, _up];
 
-	(findDisplay 46) displayRemoveEventHandler ["KeyDown", _down];
-	(findDisplay 46) displayRemoveEventHandler ["KeyUp", _up];
+	(findDisplay 46) displayRemoveAllEventHandlers "KeyDown";
+	(findDisplay 46) displayRemoveAllEventHandlers "KeyUp";
+
+	(findDisplay 46) displayRemoveEventHandler["KeyDown", _down];
+	(findDisplay 46) displayRemoveEventHandler["KeyUp", _up];
+
+	keybindEventsRemoved = compileFinal "true";
 
 };
 

@@ -38,4 +38,5 @@ if (count _activeIcons > 0 && _inUse) exitWith {
 
 };
 
+
 drawIcon3D [_defaultIcon, _colour, _pos, _size, _size, 0, "", 0.01];	

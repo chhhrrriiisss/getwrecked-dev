@@ -33,9 +33,13 @@ Items without Fixed/Added/Removed proceeding are typically balance changes.
 - Caching on entries in drawIcons to eliminate unnecessary repeat position finding per frame
 - Damage now differs between Battle / Race zones
 - Magnetic Coil now 50% less power/range in race zones
-- Group system added - Use [Insert] to access group management (friendly fire is still enabled)
-- Group global keybind added (open settings menu on any vehicle to configure)
-- Override for default keybind with groups system
+- Group management added - Use Insert (Default) to access group management (friendly fire is still enabled)
+- Group global keybind added (open settings menu to reconfigure)
+- Mines can now be dropped while airborne
+- Warning icons for mines and caltrops, now only added for first item in the group
+
+- Fixed Death camera sometimes triggering multiple times consecutively
+- Fixed Settings menu keybind should now work for vehicles nearby the player
 - Fixed HUD not fading in correctly if deploying in first person
 - Fixed Incorrect offset on muzzle effect
 - Fixed Unsaved vehicle prompt should now correctly show only for edited or non-loaded vehicles
@@ -53,8 +57,7 @@ Items without Fixed/Added/Removed proceeding are typically balance changes.
 * Known issues *
 - Occasional param errors due to changes in 1.54 turn off -showscripterrors to remove these
 - Race Mode is WIP, largely incomplete and only working in a demonstrative capacity
-- FPS Slowdowns while using Race Mode are common
-- Bugs with races/checkpoints are common while using the Race Mode
+- Suspended vehicles sometimes appear misaligned from their attached parts
 
 **v0.8.2c** [1.48 Compatibility - Public alpha release]
 

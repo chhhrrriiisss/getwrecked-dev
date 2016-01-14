@@ -126,11 +126,3 @@ if (count toArray _vehicleName == 0) then {} else {
 
 };
 
-// Select the previous row after list refresh
-[_list, _index] spawn {
-
-	Sleep 0.05;
-	disableSerialization;
-	(_this select 0) lnbSetCurSelRow (_this select 1);
-
-};

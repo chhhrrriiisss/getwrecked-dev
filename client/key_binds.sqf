@@ -9,7 +9,9 @@ initBinds = {
 
 	GW_KEYDOWN = nil;
 
-	waituntil {!(isNull (findDisplay 46))};
+	waituntil {
+		( !isNull (findDisplay 46) && !isNil "keybindEventsRemoved" )
+	};
 
 	if (!isNil "GW_KD_EH") then { (findDisplay 46) displayRemoveEventHandler ["KeyDown", GW_KD_EH]; };
 	GW_KD_EH = (findDisplay 46) displayAddEventHandler ["KeyDown", "_this call checkBinds; false"];
@@ -84,7 +86,7 @@ checkBinds = {
 	_settingsKey = ['SETTINGS'] call getGlobalBind;
 	_groupsKey = ['GROUPS'] call getGlobalBind;
 
-	if (_key == _groupsKey) then {
+	if (_key == _groupsKey && !GW_SETTINGS_ACTIVE && !GW_TIMER_ACTIVE && !GW_TITLE_ACTIVE && !GW_BUY_ACTIVE && !GW_SPAWN_ACTIVE) then {
 		([] call BIS_fnc_displayMission) createDisplay "RscDisplayDynamicGroups";
 	};	
 
@@ -121,16 +123,21 @@ checkBinds = {
 		[] call confirmCurrentDialog;
 	};	
 
-	// Windows key
+	if (_key == _settingsKey && !_inVehicle) then {
+
+		if (GW_SETTINGS_ACTIVE) exitWith {	systemChat 'Use ESC to close the settings menu.'; };
+
+		_nearby = ([player, 15, 180] call validNearby);
+		if (isNil "_nearby") exitWith {};
+
+		[_nearby, player] spawn settingsMenu;
+
+	};
+	
 	if (_key == _settingsKey && (_inVehicle && _isDriver) ) then {
 
-		if (!GW_SETTINGS_ACTIVE) then {
-			[_vehicle, player] spawn settingsMenu;
-		};
-
-		if (GW_SETTINGS_ACTIVE) then {
-			systemChat 'Use ESC to close the settings menu.';
-		};
+		if (GW_SETTINGS_ACTIVE) exitWith { systemChat 'Use ESC to close the settings menu.'; };	
+		[_vehicle, player] spawn settingsMenu;		
 	};
 
 	if ( (_key in GW_RESTRICTED_KEYS) && GW_KEYBIND_ACTIVE) exitWith { systemChat 'That key is restricted.'; };

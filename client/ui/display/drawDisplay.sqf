@@ -26,13 +26,6 @@ GW_DISPLAY_EH = addMissionEventHandler ["Draw3D", {
     	_ctrl = ((findDisplay 60490) displayCtrl 9377);
     	_ctrl ctrlSetBackgroundColor [0,0,0,0.8];
 		_ctrl ctrlCommit 0;
-
-		// _ctrl lbSetColor [ 1,[1,1,1,1]];
-
-
-		// // _ctrl ctrlSetFade 1;
-		// _ctrl ctrlCommit 0;
-
     };
 
 	// Get all the conditions we need
@@ -44,8 +37,9 @@ GW_DISPLAY_EH = addMissionEventHandler ["Draw3D", {
 	GW_HASMELEE = GW_CURRENTVEHICLE call hasMelee;
 	GW_NEWSPAWN = GW_CURRENTVEHICLE getVariable ["newSpawn", false];
 
-	_currentDir = direction player;
+	
 	GW_CURRENTPOS = (ASLtoATL visiblePositionASL GW_CURRENTVEHICLE);
+	GW_CURRENTDIR = getDir GW_CURRENTVEHICLE;
 
  	// If any of these menus are active, forget about drawing anything else
 	if (GW_DEPLOY_ACTIVE || GW_SPAWN_ACTIVE || GW_SETTINGS_ACTIVE || GW_TIMER_ACTIVE || GW_TITLE_ACTIVE) exitWith {};
