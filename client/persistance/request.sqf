@@ -23,7 +23,7 @@ if (GW_WAITLOAD) exitWith {
 GW_WAITLOAD = true;
 
 _target = [_this,0, [0,0,0], [objNull, []]] call filterParam;
-_loadTarget = [_this,1, [], ["", []]] call filterParam;
+_loadTarget = if (isNil { (_this select 1) }) then { [] } else { (_this select 1) };
 _forceServerLoad = [_this,2, false, [false]] call filterParam;
 
 if (_target isEqualType objNull) then {

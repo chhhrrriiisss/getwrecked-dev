@@ -56,6 +56,9 @@ _this spawn {
 				false
 			] call bis_fnc_mp;	
 
+			GW_DEPLOYLIST = GW_DEPLOYLIST - [(_this select 0)];
+			GW_WARNINGICON_ARRAY = GW_WARNINGICON_ARRAY - [(_this select 0)];
+
 		}];		
 
 		_o addEventHandler ['Killed', { 		
@@ -76,6 +79,9 @@ _this spawn {
 
 				false
 			} count ((ASLtoATL visiblePositionASL (_this select 0)) nearEntities [["Car"], 3]);
+
+			GW_DEPLOYLIST = GW_DEPLOYLIST - [(_this select 0)];
+			GW_WARNINGICON_ARRAY = GW_WARNINGICON_ARRAY - [(_this select 0)];
 
 		}];			
 		

@@ -31,7 +31,8 @@ Items without Fixed/Added/Removed proceeding are typically balance changes.
 - New command !boundary which toggles visible zone boundaries on/off (may improve Client FPS)
 - Removed a number of buildings in Downtown Kavala to improve FPS in that zone
 - Caching on GW_WARNINGICON_ARRAY to eliminate unnecessary repeat position finding per frame
-- Damage between Races / Battle zones can now be adjusted in config.sqf
+- Damage now differs between Battle / Race zones
+- Magnetic Coil now 50% less power/range in race zones
 - Fixed HUD not fading in correctly if deploying in first person
 - Fixed Incorrect offset on muzzle effect
 - Fixed Unsaved vehicle prompt should now correctly show only for edited or non-loaded vehicles
@@ -47,7 +48,10 @@ Items without Fixed/Added/Removed proceeding are typically balance changes.
 - Fixed Purchasing multiple items should now correctly use nearby supply boxes owned by player
 
 * Known issues *
-- FilterParam/Param command occasionally throwing errors due to changes in 1.54 turn off -showscripterrors to remove these [TEMP]
+- Occasional param errors due to changes in 1.54 turn off -showscripterrors to remove these [TEMP]
+- Race Mode is in pre-alpha, largely incomplete and only working in a demonstrative capacity
+- FPS Slowdowns while using Race Mode are common
+- Bugs with races/checkpoints are common while using the Race Mode
 
 **v0.8.2c** [1.48 Compatibility - Public alpha release]
 

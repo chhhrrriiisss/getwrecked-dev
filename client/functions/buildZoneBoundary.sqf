@@ -7,7 +7,7 @@
 if (!GW_BOUNDARIES_ENABLED) exitWith {};
 if (isNil "GW_ZONE_BOUNDARIES_CACHED") exitWith { systemchat 'Boundaries have not been cached yet, aborting...'; false };
 
-private ['_zoneName', '_pointsArray'];
+private ['_zoneName', '_pointsArray', '_bA'];
 
 _zoneName = [_this, 0, "", [""]] call filterParam;
 _pointsArray = [_this, 1, [], [[]]] call filterParam;

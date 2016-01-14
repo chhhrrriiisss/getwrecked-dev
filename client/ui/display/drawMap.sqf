@@ -37,7 +37,7 @@ GW_MAP_EH = ((findDisplay 12) displayCtrl 51) ctrlAddEventHandler ["Draw", {
 			(_this select 0) drawIcon [
 			    _icon,
 			    [1,1,1,1],
-			    (ASLtoATL visiblePositionASL _x),
+			    (_x select 1),
 			    _scale/ctrlMapScale (_this select 0),
 			    _scale/ctrlMapScale (_this select 0),
 			    0
@@ -61,7 +61,6 @@ GW_MAP_EH = ((findDisplay 12) displayCtrl 51) ctrlAddEventHandler ["Draw", {
 			_c = 0;
 
 			{
-
 				_p1 = ATLtoASL(_x);
 				_next = if (_c == (count _points - 1)) then { 0 } else { _c + 1 };
 				_p2 = ATLtoASL(_points select _next);

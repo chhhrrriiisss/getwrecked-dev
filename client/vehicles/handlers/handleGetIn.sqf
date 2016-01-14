@@ -29,9 +29,14 @@ if (GW_WAITCOMPILE) exitWith {
 
 _null = [_vehicle] call compileAttached;
 
-// Set ourselves as the owner
-_playerName = if (isNull player) then { "" } else { (name player) };
-_vehicle setVariable ["GW_Owner", _playerName, true];
+
+_playerName = (name driver _vehicle);
+
+// Set us as the owner if there is no owner
+_owner = _vehicle getVariable ["GW_Owner", ""];
+if (count toArray _owner == 0) then {
+	_vehicle setVariable ["GW_Owner", _playerName, true];
+};
 
 // Are we missing handlers? Add them!
 _hasHandlers = _vehicle getVariable ['hasHandlers', false];

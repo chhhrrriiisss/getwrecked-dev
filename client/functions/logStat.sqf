@@ -8,10 +8,10 @@ private ['_statToLog', '_vehicle', '_value'];
 
 _statToLog = [_this,0, "", [""]] call filterParam;
 
-_vehicle = if (isNil { _this select 1 }) exitWith { false };
-_vehicle = _this select 1; 
+_vehicle = if (isNil { _this select 1 }) then { (_this select 1) } else { (_this select 1) };
+_value = if (isNil { _this select 2 }) then { 0 } else { (_this select 2) };
+_value = if (_value isEqualType 0) then { _value } else { 0 };
 
-_value = [_this,2, 0, [0]] call filterParam;
 _forceSave = [_this,3, false, [false]] call filterParam;
 
 if (_statToLog == "" && !_forceSave) exitWith {};

@@ -18,10 +18,22 @@ _this spawn {
 
 	_minPower = 200;
 	_maxPower = 275;
+
+	if (GW_CURRENTZONE == "globalZone") then {
+		_minPower = _minPower * 0.5;
+		_maxPower = _maxPower * 0.5;
+	};
+
 	_power = random (_maxPower - _minPower) + _minPower;
 
 	_minRange = 50;
 	_maxRange = 80;
+
+	if (GW_CURRENTZONE == "globalZone") then {
+		_minRange = _minRange * 0.5;
+		_maxRange = _maxRange * 0.5;
+	};
+	
 	_range = random (_maxRange - _minRange) + _minRange;
 
 	playSound3D ["a3\sounds_f\sfx\alarmCar.wss", _vehicle, false, _pos, 3, 1, 200]; 

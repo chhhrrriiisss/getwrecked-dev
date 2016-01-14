@@ -6,7 +6,7 @@
 
 private ["_cam", "_victim", "_killer", "_centerCamera"];
 
-_target = [_this,0, getMarkerPos "workshopZone_camera", [objNull, []]] call filterParam;
+_target = if (!isNil { _this select 0 }) then { (_this select 0) } else { (getMarkerPos "workshopZone_camera") };
 _type = [_this,1, "default", [""]] call filterParam;
 
 // Reset kill stats

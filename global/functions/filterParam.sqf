@@ -11,7 +11,6 @@ private ['_arr'];
 // 	(_this select 2)
 // };
 
-
 // if ((_this select 1) > (count (_this select 0)) - 1) exitWith {
 // 	(_this select 2)
 // };

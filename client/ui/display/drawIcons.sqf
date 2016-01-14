@@ -12,7 +12,8 @@
 				_arr deleteAt _forEachIndex; 
 			};
 			_x call _code;
-		} foreach _arr;
+			false
+		} count _arr;
 
 	};
 
@@ -76,15 +77,9 @@
 		{
 
 			if !(GW_INVEHICLE && GW_ISDRIVER) exitWith { false };
-
-			_pos = _x getVariable ['GW_CachedPos', nil];
-			if (isNil "_pos") then {
-				_pos = (ASLtoATL visiblePositionASL _x);
-				_x setVariable ['GW_CachedPos', _pos];
-			};
-
+			_pos = (_x select 1);
 			if (_pos distance GW_CURRENTVEHICLE > 6) exitWith { false };
-			[_x, GW_CURRENTVEHICLE] call nitroPad;
+			[(_x select 0), GW_CURRENTVEHICLE] call nitroPad;
 		}
 	],
 
@@ -92,15 +87,9 @@
 		flamePads,
 		{
 			if !(GW_INVEHICLE && GW_ISDRIVER) exitWith { false };
-
-			_pos = _x getVariable ['GW_CachedPos', nil];
-			if (isNil "_pos") then {
-				_pos = (ASLtoATL visiblePositionASL _x);
-				_x setVariable ['GW_CachedPos', _pos];
-			};
-
+			_pos = (_x select 1);
 			if (_pos distance GW_CURRENTVEHICLE > 8) exitWith { false };
-			[_x, GW_CURRENTVEHICLE] call flamePad;
+			[(_x select 0), GW_CURRENTVEHICLE] call flamePad;
 
 		}
 	]
@@ -149,12 +138,13 @@ if (!isNil "GW_CURRENTZONE") then {
 					[_pos, _icon, [], 50] call drawServiceIcon;		
 				};
 
-			} foreach _areas;
-
+				false
+			} count _areas;
+			FALSE
 		} count [	
 			[2.2, vehicleTerminals, saveAreaIcon],
 			[1.7, buySigns, buyAreaIcon]
-		] > 0;
+		];
 
 		// Additionally draw icons for vehicles that are hidden
 		{
@@ -190,23 +180,20 @@ if (!isNil "GW_CURRENTZONE") then {
 			_type = _x select 4;
 
 			{		
-				_pos = _x getVariable ['GW_CachedPos', nil];
-				if (isNil "_pos") then {
-					_pos = _x modelToWorldVisual [0,0,_heightOffset];
-					_x setVariable ['GW_CachedPos', _pos];
-				};
-
+				_pos = +(_x select 1);
+				_pos set [2, (_pos select 2) + _heightOffset];
 				if ((_pos distance GW_CURRENTPOS) < 500) then {
 					[_pos, _icon, _activeIcons, 500, _type] call drawServiceIcon;		
 				};
+				false
+			} count _areas;
 
-			} foreach _areas;
-
+			false
 		} count [	
 			[1, reloadAreas, rearmIcon, [activeIconA, activeIconB, activeIconC], "REARM" ],
 			[1, repairAreas, repairIcon, [activeIconA, activeIconB, activeIconC], "REPAIR" ],
 			[1, refuelAreas, refuelIcon, [activeIconA, activeIconB, activeIconC], "REFUEL" ]
-		] > 0;
+		];
 
 	};
 

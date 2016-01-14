@@ -281,8 +281,7 @@ returnToZone =  compile preprocessFile "client\functions\returnToZone.sqf";
 setCurrentZone = compile preprocessFile "client\functions\setCurrentZone.sqf";	
 buildZoneBoundary = compile preprocessFile "client\functions\buildZoneBoundary.sqf";	
 removeZoneBoundary = compile preprocessFile "client\functions\removeZoneBoundary.sqf";	
-cacheZoneBoundary = compile preprocessFile "client\functions\cacheZoneBoundary.sqf";	
-createBoundary = compile preprocessFile "client\functions\createBoundary.sqf";	
+cacheZoneBoundary = compile preprocessFile "client\functions\cacheZoneBoundary.sqf";
 
 // Sponsorship
 giveSponsor = compile preprocessFile "client\functions\giveSponsor.sqf";	

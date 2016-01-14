@@ -12,6 +12,10 @@ waitUntil { !isNull _unit && (alive _unit) };
 
 45000 cutText ["", "BLACK IN", 1.5]; 
 
+if (GW_BOUNDARIES_ENABLED) then { 
+	[] spawn { ["workshopZone"] call buildZoneBoundary;  };
+};
+
 removeAllActions _unit;
 removeAllWeapons _unit;
 removeVest _unit;
@@ -84,8 +88,6 @@ if(!isNil "_tx") then {
 	if (GW_DEV_BUILD) then { _tx = 'test'; };
 	[[_unit,_tx],"setPlayerTexture",true,false] call bis_fnc_mp;
 };
-
-playerPos = (ASLtoATL visiblePositionASL _unit);
 
 // Reset pp
 "dynamicBlur" ppEffectEnable false; 
@@ -178,9 +180,6 @@ waitUntil { (time > _timeout) || GW_DEATH_CAMERA_ACTIVE };
 _curZone = ([player] call findCurrentZone);
 [_curZone] call setCurrentZone;
 
-if (_curZone == "workshopZone" && GW_BOUNDARIES_ENABLED) then { 
-	["workshopZone"] call buildZoneBoundary; 
-};
 
 // Clear/Unsimulate unnecessary items near workshop
 {

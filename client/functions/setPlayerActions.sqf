@@ -16,7 +16,7 @@ _unit addAction[liftVehicleFormat, {
 
 // Show changes to vehicle
 _unit addAction[showVehicleFormat, {	
-	([(_this select 0), 8, 360] call validNearby) call toggleHidden;
+	([(_this select 0), 8, 180] call validNearby) call toggleHidden;
 }, [], 0, false, false, "", "( (GW_CURRENTZONE == 'workshopZone') && 
 
 	{
@@ -27,11 +27,11 @@ _unit addAction[showVehicleFormat, {
 		true
 	}
 
-&& !GW_EDITING && (vehicle player) == player && (!isNil { [_target, 8, 90] call validNearby }) && !GW_LIFT_ACTIVE && !(GW_PAINT_ACTIVE) && !GW_TAG_ACTIVE )"];	
+&& !GW_EDITING && (vehicle player) == player && (!isNil { [_target, 8, 180] call validNearby }) && !GW_LIFT_ACTIVE && !(GW_PAINT_ACTIVE) && !GW_TAG_ACTIVE )"];	
 
 // Hide changes to vehicle
 _unit addAction[hideVehicleFormat, {	
-	([(_this select 0), 8, 360] call validNearby) call toggleHidden;
+	([(_this select 0), 8, 180] call validNearby) call toggleHidden;
 }, [], 0, false, false, "", "( (GW_CURRENTZONE == 'workshopZone') && 
 
 	{
@@ -42,11 +42,11 @@ _unit addAction[hideVehicleFormat, {
 		true		
 	}
 
-&& !GW_EDITING && (vehicle player) == player && (!isNil { [_target, 8, 90] call validNearby }) && !GW_LIFT_ACTIVE && !(GW_PAINT_ACTIVE) && !GW_TAG_ACTIVE )"];	
+&& !GW_EDITING && (vehicle player) == player && (!isNil { [_target, 8, 180] call validNearby }) && !GW_LIFT_ACTIVE && !(GW_PAINT_ACTIVE) && !GW_TAG_ACTIVE )"];	
 
 // Open the settings
 _unit addAction[settingsVehicleFormat, {
 
 	[([(_this select 0), 8, 180] call validNearby), (_this select 0)] spawn settingsMenu;
 
-}, [], 0, false, false, "", "( !GW_EDITING && (vehicle player) == player && (!isNil { [_target, 8, 90] call validNearby }) && !GW_LIFT_ACTIVE && !(GW_PAINT_ACTIVE) && !GW_TAG_ACTIVE )"];		
+}, [], 0, false, false, "", "( !GW_EDITING && (vehicle player) == player && (!isNil { [_target, 8, 180] call validNearby }) && !GW_LIFT_ACTIVE && !(GW_PAINT_ACTIVE) && !GW_TAG_ACTIVE )"];		

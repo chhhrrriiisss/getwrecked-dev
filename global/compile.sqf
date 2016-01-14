@@ -293,13 +293,13 @@ GW_globalFunctions = [
 [] call parseZones;
 
 // Pre-compile location arrays
-reloadAreas = ['reloadArea'] call findAllObjects;
-repairAreas = ['repairArea'] call findAllObjects;
-refuelAreas = ['refuelArea'] call findAllObjects;
+reloadAreas = ['reloadArea', false, true] call findAllObjects;
+repairAreas = ['repairArea', false, true] call findAllObjects;
+refuelAreas = ['refuelArea', false, true] call findAllObjects;
 saveAreas = ['saveArea'] call findAllObjects;
 tempAreas = ['tempArea'] call findAllObjects;
 spawnAreas = ['spawnArea'] call findAllObjects;
 buySigns = ['buySign'] call findAllObjects;
 vehicleTerminals = ['vehicleTerminal'] call findAllObjects;
-nitroPads = ['nitroPad'] call findAllObjects;
-flamePads = ['flamePad'] call findAllObjects;
+nitroPads = ['nitroPad', false, true] call findAllObjects;
+flamePads = ['flamePad', false, true] call findAllObjects;

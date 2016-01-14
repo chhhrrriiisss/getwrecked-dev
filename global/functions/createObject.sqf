@@ -8,7 +8,8 @@ private ['_pos', '_dir', '_type', '_cycle', '_collide', '_handlers', '_data'];
 
 _pos = [_this, 0, [0,0,0], [[]]] call filterParam;
 _type = [_this, 1, '', ['']] call filterParam;
-_dir = [_this, 2, 0, [0, []]] call filterParam;
+_dir = if (isNil "_dir") then { 0 } else { (_this select 2) };
+
 _cycle = [_this, 3, 0, [0]] call filterParam;
 _collide = [_this, 4, "NONE", [""]] call filterParam;
 _handlers = [_this, 5, true, [false]] call filterParam;

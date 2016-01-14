@@ -58,7 +58,7 @@ GW_MINLOCKTIME = 3; // Minimum amount of time to lock onto a target (default: 3)
 GW_LOCKON_TOLERANCE = 10; // Difference in angle needed to acquire target (default: 10)
 
 // Deployable items
-GW_MAXDEPLOYABLES = 50; // Per player (default :50)
+GW_MAXDEPLOYABLES = 25; // Per player (default :25)
 
 // Render distance of effects
 GW_WORKSHOP_VISUAL_RANGE = 300;

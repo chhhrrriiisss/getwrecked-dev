@@ -2,10 +2,10 @@ if (!isServer) exitWith {};
 
 {    
 
-	_p = createVehicle ["UserTexture10m_F", (ASLtoATL getPosASL _x), [], 0, 'CAN_COLLIDE'];            
+	_p = createVehicle ["UserTexture10m_F", (_x select 1), [], 0, 'CAN_COLLIDE'];            
 	_p setObjectTextureGlobal [0,"client\images\stripes_fade.paa"]; 
-	_p setPos (_x modelToWorld [2.4,5.8,-0.3]);
-	[_p, [-90,0,(getDir _x)]] call setPitchBankYaw;  
+	_p setPos ((_x select 0) modelToWorld [2.4,5.8,-0.3]);
+	[_p, [-90,0,(getDir (_x select 0))]] call setPitchBankYaw;  
 
 	false
 	
@@ -13,7 +13,7 @@ if (!isServer) exitWith {};
 
 
 {
-	_pad = _x;
+	_pad = (_x select 0);
 	_pos = _pad modelToWorld [0,0,0];
 	_pos set [2, 0];
 	_pad setVectorUp (surfaceNormal _pos);

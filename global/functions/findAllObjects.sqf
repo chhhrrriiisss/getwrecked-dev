@@ -4,10 +4,11 @@
 //      Return: Array (position data)
 //
 
-private ["_stem", "_arr", "_endIf", "_o"];
+private ["_stem", "_arr", "_endIf", "_o", "_p", "_storePos"];
 
 _stem = [_this,0, "", [""]] call filterParam;
 _endIf = [_this,1, false, [false]] call filterParam;	 
+_storePos = [_this,2, false, [false]] call filterParam;	
 
 if (_stem == "") exitWith { [] };
 
@@ -21,6 +22,13 @@ for "_i" from 0 to 50 step 1 do {
 
 	if (!_isObject && _endIf) exitWith {}; // End early if the chain is incomplete
 	if (!_isObject && !_endIf) then {} else {			
+
+		// Optionally cache the position
+		if (_storePos) exitWith { 
+			_p = if (isServer) then { (ASLtoATL getPosASL _o) } else { (ASLtoATL visiblePositionASL _o) };
+			_arr pushback [_o, _p];
+		};
+
 		_arr pushback _o;	
 	};
 

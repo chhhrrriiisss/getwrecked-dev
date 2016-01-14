@@ -27,9 +27,8 @@ _index = -1;
 if (count _boundaries == 0 || _index == -1) exitWith { ['Bad zone index or object array.'] call _onExit; };
 
 {
-	deleteVehicle _x;
-	false
-} count _boundaries;
+	deleteVehicle _x;	
+} foreach _boundaries;
 
 (GW_ZONE_BOUNDARIES select _index) set [3, []];
 
