@@ -75,7 +75,7 @@
 		nitroPads,
 		{
 
-			if !(GW_INVEHICLE && GW_ISDRIVER) exitWith { false };
+			if !(GW_INVEHICLE && GW_ISDRIVER || GW_CURRENTZONE == "globalZone") exitWith { false };
 			_pos = (_x select 1);
 			if (_pos distance GW_CURRENTVEHICLE > 6) exitWith { false };
 			[(_x select 0), GW_CURRENTVEHICLE] call nitroPad;
@@ -85,7 +85,7 @@
 	[
 		flamePads,
 		{
-			if !(GW_INVEHICLE && GW_ISDRIVER) exitWith { false };
+			if !(GW_INVEHICLE && GW_ISDRIVER || GW_CURRENTZONE == "globalZone") exitWith { false };
 			_pos = (_x select 1);
 			if (_pos distance GW_CURRENTVEHICLE > 8) exitWith { false };
 			[(_x select 0), GW_CURRENTVEHICLE] call flamePad;
@@ -165,7 +165,7 @@ if (!isNil "GW_CURRENTZONE") then {
 
 	};
 
-	if (GW_CURRENTZONE != "workshopZone") then {
+	if (GW_CURRENTZONE != "workshopZone" && GW_CURRENTZONE != "globalZone") then {
 
 		// Draw a 3D icon for each service point
 		{		
@@ -206,13 +206,29 @@ if (GW_CURRENTZONE != "globalZone") exitWith {};
 	_completedArray = (_x select 1);
 	_totalCheckpoints = (count GW_CHECKPOINTS) + (count GW_CHECKPOINTS_COMPLETED);
 	_currentCheckpoint = [(_totalCheckpoints - (count GW_CHECKPOINTS)) + 1, 0, _totalCheckpoints] call limitToRange;
-
-	// systemchat format['%1 / %2', _totalCheckpoints, _currentCheckpoint];
+	_divider = '/';
+	IF (_currentCheckpoint == _totalCheckpoints) then { 
+		_currentCheckpoint = 'FINISH';
+		_totalCheckpoints = '';
+		_divider = '';
+	};
 
 	_arr = (_x select 0);
 	{		
 
-		_pos =  if (_x isEqualType objNull) then { _x modelToWorldVisual [0, 0, 8]; } else { (_x select 0) };
+		// Use cached position if available
+		_pos = if (_x isEqualType objNull)  then {
+
+			_cachedPos = _x getVariable ['GW_CachedPos', nil];
+			if (!isNil "_cachedPos") exitWith { _cachedPos };
+
+			_pos = _x modelToWorldVisual [0, 0, 8];
+			_x setVariable ['GW_CachedPos', _pos];
+			_pos
+
+		} else {
+			(_x select 0)
+		};
 
 		_dist = (GW_CURRENTVEHICLE distance _pos);
 		_alpha = [1 - (_dist / 1000), 0.05, 1] call limitToRange;
@@ -226,11 +242,6 @@ if (GW_CURRENTZONE != "globalZone") exitWith {};
 		_alpha = if (_forEachIndex == 0 && !_completedArray) then { 1 } else { _alpha };
 
 		if (_alpha <= 0) then {} else {
-
-			// _alpha = if (_completedArray) then { _alpha } else {			
-			// 	if (_forEachIndex > 0) exitWith { (_alpha/2) };
-			// 	_alpha
-			// };
 
 			_size = [2.5 - (_dist / 100), 1.2, 2.5] call limitToRange;
 			_fontSize = if (_completedArray) then { ([(0.06 - (_dist / 10000)), (0.03), (0.06)] call limitToRange)  } else { (0.032) };
@@ -252,7 +263,7 @@ if (GW_CURRENTZONE != "globalZone") exitWith {};
 
 				if (_forEachIndex > 0) exitWith { '' };
 				_dist = if (_dist > 5000) then { format['%1km', [_dist / 1000, 0] call roundTo ] } else { format['%1m', [_dist, 0] call roundTo ]};
-				(format['%1/%2 [%3]',_currentCheckpoint, _totalCheckpoints, _dist]) 
+				(format['%1%2%3 [%4]',_currentCheckpoint, _divider, _totalCheckpoints, _dist]) 
 			};
 
 			drawIcon3D [_icon,[255,255,255,_alpha],_pos,_size * 1.03,_size * 1.03,0, _index,0, _fontSize, "PuristaMedium"];			

@@ -239,6 +239,7 @@ GW_globalFunctions = [
 	['dirToVector', nil],
 	['roundTo', nil],
 	['formatTimeStamp', nil],
+	['getMax', nil],
 
 	// Module functions
 	['smokeBomb', 'client\vehicles\attachments\'],

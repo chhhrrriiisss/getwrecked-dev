@@ -60,6 +60,14 @@ if ("locked" == _statusEffect) then {
 };
 
 _commandToLoop = switch (true) do { 
+	
+	case ('noammo' == _statusEffect): {{
+		_this setVariable ['ammo', 0];
+	}};
+
+	case ('nofuel' == _statusEffect): {{
+		_this setVariable ['fuel', 0];
+	}};
 
 	case ("cloak" == _statusEffect): {{
 

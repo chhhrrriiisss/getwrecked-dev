@@ -218,7 +218,7 @@ if ((count _cpArray) == 0 && time <= (_timeout + 0.1) ) then {
 		false
 	] call bis_fnc_mp;	
 
-	[] execVM 'testfinishcamera.sqf';
+	//[] execVM 'testfinishcamera.sqf';
 
 	// _timeStamp = (time - _startTime) call formatTimeStamp;
 	// _text = format["<br /><t size='3.3' color='#ffffff' align='center' valign='middle' shadow='0'>+%1</t>", _timeStamp];
@@ -254,14 +254,16 @@ if (alive GW_CURRENTVEHICLE) then {
 
 	// Show title if we have a time or DNC
 	waitUntil { Sleep 0.1; (isNull (findDisplay 95000)) };
-	[ format["<br /><t size='3.3' color='#ffffff' align='center' valign='middle' shadow='0'>+%1</t>", _timeStamp], "SPECTATE", [false, { true }] , { true }, 9999, true, { closeDialog 0; true }] call createTitle;
+	[ format["<br /><t size='3.3' color='#ffffff' align='center' valign='middle' shadow='0'>+%1</t>", _timeStamp], "RESPAWN AT WORKSHOP", [false, { true }] , { true }, 9999, true, { closeDialog 0; true }] call createTitle;
 
 	GW_FLYBY_ACTIVE = FALSE;
 
 	9999 cutText ["", "BLACK OUT", 0.5];
 
 	waitUntil { Sleep 0.5; (isNull (findDisplay 95000)) };
-	[_vehiclesArray] execVM 'testspectatorcamera.sqf';
+
+	GW_CURRENTVEHICLE call destroyInstantly;
+	// [_vehiclesArray] execVM 'testspectatorcamera.sqf';
 
 };
 

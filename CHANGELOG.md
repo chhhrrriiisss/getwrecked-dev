@@ -1,5 +1,5 @@
 # [Get Wrecked](http://getwrecked.info) Changelog
-## Last Updated: [18-12-2015] ##
+## Last Updated: [16-01-2016] ##
 
 Note: Some changes that are deemed spoilers are hidden from this log. 
 (WIP) Indicates items that may not be fully functional and are only partially implemented.
@@ -7,6 +7,7 @@ Items without Fixed/Added/Removed proceeding are typically balance changes.
 
 **v0.8.2 - v0.8.5** [Closed alpha release]
 
+- Added Race editor and race mode (this feature is very Alpha and VERY subject to change)
 - Added FlamePads to map
 - Added 'Loading' text to vehicle preview
 - Added 'Crash Test Dummy' texture for dev builds
@@ -34,10 +35,12 @@ Items without Fixed/Added/Removed proceeding are typically balance changes.
 - Damage now differs between Battle / Race zones
 - Magnetic Coil now 50% less power/range in race zones
 - Group management added - Use Insert (Default) to access group management (friendly fire is still enabled)
-- Group global keybind added (open settings menu to reconfigure)
+- Group global keybind added (open settings menu to configure)
 - Mines can now be dropped while airborne
 - Warning icons for mines and caltrops, now only added for first item in the group
+- Snapping now aligns to axis of matching objects (rotation align currently disabled)
 
+- Fixed Suspended vehicles no longer drop altitude when attaching/detaching objects
 - Fixed Death camera sometimes triggering multiple times consecutively
 - Fixed Settings menu keybind should now work for vehicles nearby the player
 - Fixed HUD not fading in correctly if deploying in first person
@@ -57,7 +60,10 @@ Items without Fixed/Added/Removed proceeding are typically balance changes.
 * Known issues *
 - Occasional param errors due to changes in 1.54 turn off -showscripterrors to remove these
 - Race Mode is WIP, largely incomplete and only working in a demonstrative capacity
-- Suspended vehicles sometimes appear misaligned from their attached parts
+- Attaching items to suspended vehicles often doesn't show the correct rotation until the vehicle is moved
+- Vehicles that are suspended have their direction always set to 0
+- Low FPS while using snapping tools
+- Key Binds dont save correctly if you close the settings menu too quickly after setting a bind
 
 **v0.8.2c** [1.48 Compatibility - Public alpha release]
 

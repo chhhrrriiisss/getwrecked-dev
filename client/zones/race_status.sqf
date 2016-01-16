@@ -34,8 +34,9 @@ if (_raceHost == (name player)) then {
 	_buttonCondition = { (([GW_CURRENTRACE] call checkRaceStatus) == 1)  }; // When TRUE show button
 };
 
+
 _success = 
-["<br /><br /><t size='3' color='#ffffff' align='center'>WAITING FOR PLAYERS</t>", 
+["<br /><br /><t size='3' color='#ffffff' align='center'>WAITING FOR SERVER</t>", 
 	_buttonString, 
 	[
 		false, 
@@ -43,6 +44,31 @@ _success =
 	], 
 	{  
 		_rS = [GW_CURRENTRACE] call checkRaceStatus; 
+
+		_vs = (getpos player) nearEntities [["Car"], 300];
+		{
+			_isVehicle = _x getVariable ['isVehicle', false];
+			_hasDriver = !isNull (driver _x);
+			if (!_isVehicle || !_hasDriver || !alive _x) then { _v deleteAt _forEachIndex; };
+			false
+		} count _vs;
+		
+		_textToParse = if (_rS == 1) then {
+
+			"<br /><br /><t size='3' color='#ffffff' align='center'>REACHED MINIMUM PLAYERS</t>"
+			
+		} else {
+
+			if (count _vs > 1) exitWith {
+				(format["<br /><br /><t size='3' color='#ffffff' align='center'>%1 PLAYERS FOUND</t>", count _vs])
+			};
+
+			"<br /><br /><t size='3' color='#ffffff' align='center'>WAITING FOR PLAYERS</t>"
+		};
+
+		_this ctrlSetStructuredText parseText (_textToParse);
+		_this ctrlCommit 0;
+
 		((_rS != 2) && (_rS != -1))  // While TRUE keep title up
 	}, 
 	60,

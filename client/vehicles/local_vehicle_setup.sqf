@@ -52,7 +52,7 @@ if (isNil "_meta") then {} else {
     };
 
     if (!isNil "_creator") then {        
-        _vehicle setVariable ['creator', _creator, true];
+        _vehicle setVariable ['creator', _creator];
     };
 
     // Restore previous fuel and ammo

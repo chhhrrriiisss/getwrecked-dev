@@ -19,8 +19,6 @@ _list = ((findDisplay 92000) displayCtrl 92001);
 
 // };
 
-_selectedRow = lnbCurSelRow _list;
-
 ctrlShow[92001, true]; 
 
 lnbClear _list;
@@ -169,5 +167,3 @@ _list lnbAddRow["", "", " "];
 call addReservedIndex;
 
 _list ctrlSetTooltip "Double click, then press key to set bind.";
-
-_list lnbSetCurSelRow _selectedRow;

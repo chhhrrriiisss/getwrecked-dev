@@ -24,7 +24,7 @@ disableSerialization;
 _list = ((findDisplay 92000) displayCtrl 92001);
 _list lnbSetColor [_index, 1, [1,0,0,1]];
 
-if (_index in reservedIndexes) exitWith { _list lnbSetCurSelRow (((lnbSize 92001) select 0) -1); };
+if (_index in reservedIndexes) exitWith { _list lnbSetCurSelRow _index; };
 
 // Check if we're selecting the mouse icon rather than the keybind area
 if (!isNil "GW_MOUSEX" && !isNil "GW_MOUSEY" && { GW_MOUSEX > 0.4 } ) then {
@@ -90,3 +90,5 @@ if (!isNil "GW_MOUSEX" && !isNil "GW_MOUSEY" && { GW_MOUSEX > 0.4 } ) then {
 	GW_KEYBIND_ACTIVE = false;
 
 };
+
+ _list lnbSetCurSelRow _index;

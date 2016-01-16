@@ -106,37 +106,33 @@ GW_CHECKPOINTS_COMPLETED = [];
 	GW_CHECKPOINTS pushBack _c;
 
 	{
-		_t = "UserTexture10m_F" createVehicleLocal _cPos; 
-		_t setObjectTextureGlobal [0,"client\images\stripes_fade.paa"]; 
-		_offsetPos = (_cp modelToWorldVisual _x);
-		_offsetPos set [2, 0.1];
-		_t setPos _offsetPos;		
+		if ((surfaceNormal (_cp modelToWorldVisual _x)) distance [0,0,1] > 0.1) then {} else {
 
-		if ((surfaceNormal _offsetPos) distance [0,0,1] > 0.1) then {
-			hideObject _t;
-		} else {
+			_t = "UserTexture10m_F" createVehicleLocal _cPos; 
+			_t setObjectTextureGlobal [0,"client\images\stripes_fade.paa"]; 
+			_offsetPos = (_cp modelToWorldVisual _x);
+			_offsetPos set [2, 0.1];
+			_t setPos _offsetPos;	
+			
 			[_t, [-90,0,[(_dirNext+180)] call normalizeAngle]] call setPitchBankYaw;  
+			hideObject _t;	
+
+			_t enableSimulationGlobal false;
+			_objArray pushBack _t;
+
 		};
-
-		_t enableSimulationGlobal false;
-		_objArray pushBack _t;
-
-
-	} foreach [
+		false
+	} count [
 		[10,-4.8,0],
 		[0,-4.8,0],
 		[-10,-4.8,0]
-
 	];
 	
 	_cpArray pushBack [_cp, _dirNext, _objArray];
-
+	
 } foreach _points;
 
-// Otherwise just start
-// GW_CURRENTVEHICLE setFuel 1;
-// GW_CURRENTVEHICLE engineOn true;
-// [GW_CURRENTVEHICLE, ["noshoot", "nouse"], 9999] call addVehicleStatus;
+[GW_CURRENTVEHICLE, ["noshoot", "nouse", "noammo", "nofuel"], 9999] call addVehicleStatus;
 
 _maxTime = [_this, 1, 15, [0]] call bis_fnc_param;
 _timeout = time + _maxTime;
@@ -154,17 +150,30 @@ for "_i" from 0 to 1 step 0 do {
 
 	_targetCp = (_cpArray select 0) select 0;
 
-	// Unhide circle for current active CP
-	_targetCpCircle= (((_cpArray select 0) select 2) select 1);
-	if (isObjectHidden _targetCpCircle) then { _targetCpCircle hideObject false; };
+	// Unhide all objects for active CP
+	{
+		if (isObjectHidden _x && typeOf _x != "Sign_sphere100cm_F") then { _x hideObject false; };
+	} count ((_cpArray select 0) select 2);
 	
 
 	if ((GW_CURRENTVEHICLE distance _targetCp) < _distTolerance) then {
 
 		// Remove shooting/use restrictions after first WP
-		// if ((count GW_CHECKPOINTS_COMPLETED) == 0) then {
-		// 	[GW_CURRENTVEHICLE, ["noshoot", "nouse"]] call removeVehicleStatus;
-		// };
+		if ((count GW_CHECKPOINTS_COMPLETED) == 0) then {
+			[GW_CURRENTVEHICLE, ["noshoot", "nouse", "noammo", "nofuel"]] call removeVehicleStatus;
+			['WEAPONS ENABLED!', 2, warningIcon, nil, "slideDown", "beep_warning"] spawn createAlert; 
+		};
+
+		// Give vehicle ammo/fuel equivalent to the percentage of total checkpoints complete
+		_percentComplete = if ((count GW_CHECKPOINTS -1) == 0) then { 1 } else { (count GW_CHECKPOINTS_COMPLETED / count GW_CHECKPOINTS) };
+
+		_maxAmmo = GW_CURRENTVEHICLE getVariable ["maxAmmo", 1];
+		_targetAmmo = [_maxAmmo * _percentComplete, 1] call roundTo;
+		GW_CURRENTVEHICLE setVariable ["ammo", _targetAmmo];
+		
+		_maxFuel = GW_CURRENTVEHICLE getVariable ["maxFuel", 1];
+		_targetFuel = [_maxFuel * _percentComplete, 1] call roundTo;
+		GW_CURRENTVEHICLE setVariable ["fuel", _targetFuel];
 
 		// Requires correct orientation?
 		_correctDir = (_cpArray select 0) select 1;
@@ -173,7 +182,7 @@ for "_i" from 0 to 1 step 0 do {
 		//if (_difDir > _dirTolerance) exitWith {};
 
 		_group = ((_cpArray select 0) select 2);
-		{ deleteVehicle _x; } foreach _group;
+		{ deleteVehicle _x; false } count _group;
 
 		_timeStamp = (time - _startTime) call formatTimeStamp;
 		_timeStamp = format['+%1', _timeStamp];
@@ -218,7 +227,7 @@ if ((count _cpArray) == 0 && time <= (_timeout + 0.1) ) then {
 		false
 	] call bis_fnc_mp;	
 
-	[] execVM 'testfinishcamera.sqf';
+	//[] execVM 'testfinishcamera.sqf';
 
 	// _timeStamp = (time - _startTime) call formatTimeStamp;
 	// _text = format["<br /><t size='3.3' color='#ffffff' align='center' valign='middle' shadow='0'>+%1</t>", _timeStamp];
@@ -254,14 +263,19 @@ if (alive GW_CURRENTVEHICLE) then {
 
 	// Show title if we have a time or DNC
 	waitUntil { Sleep 0.1; (isNull (findDisplay 95000)) };
-	[ format["<br /><t size='3.3' color='#ffffff' align='center' valign='middle' shadow='0'>+%1</t>", _timeStamp], "SPECTATE", [false, { true }] , { true }, 9999, true, { closeDialog 0; true }] call createTitle;
+	[ format["<br /><t size='3.3' color='#ffffff' align='center' valign='middle' shadow='0'>+%1</t>", _timeStamp], "FINISH", [false, { true }] , { true }, 9999, true, { closeDialog 0; true }] call createTitle;
 
 	GW_FLYBY_ACTIVE = FALSE;
+
+	GW_CURRENTVEHICLE call destroyInstantly;
 
 	9999 cutText ["", "BLACK OUT", 0.5];
 
 	waitUntil { Sleep 0.5; (isNull (findDisplay 95000)) };
-	[_vehiclesArray] execVM 'testspectatorcamera.sqf';
+
+	//[_vehiclesArray] execVM 'testspectatorcamera.sqf';
+
+	
 
 };
 

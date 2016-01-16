@@ -11,19 +11,17 @@ _unit = [_this,1, objNull, [objNull]] call filterParam;
 
 if (isNull _vehicle || isNull _unit) exitWith {};
 
+
 GW_LIFT_ACTIVE = true;
 GW_LIFT_VEHICLE = _vehicle;
 GW_EDITING = false;
 
-[		
-	[
-		_vehicle,
-		true
-	],
-	"setObjectSimulation",
-	false,
-	false 
-] call bis_fnc_mp;
+detach _vehicle;
+_timeout = time + 3;
+waitUntil {
+	((time > _timeout) || isNull attachedTo _vehicle)
+};
+	
 
 // Add the drop vehicle action
 removeAllActions _unit;
@@ -84,30 +82,28 @@ for "_i" from 0 to 1 step 0 do {
 if ( GW_LIFT_VEHICLE getVariable ['GW_suspend', true] ) then {
 
 	_vehicle setVariable ['GW_IGNORE_SIM', true];
-	[		
-		[
-			_vehicle,
-			false
-		],
-		"setObjectSimulation",
-		false,
-		false 
-	] call bis_fnc_mp;
+
+	// Find the closest pad and use it to attach the vehicle to
+	_pos = (ASLtoATL visiblePositionASL player); 
+	_closest = [saveAreas, _pos] call findClosest; 
+
+	_vect = [_vehicle, _closest] call getVectorDirAndUpRelative;
+	_vehicle attachTo [_closest];
+
+	_timeout = time + 3;
+	waitUntil {
+		((time > _timeout) || !isNull attachedTo _vehicle)
+	};
+
+	_vehicle setVectorDirAndUp _vect;
+	_vehicle setVectorUp [0,0,1];
+
+	//_vehicle setDir ([_dir - getDir _closest] call normalizeAngle);
 
 } else {
 
-	_vehicle setVariable ['GW_IGNORE_SIM', false];
-	
-	[		
-		[
-			_vehicle,
-			true
-		],
-		"setObjectSimulation",
-		false,
-		false 
-	] call bis_fnc_mp;
-
+	_vehicle setVariable ['GW_IGNORE_SIM', false];	
+	detach _vehicle;
 };
 
 GW_LIFT_ACTIVE = false;

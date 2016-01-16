@@ -42,7 +42,6 @@ if (count _contents == 0) exitWith {
 
 		_index = _list lnbAddRow[format['%1x', _quantity],"", _name, ""];
 
-		systemchat format['%1', _index];
 		lbSetTooltip [98001, _index, "TESSSST"];
 
 		lnbSetData [98001, [((((lnbSize 98001) select 0)) -1), 0], _class];

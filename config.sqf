@@ -13,6 +13,10 @@ GW_DEV_BUILD = true;
 // Currently non-functional
 GW_LEADERBOARD_ENABLED = false;
 
+// Player global statistics tracking (default: true)
+// Currently non-functional
+GW_GLOBAL_STATS_ENABLED = false;
+
 // Whether or not zone boundaries should be visible (turning this OFF can improve client FPS)
 GW_BOUNDARIES_ENABLED = true;
 

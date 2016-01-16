@@ -108,12 +108,10 @@ if ( !isNull attachedTo _orig ) then {  detach _orig; };
 _obj = _orig;
 if (_forceAttach) then {} else { GW_EDITING = false; };
 
-_wasSimulated = (simulationEnabled _veh);
-
 // Disable simulation
 [		
 	[
-		[_obj, _veh],
+		_obj,
 		false
 	],
 	"setObjectSimulation",
@@ -124,7 +122,7 @@ _wasSimulated = (simulationEnabled _veh);
 _timeout = time + 3;
 waitUntil{
 	Sleep 0.1;
-	( (time > _timeout) || ( !(simulationEnabled _veh) && !(simulationEnabled _obj)  )  )
+	( (time > _timeout) || !(simulationEnabled _obj) )
 };
 
 _vect = [_obj, _veh] call getVectorDirAndUpRelative;
@@ -163,32 +161,6 @@ _obj setVariable ['GW_Owner', name player, true];
 // If its being force added ignore message
 if (_forceAttach) then {} else {
 	[localize "str_gw_object_attached", 1, successIcon, nil, "slideDown", ""] spawn createAlert;	
-};
-
-
-if (_wasSimulated) then {
-	// Update the direction by re-enabling simulation on the vehicle
-	[		
-		[
-			_veh,
-			true
-		],
-		"setObjectSimulation",
-		false,
-		false 
-	] call bis_fnc_mp;
-
-};
-
-// If it wasn't simulated, briefly toggle simulation so we see the update
-if (!_wasSimulated) then {	
-	_veh enableSimulation true;
-	_timeout = time + 5;
-	waitUntil { (simulationEnabled _veh || time > _timeout) };
-	_prevPos = ASLtoATL visiblePositionASL _veh;
-	Sleep 0.1;
-	_veh enableSimulation false;
-	_veh setPos _prevPos;
 };
 
 // Re-compile vehicle information

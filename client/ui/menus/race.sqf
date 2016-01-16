@@ -105,10 +105,10 @@ startRace = {
 		};
 
 		if (_raceStatus >= 2) exitWith {
-			systemchat 'Race active and spectate only';
+			systemchat 'Race active and not currently joinable.';
 
-			closeDialog 0;
-			[] execVM 'testspectatorcamera.sqf';
+			//closeDialog 0;
+			//[] execVM 'testspectatorcamera.sqf';
 
 		};
 
@@ -220,7 +220,7 @@ selectRace = {
 	_startText = _raceStatus call {
 		if (_this == -1) exitWith { 'START' };
 		if (_this == 0) exitWith { 'JOIN' };
-		If (_this == 2) exitWith { 'SPECTATE' };
+		If (_this == 2) exitWith { 'NOT JOINABLE' };
 		'START'
 	};
 

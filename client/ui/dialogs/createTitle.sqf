@@ -26,6 +26,9 @@ _abortParameters = if ((_this select 2) isEqualType []) then { (_this select 2) 
 _canAbort = [_abortParameters,0, true, [false]] call filterParam;
 _buttonCondition = [_abortParameters,1, { true }, [{}]] call filterParam;
 
+// Testing
+_canAbort = true;
+
 _condition = [_this,3, { true }, [{}]] call filterParam;
 _maxTime = [_this,4, 60, [0]] call filterParam;
 _showBorders = [_this,5, true, [false]] call filterParam;
@@ -53,7 +56,7 @@ _btn ctrlShow true;
 _btn ctrlSetText _buttonString;
 _btn ctrlCommit 0;	
 
-if (call _buttonCondition) then {
+if (_text call _buttonCondition) then {
 	_btn ctrlEnable true;
 	_btn ctrlShow true;
 	_btn CtrlCommit 0;	
@@ -86,19 +89,21 @@ if (!_showBorders) then {
 
 };
 
-for "_i" from 0 to 1 step 0 do {
+for "_i" from 0 to 1 step 0 do {	
 
-	if ( (isNull (findDisplay 95000)) || (time > _timeout) || !(call _condition) || !GW_TITLE_ACTIVE) exitWith {};
+	if (isNull (findDisplay 95000)) exitWith {};
 
-	if (call _buttonCondition) then {		
+	_textValue = if (_textString isEqualType "") then { _textString } else { ([time, _timeout] call _textString) };
+	_text ctrlSetStructuredText parseText ( _textValue );
+	_text ctrlCommit 0;
+
+	if (_text call _buttonCondition) then {		
 		_btn ctrlEnable true;
 		_btn ctrlShow true;
 		_btn CtrlCommit 0;
 	};
 
-	_textValue = if (_textString isEqualType "") then { _textString } else { ([time, _timeout] call _textString) };
-	_text ctrlSetStructuredText parseText ( _textValue );
-	_text ctrlCommit 0;
+	if ((time > _timeout) || !(_text call _condition) || !GW_TITLE_ACTIVE) exitWith {};
 
 	Sleep 0.1;
 };
@@ -106,7 +111,7 @@ for "_i" from 0 to 1 step 0 do {
 // Timer over, tidy up
 showChat true;
 
-_exitWith = if (GW_TITLE_ACTIVE && time > _timeout || !(call _condition) ) then { 
+_exitWith = if (GW_TITLE_ACTIVE && time > _timeout || !(_text call _condition) ) then { 
 	true 
 } else { false };
 

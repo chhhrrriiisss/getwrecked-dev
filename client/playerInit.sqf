@@ -52,10 +52,7 @@ GW_DC_EH = addMissionEventHandler ["HandleDisconnect",{
 	// Remove ownership from any vehicles in workshop
 	_p = (_this select 0);
 	_n = name _p;
-	_o = nearestObjects [getmarkerpos "workshopZone_camera", [], 200];
-
-	pubVar_logDiag = format['%1 disconnected.', _n];
-	publicVariableServer "pubVar_logDiag";
+	_o = nearestObjects [getmarkerpos "workshopZone_camera", [], 200];	
 
 	// Loop through and find vehicles that player used to own
 	{
@@ -89,6 +86,9 @@ GW_DC_EH = addMissionEventHandler ["HandleDisconnect",{
 
 	// Kill the unit
 	_p setDammage 1;
+
+	pubVar_logDiag = format['%1 disconnected.', _n];
+	publicVariableServer "pubVar_logDiag";
 
 }];
 

@@ -34,8 +34,10 @@ _applyBindToObject = {
 		_pos = if ((_x select 1) isEqualType "") then { call compile (_x select 1) } else { (_x select 1) };
 		if ((_class == _objClass) && (_objPos distance _pos) < _tolerance) exitWith {
 			_x set [3, (_this select 2)];
+			FALSE
 		};
-	} foreach (_this select 0);
+		false
+	} count (_this select 0);
 
 };
 
@@ -87,8 +89,8 @@ for "_i" from 0 to _listLength step 1 do {
 						if ((_x select 0) == _tag) then {
 							_x set [1, _key];
 						};
-
-					} Foreach _bindsList;
+						false
+					} count _bindsList;
 
 					GW_SETTINGS_VEHICLE setVariable ["GW_Binds", _bindsList];
 
