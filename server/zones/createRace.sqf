@@ -30,6 +30,7 @@ _meta = (_targetRace select 0);
 _raceName = _meta select 0;
 _minPlayers =  [_meta, 3, 2, [0]] call filterParam; // 1 for testing (2 default)
 _maxWaitPeriod = [_meta, 4, 60, [0]] call filterParam;
+
 _racePoints = _targetRace select 1;
 _raceHost = _targetRace select 2;
 _startPosition = _racePoints select 0;

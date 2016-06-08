@@ -132,6 +132,7 @@ _globalBindsList = [] call listGlobalBinds;
 		if (_this == "ROTATECW") exitWith { [rotateCWIcon, "Rotate CW"] };
 		if (_this == "ROTATECCW") exitWith { [rotateCCWIcon, "Rotate CCW"] };
 		if (_this == "HOLD") exitWith { [cameraRotateIcon, "Hold Rotate"] };
+		if (_this == "INFO") exitWith { [infoIcon, "Item Info"] };
 		[]
 	};
 

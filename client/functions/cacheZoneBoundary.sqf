@@ -66,3 +66,5 @@ private ['_bA', '_c', '_zoneName', '_pointsArray'];
 } foreach GW_ZONE_BOUNDARIES;
 
 GW_ZONE_BOUNDARIES_CACHED = compileFinal "true";
+
+true

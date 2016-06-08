@@ -217,23 +217,8 @@ GW_lastAimpoint = [0,0,0];
 if (!isNil "GW_MM_EH") then { (findDisplay 46) displayRemoveEventHandler ["MouseMoving", GW_MM_EH]; };	
 GW_MM_EH = (findDisplay 46) displayAddEventHandler ["MouseMoving", "[_this, 'mouse'] call triggerLazyUpdate; false;"];
 
-// Looped items that only require a periodic refresh
+// Looped items that only require a periodic, non consistent refresh
 [nil, 'manual'] call triggerLazyUpdate;
-
-// Functions that require a regular refresh
-waitUntil {		
-	
-	Sleep 0.25;
-
-	if (GW_CURRENTZONE != "workshopZone" && GW_INVEHICLE) then {
-
-		// Vehicle status + position updates
-		[] call statusMonitor;
-
-	};
-
-	!alive player
-};
 
 inGameUISetEventHandler['PrevAction', '[_this, "scroll"] call triggerLazyUpdate; false'];
 inGameUISetEventHandler['NextAction', '[_this, "scroll"] call triggerLazyUpdate; false'];
@@ -241,10 +226,10 @@ inGameUISetEventHandler['NextAction', '[_this, "scroll"] call triggerLazyUpdate;
 // Prevent weapon disassembly
 inGameUISetEventHandler ["Action", "
 	
-	if (isNil '_this') exitWith { false };
+	if (isNil '_this') exitWith { false };	
 	if ((_this select 3) in ['DisAssemble', 'Take', 'Put', 'Inventory', 'Get In Gunner']) then {
 		true
-	}
+	};
 "];
 
 if (true) exitWith {};

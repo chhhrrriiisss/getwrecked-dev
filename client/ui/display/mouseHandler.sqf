@@ -23,3 +23,5 @@ setMouseUp = {
 		GW_LMBDOWN = false;
 	};	
 };
+
+true

@@ -20,6 +20,9 @@
 #define TITLE_X 0.5
 #define TITLE_Y 0.17
 
+#define RACE_X 0.5
+#define RACE_Y 0.17
+
 #define CT_PROGRESS 8
 
 class GW_ProgressBar {
@@ -320,10 +323,14 @@ class GW_HUD_Vehicle
 			text = "";
 		};
 
+	
+
 
 	};
 
 	class controls {		
+
+		
 
 		class VehicleHealth : GW_StructuredTextBox
 		{
@@ -521,6 +528,18 @@ class GW_HUD_Vehicle
 
 };
 
+class GW_Race_Opp : GW_StructuredTextBox
+{
+	colorBackground[] = {0,0,0,0};
+	x = (0.25 - 0.02) * safezoneW + safezoneX;
+	y = (0.13 - (GW_BUTTON_HEIGHT) - 0.018) * safezoneH + safezoneY;
+	w = (0.04) * safezoneW;
+	h = (0.036) * safezoneH;
+
+	text = "<img size='1.5' image='client\images\icons\hud\raceOpponent.paa' />";		
+};
+
+
 // Menu
 class GW_HUD
 {
@@ -551,6 +570,93 @@ class GW_HUD
 	};
 
 	class controls {		
+
+		class RaceOpp1 : GW_Race_Opp {	idc = 18031; };
+		class RaceOpp2 : GW_Race_Opp {	idc = 18032; };
+		class RaceOpp3 : GW_Race_Opp {	idc = 18033; };
+		class RaceOpp4 : GW_Race_Opp {	idc = 18034; };
+		class RaceOpp5 : GW_Race_Opp {	idc = 18035; };
+		class RaceOpp6 : GW_Race_Opp {	idc = 18036; };
+		class RaceOpp7 : GW_Race_Opp {	idc = 18037; };
+		class RaceOpp8 : GW_Race_Opp {	idc = 18038; };
+		class RaceOpp9 : GW_Race_Opp {	idc = 18039; };
+		class RaceOpp10 : GW_Race_Opp {	idc = 18040; };
+		class RaceOpp11 : GW_Race_Opp {	idc = 18041; };
+
+		class RacePlayer : GW_StructuredTextBox
+		{
+		
+			idc = 18022;
+			colorBackground[] = {0,0,0,0};
+			x = (0.25 - 0.02) * safezoneW + safezoneX;
+			y = (0.13 - (GW_BUTTON_HEIGHT) - 0.018) * safezoneH + safezoneY;
+			w = (0.04) * safezoneW;
+			h = (0.036) * safezoneH;
+
+			text = "<img size='1.5' image='client\images\icons\hud\racePlayer.paa' />";			
+		};
+
+		class RaceStart : GW_StructuredTextBox
+		{
+
+			idc = 18018;
+			colorBackground[] = {1,1,1,0};
+			x = (0.25 - 0.027) * safezoneW + safezoneX;
+			y = (0.13 - (GW_BUTTON_HEIGHT) - 0.018) * safezoneH + safezoneY;
+			w = (0.03) * safezoneW;
+			h = (0.036) * safezoneH;
+
+			text = "<img size='1.5' image='client\images\icons\menus\startMarker.paa' />";	
+		};
+
+		class RaceFinish : GW_StructuredTextBox
+		{
+
+			idc = 18019;
+			colorBackground[] = {1,1,1,0};
+			x = (0.747) * safezoneW + safezoneX;
+			y = (0.13 - (GW_BUTTON_HEIGHT) - 0.018) * safezoneH + safezoneY;
+			w = (0.03) * safezoneW;
+			h = (0.036) * safezoneH;
+
+			text = "<img size='1.5' image='client\images\icons\menus\finishMarker.paa' />";
+		};
+
+		class RaceBar : GW_StructuredTextBox
+		{
+
+			idc = 18020;
+			colorBackground[] = {1,1,1,0.75};
+			x = (0.25) * safezoneW + safezoneX;
+			y = (0.13 - (GW_BUTTON_HEIGHT) + 0.003) * safezoneH + safezoneY;
+			w = (0.5) * safezoneW;
+			h = (0.003) * safezoneH;
+		};
+
+		class RaceTime : GW_StructuredTextBox
+		{
+	
+			idc = 18021;
+			colorBackground[] = {0,0,0,0};
+			x = (0.5 - 0.05) * safezoneW + safezoneX;
+			y = (0.13 - (GW_BUTTON_HEIGHT) + 0.02 ) * safezoneH + safezoneY;
+			w = (0.1) * safezoneW;
+			h = (0.04) * safezoneH;
+
+			text = "<t size='1.25' color='#ffffff' align='center'>+00:00:00</t>";
+
+			align = "center";
+
+			class Attributes
+			{
+				font = "PuristaMedium";
+				align = "center";
+				shadow = 0;
+			};
+
+		};
+
+		
 
 
 		class StripesTopLeft : GW_StructuredTextBox

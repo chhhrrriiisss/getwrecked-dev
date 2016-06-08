@@ -17,7 +17,7 @@ class Header
 {
 	gameType = SANDBOX; 
 	minPlayers = 1; 
-	maxPlayers = 12; 
+	maxPlayers = 20; 
 };
 
 onPauseScript = "onPause.sqf";
@@ -44,13 +44,7 @@ disableChannels[] = {0,2,3,6};
 #include "client\ui\dialogs\message.hpp"
 #include "client\ui\dialogs\timer.hpp"
 #include "client\ui\dialogs\title.hpp"
-
-class CfgCommands {
-   allowedHTMLLoadURIs[] += {
-      "http://www.bistudio.com/newsfeed/arma3_news.php*",
-      "http://getwrecked-chrisnic.rhcloud.com/*"
-   };
-};
+#include "client\ui\dialogs\overlay.hpp"
 
 class CfgFunctions
 {
@@ -70,6 +64,13 @@ class RscTitles
 class CfgSounds
 {
 	sounds[] = {};
+
+	class china
+	{
+		name = "china";
+		sound[] = {"\client\sounds\china.ogg", 1, 1};
+		titles[] = {};
+	};
 
 	class summon
 	{

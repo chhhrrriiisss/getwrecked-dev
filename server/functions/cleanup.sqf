@@ -111,15 +111,14 @@ executeCleanUp = {
 		{
 			_ignore = _x getVariable ['GW_CU_IGNORE', false];
 			if ( ([_x, _timeout] call checkDeadTimeout) && !_ignore || _manualMode) then {
+
+				// Flag it so that if delete doesn't work we just ignore it next time
+				_x setVariable ['GW_CU_IGNORE', true];
+				{ _x setVariable ['GW_CU_IGNORE', true]; } foreach (attachedObjects _x);
+
 				diag_log format['Deleting %1 at %2', typeof _x, time];
 				{ deleteVehicle _x; } foreach (attachedObjects _x);
-				deleteVehicle _x; 
-
-				// If the vehicle isn't deletable, flag to ignore on next cleanup pass
-				if (!isNull _x) then { 
-					_x setVariable ['GW_CU_IGNORE', true]; 
-					{ _x setVariable ['GW_CU_IGNORE', true]; } foreach (attachedObjects _x);
-				};
+				deleteVehicle _x; 				
 			};
 		} count _arr > 0;	
 

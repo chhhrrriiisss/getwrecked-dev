@@ -22,9 +22,7 @@ _abortSequence = {
 
 // _points = [_this, 0, [], [[]]] call bis_fnc_param;
 _points = [
-	(vehicle player) modelToWorldVisual [0, 25, 0],
-	(vehicle player) modelToWorldVisual [0, 50, 0],
-	(vehicle player) modelToWorldVisual [0, 75, 0]
+	(vehicle player) modelToWorldVisual [0, 50, 0]
 ];
 
 for "_i" from 1 to 2 step 1 do {
@@ -40,22 +38,22 @@ _targetRace = if ((typename _targetRace) == "STRING") then { ((_targetRace call 
 if (count _targetRace == 0) exitWith { hint 'Could not start - invalid race'; };
 
 _points = [_targetRace, 1, _points, [[]]] call bis_fnc_param;
-
 if (count _points == 0) exitWith { hint 'Could not start - bad point data'; };
 
 _raceName = (_targetRace select 0) select 0;
+_raceHost = _targetRace select 2;
 
 _startPosition = _points select 0;
 _firstPosition = _points select 1;
 _raceStatus = [_targetRace, 3, -1, [0]] call filterParam;
 
 _cpArray = [];
-
+_dirNext = 0;
 _totalCheckpoints = count _points;
 
-GW_CHECKPOINTS = _points;
-GW_CHECKPOINTS_COMPLETED = [];
-GW_CHECKPOINTS_PROGRESS = 0;
+// Clear any pre-existing icon checkpoints
+if (count GW_CHECKPOINTS > 0) then { {  deletevehicle _x; } foreach GW_CHECKPOINTS;};
+GW_CHECKPOINTS = [];
 GW_CHECKPOINTS_COMPLETED = [];
 
 // Create checkpoint halo as a guide
@@ -64,8 +62,8 @@ GW_CHECKPOINTS_COMPLETED = [];
 	_rT = _this select 0;
 	_rB = _this select 1;
 
-	if (GW_CHECKPOINTS_PROGRESS == count GW_CHECKPOINTS) exitWith { false };
-	_cP = GW_CHECKPOINTS select GW_CHECKPOINTS_PROGRESS;
+	if (count GW_CHECKPOINTS == 0) exitWith { false };
+	_cP = GW_CHECKPOINTS select 0;
 
 	_dirDif = ([GW_CURRENTVEHICLE, _cP] call dirTo) - (getDir GW_CURRENTVEHICLE);
 	_dirTo = [_dirDif] call normalizeAngle;
@@ -91,25 +89,32 @@ GW_CHECKPOINTS_COMPLETED = [];
 }, false, [0,2,0.5], true] spawn createHalo;
 
 
-// Function to create a new checkpoint
-createCheckpoint = {
-	
-	params ['_index', '_cpArray'];	
-	private ['_index', '_cpArray'];	
 
-	_cPos = _cpArray select _index;
+// Create CP markers at each point
+{
 
 	_objArray = [];
-	_dirNext = 0;
+	_cPos = _x;
 
-	_dirNext = if (_index == (count _cpArray - 1)) then { _dirNext } else { ([_cPos, _cpArray select (_index + 1)] call dirTo) };
-
-	_cp = "Sign_Circle_F" createVehicleLocal _cPos;
-	_cp setPos [_cPos select 0, _cPos select 1, (_cPos select 2) - 5];
+	_cp = "Sign_sphere100cm_F" createVehicleLocal _cPos;
+	_dirNext = if (_forEachIndex == (count _points - 1)) then { _dirNext } else { ([_cPos, _points select (_forEachIndex + 1)] call dirTo) };
 	_cp setDir _dirNext;
+	hideObject _cp;
 	_cp enableSimulationGlobal false;
+	_cp hideObject true;
 
 	_objArray pushBack _cp;
+
+	_c = "Sign_Circle_F" createVehicleLocal _cPos;
+	_c setPos [_cPos select 0, _cPos select 1, (_cPos select 2) - 5];
+	_c setDir _dirNext;
+	_c enableSimulationGlobal false;
+	_c hideObject true;
+
+	_objArray pushBack _c;
+
+	// Add to checkpoint 3d icons array
+	GW_CHECKPOINTS pushBack _c;
 
 	{
 		if ((surfaceNormal (_cp modelToWorldVisual _x)) distance [0,0,1] > 0.1) then {} else {
@@ -120,7 +125,8 @@ createCheckpoint = {
 			_offsetPos set [2, 0.1];
 			_t setPos _offsetPos;	
 			
-			[_t, [-90,0, ( [(_dirNext+180)] call normalizeAngle )]] call setPitchBankYaw;  
+			[_t, [-90,0,[(_dirNext+180)] call normalizeAngle]] call setPitchBankYaw;  
+			hideObject _t;	
 
 			_t enableSimulationGlobal false;
 			_objArray pushBack _t;
@@ -132,102 +138,109 @@ createCheckpoint = {
 		[0,-4.8,0],
 		[-10,-4.8,0]
 	];
+	
+	_cpArray pushBack [_cp, _dirNext, _objArray];
+	
+} foreach _points;
 
-	_objArray
-
-};
-
-
-// Temporary invulnerability until first checkpoint
 [GW_CURRENTVEHICLE, ["noshoot", "nouse", "noammo", "nofuel"], 9999] call addVehicleStatus;
 
 _maxTime = [_this, 1, 15, [0]] call bis_fnc_param;
 _timeout = time + _maxTime;
 
+hint '';
 hint format['Race started! (%1s)', _maxTime];
 
 GW_CURRENTRACE_START = serverTime;
 
-
-_startTime = time;
-
 _totalDistance = [_points, false] call calculateTotalDistance;
+systemchat format['total race distance: %1', _totalDistance];
 
-// Checkpoint trigger config
 _distTolerance = 10;
 _dirTolerance = 80;
+_startTime = time;
 
-// Create initial checkpoint group
-_checkpointGroup = [GW_CHECKPOINTS_PROGRESS, GW_CHECKPOINTS] call createCheckpoint;
+_prevCp = getpos GW_CURRENTVEHICLE;
 
 for "_i" from 0 to 1 step 0 do {
 
-	if ((GW_CHECKPOINTS_PROGRESS == count GW_CHECKPOINTS) || count GW_CHECKPOINTS == 0 || time > _timeout || !alive GW_CURRENTVEHICLE || !alive player) exitWith {};
+	if (count _cpArray == 0 || time > _timeout || !alive GW_CURRENTVEHICLE) exitWith {};
 
-	// Calculate how far through the race we are	
-	_checkpointsCompleted = +GW_CHECKPOINTS;
-	_checkpointsCompleted resize GW_CHECKPOINTS_PROGRESS;
-	_distanceTravelled = [_checkpointsCompleted, FALSE] call calculateTotalDistance;
-	
-	_isPast = true;
-	_distanceToLastCheckpoint = if (GW_CHECKPOINTS_PROGRESS > 0) then { 
+	_targetCp = (_cpArray select 0) select 0;
 
-		_vPos = (ASLtoATL visiblePositionASL GW_CURRENTVEHICLE);
-		_currentCheckpoint = GW_CHECKPOINTS select GW_CHECKPOINTS_PROGRESS;
-		_lastCheckpoint = _checkpointsCompleted select (count _checkpointsCompleted - 1);
+	// Unhide all objects for active CP
+	{
+		if (isObjectHidden _x && typeOf _x != "Sign_sphere100cm_F") then { _x hideObject false; };
+	} count ((_cpArray select 0) select 2);
 
-		// Check we're on the correct side of the checkpoint
-		_dirTo = [_lastCheckpoint, _currentCheckpoint] call dirTo;
-		_dirV = [_lastCheckpoint, GW_CURRENTVEHICLE] call dirTo;
-		_dirDif = [_dirTo - _dirV] call flattenAngle;
+	// Calculate how far through the race we are
+	_distanceToCheckpoint = (GW_CURRENTVEHICLE distance _targetCp);
 
-		if (_dirDif > 90) exitWith { _isPast = false; 0 };
+	// Make a copy of the race points, chop ofF checkpoints we've completed
+	_cpRemaining = +_points;
+	reverse _cpRemaining;
+	_checkPointsLeft = [((count GW_CHECKPOINTS) - (count GW_CHECKPOINTS_COMPLETED)), 0, count GW_CHECKPOINTS] call limitToRange;
 
-		([(_vPos distance _lastCheckpoint), 0, (_lastCheckpoint distance _currentCheckpoint)] call limitToRange)
+	_cpRemaining resize _checkPointsLeft;
 
-	} else { 0 };
+	// Add the vehicle's position to the distance calculation (provided distance is less than distance between cps + we're not at the start)
+	GW_TEST= _cpRemaining;
+	// Calculate distance remaining (within bounds of total race distance)
+	_distanceRemaining = [_cpRemaining, FALSE] call calculateTotalDistance;
 
-	_distanceTravelled = _distanceTravelled + _distanceToLastCheckpoint;
+	// Start adding combined distance past the first checkpoint
+	if (count GW_CHECKPOINTS_COMPLETED >= 1) then { 
+		_stepDistance = (getPos _targetCp) distance _prevCp;
+		_distanceToAdd = [_distanceToCheckpoint, 0, _stepDistance] call limitToRange;
+		_distanceRemaining = _distanceRemaining + _distanceToCheckpoint;
+	};
 
-	GW_CURRENTRACE_PROGRESS = 1- ((_totalDistance - _distanceTravelled) / _totalDistance);
+	// Limit distance to total race distance
+	_distanceRemaining = [_distanceRemaining - _distTolerance, 0, _totalDistance] call limitToRange;
 
-	_distanceToCheckpoint = (ASLtoATL visiblePositionASL GW_CURRENTVEHICLE) distance (GW_CHECKPOINTS select GW_CHECKPOINTS_PROGRESS);
+	// Calculate our percentage progress through the race
+	GW_CURRENTRACE_PROGRESS = 1 - (_distanceRemaining / _totalDistance);
+
+	HINT format['%1 Remaining \ %2 Total \ %3%4 Complete \ %5 Left', _distanceRemaining, _totalDistance, GW_CURRENTRACE_PROGRESS, '%', _checkPointsLeft];
+
 	if (_distanceToCheckpoint < _distTolerance) then {			
 
 		// Remove shooting/use restrictions after first WP
-		if (GW_CHECKPOINTS_PROGRESS == 0) then {
+		if ((count GW_CHECKPOINTS_COMPLETED) == 0) then {
 			[GW_CURRENTVEHICLE, ["noshoot", "nouse", "noammo", "nofuel"]] call removeVehicleStatus;
+			['MODULES ENABLED!', 2, warningIcon, nil, "slideDown", "beep_warning"] spawn createAlert; 
 		};
 
 		// Give vehicle ammo/fuel equivalent to the percentage of total checkpoints complete
 		// _percentComplete = if ((count GW_CHECKPOINTS -1) == 0) then { 1 } else { (count GW_CHECKPOINTS_COMPLETED / count GW_CHECKPOINTS) };
 
-		// 10% Ammo & Fuel at each checkpoint
-		// _maxAmmo = GW_CURRENTVEHICLE getVariable ["maxAmmo", 1];
-		// _targetAmmo = [_maxAmmo * 0.1, 1] call roundTo;
-		// GW_CURRENTVEHICLE setVariable ["ammo", _maxAmmo];
+		_maxAmmo = GW_CURRENTVEHICLE getVariable ["maxAmmo", 1];
+		// _targetAmmo = [_maxAmmo * _percentComplete, 1] call roundTo;
+		GW_CURRENTVEHICLE setVariable ["ammo", _maxAmmo];
 		
-		// _maxFuel = GW_CURRENTVEHICLE getVariable ["maxFuel", 1];
-		// _targetFuel = [_maxFuel * 0.1, 1] call roundTo;
-		// GW_CURRENTVEHICLE setVariable ["fuel", _maxFuel];
+		_maxFuel = GW_CURRENTVEHICLE getVariable ["maxFuel", 1];
+		// _targetFuel = [_maxFuel * _percentComplete, 1] call roundTo;
+		GW_CURRENTVEHICLE setVariable ["fuel", _maxFuel];
+
+		// Requires correct orientation?
+		_correctDir = (_cpArray select 0) select 1;
+		_currentDir = getDir GW_CURRENTVEHICLE;
+		_difDir = abs ([_currentDir - _correctDir] call flattenAngle);
+		//if (_difDir > _dirTolerance) exitWith {};
+
+		_group = ((_cpArray select 0) select 2);
+		{ deleteVehicle _x; false } count _group;
 
 		_timeStamp = (time - _startTime) call formatTimeStamp;
 		_timeStamp = format['+%1', _timeStamp];
+
+		_prevCp = getpos ((_cpArray select 0) select 0);
+
+		GW_CHECKPOINTS_COMPLETED pushback [_prevCp, _timeStamp, 1];
+		_cpArray deleteAt 0;
+		GW_CHECKPOINTS deleteAt 0;
+		hint format['Reached checkpoint %1/%2!', _totalCheckpoints - (count _cpArray), _totalCheckpoints, time];
 		GW_CURRENTVEHICLE say "blipCheckpoint";		
-
-		// Delete previous checkpoint group 
-		{ 
-			deleteVehicle _x;
-		} foreach _checkpointGroup;
-
-		GW_CHECKPOINTS_COMPLETED pushback [(GW_CHECKPOINTS select GW_CHECKPOINTS_PROGRESS), _timeStamp, 1];
-
-		GW_CHECKPOINTS_PROGRESS = GW_CHECKPOINTS_PROGRESS + 1;
-
-		if (GW_CHECKPOINTS_PROGRESS == count GW_CHECKPOINTS) exitWith {};
-
-		// Create new checkpoint if not last point
-		_checkPointGroup = [GW_CHECKPOINTS_PROGRESS, GW_CHECKPOINTS] call createCheckpoint;
 
 	};
 
@@ -241,14 +254,9 @@ for "_i" from 0 to 1 step 0 do {
 
 	};
 
-	Sleep 0.25;
+	Sleep 0.1;
 
 };
-
-// Delete previous checkpoint group 
-{ 
-	deleteVehicle _x;
-} foreach _checkpointGroup;
 
 _raceID =  ((_raceName call getRaceID) select 1);
 
@@ -267,6 +275,28 @@ if ((count _cpArray) == 0 && time <= (_timeout + 0.1) ) then {
 		false,
 		false
 	] call bis_fnc_mp;	
+
+	//[] execVM 'testfinishcamera.sqf';
+
+	// _timeStamp = (time - _startTime) call formatTimeStamp;
+	// _text = format["<br /><t size='3.3' color='#ffffff' align='center' valign='middle' shadow='0'>+%1</t>", _timeStamp];
+
+	// _done = [_text, "SPECTATE", false, { true }, 10] spawn createTitle;
+	
+
+	// _timeout = time + 10;
+	// waitUntil {
+	// 	Sleep 0.1;
+	// 	((time > _timeout) || (scriptDone _done))
+	// };
+
+	// 9999 cutText ["", "BLACK OUT", 1]; 
+	// Sleep 1; 
+	// [] execVM 'testspectatorcamera.sqf';
+	
+	// [] execVM 'testfinishcamera.sqf';
+
+	//_result = ['START', 5, false] call createTimer;
 		
 	GW_CHECKPOINTS = [];
 	GW_CHECKPOINTS_COMPLETED = [];	
@@ -295,8 +325,13 @@ if (alive GW_CURRENTVEHICLE) then {
 	waitUntil { Sleep 0.5; (isNull (findDisplay 95000)) };
 
 	//[_vehiclesArray] execVM 'testspectatorcamera.sqf';
+
 	
 
 };
 
+// Cleanup
+{
+	{ deleteVehicle _x; } foreach (_x select 2);
+} foreach _cpArray;
 

@@ -20,8 +20,8 @@ _this spawn {
 	_maxPower = 275;
 
 	if (GW_CURRENTZONE == "globalZone") then {
-		_minPower = _minPower * 0.5;
-		_maxPower = _maxPower * 0.5;
+		_minPower = _minPower * 0.05;
+		_maxPower = _maxPower * 0.05;
 	};
 
 	_power = random (_maxPower - _minPower) + _minPower;
@@ -30,8 +30,8 @@ _this spawn {
 	_maxRange = 80;
 
 	if (GW_CURRENTZONE == "globalZone") then {
-		_minRange = _minRange * 0.5;
-		_maxRange = _maxRange * 0.5;
+		_minRange = _minRange * 0.3;
+		_maxRange = _maxRange * 0.3;
 	};
 	
 	_range = random (_maxRange - _minRange) + _minRange;

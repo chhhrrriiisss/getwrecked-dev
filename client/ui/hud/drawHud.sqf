@@ -118,6 +118,11 @@ for "_i" from 0 to 1 step 0 do {
 
 	_startTime = time;
 
+	_inRace = if (isNil "GW_CURRENTRACE") then { false } else {
+		IF ([GW_CURRENTRACE] call checkRaceStatus == 2) exitWith { true };
+		false
+	};
+
 	_vehicle = GW_CURRENTVEHICLE;		
 	_inVehicle = GW_INVEHICLE;
 	_isDriver = GW_ISDRIVER;	
@@ -136,6 +141,53 @@ for "_i" from 0 to 1 step 0 do {
 		GW_HUD_NORMAL_ACTIVE = false;
 		[[_hudMoney, _hudTransaction], [['fade', 1, 0, 0], ['y', '0', '-0.1', 1.2]], "quad"] spawn createTween;
 	};
+
+	// We're in a race
+	if (_inRace) then {
+
+	// 	hint 'In race!';
+
+	// 	// [[_vHudRace], [['fade', 1, 0, 0]], "quad"] spawn createTween;
+	// 	// Render race hud stuff
+	// } else {
+
+		// Race HUD info
+		_vHudRace = (_hud displayCtrl 18020);
+		_vHudRaceTime = (_hud displayCtrl 18021);
+		_vHudRacePlayer = (_hud displayCtrl 18022);
+
+		_vHudRace ctrlShow true;
+		_vHudRaceTime ctrlShow true;
+		_vHudRacePlayer ctrlShow true;
+
+		_vHudRacePlayer ctrlSetPosition [(((GW_CURRENTRACE_PROGRESS * 0.5) + 0.25) - 0.02) * safezoneW + safezoneX, (ctrlPosition _vHudRacePlayer) select 1];
+
+		// hint format['race progress %1', GW_CURRENTRACE_PROGRESS];
+
+		_timeSince = if (!isNil "GW_CURRENTRACE_START") then { serverTime - GW_CURRENTRACE_START } else { 0 };
+		_seconds = floor (_timeSince);	
+		_milLeft = floor ( abs ( floor( _timeSince ) - _timeSince) * 10);
+		_hoursLeft = floor(_seconds / 3600);
+		_minsLeft = floor((_seconds - (_hoursLeft*3600)) / 60);
+		_secsLeft = floor(_seconds % 60);
+		_timeSinceStart = format['+%1:%2:%3:%4', ([_hoursLeft, 2] call padZeros), ([_minsLeft, 2] call padZeros), ([_secsLeft, 2] call padZeros), ([_milLeft, 2] call padZeros)];
+
+		_vHudRaceTime ctrlSetStructuredText parseText ( format["<t size='1.25' color='#ffffff' align='center'>%1</t>", _timeSinceStart ] );
+		_vHudRacePlayer ctrlSetStructuredText parseText ( format["<img size='1.5' image='%1' />", racePlayer ] );		
+
+		_vHudRace ctrlSetFade 0;
+		_vHudRaceTime ctrlSetFade 0;
+		_vHudRacePlayer ctrlSetFade 0;
+
+		_vHudRace ctrlCommit 0;
+		_vHudRaceTime ctrlCommit 0;
+		_vHudRacePlayer ctrlCommit 0;
+
+		// [[_vHudRace, _vHudRaceTime, _vHudRacePlayer], [['fade', 1, 0, 0]], "quad"] spawn createTween;
+
+		
+		// [[_vHudRace], [['fade', 1,0, 0]], "quad"] spawn createTween;
+	};	
 	
 	// We're in a vehicle
 	if (_inVehicle && _isDriver) then {		
@@ -340,10 +392,14 @@ for "_i" from 0 to 1 step 0 do {
 		
 	    };
 
+	    // if ("wrwy" in _status) then {
+     //        ["WRONG WAY", 1, rotateCWIcon, colorRed, "warning", "beep_warning"] spawn createAlert;
+     //    };
+
         if ("tyresPopped" in _status) then {
             [localize "str_gw_wheels_disabled", 1, warningIcon, colorRed, "warning", "beep_warning"] execVM 'client\ui\hud\alert_new.sqf';
         };
-
+       
         if ("invulnerable" in _status) then {
 
             //[localize "str_gw_invulnerable", 1, shieldIcon, colorRed, "warning"] spawn createAlert;
@@ -475,6 +531,37 @@ for "_i" from 0 to 1 step 0 do {
 			false
 			
 		} count _vHudIcons;
+
+
+
+		// If we're not disabled to any extent (or we've not been to a pad for 3 seconds)
+		if ({ if (_x in GW_VEHICLE_STATUS) exitWith {1}; false } count ["emp", "disabled", "noservice"] isEqualTo 0) then { 
+
+			_nearbyService = GW_CURRENTVEHICLE getVariable ["GW_NEARBY_SERVICE", nil];
+			[GW_CURRENTVEHICLE] spawn checkTyres;
+
+			if (!isNil "_nearbyService") then {   
+				[GW_CURRENTVEHICLE, _nearbyService] call servicePoint;
+			};
+		};	
+
+		// Check tyres aren't disabled
+		[GW_CURRENTVEHICLE] spawn checkTyres;
+
+		// Give a little bit of fuel if it looks like we're out
+		if (fuel GW_CURRENTVEHICLE < 0.01 && !("emp" in GW_VEHICLE_STATUS)) then {
+			GW_CURRENTVEHICLE setFuel 0.01;
+		};
+
+		// No status, reinflate tyres 
+		if (count GW_VEHICLE_STATUS <= 0) exitWith {
+			GW_CURRENTVEHICLE sethit ["wheel_1_1_steering", 0];
+			GW_CURRENTVEHICLE sethit ["wheel_1_2_steering", 0];
+			GW_CURRENTVEHICLE sethit ["wheel_2_1_steering", 0];
+			GW_CURRENTVEHICLE sethit ["wheel_2_2_steering", 0];
+		};	
+
+
 
 	};
 	

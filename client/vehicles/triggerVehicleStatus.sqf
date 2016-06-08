@@ -188,15 +188,15 @@ _commandToLoop = switch (true) do {
 		
 		_status = _this getVariable ['status', []];
 		if ("nuke" in _status) then {} else {
-			[_this, 0.3] spawn slowDown;   
+
+			_special = _this getVariable ['special', []];
+			if ('EMF' in _special) exitWith {
+				[_this, 0.95] spawn slowDown;   
+			};
+
+			[_this, 0.1] spawn slowDown;   
 		};
 
-		_special = _this getVariable ['special', []];
-		if ('EMF' in _special) then {
-			for "_i" from 0 to (['EMF', _this] call hasType) step 1 do {
-				if ((random 100) > 98) exitWith { [_this, ['emp']] call removeVehicleStatus; };
-			};
-		};
 	}}; 
 
 	default

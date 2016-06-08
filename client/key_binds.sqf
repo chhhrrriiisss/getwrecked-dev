@@ -3,46 +3,17 @@ GW_RESTRICTED_KEYS = [
 	69 // Num Lock Spam
 ];
 
-initBinds = {	
-	
-	fireKeyDown = '';
-
-	GW_KEYDOWN = nil;
-
-	waituntil {
-		( !isNull (findDisplay 46) && !isNil "keybindEventsRemoved" )
-	};
-
-	if (!isNil "GW_KD_EH") then { (findDisplay 46) displayRemoveEventHandler ["KeyDown", GW_KD_EH]; };
-	GW_KD_EH = (findDisplay 46) displayAddEventHandler ["KeyDown", "_this call checkBinds; false"];
-
-	if (!isNil "GW_KU_EH") then { (findDisplay 46) displayRemoveEventHandler ["KeyUp", GW_KU_EH];	GW_KU_EH = nil;	};
-	GW_KU_EH = (findDisplay 46) displayAddEventHandler ["KeyUp", "_this call resetBinds; false"];
-
-	if (!isNil "GW_MD_EH") then { (findDisplay 46) displayRemoveEventHandler ["MouseButtonDown", GW_MD_EH];	GW_MD_EH = nil;	};
-	GW_MD_EH = (findDisplay 46) displayAddEventHandler ["MouseButtonDown", "_this call setMouseDown; false;"];
-
-	if (!isNil "GW_MU_EH") then { (findDisplay 46) displayRemoveEventHandler ["MouseButtonUp", GW_MU_EH];	GW_MU_EH = nil;	};
-	GW_MU_EH = (findDisplay 46) displayAddEventHandler ["MouseButtonUp", "_this call setMouseUp; false;"];
-
-	setMouseDown = {			
-		if ((_this select 1) == 0) then { GW_LMBDOWN = true; };		
-	};
-
-	setMouseUp = {		
-		if ((_this select 1) == 0) then {  GW_LMBDOWN = false; };		
-	};
-
-};
 
 resetBinds = {
 	
+	_key = _this select 1; // The key that was pressed
+
 	if (showBinds) then {
 		showBinds = false;
 	};
 
-	if (fireKeyDown != '') then {
-		fireKeyDown = '';
+	if (fireKeyDown != "") then {
+		fireKeyDown = "";
 	};
 
 	if (keyDown) then {
@@ -62,29 +33,36 @@ resetBinds = {
 	GW_HOLD_ROTATE = false;
 	GW_KEYDOWN = nil;
 
-	_groupsKey = ['GROUPS'] call getGlobalBind;
+	// _groupsKey = ["GROUPS"] call getGlobalBind;
+
+	_infoKey = ["INFO"] call getGlobalBind;
+
+	if (_key == _infoKey) then {
+		[] execVM "client\ui\dialogs\createOverlay.sqf";
+	};
 
 	// if (_key == _groupsKey) then {
-	// 	['OnKeyUp', _this] call dynamicGroups;
+	// 	["OnKeyUp", _this] call dynamicGroups;
 	// };
 };
 
 checkBinds = {
 	
-	[_this, 'key'] call triggerLazyUpdate;
+	[_this, "key"] call triggerLazyUpdate;
 
 	_key = _this select 1; // The key that was pressed
 	_shift = _this select 2; 
 	_ctrl = _this select 3; 
 	_alt = _this select 4; 
 
-	_grabKey = ['GRAB'] call getGlobalBind;
-	_attachKey = ['ATTACH'] call getGlobalBind;
-	_rotateCWKey = ['ROTATECW'] call getGlobalBind;
-	_rotateCCWKey = ['ROTATECCW'] call getGlobalBind;
-	_holdRotateKey = ['HOLD'] call getGlobalBind;
-	_settingsKey = ['SETTINGS'] call getGlobalBind;
-	_groupsKey = ['GROUPS'] call getGlobalBind;
+	_grabKey = ["GRAB"] call getGlobalBind;
+	_attachKey = ["ATTACH"] call getGlobalBind;
+	_rotateCWKey = ["ROTATECW"] call getGlobalBind;
+	_rotateCCWKey = ["ROTATECCW"] call getGlobalBind;
+	_holdRotateKey = ["HOLD"] call getGlobalBind;
+	_settingsKey = ["SETTINGS"] call getGlobalBind;
+	_groupsKey = ["GROUPS"] call getGlobalBind;
+	
 
 	if (_key == _groupsKey && !GW_SETTINGS_ACTIVE && !GW_TIMER_ACTIVE && !GW_TITLE_ACTIVE && !GW_BUY_ACTIVE && !GW_SPAWN_ACTIVE) then {
 		([] call BIS_fnc_displayMission) createDisplay "RscDisplayDynamicGroups";
@@ -125,7 +103,7 @@ checkBinds = {
 
 	if (_key == _settingsKey && !_inVehicle) then {
 
-		if (GW_SETTINGS_ACTIVE) exitWith {	systemChat 'Use ESC to close the settings menu.'; };
+		if (GW_SETTINGS_ACTIVE) exitWith {	systemChat "Use ESC to close the settings menu."; };
 
 		_nearby = ([player, 15, 180] call validNearby);
 		if (isNil "_nearby") exitWith {};
@@ -136,11 +114,11 @@ checkBinds = {
 	
 	if (_key == _settingsKey && (_inVehicle && _isDriver) ) then {
 
-		if (GW_SETTINGS_ACTIVE) exitWith { systemChat 'Use ESC to close the settings menu.'; };	
+		if (GW_SETTINGS_ACTIVE) exitWith { systemChat "Use ESC to close the settings menu."; };	
 		[_vehicle, player] spawn settingsMenu;		
 	};
 
-	if ( (_key in GW_RESTRICTED_KEYS) && GW_KEYBIND_ACTIVE) exitWith { systemChat 'That key is restricted.'; };
+	if ( (_key in GW_RESTRICTED_KEYS) && GW_KEYBIND_ACTIVE) exitWith { systemChat "That key is restricted."; };
 
 	GW_KEYDOWN = _key;
 
@@ -150,7 +128,7 @@ checkBinds = {
 
 		// Save
 		if (_ctrl && _key == 31) exitWith {
-			[''] spawn saveVehicle;
+			[""] spawn saveVehicle;
 		};
 
 		// Preview
@@ -204,10 +182,10 @@ checkBinds = {
 		};
 
 		_status = GW_VEHICLE_STATUS;
-		_canShoot = if (!('cloak' in _status) && !('noshoot' in _status)) then { true } else { false };
-		_canUse = if (!GW_WAITUSE && !('cloak' in _status) && !('nouse' in _status)) then { true } else { false };
+		_canShoot = if (!("cloak" in _status) && !("noshoot" in _status)) then { true } else { false };
+		_canUse = if (!GW_WAITUSE && !("cloak" in _status) && !("nouse" in _status)) then { true } else { false };
 
-		['Can Use', true] call logDebug;
+		["Can Use", true] call logDebug;
 
 		{	
 
@@ -225,7 +203,7 @@ checkBinds = {
 					_bind = if (_isVehicleBind) then { (_x select 1) } else { _obj = (_x select 1); (_obj getVariable ["GW_KeyBind", ["-1", "1"]]) };			
 					
 
-					// Make sure we're working with a properly formatted array bind
+					// Make sure were working with a properly formatted array bind
 					if (_bind isEqualType []) then {} else {						
 						_k = if ( !(_bind isEqualType "") ) then { (str _bind) } else { _bind };
 						_bind = [_k, "1"];
@@ -241,14 +219,14 @@ checkBinds = {
 						// Vehicle binds
 						if (_isVehicleBind) exitWith {							
 
-							if (_tag == "HORN") exitWith { [_vehicle, ['horn'], 1] call addVehicleStatus; [_vehicle] spawn tauntVehicle; };
+							if (_tag == "HORN") exitWith { [_vehicle, ["horn"], 1] call addVehicleStatus; [_vehicle] spawn tauntVehicle; };
 							if (_tag == "UNFL") exitWith { [_vehicle, false, false] spawn flipVehicle; };				
 							if (_tag == "EPLD") exitWith { [_vehicle] call detonateTargets; playSound "beep"; };
 							if (_tag == "TELP") exitWith { [_vehicle] call activateTeleport;  playSound "beep"; };
 							if (_tag == "LOCK" && {	_exists = false; {	if (([_x, _vehicle] call hasType) > 0) exitWith { _exists = true; };false } count GW_LOCKONWEAPONS > 0;	_exists	}) exitWith { [_vehicle] call toggleLockOn; playSound "beep"; };
-							if (_tag == "OILS" && ((['OIL', _vehicle] call hasType) > 0) ) exitWith { GW_OIL_ACTIVE = nil; playSound "beep"; };
-							if (_tag == "DCLK" && ((['CLK', _vehicle] call hasType) > 0) ) exitWith { [_vehicle, ['cloak']] call removeVehicleStatus; playSound "beep"; };
-							if (_tag == "PARC" && ((['PAR', _vehicle] call hasType) > 0) ) exitWith { if (GW_CHUTE_ACTIVE) then { GW_CHUTE_ACTIVE = false; playSound "beep"; };  };
+							if (_tag == "OILS" && ((["OIL", _vehicle] call hasType) > 0) ) exitWith { GW_OIL_ACTIVE = nil; playSound "beep"; };
+							if (_tag == "DCLK" && ((["CLK", _vehicle] call hasType) > 0) ) exitWith { [_vehicle, ["cloak"]] call removeVehicleStatus; playSound "beep"; };
+							if (_tag == "PARC" && ((["PAR", _vehicle] call hasType) > 0) ) exitWith { if (GW_CHUTE_ACTIVE) then { GW_CHUTE_ACTIVE = false; playSound "beep"; };  };
 							
 
 						};
@@ -292,5 +270,38 @@ checkBinds = {
 	};	
 
 	true
+
+};
+
+
+initBinds = {	
+	
+	fireKeyDown = '';
+
+	GW_KEYDOWN = nil;
+
+	waituntil {
+		( !isNull (findDisplay 46) && !isNil "keybindEventsRemoved" )
+	};
+
+	if (!isNil "GW_KD_EH") then { (findDisplay 46) displayRemoveEventHandler ["KeyDown", GW_KD_EH]; };
+	GW_KD_EH = (findDisplay 46) displayAddEventHandler ["KeyDown", "_this call checkBinds; false"];
+
+	if (!isNil "GW_KU_EH") then { (findDisplay 46) displayRemoveEventHandler ["KeyUp", GW_KU_EH];	GW_KU_EH = nil;	};
+	GW_KU_EH = (findDisplay 46) displayAddEventHandler ["KeyUp", "_this call resetBinds; false"];
+
+	if (!isNil "GW_MD_EH") then { (findDisplay 46) displayRemoveEventHandler ["MouseButtonDown", GW_MD_EH];	GW_MD_EH = nil;	};
+	GW_MD_EH = (findDisplay 46) displayAddEventHandler ["MouseButtonDown", "_this call setMouseDown; false;"];
+
+	if (!isNil "GW_MU_EH") then { (findDisplay 46) displayRemoveEventHandler ["MouseButtonUp", GW_MU_EH];	GW_MU_EH = nil;	};
+	GW_MU_EH = (findDisplay 46) displayAddEventHandler ["MouseButtonUp", "_this call setMouseUp; false;"];
+
+	setMouseDown = {			
+		if ((_this select 1) == 0) then { GW_LMBDOWN = true; };		
+	};
+
+	setMouseUp = {		
+		if ((_this select 1) == 0) then {  GW_LMBDOWN = false; };		
+	};
 
 };

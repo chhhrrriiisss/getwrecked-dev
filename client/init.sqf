@@ -76,4 +76,4 @@ if (_raceVersion < GW_VERSION || isNil "_races") then {
 [player] call playerInit;
 
 // Start simulation toggling
-[] spawn simulationManager;
+// [] call simulationManager;

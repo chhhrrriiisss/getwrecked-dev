@@ -7,9 +7,14 @@ if (!('radar' in GW_VEHICLE_STATUS)) then { GW_TARGETICON_ARRAY = []; };
 // Show player/vehicle tags for nearby units
 _vehicleRendered = false;
 {	
+	
+
 	// Target must be in a vehicle
-	_inVehicle = if (_x == (driver (vehicle _x))) then { true } else { false };	
+	_inVehicle = if (_x == (vehicle _x)) then { false } else { true };	
 	if (_inVehicle) then {
+
+		// If not driver of current vehicle
+		if (_x != (driver (vehicle _x)))  exitWith {};	
 
 		// Valid vehicle?
 		_isVehicle = (vehicle _x) getVariable ['isVehicle', false];
@@ -38,7 +43,7 @@ _vehicleRendered = false;
 
 		if (!isPlayer _x) exitWith {};
 		if ( (_x == player || !alive _x) && !GW_DEBUG  ) exitWith {};
-		
+
 		_name = (name _x);
 		_pos = _x modelToWorldVisual [0, 0, 2.2];
 		_dist = GW_CURRENTPOS distance _pos;
@@ -60,3 +65,5 @@ _vehicleRendered = false;
 
 	false
 } count _arr > 0;
+
+// systemchat str _arr;

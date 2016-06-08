@@ -11,10 +11,12 @@ Items without Fixed/Added/Removed proceeding are typically balance changes.
 - Added FlamePads to map
 - Added 'Loading' text to vehicle preview
 - Added 'Crash Test Dummy' texture for dev builds
+- Added 'Wrong Way' message to race hud
 - Caltrops now more reliable and destroyed after first collision
 - Increased global damage scale by x2 (0.04 > 0.08)
 - Decreased ammo requirements of some weapons
 - Decreased breakage frequency for melee weapons
+- EM Fencing now only mitigates the speed reduction of an EMP, rather than removing effect entirely
 - Alert UI moved further upwards to reduce screen clutter
 - Halo effect now follows ground when vehicle is airborne
 - New system that uses server to determine empty setpos locations
@@ -58,6 +60,8 @@ Items without Fixed/Added/Removed proceeding are typically balance changes.
 - Fixed Purchasing multiple items should now correctly use nearby supply boxes owned by player
 
 * Known issues *
+- Small stutter when saving to profilenamespace (keybinds, cars etc)
+- 'lineMarker' missing error on opening race creation screen
 - Occasional param errors due to changes in 1.54 turn off -showscripterrors to remove these
 - Race Mode is WIP, largely incomplete and only working in a demonstrative capacity
 - Attaching items to suspended vehicles often doesn't show the correct rotation until the vehicle is moved

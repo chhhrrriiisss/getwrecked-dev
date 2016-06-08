@@ -1,6 +1,9 @@
 #define GW_Race_ID 90000
+
+#define GW_StatsList_ID 90009
 #define GW_RaceTitle_ID 90012
 #define GW_FilterList_ID 90011
+
 #define GW_Edit_ID 90020
 #define GW_Rename_ID 90021
 #define GW_New_ID 90022
@@ -29,6 +32,8 @@ class RscMapControl {
     type = 101;
     idc = 51;
     style = 48;
+
+
 
     colorBackground[] = {
         0.969, 0.957, 0.949, 1
@@ -117,6 +122,16 @@ class RscMapControl {
             "Gamma", 1, 1.5
         }
     };
+
+     class LineMarker
+    {
+        lineDistanceMin = 3e-005;
+        lineLengthMin = 5;
+        lineWidthThick = 0.014;
+        lineWidthThin = 0.008;
+        textureComboBoxColor = "#(argb,8,8,3)color(1,1,1,1)";
+    };
+    
     class Legend {
         colorBackground[] = {
             1, 1, 1, 0.5
@@ -516,7 +531,8 @@ class GW_Race
 	class controlsBackground
 	{
 		
-    	class Map : RscMapControl
+    	
+        class Map : RscMapControl
         {
           moveOnEdges = 1;
           colorBackground[] = {1,1,1,1};
@@ -526,9 +542,12 @@ class GW_Race
           w = 3 * safezoneW;
           h = 1 * safezoneH;
         };  
+
+
+
      
   
-    
+         
 	};
 
 	class controls
@@ -582,6 +601,33 @@ class GW_Race
       w = 3;
       h = MARGIN_TOP + (GW_BUTTON_HEIGHT) * safezoneH;
     };      
+
+    class HelpText : GW_StructuredTextBox
+    {
+        idc = 90030;
+        fade = 1;
+        text = "<t size='1' color='#ffffff' align='center'>Some random help text.</t>";
+        x = (0.008) * safezoneW + safezoneX;
+        y = (MARGIN_BOTTOM - GW_BUTTON_HEIGHT) * safezoneH + safezoneY;
+        w = (GW_BUTTON_WIDTH*2) * safezoneW;
+        h = (GW_BUTTON_HEIGHT*2) * safezoneH;
+
+        shadow = 1;
+
+        colorBackground[] = {0,0,0,0};
+        colorText[] = {1,1,1,1};
+
+        align = "left";
+        valign = "top";
+
+        class Attributes
+        {
+            font = "PuristaMedium";
+            align = "left";
+            valign = "top";
+            shadow = 0;
+        };
+    };
 
     class FilterList : GW_RscCombo
     {
@@ -720,6 +766,46 @@ class GW_Race
 
 
     };
+
+
+    class RaceStatsBackground : GW_Block
+    {
+        idc = -1;
+        colorBackground[] = {0,0,0,0.5};
+        colorBackgroundFocused[] = {0,0,0,0.5};
+        x = (0.015) * safezoneW + safezoneX;
+        y = (MARGIN_TOP + GW_BUTTON_HEIGHT + GW_BUTTON_GAP_Y) * safezoneH + safezoneY;
+        w = (GW_BUTTON_WIDTH + 0.001) * safezoneW;
+        h = (GW_BUTTON_HEIGHT * 5) * safezoneH;
+    }; 
+
+    class RaceStats : GW_ListBox
+    {
+        idc = GW_StatsList_ID;
+        colorBackground[] = GW_BUTTON_BACKGROUND;
+        x = (0.015) * safezoneW + safezoneX;
+        y = (MARGIN_TOP + GW_BUTTON_HEIGHT + GW_BUTTON_GAP_Y) * safezoneH + safezoneY;
+        w = (GW_BUTTON_WIDTH) * safezoneW;
+        h = (GW_BUTTON_HEIGHT * 5) * safezoneH;
+        
+        colorSelectBackground[] = {0,0,0,0};
+        colorSelectBackground2[] = {0,0,0,0};
+
+        colorSelect[] = {1,1,1,1};
+        colorSelect2[] = {1,1,1,1};
+
+        text = "";
+        sizeEx = "0.03";
+        columns[] = {0, 0.15, 0.5, 0.7};
+        drawSideArrows = false;
+        idcLeft = -1;
+        idcRight = -1;
+        rowHeight = GW_BUTTON_HEIGHT * 1.5;
+    
+    };  
+
+   
+
 
     class ButtonPrev : GW_RscButtonMenu
     {

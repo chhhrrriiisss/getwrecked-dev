@@ -154,7 +154,7 @@ class GW_ListBox {
 	autoScrollDelay = 5;
 	autoScrollRewind = 0;
 
-	tooltip = "TEST";
+	tooltip = "";
 	tooltipColorShade[] = {0,0,0,1}; // Tooltip background color
 	tooltipColorText[] = {1,1,1,1}; // Tooltip text color
 	tooltipColorBox[] = {1,1,1,1}; // Tooltip frame color

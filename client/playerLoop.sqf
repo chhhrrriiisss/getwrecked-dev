@@ -11,6 +11,42 @@ if (GW_DEATH_CAMERA_ACTIVE || GW_PREVIEW_CAM_ACTIVE || GW_SPECTATOR_ACTIVE || GW
 	};
 };
 
+// Update vehicle damage
+GW_CURRENTVEHICLE call updateVehicleDamage;
+
+// Toggle simulation back if we lose it for any reason
+if (!simulationEnabled GW_CURRENTVEHICLE) then { GW_CURRENTVEHICLE enableSimulation true; };
+
+// Every 5 seconds, record position, ignoring while in parachute
+_remainder = round (time) % 5;
+_hasMoved = false;
+
+if (_remainder == 0 && (typeOf GW_CURRENTVEHICLE != "Steerable_Parachute_F")) then {
+	
+	_prevPos = GW_CURRENTVEHICLE getVariable ['GW_prevPos', nil];
+	_currentPos = ASLtoATL visiblePositionASL GW_CURRENTVEHICLE;
+
+	// If there's position data stored and we're not at the workshop
+	if (!isNil "_prevPos") then {
+
+		_distanceTravelled = _prevPos distance _currentPos;   
+		if (_distanceTravelled > 3) then {       
+		    ['mileage', GW_CURRENTVEHICLE, _distanceTravelled] call logStat;  
+		    _hasMoved = true; 
+		};
+	};
+
+	// Log time alive
+	if (isNil "GW_LASTPOSCHECK") then { GW_LASTPOSCHECK = time;	};  
+	_timeAlive = (time - GW_LASTPOSCHECK);
+	if (_timeAlive > 0) then {	['timeAlive', GW_CURRENTVEHICLE, _timeAlive] call logStat;  };
+	GW_LASTPOSCHECK = time;   
+
+	GW_CURRENTVEHICLE setVariable ['GW_prevPos', _currentPos];
+	player setVariable ['GW_prevPos', _currentPos];
+
+};
+
 if (!isNil "GW_CURRENTZONE") then {
    
     // Add actions to nearby objects

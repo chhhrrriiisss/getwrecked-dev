@@ -14,12 +14,15 @@ if (!isNil "GW_DISPLAY_EH") then {
 	GW_DISPLAY_EH = nil;
 };
 
+
+
 GW_DISPLAY_EH = addMissionEventHandler ["Draw3D", {
-	
-	
+
 	// Auto close inventories
 	disableSerialization;
-    if (!isNull (findDisplay 602)) then  { closeDialog 602; };
+    if (!isNull (findDisplay 602)) then  { 
+    	closeDialog 602; 
+    };
 
     // Set color of GUI groups interface
     if (!isNull (findDisplay 60490)) then  { 
@@ -39,12 +42,13 @@ GW_DISPLAY_EH = addMissionEventHandler ["Draw3D", {
 
 	
 	GW_CURRENTPOS = (ASLtoATL visiblePositionASL GW_CURRENTVEHICLE);
-	GW_CURRENTDIR = getDir GW_CURRENTVEHICLE;
+	GW_CURRENTDIR = getDir GW_CURRENTVEHICLE;	
 
  	// If any of these menus are active, forget about drawing anything else
 	if (GW_DEPLOY_ACTIVE || GW_SPAWN_ACTIVE || GW_SETTINGS_ACTIVE || GW_TIMER_ACTIVE || GW_TITLE_ACTIVE) exitWith {};
 
 	call drawIcons;	  
+	// [] execVM 'client\ui\display\drawIcons.sqf';
 
 	if (isNil "GW_CURRENTZONE") exitWith {};
 
@@ -53,7 +57,7 @@ GW_DISPLAY_EH = addMissionEventHandler ["Draw3D", {
 		call targetCursor; 
 	};		
 
-	// If there's no nearby targets, no point going any further
+	// If theres no nearby targets, no point going any further
 	_targets = if (GW_DEBUG) then { ((ASLtoATL visiblePositionASL GW_CURRENTVEHICLE) nearEntities [["Car", "Man", "Tank"], 1000]) } else { ([GW_CURRENTZONE, {true}, true] call findAllInZone) };
 	if (count _targets == 0) exitWith {};	
 
@@ -66,7 +70,8 @@ GW_DISPLAY_EH = addMissionEventHandler ["Draw3D", {
 		_targets call targetLockOn;
 	};
 
-	
-	
-		
+	true
+
 }];
+
+true

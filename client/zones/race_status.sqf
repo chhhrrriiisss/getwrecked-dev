@@ -93,7 +93,8 @@ if (_raceStatus >= 2) exitWith {
 
 	waitUntil { Sleep 0.1; (isNull (findDisplay 95000)) };
 
-	_maxTime = if (GW_DEBUG) then { 1} else { 15 };
+	_maxTime = 5;
+
 	[_targetRace, 9999] execVM 'testcheckpoints.sqf';
 	_success = ['ABORT', _maxTime, [false, false], true] call createTimer;
 

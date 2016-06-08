@@ -269,7 +269,8 @@ GW_TAUNTS_LIST = [
 	'herewego',
 	'mlg',
 	'party',
-	'sparta'
+	'sparta',
+	'china'
 ];
 
 // Specific map configs
@@ -337,6 +338,16 @@ switch (worldName) do {
 			['airbase', 'battle', 'Airbase'],
 			['peninsula', 'battle', 'Peninsula'],
 			['beach', 'battle', 'Beach'],
+			['workshop', 'safe', 'Workshop']
+		];
+
+	};
+
+
+	case "Tanoa":
+	{
+		// Available arenas and game type
+		GW_VALID_ZONES = [
 			['workshop', 'safe', 'Workshop']
 		];
 

@@ -148,7 +148,9 @@ GW_clientFunctions = [
 
 	['createMessage', 'client\ui\dialogs\'],
 	['createTimer', 'client\ui\dialogs\'],
-	['createTitle', 'client\ui\dialogs\']
+	['createTitle', 'client\ui\dialogs\'],
+
+	['calculateTotalDistance', nil]
 
 ];
 
@@ -248,7 +250,7 @@ attachVehicleTo = compile preprocessFile "client\functions\attachVehicleTo.sqf";
 createCollision = compile preprocessFile 'client\functions\createCollision.sqf';
 collisionCheck = compile preprocessFile 'client\functions\collisionCheck.sqf';
 
-statusMonitor = compile preprocessFile "client\vehicles\status_monitor.sqf";
+// statusMonitor = compile preprocessFile "client\vehicles\status_monitor.sqf";
 simulationManager = compile preprocessFile "client\simulation_manager.sqf";
 
 // Effects

@@ -1,6 +1,6 @@
 //
-//      Name: createAlert
-//      Desc: Creates a notification box in the center of the screen
+//      Name: createHint
+//      Desc: Creates a notification hint in the center of the screen
 //      Return: None
 //
 

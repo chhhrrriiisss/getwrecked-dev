@@ -22,22 +22,6 @@ if(!(createDialog "GW_Race")) exitWith { GW_RACE_GENERATOR_ACTIVE = false; }; //
 
 showChat false;
 
-calculateDistance = {
-	params ['_array'];
-	private ['_array'];
-
-	_d = 0;
-	{
-		if (_foreachIndex == ((count _array) - 1)) exitWith {};
-		_d = _d + (_x distance (_array select (_foreachIndex + 1)));
-	} foreach _array;	
-
-	_d = if (_d > 1000) then { format['%1km', [_d / 1000, 1] call roundTo ] } else { format['%1m', [_d, 1] call roundTo ]};
-
-	_d
-
-};
-
 getAllRaces = {
 	_rcs = profileNamespace getVariable ['GW_RACES', []];
 	_rcs = if (count _rcs == 0) then {
@@ -51,10 +35,11 @@ getAllRaces = {
 	_activeRaces = [];
 	{ _activeRaces pushback ((_x select 0) select 0);	} foreach GW_ACTIVE_RACES;
 
-	// Hide races in library that are the same as active races
+	// Hide races in library that are the same as active races OR aren't on this map
 	{
 		_name = (_x select 0) select 0;
-		if (_name in _activeRaces) then { _libraryRaces deleteAt _foreachIndex; };
+		_location = (_x select 0) select 2;
+		if (_name in _activeRaces || _location != worldName) then { _libraryRaces deleteAt _foreachIndex; };
 	} foreach _libraryRaces;
 
 	// Merge the two arrays and return
@@ -77,7 +62,8 @@ startRace = {
 	_meta = (_selectedRace select 0);
 	_name = _meta select 0;
 
-	_minPlayers = if (GW_DEBUG) then { 1 } else { 2 };
+	// _minPlayers = if (GW_DEBUG) then { 1 } else { 2 };
+	_minPlayers = 1;
 	_meta set [3, _minPlayers];
 
 	_maxWaitPeriod = if (GW_DEBUG) then { 15 } else { 60 };
@@ -94,7 +80,7 @@ startRace = {
 	} foreach GW_ACTIVE_RACES;
 
 	// Calculate total distance for this race
-	_distance = [_points] call calculateDistance;
+	_distance = [_points] call calculateTotalDistance;
 
 	// If we're targetting a race that's already running, go straight to deploy
 	if (_exists) exitWith {
@@ -324,6 +310,25 @@ _mapTitle = ((findDisplay 90000) displayCtrl 90012);
 _mapControl ctrlEnable false;
 _mapControl ctrlCommit 0;
 
+_raceStats = ((findDisplay 90000) displayCtrl 90009);
+_raceStats ctrlEnable false;
+_raceStats ctrlSetFade 0;
+_raceStats ctrlCommit 0;
+
+lnbClear _raceStats;
+	
+{	
+	_raceStats lnbAddRow _x;
+	false
+} count [
+	[""],
+	["", "Distance:", "0km"],
+	["", "Total Checkpoints:", "0 / 20"],
+	["", "Estimated Time:", "0 minutes"],	
+	["", "Author", "Unknown"]
+
+] > 0;
+
 _existingRaces = call getAllRaces;
 
 GW_RACE_NAME = '';
@@ -413,6 +418,7 @@ toggleRaceEditing = {
 	_display = (findDisplay 90000);
 	_mapControl = (_display displayCtrl 90001);
 	_mapTitle = (_display displayCtrl 90012);
+	_mapHelpText = (_display displayCtrl 90030);
 
 	_nonEditorControls = [
 		(_display displayCtrl 90011),
@@ -439,6 +445,10 @@ toggleRaceEditing = {
 		_editButton ctrlEnable true;
 		_editButton ctrlCommit 0;
 
+		_mapHelpText ctrlSetFade 1;
+		_mapHelpText ctrlEnable false;
+		_mapHelpText ctrlCommit 0;
+
 		{
 			_x ctrlSetFade 0;
 			_x ctrlCommit 0;
@@ -454,6 +464,22 @@ toggleRaceEditing = {
 
 		_editButton ctrlSetText 'SAVE';
 		_editButton ctrlCommit 0;
+
+		_mapHelpText ctrlSetStructuredText parseText ( 
+			"
+			<t size='0.9' color='#ffffff' valign='top' shadow='0' align='left'>Double click to add a new checkpoint.</t>
+			<br />
+			<t size='0.9' color='#ffffff' valign='top'  shadow='0' align='left'>Left Click+Drag to move points to a location.</t>
+			<br />
+			<t size='0.9' color='#ffffff' valign='top'  shadow='0' align='left'>Use delete to remove a checkpoint.</t>
+
+
+
+
+			"
+		);
+		_mapHelpText ctrlSetFade 0;
+		_mapHelpText ctrlCommit 0;
 
 		{
 			_x ctrlSetFade 1;

@@ -67,7 +67,6 @@ _canTrigger = _this call {
 	true
 };
 
-
 if (!_canTrigger) exitWith {};
 
 [] call playerLoop;

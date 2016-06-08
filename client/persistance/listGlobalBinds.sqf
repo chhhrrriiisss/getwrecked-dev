@@ -14,7 +14,8 @@ _defaultBinds = [
 	["ATTACH", "-1"],
 	["ROTATECW", "-1"],
 	["ROTATECCW", "-1"],
-	["HOLD","-1"]
+	["HOLD","-1"],
+	["INFO", "23"]
 ];
 
 IF ((count _globalBinds == count _defaultBinds) && _globalBindsVersion == GW_VERSION) exitWith { _globalBinds };

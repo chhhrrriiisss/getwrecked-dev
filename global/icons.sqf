@@ -106,6 +106,11 @@ speedSupplyIcon = ICON_ROOT + "hud\speedSupply.paa";
 armorSupplyIcon = ICON_ROOT + "hud\armorSupply.paa";
 radarSupplyIcon = ICON_ROOT + "hud\radarSupply.paa";
 
+// Race Icons
+
+racePlayer = ICON_ROOT + "hud\racePlayer.paa";
+raceOpponent = ICON_ROOT + "hud\raceOpponent.paa";
+
 // Markers
 targetIcon = ICON_ROOT + "hud\target.paa";
 defaultIcon = targetIcon;
@@ -116,6 +121,7 @@ rpgTargetIcon = ICON_ROOT + "hud\rpgTarget.paa";
 rangeTargetIcon = ICON_ROOT + "hud\rangeTarget.paa";
 hmgTargetIcon = ICON_ROOT + "hud\hmgTarget.paa";
 vehicleTargetIcon = ICON_ROOT + "hud\vehicleTarget.paa";
+infoIcon = ICON_ROOT + "hud\info.paa";
 
 // Alert Icons
 successIcon = ICON_ROOT + "hud\success.paa";

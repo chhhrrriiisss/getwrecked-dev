@@ -97,10 +97,17 @@ if ("invulnerable" in _status) then {
 
 };
 
+
+
 // Update the vehicle damage status bar
 _vehicle spawn { 
 
     Sleep 0.01; 
+
+    // Apply vehicle damage to driver
+    _vehDamage = getDammage _this;
+    if (getDammage (driver _this) != (_vehDamage)) then { (driver _this) setDammage _vehDamage; };
+
     _this call updateVehicleDamage; 
 
     if (!GW_DEBUG) exitWith {};

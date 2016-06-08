@@ -1,23 +1,9 @@
-//
-//     Get Wrecked
-//     Vehicle Combat Sandbox by Sli
-//
-//     getwrecked.info
-//     @GetWreckedA3
-//     
-//     This mod and its content (excluding those already attributed therein) are under a CC-BY-NC-ND 4.0 License
-//     Attribution-NonCommercial-NoDerivatives 4.0 International
-//     Permission must be sought from the Author for its commercial use, any modification or use of a non-public release obtained via the mission cache
-//     
-
-//TEST
-
 X_Server = false;
 X_Client = false;
 X_JIP = false;
 
 // Used to determine if saved vehicles are out-of-date
-GW_VERSION = 85.31;
+GW_VERSION = 85.6;
 
 if (isServer) then { X_Server = true };
 if (!isDedicated) then { X_Client = true };
@@ -35,7 +21,7 @@ MISSION_ROOT = call {
 call compile preprocessFile "global\compile.sqf";
 [] execVM "briefing.sqf";
 
-hint "v0.8.5 RC3";
+hint "v0.8.5 RC6";
 
 99999 cutText [localize "str_gw_loading", "BLACK", 0.01]; 
 

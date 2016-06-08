@@ -104,3 +104,4 @@ GW_MAP_EH = ((findDisplay 12) displayCtrl 51) ctrlAddEventHandler ["Draw", {
 
 }];
 
+true
