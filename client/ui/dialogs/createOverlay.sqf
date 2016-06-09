@@ -66,18 +66,17 @@ _title ctrlCommit 0;
 
 _content ctrlShow true;
 _t = format[
-	'<t size="0.85" font="puristaMedium" shadow="0" color="#FFFFFF" align="center">%1 </t>
+	'<t size="0.85" font="puristaMedium" shadow="1" color="#FFFFFF" align="center">%1 </t>
 	<br /><br />
-	<t size="0.85" font="puristaLight" shadow="0" color="#FFFFFF" align="center">%2</t>
+	<t size="0.85" font="puristaLight" shadow="1" color="#FFFFFF" align="center">%2</t>
 	<br /><br />
-	<t size="0.85" font="puristaMedium" shadow="0" color="#FFFFFF" align="center">For additional hints, press <t color="#FCD93B">[ %3 ]</t> when near an item or object.</t> ', 
+	<t size="0.85" font="puristaMedium" shadow="1" color="#FFFFFF" align="center">For additional hints, press <t color="#FCD93B">[ %3 ]</t> when near an item or object.</t>', 
 	"Get Wrecked is a custom vehicle sandbox that challenges players to create armoured vehicles and then fight to the death in a race or battle.",
-	"To begin, find an empty Vehicle Service Terminal to load or create a vehicle from scratch. After saving, you can then deploy that vehicle to a battle, arena or active race.",
+	"To begin, find an empty Vehicle Service Terminal to load or create a vehicle from scratch. <br /> If you have issues that are not fixed by rejoining, use the !reset command.",
 	[ (['INFO'] call getGlobalBind) ] call codeToKey
 ];
 _content ctrlSetStructuredText(parseText(_t));
 _content ctrlCommit 0;
-
 
 
 // _btn ctrlShow true;

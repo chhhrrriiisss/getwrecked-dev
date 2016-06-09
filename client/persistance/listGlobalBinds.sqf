@@ -24,7 +24,7 @@ systemchat 'Global binds updated to new version.';
 // Try and use previously set binds (if exists)
 {	
 	_bind = (_x select 0);
-	_defaultKey = (_x select 0);
+	_defaultKey = (_x select 1);
 
 	{	
 		if ((_x select 0) == _bind) exitWith {

@@ -194,7 +194,13 @@ GW_COMMANDS_LIST = [
 		{
 
 			_argument = [_this, 0, "ALL", [""]] call filterParam;
-			if (count toArray _argument == 0) then { _argument = "ALL"; };
+			if (count toArray _argument == 0) exitWith { 
+
+
+				systemchat 'Use: !reset <money | unlocks | library | races | binds | all>'
+
+			};
+
 			_argument = toUpper(_argument);
 
 			0 = [_argument] spawn {
@@ -213,6 +219,9 @@ GW_COMMANDS_LIST = [
 						profileNamespace SetVariable ['GW_LIBRARY', nil];
 						profileNamespace setVariable ['GW_FIXDLC', nil];	
 						profileNamespace setVariable ['GW_HINTS_ENABLED', nil];	
+						profileNamespace setVariable ['GW_BINDS', nil];
+						profileNamespace setVariable ['GW_BINDS_VERSION', nil];
+						saveProfileNamespace;
 						systemChat 'Profile reset successfully.';
 					};
 

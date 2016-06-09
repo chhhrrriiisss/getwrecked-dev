@@ -1,5 +1,5 @@
 # [Get Wrecked](http://getwrecked.info) Changelog
-## Last Updated: [16-01-2016] ##
+## Last Updated: [10-06-2016] ##
 
 Note: Some changes that are deemed spoilers are hidden from this log. 
 (WIP) Indicates items that may not be fully functional and are only partially implemented.

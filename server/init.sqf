@@ -19,9 +19,6 @@ _startTime = time;
 	false
 } count (nearestObjects [(getmarkerpos "workshopZone_camera"), [], 200]) > 0;
 
-// Initializes the Dynamic Groups framework
-["Initialize"] call bis_fnc_dynamicGroups; 
-
 // Make AI attack civlian players
 west setFriend [civilian, 0];
 east setFriend [civilian, 0];

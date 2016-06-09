@@ -28,7 +28,7 @@ class GW_Overlay
 		class Background : GW_Block
 		{
 			idc = 99005;
-			colorBackground[] = {0,0,0,0.5};
+			colorBackground[] = {0,0,0,0.6};
 			x = -1;
 			y = 0 * safezoneH + safezoneY; 
 			w = 3;
