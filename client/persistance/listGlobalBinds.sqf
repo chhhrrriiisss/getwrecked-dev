@@ -9,7 +9,6 @@ _globalBindsVersion = profileNamespace getVariable ['GW_BINDS_VERSION', 0];
 
 _defaultBinds = [
 	["SETTINGS", "220"],
-	["GROUPS", "210"],
 	["GRAB", "-1"],
 	["ATTACH", "-1"],
 	["ROTATECW", "-1"],

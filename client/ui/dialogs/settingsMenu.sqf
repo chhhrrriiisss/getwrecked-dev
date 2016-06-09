@@ -7,7 +7,7 @@
 private ['_vehicle', '_unit'];
 
 // Make sure we cant open it while we're deploying
-if (GW_SETTINGS_ACTIVE || GW_TIMER_ACTIVE) exitWith {};
+if (GW_SETTINGS_ACTIVE || GW_TIMER_ACTIVE || GW_LOBBY_ACTIVE) exitWith {};
 GW_SETTINGS_ACTIVE = true;
 
 _vehicle = [_this,0, objNull, [objNull]] call filterParam;
@@ -69,6 +69,8 @@ GW_SETTINGS_READY = false;
 
 "dynamicBlur" ppEffectAdjust [0]; 
 "dynamicBlur" ppEffectCommit 0.1; 
+
+saveProfileNamespace;
 
 
 

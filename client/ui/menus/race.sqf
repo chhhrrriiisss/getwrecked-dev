@@ -36,15 +36,16 @@ getAllRaces = {
 	{ _activeRaces pushback ((_x select 0) select 0);	} foreach GW_ACTIVE_RACES;
 
 	// Hide races in library that are the same as active races OR aren't on this map
+	_filteredRaces = [];
 	{
 		_name = (_x select 0) select 0;
 		_location = (_x select 0) select 2;
-		if (_name in _activeRaces || _location != worldName) then { _libraryRaces deleteAt _foreachIndex; };
+		if (_name in _activeRaces || _location != worldName) then {} else { _filteredRaces pushback _x; };
 	} foreach _libraryRaces;
 
 	// Merge the two arrays and return
 	_totalRaces = +GW_ACTIVE_RACES;
-	_totalRaces append _libraryRaces;
+	_totalRaces append _filteredRaces;
 	_totalRaces
 };
 
@@ -62,8 +63,7 @@ startRace = {
 	_meta = (_selectedRace select 0);
 	_name = _meta select 0;
 
-	// _minPlayers = if (GW_DEBUG) then { 1 } else { 2 };
-	_minPlayers = 1;
+	_minPlayers = if (GW_DEBUG) then { 1 } else { 2 };
 	_meta set [3, _minPlayers];
 
 	_maxWaitPeriod = if (GW_DEBUG) then { 15 } else { 60 };
@@ -74,8 +74,9 @@ startRace = {
 
 	// Check a race with that name is not currently running
 	_exists = false;
+	_timeout = serverTime + 60;
 	{
-		if (((_x select 0) select 0) == _name) exitWith { _exists = true; };
+		if (((_x select 0) select 0) == _name) exitWith { _timeout = ((_x select 0) select 5); _exists = true; };
 		if (((_x select 1) select 0) distance (_points select 0) < 100) exitWith { _exists = true; };
 	} foreach GW_ACTIVE_RACES;
 
@@ -87,30 +88,29 @@ startRace = {
 
 		// Race is a new one
 		if (_raceStatus == -1) exitWith {
-			systemchat 'A race in that area is already active.';
+			disableSerialization;
+			_startButton = ((findDisplay 90000) displayCtrl 90015);
+			_startButton ctrlSetText "RACE ACTIVE IN AREA";
+			_startButton ctrlCommit 0;
 		};
 
-		if (_raceStatus >= 2) exitWith {
-			systemchat 'Race active and not currently joinable.';
+		// Race is currently locked (already started)
+		if (_raceStatus >= 2 || (_timeout - serverTime < 10)) exitWith {
+			disableSerialization;
+			_startButton = ((findDisplay 90000) displayCtrl 90015);
+			_startButton ctrlSetText "NOT JOINABLE";
+			_startButton ctrlCommit 0;
 
 			//closeDialog 0;
 			//[] execVM 'testspectatorcamera.sqf';
-
 		};
+		
 
 		closeDialog 0;
 
 		// Send player to zone and begin waiting period for races that are already active
 		_success = [GW_SPAWN_VEHICLE, player, _selectedRace] call deployRace;
-		_success = true;
 		GW_SPAWN_ACTIVE = false;
-
-		if (!_success) exitWith {
-			systemchat 'Deployment cancelled.';
-			GW_RACE_ACTIVE = false;
-			GW_HUD_ACTIVE = true;
-			GW_HUD_LOCK = false;
-		};
 	};
 
 	// Confirmation in case of mis-click
@@ -174,15 +174,24 @@ startRace = {
 	// Send player to zone and begin waiting period
 	_success = [GW_SPAWN_VEHICLE, player, _selectedRace] call deployRace;
 	GW_SPAWN_ACTIVE = false;
+	GW_RACE_ACTIVE = false;
 
 	if (!_success) exitWith {
-		GW_RACE_ACTIVE = false;
 		GW_HUD_ACTIVE = true;
 		GW_HUD_LOCK = false;
 	};
 
 };
 
+changeRace = {
+	private ['_list', '_newSelection'];	
+	_existingRaces = call getAllRaces;
+	_newSelection = [GW_RACE_ID + _this, 0, (count _existingRaces) - 1, true] call limitToRange;
+	disableSerialization;
+	_list = ((findDisplay 90000) displayCtrl 90011);	
+	_list lbSetCurSel _newSelection;
+	_newSelection call selectRace;
+};
 
 selectRace = {
 	
@@ -198,11 +207,13 @@ selectRace = {
 	GW_RACE_NAME = (_raceData select 0) select 0;	
 	GW_RACE_HOST = [_raceData, 2, "NONE", [""]] call filterParam;
 	GW_RACE_ID = _selection;
-
+	_raceMeta = _raceData select 0;
+	_isDefault = [_raceMeta, 3, false, [false]] call filterParam;
 
 	_startButton = ((findDisplay 90000) displayCtrl 90015);
 	_raceStatus = [GW_RACE_NAME] call checkRaceStatus;
 
+	// Determine start text based on race status
 	_startText = _raceStatus call {
 		if (_this == -1) exitWith { 'START' };
 		if (_this == 0) exitWith { 'JOIN' };
@@ -213,34 +224,38 @@ selectRace = {
 	_startButton ctrlSetText _startText;
 	_startButton ctrlCommit 0;	
 
-	_buttonFade = if (GW_RACE_HOST == "NONE") then { 0 } else { 1 };
+	// Hide edit/rename buttons
+	_fade = if (_raceStatus >= 0 || _isDefault) then { 1 } else { 0 };
+	_enable = if (_fade == 1) then { false } else { true };
+
 	_editButton = ((findDisplay 90000) displayCtrl 90020);
 	_renameButton = ((findDisplay 90000) displayCtrl 90021);
 	_deleteButton = ((findDisplay 90000) displayCtrl 90018);
 
-	{
-		_x ctrlEnable true;
-		// _x ctrlShow true;		
-		_x ctrlSetFade _buttonFade;
+	{	
+
+		_x ctrlEnable _enable;	
+		_x ctrlSetFade _fade;
 		_x ctrlCommit 0;
 	} foreach [_editButton, _renameButton, _deleteButton];
 
-	_mapTitle = ((findDisplay 90000) displayCtrl 90012);
-	_mapTitle ctrlSetText GW_RACE_NAME;
-	_mapTitle ctrlCommit 0;
+	_defaultFlag = ((findDisplay 90000) displayCtrl 90023);
+	_fade = if (_raceStatus >= 0 || _isDefault) then { 0 } else { 1 };
+	_defaultFlag ctrlSetFade _fade;
 
-	// If default map, hide delete button
-	_raceMeta = _raceData select 0;
-	_isDefault = [_raceMeta, 3, false, [false]] call filterParam;
-
-	if (_isDefault || _raceStatus >= 0) then {		
-
-
-		_deleteButton ctrlEnable false;	
-		_deleteButton ctrlSetFade 1;
-		_deleteButton ctrlCommit 0;
+	_text = 'OFFICIAL RACE';
+	if (_raceStatus >= 0) then {
+		_text = format['SHARED BY %1', [GW_RACE_HOST, 12] call cropString];
 	};
 
+	_defaultFlag ctrlSetText _text;
+
+	_defaultFlag ctrlCommit 0;
+
+	_mapTitle = ((findDisplay 90000) displayCtrl 90012);
+	_mapTitle ctrlSetText GW_RACE_NAME;
+	_mapTitle ctrlCommit 0;	
+	
 	[] call focusCurrentRace;
 
 
@@ -248,6 +263,8 @@ selectRace = {
 };
 
 generateRaceList = {
+
+	private ['_selected', '_filterList', '_existingRaces', '_meta', '_name', '_host', '_text', '_status'];
 	
 	_selected = [_this, 0, 0, [0]] call filterParam;
 
@@ -260,13 +277,20 @@ generateRaceList = {
 	{
 		_meta = _x select 0;
 		_name = _meta select 0;
+		_status = [_name] call checkRaceStatus;
 		_host =  [_x, 2, "", [""]] call filterParam;
+		_host = if ((count toArray _host) > 0) then { _host } else { 'UNKNOWN' };
 
-		if ((count toArray _host) > 0) then { 
-			_host = format[' [ACTIVE, %1]', _host];
+		_text = if (_status == -1) then {
+			format[' %1', _name]
+		} else {
+			if (_status == 3) exitWith {  format[' %1 [ENDING]', _name] };
+			if (_status == 2) exitWith {  format[' %1 [RUNNING]', _name] };
+			if (_status == 1) exitWith {  format[' %1 [STARTING]', _name] };
+			format[' %1 [IN LOBBY]', _name]
 		};
 
-		lbAdd [90011,  format[' %1%2', _name,_host] ];
+		lbAdd [90011,  _text ];
 		lbSetData [90011, _forEachIndex, _name];	
 
 
@@ -277,25 +301,50 @@ generateRaceList = {
 };
 
 focusCurrentRace = {
-	_mapControl = ((findDisplay 90000) displayCtrl 90001);
+
+	private ['_map'];
+
+	disableSerialization;
+	_map = ((findDisplay 90000) displayCtrl 90001);
+
 	_startPos = GW_RACE_ARRAY select 0;
+	if (isNIl "_startPos") exitWith {};
+
 	_endPos = GW_RACE_ARRAY select ((count GW_RACE_ARRAY) -1);
+	if (isNIl "_endPos") exitWith {};
+
 	_dir = [_startPos, _endPos] call dirTo;
 	_midPos = [_startPos, ((_startPos distance _endPos) / 2), _dir] call relPos;
-	_startPosMap = (_mapControl ctrlMapWorldToScreen _startPos);
-	_endPosMap = (_mapControl ctrlMapWorldToScreen _endPos);
+	if (isNIl "_midPos") exitWith {};
+
+	_startPosMap = (_map ctrlMapWorldToScreen _startPos);
+	_endPosMap = (_map ctrlMapWorldToScreen _endPos);
 	_screenYDist = [_startPosMap select 0, _startPosMap select 1, 0] distance [_startPosMap select 0, _endPosMap select 1, 0];
 	_screenXDist = [_startPosMap select 0, _startPosMap select 1, 0] distance [_endPosMap select 0, _startPosMap select 1, 0];
 	_multiplier = if (_screenXDist > _screenYDist) then { (_screenXDist / 0.5) } else { (_screenYDist / 0.3) };
-	_mapControl ctrlMapAnimAdd [0.25, (1 * _multiplier), _midPos];
-	ctrlMapAnimCommit _mapControl;
+	_map ctrlMapAnimAdd [0.25, (1 * _multiplier), _midPos];
+	ctrlMapAnimCommit _map;
 };
 
 createNewRace = {
-	
+	private ['_existingRaces', '_raceName', '_origin', '_p1', '_p2'];
+
 	_existingRaces = call getAllRaces;
 	_raceName = toUpper([true] call generateName);
-	_existingRaces pushBack [[_raceName,(name player),worldName], [[22845.5,18443,0],[23190.5,17340.5,0],[24414.8,18932.3,0]]];
+
+	// Create a basic set of waypoints to start
+	_origin = [[], 0, 20000, 25, 0, 5, 0] call bis_fnc_findSafePos;
+	_p1 = [_origin, 200, 1000, 5, 0, 5, 0] call bis_fnc_findSafePos;
+	_p2 = [_p1, 200, 1000, 5, 0, 5, 0] call bis_fnc_findSafePos;
+
+	if (count _origin == 0 || count _p1 == 0 || count _p2 == 0) exitWith { [] call createNewRace; };
+	{_x set [2, 0];	} foreach [_origin, _p1, _p2];
+
+	_existingRaces pushBack [[_raceName,(name player),worldName, false],[_origin,_p1,_p2]];
+
+	//[[_raceName,(name player),worldName], [_origin,_p1,_p2] ]];
+	
+
 	profileNamespace setVariable ['GW_RACES', _existingRaces];
 	saveProfileNamespace;
 
@@ -465,21 +514,21 @@ toggleRaceEditing = {
 		_editButton ctrlSetText 'SAVE';
 		_editButton ctrlCommit 0;
 
-		_mapHelpText ctrlSetStructuredText parseText ( 
-			"
-			<t size='0.9' color='#ffffff' valign='top' shadow='0' align='left'>Double click to add a new checkpoint.</t>
-			<br />
-			<t size='0.9' color='#ffffff' valign='top'  shadow='0' align='left'>Left Click+Drag to move points to a location.</t>
-			<br />
-			<t size='0.9' color='#ffffff' valign='top'  shadow='0' align='left'>Use delete to remove a checkpoint.</t>
+		// _mapHelpText ctrlSetStructuredText parseText ( 
+		// 	"
+		// 	<t size='0.9' color='#ffffff' valign='top' shadow='0' align='left'>Double click to add a new checkpoint.</t>
+		// 	<br />
+		// 	<t size='0.9' color='#ffffff' valign='top'  shadow='0' align='left'>Left Click+Drag to move points to a location.</t>
+		// 	<br />
+		// 	<t size='0.9' color='#ffffff' valign='top'  shadow='0' align='left'>Use delete to remove a checkpoint.</t>
 
 
 
 
-			"
-		);
-		_mapHelpText ctrlSetFade 0;
-		_mapHelpText ctrlCommit 0;
+		// 	"
+		// );
+		// _mapHelpText ctrlSetFade 0;
+		// _mapHelpText ctrlCommit 0;
 
 		{
 			_x ctrlSetFade 1;

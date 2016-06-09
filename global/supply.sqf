@@ -161,45 +161,45 @@ GW_SUPPLY_TYPES = [
 		}
 	],
 
-	[		
-		"damage", // not working right now
-		1.1,
-		damageSign,
-		{	
-			_crate = _this;
-			(vehicle player) setVariable ['status', [], true];
+	// [		
+	// 	"damage", // not working right now
+	// 	1.1,
+	// 	damageSign,
+	// 	{	
+	// 		_crate = _this;
+	// 		(vehicle player) setVariable ['status', [], true];
 
-			[
-				[
-					(vehicle player),
-					15,
-					[0.812,0.208,0.22,0.05]
-				],
-				"shieldEffect"
-			] call bis_fnc_mp;
+	// 		[
+	// 			[
+	// 				(vehicle player),
+	// 				15,
+	// 				[0.812,0.208,0.22,0.05]
+	// 			],
+	// 			"shieldEffect"
+	// 		] call bis_fnc_mp;
 
-			[(vehicle player), ['extradamage'], 30] call addVehicleStatus;
-			['EXTRA DAMAGE', 30, damageSupplyIcon, { ("extradamage" in ((vehicle player) getVariable ['status', []])) }] spawn createNotification;
-		}
-	],
+	// 		[(vehicle player), ['extradamage'], 30] call addVehicleStatus;
+	// 		['EXTRA DAMAGE', 30, damageSupplyIcon, { ("extradamage" in ((vehicle player) getVariable ['status', []])) }] spawn createNotification;
+	// 	}
+	// ],
 
-	[		
-		"speed",
-		0.5,
-		speedSign,
-		{	
-			_crate = _this;
-			_condition = { ("overcharge" in ((vehicle player) getVariable ['status', []])) };
-			_maxTime = 45;
-			_vehicle = (vehicle player);
-			_vehicle setVariable ['status', [], true];
+	// [		
+	// 	"speed",
+	// 	0.5,
+	// 	speedSign,
+	// 	{	
+	// 		_crate = _this;
+	// 		_condition = { ("overcharge" in ((vehicle player) getVariable ['status', []])) };
+	// 		_maxTime = 45;
+	// 		_vehicle = (vehicle player);
+	// 		_vehicle setVariable ['status', [], true];
 
-			[_vehicle, ['overcharge'], _maxTime] call addVehicleStatus;
-			[_vehicle, _maxTime, 'client\images\power_halo.paa', _condition, true, [0,0,0.5], false] spawn createHalo;
-			[_vehicle, 'client\images\vehicle_textures\fire\fire.jpg', _maxTime, _condition] spawn swapVehicleTexture;
-			['OVERCHARGE', _maxTime, speedSupplyIcon] spawn createNotification;
-		}
-	],
+	// 		[_vehicle, ['overcharge'], _maxTime] call addVehicleStatus;
+	// 		[_vehicle, _maxTime, 'client\images\power_halo.paa', _condition, true, [0,0,0.5], false] spawn createHalo;
+	// 		[_vehicle, 'client\images\vehicle_textures\fire\fire.jpg', _maxTime, _condition] spawn swapVehicleTexture;
+	// 		['OVERCHARGE', _maxTime, speedSupplyIcon] spawn createNotification;
+	// 	}
+	// ],
 
 	[		
 		"armor",
@@ -215,28 +215,28 @@ GW_SUPPLY_TYPES = [
 			[_vehicle, ['nanoarmor'], _maxTime] call addVehicleStatus;
 			[_vehicle, _maxTime, 'client\images\power_halo.paa', _condition, true, [0,0,0.5], false] spawn createHalo;
 			[_vehicle, 'client\images\vehicle_textures\special\armor.jpg', _maxTime, _condition] spawn swapVehicleTexture;
-			['NANO ARMOR', _maxTime, armorSupplyIcon, _condition] spawn createNotification;
+			['MAXIMUM ARMOR', _maxTime, armorSupplyIcon, _condition] spawn createNotification;
 		}
 	],
 
-	[		
-		"radar",
-		0.5,
-		jammerSign,
-		{	
-			_crate = _this;
-			_condition = { ("radar" in ((vehicle player) getVariable ['status', []])) };
-			_maxTime = 90;
-			_vehicle = (vehicle player);
-			_vehicle setVariable ['status', [], true];
+	// [		
+	// 	"radar",
+	// 	0.5,
+	// 	jammerSign,
+	// 	{	
+	// 		_crate = _this;
+	// 		_condition = { ("radar" in ((vehicle player) getVariable ['status', []])) };
+	// 		_maxTime = 90;
+	// 		_vehicle = (vehicle player);
+	// 		_vehicle setVariable ['status', [], true];
 
-			playSound3D ["a3\sounds_f\sfx\special_sfx\sparkles_wreck_2.wss", _vehicle, false, (ASLtoATL getposASL _vehicle), 2, 1, 150];
+	// 		playSound3D ["a3\sounds_f\sfx\special_sfx\sparkles_wreck_2.wss", _vehicle, false, (ASLtoATL getposASL _vehicle), 2, 1, 150];
 			
-			[_vehicle, ['radar'], _maxTime] call addVehicleStatus;
-			['RADAR ACTIVE', _maxTime, radarSupplyIcon, _condition] spawn createNotification;	
+	// 		[_vehicle, ['radar'], _maxTime] call addVehicleStatus;
+	// 		['RADAR ACTIVE', _maxTime, radarSupplyIcon, _condition] spawn createNotification;	
 
-		}
-	],
+	// 	}
+	// ],
 
 	[		
 		"explosive",

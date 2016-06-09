@@ -26,9 +26,6 @@ _abortParameters = if ((_this select 2) isEqualType []) then { (_this select 2) 
 _canAbort = [_abortParameters,0, true, [false]] call filterParam;
 _buttonCondition = [_abortParameters,1, { true }, [{}]] call filterParam;
 
-// Testing
-_canAbort = true;
-
 _condition = [_this,3, { true }, [{}]] call filterParam;
 _maxTime = [_this,4, 60, [0]] call filterParam;
 _showBorders = [_this,5, true, [false]] call filterParam;

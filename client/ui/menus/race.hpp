@@ -7,6 +7,7 @@
 #define GW_Edit_ID 90020
 #define GW_Rename_ID 90021
 #define GW_New_ID 90022
+#define GW_Default_ID 90023
 
 #define GW_BUTTON_WIDTH 0.2
 #define GW_BUTTON_HEIGHT 0.035
@@ -607,7 +608,7 @@ class GW_Race
         idc = 90030;
         fade = 1;
         text = "<t size='1' color='#ffffff' align='center'>Some random help text.</t>";
-        x = (0.008) * safezoneW + safezoneX;
+        x = (0.5 - GW_BUTTON_WIDTH) * safezoneW + safezoneX;
         y = (MARGIN_BOTTOM - GW_BUTTON_HEIGHT) * safezoneH + safezoneY;
         w = (GW_BUTTON_WIDTH*2) * safezoneW;
         h = (GW_BUTTON_HEIGHT*2) * safezoneH;
@@ -651,6 +652,33 @@ class GW_Race
       h = GW_BUTTON_HEIGHT * safezoneH;
 
       size = 0.04;
+
+      class TextPos
+      {
+        left = 0;
+        top = 0.0135;
+        right = 0;
+        bottom = 0;
+      };
+
+    };
+
+    class RaceFlags : GW_RscButtonMenu
+    {
+      idc = GW_Default_ID;
+      text = "OFFICIAL RACE";
+      x = (0.015) * safezoneW + safezoneX;
+      y = (MARGIN_TOP) * safezoneH + safezoneY;
+      w = (GW_BUTTON_WIDTH) * safezoneW;
+      h = GW_BUTTON_HEIGHT * safezoneH;
+
+    colorFocused[] = {1,1,1,1};
+    color2[] = {1,1,1,1};
+
+    colorBackground[] = GW_BUTTON_BACKGROUND;
+    colorBackgroundFocused[] = GW_BUTTON_BACKGROUND;
+    colorBackground2[] = GW_BUTTON_BACKGROUND;
+
 
       class TextPos
       {
@@ -811,7 +839,7 @@ class GW_Race
     {
       idc = 90017;
       text = "&#60;";
-      onButtonClick = "(GW_RACE_ID -1) call selectRace";
+      onButtonClick = "-1 call changeRace";
       x = (0.4 - ( (GW_BUTTON_WIDTH / 3) + GW_BUTTON_GAP_X)) * safezoneW + safezoneX;
       y = (MARGIN_BOTTOM) * safezoneH + safezoneY;
       w = (GW_BUTTON_WIDTH / 3) * safezoneW;
@@ -831,7 +859,7 @@ class GW_Race
     {
       idc = 90016;
       text = "&#62;";
-      onButtonClick = "(GW_RACE_ID +1) call selectRace";
+      onButtonClick = "1 call changeRace";
       x = (0.4 + GW_BUTTON_WIDTH + GW_BUTTON_GAP_X) * safezoneW + safezoneX;
       y = (MARGIN_BOTTOM) * safezoneH + safezoneY;
       w = (GW_BUTTON_WIDTH / 3) * safezoneW;

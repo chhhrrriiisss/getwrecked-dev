@@ -66,8 +66,9 @@ for "_i" from 0 to 11 step 1 do {
 };
 
 // Push array to active races and add start positions
-// Then set race status to 'waiting phase' + SYNC 
+// Then set race status to 'waiting phase' + SYNC
 _targetRace set [4, _gridPositions];
+(_targetRace select 0) set [5, serverTime + _maxWaitPeriod];
 GW_ACTIVE_RACES pushback _targetRace;
 [_raceName, 0] call checkRaceStatus;
 
@@ -76,6 +77,8 @@ pubVar_systemChat = format['%1 started a race — use the race menu to join it.'
 publicVariable "pubVar_systemChat";
 systemchat pubVar_systemChat;
 
+// GW_CURRENTRACE_START = serverTime + _maxWaitPeriod;
+
 // Wait for 60 seconds or players > minPlayers
 _timeout = time + _maxWaitPeriod;
 _v = [];
@@ -83,10 +86,8 @@ waitUntil {
 
 	Sleep 1;
 
-	
-
 	// Ensure we only count vehicles with drivers
-	_v = _startPosition nearEntities [["Car"], 300];
+	_v = _startPosition nearEntities [["Car"], 150];
 	{
 		_isVehicle = _x getVariable ['isVehicle', false];
 		_hasDriver = !isNull (driver _x);
@@ -101,28 +102,48 @@ waitUntil {
 		// Set race status to 'ready'
 		if (_raceStatus == 0) then { [_raceName, 1] call checkRaceStatus; };
 
+		_allReady = true;
+		{
+			_isReady = _x getVariable ['GW_R_PR', -1];
+
+			// Push start time to local client
+			// (owner _x) publicVariableClient "GW_CURRENTRACE_START";
+			if (_isReady == -1) exitWith { _allReady = false; };
+		} foreach _v;
+
+		// Race status is 'ready' and all players confirm 'ready', start!
+		_raceStatus =  [_raceName] call checkRaceStatus;
+		if (_allReady && _raceStatus == 1) then {
+			[_raceName, 2] call checkRaceStatus;
+		};
+
 	} else {
 
 		// Set race status to 'waiting'
 		if (_raceStatus == 1) then { [_raceName, 0] call checkRaceStatus; };
 	};
 
-	_left = [([(_timeout - time), 0, _maxWaitPeriod] call limitToRange), 0] call roundTo;
+	// If the race status is 1 (sufficient players) start if all players confirm 'ready'
+
+
+	//_left = [([(_timeout - time), 0, _maxWaitPeriod] call limitToRange), 0] call roundTo;
 
 	// Send timer message to each vehicle in zone every few seconds
-	if (_left % 2 == 0) then {		
-		_string = if ((count _v) < _minPlayers) then { 'Waiting for players... %1s' } else { 'Reached minimum players — starting in %1s' };
-		pubVar_systemChat = format[_string, _left, (count _v)];
-		{
-			
-			if (local _x) then { systemchat pubVar_systemChat; } else {
-				(owner _x) publicVariableClient "pubVar_systemChat";
-			};
+	// if (_left % 2 == 0) then {		
+	// 	_string = if ((count _v) < _minPlayers) then { 'Waiting for players... %1s' } else { 'Reached minimum players — starting in %1s' };
+	// 	pubVar_systemChat = format[_string, _left, (count _v)];
+	// 	{
+	// 		// Message all players in race + let them know who they are playing with
+	// 		if (local _x) then { 	
+	// 			systemchat pubVar_systemChat; 
+	// 		} else {				
+	// 			(owner _x) publicVariableClient "pubVar_systemChat";
+	// 		};
 
-		} foreach _v;
-	};
+	// 	} foreach _v;
+	// };
 	
-
+	_raceStatus = [_raceName] call checkRaceStatus;	
 	((time > _timeout) || _raceStatus == 2)
 };
 
@@ -150,62 +171,13 @@ if (time > _timeout && _raceStatus == 0) exitWith {
 
 };
 
-// Warning message
-// pubVar_systemChat = "Note: Weapons/items are disabled until first checkpoint.";
-// {
-// 	if (local _x) then { systemchat pubVar_systemChat; } else {
-// 		(owner _x) publicVariableClient "pubVar_systemChat";
-// 	};
-// } foreach _v;
-
-// If we are the host, create supply boxes along the route
-// if (_raceHost == (name player)) then {
-// 	_maxSupply = 15;
-// 	_supplyCount = 0;
-// 	{
-// 		// Limit maximum number of supply drops
-// 		if (_supplyCount >= _maxSupply) exitWith {};
-
-// 		// Dont put crates at the last checkpoint
-// 		if (_forEachIndex == ((count _racePoints)-1)) exitWith {}; 
-
-// 		for "_i" from 0 to (random 3) step 1 do { 
-
-// 			// Only a chance of a crate, increasing with proximity to end
-// 			if (random 100 < (20 - (_forEachIndex * 2))) exitWith {};
-// 			_supplyCount = _supplyCount + 1;			
-
-// 			// Random position, between this and next point
-// 			_nextPos = _racePoints select (_forEachIndex + 1);
-// 			_dirNext = [_x, _nextPos] call dirTo;
-// 			_distNext = _x distance _nextPos;
-// 			_pos = ([_x, random _distNext, _dirNext] call relPos) vectorAdd [((random 150) - 75), ((random 150) - 75), 0];
-// 			_pos set [2, 0];
-
-// 			// Care packages at least 50% of the time
-// 			_type = if (random 100 > 50) then { "care" } else { "" };
-// 			[
-// 				[_pos, false, _type],
-// 				'createSupplyDrop',
-// 				false,
-// 				false
-// 			] call bis_fnc_mp;	
-
-// 		};
-
-// 	} foreach _racePoints;
-// };
-
-// // Set race status to complete
-// [_raceName, 3] call checkRaceStatus;
-
-// // 15 seconds of camera, then end race
-// _timeout = time + 10;
-// waitUntil {
-// 	Sleep 1;
-// 	(time > _timeout)
-// };
-
-
-
-
+// Message all players in race + let them know who they are playing with
+{
+	
+	if (local _x) then { 
+		GW_CR_V = _v;
+	} else {
+		GW_CR_V = _v;
+		(owner _x) publicVariableClient "GW_CR_V";
+	};
+} foreach _v;

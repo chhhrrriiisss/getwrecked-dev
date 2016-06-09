@@ -82,7 +82,7 @@ class GW_Spawn
 		{
 			idc = GW_Spawn_List_ID;
 			colorBackground[] = {0,0,0,0.7};
-			onLBSelChanged  = "[_this select 1] spawn changeLocation;";
+			onLBSelChanged  = "(_this select 1) call previewLocation;";
 			x = (0.015) * safezoneW + safezoneX;
 			y = (MARGIN_BOTTOM) * safezoneH + safezoneY;
 			w = (GW_BUTTON_WIDTH) * safezoneW;
@@ -124,7 +124,7 @@ class GW_Spawn
 		{
 			idc = -1;
 			text = "DEPLOY";
-			onButtonClick = "[] spawn selectLocation";
+			onButtonClick = "[] call selectLocation";
 			x = (0.4) * safezoneW + safezoneX;
 			y = (MARGIN_BOTTOM) * safezoneH + safezoneY;
 			w = (GW_BUTTON_WIDTH) * safeZoneW;
@@ -156,7 +156,7 @@ class GW_Spawn
 		{
 			idc = -1;
 			text = "&#60;";
-			onButtonClick = "['prev'] spawn changeLocation";
+			onButtonClick = "-1 call changeLocation";
 			x = (0.4 - ( (GW_BUTTON_WIDTH / 3) + GW_BUTTON_GAP_X)) * safezoneW + safezoneX;
 			y = (MARGIN_BOTTOM) * safezoneH + safezoneY;
 			w = (GW_BUTTON_WIDTH / 3) * safezoneW;
@@ -176,7 +176,7 @@ class GW_Spawn
 		{
 			idc = -1;
 			text = "&#62;";
-			onButtonClick = "['next'] spawn changeLocation";
+			onButtonClick = "1 call changeLocation";
 			x = (0.4 + GW_BUTTON_WIDTH + GW_BUTTON_GAP_X) * safezoneW + safezoneX;
 			y = (MARGIN_BOTTOM) * safezoneH + safezoneY;
 			w = (GW_BUTTON_WIDTH / 3) * safezoneW;

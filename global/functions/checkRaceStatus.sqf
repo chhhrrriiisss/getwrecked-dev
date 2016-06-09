@@ -14,8 +14,9 @@ if (_s == -2) exitWith {
 
 	_s = -1;
 	{			
-		if (_r == ((_X select 0) select 0)) exitWith { _s = [_x, 3, -1, [0]] call filterParam; };
-	} foreach GW_ACTIVE_RACES;
+		if (_r == ((_X select 0) select 0)) exitWith { _s = [_x, 3, -1, [0]] call filterParam; false };
+		false
+	} count GW_ACTIVE_RACES;
 
 	_s
 
@@ -23,8 +24,9 @@ if (_s == -2) exitWith {
 
 // Setting the race to the current status
 {
-	if (_r == ((_X select 0) select 0)) exitWith { _x set [3, _s]; };
-} foreach GW_ACTIVE_RACES;
+	if (_r == ((_X select 0) select 0)) exitWith { _x set [3, _s]; false };
+	false
+} count GW_ACTIVE_RACES;
 
 // Update that value
 publicVariable "GW_ACTIVE_RACES";

@@ -5,7 +5,7 @@ GW_INT_MONITOR_LAST_UPDATE = time;
 GW_CURRENTPOS = (ASLtoATL visiblePositionASL player);
 
 // Restore the HUD if we're somewhere that needs it
-if (GW_DEATH_CAMERA_ACTIVE || GW_PREVIEW_CAM_ACTIVE || GW_SPECTATOR_ACTIVE || GW_TIMER_ACTIVE || GW_TITLE_ACTIVE || GW_GUIDED_ACTIVE || GW_SETTINGS_ACTIVE || GW_LOADING_ACTIVE || GW_HUD_LOCK) then {} else {
+if (GW_DEATH_CAMERA_ACTIVE || GW_PREVIEW_CAM_ACTIVE || GW_SPECTATOR_ACTIVE || GW_TIMER_ACTIVE || GW_TITLE_ACTIVE || GW_GUIDED_ACTIVE || GW_SETTINGS_ACTIVE || GW_LOADING_ACTIVE || GW_HUD_LOCK || GW_LOBBY_ACTIVE) then {} else {
 	if (!GW_HUD_ACTIVE) then {	
 		[] spawn drawHud;
 	};
@@ -90,19 +90,16 @@ if (!isNil "GW_CURRENTZONE") then {
 };
 
 // Debugging
-if (!GW_DEBUG) then {} else {
+if (!GW_DEBUG) exitWith {};
+if (isNil "GW_DEBUG_ARRAY") then {	GW_DEBUG_ARRAY = []; };
+if (GW_DEBUG_ARRAY isEqualTo []) exitWith {};
 
-	if (isNil "GW_DEBUG_ARRAY") then {	GW_DEBUG_ARRAY = []; };
-	if (GW_DEBUG_ARRAY isEqualTo []) exitWith {};
+GW_DEBUG_MONITOR_LAST_UPDATE = time;
+_totalString = format["[   DEBUG MODE   ] \n\n Time: %1\n Zone: %2\n Player: %3\n FPS: %4\n FPSMIN: %5\n", time, GW_CURRENTZONE, name player, [diag_fps, 0] call roundTo, [diag_fpsMIN, 0] call roundTo];
+{	_totalString = format['%1 \n %2: %3', _totalString, (_x select 0), (_x select 1)];	false	} count GW_DEBUG_ARRAY > 0;
 
-	GW_DEBUG_MONITOR_LAST_UPDATE = time;
-	_totalString = format["[   DEBUG MODE   ] \n\n Time: %1\n Zone: %2\n Player: %3\n FPS: %4\n FPSMIN: %5\n", time, GW_CURRENTZONE, name player, [diag_fps, 0] call roundTo, [diag_fpsMIN, 0] call roundTo];
-	{	_totalString = format['%1 \n %2: %3', _totalString, (_x select 0), (_x select 1)];	false	} count GW_DEBUG_ARRAY > 0;
-	
-	hintSilent _totalString;
-};
+hintSilent _totalString;
 
-if (true) exitWith {};
 
 // Periodically check what part of the boundary is visible and update accordingly
 // _points = [];

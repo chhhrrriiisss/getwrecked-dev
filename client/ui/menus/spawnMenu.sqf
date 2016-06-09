@@ -34,7 +34,7 @@ _layerStatic cutRsc ["RscStatic", "PLAIN" , 1];
 
 [_startIndex] call generateSpawnList;
 
-[GW_SPAWN_LOCATION, _displayName,_type] spawn previewLocation;
+_startIndex call previewLocation;
 
 99999 cutText ["", "BLACK IN", 0.35];  
 

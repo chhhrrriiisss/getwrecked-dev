@@ -5,13 +5,14 @@ Note: Some changes that are deemed spoilers are hidden from this log.
 (WIP) Indicates items that may not be fully functional and are only partially implemented.
 Items without Fixed/Added/Removed proceeding are typically balance changes.
 
-**v0.8.2 - v0.8.5** [Closed alpha release]
+**v0.8.2 - v0.8.6** [Closed alpha release]
 
 - Added Race editor and race mode (this feature is very Alpha and VERY subject to change)
 - Added FlamePads to map
 - Added 'Loading' text to vehicle preview
 - Added 'Crash Test Dummy' texture for dev builds
 - Added 'Wrong Way' message to race hud
+- Race lobby menu and 'ready' threshold for race starting
 - Caltrops now more reliable and destroyed after first collision
 - Increased global damage scale by x2 (0.04 > 0.08)
 - Decreased ammo requirements of some weapons
@@ -58,13 +59,15 @@ Items without Fixed/Added/Removed proceeding are typically balance changes.
 - Fixed some vehicle items tending not to load under low server fps
 - Fixed Items shifting position when saved multiple times 
 - Fixed Purchasing multiple items should now correctly use nearby supply boxes owned by player
+- Fixed Filter list on deploy menu should now correctly update when arrows are used
+- Fixed Race menu should now correctly only show races valid on the current map
 
 * Known issues *
 - Small stutter when saving to profilenamespace (keybinds, cars etc)
 - 'lineMarker' missing error on opening race creation screen
 - Occasional param errors due to changes in 1.54 turn off -showscripterrors to remove these
 - Race Mode is WIP, largely incomplete and only working in a demonstrative capacity
-- Attaching items to suspended vehicles often doesn't show the correct rotation until the vehicle is moved
+- Attaching items to suspended vehicles often doesn't show the correct rotation until the vehicle is moved again
 - Vehicles that are suspended have their direction always set to 0
 - Low FPS while using snapping tools
 - Key Binds dont save correctly if you close the settings menu too quickly after setting a bind

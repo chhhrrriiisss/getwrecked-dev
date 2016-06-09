@@ -4,10 +4,8 @@
 //      Return: None
 //
 
-if (!isNil "GW_SPAWN_LOCATION") then {
+if (isNil 'GW_SPAWN_LOCATION') exitWith {}; 
 
-	closeDialog 0;
-	[GW_SPAWN_VEHICLE, player, GW_SPAWN_LOCATION] spawn deployBattle;	
-	GW_SPAWN_ACTIVE = false;
-	
-};
+closeDialog 0; 
+
+[GW_SPAWN_VEHICLE, player, GW_SPAWN_LOCATION] spawn deployBattle; 

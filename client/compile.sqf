@@ -70,6 +70,7 @@ GW_PREVIEW_CAM_ACTIVE = false;
 GW_GENERATOR_ACTIVE = false;
 GW_RACE_GENERATOR_ACTIVE = false;
 GW_SETTINGS_ACTIVE = false;
+GW_LOBBY_ACTIVE = false;
 GW_SPAWN_ACTIVE = false;
 GW_DEPLOY_ACTIVE = false;
 GW_TIMER_ACTIVE = false;
@@ -135,6 +136,7 @@ GW_clientFunctions = [
 
 	['settingsMenu', 'client\ui\dialogs\'],
 	['newMenu', 'client\ui\dialogs\'],
+	['raceLobby', 'client\ui\dialogs\'],
 	['buyMenu', 'client\ui\dialogs\'],
 	['inventoryMenu', 'client\ui\dialogs\'],
 	['spawnMenu', 'client\ui\menus\'],
@@ -319,6 +321,7 @@ checkMark = compile preprocessFile "client\functions\checkMark.sqf";
 damageIntersects = compile preprocessFile "client\functions\damageIntersects.sqf";
 burnIntersects = compile preprocessFile "client\functions\burnIntersects.sqf";
 destroyInstantly = compile preprocessFile "client\functions\destroyInstantly.sqf";
+destroyAndClear = compile preprocessFile "client\functions\destroyAndClear.sqf";
 shredTyres = compile preprocessFile "client\functions\shredTyres.sqf";
 setVehicleOnFire = compile preprocessFile "client\functions\setVehicleOnFire.sqf";
 slowDown = compile preprocessFile "client\functions\slowDown.sqf";

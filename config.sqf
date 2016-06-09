@@ -24,7 +24,7 @@ GW_BOUNDARIES_ENABLED = true;
 GW_GAME_MODE = 0;
 GW_ITEM_COST = 1;
 
-// Spawn timer in seconds (default: 30)
+// Spawn timer in seconds (default: 120)
 GW_RESPAWN_DELAY = 120;
 
 // Object respawn settings (default: 3, .5)
@@ -38,21 +38,21 @@ GW_DAMAGE_UPDATE_INTERVAL = 0.1;
 GW_ARMOR_SYSTEM_ENABLED = true;
 
 // Weapon Damage vs vehicles 
-GW_GDS = 0.08; 
-GW_GDS_RACE = 0.2;
+GW_GDS = 0.08; // Damage modifier while in a battle (default: 0.08)
+GW_GDS_RACE = 0.2; // Damage modifier while in a race (default: 0.2)
 
+// Weapon Damage vs objects
+GW_GHS = 4; // Damage modifier weapons vs items (default: 4)
+
+OBJ_COLLISION_DMG_SCALE = 0;
 WHEEL_COLLISION_DMG_SCALE = 0; 
 COLLISION_DMG_SCALE = 0; 
 FIRE_DMG_SCALE = 8; 
 
-// Weapon Damage vs objects
-GW_GHS = 4;
-OBJ_COLLISION_DMG_SCALE = 0;
-
-// Melee Damage Frequency
+// Melee Damage Frequency (default: 1)
 GW_COLLISION_FREQUENCY = 1;
 
-// Global armor modifier
+// Global armor modifier (default: 32)
 GW_GAM = 32;
 
 // Lock on properties
@@ -64,8 +64,8 @@ GW_LOCKON_TOLERANCE = 10; // Difference in angle needed to acquire target (defau
 // Deployable items
 GW_MAXDEPLOYABLES = 25; // Per player (default :25)
 
-// Render distance of effects
-GW_WORKSHOP_VISUAL_RANGE = 300;
+// Render distance of effects 
+GW_WORKSHOP_VISUAL_RANGE = 300; // ViewDistance while in workshop (default: 300)
 GW_EFFECTS_RANGE = 1000; // Increasing this may add lag at the workshop/airfield (default: 1000)
 
 // % Chance of eject system failing
@@ -76,7 +76,7 @@ GW_INIT_BALANCE = 5000; // (Default: 5000)
 
 // Value modifier for killed vehicles
 GW_KILL_VALUE = 0.5; // How much of the vehicles value should the killer get? (default: 0.5)
-GW_KILL_EMPTY_VALUE = 0.1;
+GW_KILL_EMPTY_VALUE = 0.1; // Value of killing a vehicle with noone in it
 
 // Money earnt in zone
 GW_IN_ZONE_VALUE = 200;
@@ -174,10 +174,8 @@ GW_VALID_ZONES = [
 	['swamp', 'battle', 'Swamp'],
 	['airfield', 'battle', 'Airfield'],
 	['downtown', 'battle', 'Downtown'],
-	// ['field', 'battle', 'Killing Field'],
 	['wasteland', 'battle', 'Wasteland'],
 	['saltflat', 'battle', 'Salt Flat'],
-	// ['highway', 'race'], 
 	['workshop', 'safe', 'Workshop']
 ];
 
@@ -348,6 +346,9 @@ switch (worldName) do {
 	{
 		// Available arenas and game type
 		GW_VALID_ZONES = [
+			['port', 'battle', 'Port'],
+			['quarry', 'battle', 'Quarry'],
+			['crater', 'battle', 'Crater'],
 			['workshop', 'safe', 'Workshop']
 		];
 

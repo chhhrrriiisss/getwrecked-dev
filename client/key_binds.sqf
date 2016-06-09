@@ -61,12 +61,7 @@ checkBinds = {
 	_rotateCCWKey = ["ROTATECCW"] call getGlobalBind;
 	_holdRotateKey = ["HOLD"] call getGlobalBind;
 	_settingsKey = ["SETTINGS"] call getGlobalBind;
-	_groupsKey = ["GROUPS"] call getGlobalBind;
 	
-
-	if (_key == _groupsKey && !GW_SETTINGS_ACTIVE && !GW_TIMER_ACTIVE && !GW_TITLE_ACTIVE && !GW_BUY_ACTIVE && !GW_SPAWN_ACTIVE) then {
-		([] call BIS_fnc_displayMission) createDisplay "RscDisplayDynamicGroups";
-	};	
 
 	// Tilde key for cancelling hints
 	if (_key == 41) exitWith { hint ''; };
@@ -122,7 +117,7 @@ checkBinds = {
 
 	GW_KEYDOWN = _key;
 
-	if (GW_SETTINGS_ACTIVE || GW_DEPLOY_ACTIVE || GW_SPAWN_ACTIVE || GW_DIALOG_ACTIVE) exitWith {};	
+	if (GW_SETTINGS_ACTIVE || GW_DEPLOY_ACTIVE || GW_SPAWN_ACTIVE || GW_DIALOG_ACTIVE || GW_LOBBY_ACTIVE) exitWith {};	
 
 	if (!_inVehicle && GW_CURRENTZONE == "workshopZone") then {
 

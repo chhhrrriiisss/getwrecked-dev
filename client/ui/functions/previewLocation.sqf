@@ -4,14 +4,16 @@
 //      Return: None
 //
 
-private ['_location', '_pos', '_typeOfZone'];
-params ['_location', '_nil', '_typeOfZone'];
+private ['_index'];
+
+
+_index = [_this, 0, count GW_VALID_ZONES -1, true] call limitToRange;
+
+GW_SPAWN_LOCATION = (GW_VALID_ZONES select _index) select 0;
+_typeOfZone = (GW_VALID_ZONES select _index) select 1;
+_displayName = (GW_VALID_ZONES select _index) select 2;
 
 _pos = switch(_typeOfZone) do {
-
-	case "race": {
-		(GW_RACE_ARRAY select 0)
-	};
 	case "battle": {
 		(getMarkerPos format['%1%2_%3', GW_SPAWN_LOCATION, 'Zone', 'camera'])
 	};
@@ -37,7 +39,7 @@ _title = ((findDisplay 52000) displayCtrl 52001);
 _list = ((findDisplay 52000) displayCtrl 52002);	
 
 _title ctrlShow true;
-_title ctrlSetText toUpper (_this select 1);
+_title ctrlSetText toUpper _displayName;
 _title ctrlCommit 0;
 
 GW_LASTLOCATION = GW_SPAWN_LOCATION;

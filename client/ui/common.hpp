@@ -89,6 +89,7 @@ class GW_Stripe_Box
 	lineSpacing = 1; 
 }; 
 
+
 class GW_Text_Box
 {
 	
@@ -143,8 +144,8 @@ class GW_ListBox {
 	colorScrollbar[] = {0.95,0.95,0.95,1};
 	colorSelect[] = {1,1,1,1};
 	colorSelect2[] = {1,1,1,1};
-	colorSelectBackground[] = {0.8,0.8,0.8,1};
-	colorSelectBackground2[] = {1,1,1,0.5};
+	colorSelectBackground[] = {0,0,0,1};
+	colorSelectBackground2[] = {0,0,0,0.5};
 	soundSelect[] = {"",0.1,1};
 	soundExpand[] = {"",0.1,1};
 	soundCollapse[] = {"",0.1,1};

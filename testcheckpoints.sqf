@@ -64,7 +64,7 @@ GW_CHECKPOINTS_COMPLETED = [];
 	_rT = _this select 0;
 	_rB = _this select 1;
 
-	if (GW_CHECKPOINTS_PROGRESS == count GW_CHECKPOINTS) exitWith { false };
+	if (count GW_CHECKPOINTS == 0 || GW_CHECKPOINTS_PROGRESS == count GW_CHECKPOINTS) exitWith { false };
 	_cP = GW_CHECKPOINTS select GW_CHECKPOINTS_PROGRESS;
 
 	_dirDif = ([GW_CURRENTVEHICLE, _cP] call dirTo) - (getDir GW_CURRENTVEHICLE);
@@ -146,9 +146,6 @@ _timeout = time + _maxTime;
 
 hint format['Race started! (%1s)', _maxTime];
 
-GW_CURRENTRACE_START = serverTime;
-
-
 _startTime = time;
 
 _totalDistance = [_points, false] call calculateTotalDistance;
@@ -159,6 +156,7 @@ _dirTolerance = 80;
 
 // Create initial checkpoint group
 _checkpointGroup = [GW_CHECKPOINTS_PROGRESS, GW_CHECKPOINTS] call createCheckpoint;
+
 
 for "_i" from 0 to 1 step 0 do {
 
@@ -189,7 +187,13 @@ for "_i" from 0 to 1 step 0 do {
 
 	_distanceTravelled = _distanceTravelled + _distanceToLastCheckpoint;
 
-	GW_CURRENTRACE_PROGRESS = 1- ((_totalDistance - _distanceTravelled) / _totalDistance);
+	
+	GW_CURRENTRACE_PROGRESS = 1 - ((_totalDistance - _distanceTravelled) / _totalDistance);
+	
+	// Publish updated progress once every 1.5 seconds
+	if (round (time) % 1.5 == 0) then {
+		GW_CURRENTVEHICLE setVariable ['GW_R_PR', GW_CURRENTRACE_PROGRESS, true];
+	};
 
 	_distanceToCheckpoint = (ASLtoATL visiblePositionASL GW_CURRENTVEHICLE) distance (GW_CHECKPOINTS select GW_CHECKPOINTS_PROGRESS);
 	if (_distanceToCheckpoint < _distTolerance) then {			
@@ -211,7 +215,7 @@ for "_i" from 0 to 1 step 0 do {
 		// _targetFuel = [_maxFuel * 0.1, 1] call roundTo;
 		// GW_CURRENTVEHICLE setVariable ["fuel", _maxFuel];
 
-		_timeStamp = (time - _startTime) call formatTimeStamp;
+		_timeStamp = (serverTime - GW_CURRENTRACE_START) call formatTimeStamp;
 		_timeStamp = format['+%1', _timeStamp];
 		GW_CURRENTVEHICLE say "blipCheckpoint";		
 
@@ -276,12 +280,12 @@ if ((count _cpArray) == 0 && time <= (_timeout + 0.1) ) then {
 	_cpArray call _abortSequence;
 };
 
-if (alive GW_CURRENTVEHICLE) then {
+if (alive GW_CURRENTVEHICLE && alive (driver GW_CURRENTVEHICLE)) then {
 
-	_timeStamp = (time - _startTime) call formatTimeStamp;
+	_timeStamp = (serverTime - GW_CURRENTRACE_START) call formatTimeStamp;
 
 	// Show title if we have a time or DNC
-	waitUntil { Sleep 0.1; (isNull (findDisplay 95000)) };
+	waitUntil { (isNull (findDisplay 95000)) };
 	[ format["<br /><t size='3.3' color='#ffffff' align='center' valign='middle' shadow='0'>+%1</t>", _timeStamp], "FINISH", [false, { true }] , { true }, 9999, true, { closeDialog 0; true }] call createTitle;
 
 	GW_FLYBY_ACTIVE = FALSE;

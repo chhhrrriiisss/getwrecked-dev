@@ -38,6 +38,7 @@ disableChannels[] = {0,2,3,6};
 #include "client\ui\menus\race.hpp"
 #include "client\ui\menus\spectator.hpp"
 #include "client\ui\dialogs\new.hpp"
+#include "client\ui\dialogs\raceLobby.hpp"
 #include "client\ui\dialogs\buy.hpp"
 #include "client\ui\dialogs\settings.hpp"
 #include "client\ui\dialogs\inventory.hpp"

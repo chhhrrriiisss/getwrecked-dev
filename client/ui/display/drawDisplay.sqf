@@ -45,7 +45,7 @@ GW_DISPLAY_EH = addMissionEventHandler ["Draw3D", {
 	GW_CURRENTDIR = getDir GW_CURRENTVEHICLE;	
 
  	// If any of these menus are active, forget about drawing anything else
-	if (GW_DEPLOY_ACTIVE || GW_SPAWN_ACTIVE || GW_SETTINGS_ACTIVE || GW_TIMER_ACTIVE || GW_TITLE_ACTIVE) exitWith {};
+	if (GW_DEPLOY_ACTIVE || GW_SPAWN_ACTIVE || GW_SETTINGS_ACTIVE || GW_TIMER_ACTIVE || GW_TITLE_ACTIVE || GW_LOBBY_ACTIVE) exitWith {};
 
 	call drawIcons;	  
 	// [] execVM 'client\ui\display\drawIcons.sqf';
