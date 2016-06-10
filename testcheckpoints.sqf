@@ -179,14 +179,15 @@ for "_i" from 0 to 1 step 0 do {
 		_dirV = [_lastCheckpoint, GW_CURRENTVEHICLE] call dirTo;
 		_dirDif = [_dirTo - _dirV] call flattenAngle;
 
-		if (_dirDif > 90) exitWith { _isPast = false; 0 };
+		if (abs _dirDif > 90) exitWith { _isPast = false; 0 };
+
+		
 
 		([(_vPos distance _lastCheckpoint), 0, (_lastCheckpoint distance _currentCheckpoint)] call limitToRange)
 
 	} else { 0 };
 
 	_distanceTravelled = _distanceTravelled + _distanceToLastCheckpoint;
-
 	
 	GW_CURRENTRACE_PROGRESS = 1 - ((_totalDistance - _distanceTravelled) / _totalDistance);
 	
@@ -219,16 +220,17 @@ for "_i" from 0 to 1 step 0 do {
 		_timeStamp = format['+%1', _timeStamp];
 		GW_CURRENTVEHICLE say "blipCheckpoint";		
 
-		// Delete previous checkpoint group 
-		{ 
-			deleteVehicle _x;
-		} foreach _checkpointGroup;
-
+	
 		GW_CHECKPOINTS_COMPLETED pushback [(GW_CHECKPOINTS select GW_CHECKPOINTS_PROGRESS), _timeStamp, 1];
 
 		GW_CHECKPOINTS_PROGRESS = GW_CHECKPOINTS_PROGRESS + 1;
 
 		if (GW_CHECKPOINTS_PROGRESS == count GW_CHECKPOINTS) exitWith {};
+
+		// Delete previous checkpoint group 
+		{ 
+			deleteVehicle _x;
+		} foreach _checkpointGroup;
 
 		// Create new checkpoint if not last point
 		_checkPointGroup = [GW_CHECKPOINTS_PROGRESS, GW_CHECKPOINTS] call createCheckpoint;
@@ -249,17 +251,14 @@ for "_i" from 0 to 1 step 0 do {
 
 };
 
-// Delete previous checkpoint group 
-{ 
-	deleteVehicle _x;
-} foreach _checkpointGroup;
+
 
 _raceID =  ((_raceName call getRaceID) select 1);
 
 _vehiclesArray = [GW_ACTIVE_RACES, _raceID, [], [[]]] call filterParam;
 _vehiclesArray = [_vehiclesArray, 4, allPlayers, [[]]] call filterParam;
 
-if ((count _cpArray) == 0 && time <= (_timeout + 0.1) ) then {
+if ( time <= (_timeout + 0.1) ) then {
 	hint format['Race complete! (%1s)', ([time - _startTime, 2] call roundTo)];	
 
 	GW_CURRENTVEHICLE say "electronTrigger";
@@ -277,7 +276,6 @@ if ((count _cpArray) == 0 && time <= (_timeout + 0.1) ) then {
 
 } else {
 	hint format['Race failed! (Timeout)', time];
-	_cpArray call _abortSequence;
 };
 
 if (alive GW_CURRENTVEHICLE && alive (driver GW_CURRENTVEHICLE)) then {
@@ -286,9 +284,17 @@ if (alive GW_CURRENTVEHICLE && alive (driver GW_CURRENTVEHICLE)) then {
 
 	// Show title if we have a time or DNC
 	waitUntil { (isNull (findDisplay 95000)) };
+
+	[] spawn { 
+		_timeout = time + 3;
+		waitUntil { [GW_CURRENTVEHICLE, 0.97] spawn slowDown;  time > _timeout };
+	};
+
+	_handle = [] execVM 'testorbitcamera.sqf';
+
 	[ format["<br /><t size='3.3' color='#ffffff' align='center' valign='middle' shadow='0'>+%1</t>", _timeStamp], "FINISH", [false, { true }] , { true }, 9999, true, { closeDialog 0; true }] call createTitle;
 
-	GW_FLYBY_ACTIVE = FALSE;
+	terminate _handle;
 
 	GW_CURRENTVEHICLE call destroyInstantly;
 
@@ -302,5 +308,10 @@ if (alive GW_CURRENTVEHICLE && alive (driver GW_CURRENTVEHICLE)) then {
 	
 
 };
+
+// Delete previous checkpoint group 
+{ 
+	deleteVehicle _x;
+} foreach _checkpointGroup;
 
 

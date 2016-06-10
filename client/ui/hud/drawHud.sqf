@@ -62,7 +62,6 @@ _vHudStatus = (_vHud displayCtrl 12014);
 _vHudNotification = (_vHud displayCtrl 12017);
 _vHudMoney = (_vHud displayCtrl 12016);
 
-
 _hudStatusBox = [
 	(_hud displayCtrl 11000),
 	(_hud displayCtrl 11001),
@@ -77,6 +76,32 @@ _hudTransaction = (_hud displayCtrl 10002);
 _hudStripesTopLeft = (_hud displayCtrl 10021);
 _hudStripesBottomRight = (_hud displayCtrl 10022); 
 
+// Race HUD info
+_vHudRace = (_vHud displayCtrl 18020);
+_vHudRaceTime = (_vHud displayCtrl 18021);
+_vHudRacePlayer = (_vHud displayCtrl 18022);
+_vHudRaceStart = (_vHud displayCtrl 18018);
+_vHudRaceFinish = (_vHud displayCtrl 18019);
+
+_vHudRaceOpponents = [];
+_baseIDC = 18031;
+_maxOpponents = 11;
+
+for "_i" from 0 to (_maxOpponents-1) step 1 do {
+	_marker = (_vHud displayCtrl (_baseIDC + _i));	
+	_vHudRaceOpponents pushback _marker;
+};
+
+_vHudRaceInfo = [
+	_vHudRace,
+	_vHudRaceTime,
+	_vHudRacePlayer,
+	_vHudRaceStart,
+	_vHudRaceFinish
+];
+
+_vHudRaceInfo append _vHudRaceOpponents;
+
 // Iterate through all the controls and ensure they are not visible to start
 _count = (count _vHudBars -1);
 {	
@@ -86,8 +111,9 @@ _count = (count _vHudBars -1);
 
 _moduleList = [];
 
-[[_vHudIcon, _vHudFuel, _vHudAmmo, _vHudHealth, _vHudMoney, _vHudNotification], [['fade', 0, 1, 0]], "quad"] spawn createTween;
+[[_vHudIcon, _vHudFuel, _vHudAmmo, _vHudHealth, _vHudMoney, _vHudNotification, _vHudRaceInfo], [['fade', 0, 1, 0]], "quad"] spawn createTween;
 [[_hudStripesTopLeft, _hudStripesBottomRight], [['fade', 1, 0, 1.2]], "quad"] spawn createTween;
+
 
 // Starting conditions and loop config
 _refreshRate = 0.75; // How quickly the hud should update (faster can be buggier)
@@ -110,6 +136,7 @@ _iconsArray = [];
 
 _layerStatic = ("BIS_layerStatic" call BIS_fnc_rscLayer);
 
+GW_HUD_RACE_ACTIVE = false;
 GW_HUD_VEHICLE_ACTIVE = false;
 GW_HUD_NORMAL_ACTIVE = false;
 GW_HUD_REFRESH = false;
@@ -141,74 +168,60 @@ for "_i" from 0 to 1 step 0 do {
 		GW_HUD_NORMAL_ACTIVE = false;
 		[[_hudMoney, _hudTransaction], [['fade', 1, 0, 0], ['y', '0', '-0.1', 1.2]], "quad"] spawn createTween;
 	};
-
-	// We're in a race
-	if (_inRace) then {
-
-	// 	hint 'In race!';
-
-	// 	// [[_vHudRace], [['fade', 1, 0, 0]], "quad"] spawn createTween;
-	// 	// Render race hud stuff
-	// } else {
-
-		// Race HUD info
-		_vHudRace = (_hud displayCtrl 18020);
-		_vHudRaceTime = (_hud displayCtrl 18021);
-		_vHudRacePlayer = (_hud displayCtrl 18022);
-
-		_vHudRace ctrlShow true;
-		_vHudRaceTime ctrlShow true;
-		_vHudRacePlayer ctrlShow true;
-
-		_vHudRaceX = 0.25;
-		_vHudRaceRange = 0.5;
-
-		// Loop through vehicles in current race, retrieve progress and update bar
-		_baseIDC = 18031;
-		{
-			// Ignore our own vehicle
-			if (_x == GW_CURRENTVEHICLE) then {} else {
-				_progress = [ (_x getVariable ['GW_R_PR', 0]), 0, 1] call limitToRange; 
-				disableSerialization;
-				_marker = (_hud displayCtrl (_baseIDC + _forEachIndex));				
-				_marker ctrlSetPosition [(((_progress * _vHudRaceRange) + _vHudRaceX) - 0.02) * safezoneW + safezoneX, (ctrlPosition _marker) select 1];
-				_marker ctrlSetFade 0;
-				_marker ctrlCommit 1.5;
-			};
-			false
-		} count GW_CR_V;
-
-		// Update our own progress
-		_vHudRacePlayer ctrlSetPosition [(((GW_CURRENTRACE_PROGRESS * _vHudRaceRange) + _vHudRaceX) - 0.02) * safezoneW + safezoneX, (ctrlPosition _vHudRacePlayer) select 1];
-
-		// Calculate how long race has been running
-		_timeSince = if (!isNil "GW_CURRENTRACE_START") then { serverTime - GW_CURRENTRACE_START } else { 0 };
-		_seconds = floor (_timeSince);	
-		_milLeft = floor ( abs ( floor( _timeSince ) - _timeSince) * 10);
-		_hoursLeft = floor(_seconds / 3600);
-		_minsLeft = floor((_seconds - (_hoursLeft*3600)) / 60);
-		_secsLeft = floor(_seconds % 60);
-		_timeSinceStart = format['+%1:%2:%3:%4', ([_hoursLeft, 2] call padZeros), ([_minsLeft, 2] call padZeros), ([_secsLeft, 2] call padZeros), ([_milLeft, 2] call padZeros)];
-
-		_vHudRaceTime ctrlSetStructuredText parseText ( format["<t size='1.25' color='#ffffff' align='center'>%1</t>", _timeSinceStart ] );
-		_vHudRacePlayer ctrlSetStructuredText parseText ( format["<img size='1.5' image='%1' /><t size='1' color='#ffffff' align='left'> 1</t>", racePlayer ] );		
-
-		_vHudRace ctrlSetFade 0;
-		_vHudRaceTime ctrlSetFade 0;
-		_vHudRacePlayer ctrlSetFade 0;
-
-		_vHudRace ctrlCommit 0;
-		_vHudRaceTime ctrlCommit 0;
-		_vHudRacePlayer ctrlCommit 1.5;
-
-		// [[_vHudRace, _vHudRaceTime, _vHudRacePlayer], [['fade', 1, 0, 0]], "quad"] spawn createTween;
-
-		
-		// [[_vHudRace], [['fade', 1,0, 0]], "quad"] spawn createTween;
-	};	
+	
 	
 	// We're in a vehicle
 	if (_inVehicle && _isDriver) then {		
+
+		// We're in a race
+		if (_inRace) then {
+
+			_vHudRaceX = 0.25;
+			_vHudRaceRange = 0.5;
+
+			// Loop through vehicles in current race, retrieve progress and update bar
+			_baseIDC = 18031;
+			{
+				// Ignore our own vehicle
+				if (_x == GW_CURRENTVEHICLE) then {} else {
+					_progress = [ (_x getVariable ['GW_R_PR', 0]), 0, 1] call limitToRange; 
+					disableSerialization;
+					_marker = (_vHud displayCtrl (_baseIDC + _forEachIndex));	
+					_marker ctrlSetFade 0;
+					_marker ctrlCommit 0;
+
+					_marker ctrlSetPosition [(((_progress * _vHudRaceRange) + _vHudRaceX) - 0.02) * safezoneW + safezoneX, (ctrlPosition _marker) select 1];
+					_marker ctrlCommit 1.5;
+				};
+				false
+			} foreach GW_CR_V;
+
+			// Update our own progress
+			_vHudRacePlayer ctrlSetPosition [(((GW_CURRENTRACE_PROGRESS * _vHudRaceRange) + _vHudRaceX) - 0.02) * safezoneW + safezoneX, (ctrlPosition _vHudRacePlayer) select 1];
+
+			// Calculate how long race has been running
+			_timeSince = if (!isNil "GW_CURRENTRACE_START") then { serverTime - GW_CURRENTRACE_START } else { 0 };
+			_seconds = floor (_timeSince);	
+			_milLeft = floor ( abs ( floor( _timeSince ) - _timeSince) * 10);
+			_hoursLeft = floor(_seconds / 3600);
+			_minsLeft = floor((_seconds - (_hoursLeft*3600)) / 60);
+			_secsLeft = floor(_seconds % 60);
+			_timeSinceStart = format['+%1:%2:%3:%4', ([_hoursLeft, 2] call padZeros), ([_minsLeft, 2] call padZeros), ([_secsLeft, 2] call padZeros), ([_milLeft, 2] call padZeros)];
+
+			_vHudRaceTime ctrlSetStructuredText parseText ( format["<t size='1.25' color='#ffffff' align='center'>%1</t>", _timeSinceStart ] );
+			_vHudRacePlayer ctrlSetStructuredText parseText ( format["<img size='1.5' image='%1' /><t size='1' color='#ffffff' align='left'> 1</t>", racePlayer ] );		
+
+			_vHudRace ctrlCommit 0;
+			_vHudRaceTime ctrlCommit 0;
+			_vHudRacePlayer ctrlCommit 1.5;
+
+		};	
+
+		if (_inRace && (!GW_HUD_RACE_ACTIVE || GW_HUD_REFRESH)) then {
+			GW_HUD_RACE_ACTIVE = true;
+			[_vHudRaceInfo, [['fade', 1, 0, 0.5]], "quad"] spawn createTween;
+		};
+
 
 		// Calculate a list of current modules on the vehicle
 		_moduleList = [];
@@ -220,7 +233,7 @@ for "_i" from 0 to 1 step 0 do {
 
 		if ((count _moduleList) > (count _vHudBars)) then {
 			_moduleList resize (count _vHudBars);
-		};
+		};	
 
 		// Open vehicle HUD
 		if (!GW_HUD_VEHICLE_ACTIVE || GW_HUD_REFRESH) then {
@@ -244,8 +257,6 @@ for "_i" from 0 to 1 step 0 do {
 			[[_hudMoney, _hudTransaction], [['fade', 0, 1, 0]], "quad"] spawn createTween;
 
 			// Fade in Vehicle HUD, if 3rd person camera
-			//if (cameraView == "Internal") exitWith {};
-
 			[[_vHudIcon, _vHudFuel, _vHudAmmo, _vHudHealth, _vHudMoney, _vHudNotification], [['fade', 1, 0, 0.1]], "quad"] spawn createTween;
 			_vHudIcon ctrlSetStructuredText parseText ( format["<img size='2.4' align='center' valign='top' image='%1' />", [typeOf _vehicle] call getVehiclePicture] );
 			_vHudIcon ctrlCommit 0;
@@ -261,7 +272,7 @@ for "_i" from 0 to 1 step 0 do {
 			
 		};
 
-	} else {		
+	} else {			
 
 		// Close Vehicle HUD
 		if (GW_HUD_VEHICLE_ACTIVE) then {
@@ -271,6 +282,7 @@ for "_i" from 0 to 1 step 0 do {
 			[localize "str_gw_connection_lost", 1, warningIcon, colorRed, "warning"] spawn createAlert;  
 
 			GW_HUD_VEHICLE_ACTIVE = false;
+			GW_HUD_RACE_ACTIVE = false;
 
 			// Fade Out Vehicle HUD 
 			_count = (count _moduleList -1);
@@ -280,7 +292,7 @@ for "_i" from 0 to 1 step 0 do {
 				false
 			} count _moduleList > 0;		
 
-			[[_vHudIcon, _vHudFuel, _vHudAmmo, _vHudHealth, _vHudMoney, _vHudNotification], [['fade', 0, 1, 0]], "quad"] spawn createTween;
+			[[_vHudIcon, _vHudFuel, _vHudAmmo, _vHudHealth, _vHudMoney, _vHudNotification, _vHudRaceInfo], [['fade', 0, 1, 0]], "quad"] spawn createTween;
 
 			_moduleList = [];
 

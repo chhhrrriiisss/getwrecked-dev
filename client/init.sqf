@@ -18,6 +18,10 @@ systemchat 'Server is ready to go!';
 	_timeout = time + 30;
 	waitUntil {Sleep 1; ((time > _timeout) || (!isNil "clientLoadComplete"))};	
 	99999 cutText ["","PLAIN", 0.6];
+
+	[] execVM 'client\ui\dialogs\createHint.sqf';
+
+
 };
 
 // Check for an existing library

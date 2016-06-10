@@ -45,7 +45,7 @@ disableChannels[] = {0,2,3,6};
 #include "client\ui\dialogs\message.hpp"
 #include "client\ui\dialogs\timer.hpp"
 #include "client\ui\dialogs\title.hpp"
-#include "client\ui\dialogs\overlay.hpp"
+#include "client\ui\dialogs\hint.hpp"
 
 class CfgFunctions
 {

@@ -193,6 +193,27 @@ changeRace = {
 	_newSelection call selectRace;
 };
 
+generateRaceStats = {	
+
+	_raceStats = ((findDisplay 90000) displayCtrl 90009);
+	_raceStats ctrlEnable false;
+	_raceStats ctrlSetFade 0;
+	_raceStats ctrlCommit 0;
+
+	lnbClear _raceStats;
+
+	{	
+		_raceStats lnbAddRow _x;
+		false
+	} count [
+		[""],
+		["", "Distance:", ([GW_RACE_ARRAY] call calculateTotalDistance)],
+		["", "Total Checkpoints:", str count (GW_RACE_ARRAY)],
+		["", "Estimated Time:", ([GW_RACE_ARRAY, true] call estimateRaceTime)]
+	] > 0;
+
+};
+
 selectRace = {
 	
 	private ['_existingRaces', '_selection', '_raceData', '_raceStatus', '_raceMeta', '_isDefault'];
@@ -243,7 +264,7 @@ selectRace = {
 	_fade = if (_raceStatus >= 0 || _isDefault) then { 0 } else { 1 };
 	_defaultFlag ctrlSetFade _fade;
 
-	_text = 'OFFICIAL RACE';
+	_text = 'DEFAULT RACE';
 	if (_raceStatus >= 0) then {
 		_text = format['SHARED BY %1', [GW_RACE_HOST, 12] call cropString];
 	};
@@ -255,7 +276,11 @@ selectRace = {
 	_mapTitle = ((findDisplay 90000) displayCtrl 90012);
 	_mapTitle ctrlSetText GW_RACE_NAME;
 	_mapTitle ctrlCommit 0;	
-	
+
+	// Populate race properties
+	[] call generateRaceStats;
+		
+	// Update the map location and animate
 	[] call focusCurrentRace;
 
 
@@ -326,11 +351,16 @@ focusCurrentRace = {
 	ctrlMapAnimCommit _map;
 };
 
+
+
 createNewRace = {
 	private ['_existingRaces', '_raceName', '_origin', '_p1', '_p2'];
 
 	_existingRaces = call getAllRaces;
 	_raceName = toUpper([true] call generateName);
+
+	// Make sure we don't create two identical names
+	if ( ({ if (((_x select 0) select 0) == _raceName) exitWith { 1 }; false } count call getAllRaces) >= 1) exitWith { [] call createNewRace; };
 
 	// Create a basic set of waypoints to start
 	_origin = [[], 0, 20000, 25, 0, 5, 0] call bis_fnc_findSafePos;
@@ -340,16 +370,12 @@ createNewRace = {
 	if (count _origin == 0 || count _p1 == 0 || count _p2 == 0) exitWith { [] call createNewRace; };
 	{_x set [2, 0];	} foreach [_origin, _p1, _p2];
 
-	_existingRaces pushBack [[_raceName,(name player),worldName, false],[_origin,_p1,_p2]];
-
-	//[[_raceName,(name player),worldName], [_origin,_p1,_p2] ]];
-	
+	_existingRaces pushBack [[_raceName,(name player),worldName, false],[_origin,_p1,_p2]];	
 
 	profileNamespace setVariable ['GW_RACES', _existingRaces];
 	saveProfileNamespace;
 
 	[((count _existingRaces) -1)] call generateRaceList;
-	// [(_existingRaces select ((count _existingRaces) -1))] call selectRace;
 
 };
 
@@ -359,24 +385,7 @@ _mapTitle = ((findDisplay 90000) displayCtrl 90012);
 _mapControl ctrlEnable false;
 _mapControl ctrlCommit 0;
 
-_raceStats = ((findDisplay 90000) displayCtrl 90009);
-_raceStats ctrlEnable false;
-_raceStats ctrlSetFade 0;
-_raceStats ctrlCommit 0;
 
-lnbClear _raceStats;
-	
-{	
-	_raceStats lnbAddRow _x;
-	false
-} count [
-	[""],
-	["", "Distance:", "0km"],
-	["", "Total Checkpoints:", "0 / 20"],
-	["", "Estimated Time:", "0 minutes"],	
-	["", "Author", "Unknown"]
-
-] > 0;
 
 _existingRaces = call getAllRaces;
 
@@ -409,12 +418,9 @@ deleteRace = {
 
 	_existingRaces = call getAllRaces;
 
-	systemchat format['%1 / %2', _raceToDelete, GW_RACE_NAME];
-
-	{
-		_meta = _x select 0;
-		_name = _meta select 0;
-		if (_name == _raceToDelete) exitWith { _existingRaces deleteAt _forEachIndex; };
+	// Dlete race from array
+	{ 
+		if (((_x select 0) select 0) == _raceToDelete) exitWith { _existingRaces deleteAt _forEachIndex; }; 
 	} foreach _existingRaces;
 
 	profileNamespace setVariable ['GW_RACES', _existingRaces];
@@ -433,7 +439,10 @@ renameCurrentRace = {
 
 	if !(_result isEqualType "") exitWith {};
 	if (_result == GW_RACE_NAME) exitWith {};
-	if (count toArray _result == 0) exitWith {}; 		
+	if (count toArray _result == 0) exitWith {};
+
+	// Check race name isn't the same as an existing race
+	if ( ({ if (((_x select 0) select 0) == _result) exitWith { 1 }; false } count call getAllRaces) >= 1) exitWith {  systemchat "Race name conflicts with an existing race."; };
 
 	GW_RACE_NAME = [toUpper (_result), 10] call cropString;
 	[] call saveCurrentRace;
@@ -561,6 +570,8 @@ saveCurrentRace = {
 
 	profileNamespace setVariable ['GW_RACES', _existingRaces]; 
 	saveProfileNamespace;
+
+	[] call generateRaceStats;
 };
 
 
@@ -640,6 +651,8 @@ _mouseUp = _mapControl ctrlAddEventHandler ["MouseButtonUp", {
 	GW_RACE_ARRAY set [GW_MAP_NUMBER, _currentPos];
 	GW_MAP_NUMBER = GW_MAP_NUMBER + 1; 
 
+
+
 }];
 
 _mouseDown = _mapControl ctrlAddEventHandler ["MouseButtonDown", { 
@@ -679,6 +692,10 @@ _mouseHold = _mapControl ctrlAddEventHandler ["MouseHolding", {
 	_tooltip = (findDisplay 90000) displayCtrl 90020;
 	_tooltip ctrlSetFade 0;
 	_tooltip ctrlCommit 0.2;
+
+	// Populate race properties
+	[] call generateRaceStats;
+
 }];
 
 _mouseMove = _mapControl ctrlAddEventHandler ["MouseMoving", { 	

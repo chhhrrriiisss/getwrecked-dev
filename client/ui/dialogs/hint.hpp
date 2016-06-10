@@ -14,13 +14,13 @@
 #define CT_STRUCTURED_TEXT  13
 #define CT_EDIT 2
 
-class GW_Overlay
+class GW_Hint
 {
 	idd = GW_Overlay_ID;
-	name = "GW_Overlay";
+	name = "GW_Hint";
 	movingEnabled = false;
 	enableSimulation = true;	
-	onLoad = "uiNamespace setVariable ['GW_Overlay', _this select 0]; "; 
+	onLoad = "uiNamespace setVariable ['GW_Hint', _this select 0]; "; 
 
 	class controlsBackground
 	{

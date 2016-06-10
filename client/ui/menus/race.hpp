@@ -666,7 +666,7 @@ class GW_Race
     class RaceFlags : GW_RscButtonMenu
     {
       idc = GW_Default_ID;
-      text = "OFFICIAL RACE";
+      text = "DEFAULT RACE";
       x = (0.015) * safezoneW + safezoneX;
       y = (MARGIN_TOP) * safezoneH + safezoneY;
       w = (GW_BUTTON_WIDTH) * safezoneW;
@@ -804,7 +804,7 @@ class GW_Race
         x = (0.015) * safezoneW + safezoneX;
         y = (MARGIN_TOP + GW_BUTTON_HEIGHT + GW_BUTTON_GAP_Y) * safezoneH + safezoneY;
         w = (GW_BUTTON_WIDTH + 0.001) * safezoneW;
-        h = (GW_BUTTON_HEIGHT * 5) * safezoneH;
+        h = (GW_BUTTON_HEIGHT * 4) * safezoneH;
     }; 
 
     class RaceStats : GW_ListBox
@@ -814,7 +814,7 @@ class GW_Race
         x = (0.015) * safezoneW + safezoneX;
         y = (MARGIN_TOP + GW_BUTTON_HEIGHT + GW_BUTTON_GAP_Y) * safezoneH + safezoneY;
         w = (GW_BUTTON_WIDTH) * safezoneW;
-        h = (GW_BUTTON_HEIGHT * 5) * safezoneH;
+        h = (GW_BUTTON_HEIGHT * 4) * safezoneH;
         
         colorSelectBackground[] = {0,0,0,0};
         colorSelectBackground2[] = {0,0,0,0};

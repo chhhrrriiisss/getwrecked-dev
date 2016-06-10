@@ -1,26 +1,14 @@
 //
-//      Name: createTitle
+//      Name: createHint
 //      Desc: Used for displaying a large full-screen message
 //      Return: None
 //
 
-waitUntil {
-	Sleep 1;
-	isNull (findDisplay 602)
-};
-
-if (isNil "GW_OVERLAY_ACTIVE") then {
-	GW_OVERLAY_ACTIVE = false;
-};
-
-if (GW_OVERLAY_ACTIVE) exitWith { 
-	systemchat 'Overlay already active.'; 
-	false
-};
+// Overlay already active, abort
+closeDialog 99000;
+if (!isNull (findDisplay 602)) exitWith {};
 
 hint '';
-
-GW_OVERLAY_ACTIVE = true;
 
 // Close the hud if its open
 GW_HUD_ACTIVE = false;
@@ -28,16 +16,14 @@ GW_HUD_LOCK = true;
 
 private ['_buttonString', '_timeValue', '_canAbort', '_timeout'];
 
-_textString =  [_this,0, "", ["", {}]] call filterParam;
-_buttonString = [_this,1, "CANCEL", [""]] call filterParam;
+_item =  [_this,0, "welcome", [""]] call filterParam;
 
 _maxTime = 10;
 
 // _soundEnabled = [_this,3, false, [false]] call filterParam;
 disableSerialization;
 
-closeDialog 99000;
-if(!(createDialog "GW_Overlay")) exitWith { systemchat 'Error - couldnt create title.'; GW_OVERLAY_ACTIVE = false; false }; 
+if(!(createDialog "GW_Hint")) exitWith { systemchat 'Error - couldnt create title.'; false }; 
 showChat false;
 
 _timeout = time + _maxTime;
@@ -65,76 +51,39 @@ _title ctrlSetStructuredText(parseText(_t));
 _title ctrlCommit 0;
 
 _content ctrlShow true;
-_t = format[
-	'<t size="0.85" font="puristaMedium" shadow="1" color="#FFFFFF" align="center">%1 </t>
-	<br /><br />
-	<t size="0.85" font="puristaLight" shadow="1" color="#FFFFFF" align="center">%2</t>
-	<br /><br />
-	<t size="0.85" font="puristaMedium" shadow="1" color="#FFFFFF" align="center">For additional hints, press <t color="#FCD93B">[ %3 ]</t> when near an item or object.</t>', 
-	"Get Wrecked is a custom vehicle sandbox that challenges players to create armoured vehicles and then fight to the death in a race or battle.",
-	"To begin, find an empty Vehicle Service Terminal to load or create a vehicle from scratch. <br /> If you have issues that are not fixed by rejoining, use the !reset command.",
-	[ (['INFO'] call getGlobalBind) ] call codeToKey
-];
+
+_t = if (_item == "welcome") then {
+
+	format[
+		'<t size="0.85" font="puristaMedium" shadow="1" color="#FFFFFF" align="center">%1 </t>
+		<br /><br />
+		<t size="0.85" font="puristaLight" shadow="1" color="#FFFFFF" align="center">%2</t>
+		<br /><br />
+		<t size="0.85" font="puristaMedium" shadow="1" color="#FFFFFF" align="center">For additional hints, press <t color="#FCD93B">[ %3 ]</t> when near an item or object.</t>', 
+		"Get Wrecked is a custom vehicle sandbox that challenges players to create armoured vehicles and then fight to the death in a race or battle.",
+		"To begin, find an empty Vehicle Service Terminal to load or create a vehicle from scratch. <br /> If you have issues that are not fixed by rejoining, use the !reset command.",
+		[ (['INFO'] call getGlobalBind) ] call codeToKey
+	]
+
+} else {
+	
+	"test"
+
+};
+
 _content ctrlSetStructuredText(parseText(_t));
 _content ctrlCommit 0;
 
-
-// _btn ctrlShow true;
-// _btn ctrlSetText _buttonString;
-// _btn ctrlCommit 0;	
-
-// if (_text call _buttonCondition) then {
-// 	_btn ctrlEnable true;
-// 	_btn ctrlShow true;
-// 	_btn CtrlCommit 0;	
-// } else {
-// 	_btn ctrlEnable false;
-// 	_btn ctrlShow false;
-// 	_btn CtrlCommit 0;	
-// };
-
-// // Show button if we can cancel this title
-// if (!_canAbort) then {
-// 	[95000, true] call toggleDisplayLock;	
-// };
-
-// // Hide/show top and bottom margins
-// if (!_showBorders) then {
-
-// 	{
-// 		_x ctrlSetFade 1;
-// 		_x ctrlCommit 0;
-// 	} foreach _margins;
-
-// } else {
-
-// 	{
-// 		_x ctrlSetFade 0;
-// 		_x ctrlCommit 0;
-// 	} foreach _margins;
-
-// };
 
 // Desaturate screen
 "colorCorrections" ppEffectEnable true; 
 "colorCorrections" ppEffectAdjust [1, 1, 0, [1, 1, 1, 0], [1, 1, 1, 0], [0.75, 0.25, 0, 1.0]];
 "colorCorrections" ppEffectCommit 0;
 
-for "_i" from 0 to 1 step 0 do {	
+ctrlSetFocus _btnA;
 
-	// _textValue = if (_textString isEqualType "") then { _textString } else { ([time, _timeout] call _textString) };
-	// _text ctrlSetStructuredText parseText ( _textValue );
-	// _text ctrlCommit 0;
-
-	// if (_text call _buttonCondition) then {		
-	// 	_btn ctrlEnable true;
-	// 	_btn ctrlShow true;
-	// 	_btn CtrlCommit 0;
-	// };
-
-	if (isNull (findDisplay 99000) ||  !GW_OVERLAY_ACTIVE) exitWith {};
-
-	Sleep 0.1;
+waitUntil{
+	isNull (findDisplay 99000)
 };
 
 // Desaturate screen
@@ -142,14 +91,12 @@ for "_i" from 0 to 1 step 0 do {
 "colorCorrections" ppEffectEnable true; 
 "colorCorrections" ppEffectCommit 0;
 
-
 // Timer over, tidy up
 showChat true;
 
-GW_OVERLAY_ACTIVE = false;
 GW_HUD_ACTIVE = false;
 GW_HUD_LOCK = false;
-closeDialog 99000;
+
 
 
 

@@ -152,7 +152,8 @@ GW_clientFunctions = [
 	['createTimer', 'client\ui\dialogs\'],
 	['createTitle', 'client\ui\dialogs\'],
 
-	['calculateTotalDistance', nil]
+	['calculateTotalDistance', nil],
+	['estimateRaceTime', nil]
 
 ];
 

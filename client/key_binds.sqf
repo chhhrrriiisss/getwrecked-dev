@@ -34,11 +34,10 @@ resetBinds = {
 	GW_KEYDOWN = nil;
 
 	// _groupsKey = ["GROUPS"] call getGlobalBind;
-
 	_infoKey = ["INFO"] call getGlobalBind;
 
 	if (_key == _infoKey) then {
-		[] execVM "client\ui\dialogs\createOverlay.sqf";
+		[] execVM "client\ui\dialogs\createHint.sqf";
 	};
 
 	// if (_key == _groupsKey) then {
@@ -60,8 +59,7 @@ checkBinds = {
 	_rotateCWKey = ["ROTATECW"] call getGlobalBind;
 	_rotateCCWKey = ["ROTATECCW"] call getGlobalBind;
 	_holdRotateKey = ["HOLD"] call getGlobalBind;
-	_settingsKey = ["SETTINGS"] call getGlobalBind;
-	
+	_settingsKey = ["SETTINGS"] call getGlobalBind;	
 
 	// Tilde key for cancelling hints
 	if (_key == 41) exitWith { hint ''; };
@@ -268,35 +266,31 @@ checkBinds = {
 
 };
 
+fireKeyDown = '';
 
-initBinds = {	
-	
-	fireKeyDown = '';
+GW_KEYDOWN = nil;
 
-	GW_KEYDOWN = nil;
-
-	waituntil {
-		( !isNull (findDisplay 46) && !isNil "keybindEventsRemoved" )
-	};
-
-	if (!isNil "GW_KD_EH") then { (findDisplay 46) displayRemoveEventHandler ["KeyDown", GW_KD_EH]; };
-	GW_KD_EH = (findDisplay 46) displayAddEventHandler ["KeyDown", "_this call checkBinds; false"];
-
-	if (!isNil "GW_KU_EH") then { (findDisplay 46) displayRemoveEventHandler ["KeyUp", GW_KU_EH];	GW_KU_EH = nil;	};
-	GW_KU_EH = (findDisplay 46) displayAddEventHandler ["KeyUp", "_this call resetBinds; false"];
-
-	if (!isNil "GW_MD_EH") then { (findDisplay 46) displayRemoveEventHandler ["MouseButtonDown", GW_MD_EH];	GW_MD_EH = nil;	};
-	GW_MD_EH = (findDisplay 46) displayAddEventHandler ["MouseButtonDown", "_this call setMouseDown; false;"];
-
-	if (!isNil "GW_MU_EH") then { (findDisplay 46) displayRemoveEventHandler ["MouseButtonUp", GW_MU_EH];	GW_MU_EH = nil;	};
-	GW_MU_EH = (findDisplay 46) displayAddEventHandler ["MouseButtonUp", "_this call setMouseUp; false;"];
-
-	setMouseDown = {			
-		if ((_this select 1) == 0) then { GW_LMBDOWN = true; };		
-	};
-
-	setMouseUp = {		
-		if ((_this select 1) == 0) then {  GW_LMBDOWN = false; };		
-	};
-
+waituntil {
+	!isNull (findDisplay 46) 
 };
+
+if (!isNil "GW_KD_EH") then { (findDisplay 46) displayRemoveEventHandler ["KeyDown", GW_KD_EH]; };
+GW_KD_EH = (findDisplay 46) displayAddEventHandler ["KeyDown", "_this call checkBinds; false"];
+
+if (!isNil "GW_KU_EH") then { (findDisplay 46) displayRemoveEventHandler ["KeyUp", GW_KU_EH];	GW_KU_EH = nil;	};
+GW_KU_EH = (findDisplay 46) displayAddEventHandler ["KeyUp", "_this call resetBinds; false"];
+
+if (!isNil "GW_MD_EH") then { (findDisplay 46) displayRemoveEventHandler ["MouseButtonDown", GW_MD_EH];	GW_MD_EH = nil;	};
+GW_MD_EH = (findDisplay 46) displayAddEventHandler ["MouseButtonDown", "_this call setMouseDown; false;"];
+
+if (!isNil "GW_MU_EH") then { (findDisplay 46) displayRemoveEventHandler ["MouseButtonUp", GW_MU_EH];	GW_MU_EH = nil;	};
+GW_MU_EH = (findDisplay 46) displayAddEventHandler ["MouseButtonUp", "_this call setMouseUp; false;"];
+
+setMouseDown = {			
+	if ((_this select 1) == 0) then { GW_LMBDOWN = true; };		
+};
+
+setMouseUp = {		
+	if ((_this select 1) == 0) then {  GW_LMBDOWN = false; };		
+};
+

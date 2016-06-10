@@ -145,7 +145,8 @@ lnbClear _statsList;
 
 _totalCheckpoints = count _points;
 _totalDistance = [_points] call calculateTotalDistance;
-	
+_estimatedTime = [_points] call estimateRaceTime;
+
 {	
 
 	_text = (_x select 0);
@@ -159,7 +160,7 @@ _totalDistance = [_points] call calculateTotalDistance;
 	[ format['%1', _raceName],  infoIcon],
 	[ format['%1 checkpoints', _totalCheckpoints],  checkpointMarkerIcon],
 	[ format['%1', _totalDistance], suspendIcon],
-	[ format['%1', '~3.5mins'], nitroIcon]
+	[ format['%1', _estimatedTime], nitroIcon]
 	// [ [(format['%1%2', (_data select 3) * 100, '%']), ammoIcon], [(format['%1L', (_data select 4) * 100]), fuelIcon] ],
 	// [ [(format['%1', (_data select 5)]),armourIcon], [(format['%1', (_data select 7)]), radarIcon] ]		
 
@@ -213,6 +214,8 @@ waitUntil {
 
 	isNull (findDisplay 103000) 
 };
+
+
 
 closeDialog 103000;
 _timeout = time + 1;

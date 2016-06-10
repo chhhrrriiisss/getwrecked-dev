@@ -11,7 +11,6 @@ Items without Fixed/Added/Removed proceeding are typically balance changes.
 - Added FlamePads to map
 - Added 'Loading' text to vehicle preview
 - Added 'Crash Test Dummy' texture for dev builds
-- Added 'Wrong Way' message to race hud
 - Race lobby menu and 'ready' threshold for race starting
 - Caltrops now more reliable and destroyed after first collision
 - Increased global damage scale by x2 (0.04 > 0.08)

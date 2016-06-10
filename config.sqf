@@ -313,6 +313,17 @@ switch (worldName) do {
 	case "Stratis":
 	{
 
+		// Render distance of effects
+		GW_EFFECTS_RANGE = 3500; // Increasing this may add lag at the workshop (default: 1700)
+
+		// Available arenas and game type
+		GW_VALID_ZONES = [
+			['airbase', 'battle', 'Airbase'],
+			['peninsula', 'battle', 'Peninsula'],
+			['beach', 'battle', 'Beach'],
+			['workshop', 'safe', 'Workshop']
+		];
+
 		// Cleanup unwanted buildings from workshop
 		if (isServer) then {
 
@@ -328,29 +339,64 @@ switch (worldName) do {
 			_objectsToClear = nil;
 		};
 
-		// Render distance of effects
-		GW_EFFECTS_RANGE = 3500; // Increasing this may add lag at the workshop (default: 1700)
-
-		// Available arenas and game type
-		GW_VALID_ZONES = [
-			['airbase', 'battle', 'Airbase'],
-			['peninsula', 'battle', 'Peninsula'],
-			['beach', 'battle', 'Beach'],
-			['workshop', 'safe', 'Workshop']
-		];
+		
 
 	};
 
 
 	case "Tanoa":
 	{
+
 		// Available arenas and game type
-		GW_VALID_ZONES = [
+		GW_VALID_ZONES = [			
+			['runway', 'battle', 'Runway'],
+			['city', 'battle', 'City'],
 			['port', 'battle', 'Port'],
 			['quarry', 'battle', 'Quarry'],
 			['crater', 'battle', 'Crater'],
 			['workshop', 'safe', 'Workshop']
 		];
+
+		if (isServer) then {
+
+			// Cleanup lag inducing clusterfuck of houses in Kavala
+			_objects = (getMarkerPos "cityZone_camera") nearObjects 2000;  
+			_objectsToHide = [
+				"Land_PowerLine_01_wire_50m_F",
+				"Land_PowerLine_01_wire_50m_main_F",
+				"Land_PowerLine_01_pole_tall_F",
+				"Land_LampShabby_F",
+				"Land_SignCommand_01_stop_F",
+				"Land_PowerLine_01_pole_small_F",
+				"Land_Sign_01_sharpBend_left_F",
+				"Land_Sign_01_sharpBend_right_F",
+				"Land_QuayConcrete_01_20m_F",
+				"Land_SignCommand_01_priority_F",
+				"Land_Shed_02_F",
+				"Land_Slum_03_F",
+				"Land_Shed_04_F",
+				"Land_Shed_05_F",
+				"Land_Slum_04_F",
+				"Land_House_Small_02_F",
+				"Land_LampStreet_small_F",
+				"Land_LampStreet_F",
+				"Land_Cathedral_01_F",
+				"Land_FireEscape_01_tall_F"				
+			];
+
+			_c = 0;
+			{      
+				if (typeof _x in _objectsToHide) then {
+					_x hideObjectGlobal true; 					
+					_c = _c + 1;
+				};
+				_x enableSimulationGlobal false; 
+				false
+			} count _objects; 
+		};
+
+
+		
 
 	};
 
