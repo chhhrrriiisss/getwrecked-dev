@@ -181,7 +181,9 @@ for "_i" from 0 to 1 step 0 do {
 
 			// Loop through vehicles in current race, retrieve progress and update bar
 			_baseIDC = 18031;
-			{
+			{	
+
+
 				// Ignore our own vehicle
 				if (_x == GW_CURRENTVEHICLE) then {} else {
 					_progress = [ (_x getVariable ['GW_R_PR', 0]), 0, 1] call limitToRange; 
@@ -194,21 +196,15 @@ for "_i" from 0 to 1 step 0 do {
 					_marker ctrlCommit 1.5;
 				};
 				false
-			} foreach GW_CR_V;
+			} foreach (((GW_CURRENTRACE call getRaceID) select 0) select 5);
 
 			// Update our own progress
 			_vHudRacePlayer ctrlSetPosition [(((GW_CURRENTRACE_PROGRESS * _vHudRaceRange) + _vHudRaceX) - 0.02) * safezoneW + safezoneX, (ctrlPosition _vHudRacePlayer) select 1];
 
 			// Calculate how long race has been running
-			_timeSince = if (!isNil "GW_CURRENTRACE_START") then { serverTime - GW_CURRENTRACE_START } else { 0 };
-			_seconds = floor (_timeSince);	
-			_milLeft = floor ( abs ( floor( _timeSince ) - _timeSince) * 10);
-			_hoursLeft = floor(_seconds / 3600);
-			_minsLeft = floor((_seconds - (_hoursLeft*3600)) / 60);
-			_secsLeft = floor(_seconds % 60);
-			_timeSinceStart = format['+%1:%2:%3:%4', ([_hoursLeft, 2] call padZeros), ([_minsLeft, 2] call padZeros), ([_secsLeft, 2] call padZeros), ([_milLeft, 2] call padZeros)];
+			_timeSince = serverTime - ((((GW_CURRENTRACE call getRaceID) select 0) select 0) select 5);
 
-			_vHudRaceTime ctrlSetStructuredText parseText ( format["<t size='1.25' color='#ffffff' align='center'>%1</t>", _timeSinceStart ] );
+			_vHudRaceTime ctrlSetStructuredText parseText ( format["<t size='1.25' color='#ffffff' align='center'>+%1</t>", _timeSince call formatTimestamp ] );
 			_vHudRacePlayer ctrlSetStructuredText parseText ( format["<img size='1.5' image='%1' /><t size='1' color='#ffffff' align='left'> 1</t>", racePlayer ] );		
 
 			_vHudRace ctrlCommit 0;

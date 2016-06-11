@@ -13,7 +13,9 @@ GW_HUD_LOCK = true;
 
 ["workshopZone"] call setCurrentZone;
 
-9999 cutText ["", "BLACK OUT", 0.3];  
+if (GW_IGNORE_DEATH_CAMERA) then {} else {
+	9999 cutText ["", "BLACK OUT", 0.3];  
+};
 
 _prevVehicle = _victim getVariable ["GW_prevVeh", nil];
 

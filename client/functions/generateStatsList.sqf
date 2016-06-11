@@ -64,6 +64,9 @@ _stats = [
 	['', 'Deploys', 
 		format['%1', ["deploy", _name] call getStat]
 	],
+	['', 'Race Wins', 
+		format['%1', ["racewin", _name] call getStat]
+	],
 	['', 'Immobilized', 
 		format['%1', ["disabled", _name] call getStat]
 	],

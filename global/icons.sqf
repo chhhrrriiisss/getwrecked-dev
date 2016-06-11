@@ -89,6 +89,9 @@ buyAreaIcon = ICON_ROOT + "hud\buyArea.paa";
 lootAreaIcon = ICON_ROOT + "hud\lootArea.paa"; 
 hiddenIcon =  ICON_ROOT + "hud\hidden.paa";
 
+plusAmmoIcon =  ICON_ROOT + "hud\plusAmmo.paa";
+plusFuelIcon =  ICON_ROOT + "hud\plusFuel.paa";
+
 activeIconA = ICON_ROOT + "hud\active_a.paa";
 activeIconB = ICON_ROOT + "hud\active_b.paa";
 activeIconC = ICON_ROOT + "hud\active_c.paa";

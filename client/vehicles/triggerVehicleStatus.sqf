@@ -67,6 +67,7 @@ _commandToLoop = switch (true) do {
 
 	case ('nofuel' == _statusEffect): {{
 		_this setVariable ['fuel', 0];
+		_this setFuel 0.1;
 	}};
 
 	case ("cloak" == _statusEffect): {{

@@ -16,6 +16,11 @@
 #define CT_STRUCTURED_TEXT  13
 #define CT_EDIT 2
 
+class GW_StructuredTextBox_Title : GW_StructuredTextBox
+{
+	linespacing = 1;
+};
+
 class GW_TitleScreen
 {
 	idd = GW_TitleScreen_ID;
@@ -67,7 +72,7 @@ class GW_TitleScreen
 
 		};
 
-		class TitleScreenTitle : GW_StructuredTextBox
+		class TitleScreenTitle : GW_StructuredTextBox_Title
 		{
 			idc = GW_TitleScreen_Title_ID;
 			text = "";

@@ -1,3 +1,9 @@
+//
+//      Name: removeFromRace
+//      Desc: Handles deaths during race, ending race when all players are killed
+//      Return: None
+//
+
 params ['_raceName', '_vehicle'];
 private ['_raceName', '_id', '_vehicle'];
 
@@ -10,7 +16,10 @@ _raceID = (_raceData select 1);
 
 ((GW_ACTIVE_RACES select _raceID) select 5) deleteAt (((GW_ACTIVE_RACES select _raceID) select 5) find _vehicle);
 
-if (count ((GW_ACTIVE_RACES select _raceID) select 5) == 0) then {
+_finishedArray = if (isNil "((GW_ACTIVE_RACES select _raceID) select 6)") then { [] } else { ((GW_ACTIVE_RACES select _raceID) select 6) };
+
+// If active array empty and finished array empty
+if (count ((GW_ACTIVE_RACES select _raceID) select 5) == 0 && count _finishedArray == 0) then {
 	[_raceName, 3] call checkRaceStatus;
 	GW_ACTIVE_RACES deleteAt _raceID;
 

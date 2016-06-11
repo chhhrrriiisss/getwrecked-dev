@@ -51,9 +51,10 @@ getWeaponIcon = {
 	noTargetIcon
 };
 
+GW_IGNORE_DEATH_CAMERA = false;
 GW_INVEHICLE = false;
 GW_ISDRIVER = false;
-GW_STATS_ORDER = ["kill", "death", "destroyed", "mileage", "moneyEarned", "timeAlive", "deploy", "disabled", "outofbounds"];
+GW_STATS_ORDER = ["kill", "death", "destroyed", "mileage", "moneyEarned", "timeAlive", "deploy", "disabled", "outofbounds", "racewin"];
 GW_INVULNERABLE = true;
 GW_DEPLOYLIST = [];
 GW_LOCKEDTARGETS = [];

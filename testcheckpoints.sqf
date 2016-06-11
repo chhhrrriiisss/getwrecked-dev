@@ -1,39 +1,12 @@
 //
 //      Name: testCheckpoints
-//      Desc: 
+//      Desc: Checkpoints system for races
 //      Return: 
 //
 
-// Creates a series of checkpoints, waits for player to enter correctly 
-_abortSequence = {
-	
-	_toDelete = _this;
-
-	GW_CURRENTVEHICLE say "siren";
-
-	// Empty _cpArray
-	{
-		{
-			deleteVehicle _x;
-		} foreach (_x select 2);
-	} foreach _toDelete;
-
-};
-
-// _points = [_this, 0, [], [[]]] call bis_fnc_param;
-_points = [
-	(vehicle player) modelToWorldVisual [0, 25, 0],
-	(vehicle player) modelToWorldVisual [0, 50, 0],
-	(vehicle player) modelToWorldVisual [0, 75, 0]
-];
-
-for "_i" from 1 to 2 step 1 do {
-	_p = GW_CURRENTVEHICLE modelToWorldVisual [0 + ((random 50) - 25), 75*_i, 0];
-	_p set [2, 0];
-	_points set [_i, _p];
-};
-
 private ['_points', '_targetRace', '_startPosition', '_raceStatus', '_raceName'];
+
+_points = [];
 
 _targetRace = [_this, 0, [], [[], ""]] call bis_fnc_param;
 _targetRace = if ((typename _targetRace) == "STRING") then { ((_targetRace call getRaceID) select 0) } else { _targetRace };
@@ -74,22 +47,9 @@ GW_CHECKPOINTS_COMPLETED = [];
 	[_rT, [-90,0,_dirTo]] call setPitchBankYaw;
 	[_rB, [90,0,_dirToRB]] call setPitchBankYaw;
 
-	// If the vehicle direction is too far from the required direction, flag vehicle as facing wrong way
-	// _dif = abs ([_dirDif] call flattenAngle);
-	// if (_dif > 70) then {
-	// 	if ('wrwy' in GW_VEHICLE_STATUS) exitWith {};
-	// 	[GW_CURRENTVEHICLE, ['wrwy'], 9999] call addVehicleStatus;	
-	// } else {
-	// 	[GW_CURRENTVEHICLE, ['wrwy']] call removeVehicleStatus;	
-	// };
-
-	// _rT setDir _dirTo;
-	// _rB setDir _dirTo;
-
 	((alive GW_CURRENTVEHICLE) || (count GW_CHECKPOINTS > 0))
 
 }, false, [0,2,0.5], true] spawn createHalo;
-
 
 // Function to create a new checkpoint
 createCheckpoint = {
@@ -179,13 +139,12 @@ for "_i" from 0 to 1 step 0 do {
 		_dirV = [_lastCheckpoint, GW_CURRENTVEHICLE] call dirTo;
 		_dirDif = [_dirTo - _dirV] call flattenAngle;
 
-		if (abs _dirDif > 90) exitWith { _isPast = false; 0 };
-
-		
+		if (abs _dirDif > 90) exitWith { _isPast = false; 0 };		
 
 		([(_vPos distance _lastCheckpoint), 0, (_lastCheckpoint distance _currentCheckpoint)] call limitToRange)
 
 	} else { 0 };
+
 
 	_distanceTravelled = _distanceTravelled + _distanceToLastCheckpoint;
 	
@@ -204,17 +163,35 @@ for "_i" from 0 to 1 step 0 do {
 			[GW_CURRENTVEHICLE, ["noshoot", "nouse", "noammo", "nofuel"]] call removeVehicleStatus;
 		};
 
-		// Give vehicle ammo/fuel equivalent to the percentage of total checkpoints complete
-		// _percentComplete = if ((count GW_CHECKPOINTS -1) == 0) then { 1 } else { (count GW_CHECKPOINTS_COMPLETED / count GW_CHECKPOINTS) };
+		// 50/50 Chance of 10% Ammo or Fuel per checkpoint		
+		if (random 100 > 50) then {
 
-		// 10% Ammo & Fuel at each checkpoint
-		// _maxAmmo = GW_CURRENTVEHICLE getVariable ["maxAmmo", 1];
-		// _targetAmmo = [_maxAmmo * 0.1, 1] call roundTo;
-		// GW_CURRENTVEHICLE setVariable ["ammo", _maxAmmo];
-		
-		// _maxFuel = GW_CURRENTVEHICLE getVariable ["maxFuel", 1];
-		// _targetFuel = [_maxFuel * 0.1, 1] call roundTo;
-		// GW_CURRENTVEHICLE setVariable ["fuel", _maxFuel];
+			// Give 10% ammo
+			_maxAmmo = GW_CURRENTVEHICLE getVariable ["maxAmmo", 1];
+			_targetAmmo = [_maxAmmo * 0.1, 1] call roundTo;
+			_newAmmo = [(GW_CURRENTVEHICLE getVariable ["ammo", 0]) + _targetAmmo, 0, _maxAmmo] call limitToRange;
+			GW_CURRENTVEHICLE setVariable ["ammo", _newAmmo];
+
+			["", 1, plusAmmoIcon, [0,0,0,0.5], "slideUp", "upgrade"] execVM 'client\ui\hud\alert_new.sqf';
+
+		} else {
+
+			// Give 10% fuel per checkpoint
+			_maxFuel = GW_CURRENTVEHICLE getVariable ["maxFuel", 1];
+			_totalFuel = _maxFuel + fuel GW_CURRENTVEHICLE;
+			_targetFuel = [_totalFuel * 0.1, 1] call roundTo;
+			if (_targetFuel < 0.99) then {	
+				_newFuel = [fuel GW_CURRENTVEHICLE + _targetFuel, 0, 1] call limitToRange;
+				GW_CURRENTVEHICLE setFuel _newFuel;
+			} else { 
+				GW_CURRENTVEHICLE setFuel 1;
+				__newFuel = [(GW_CURRENTVEHICLE getVariable ["fuel", 0]) + (_targetFuel - 1), 0, _maxFuel] call limitToRange;
+				GW_CURRENTVEHICLE setVariable ["fuel", _newFuel];
+			};	
+
+			["", 1, plusFuelIcon, [0,0,0,0.5], "slideUp", "upgrade"] execVM 'client\ui\hud\alert_new.sqf';
+
+		};
 
 		_timeStamp = (serverTime - GW_CURRENTRACE_START) call formatTimeStamp;
 		_timeStamp = format['+%1', _timeStamp];
@@ -251,8 +228,6 @@ for "_i" from 0 to 1 step 0 do {
 
 };
 
-
-
 _raceID =  ((_raceName call getRaceID) select 1);
 
 _vehiclesArray = [GW_ACTIVE_RACES, _raceID, [], [[]]] call filterParam;
@@ -280,32 +255,71 @@ if ( time <= (_timeout + 0.1) ) then {
 
 if (alive GW_CURRENTVEHICLE && alive (driver GW_CURRENTVEHICLE)) then {
 
-	_timeStamp = (serverTime - GW_CURRENTRACE_START) call formatTimeStamp;
-
-	// Show title if we have a time or DNC
-	waitUntil { (isNull (findDisplay 95000)) };
-
+	// Slow vehicle down
 	[] spawn { 
 		_timeout = time + 3;
 		waitUntil { [GW_CURRENTVEHICLE, 0.97] spawn slowDown;  time > _timeout };
 	};
 
+	GW_HUD_ACTIVE = false;
+	GW_HUD_LOCK = TRUE;
+
+	// Spawn camera transition
 	_handle = [] execVM 'testorbitcamera.sqf';
 
-	[ format["<br /><t size='3.3' color='#ffffff' align='center' valign='middle' shadow='0'>+%1</t>", _timeStamp], "FINISH", [false, { true }] , { true }, 9999, true, { closeDialog 0; true }] call createTitle;
+	// Show blank title while waiting
+	// waitUntil { (isNull (findDisplay 95000)) };
+	// [] spawn { ["", "", [false, { false }] , { !isNil "GW_CR_F" }, 9999, true, { closeDialog 0; }] call createTitle; };
+
+	// Wait 3 seconds for server to tell us our time/position
+	GW_CR_F = nil;
+	_timeout = time + 3;
+	waitUntil {
+		!isNil "GW_CR_F" || time > _timeout
+	};
+
+	// If server hasn't responded, use local time
+	if (isNil "GW_CR_F") then { 
+		_timeStamp = (serverTime - GW_CURRENTRACE_START) call formatTimeStamp;
+		GW_CR_F = [_timeStamp, 0]; 
+	};
+
+	_raceTime = (GW_CR_F select 0);	
+	_racePosition = (GW_CR_F select 1);	
+
+	// If we came first, log as race win
+	if (_racePosition == 1) then { ['racewin', GW_CURRENTVEHICLE, 1, true] call logStat; };
+
+	// Show title if we have a time or DNC
+	waitUntil { (isNull (findDisplay 95000)) };	
+
+	_exitFunction =	{  	
+		9999 cutText ["", "BLACK", 0.01]; 
+		GW_IGNORE_DEATH_CAMERA = true; 
+		closeDialog 0;	
+		true
+	};
+
+	_racePosition = if (_racePosition == 0) then { 'RACE COMPLETE' } else {
+		_desc = _racePosition call {
+			if (_this == 1) exitWith {'ST'};
+			if (_this == 2) exitWith {'ND'};
+			if (_this == 3) exitWith {'RD'};
+			'TH'
+		};
+		format['YOU FINISHED %1%2', _racePosition, _desc]
+	};
+
+	// Show new title with time/position
+	[ format["<t size='3.3' color='#ffffff' align='center' valign='middle' shadow='0'>%1</t><br /><t size='3.3' color='#ffffff' align='center' valign='middle' shadow='0'>+%2</t>", _racePosition, _raceTime call formatTimestamp], "RESPAWN", [false, { true }] , { true }, 9999, true, _exitFunction] call createTitle;
+	
+	Sleep 0.5; 
 
 	terminate _handle;
 
 	GW_CURRENTVEHICLE call destroyInstantly;
 
 	GW_CURRENTRACE = "";
-
-	9999 cutText ["", "BLACK OUT", 0.5];
-
-	waitUntil { Sleep 0.5; (isNull (findDisplay 95000)) };
-
-	//[_vehiclesArray] execVM 'testspectatorcamera.sqf';
-	
 
 };
 

@@ -6,6 +6,13 @@
 
 private ["_cam", "_victim", "_killer", "_centerCamera"];
 
+// Optional toggle to prevent death camera showing in certain conditions (race ending for example)
+if (GW_IGNORE_DEATH_CAMERA) exitWith { 
+	GW_IGNORE_DEATH_CAMERA = false; 
+	player cameraeffect["terminate","back"]; 
+	9999 cutText ["", "BLACK IN", 1.5]; 
+};
+
 _target = if (!isNil { _this select 0 }) then { (_this select 0) } else { (getMarkerPos "workshopZone_camera") };
 _type = [_this,1, "default", [""]] call filterParam;
 

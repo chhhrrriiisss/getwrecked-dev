@@ -43,9 +43,14 @@ GW_HUD_LOCK = true;
 
 exitLobbyToWorkshop = {
 	
+	if (isNull (findDisplay 103000)) exitWith {};
+
 	// Don't allow exiting once race has started
 	_raceStatus = [GW_CURRENTRACE] call checkRaceStatus;
 	if (_raceStatus == 2) exitWith { systemchat 'Race already starting... cannot abort.';  };
+
+	9999 cutText ["", "BLACK", 0.01]; 
+	GW_IGNORE_DEATH_CAMERA = TRUE;
 
 	closeDialog 0;
 
@@ -223,15 +228,13 @@ waitUntil { ((isNull (findDisplay 103000)) || time > _timeout) };
 
 GW_LOBBY_ACTIVE = false;
 
-// Reopen the hud if its closed
-GW_HUD_ACTIVE = false;
-GW_HUD_LOCK = false;
-
 "dynamicBlur" ppEffectAdjust [0]; 
 "dynamicBlur" ppEffectCommit 0.1; 
 
 // Race cancelled or not enough players
 _raceStatus = [_raceName] call checkRaceStatus;
+_raceData = _raceName call getRaceID;
+_raceID = (_raceData select 1);
 
 // Race aborted by user, return to workshop
 if (_raceStatus == 0 || _raceStatus == 1) exitWith {	
@@ -262,6 +265,10 @@ if (_raceStatus >= 2) exitWith {
 		waitUntil { Sleep 0.1; (isNull (findDisplay 94000)) };
 		GW_CURRENTVEHICLE call destroyInstantly;
 	};
+
+	// Reopen the hud if its closed
+	GW_HUD_ACTIVE = false;
+	GW_HUD_LOCK = false;
 
 	GW_CURRENTRACE_START = serverTime;
 

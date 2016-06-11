@@ -1,3 +1,9 @@
+//
+//      Name: endRace
+//      Desc: Handles race end scenario, determining vehicles left and ending race once all killed
+//      Return: None
+//
+
 params ['_raceName', '_vehicle'];
 private ['_raceName', '_id', '_vehicle'];
 
@@ -5,47 +11,46 @@ _raceStatus = [_raceName] call checkRaceStatus;
 if (_raceStatus == -1) exitWith {};
 
 _raceData = _raceName call getRaceID;
+
+if (isNil "_raceData") exitWith {};
+if (count _raceData == 0) exitWith {};
 _raceID = (_raceData select 1);
 
-((GW_ACTIVE_RACES select _raceID) select 6) pushBack _vehicle;
-_position = (((GW_ACTIVE_RACES select _raceID) select 6) find _vehicle) + 1;
-_desc = _position call {
-	if (_this == 1) exitWith {
-		'st'
-	};
-	if (_this == 2) exitWith {
-		'nd'
-	};
-	if (_this == 3) exitWith {
-		'rd'
-	};
-	'th'
+_raceStartTime = ((_raceData select 0) select 0) select 5;
+_finalTime = serverTime - _raceStartTime;
+
+// Find ID in active array and delete;
+_activeArray = ((GW_ACTIVE_RACES select _raceID) select 5);
+_activeID = _activeArray find _vehicle;
+_activeArray deleteAt _activeID;
+
+// Add vehicle to finished array
+_finishedArray = ((GW_ACTIVE_RACES select _raceID) select 6);
+_finishedArray pushBack _vehicle;
+
+// Determine position based off of index in finish array
+_finalPosition = (_finishedArray find _vehicle) + 1;
+
+// Publish position/time to client
+GW_CR_F = [_finalTime, _finalPosition];
+if (!local _vehicle) then {
+	(owner _vehicle) publicVariableClient "GW_CR_F";
 };
 
-if (_raceStatus == 3 && _position > 0) then {
-	pubVar_systemChat = format['%1 - %2 finished %3%4!', _raceName, name (driver _vehicle), _position, _desc];
-	systemchat pubVar_systemChat;
-	publicVariable "pubVar_systemChat";
+// Are we the last player? Delete the race from the active races
+if (count _activeArray == 0 || ({ if (alive _x) exitWith { 1 }; false } count _activeArray) <= 0) then {
+
+	// Delete the race from the active races
+	GW_ACTIVE_RACES deleteAt _raceID;
+	publicVariable "GW_ACTIVE_RACES";
 };
 
-// Set race to 'end'
+// Race already ended, abort doing anything else
 if (_raceStatus == 3) exitWith {};
+
+// Set race to ended
 [_raceName, 3] call checkRaceStatus;
 
-// Get list of current vehicles
-((GW_ACTIVE_RACES select _raceID) select 5) deleteAt (((GW_ACTIVE_RACES select _raceID) select 5) find _vehicle);
 
-// Delete vehicles that are already dead
-// {
-// 	if (!alive _x) then { _vArray deleteAt _forEachIndex; };
-// 	_x call destroyInstantly;
-// } foreach _vArray;
-
-pubVar_systemChat = format['%1 race ended — %2 finished 1st!', _raceName, name (driver _vehicle)];
-systemchat pubVar_systemChat;
-publicVariable "pubVar_systemChat";
-
-GW_ACTIVE_RACES deleteAt _raceID;
-publicVariable "GW_ACTIVE_RACES";
 
 true

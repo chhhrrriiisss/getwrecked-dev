@@ -172,12 +172,12 @@ if (time > _timeout && _raceStatus == 0) exitWith {
 };
 
 // Message all players in race + let them know who they are playing with
-{
+// {
 	
-	if (local _x) then { 
-		GW_CR_V = _v;
-	} else {
-		GW_CR_V = _v;
-		(owner _x) publicVariableClient "GW_CR_V";
-	};
-} foreach _v;
+// 	if (local _x) then { 
+// 		GW_CR_V = _v;
+// 	} else {
+// 		GW_CR_V = _v;
+// 		(owner _x) publicVariableClient "GW_CR_V";
+// 	};
+// } foreach _v;
