@@ -29,10 +29,10 @@ _register = [];
 		_totalExists = [_tag, GW_SETTINGS_VEHICLE] call hasType;
 
 		// Only add an entry for the last item of that type
-		if (_totalAdded < _totalExists && (_tag == 'EPL' || _tag == 'TPD')) exitWith {};
+		if (_totalAdded < _totalExists && (_tag == 'EPL' || _tag == 'TPD' || _tag == 'NPA')) exitWith {};
 
 		// Determine the amount on the vehicle 
-		_amount = if (_tag in _register && (_tag == 'EPL' || _tag == 'TPD')) then {
+		_amount = if (_tag in _register && (_tag == 'EPL' || _tag == 'TPD' || _tag == 'NPA')) then {
 			if (_totalExists <= 1) exitWIth { '' };
 			(format ['(x%1) ', {_x == _tag} count _register])
 		} else { '' };

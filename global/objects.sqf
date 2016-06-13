@@ -77,8 +77,9 @@ GW_LOOT_LIST = [
 	["Box_IND_Wps_F", "Shield Generator",  5, 500, 0, 0, 'SHD', "Shield that grants temporary invulnerability", 1, shieldIcon, [60,0] ],
 	["Land_Coil_F", "Magnetic Coil",  5, 6000, 0, 0, 'MAG', "Deploys a magnetic pulse that pulls in vehicles", 1, magneticIcon, [45,0] ],
 	["Land_Sleeping_bag_folded_F", "Teleportation Pad",  5, 500, 0, 0, 'TPD', "Drops a teleportation pad", 0.9, tpdIcon, [8,0] ],
-	["Land_WaterBarrel_F", "Electromagnet",  5, 2000, 0, 0, 'ELM', "Magical distance minimizer", 0.9, elmIcon, [60,0] ]
+	["Land_WaterBarrel_F", "Electromagnet",  5, 2000, 0, 0, 'ELM', "Magical distance minimizer", 0.9, elmIcon, [60,0] ],
 
+	["FlexibleTank_01_forest_F", "Napalm Bomb",  5, 2000, 0, 0, 'NPA', "Drops a rather toasty napalm device", 0.1, flameIcon, [1,0] ]
 	
 	// ["Land_Sleeping_bag_folded_F", "Limpet Mines",  5, 500, 0, 0, 'LPT', "Drops limpet mines", 0.7, minesIcon],
 ];
@@ -140,7 +141,8 @@ GW_TACTICALARRAY = [
 	'CLK',
 	'MAG',
 	'TPD',
-	'ELM'
+	'ELM',
+	'NPA'
 ];
 
 // Modules without an action menu entry, but that still do something
@@ -207,7 +209,8 @@ GW_LOOT_INCENDIARY = [
 	["Box_East_AmmoOrd_F", 400],
 	["Land_FireExtinguisher_F", 100],
 	["Land_Runway_PAPI", 400],
-	["Land_DischargeStick_01_F", 300]
+	["Land_DischargeStick_01_F", 300],
+	["FlexibleTank_01_forest_F", 100]
 ];
 
 // Electronics
@@ -227,7 +230,8 @@ GW_LOOT_DEPLOYABLES = [
 	["Land_WoodenBox_F", 200],
 	["Land_FoodContainer_01_F", 500],
 	["Land_Sleeping_bag_folded_F", 200],
-	["Land_WaterTank_F", 100]
+	["Land_WaterTank_F", 100],
+	["FlexibleTank_01_forest_F", 100]
 ];
 
 // Defense

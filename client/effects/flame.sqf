@@ -34,7 +34,7 @@ _scale = 0.1;
 _source3  = "#particlesource" createvehiclelocal _pos;
 _source3 setParticleCircle [0, [0, 0, 0]];
 _source3 setParticleRandom [0.2, [15 * _scale, 15 * _scale, 0], [0, 0, 0], 1, 0.5, [0, 0, 0, 0], 0, 0];
-_source3 setDropInterval 0.02;
+_source3 setDropInterval 0.04;
 _source3 attachTo [_target];
 
 _source3 setParticleParams

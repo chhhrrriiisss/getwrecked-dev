@@ -43,7 +43,7 @@ _layerStatic = ("BIS_layerStatic" call BIS_fnc_rscLayer);
 _layerStatic cutRsc ["RscStatic", "PLAIN" , 0.5];
 
 [] spawn generateSettingsList;
-[ [92000, 92004] , GW_SETTINGS_VEHICLE] spawn generateStatsList;
+[ [92000, 92004] , GW_SETTINGS_VEHICLE, time - 5] call generateStatsList;
 
 [] spawn generateTauntsList;
 

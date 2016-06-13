@@ -21,12 +21,13 @@ if (!isServer) then { _vehicle setVariable ["GW_Owner", name player, true]; };
 _name = _vehicle getVariable ["name", ''];
 if (_name == '' || _name == "UNTITLED") exitWith {};
 
-// Is there any data for this vehicle?
-_raw = profileNameSpace getVariable[_name, nil]; 
+_raw = [_name] call getVehicleData;
 if (isNil "_raw") exitWith {};
 
 // Grab the meta data
 _meta = (_raw select 0) select 6;
+
+// Set as saved
 _vehicle setVariable ["isSaved", true];
 
 // Apply meta (if exists)
@@ -102,3 +103,6 @@ if (isNil "_meta") then {} else {
     };
 
 };
+
+// Set as initialized
+_vehicle setVariable ["isSetup", true];

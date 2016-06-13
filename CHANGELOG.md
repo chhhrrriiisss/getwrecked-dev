@@ -11,6 +11,7 @@ Items without Fixed/Added/Removed proceeding are typically balance changes.
 - Added FlamePads to map
 - Added 'Loading' text to vehicle preview
 - Added 'Crash Test Dummy' texture for dev builds
+- Added 'Napalm Bomb' as droppable module
 - Race lobby menu and 'ready' threshold for race starting
 - Caltrops now more reliable and destroyed after first collision
 - Increased global damage scale by x2 (0.04 > 0.08)
@@ -42,6 +43,8 @@ Items without Fixed/Added/Removed proceeding are typically balance changes.
 - Warning icons for mines and caltrops, now only added for first item in the group
 - Snapping now aligns to axis of matching objects (rotation align currently disabled)
 
+- Fixed Issue with stats retrieval occuring too early on previewVehicle
+- Fixed Bug preventing local vehicle setup from properly occuring
 - Fixed Suspended vehicles no longer drop altitude when attaching/detaching objects
 - Fixed Death camera sometimes triggering multiple times consecutively
 - Fixed Settings menu keybind should now work for vehicles nearby the player

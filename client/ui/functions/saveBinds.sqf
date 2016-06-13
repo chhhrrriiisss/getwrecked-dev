@@ -66,7 +66,7 @@ for "_i" from 0 to _listLength step 1 do {
 			_objTag = _obj getVariable ['GW_Tag', ''];
        			
 			// If its a bag of explosives, apply the bind to every bag
-			if (_objTag == 'EPL' || _objTag == "TPD") then {
+			if (_objTag == 'EPL' || _objTag == "TPD" || _objTag == "NPA") then {
 
 				{
 					if ((_x select 0) == _objTag) then {

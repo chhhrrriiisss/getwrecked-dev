@@ -111,7 +111,6 @@ GW_attributes = [
 	"Setback",	
 	"Destruction",	
 	"Wreck",
-	"Akbar",
 	"Fanatic",
 	"Overkill",
 	"Vengeance",

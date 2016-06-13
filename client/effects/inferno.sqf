@@ -6,6 +6,7 @@
 
 _target = [_this,0, objNull, [objNull]] call filterParam;
 _duration = [_this,1, 1, [0]] call filterParam;
+_size = [_this,2, 1, [0]] call filterParam;
 
 if (isNull _target || _duration < 0) exitWith {};
 
@@ -18,6 +19,7 @@ if (!_isVisible) exitWith {};
 // Smoke Effect
 //
 
+_smokeScale = [_size, 0.5, 1] call limitToRange;
 _source2 = "#particlesource" createVehicleLocal _pos;
 _source2 setParticleParams 
 /*Sprite*/		[["\A3\data_f\ParticleEffects\Universal\Universal", 16, 7, 48, 1], "",// File,Ntieth,Index,Count,Loop(Bool)
@@ -27,7 +29,7 @@ _source2 setParticleParams
 /*Position*/		[0,0,0],
 /*MoveVelocity*/	[0,0,0.5],
 /*Simulation*/		0,1.277,1,0.025,//rotationVel,weight,volume,rubbing
-/*Scale*/			[5,6,7,8],
+/*Scale*/			[5 * _smokeScale,6 * _smokeScale,7 * _smokeScale,8 * _smokeScale],
 /*Color*/			[[0,0,0,0],[0,0,0,0.6],[0,0,0,0.6],[0,0, 0,0.4], [0,0,0,0.15], [1,1,1,0]],
 /*AnimSpeed*/		[0.2],
 /*randDirPeriod*/	1,
@@ -52,18 +54,18 @@ _source2 setParticleRandom
 /*randDirIntesity*/	0,
 /*Angle*/		360];
 
-_source2 setDropInterval 0.025;
+_source2 setDropInterval 0.1;
 _source2 attachTo [_this];
 
 //
 //	Refract Effect
 //
 
-_scale = 0.5;	
+_scale = 0.5 * _size;	
 _source3  = "#particlesource" createvehiclelocal _pos;
 _source3 setParticleCircle [0, [0, 0, 0]];
 _source3 setParticleRandom [0.2, [15 * _scale, 15 * _scale, 0], [0, 0, 0], 1, 0.5, [0, 0, 0, 0], 0, 0];
-_source3 setDropInterval 0.01;
+_source3 setDropInterval 0.05;
 _source3 attachTo [_this];
 
 _source3 setParticleParams
@@ -89,19 +91,20 @@ _source3 setParticleParams
 _this																	//Object
 ];	
 
+
 // 
 //	Fire Effect
 //
 _source = "#particlesource" createVehicle _pos;
 _source setParticleClass "ObjectDestructionFire1Smallx";
-_source setDropInterval 0.0025;
+_source setDropInterval 0.0125;
 	// RANDOM / TOLERANCE PARAMS
 _source setParticleRandom
 /*LifeTime*/		[3,
 /*Position*/		[3, 3, 0.5],
 /*MoveVelocity*/	[1, 1, 2],
 /*rotationVel*/		20,
-/*Scale*/		1.2,
+/*Scale*/		1.2 * _size,
 /*Color*/		[0, 0, 0, 1],
 /*randDirPeriod*/	3,
 /*randDirIntesity*/	0.1,
@@ -112,5 +115,9 @@ _source attachTo [_this];
 Sleep _duration;
 
 deleteVehicle _source;
-deleteVehicle _source2;	
+
 deleteVehicle _source3;	
+
+Sleep 0.5;
+
+deleteVehicle _source2;	

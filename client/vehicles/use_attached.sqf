@@ -104,6 +104,7 @@ _success = if (!isNil "_obj") then {
 		case "MIN": { dropMines };
 		case "PAR": { emergencyParachute };
 		case "EPL": { dropExplosives };
+		case "NPA": { dropNapalm };
 		case "TPD": { dropTeleport };
 		case "CLK": { cloakingDevice };
 		case "MAG": { magneticCoil };

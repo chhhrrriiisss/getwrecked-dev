@@ -8,6 +8,9 @@ private ['_display', '_control', '_v', '_vehicleStats', '_dist', '_stats'];
 
 _control = [_this,0, [], [[]]] call filterParam;
 _v = [_this,1, objNull, [objNull]] call filterParam;
+_tO = [_this,2, time + 3, [0]] call filterParam;
+_this set [2, _tO];
+
 
 if (count _control == 0 || isNull _v) exitWith {};
 
@@ -16,6 +19,14 @@ disableSerialization;
 _statsList = (findDisplay (_control select 0)) displayCtrl (_control select 1);
 
 lnbClear _statsList;
+
+// If not ready to parse stats, call again in 0.5 seconds 
+_isSetup = _v getVariable ['isSetup', false];
+if (!_isSetup && time <= _tO) exitWith {
+	_statsList lnbAddRow['', ''];
+	_statsList lnbAddRow['', 'Loading...'];
+	_this spawn { Sleep 1; _this call generateStatsList; };
+};
 
 // Collect all stats
 _name = _v getVariable ['name', ''];

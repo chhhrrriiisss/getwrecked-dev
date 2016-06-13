@@ -3,7 +3,7 @@
 #define GW_VehicleData_ID 42002
 #define GW_FilterList_ID 42003
 #define GW_StatsList_ID 42004
-
+#define GW_StatsTitle_ID 42005
 
 #define GW_BUTTON_WIDTH 0.2
 #define GW_BUTTON_HEIGHT 0.035
@@ -119,7 +119,7 @@ class GW_Menu
 
 		class StatsTitle : GW_RscButtonMenu
 		{
-			idc = -1;
+			idc = GW_StatsTitle_ID;
 			text = "VEHICLE STATS";
 			onButtonClick = "";
 			x = (0.015) * safezoneW + safezoneX;

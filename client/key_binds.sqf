@@ -236,7 +236,7 @@ checkBinds = {
 						if (_canUse && _isModuleBind) exitWith {
 
 							// If its a bag of explosives, just drop one bag
-							if (_tag == "EPL" || _tag == "TPD") then { _exitEarly = true; false };							
+							if (_tag == "EPL" || _tag == "TPD" || _tag == "NPA") then { _exitEarly = true; false };							
 							[_tag, _vehicle, _obj] call useAttached;
 						};	
 
