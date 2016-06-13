@@ -28,8 +28,28 @@ if (count _targetRace == 0) exitWith { diag_log 'Error bad race data or no race 
 // Get race information
 _meta = (_targetRace select 0);
 _raceName = _meta select 0;
+_raceHost = _meta select 1;
 _minPlayers =  [_meta, 3, 2, [0]] call filterParam; // 1 for testing (2 default)
 _maxWaitPeriod = [_meta, 4, 60, [0]] call filterParam;
+
+// Check a race with this name isn't already active
+if ({	
+	if ((((GW_ACTIVE_RACES select 0) select 0) select 0) == _raceName) exitWith { 1 };
+	false
+} count GW_ACTIVE_RACES > 0) exitWith {
+	
+	pubVar_systemChat = format['%1 race could not be started — race with name already running.', _raceName];
+	diag_log pubVar_systemChat;
+
+	// Attempt to find owner of this race
+	_player = [_raceHost] call findUnit;
+	if (isNil "_player") exitWith {};
+
+	// Broadcash result
+	if (local _player) exitWith { systemchat pubVar_systemChat; };
+	(owner _player) publicVariableClient "pubVar_systemChat";
+};
+
 
 _racePoints = _targetRace select 1;
 _raceHost = _targetRace select 2;

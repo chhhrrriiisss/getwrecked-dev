@@ -14,12 +14,13 @@ if (_raceStatus == -1) exitWith {};
 _raceData = _raceName call getRaceID;
 _raceID = (_raceData select 1);
 
-((GW_ACTIVE_RACES select _raceID) select 5) deleteAt (((GW_ACTIVE_RACES select _raceID) select 5) find _vehicle);
+_activeArray = [(GW_ACTIVE_RACES select _raceID), 5, [], [[]]] call filterParam;
+_finishedArray = [(GW_ACTIVE_RACES select _raceID), 6, [], [[]]] call filterParam;
 
-_finishedArray = if (isNil "((GW_ACTIVE_RACES select _raceID) select 6)") then { [] } else { ((GW_ACTIVE_RACES select _raceID) select 6) };
+_activeArray deleteAt (_activeArray find _vehicle);
 
 // If active array empty and finished array empty
-if (count ((GW_ACTIVE_RACES select _raceID) select 5) == 0 && count _finishedArray == 0) then {
+if (count _activeArray == 0 && count _finishedArray == 0) then {
 	[_raceName, 3] call checkRaceStatus;
 	GW_ACTIVE_RACES deleteAt _raceID;
 

@@ -20,7 +20,9 @@ if (!_isVehicleReady) exitWith { GW_RACE_GENERATOR_ACTIVE = false; };
 disableSerialization;
 if(!(createDialog "GW_Race")) exitWith { GW_RACE_GENERATOR_ACTIVE = false; }; //Couldn't create the menu
 
-showChat false;
+showChat true;
+
+
 
 getAllRaces = {
 	_rcs = profileNamespace getVariable ['GW_RACES', []];
@@ -50,6 +52,8 @@ getAllRaces = {
 };
 
 startRace = {	
+	
+	disableSerialization;
 
 	if (GW_RACE_ACTIVE) exitWith { systemchat 'You cant host more than one race at a time.'; };
 	GW_RACE_ACTIVE = true;
@@ -88,7 +92,7 @@ startRace = {
 
 		// Race is a new one
 		if (_raceStatus == -1) exitWith {
-			disableSerialization;
+			
 			_startButton = ((findDisplay 90000) displayCtrl 90015);
 			_startButton ctrlSetText "RACE ACTIVE IN AREA";
 			_startButton ctrlCommit 0;
@@ -96,7 +100,6 @@ startRace = {
 
 		// Race is currently locked (already started)
 		if (_raceStatus >= 2 || (_timeout - serverTime < 10)) exitWith {
-			disableSerialization;
 			_startButton = ((findDisplay 90000) displayCtrl 90015);
 			_startButton ctrlSetText "NOT JOINABLE";
 			_startButton ctrlCommit 0;
@@ -217,6 +220,7 @@ generateRaceStats = {
 selectRace = {
 	
 	private ['_existingRaces', '_selection', '_raceData', '_raceStatus', '_raceMeta', '_isDefault'];
+	disableSerialization;
 
 	_existingRaces = call getAllRaces;
 
@@ -325,8 +329,9 @@ generateRaceList = {
 
 };
 
-focusCurrentRace = {
 
+focusCurrentRace = {
+	
 	private ['_map'];
 
 	disableSerialization;
@@ -338,18 +343,39 @@ focusCurrentRace = {
 	_endPos = GW_RACE_ARRAY select ((count GW_RACE_ARRAY) -1);
 	if (isNIl "_endPos") exitWith {};
 
-	_dir = [_startPos, _endPos] call dirTo;
 	_midPos = [_startPos, ((_startPos distance _endPos) / 2), _dir] call relPos;
-	if (isNIl "_midPos") exitWith {};
-
-	_startPosMap = (_map ctrlMapWorldToScreen _startPos);
-	_endPosMap = (_map ctrlMapWorldToScreen _endPos);
-	_screenYDist = [_startPosMap select 0, _startPosMap select 1, 0] distance [_startPosMap select 0, _endPosMap select 1, 0];
-	_screenXDist = [_startPosMap select 0, _startPosMap select 1, 0] distance [_endPosMap select 0, _startPosMap select 1, 0];
-	_multiplier = if (_screenXDist > _screenYDist) then { (_screenXDist / 0.5) } else { (_screenYDist / 0.3) };
-	_map ctrlMapAnimAdd [0.25, (1 * _multiplier), _midPos];
+	_map ctrlMapAnimAdd [0.25, 0.05, _startPos];
 	ctrlMapAnimCommit _map;
+
 };
+
+
+// focusCurrentRace = {
+	
+// 	private ['_map'];
+
+// 	disableSerialization;
+// 	_map = ((findDisplay 90000) displayCtrl 90001);
+
+// 	_startPos = GW_RACE_ARRAY select 0;
+// 	if (isNIl "_startPos") exitWith {};
+
+// 	_endPos = GW_RACE_ARRAY select ((count GW_RACE_ARRAY) -1);
+// 	if (isNIl "_endPos") exitWith {};
+
+// 	_dir = [_startPos, _endPos] call dirTo;
+// 	_midPos = [_startPos, ((_startPos distance _endPos) / 2), _dir] call relPos;
+// 	if (isNIl "_midPos") exitWith {};
+
+// 	_startPosMap = (_map ctrlMapWorldToScreen _startPos);
+// 	_endPosMap = (_map ctrlMapWorldToScreen _endPos);
+// 	_screenYDist = [_startPosMap select 0, _startPosMap select 1, 0] distance [_startPosMap select 0, _endPosMap select 1, 0];
+// 	_screenXDist = [_startPosMap select 0, _startPosMap select 1, 0] distance [_endPosMap select 0, _startPosMap select 1, 0];
+// 	_multiplier = if (_screenXDist > _screenYDist) then { (_screenXDist / 0.5) } else { (_screenYDist / 0.3) };
+// 	_map ctrlMapAnimAdd [0.25, (1 * _multiplier), _midPos];
+// 	ctrlMapAnimCommit _map;
+
+// };
 
 
 
@@ -385,8 +411,6 @@ _mapTitle = ((findDisplay 90000) displayCtrl 90012);
 _mapControl ctrlEnable false;
 _mapControl ctrlCommit 0;
 
-
-
 _existingRaces = call getAllRaces;
 
 GW_RACE_NAME = '';
@@ -405,7 +429,6 @@ GW_MAP_Y = -1;
 GW_MAP_NUMBER = 0;
 GW_MAP_CLOSEST = -1;
 GW_MAP_BETWEEN = -1;
-
 
 deleteRace = {
 	
@@ -523,22 +546,6 @@ toggleRaceEditing = {
 		_editButton ctrlSetText 'SAVE';
 		_editButton ctrlCommit 0;
 
-		// _mapHelpText ctrlSetStructuredText parseText ( 
-		// 	"
-		// 	<t size='0.9' color='#ffffff' valign='top' shadow='0' align='left'>Double click to add a new checkpoint.</t>
-		// 	<br />
-		// 	<t size='0.9' color='#ffffff' valign='top'  shadow='0' align='left'>Left Click+Drag to move points to a location.</t>
-		// 	<br />
-		// 	<t size='0.9' color='#ffffff' valign='top'  shadow='0' align='left'>Use delete to remove a checkpoint.</t>
-
-
-
-
-		// 	"
-		// );
-		// _mapHelpText ctrlSetFade 0;
-		// _mapHelpText ctrlCommit 0;
-
 		{
 			_x ctrlSetFade 1;
 			_x ctrlCommit 0;
@@ -571,6 +578,7 @@ saveCurrentRace = {
 	profileNamespace setVariable ['GW_RACES', _existingRaces]; 
 	saveProfileNamespace;
 
+	[_index] call generateRaceList;
 	[] call generateRaceStats;
 };
 

@@ -97,7 +97,6 @@ createCheckpoint = {
 
 };
 
-
 // Temporary invulnerability until first checkpoint
 [GW_CURRENTVEHICLE, ["noshoot", "nouse", "noammo", "nofuel"], 9999] call addVehicleStatus;
 
@@ -116,7 +115,6 @@ _dirTolerance = 80;
 
 // Create initial checkpoint group
 _checkpointGroup = [GW_CHECKPOINTS_PROGRESS, GW_CHECKPOINTS] call createCheckpoint;
-
 
 for "_i" from 0 to 1 step 0 do {
 
