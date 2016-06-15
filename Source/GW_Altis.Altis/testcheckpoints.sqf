@@ -226,13 +226,8 @@ for "_i" from 0 to 1 step 0 do {
 
 };
 
-_raceID =  ((_raceName call getRaceID) select 1);
-
-_vehiclesArray = [GW_ACTIVE_RACES, _raceID, [], [[]]] call filterParam;
-_vehiclesArray = [_vehiclesArray, 4, allPlayers, [[]]] call filterParam;
-
-if ( time <= (_timeout + 0.1) ) then {
-	hint format['Race complete! (%1s)', ([time - _startTime, 2] call roundTo)];	
+// Only go to victory cutscene if we've actually completed the race
+if ( time <= (_timeout + 0.1) && alive GW_CURRENTVEHICLE && alive (driver GW_CURRENTVEHICLE)  && GW_CHECKPOINTS_PROGRESS == count GW_CHECKPOINTS) then {
 
 	GW_CURRENTVEHICLE say "electronTrigger";
 	GW_CURRENTVEHICLE say "summon";
@@ -246,12 +241,6 @@ if ( time <= (_timeout + 0.1) ) then {
 		
 	GW_CHECKPOINTS = [];
 	GW_CHECKPOINTS_COMPLETED = [];	
-
-} else {
-	hint format['Race failed! (Timeout)', time];
-};
-
-if (alive GW_CURRENTVEHICLE && alive (driver GW_CURRENTVEHICLE)) then {
 
 	// Slow vehicle down
 	[] spawn { 

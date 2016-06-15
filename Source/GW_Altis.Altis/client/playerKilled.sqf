@@ -6,7 +6,7 @@
 
 _victim = [_this,0, objNull, [objNull]] call filterParam;
 if (isNull _victim) exitWith {};
-
+	
 // Disable hud + lock until spawned
 GW_HUD_ACTIVE = false;
 GW_HUD_LOCK = true;

@@ -17,33 +17,23 @@ GW_CURRENTVEHICLE call updateVehicleDamage;
 // Toggle simulation back if we lose it for any reason
 if (!simulationEnabled GW_CURRENTVEHICLE) then { GW_CURRENTVEHICLE enableSimulation true; };
 
-// Every 5 seconds, record position, ignoring while in parachute
+// Every 5 seconds, track mileage + alive state
 _remainder = round (time) % 5;
-_hasMoved = false;
-
-if (_remainder == 0 && (typeOf GW_CURRENTVEHICLE != "Steerable_Parachute_F")) then {
+if (_remainder == 0) then {
 	
-	_prevPos = GW_CURRENTVEHICLE getVariable ['GW_prevPos', nil];
-	_currentPos = ASLtoATL visiblePositionASL GW_CURRENTVEHICLE;
-
-	// If there's position data stored and we're not at the workshop
-	if (!isNil "_prevPos") then {
-
-		_distanceTravelled = _prevPos distance _currentPos;   
-		if (_distanceTravelled > 3) then {       
-		    ['mileage', GW_CURRENTVEHICLE, _distanceTravelled] call logStat;  
-		    _hasMoved = true; 
-		};
-	};
-
 	// Log time alive
-	if (isNil "GW_LASTPOSCHECK") then { GW_LASTPOSCHECK = time;	};  
-	_timeAlive = (time - GW_LASTPOSCHECK);
-	if (_timeAlive > 0) then {	['timeAlive', GW_CURRENTVEHICLE, _timeAlive] call logStat;  };
-	GW_LASTPOSCHECK = time;   
+	if (alive GW_CURRENTVEHICLE) then {
+		['timeAlive', GW_CURRENTVEHICLE, 5] call logStat;
+	};
+	
+	// Track mileage
+	_currentPos = GW_CURRENTPOS;
+	_prevPos = GW_CURRENTVEHICLE getVariable ['GW_prevPos', _currentPos];	
 
-	GW_CURRENTVEHICLE setVariable ['GW_prevPos', _currentPos];
-	player setVariable ['GW_prevPos', _currentPos];
+	_distanceTravelled = _prevPos distance _currentPos;   
+	if (_distanceTravelled > 3) then {       
+	    ['mileage', GW_CURRENTVEHICLE, _distanceTravelled] call logStat;  
+	};
 
 };
 
@@ -99,51 +89,3 @@ _totalString = format["[   DEBUG MODE   ] \n\n Time: %1\n Zone: %2\n Player: %3\
 {	_totalString = format['%1 \n %2: %3', _totalString, (_x select 0), (_x select 1)];	false	} count GW_DEBUG_ARRAY > 0;
 
 hintSilent _totalString;
-
-
-// Periodically check what part of the boundary is visible and update accordingly
-// _points = [];
-
-// {
-// 	if ((_x select 0) == GW_CURRENTZONE) exitWith { _points = (_x select 2); false };
-// 		false
-// } count GW_ZONE_BOUNDARIES;
-
-// _step  = floor ((count _points) / 72);
-
-// for "_i" from 0 to ((count _points)-1) step _step do {
-
-// 	//hint format['%1', ((_points select _i) select 0)];
-// 	_obj = (((GW_ACTIVE_BOUNDARIES select 1) select 1) select _i);
-// 	_lastUpdate = _obj getVariable ['lastUpdate', time - 5];
-// 	if ((time - _lastUpdate) < 5) then {} else {
-// 		_obj setVariable ['lastUpdate', time];
-
-// 		_inRange = if ( (_currentPos distance ((_points select _i) select 0)) < 50) then { true } else { false };
-// 		if (_inRange) then {
-
-// 			// If the object is already hidden, don't bother
-// 			if (!isObjectHidden _obj) exitWith {};
-
-// 			_rangeL = [_i - (_step / 2), 0, (count _points) -1] call limitToRange;
-// 			_rangeR = [_i + (_step / 2), 0, (count _points) -1] call limitToRange;			
-
-// 			[_rangeL, _rangeR] spawn {
-
-// 				for "_y" from (_this select 0) to (_this select 1) step 1 do {		
-// 					(((GW_ACTIVE_BOUNDARIES select 1) select 1) select _y) hideObject false;
-// 				};
-
-// 				Sleep 4;
-
-// 				for "_y" from (_this select 0) to (_this select 1) step 1 do {
-// 					(((GW_ACTIVE_BOUNDARIES select 1) select 1) select _y) hideObject true;
-// 				};
-
-
-
-// 			};
-
-// 		};
-// 	};
-// };
