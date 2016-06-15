@@ -214,13 +214,13 @@ GW_COMMANDS_LIST = [
 				_string call {
 
 					if (_this == "ALL") exitWith {
-						profileNamespace setVariable ['GW_BALANCE', GW_INIT_BALANCE];
-						profileNamespace setVariable ['GW_UNLOCKED_ITEMS', nil]; 
-						profileNamespace SetVariable ['GW_LIBRARY', nil];
+						profileNamespace setVariable [GW_BALANCE_LOCATION, GW_INIT_BALANCE];
+						profileNamespace setVariable [GW_UNLOCKED_ITEMS_LOCATION, nil]; 
+						profileNamespace SetVariable [GW_LIBRARY_LOCATION, nil];
 						profileNamespace setVariable ['GW_FIXDLC', nil];	
 						profileNamespace setVariable ['GW_HINTS_ENABLED', nil];	
-						profileNamespace setVariable ['GW_BINDS', nil];
-						profileNamespace setVariable ['GW_BINDS_VERSION', nil];
+						profileNamespace setVariable [GW_BINDS_LOCATION, nil];
+						profileNamespace setVariable [GW_BINDS_VERSION_LOCATION, nil];
 						saveProfileNamespace;
 						systemChat 'Profile reset successfully.';
 					};
@@ -231,29 +231,29 @@ GW_COMMANDS_LIST = [
 					};
 
 					if (_this == "MONEY") exitWith {
-						profileNamespace setVariable ['GW_BALANCE', nil];		
+						profileNamespace setVariable [GW_BALANCE_LOCATION, nil];		
 						systemChat 'Money reset successfully.';			
 					};
 
 					if (_this == "UNLOCKS") exitWith {
-						profileNamespace setVariable ['GW_UNLOCKED_ITEMS', nil]; 
+						profileNamespace setVariable [GW_UNLOCKED_ITEMS_LOCATION, nil]; 
 						systemChat 'Unlocks reset successfully.';					
 					};
 
 					if (_this == "LIBRARY") exitWith {
-						profileNamespace SetVariable ['GW_LIBRARY', nil];	
+						profileNamespace SetVariable [GW_LIBRARY_LOCATION, nil];	
 						systemChat 'Library reset successfully.';				
 					};
 
 					if (_this == "RACES") exitWith {
-						profileNamespace SetVariable ['GW_RACES', nil];	
+						profileNamespace SetVariable [GW_RACES_LOCATION, nil];	
 						profileNamespace setVariable ['GW_RACE_VERSION', nil];
 						systemChat 'Races library reset successfully.';				
 					};
 
 					if (_this == "BINDS") exitWith {
-						profileNamespace setVariable ['GW_BINDS', nil];
-						profileNamespace setVariable ['GW_BINDS_VERSION', nil];
+						profileNamespace setVariable [GW_BINDS_LOCATION, nil];
+						profileNamespace setVariable [GW_BINDS_VERSION_LOCATION, nil];
 						systemChat 'Global keybinds reset successfully.';				
 					};
 

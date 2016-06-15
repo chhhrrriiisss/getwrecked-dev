@@ -9,6 +9,24 @@
 // Set to true for enhanced debugging/logging
 GW_DEV_BUILD = true;
 
+GW_LOCATION_TAG = if (GW_DEV_BUILD) then { 'GWDEV' } else { 'GW' };
+
+// Profile library location
+GW_LIBRARY_LOCATION = format['%1_LIBRARY', GW_LOCATION_TAG];
+
+// Profile races location
+GW_RACES_LOCATION = format['%1_RACES', GW_LOCATION_TAG];
+
+// Profile unlocks location
+GW_UNLOCKED_ITEMS_LOCATION = format['%1_UNLOCKED_ITEMS', GW_LOCATION_TAG];
+
+// Profile binds location
+GW_BINDS_LOCATION = format['%1_BINDS', GW_LOCATION_TAG];
+GW_BINDS_VERSION_LOCATION = format['%1_BINDS_VERSION', GW_LOCATION_TAG];
+
+// Profile balance location
+GW_BALANCE_LOCATION = format['%1_BALANCE', GW_LOCATION_TAG];
+
 // Leaderboard stats tracking (default: false)
 // Currently non-functional
 GW_LEADERBOARD_ENABLED = false;

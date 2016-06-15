@@ -31,7 +31,7 @@ if (!_exists) then {
 };   
 
 // Save that data to an open slot
-profileNameSpace setVariable['GW_LIBRARY', _lib];
+profileNameSpace setVariable[GW_LIBRARY_LOCATION, _lib];
 saveProfileNamespace;
 
 true

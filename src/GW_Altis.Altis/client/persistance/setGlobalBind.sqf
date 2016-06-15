@@ -19,5 +19,5 @@ _found = false;
 
 if (!_found) exitWith {};
 
-profileNamespace setVariable ['GW_BINDS', _globalBinds]; 
+profileNamespace setVariable [GW_BINDS_LOCATION, _globalBinds]; 
 // saveProfileNamespace;  

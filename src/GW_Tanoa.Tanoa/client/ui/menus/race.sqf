@@ -25,10 +25,10 @@ showChat true;
 
 
 getAllRaces = {
-	_rcs = profileNamespace getVariable ['GW_RACES', []];
+	_rcs = profileNamespace getVariable [GW_RACES_LOCATION, []];
 	_rcs = if (count _rcs == 0) then {
 		[] call createDefaultRaces; 
-		(profileNamespace getVariable ['GW_RACES', []])
+		(profileNamespace getVariable [GW_RACES_LOCATION, []])
 	} else { _rcs };
 
 	_libraryRaces = +_rcs;
@@ -398,7 +398,7 @@ createNewRace = {
 
 	_existingRaces pushBack [[_raceName,(name player),worldName, false],[_origin,_p1,_p2]];	
 
-	profileNamespace setVariable ['GW_RACES', _existingRaces];
+	profileNamespace setVariable [GW_RACES_LOCATION, _existingRaces];
 	saveProfileNamespace;
 
 	[((count _existingRaces) -1)] call generateRaceList;
@@ -446,7 +446,7 @@ deleteRace = {
 		if (((_x select 0) select 0) == _raceToDelete) exitWith { _existingRaces deleteAt _forEachIndex; }; 
 	} foreach _existingRaces;
 
-	profileNamespace setVariable ['GW_RACES', _existingRaces];
+	profileNamespace setVariable [GW_RACES_LOCATION, _existingRaces];
 	saveProfileNamespace;
 
 	[((count _existingRaces) -1)] call generateRaceList;
@@ -557,7 +557,7 @@ toggleRaceEditing = {
 
 saveCurrentRace = {
 	
-	_existingRaces = profileNamespace getVariable ['GW_RACES', nil];
+	_existingRaces = profileNamespace getVariable [GW_RACES_LOCATION, nil];
 	if (isNil "_existingRaces") exitWith { systemchat 'Error saving... corrupted race library.'; };
 
 	_index = count _existingRaces;
@@ -575,7 +575,7 @@ saveCurrentRace = {
 		]
 	];
 
-	profileNamespace setVariable ['GW_RACES', _existingRaces]; 
+	profileNamespace setVariable [GW_RACES_LOCATION, _existingRaces]; 
 	saveProfileNamespace;
 
 	[_index] call generateRaceList;

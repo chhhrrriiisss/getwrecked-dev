@@ -5,7 +5,7 @@
 //
 
 // If we've got a new player, give them starter cash, otherwise use their existing cash
-_balance = profileNamespace getVariable ['GW_BALANCE', nil];
+_balance = profileNamespace getVariable [GW_BALANCE_LOCATION, nil];
 GW_BALANCE = if (!isNil "_balance") then {
 
     if (_balance < 0) then { _balance = 0; };
@@ -13,16 +13,16 @@ GW_BALANCE = if (!isNil "_balance") then {
 
 } else { GW_INIT_BALANCE };
 
-profileNamespace setVariable ['GW_BALANCE', GW_BALANCE];
+profileNamespace setVariable [GW_BALANCE_LOCATION, GW_BALANCE];
 
 // If the player has unlocked items, apply them to the unlocked items array
-_unlocked = profileNamespace getVariable ['GW_UNLOCKED_ITEMS', []];
+_unlocked = profileNamespace getVariable [GW_UNLOCKED_ITEMS_LOCATION, []];
 
 GW_UNLOCKED_ITEMS = if (count _unlocked > 0) then {
 
     _unlocked
 
-} else { profileNamespace setVariable ['GW_UNLOCKED_ITEMS', []];  [] };
+} else { profileNamespace setVariable [GW_UNLOCKED_ITEMS_LOCATION, []];  [] };
 
 saveProfileNamespace;
 
@@ -150,8 +150,8 @@ setBalance = {
 
 	_value = [_this,0,0,[0]] call filterParam;
 
-	_oldBalance = profileNamespace getVariable ['GW_BALANCE', 0];
-	profileNamespace setVariable ['GW_BALANCE', _value];
+	_oldBalance = profileNamespace getVariable [GW_BALANCE_LOCATION, 0];
+	profileNamespace setVariable [GW_BALANCE_LOCATION, _value];
 	saveProfileNamespace;
 	
 	_difBalance = _value - _oldBalance;	
@@ -167,12 +167,12 @@ changeBalance = {
 	_value = [_this,0,0,[0]] call filterParam;
 	if (_value == 0) exitWith { false };
 
-	_current = profileNamespace getVariable ['GW_BALANCE', 0];
+	_current = profileNamespace getVariable [GW_BALANCE_LOCATION, 0];
 	_current = _current + _value;
 
 	if (_current < 0) exitWith { false };
 
-	profileNamespace setVariable ['GW_BALANCE', _current];
+	profileNamespace setVariable [GW_BALANCE_LOCATION, _current];
 	saveProfileNamespace;
 
 	_value spawn showTransaction;
@@ -201,14 +201,14 @@ unlockItem = {
 	
 	_item = _this;
 
-	_current = profileNamespace getVariable ['GW_UNLOCKED_ITEMS', []];
+	_current = profileNamespace getVariable [GW_UNLOCKED_ITEMS_LOCATION, []];
 
 	if (_item in _current) exitWIth {};
 
 	GW_UNLOCKED_ITEMS = if (count _current > 0) then { _current	} else { [] };
 	GW_UNLOCKED_ITEMS pushBack _item;
 
-	profileNamespace setVariable ['GW_UNLOCKED_ITEMS', GW_UNLOCKED_ITEMS];
+	profileNamespace setVariable [GW_UNLOCKED_ITEMS_LOCATION, GW_UNLOCKED_ITEMS];
 	saveProfileNamespace;
 
 	true

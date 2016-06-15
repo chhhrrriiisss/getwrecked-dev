@@ -26,7 +26,7 @@ profileNamespace setVariable ['GW_Fresh Meat', [
 profileNamespace setVariable ['GW_Special Delivery', [ ["C_Van_01_transport_F","SPECIAL DELIVERY","","[]",0,[["Land_Portable_generator_F","[-0.0742188,-1.306641,-0.866945]",[1.4309,1.4751,0.0321974],["-1","1"]],["Land_Sacks_heap_F","[0.222656,-1.851563,-0.923588]",[1.43748,1.46821,0.0324669],["-1","1"]],["Land_Sacks_heap_F","[-0.386719,-2.0214844,-0.829318]",[1.43565,1.47572,0.0327176],["-1","1"]],["Box_IND_Wps_F","[-0.0410156,-0.638672,-0.849981]",[1.43392,1.45615,0.0894442],["-1","1"]],["Land_Sacks_heap_F","[0.269531,-2.298828,-0.80055]",[1.43345,1.42281,26.9694],["-1","1"]],["Land_MetalBarrel_F","[0.578125,-0.548828,-0.766026]",[1.3799,2.58176,21.5532],["-1","1"]],["Land_CncBarrier_stripes_F","[-0.0078125,2.273438,-1.62625]",[1.21871,2.4194,359.059],["-1","1"]],["Land_CncBarrier_stripes_F","[0.0078125,2.257813,-0.839446]",[1.21873,1.0827,359.058],["-1","1"]],["Land_BagFence_Long_F","[0.957031,-1.771484,-1.0472355]",[0.921023,1.13933,90.0183],["-1","1"]],["Land_BagFence_Long_F","[-1.0585938,-1.865234,-1.0080328]",[0.807465,1.06457,90.0126],["-1","1"]],["Land_DischargeStick_01_F","[-0.550781,2.1875,-0.152859]",[1.34994,3.41398,180.096],["-1","1"]]],[GW_VERSION,"SLI",5,2,[],[["HORN","0"],["UNFL","0"],["EPLD",""],["LOCK",""],["OILS",""],["DCLK",""]],[]]] ]]; 
 
 _defaults = ['Fresh Meat', 'Special Delivery'];
-profileNamespace setVariable ['GW_LIBRARY', _defaults]; 
+profileNamespace setVariable [GW_LIBRARY_LOCATION, _defaults]; 
 saveProfileNamespace;  
 
 _defaults

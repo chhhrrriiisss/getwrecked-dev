@@ -3,7 +3,7 @@ X_Client = false;
 X_JIP = false;
 
 // Used to determine if saved vehicles are out-of-date
-GW_VERSION = 85.6;
+GW_VERSION = 86;
 
 if (isServer) then { X_Server = true };
 if (!isDedicated) then { X_Client = true };

@@ -302,7 +302,7 @@ for "_i" from 0 to 1 step 0 do {
 	// Show the balance when the normal hud is active
 	if (!GW_HUD_VEHICLE_ACTIVE && GW_HUD_NORMAL_ACTIVE) then {
 
-		_balance = profileNamespace getVariable ['GW_BALANCE', 0];
+		_balance = profileNamespace getVariable [GW_BALANCE_LOCATION, 0];
 		_balanceColour = if (_balance <= 10) then { '#ff0000' } else { '#ffffff' };
 		_hudMoney ctrlSetStructuredText parseText ( (format["<img size='1.5' align='center' valign='top' image='%1' /> <t size='1.3' color='%2' align='center'>$%3</t>", balanceIcon, _balanceColour, ([_balance] call numberToCurrency)]) );
 		_hudMoney ctrlCommit 0;
@@ -336,7 +336,7 @@ for "_i" from 0 to 1 step 0 do {
  		_actualAmmo = [_actualAmmo, 0, 100] call limitToRange;	
 
  		// Money Status
- 		_balance = profileNamespace getVariable ['GW_BALANCE', 0];
+ 		_balance = profileNamespace getVariable [GW_BALANCE_LOCATION, 0];
 		_balanceColour = if (_balance <= 10) then { '#ff0000' } else { '#ffffff' };
 
 		// Commit all of the above

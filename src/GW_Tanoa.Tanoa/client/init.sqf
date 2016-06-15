@@ -40,7 +40,7 @@ _last = profileNamespace getVariable ['GW_LASTLOAD', nil];
 GW_LASTLOAD = if (isNil "_last") then {  profileNamespace setVariable ['GW_LASTLOAD', '']; saveProfileNamespace; '' } else { _last };
 
 // Check for custom races
-_races = profileNamespace getVariable ['GW_RACES', nil];
+_races = profileNamespace getVariable [GW_RACES_LOCATION, nil];
 _raceVersion = profileNamespace getVariable ['GW_RACE_VERSION', 0];
 
 if (_raceVersion < GW_VERSION || isNil "_races") then {

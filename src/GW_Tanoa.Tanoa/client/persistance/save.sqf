@@ -18,7 +18,7 @@ _onExit = {
 };
 
 // Prevent abuse
-if (_saveTarget == 'default' || _saveTarget == 'last' || _saveTarget == 'GW_LASTLOAD' || _saveTarget == 'GW_LIBRARY' || _saveTarget == 'VEHICLE') exitWith {
+if (_saveTarget == 'default' || _saveTarget == 'last' || _saveTarget == 'GW_LASTLOAD' || _saveTarget == GW_LIBRARY_LOCATION || _saveTarget == 'VEHICLE') exitWith {
     ['Sorry that name is reserved, try saving as something else!'] call _onExit;
 };
 
@@ -213,7 +213,7 @@ if (count _attachments > 0) then {
 _creator = GW_SAVE_VEHICLE getVariable ['creator', name player];
 _prevAmmo = GW_SAVE_VEHICLE getVariable ["ammo", 1];
 _prevFuel = (fuel GW_SAVE_VEHICLE) + (GW_SAVE_VEHICLE getVariable ["fuel", 0]);
-_vehicleBinds = GW_SAVE_VEHICLE getVariable ['GW_Binds', GW_BINDS_ORDER];
+_vehicleBinds = GW_SAVE_VEHICLE getVariable [GW_BINDS_LOCATION, GW_BINDS_ORDER];
 _taunt = GW_SAVE_VEHICLE getVariable ['GW_Taunt', []];
 
 _stats = [];

@@ -4,8 +4,8 @@
 //      Return: None
 //
 
-_globalBinds = profileNamespace getVariable ['GW_BINDS', []];
-_globalBindsVersion = profileNamespace getVariable ['GW_BINDS_VERSION', 0];
+_globalBinds = profileNamespace getVariable [GW_BINDS_LOCATION, []];
+_globalBindsVersion = profileNamespace getVariable [GW_BINDS_VERSION_LOCATION, 0];
 
 _defaultBinds = [
 	["SETTINGS", "219"],
@@ -36,8 +36,8 @@ systemchat 'Global binds updated to new version.';
 	_x set [1, _defaultKey];
 } foreach _defaultBinds;
 
-profileNamespace setVariable ['GW_BINDS_VERSION', GW_VERSION];
-profileNamespace setVariable ['GW_BINDS', _defaultBinds]; 
+profileNamespace setVariable [GW_BINDS_VERSION_LOCATION, GW_VERSION];
+profileNamespace setVariable [GW_BINDS_LOCATION, _defaultBinds]; 
 
 _defaultBinds
 

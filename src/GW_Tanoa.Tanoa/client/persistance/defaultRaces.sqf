@@ -18,5 +18,5 @@ _defaultRaces = [
 
 ];
 
-profileNamespace setVariable ['GW_RACES', _defaultRaces]; 
+profileNamespace setVariable [GW_RACES_LOCATION, _defaultRaces]; 
 saveProfileNamespace;  

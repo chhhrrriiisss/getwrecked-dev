@@ -118,7 +118,7 @@ for "_i" from 0 to _listLength step 1 do {
 _vehicleName = GW_SETTINGS_VEHICLE getVariable ['name', ''];
 if (count toArray _vehicleName == 0) then {} else {
 
-	_bindsList = GW_SETTINGS_VEHICLE getVariable ['GW_Binds', []];
+	_bindsList = GW_SETTINGS_VEHICLE getVariable [GW_BINDS_LOCATION, []];
 
 	// Update meta
 	((_raw select 0) select 6) set [5, _bindsList];

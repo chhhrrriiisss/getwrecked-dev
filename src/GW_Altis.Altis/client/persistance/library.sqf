@@ -15,7 +15,7 @@ if (_action == "") exitWith {};
 // Clear the vehicle library
 if (_action == 'clear') exitWith {
 
-	_raw = profileNamespace getVariable ['GW_LIBRARY', []];
+	_raw = profileNamespace getVariable [GW_LIBRARY_LOCATION, []];
 	if (count _raw == 0) exitWith {};		
 
 	{
@@ -25,7 +25,7 @@ if (_action == 'clear') exitWith {
 
 	} ForEach _raw;
 
-	profileNameSpace setVariable['GW_LIBRARY', []]; 
+	profileNameSpace setVariable[GW_LIBRARY_LOCATION, []]; 
 	saveProfileNamespace;
 
 	systemChat "List cleared.";
@@ -76,7 +76,7 @@ if (_action == 'add') exitWith {
 
 // 	_string = toString(_arr);
 
-// 	_raw = profileNamespace getVariable ['GW_LIBRARY', []];
+// 	_raw = profileNamespace getVariable [GW_LIBRARY_LOCATION, []];
 // 	if (count _raw == 0) exitWith { systemChat 'List is empty.'; };
 
 // 	_found = false;
@@ -119,7 +119,7 @@ if (_action == 'delete') exitWith {
 
 			//profileNameSpace setVariable[_target, nil]; 
 			// profileNameSpace setVariable[format['GW_%1',_target], nil]; 
-			profileNameSpace setVariable['GW_LIBRARY', _raw]; 
+			profileNameSpace setVariable[GW_LIBRARY_LOCATION, _raw]; 
 			saveProfileNamespace;	
 			GW_LIBRARY = _raw;
 
