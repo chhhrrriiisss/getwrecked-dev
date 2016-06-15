@@ -1,6 +1,6 @@
 ![Get Wrecked](http://getwrecked.info/downloads/header.jpg "Get Wrecked")
 
-## Vehicle Combat Sandbox for Arma 3 ## 
+## Vehicle Combat Sandbox for Arma 3
 
 Get Wrecked challenges players to create, customize, drive, survive and of course, destroy. Construct wheeled, armoured behemoths using a variety of building parts, then fight to the death in a race zone of choice. It's a creative vehicle combat sandbox for Arma 3. It's currently designed for small games of up to 12 players and is in an alpha release state.
 

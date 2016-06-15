@@ -1,5 +1,4 @@
-![Get Wrecked]
-
+### Get Wrecked
 ## Vehicle Combat Sandbox for Arma 3 ##
 
 **Created by Sli**
