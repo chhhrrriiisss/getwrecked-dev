@@ -53,7 +53,7 @@ _pad spawn {
 
 			_nearby = (ASLtoATL visiblePositionASL _this) nearEntities[["Car", "Tank"], 8];
 			{ 				
-				_null = [_x, 100, 6] spawn setVehicleOnFire;
+				_null = [_x, 100, 6] call setVehicleOnFire;
 
 				_x setDammage ((getdammage _x) + (random 0.25));
 				[       

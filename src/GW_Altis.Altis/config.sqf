@@ -332,7 +332,7 @@ switch (worldName) do {
 	{
 
 		// Render distance of effects
-		GW_EFFECTS_RANGE = 3500; // Increasing this may add lag at the workshop (default: 1700)
+		GW_EFFECTS_RANGE = 3500; 
 
 		// Available arenas and game type
 		GW_VALID_ZONES = [
@@ -364,14 +364,17 @@ switch (worldName) do {
 
 	case "Tanoa":
 	{
+		// Render distance of effects
+		GW_EFFECTS_RANGE = 1000; 
 
 		// Available arenas and game type
 		GW_VALID_ZONES = [			
-			['runway', 'battle', 'Runway'],
+			['terminal', 'battle', 'Terminal'],
 			['city', 'battle', 'City'],
 			['port', 'battle', 'Port'],
 			['quarry', 'battle', 'Quarry'],
 			['crater', 'battle', 'Crater'],
+			['plantation', 'battle', 'Plantation'],
 			['workshop', 'safe', 'Workshop']
 		];
 
@@ -379,6 +382,9 @@ switch (worldName) do {
 
 			// Cleanup lag inducing clusterfuck of houses in Kavala
 			_objects = (getMarkerPos "cityZone_camera") nearObjects 2000;  
+			_workshopObjects = (getMarkerPos "workshopZone_camera") nearObjects 500; 
+			_objects append _workshopObjects;
+
 			_objectsToHide = [
 				"Land_PowerLine_01_wire_50m_F",
 				"Land_PowerLine_01_wire_50m_main_F",
@@ -399,8 +405,11 @@ switch (worldName) do {
 				"Land_LampStreet_small_F",
 				"Land_LampStreet_F",
 				"Land_Cathedral_01_F",
-				"Land_FireEscape_01_tall_F"				
-			];
+				"Land_FireEscape_01_tall_F",
+				"Land_dp_transformer_F",
+				"Land_dpp_01_transformer_F",
+				"Land_dpp_01_waterCooler_F"
+			];			
 
 			_c = 0;
 			{      

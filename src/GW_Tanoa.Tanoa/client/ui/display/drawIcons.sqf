@@ -1,3 +1,9 @@
+//
+//      Name: drawIcons
+//      Desc: Render loop for onscreen icons
+//      Return: None
+//
+
 {
 	_arr = _x select 0;
 	_code = _x select 1;
@@ -92,7 +98,6 @@
 
 		}
 	]
-
 ];
 
 // Laser Effect

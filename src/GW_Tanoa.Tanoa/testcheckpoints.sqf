@@ -170,7 +170,7 @@ for "_i" from 0 to 1 step 0 do {
 			_newAmmo = [(GW_CURRENTVEHICLE getVariable ["ammo", 0]) + _targetAmmo, 0, _maxAmmo] call limitToRange;
 			GW_CURRENTVEHICLE setVariable ["ammo", _newAmmo];
 
-			["", 1, plusAmmoIcon, [0,0,0,0.5], "slideUp", "upgrade"] execVM 'client\ui\hud\alert_new.sqf';
+			["", 1, plusAmmoIcon, [0,0,0,0.5], "slideUp", "upgrade"] spawn createNotification;
 
 		} else {
 
@@ -187,7 +187,7 @@ for "_i" from 0 to 1 step 0 do {
 				GW_CURRENTVEHICLE setVariable ["fuel", _newFuel];
 			};	
 
-			["", 1, plusFuelIcon, [0,0,0,0.5], "slideUp", "upgrade"] execVM 'client\ui\hud\alert_new.sqf';
+			["", 1, plusFuelIcon, [0,0,0,0.5], "slideUp", "upgrade"] spawn createNotification;
 
 		};
 

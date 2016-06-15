@@ -18,10 +18,6 @@ If you're looking to host a game yourself, it is strongly recommended to use a d
 
 This isn't your typical infantry shooter and if you're coming from more mil-sim orientated game modes you're in for a surprise. A short guide is [available on the website](http://getwrecked.info#guide). [Orangesherbet](http://twitch.tv/orangesherbet) also has an [excellent tutorial video](https://www.youtube.com/watch?v=KL3aYOJD0fY&feature=youtu.be&a=) that introduces the basics, shows some game-play and also offers some tips for survival. 
 
-## Customization  
-
-Several aspects of the game mode can/will be customizable. These include starting money, kill rewards, the armor system and respawn timers. If you are reasonably SQF literate, you may also edit [config.sqf](https://github.com/chrisnic/getwrecked-dev/blob/master/config.sqf) to your preference and then re-compile the .pbo. Seek help if you are not sure what you are doing as any errors here may cause the mission to stop working. 
-
 ## License
 
 **Created, coded and designed by Sli**

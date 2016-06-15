@@ -191,6 +191,38 @@
 	},
 	"buffers":
 	[
+		{
+			"file": "/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/gruntfile_backup.js",
+			"settings":
+			{
+				"buffer_size": 7423,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "README.md",
+			"settings":
+			{
+				"buffer_size": 2467,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/node_modules/grunt-sync/readme.md",
+			"settings":
+			{
+				"buffer_size": 4116,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/package.json",
+			"settings":
+			{
+				"buffer_size": 2033,
+				"line_ending": "Unix"
+			}
+		}
 	],
 	"build_system": "",
 	"build_system_choices":
@@ -230,10 +262,64 @@
 	},
 	"expanded_folders":
 	[
-		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/Get Wrecked - Development/src/GW_Code"
+		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/Get Wrecked - Development/src/GW_Code",
+		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/Get Wrecked - Development/src/GW_Code/client",
+		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/Get Wrecked - Development/src/GW_Code/client/ui",
+		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/Get Wrecked - Development/src/GW_Code/client/ui/display"
 	],
 	"file_history":
 	[
+		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/Get Wrecked - Development/CHANGELOG.md",
+		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/Get Wrecked - Development/src/GW_Code/client/vehicles/attachments/emergencyRepair.sqf",
+		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/Get Wrecked - Development/src/GW_Code/global/supply.sqf",
+		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/Get Wrecked - Development/src/GW_Code/client/ui/functions/generateSettingsList.sqf",
+		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/Get Wrecked - Development/src/GW_Code/description.ext",
+		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/Get Wrecked - Development/src/GW_Code/testcheckpoints.sqf",
+		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/Get Wrecked - Development/src/GW_Code/client/ui/display/drawIcons.sqf",
+		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/Get Wrecked - Development/src/GW_Code/global/compile.sqf",
+		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/Get Wrecked - Development/src/GW_Code/global/icons.sqf",
+		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/Get Wrecked - Development/src/GW_Code/client/functions/triggerLazyUpdate.sqf",
+		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/Get Wrecked - Development/src/GW_Code/client/playerInit.sqf",
+		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/Get Wrecked - Development/src/GW_Code/client/init.sqf",
+		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/Get Wrecked - Development/src/GW_Code/client/playerSpawn.sqf",
+		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/Get Wrecked - Development/src/GW_Code/client/functions/setCurrentZone.sqf",
+		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/Get Wrecked - Development/src/GW_Code/global/functions/findCurrentZone.sqf",
+		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/gruntfile.js",
+		"/C/Users/Chris/AppData/Local/Arma 3/MPMissionsCache/QS_IA_US_2.Tanoa/mission.sqm",
+		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/Get Wrecked - Development/src/GW_Code/config.sqf",
+		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/Get Wrecked - Development/src/GW_Code/client/ui/hud/drawHud.sqf",
+		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/Get Wrecked - Development/src/GW_Code/client/ui/hud/createPowerup.sqf",
+		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/Get Wrecked - Development/src/GW_Code/client/vehicles/attachments/dropNapalm.sqf",
+		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/Get Wrecked - Development/src/GW_Code/client/compile.sqf",
+		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/Get Wrecked - Development/src/GW_Code/client/objects/tag.sqf",
+		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/Get Wrecked - Development/src/GW_Code/client/objects/actions.sqf",
+		"/C/Users/Chris/AppData/Local/Arma 3/MPMissionsCache/QS_IA_US_2.Tanoa/data/QS_RD_functions.hpp",
+		"/C/Users/Chris/AppData/Local/Arma 3/MPMissionsCache/QS_IA_US_2.Tanoa/data/QS_RD_dialog_menu_utexture.hpp",
+		"/C/Users/Chris/AppData/Local/Arma 3/MPMissionsCache/QS_IA_US_2.Tanoa/data/QS_RD_dialog_menu_vtexture.hpp",
+		"/C/Users/Chris/AppData/Local/Arma 3/MPMissionsCache/QS_IA_US_2.Tanoa/description.ext",
+		"/C/Users/Chris/AppData/Local/Arma 3/MPMissionsCache/QS_IA_US_2.Tanoa/data/QS_RD_general.hpp",
+		"/C/Users/Chris/AppData/Local/Arma 3/MPMissionsCache/QS_IA_US_2.Tanoa/data/QS_RD_tasks.hpp",
+		"/C/Users/Chris/AppData/Local/Arma 3/MPMissionsCache/QS_IA_US_2.Tanoa/data/QS_RD_dialog_menu_main.hpp",
+		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/node_modulespattern.",
+		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/Temp/Altis/CHANGELOG.md",
+		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/Get Wrecked - Development/src/GW_Code/client/persistance/listGlobalBinds.sqf",
+		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/Get Wrecked - Development/README.md",
+		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/Get Wrecked - Development/src/GW_Code/client/ui/common.hpp",
+		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/Get Wrecked - Development/src/GW_Code/init.sqf",
+		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/Get Wrecked - Development/src/GW_Code/client/commands/commands.sqf",
+		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/Get Wrecked - Development/LICENSE.md",
+		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/Get Wrecked - Development/src/GW_Code/client/ui/dialogs/createHint.sqf",
+		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/Get Wrecked - Development/src/GW_Code/client/ui/dialogs/hint.hpp",
+		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/Get Wrecked - Development/src/GW_Code/client/ui/menus/race.sqf",
+		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/Get Wrecked - Development/src/GW_Code/client/persistance/defaultRaces.sqf",
+		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/Get Wrecked - Development/src/GW_Code/client/economy/functions.sqf",
+		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/Get Wrecked - Development/src/GW_Code/client/persistance/add.sqf",
+		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/Get Wrecked - Development/src/GW_Code/client/persistance/default.sqf",
+		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/Get Wrecked - Development/src/GW_Code/client/persistance/getVehicleLibrary.sqf",
+		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/Get Wrecked - Development/src/GW_Code/client/persistance/library.sqf",
+		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/Get Wrecked - Development/src/GW_Code/client/persistance/save.sqf",
+		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/Get Wrecked - Development/src/GW_Code/client/persistance/setGlobalBind.sqf",
+		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/Get Wrecked - Development/src/GW_Code/client/ui/functions/saveBinds.sqf",
 		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/GW_v0_8_5_RC1.Altis/client/zones/deploy_battle.sqf",
 		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/GW_v0_8_5_RC1.Altis/client/zones/preVehicleDeploy.sqf",
 		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/GW_v0_8_5_RC1.Altis/client/ui/dialogs/createTimer.sqf",
@@ -310,68 +396,20 @@
 		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/GW_v0_8_5_DEV.Altis/client/vehicles/status_monitor.sqf",
 		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/GW_v0_8_5_RC1.Altis/client/ui/dialogs/settings.sqf",
 		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/GW_v0_8_5_RC1.Altis/client/ui/functions/saveBinds.sqf",
-		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/GW_v0_8_5_RC1.Altis/client/persistance/list.sqf",
-		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/GW_v0_8_5_RC1.Altis/client/ui/functions/generateFilterList.sqf",
-		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/GW_v0_8_5_RC1.Altis/client/persistance/library.sqf",
-		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/GW_v0_8_5_RC1.Altis/client/persistance/getVehicleData.sqf",
-		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/GW_v0_8_5_RC1.Altis/client/persistance/setVehicleData.sqf",
-		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/GW_v0_8_5_RC1.Altis/client/init.sqf",
-		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/GW_v0_8_5_RC1.Altis/client/persistance/add.sqf",
-		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/GW_v0_8_5_RC1.Altis/client/ui/common.hpp",
-		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/GW_v0_8_5_RC1.Altis/client/ui/functions/renameVehicle.sqf",
-		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/GW_v0_8_5_RC1.Altis/client/ui/functions/removeVehicle.sqf",
-		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/GW_v0_8_5_RC1.Altis/global/functions/shareVehicle.sqf",
-		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/GW_v0_8_5_RC1.Altis/client/ui/dialogs/message.sqf",
-		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/GW_v0_8_5_RC1.Altis/client/ui/functions/previewVehicle.sqf",
-		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/GW_v0_8_5_RC1.Altis/client/ui/dialogs/title.sqf",
-		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/TTN_v0_1_0.Stratis/jetpack.sqf",
-		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/GW_v0_8_5_RC1.Altis/client/functions/getStat.sqf",
-		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/GW_v0_8_5_RC1.Altis/client/persistance/request.sqf",
-		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/GW_v0_8_5_RC1.Altis/client/ui/functions/setBind.sqf",
-		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/GW_v0_8_5_DEV.Altis/global/functions/loadVehicle.sqf",
-		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/GW_v0_8_5_DEV.Altis/client/persistance/request.sqf",
-		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/GW_v0_8_5_RC1.Altis/client/persistance/setGlobalBind.sqf",
-		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/GW_v0_8_5_RC1.Altis/client/ui/dialogs/settings.hpp",
-		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/GW_v0_8_5_RC1.Altis/global/icons.sqf",
-		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/GW_v0_8_5_RC1.Altis/client/ui/functions/generateSettingsList.sqf",
-		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/GW_v0_8_5_RC1.Altis/client/persistance/getGlobalBind.sqf",
-		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/GW_v0_8_5_RC1.Altis/client/persistance/listGlobalBinds.sqf",
-		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/GW_v0_8_5_RC1.Altis/client/ui/display/lockon.sqf",
-		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/GW_v0_8_5_RC1.Altis/client/ui/hud/notification.sqf",
-		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/GW_v0_8_5_RC1.Altis/client/functions/shredTyres.sqf",
-		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/GW_v0_8_5_RC1.Altis/client/vehicles/attachments/dropCaltrops.sqf",
-		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/GW_v0_8_5_RC1.Altis/client/functions/checkNearbyActions.sqf",
-		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/GW_v0_8_5_RC1.Altis/client/ui/compile.sqf",
-		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/GW_v0_8_5_RC1.Altis/client/ui/functions/formatBind.sqf",
-		"/C/Users/Chris/AppData/Local/Arma 3/arma3_2015-12-24_19-05-08.rpt",
-		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/GW_v0_8_4_RC1.Altis/CHANGELOG.md",
-		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/GW_v0_8_4_RC1.Altis/client/ui/functions/requestSupplyBox.sqf",
-		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/GW_v0_8_4_RC1.Altis/client/ui/functions/purchaseList.sqf",
-		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/GW_v0_8_4_RC1.Altis/client/ui/display/target.sqf",
-		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/GW_v0_8_4_RC1.Altis/client/ui/display/display.sqf",
-		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/GW_v0_8_4_RC1.Altis/client/player_init.sqf",
-		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/GW_v0_8_4_RC1.Altis/init.sqf",
-		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/GW_v0_8_4_RC1.Altis/client/init.sqf",
-		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/GW_v0_8_4_RC1.Altis/client/compile.sqf",
-		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/GW_v0_8_4_RC1.Altis/client/vehicles/handlers/handleDamageVehicle.sqf",
-		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/GW_v0_8_4_RC1.Altis/client/commands/commands.sqf",
-		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/GW_v0_8_4_RC1.Altis/client/functions/giveSponsor.sqf",
-		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/GW_v0_8_4_RC1.Altis/client/player_loop.sqf",
-		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/GW_v0_8_4_RC1.Altis/client/vehicles/status_monitor.sqf",
-		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/GW_v0_8_4_RC1.Altis/client/functions/triggerLazyUpdate.sqf",
-		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/GW_v0_8_4_RC1.Altis/client/player_spawn.sqf",
-		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/GW_v0_8_4_RC1.Altis/client/functions/cacheZoneBoundary.sqf",
-		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/GW_v0_8_4_RC1.Altis/global/functions/loadVehicle.sqf"
+		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/GW_v0_8_5_RC1.Altis/client/persistance/list.sqf"
 	],
 	"find":
 	{
-		"height": 21.0
+		"height": 34.0
 	},
 	"find_in_files":
 	{
 		"height": 90.0,
 		"where_history":
 		[
+			"C:\\Users\\Chris\\Documents\\Arma 3 - Other Profiles\\SLI\\MPMissions\\Get Wrecked - Development\\src\\GW_Code",
+			"C:\\Users\\Chris\\Documents\\Arma 3 - Other Profiles\\SLI\\MPMissions\\Get Wrecked - Development\\src\\GW_Code,C:\\Users\\Chris\\Documents\\Arma 3 - Other Profiles\\SLI\\MPMissions\\node_modulespattern.",
+			"C:\\Users\\Chris\\Documents\\Arma 3 - Other Profiles\\SLI\\MPMissions\\Get Wrecked - Development\\src\\GW_Code",
 			"C:\\Users\\Chris\\Documents\\Arma 3 - Other Profiles\\SLI\\MPMissions\\GW_v0_8_5_RC1.Altis",
 			"C:\\Users\\Chris\\Documents\\Arma 3 - Other Profiles\\SLI\\MPMissions\\GW_v0_8_4_RC1.Altis",
 			"C:\\Users\\Chris\\Documents\\Arma 3 - Other Profiles\\SLI\\MPMissions\\GW_v0_8_3_RC1.Altis",
@@ -475,6 +513,42 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"createNotification",
+			"alert_new.sqf",
+			"execVM 'client\\ui\\hud\\alert_new.sqf';",
+			"createNotification",
+			"dropNapalm",
+			"GW_detonateTargets",
+			"detonate explosives",
+			"fire",
+			"setCurrentZone",
+			"GW_ZONES",
+			"setCurrentZone",
+			"GW_VALID_ZONES",
+			"findCurrentZone",
+			"KEYBINDS/SETTINGS",
+			"PuristaMedium",
+			"sign",
+			"Live",
+			"pattern.indexOf",
+			"test",
+			"tagObj",
+			"class GW_RscButtonMenu",
+			"GW_RscButtonMenu",
+			"mousemoving",
+			"addUI",
+			"addUIEventHandler",
+			"'GW_BINDS_VERSION'",
+			"'GW_RACES'",
+			"'GW_BINDS'",
+			"'GW_UNLOCKED_ITEMS'",
+			"'GW_LIBRARY'",
+			"'GW_BALANCE'",
+			"GW_BALANCE",
+			"define",
+			"profilenamespace getvariab",
+			"profilenamespace",
+			"default",
 			"preVehicleDeploy",
 			"_currentPos distance GW_CURRENTPOS",
 			"_currentPos distance _pos",
@@ -566,43 +640,7 @@
 			"_raw set[0, _data]",
 			"_raw set [0, _data]",
 			"_RAW = profilename",
-			"requestVehicle",
-			"previewVehicle",
-			"defaultLibrary",
-			"_newPlayer",
-			"createDefaultLibrary",
-			"listFunctions",
-			"acquireTarget",
-			"checkBinds;",
-			"checkBindsl",
-			"cgecjVubdsl",
-			"user1",
-			"FINDcURRENTzONE",
-			"sett",
-			"User1",
-			"saveBinds",
-			"SETTINGS",
-			"defaultRaces",
-			"(count _raw == 0)) exitWith",
-			"(count _raw == 0)",
-			"in ['DisAssemble",
-			"_raw",
-			"LOADvEHICLE",
-			"inString",
-			"registerVehicle",
-			"generateFilterList",
-			"rename race",
-			"setTerminalActions",
-			"listVehicles",
-			"COUNT TOaRRAY (_DATA SELECT ",
-			"money",
-			"sendMoney",
-			"updateVehicleDamage",
-			"if (count _pointsArray",
-			"PLAYERlOOP",
-			"inScope",
-			"statusMonitor",
-			"playerLoop"
+			"requestVehicle"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -610,6 +648,13 @@
 		"regex": false,
 		"replace_history":
 		[
+			"spawn createNotification;",
+			"GW_BINDS_VERSION_LOCATION",
+			"GW_RACES_LOCATION",
+			"GW_BINDS_LOCATION",
+			"GW_UNLOCKED_ITEMS_LOCATION",
+			"GW_LIBRARY_LOCATION",
+			"GW_BALANCE_LOCATION",
 			"playerInit",
 			"TTN_COMMANDS_HISTORY",
 			"TITAN",
@@ -711,8 +756,127 @@
 	"groups":
 	[
 		{
+			"selected": 0,
 			"sheets":
 			[
+				{
+					"buffer": 0,
+					"file": "/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/gruntfile_backup.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 7423,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3809,
+								3813
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 971.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "README.md",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2467,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								593,
+								592
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/node_modules/grunt-sync/readme.md",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 4116,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1329,
+								1344
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.sublime-syntax",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/package.json",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2033,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								787,
+								787
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JSON.sublime-syntax",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				}
 			]
 		}
 	],
@@ -753,13 +917,13 @@
 	},
 	"output.find_results":
 	{
-		"height": 225.0
+		"height": 415.0
 	},
 	"pinned_build_system": "",
 	"project": "GET WRECKED.sublime-project",
 	"replace":
 	{
-		"height": 38.0
+		"height": 62.0
 	},
 	"save_all_on_build": true,
 	"select_file":

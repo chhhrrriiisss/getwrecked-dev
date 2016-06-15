@@ -28,58 +28,6 @@ _holder = createVehicle ["Land_PenBlack_F", _pos, [], 0, 'CAN_COLLIDE']; // So i
 
 _obj attachTo [_holder, [0,0,0.1]];
 
-createNapalm = {
-	
-	_pos = _this;
-
-	_objectsArray = [];
-
-	// _src = createVehicle ["Land_PenBlack_F", _pos, [], 0, "CAN_COLLIDE"];
-	// [_src, 10, 0.8] spawn infernoEffect;
-	// _objectsArray pushback _src;
-
-
-	for "_i" from 0 to 4 step 1 do {
-
-		_theta = random 360;
-
-		_size = 0.75;
-
-		_r = 7;
-		_phi = 1;
-
-		_rx = _r * (sin _theta) * (cos _phi);
-		_ry = _r * (cos _theta) * (cos _phi);	
-
-		_nPos = _pos vectorAdd [_rx, _ry, 0];
-
-		_src = createVehicle ["Land_PenBlack_F", _nPos, [], 0, "CAN_COLLIDE"];
-		[_src, 10, _size] spawn infernoEffect;
-		_objectsArray pushback _src;
-
-	};	
-	
-	for "_i" from 0 to 4 step 1 do {
-		_src = createVehicle ["Land_PenBlack_F", _pos, [], 0, "CAN_COLLIDE"];
-		
-		[_src, 10] spawn flameEffect;
-		_src setVelocity [(random 16)-8, (random 16)-8, 1];	
-
-		_objectsArray pushback _src;
-
-	};
-
-	_bomb = createVehicle ["M_AT", _pos, [], 0, "CAN_COLLIDE"];		
-	_bomb setVelocity [0,0,-100];
-
-	_objectsArray spawn {	
-		Sleep 10;
-		{ deleteVehicle _x; } foreach _this;
-	};
-
-};
-
-
 [_obj, _holder, _vehicle] spawn { 
 
 	params ['_o'];
@@ -114,12 +62,6 @@ _obj addEventHandler['killed', {	(_this select 0) setVariable ["triggered", true
 _obj addEventHandler['Explosion', {	(_this select 0) setVariable ["triggered", true]; }];
 _obj addEventHandler['Hit', { (_this select 0) setVariable ["triggered", true]; }];
 
-
-// Add to targets array
-_existingTargets = _vehicle getVariable ["GW_detonateTargets", []];
-_newTargets = _existingTargets + [_obj];
-_vehicle setVariable ["GW_detonateTargets", _newTargets];
-
 GW_WARNINGICON_ARRAY = GW_WARNINGICON_ARRAY + [_obj];
 GW_DEPLOYLIST = GW_DEPLOYLIST + [_obj];
 
@@ -152,134 +94,47 @@ GW_DEPLOYLIST = GW_DEPLOYLIST + [_obj];
 
 		[		
 			[
-				_o,
-				"flamethrower",
-				50
+				_pos
 			],
-			"playSoundAll",
+			"napalmEffect",
 			true,
 			false
-		] call bis_fnc_mp;	  
+		] call bis_fnc_mp;
 
-		_pos call createNapalm;
+		_bomb = createVehicle ["M_AT", _pos, [], 0, "CAN_COLLIDE"];		
+		_bomb setVelocity [0,0,-100];
 
 		_nearby = _pos nearEntities [["Car", "Tank"], 30];	
 
 		if (count _nearby > 0) then {
-			{
-				_status = _x getVariable ['status', []];
+			{		
 
-				if ('nofire' in _status) then {} else {
+				if (_x != (_v)) then { [_x, "NPA"] call markAsKilledBy; };
 
-					if (_x != (_v)) then { [_x, "NPA"] call markAsKilledBy; };
+				_modifier = [1 - (30 / ( _x distance _pos)), 0.5, 1] call limitToRange;					
+				_d = 0.1;
 
-					_modifier = [1 - (30 / ( _x distance _pos)), 0.5, 1] call limitToRange;					
-					_d = 0.1;
+				_armor = _x getVariable ['GW_Armor', 1];
+				_d = [(_d / (_armor / 15)), 0, _d] call limitToRange;
 
-					_armor = _x getVariable ['GW_Armor', 1];
-					_d = [(_d / (_armor / 15)), 0, _d] call limitToRange;
+				_d = _d * _modifier;			
 
-					_d = _d * _modifier;			
+				_x setDammage ((getdammage _x) + _d);
 
-					_x setDammage ((getdammage _x) + _d);
+				[       
+					_x,
+					"updateVehicleDamage",
+					_x,
+					false
+				] call bis_fnc_mp; 		
 
-					[       
-						_x,
-						"updateVehicleDamage",
-						_x,
-						false
-					] call bis_fnc_mp; 		
-
-					[_x, 100, 6] spawn setVehicleOnFire;
-					[_x, 'NPA'] call markAsKilledBy;				
-
-				};
+				[_x, 100, 6] call setVehicleOnFire;
+				[_x, 'NPA'] call markAsKilledBy;				
 				
 				false
 				
 			} count _nearby > 0;
 		};
-
-
-		// _flames = [];
-		// for "_i" from 0 to 10 step 1 do {
-
-		// // Fire sound effect
-
-
-	
-		// 	_src = createVehicle ["Land_PenBlack_F", _pos, [], 0, "CAN_COLLIDE"];
-		// 	_flames pushback _src;
-		// 	[_src, 5] spawn flameEffect;
-		// 	_src setVelocity [(random 30)-15, (random 30)-15, 0];
-
-		// 	// [_src, 1.5] spawn flameEffect;
-
-		// 	// [
-		// 	// 	[
-		// 	// 		_src,
-		// 	// 		_lifetime
-		// 	// 	],
-		// 	// 	"flameEffect",
-		// 	// 	false,
-		// 	// 	false
-		// 	// ] call bis_fnc_mp;
-
-
-		// };
-
-		// // Cleanup
-		// _flames spawn {
-		// 	Sleep 10;
-		// 	{ deletevehicle _x; } foreach _this;
-		// };
-
-
-
-		// _bomb = createVehicle ["Bo_GBU12_LGB", _pos, [], 0, "FLY"];		
-		// _bomb setVelocity [0,0,-10];
-		// [_pos, 40, 15] call shockwaveEffect;		
-
-		// _nearby = _pos nearEntities [["Car", "Tank"], 30];	
-
-		// if (count _nearby > 0) then {
-		// 	{
-		// 		_status = _x getVariable ['status', []];
-
-		// 		if ('invulnerable' in _status) then {} else {
-
-		// 			if (_x != (_v)) then { [_x, "EPL"] call markAsKilledBy; };
-
-		// 			_modifier = [1 - (30 / ( _x distance _pos)), 0.5, 1] call limitToRange;					
-		// 			_d = if ('nanoarmor' in _status) then { 0.05 } else { (random (0.1) + 0.5) };
-
-		// 			_armor = _x getVariable ['GW_Armor', 1];
-		// 			_d = [(_d / (_armor / 15)), 0, _d] call limitToRange;
-
-		// 			_d = _d * _modifier;
-
-		// 			if (_d > 0) then {
-
-		// 				_x setDammage ((getdammage _x) + _d);
-
-		// 				[       
-		// 					_x,
-		// 					"updateVehicleDamage",
-		// 					_x,
-		// 					false
-		// 				] call bis_fnc_mp; 
-
-		// 			};
-
-		// 		};
-				
-		// 		false
-				
-		// 	} count _nearby > 0;
-		// };
-
-		
-		
 
 	};
 

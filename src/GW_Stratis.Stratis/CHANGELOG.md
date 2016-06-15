@@ -43,6 +43,7 @@ Items without Fixed/Added/Removed proceeding are typically balance changes.
 - Warning icons for mines and caltrops, now only added for first item in the group
 - Snapping now aligns to axis of matching objects (rotation align currently disabled)
 - Progress saved on DEV versions of Get Wrecked is now isolated from live version
+- Emergency repair device now only repairs 50% damage
 - Fixed Issue with stats retrieval occuring too early on previewVehicle
 - Fixed Bug preventing local vehicle setup from properly occuring
 - Fixed Suspended vehicles no longer drop altitude when attaching/detaching objects

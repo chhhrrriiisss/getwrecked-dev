@@ -5,10 +5,8 @@
 //
 
 // Overlay already active, abort
-closeDialog 99000;
 if (!isNull (findDisplay 602)) exitWith {};
-
-hint '';
+IF (!isnull (findDisplay 99000)) exitWith {};
 
 // Close the hud if its open
 GW_HUD_ACTIVE = false;
@@ -40,7 +38,15 @@ _bg ctrlCommit 0;
 
 _btnA ctrlShow true;
 _btnA ctrlSetText 'GOT IT!';
+ctrlSetFocus _btnA;
 _btnA ctrlCommit 0;
+
+_focusReset = (findDisplay 99000) displayAddEventHandler ["MouseMoving", {
+
+	ctrlSetFocus ((findDisplay 99000) displayCtrl 99003);
+
+}]; 
+
 
 _btnB ctrlShow true;
 _btnB ctrlCommit 0;
@@ -84,6 +90,10 @@ ctrlSetFocus _btnA;
 
 waitUntil{
 	isNull (findDisplay 99000)
+};
+
+if (!isNil "_focusReset") then {
+	(findDisplay 99000) displayRemoveEventHandler ["MouseMoving", _focusReset];
 };
 
 // Desaturate screen

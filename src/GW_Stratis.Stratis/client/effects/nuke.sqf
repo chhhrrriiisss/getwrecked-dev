@@ -202,7 +202,7 @@ if (_dist > _range) then {
 	_vehicle setVelocity _vel;
 
 	// Set vehicle on fire
-	[_vehicle, 95, 7] spawn setVehicleOnFire;
+	[_vehicle, 95, 7] call setVehicleOnFire;
 
 };
 

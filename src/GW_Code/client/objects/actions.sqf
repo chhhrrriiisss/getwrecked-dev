@@ -24,7 +24,7 @@ setTerminalActions = {
 
 	_obj setVariable ["hasActions", true];
 
-	// If it's a vehicle terminal
+	// If it's a shop terminal
 	if (typeOf _obj == "SignAd_Sponsor_ARMEX_F" && _var isEqualType "") exitWith {
 
 		_obj setVariable ['company', _var];

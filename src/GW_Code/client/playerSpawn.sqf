@@ -172,6 +172,9 @@ if (!_firstSpawn) then {
 	// Show the screen
 	_unit setVariable ["firstSpawn", false];	
 	titlecut["","BLACK IN",2];	
+
+	// Show welcome note
+	[] execVM 'client\ui\dialogs\createHint.sqf';
 	
 };
 
@@ -180,8 +183,7 @@ _timeout = time + 3;
 waitUntil { (time > _timeout) || GW_DEATH_CAMERA_ACTIVE };
 
 // Set current zone
-_curZone = ([player] call findCurrentZone);
-[_curZone] call setCurrentZone;
+["workshopZone"] call setCurrentZone;
 
 
 // Clear/Unsimulate unnecessary items near workshop
@@ -224,12 +226,12 @@ inGameUISetEventHandler['PrevAction', '[_this, "scroll"] call triggerLazyUpdate;
 inGameUISetEventHandler['NextAction', '[_this, "scroll"] call triggerLazyUpdate; false'];
 
 // Prevent weapon disassembly
-inGameUISetEventHandler ["Action", "
+// inGameUISetEventHandler ["Action", "
 	
-	if (isNil '_this') exitWith { false };	
-	if ((_this select 3) in ['DisAssemble', 'Take', 'Put', 'Inventory', 'Get In Gunner']) then {
-		true
-	};
-"];
+// 	if (isNil '_this') exitWith { false };	
+// 	if ((_this select 3) in ['DisAssemble', 'Take', 'Put', 'Inventory', 'Get In Gunner']) then {
+// 		true
+// 	};
+// "];
 
 if (true) exitWith {};

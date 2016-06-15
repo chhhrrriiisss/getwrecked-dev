@@ -215,7 +215,7 @@ GW_SUPPLY_TYPES = [
 			[_vehicle, ['nanoarmor'], _maxTime] call addVehicleStatus;
 			[_vehicle, _maxTime, 'client\images\power_halo.paa', _condition, true, [0,0,0.5], false] spawn createHalo;
 			[_vehicle, 'client\images\vehicle_textures\special\armor.jpg', _maxTime, _condition] spawn swapVehicleTexture;
-			['MAXIMUM ARMOR', _maxTime, armorSupplyIcon, _condition] spawn createNotification;
+			['MAXIMUM ARMOR', _maxTime, armorSupplyIcon, _condition] spawn createPowerup;
 		}
 	],
 

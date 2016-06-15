@@ -57,7 +57,7 @@ class RscTitles
 {   
    #include "client\ui\hud\hud.hpp"
    #include "client\ui\hud\alert.hpp"   
-   #include "client\ui\hud\alert_new.hpp"
+   #include "client\ui\hud\powerup.hpp"
    #include "client\ui\hud\notification.hpp"
 };
 

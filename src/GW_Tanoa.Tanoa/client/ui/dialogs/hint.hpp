@@ -80,6 +80,12 @@ class GW_Hint
 			w = (GW_BUTTON_WIDTH * 0.75) * safeZoneW;
 			h = GW_BUTTON_HEIGHT  * safeZoneH;
 
+			colorBackground2[] = {0,0,0,0.8};
+			colorBackgroundFocused[] = {0,0,0,0.8};
+			colorFocused[] = {1,1,1,1};
+			color2[] = {1,1,1,1};
+			period = 0;
+
 		
 			class TextPos
 			{

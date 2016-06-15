@@ -12,36 +12,38 @@ _minDuration = [_this, 2, 3, [0]] call filterParam; // Default minimum duration 
 
 if (isNull _target) exitWith {};
 
-_isVehicle = _target getVariable ["isVehicle", false];
-_status = _target getVariable ["status", []];
 _rnd = random 100;
+if (_rnd > _chance) exitWith { false };
 
-if ( !('inferno' in _status) && !('nofire' in _status) && _isVehicle && _rnd < _chance) then {
+_isVehicle = _target getVariable ["isVehicle", false];
+if (!_isVehicle) exitWith { false };
 
-	_statusToAdd = if ('fire' in _status) then { ['inferno'] } else { ['fire'] };
+_status = _target getVariable ["status", []];
+if ( 'inferno' in _status || 'nofire' in _status) exitWith { false };
 
-	// Fire duration
-	_rnd = random 6 + _minDuration;
+_statusToAdd = if ('fire' in _status) then { ['inferno'] } else { ['fire'] };
 
-	if (_target != (vehicle player) ) then { [_target] call markAsKilledBy;  };
+// Fire duration
+_rnd = random 6 + _minDuration;
 
-	[       
-        [
-            _target,
-            str _statusToAdd,
-            _rnd
-        ],
-        "addVehicleStatus",
+if (_target != (vehicle player) ) then { [_target] call markAsKilledBy;  };
+
+[       
+    [
         _target,
-        false 
-	] call bis_fnc_mp;  
+        str _statusToAdd,
+        _rnd
+    ],
+    "addVehicleStatus",
+    _target,
+    false 
+] call bis_fnc_mp;  
 
+[
 	[
-		[
-			_target,
-			_rnd
-		],
-		"burnEffect"
-	] call bis_fnc_mp;
+		_target,
+		_rnd
+	],
+	"burnEffect"
+] call bis_fnc_mp;
 
-};

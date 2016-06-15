@@ -144,6 +144,7 @@ GW_clientFunctions = [
 	['previewMenu', 'client\ui\menus\'],
 
 	['createAlert', 'client\ui\hud\'],
+	['createPowerup', 'client\ui\hud\'],
 	['createNotification', 'client\ui\hud\'],
 	['createHalo', 'client\ui\hud\'],
 	['createTween', 'client\ui\hud\'],
@@ -269,6 +270,7 @@ smokeEffect = compile preprocessFile "client\effects\smoke.sqf";
 cloakEffect = compile preprocessFile "client\effects\cloak.sqf";
 magnetEffect = compile preprocessFile "client\effects\magnet.sqf";
 sparkEffect = compile preprocessFile "client\effects\spark.sqf";
+napalmEffect = compile preprocessFile "client\effects\napalm.sqf";
 nitroEffect = compile preprocessFile "client\effects\nitro.sqf";
 muzzleEffect = compile preprocessFile "client\effects\muzzle.sqf";
 flameEffect = compile preprocessFile "client\effects\flame.sqf";

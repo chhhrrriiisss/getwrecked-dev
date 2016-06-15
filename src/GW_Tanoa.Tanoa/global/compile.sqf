@@ -309,3 +309,5 @@ buySigns = ['buySign'] call findAllObjects;
 vehicleTerminals = ['vehicleTerminal'] call findAllObjects;
 nitroPads = ['nitroPad', false, true] call findAllObjects;
 flamePads = ['flamePad', false, true] call findAllObjects;
+
+hintObjects = +buySigns append +vehicleTerminals;

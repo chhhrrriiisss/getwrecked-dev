@@ -74,7 +74,7 @@ _src addEventHandler['EpeContactStart', {
 
 	(_this select 0) removeEventHandler ['EpeContactStart', 0];
 
-	[(_this select 1), 100, 6] spawn setVehicleOnFire;
+	[(_this select 1), 100, 6] call setVehicleOnFire;
 
 	_status = (_this select 1) getVariable ['status', []];
 	if ('nofire' in _status || 'invulnerable' in _status) exitWith {};
@@ -93,7 +93,7 @@ _src spawn {
 		_nearby = (ASLtoATL visiblePositionASL _this) nearEntities[["Car"], 6];
 		{ 
 			if (_x distance (ASLtoATL visiblePositionASL _this) < 4 && _x != (vehicle player)) exitWith {
-				_null = [_x, 100, 6] spawn setVehicleOnFire;
+				_null = [_x, 100, 6] call setVehicleOnFire;
 				[_x, 'FLM'] call markAsKilledBy;
 			};
 			false

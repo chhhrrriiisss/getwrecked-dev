@@ -36,7 +36,8 @@ if (_dmg <= 0) exitWith {
 	if (_tyresRepaired) then { true } else { false };
 };
 
-_vehicle setDammage 0;
+_newDamage = [(getDammage _vehicle) - 0.5, 0, 1] call limitToRange;
+_vehicle setDammage _newDamage;
 
 [
 	[

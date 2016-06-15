@@ -384,7 +384,7 @@ for "_i" from 0 to 1 step 0 do {
 	        		if (_this == "emp") exitWith {warningIcon };
 	        		if (_this == "tyresPopped") exitWith { warningIcon };
 	        		if (_this == "invulnerable") exitWith { shieldIcon };
-	        		if (_this == "fire") exitWith { flameIcon };
+	        		if (_this == "fire" || _this == "inferno") exitWith { flameIcon };
 	        		if (_this == "locked") exitWith { lockedIcon };
 	        		if (_this == "locking") exitWith { lockingIcon };
 	        		if (_this == "radar") exitWith { radarSupplyIcon };
@@ -423,13 +423,13 @@ for "_i" from 0 to 1 step 0 do {
      //    };
 
         if ("tyresPopped" in _status) then {
-            [localize "str_gw_wheels_disabled", 1, warningIcon, colorRed, "warning", "beep_warning"] execVM 'client\ui\hud\alert_new.sqf';
+            [localize "str_gw_wheels_disabled", 1, warningIcon, colorRed, "warning", "beep_warning"] spawn createNotification;
         };
        
         if ("invulnerable" in _status) then {
 
             //[localize "str_gw_invulnerable", 1, shieldIcon, colorRed, "warning"] spawn createAlert;
-            [localize "str_gw_invulnerable", 1, shieldIcon, colorRed, "slideup"] execVM 'client\ui\hud\alert_new.sqf';
+            [localize "str_gw_invulnerable", 1, shieldIcon, colorRed, "slideup"] spawn createNotification;
 
             if (_blink) then {} else {
 				_vHudStatus ctrlSetStructuredText parseText( "" );
@@ -439,16 +439,16 @@ for "_i" from 0 to 1 step 0 do {
         };
 
         if ("fire" in _status) then {
-            [localize "str_gw_fire_detected", 1, warningIcon, colorRed, "warning", "beep_warning"]  execVM 'client\ui\hud\alert_new.sqf';   
+            [localize "str_gw_fire_detected", 1, flameIcon, colorRed, "warning", "beep_warning"]  spawn createNotification;   
         };
  
         if ("locked" in _status) then {
-            [localize "str_gw_lock_detected", 1, rpgTargetIcon, colorRed, "slideup", "beep_warning"]  execVM 'client\ui\hud\alert_new.sqf';   
+            [localize "str_gw_lock_detected", 1, rpgTargetIcon, colorRed, "slideup", "beep_warning"]  spawn createNotification;   
         };
 
         if ("emp" in _status) then {
 
-            [localize "str_gw_disabled", 1, warningIcon, colorRed, "warning", "beep_warning"] execVM 'client\ui\hud\alert_new.sqf';                 
+            [localize "str_gw_disabled", 1, warningIcon, colorRed, "warning", "beep_warning"] spawn createNotification;                 
 
             if (_blink) then {} else {              
 				_layerStatic cutRsc ["RscStatic", "PLAIN" ,1]; 

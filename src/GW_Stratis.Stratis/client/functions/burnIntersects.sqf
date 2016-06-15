@@ -17,7 +17,7 @@ _objects = lineIntersectsWith [_source, _destination, _ignore, objNull, false];
 if (count _objects == 0) exitWith {};
 
 {	
-	[_x, _chance, _minDuration] spawn setVehicleOnFire;
+	[_x, _chance, _minDuration] call setVehicleOnFire;
 	false
 } count _objects > 0;
 
