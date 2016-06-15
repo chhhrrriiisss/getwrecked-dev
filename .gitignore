@@ -21,6 +21,9 @@ node_modules/
 
 # Ignore everything in location-only folders, but include .sqm
 
+Source/GW_Altis.Altis/*
+!Source/GW_Altis.Altis/mission.sqm
+
 Source/GW_Stratis.Stratis/*
 !Source/GW_Stratis.Stratis/mission.sqm
 
