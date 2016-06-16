@@ -192,35 +192,131 @@
 	"buffers":
 	[
 		{
-			"file": "/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/gruntfile_backup.js",
+			"file": "src/GW_Code/client/ui/hud/createNotification.sqf",
 			"settings":
 			{
-				"buffer_size": 7423,
+				"buffer_size": 5808,
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "README.md",
+			"file": "src/GW_Code/client/vehicles/attachments/dropNapalm.sqf",
 			"settings":
 			{
-				"buffer_size": 2467,
+				"buffer_size": 3545,
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/node_modules/grunt-sync/readme.md",
+			"file": "src/GW_Code/client/effects/napalm.sqf",
 			"settings":
 			{
-				"buffer_size": 4116,
-				"line_ending": "Unix"
+				"buffer_size": 920,
+				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/package.json",
+			"file": "/D/Projects/Arma/Get Wrecked/Server/Dev/server_1.cfg",
 			"settings":
 			{
-				"buffer_size": 2033,
-				"line_ending": "Unix"
+				"buffer_size": 4505,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "/D/Node/getwrecked-api/gruntfile.js",
+			"settings":
+			{
+				"buffer_size": 2016,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "src/GW_Code/client/playerKilled.sqf",
+			"settings":
+			{
+				"buffer_size": 864,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "src/GW_Code/client/vehicles/attachments/emergencyRepair.sqf",
+			"settings":
+			{
+				"buffer_size": 1301,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "src/GW_Code/client/vehicles/attachments/activateElectromagnet.sqf",
+			"settings":
+			{
+				"buffer_size": 1871,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"contents": "_pos = _this;\n\n_objectsArray = [];\n\n// _src = createVehicle [\"Land_PenBlack_F\", _pos, [], 0, \"CAN_COLLIDE\"];\n// [_src, 10, 0.8] spawn infernoEffect;\n// _objectsArray pushback _src;\n\n\nfor \"_i\" from 0 to 4 step 1 do {\n\n	_theta = random 360;\n\n	_size = 0.75;\n\n	_r = 7;\n	_phi = 1;\n\n	_rx = _r * (sin _theta) * (cos _phi);\n	_ry = _r * (cos _theta) * (cos _phi);	\n\n	_nPos = _pos vectorAdd [_rx, _ry, 0];\n\n	_src = createVehicle [\"Land_PenBlack_F\", _nPos, [], 0, \"CAN_COLLIDE\"];\n	[_src, 10, _size] spawn infernoEffect;\n	_objectsArray pushback _src;\n\n};	\n\nfor \"_i\" from 0 to 4 step 1 do {\n	_src = createVehicle [\"Land_PenBlack_F\", _pos, [], 0, \"CAN_COLLIDE\"];\n	\n	[_src, 10] spawn flameEffect;\n	_src setVelocity [(random 16)-8, (random 16)-8, 1];	\n\n	_objectsArray pushback _src;\n\n};\n\n_objectsArray spawn {	\n	Sleep 10;\n	{ deleteVehicle _x; } foreach _this;\n};\n\n",
+			"settings":
+			{
+				"buffer_size": 848,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "src/GW_Code/client/functions/setVehicleOnFire.sqf",
+			"settings":
+			{
+				"buffer_size": 1157,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "src/GW_Code/client/functions/burnIntersects.sqf",
+			"settings":
+			{
+				"buffer_size": 631,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "src/GW_Code/client/effects/nuke.sqf",
+			"settings":
+			{
+				"buffer_size": 8569,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "src/GW_Code/client/ui/hud/createPowerup.sqf",
+			"settings":
+			{
+				"buffer_size": 2754,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "src/GW_Code/client/ui/hud/drawHud.sqf",
+			"settings":
+			{
+				"buffer_size": 19398,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "src/GW_Code/client/ui/hud/notification.hpp",
+			"settings":
+			{
+				"buffer_size": 6202,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "src/GW_Code/client/ui/hud/powerup.hpp",
+			"settings":
+			{
+				"buffer_size": 1883,
+				"line_ending": "Windows"
 			}
 		}
 	],
@@ -269,6 +365,18 @@
 	],
 	"file_history":
 	[
+		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/gruntfile.js",
+		"/C/Users/Chris/Desktop/Hey all. Starting this weekend, i'll be looking at",
+		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/.ftppass.json",
+		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/.ftppass",
+		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/Get Wrecked - Development/src/GW_Code/client/compile.sqf",
+		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/Get Wrecked - Development/src/GW_Code/client/effects/napalm.sqf",
+		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/Get Wrecked - Development/src/GW_Code/client/vehicles/weapons/flamethrower.sqf",
+		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/Get Wrecked - Development/src/GW_Code/client/zones/flame_pad.sqf",
+		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/package.json",
+		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/node_modules/grunt-sync/readme.md",
+		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/Get Wrecked - Development/README.md",
+		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/gruntfile_backup.js",
 		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/Get Wrecked - Development/CHANGELOG.md",
 		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/Get Wrecked - Development/src/GW_Code/client/vehicles/attachments/emergencyRepair.sqf",
 		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/Get Wrecked - Development/src/GW_Code/global/supply.sqf",
@@ -284,13 +392,11 @@
 		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/Get Wrecked - Development/src/GW_Code/client/playerSpawn.sqf",
 		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/Get Wrecked - Development/src/GW_Code/client/functions/setCurrentZone.sqf",
 		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/Get Wrecked - Development/src/GW_Code/global/functions/findCurrentZone.sqf",
-		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/gruntfile.js",
 		"/C/Users/Chris/AppData/Local/Arma 3/MPMissionsCache/QS_IA_US_2.Tanoa/mission.sqm",
 		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/Get Wrecked - Development/src/GW_Code/config.sqf",
 		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/Get Wrecked - Development/src/GW_Code/client/ui/hud/drawHud.sqf",
 		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/Get Wrecked - Development/src/GW_Code/client/ui/hud/createPowerup.sqf",
 		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/Get Wrecked - Development/src/GW_Code/client/vehicles/attachments/dropNapalm.sqf",
-		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/Get Wrecked - Development/src/GW_Code/client/compile.sqf",
 		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/Get Wrecked - Development/src/GW_Code/client/objects/tag.sqf",
 		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/Get Wrecked - Development/src/GW_Code/client/objects/actions.sqf",
 		"/C/Users/Chris/AppData/Local/Arma 3/MPMissionsCache/QS_IA_US_2.Tanoa/data/QS_RD_functions.hpp",
@@ -303,7 +409,6 @@
 		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/node_modulespattern.",
 		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/Temp/Altis/CHANGELOG.md",
 		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/Get Wrecked - Development/src/GW_Code/client/persistance/listGlobalBinds.sqf",
-		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/Get Wrecked - Development/README.md",
 		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/Get Wrecked - Development/src/GW_Code/client/ui/common.hpp",
 		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/Get Wrecked - Development/src/GW_Code/init.sqf",
 		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/Get Wrecked - Development/src/GW_Code/client/commands/commands.sqf",
@@ -387,16 +492,7 @@
 		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/GW_v0_8_5_RC1.Altis/global/supply.sqf",
 		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/GW_v0_8_5_RC1.Altis/client/vehicles/handlers/handleGetOut.sqf",
 		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/GW_v0_8_5_RC1.Altis/client/vehicles/handlers/handleGetIn.sqf",
-		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/GW_v0_8_5_RC1.Altis/client/ui/display/icons.sqf",
-		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/GW_v0_8_5_RC1.Altis/client/player_loop.sqf",
-		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/GW_v0_8_5_RC1.Altis/client/functions/triggerLazyUpdate.sqf",
-		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/GW_v0_8_5_RC1.Altis/client/player_spawn.sqf",
-		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/GW_v0_8_5_RC1.Altis/client/vehicles/status_monitor.sqf",
-		"/C/Users/Chris/AppData/Local/Arma 3/arma3_2016-01-08_18-10-44.rpt",
-		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/GW_v0_8_5_DEV.Altis/client/vehicles/status_monitor.sqf",
-		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/GW_v0_8_5_RC1.Altis/client/ui/dialogs/settings.sqf",
-		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/GW_v0_8_5_RC1.Altis/client/ui/functions/saveBinds.sqf",
-		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/GW_v0_8_5_RC1.Altis/client/persistance/list.sqf"
+		"/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/GW_v0_8_5_RC1.Altis/client/ui/display/icons.sqf"
 	],
 	"find":
 	{
@@ -513,6 +609,14 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"createVehicleLocal",
+			"napalm",
+			"naplm",
+			"killed by",
+			"was killed by",
+			"cloak.sqf",
+			"flamethrower",
+			"setVehicleOnFire",
 			"createNotification",
 			"alert_new.sqf",
 			"execVM 'client\\ui\\hud\\alert_new.sqf';",
@@ -632,15 +736,7 @@
 			"requestVehicle",
 			"loadVehicle",
 			"loading...",
-			"registerVehicle",
-			"NOT AVAILABLE",
-			"call getVehicleData",
-			"v",
-			"toArray (_name)",
-			"_raw set[0, _data]",
-			"_raw set [0, _data]",
-			"_RAW = profilename",
-			"requestVehicle"
+			"registerVehicle"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -756,24 +852,139 @@
 	"groups":
 	[
 		{
-			"selected": 0,
+			"selected": 4,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/gruntfile_backup.js",
+					"file": "src/GW_Code/client/ui/hud/createNotification.sqf",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 7423,
+						"buffer_size": 5808,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								3809,
-								3813
+								4551,
+								4551
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/SQF Language/SQF.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 2613.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 11,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "src/GW_Code/client/vehicles/attachments/dropNapalm.sqf",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3545,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2468,
+								2468
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/SQF Language/SQF.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 962.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "src/GW_Code/client/effects/napalm.sqf",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 920,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								774,
+								774
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/SQF Language/SQF.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "/D/Projects/Arma/Get Wrecked/Server/Dev/server_1.cfg",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 4505,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								4505,
+								4505
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/SQF Language/SQF.tmLanguage"
+						},
+						"translation.x": -0.0,
+						"translation.y": 273.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "/D/Node/getwrecked-api/gruntfile.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2016,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
 							]
 						],
 						"settings":
@@ -783,98 +994,326 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 971.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
 					"type": "text"
 				},
 				{
-					"buffer": 1,
-					"file": "README.md",
+					"buffer": 5,
+					"file": "src/GW_Code/client/playerKilled.sqf",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 2467,
+						"buffer_size": 864,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								593,
-								592
+								371,
+								371
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/HTML/HTML.sublime-syntax"
+							"syntax": "Packages/SQF Language/SQF.tmLanguage",
+							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 1,
+					"stack_index": 4,
 					"type": "text"
 				},
 				{
-					"buffer": 2,
-					"file": "/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/node_modules/grunt-sync/readme.md",
+					"buffer": 6,
+					"file": "src/GW_Code/client/vehicles/attachments/emergencyRepair.sqf",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 4116,
+						"buffer_size": 1301,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1329,
-								1344
+								0,
+								0
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/HTML/HTML.sublime-syntax",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
+							"syntax": "Packages/SQF Language/SQF.tmLanguage",
+							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 3,
+					"stack_index": 5,
 					"type": "text"
 				},
 				{
-					"buffer": 3,
-					"file": "/C/Users/Chris/Documents/Arma 3 - Other Profiles/SLI/MPMissions/package.json",
+					"buffer": 7,
+					"file": "src/GW_Code/client/vehicles/attachments/activateElectromagnet.sqf",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 2033,
+						"buffer_size": 1871,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								787,
-								787
+								380,
+								379
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/JavaScript/JSON.sublime-syntax",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
+							"syntax": "Packages/SQF Language/SQF.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 39.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 6,
+					"type": "text"
+				},
+				{
+					"buffer": 8,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 848,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								848
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/SQF Language/SQF.tmLanguage",
+							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 2,
+					"stack_index": 7,
+					"type": "text"
+				},
+				{
+					"buffer": 9,
+					"file": "src/GW_Code/client/functions/setVehicleOnFire.sqf",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1157,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								909,
+								909
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/SQF Language/SQF.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 195.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 8,
+					"type": "text"
+				},
+				{
+					"buffer": 10,
+					"file": "src/GW_Code/client/functions/burnIntersects.sqf",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 631,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								582,
+								582
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/SQF Language/SQF.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 9,
+					"type": "text"
+				},
+				{
+					"buffer": 11,
+					"file": "src/GW_Code/client/effects/nuke.sqf",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 8569,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								6891,
+								6891
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/SQF Language/SQF.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 2320.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 10,
+					"type": "text"
+				},
+				{
+					"buffer": 12,
+					"file": "src/GW_Code/client/ui/hud/createPowerup.sqf",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2754,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2754,
+								2754
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/SQF Language/SQF.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 12,
+					"type": "text"
+				},
+				{
+					"buffer": 13,
+					"file": "src/GW_Code/client/ui/hud/drawHud.sqf",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 19398,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								13633,
+								13633
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/SQF Language/SQF.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": -0.0,
+						"translation.y": 5382.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 15,
+					"type": "text"
+				},
+				{
+					"buffer": 14,
+					"file": "src/GW_Code/client/ui/hud/notification.hpp",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 6202,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								5879,
+								5879
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 3120.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 14,
+					"type": "text"
+				},
+				{
+					"buffer": 15,
+					"file": "src/GW_Code/client/ui/hud/powerup.hpp",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1883,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								542,
+								542
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 13,
 					"type": "text"
 				}
 			]
@@ -917,7 +1356,7 @@
 	},
 	"output.find_results":
 	{
-		"height": 415.0
+		"height": 196.0
 	},
 	"pinned_build_system": "",
 	"project": "GET WRECKED.sublime-project",
