@@ -26,7 +26,6 @@ generateCategoryList = compile preprocessFile "client\ui\functions\generateCateg
 changeCategory = compile preprocessFile "client\ui\functions\changeCategory.sqf";	
 
 
-
 // Displays and restores purchase button text
 showPurchaseMessage = {
 
@@ -110,18 +109,16 @@ generateSettingsList = compile preprocessFile "client\ui\functions\generateSetti
 generateTauntsList = compile preprocessFile "client\ui\functions\generateTauntsList.sqf";
 setTaunt = compile preprocessFile "client\ui\functions\setTaunt.sqf";
 
-// Add the name to the settings stats column
-// generateName = {
-	
-// 	private ['_title', '_name'];
+//
+//      
+//      Race Menu Functions
+//      
+//
 
-// 	disableSerialization;
-// 	_title = ((findDisplay 92000) displayCtrl 92003);
-// 	_name = GW_SETTINGS_VEHICLE getVariable ["name", ""];
-// 	_name = [_name, 10, '...'] call cropString;
-// 	_title ctrlSetText toUpper(_name);
-// 	_title ctrlCommit 0;
-// };
+// When GW_ACTIVE_RACES triggered, update races if we're in the menu
+"GW_ACTIVE_RACES" addPublicVariableEventHandler { call updateRaces; };
+updateRaces = compile preprocessFile "client\ui\functions\updateRaces.sqf";
+
 
 // Resets a bind row and saves
 clearBind = {

@@ -89,7 +89,6 @@ GW_CURRENTVEHICLE setVariable ['GW_R_PR', -1, true];
 // Get the latest race data (updated from server while we were loading...)
 
 // Initialize race lobby dialog
-// [_targetRace] execVM 'client\zones\race_status.sqf';
-[(GW_ACTIVE_RACES select _raceID)] execVM 'client\ui\dialogs\raceLobby.sqf';
+[(GW_ACTIVE_RACES select _raceID)] spawn raceLobby;
 
 TRUE

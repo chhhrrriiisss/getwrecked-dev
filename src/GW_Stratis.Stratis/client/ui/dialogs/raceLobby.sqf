@@ -252,7 +252,7 @@ if (_raceStatus != 2 || _raceStatus == -1) exitWith {
 // Race running, start checkpoint system!
 if (_raceStatus >= 2) exitWith {
 
-	[_targetRace, 9999] execVM 'testcheckpoints.sqf';
+	[_targetRace, 9999] spawn raceCheckpoints;
 
 	waitUntil { Sleep 0.1; (isNull (findDisplay 95000)) };
 	["<br /><br /><t size='3' color='#ffffff' align='center'>GET READY</t>", "", [false, { false }], { true }, 3, true] call createTitle;

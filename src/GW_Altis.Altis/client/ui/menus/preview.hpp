@@ -21,7 +21,6 @@ class GW_Menu
 	idd = GW_Menu_ID;
 	name = "GW_Menu";
 	movingEnabled = false;
-	// onMouseMoving = "_this execVM 'client\ui\mouse_handler.sqf'";
 	enableSimulation = true;	
 	onLoad = "uiNamespace setVariable ['GW_Preview_Menu', _this select 0]; "; 
 

@@ -120,6 +120,7 @@ GW_clientFunctions = [
 	['triggerLazyUpdate', nil],
 	['previewCamera', 'client\ui\cameras\'],
 	['deathCamera', 'client\ui\cameras\'],
+	['orbitCamera', 'client\ui\cameras\'],
 
 	['setPlayerTexture', nil],
 
@@ -155,7 +156,8 @@ GW_clientFunctions = [
 	['createTitle', 'client\ui\dialogs\'],
 
 	['calculateTotalDistance', nil],
-	['estimateRaceTime', nil]
+	['estimateRaceTime', nil],
+	['createCheckpoint', 'client\zones\']
 
 ];
 
@@ -174,6 +176,7 @@ preVehicleDeploy = compile preprocessFile 'client\zones\preVehicleDeploy.sqf';
 initVehicleDeploy = compile preprocessFile 'client\zones\initVehicleDeploy.sqf';
 deployBattle = compile preprocessFile 'client\zones\deploy_battle.sqf';
 deployRace = compile preprocessFile 'client\zones\deploy_race.sqf';
+raceCheckpoints = compile preprocessFile 'client\zones\race_checkpoints.sqf';
 servicePoint = compile preprocessFile 'client\zones\vehicle_point.sqf';
 nitroPad =  compile preprocessFile 'client\zones\nitro_pad.sqf';
 flamePad = compile preprocessFile 'client\zones\flame_pad.sqf';
@@ -352,7 +355,6 @@ pubVar_fnc_globalTitle = compile preprocessFile "client\functions\pubVar_globalT
 pubVar_fnc_setHidden = compile preprocessFile "client\functions\pubVar_setHidden.sqf";
 "pubVar_setHidden" addPublicVariableEventHandler { (_this select 1) call pubVar_fnc_setHidden };
 
-"GW_ACTIVE_RACES" addPublicVariableEventHandler { execVM 'testupdateraces.sqf'; };
 
 // Chat command interceptor
 [] call compile preProcessFilelineNumbers "client\commands\init.sqf";
