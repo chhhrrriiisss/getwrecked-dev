@@ -24,7 +24,7 @@ playSound3D ["a3\sounds_f\sfx\special_sfx\sparkles_wreck_2.wss", _obj, false, _o
 
 [_obj, _target, _vehicle] spawn {
 	
-
+	_indirect = (_this select 0) call isIndirect;
 	_projectileSpeed = 1000;
 	_oPos = (_this select 0) modelToWorldVisual [0,0,0];
 	_tPos = if ((_this select 1) isEqualTo objNull) then { (ASLtoATL visiblePositionASL (_this select 01)) } else { (_this select 1) };
@@ -41,8 +41,9 @@ playSound3D ["a3\sounds_f\sfx\special_sfx\sparkles_wreck_2.wss", _obj, false, _o
 
 		_tPos = if ((_this select 1) isEqualTo objNull) then { (ASLtoATL visiblePositionASL (_this select 01)) } else { (_this select 1) };
 
-		_heading = [_oPos,_tPos] call BIS_fnc_vectorFromXToY;
+		_heading = if (_indirect) then { ([ATLtoASL _oPos, ATLtoASL _tPos] call BIS_fnc_vectorFromXToY) } else { GW_CAMERA_HEADING };
 		_velocity = [_heading, _projectileSpeed] call BIS_fnc_vectorMultiply; 
+		_velocity = _velocity vectorAdd GW_CURRENTVEL;
 
 		_bullet = createVehicle ["B_127x99_Ball_Tracer_Red", _oPos, [], 0, "CAN_COLLIDE"];
 		_bullet setVectorDir _heading; 
@@ -51,7 +52,7 @@ playSound3D ["a3\sounds_f\sfx\special_sfx\sparkles_wreck_2.wss", _obj, false, _o
 		[ATLtoASL _oPos, ATLtoASL _tPos, (vehicle player), 90, 0] spawn burnIntersects;
 		[(ATLtoASL _oPos), (ATLtoASL _tPos), "LSR"] call markIntersects;
 
-		Sleep 0.05;
+		Sleep 0.02;
 
 	};
 

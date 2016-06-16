@@ -6,6 +6,7 @@
 
 params ['_gun', '_target', '_vehicle'];
 
+_indirect = (_this select 0) call isIndirect;
 _round = "G_40mm_HEDP";
 _soundToPlay = "a3\sounds_f\weapons\Grenades\grenade_launcher_1.wss";
 _fireSpeed = 0.3;
@@ -18,8 +19,9 @@ _targetPos = if (_target isEqualTo objNull) then { getPosASL _target } else { _t
 _gPos = _gun selectionPosition "otochlaven";
 _gPos = _gun modelToWorld [-0.15,1.7,-0.72];
 
-_heading = [_gPos,_targetPos] call BIS_fnc_vectorFromXToY;
+_heading = if (_indirect) then { ([ATLtoASL _gPos, ATLtoASL _targetPos] call BIS_fnc_vectorFromXToY) } else { GW_CAMERA_HEADING };
 _velocity = [_heading, _projectileSpeed] call BIS_fnc_vectorMultiply; 
+_velocity = _velocity vectorAdd GW_CURRENTVEL;
 
 _bullet = createVehicle [_round, _gPos, [], 0, "CAN_COLLIDE"];
 

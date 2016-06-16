@@ -11,6 +11,7 @@ _this spawn {
 	params ['_obj', '_target', '_vehicle'];
 	_repeats = 1;
 	_projectileSpeed = 2000;
+	
 
 	[		
 		[
@@ -43,10 +44,7 @@ _this spawn {
 
 	_oPos = _obj modelToWorld [3,0,-0.7];
 
-	_indirect = true;
-	{	
-		if ((_x select 0) == _obj) exitWith { _indirect = false; };
-	} Foreach GW_AVAIL_WEAPONS;
+	_indirect = (_this select 0) call isIndirect;
 
 	// Can we use the mouse cursor to aim or are we firing indirectly?
 	_tPos = if (_indirect) then {
@@ -54,7 +52,7 @@ _this spawn {
 		(_obj modelToWorldVisual [200, 0, 0.2])
 	} else { GW_TARGET };
 
-	_heading = [_oPos,_tPos] call BIS_fnc_vectorFromXToY;
+	_heading = if (_indirect) then { ([_oPos,_tPos] call BIS_fnc_vectorFromXToY) } else { GW_CAMERA_HEADING };
 	_velocity = [_heading, _projectileSpeed] call BIS_fnc_vectorMultiply; 
 
 	_bullet = createVehicle ["M_Titan_AA_static", _oPos, [], 0, "FLY"];

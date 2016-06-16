@@ -6,11 +6,16 @@
 
 params ['_obj', '_target', '_vehicle'];
 
+
+// _tPos = if (_target isEqualTo objNull) then { getPosASL _target } else { _target };
 _oPos = (_obj modelToWorldVisual [5,0,-0.7]);
 _tPos = _target;
-_heading = [ASLtoATL _oPos,ASLtoATL _tPos] call BIS_fnc_vectorFromXToY;
-_velocity = [_heading, 60] call BIS_fnc_vectorMultiply; 
-_velocity = (_velocity) vectorAdd (velocity _vehicle);
+_indirect = (_this select 0) call isIndirect;
+if (_indirect) then { _tPos = _obj modelToWorldVisual [30,0,-0.7]; };
+
+_heading = if (_indirect) then { [ATLtoASL _oPos,ATLtoASL _tPos] call BIS_fnc_vectorFromXToY } else { GW_CAMERA_HEADING };
+_velocity = [_heading, 80] call BIS_fnc_vectorMultiply; 
+_velocity = (_velocity) vectorAdd GW_CURRENTVEL;
 
 _hook = createVehicle ["Land_Tableware_01_fork_F", _oPos, [], 0, "CAN_COLLIDE"];
 

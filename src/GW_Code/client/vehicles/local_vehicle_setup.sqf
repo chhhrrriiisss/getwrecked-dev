@@ -47,9 +47,7 @@ if (isNil "_meta") then {} else {
 
         _version = if (_version isEqualTo []) then { 0 } else { _version };
 
-        if (_version < GW_VERSION) then {
-            player customChat [GW_WARNING_CHANNEL, localize "str_gw_version_mismatch"];        
-        };
+        if (_version < GW_VERSION) then {};
     };
 
     if (!isNil "_creator") then {        

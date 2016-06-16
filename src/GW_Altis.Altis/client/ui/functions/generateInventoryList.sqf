@@ -56,8 +56,8 @@ if (count _contents == 0) exitWith {
 
 _button = ((findDisplay 98000) displayCtrl 98002);
 
-_button ctrlSetTooltip "TEST";
-_button lbSetTooltip [9999, "TESSSSSST"];
+// _button ctrlSetTooltip "";
+// _button lbSetTooltip [9999, "TESSSSSST"];
 
 
 // _list ctrlSetTooltip "ThisIsAGoodTip";

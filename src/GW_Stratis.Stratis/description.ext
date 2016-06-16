@@ -7,7 +7,7 @@ author="SLI";
 OnLoadName = "GET WRECKED";
 OnLoadMission = "Vehicle combat sandbox.";
 enableDebugConsole = 1;
-
+ 
 overviewPicture = "load-image.jpg";
 loadScreen = "load-image.jpg";
 

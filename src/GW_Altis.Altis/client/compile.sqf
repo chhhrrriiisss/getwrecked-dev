@@ -157,7 +157,9 @@ GW_clientFunctions = [
 
 	['calculateTotalDistance', nil],
 	['estimateRaceTime', nil],
-	['createCheckpoint', 'client\zones\']
+	['createCheckpoint', 'client\zones\'],
+
+	['isIndirect', nil]
 
 ];
 

@@ -31,7 +31,7 @@ _count = 0;
 	_string = _x select 0;	
 	_name = format['      %1', _string];
 	
-	lbAdd[97012, _name ];	
+	_index = lbAdd[97012, _name ];	
 	lbSetData[97012, 0, _count];
 
 	_count = _count + 1;

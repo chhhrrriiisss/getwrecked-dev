@@ -6,6 +6,7 @@
 
 params ['_gun', '_target', '_vehicle'];
 
+_indirect = (_this select 0) call isIndirect;
 _round = "B_127x99_Ball";
 _soundToPlay = "a3\sounds_f\weapons\HMG\HMG_gun.wss";
 _fireSpeed = 0.35;
@@ -15,11 +16,11 @@ _range = 300;
 [_gun, [0,1.6,-0.5]] spawn muzzleEffect;
 
 _targetPos = if (_target isEqualTo objNull) then { (_target modelToWorldVisual [0,0,0.5]) } else { _target };
-_target set [2, (_target select 2) + 3];
 _gPos = _gun modelToWorldVisual [0, 3, -0.7];
 
-_heading = [_gPos, _targetPos] call BIS_fnc_vectorFromXToY;
+_heading = if (_indirect) then { ([ATLtoASL _gPos, ATLtoASL _targetPos] call BIS_fnc_vectorFromXToY) } else { GW_CAMERA_HEADING };
 _velocity = [_heading, _projectileSpeed] call BIS_fnc_vectorMultiply; 
+_velocity = _velocity vectorAdd GW_CURRENTVEL;
 
 playSound3D ["a3\sounds_f\weapons\HMG\HMG_gun.wss", _gun, false, _gPos, 7, 1, 100];
 

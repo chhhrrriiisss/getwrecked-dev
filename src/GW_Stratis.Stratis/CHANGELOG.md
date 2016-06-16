@@ -44,6 +44,7 @@ Items without Fixed/Added/Removed proceeding are typically balance changes.
 - Snapping now aligns to axis of matching objects (rotation align currently disabled)
 - Progress saved on DEV versions of Get Wrecked is now isolated from live version
 - Emergency repair device now only repairs 50% damage
+- Updated targetCursor to better calculate shooting while on steep terrain
 - Fixed Issue with stats retrieval occuring too early on previewVehicle
 - Fixed Bug preventing local vehicle setup from properly occuring
 - Fixed Suspended vehicles no longer drop altitude when attaching/detaching objects

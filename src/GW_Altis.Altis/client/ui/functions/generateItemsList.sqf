@@ -125,4 +125,6 @@ _filterBy = if (_category > 0) then {
 
 } count GW_LOOT_LIST > 0;
 
+_list ctrlSetTooltip "TEST";
+
 _list lnbsetcurselrow _index;

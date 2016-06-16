@@ -121,7 +121,7 @@ _vehicle spawn {
     if (_health == 0 && !_isDead) then {
         _this setVariable ['isDead', true];
         _firstHit = _this getVariable ['firstHit', time];
-        player customChat [GW_SUCCESS_CHANNEL, format['%1 destroyed in %2', _name, ([(time - _firstHit),1] call roundTo)]  ];
+        systemchat format['%1 destroyed in %2', _name, ([(time - _firstHit),1] call roundTo)];
     };  
    
 };

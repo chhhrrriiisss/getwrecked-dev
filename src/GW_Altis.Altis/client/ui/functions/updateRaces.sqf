@@ -1,3 +1,9 @@
+//
+//      Name: updateRaces
+//      Desc: Function to automatically refresh race menu when GW_ACTIVE_RACES is updated and we're in the menu
+//      Return: 
+//
+
 if (!GW_RACE_GENERATOR_ACTIVE) exitWith { false };
 
 // current state

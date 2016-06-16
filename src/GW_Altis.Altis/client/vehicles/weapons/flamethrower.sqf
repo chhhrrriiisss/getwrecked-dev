@@ -6,6 +6,7 @@
 
 params ['_obj', '_target', '_vehicle'];
 
+_indirect = (_this select 0) call isIndirect;
 _repeats = 3;
 _projectileSpeed = 60;
 _projectileRange = 50;
@@ -29,9 +30,10 @@ if (_fuel > 1) then {
 _oPos = _obj modelToWorldVisual [0,-4,0];
 _tPos = if (_target isEqualTo objNull) then { (ASLtoATL getPosASL _target) } else { _target };
 
-_heading = [_oPos,_tPos] call BIS_fnc_vectorFromXToY;
+
+_heading = if (_indirect) then { ([ATLtoASL _oPos, ATLtoASL _tPos] call BIS_fnc_vectorFromXToY) } else { GW_CAMERA_HEADING };
 _velocity = [_heading, _projectileSpeed] call BIS_fnc_vectorMultiply; 
-// _velocity = (velocity _vehicle) vectorAdd _velocity;
+_velocity = _velocity vectorAdd GW_CURRENTVEL;
 
 // Fire sound effect
 [		
@@ -61,8 +63,7 @@ _src = createVehicle ["Land_PenBlack_F", _oPos, [], 0, "CAN_COLLIDE"];
 _src setVectorDir _heading; 
 _src setVelocity _velocity;
 
-_vehiclePos = (ASLtoATL getPosASL _vehicle);
-_nearby = _vehiclePos nearEntities [["Car", "Tank"], 50];
+_nearby = GW_CURRENTPOS nearEntities [["Car", "Tank"], 50];
 
 if (count _nearby < 0) exitWith {};
 

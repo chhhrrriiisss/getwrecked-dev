@@ -8,10 +8,7 @@ private ['_gun', '_target', '_vehicle'];
 
 _this spawn {
 
-	_indirect = true;
-	{	
-		if ((_x select 0) == (_this select 0)) exitWith { _indirect = false; };
-	} count GW_AVAIL_WEAPONS > 0;
+	_indirect = (_this select 0) call isIndirect;
 
 	for "_i" from 0 to 1 step 1 do {
 
@@ -29,8 +26,9 @@ _this spawn {
 			_vehicle call updateVehicleDamage;
 		};
 
-		_heading = [ASLtoATL _gPos, ASLtoATL _targetPos] call BIS_fnc_vectorFromXToY;
-		_velocity = [_heading, 50] call BIS_fnc_vectorMultiply; 		
+		_heading = if (_indirect) then { ([ASLtoATL _gPos, ASLtoATL _targetPos] call BIS_fnc_vectorFromXToY) } else { GW_CAMERA_HEADING };
+		_velocity = [_heading, 50] call BIS_fnc_vectorMultiply; 	
+		_velocity = _velocity vectorAdd GW_CURRENTVEL;	
 
 		_rocket = createVehicle ["M_Titan_AT_static", _gPos, [], 0, "FLY"];
 		playSound3D ["a3\sounds_f\weapons\rockets\new_rocket_8.wss", (_this select 2), false, (ASLtoATL visiblePositionASL (_this select 2)), 10, 1, 40]; 

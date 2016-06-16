@@ -44,6 +44,7 @@ GW_DISPLAY_EH = addMissionEventHandler ["Draw3D", {
 	
 	GW_CURRENTPOS = (ASLtoATL visiblePositionASL GW_CURRENTVEHICLE);
 	GW_CURRENTDIR = getDir GW_CURRENTVEHICLE;	
+	GW_CURRENTVEL = (velocity GW_CURRENTVEHICLE);
 
  	// If any of these menus are active, forget about drawing anything else
 	if (GW_DEPLOY_ACTIVE || GW_SPAWN_ACTIVE || GW_SETTINGS_ACTIVE || GW_TIMER_ACTIVE || GW_TITLE_ACTIVE || GW_LOBBY_ACTIVE) exitWith {};

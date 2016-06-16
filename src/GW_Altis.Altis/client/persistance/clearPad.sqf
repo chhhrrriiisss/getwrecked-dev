@@ -43,7 +43,6 @@ _nearbyPlayers = [];
         case (_type in GW_PROTECTED_ITEMS): {
             _relPos = [_targetPos, 10, (random 360)] call relPos;
             _y setPos _relPos;
-            player customChat [GW_WARNING_CHANNEL, 'A supply box was moved as it was on the pad.'];  
         };
         default {
            deleteVehicle _y;
