@@ -173,8 +173,14 @@ if (!_firstSpawn) then {
 	_unit setVariable ["firstSpawn", false];	
 	titlecut["","BLACK IN",2];	
 
+	// Make us face the closest vehicle terminal
+	_closest = [vehicleTerminals, (ASLtoATL visiblePositionASL player)] call findClosest; 
+
+	_dirTo = ([player, _closest] call dirTo);
+	player setDir _dirTo;
+
 	// Show welcome note
-	[] execVM 'client\ui\dialogs\createHint.sqf';
+	['welcome'] spawn createHint;
 	
 };
 

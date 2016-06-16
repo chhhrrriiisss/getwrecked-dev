@@ -37,7 +37,8 @@ resetBinds = {
 	_infoKey = ["INFO"] call getGlobalBind;
 
 	if (_key == _infoKey) then {
-		[] execVM "client\ui\dialogs\createHint.sqf";
+		hint 'This feature is not yet implemented.';
+		// [] execVM "client\ui\dialogs\createHint.sqf";
 	};
 
 	// if (_key == _groupsKey) then {
@@ -266,31 +267,35 @@ checkBinds = {
 
 };
 
-fireKeyDown = '';
+initBinds = {
 
-GW_KEYDOWN = nil;
+	fireKeyDown = '';
 
-waituntil {
-	!isNull (findDisplay 46) 
-};
+	GW_KEYDOWN = nil;
 
-if (!isNil "GW_KD_EH") then { (findDisplay 46) displayRemoveEventHandler ["KeyDown", GW_KD_EH]; };
-GW_KD_EH = (findDisplay 46) displayAddEventHandler ["KeyDown", "_this call checkBinds; false"];
+	waituntil {
+		!isNull (findDisplay 46) 
+	};
 
-if (!isNil "GW_KU_EH") then { (findDisplay 46) displayRemoveEventHandler ["KeyUp", GW_KU_EH];	GW_KU_EH = nil;	};
-GW_KU_EH = (findDisplay 46) displayAddEventHandler ["KeyUp", "_this call resetBinds; false"];
+	if (!isNil "GW_KD_EH") then { (findDisplay 46) displayRemoveEventHandler ["KeyDown", GW_KD_EH]; };
+	GW_KD_EH = (findDisplay 46) displayAddEventHandler ["KeyDown", "_this call checkBinds; false"];
 
-if (!isNil "GW_MD_EH") then { (findDisplay 46) displayRemoveEventHandler ["MouseButtonDown", GW_MD_EH];	GW_MD_EH = nil;	};
-GW_MD_EH = (findDisplay 46) displayAddEventHandler ["MouseButtonDown", "_this call setMouseDown; false;"];
+	if (!isNil "GW_KU_EH") then { (findDisplay 46) displayRemoveEventHandler ["KeyUp", GW_KU_EH];	GW_KU_EH = nil;	};
+	GW_KU_EH = (findDisplay 46) displayAddEventHandler ["KeyUp", "_this call resetBinds; false"];
 
-if (!isNil "GW_MU_EH") then { (findDisplay 46) displayRemoveEventHandler ["MouseButtonUp", GW_MU_EH];	GW_MU_EH = nil;	};
-GW_MU_EH = (findDisplay 46) displayAddEventHandler ["MouseButtonUp", "_this call setMouseUp; false;"];
+	if (!isNil "GW_MD_EH") then { (findDisplay 46) displayRemoveEventHandler ["MouseButtonDown", GW_MD_EH];	GW_MD_EH = nil;	};
+	GW_MD_EH = (findDisplay 46) displayAddEventHandler ["MouseButtonDown", "_this call setMouseDown; false;"];
 
-setMouseDown = {			
-	if ((_this select 1) == 0) then { GW_LMBDOWN = true; };		
-};
+	if (!isNil "GW_MU_EH") then { (findDisplay 46) displayRemoveEventHandler ["MouseButtonUp", GW_MU_EH];	GW_MU_EH = nil;	};
+	GW_MU_EH = (findDisplay 46) displayAddEventHandler ["MouseButtonUp", "_this call setMouseUp; false;"];
 
-setMouseUp = {		
-	if ((_this select 1) == 0) then {  GW_LMBDOWN = false; };		
+	setMouseDown = {			
+		if ((_this select 1) == 0) then { GW_LMBDOWN = true; };		
+	};
+
+	setMouseUp = {		
+		if ((_this select 1) == 0) then {  GW_LMBDOWN = false; };		
+	};
+
 };
 

@@ -286,7 +286,8 @@ GW_TAUNTS_LIST = [
 	'mlg',
 	'party',
 	'sparta',
-	'china'
+	'china',
+	'leeroy'
 ];
 
 // Specific map configs
@@ -408,7 +409,8 @@ switch (worldName) do {
 				"Land_FireEscape_01_tall_F",
 				"Land_dp_transformer_F",
 				"Land_dpp_01_transformer_F",
-				"Land_dpp_01_waterCooler_F"
+				"Land_dpp_01_waterCooler_F",
+				"Land_DPP_01_smallFactory_F"
 			];			
 
 			_c = 0;

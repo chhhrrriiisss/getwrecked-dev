@@ -6,6 +6,7 @@
 #define GW_Stats_Title_ID 92005
 #define GW_Taunts_List_ID 92006
 #define GW_Settings_Tooltip_ID 92007
+#define GW_Settings_Close_Button_ID 92008
 
 #define GW_BUTTON_WIDTH 0.2
 #define GW_BUTTON_HEIGHT 0.035
@@ -126,7 +127,7 @@ class GW_Settings
 			rowHeight = GW_BUTTON_HEIGHT * 2;
 
 			onMouseMoving = "GW_MOUSEX = (_this select 1); GW_MOUSEY = (_this select 2); ";
-			onLBSelChanged = "";
+			onLBSelChanged = "_this spawn setBind; false";
 			onLBDblClick = "_this spawn setBind; false";
 		
 		};
@@ -336,11 +337,11 @@ class GW_Settings
 
 		class SaveAndClose : GW_RscButtonMenu
 		{
-			idc = -1;
+			idc = GW_Settings_Close_Button_ID;
 
 			style = "0x02 + 0xC0 + 64";
-			text = "CLOSE";
-			onButtonClick = "[] call saveBinds; closeDialog 0;";
+			text = "SAVE & CLOSE";
+			onButtonClick = "[] spawn closeSettingsMenu;";
 			x = (SETTINGS_X + (GW_BUTTON_WIDTH) + GW_BUTTON_GAP_X) * safezoneW + safezoneX;
 			y = (SETTINGS_Y + (GW_BUTTON_HEIGHT * 10) + (GW_BUTTON_GAP_Y * 2)) * safezoneH + safezoneY;
 			w = (GW_BUTTON_WIDTH - GW_BUTTON_GAP_X) * safezoneW;

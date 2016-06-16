@@ -37,7 +37,7 @@ if (!isNil "GW_MOUSEX" && !isNil "GW_MOUSEY" && { GW_MOUSEX > 0.4 } ) then {
 	_mouseBindState = if (_mouseBindState == "1") then { systemchat 'Mouse fire disabled.'; [mouseInactiveIcon, "0"] } else { systemchat 'Mouse fire enabled.'; [mouseActiveIcon, "1"] };
 	lnbSetData [92001, [_index, 3], (_mouseBindState select 1)];
 	lnbSetPicture[92001, [_index, 3], (_mouseBindState select 0)];
-	[_index] call saveBinds;
+	// [_index] call saveBinds;
 
 } else {
 
@@ -77,7 +77,7 @@ if (!isNil "GW_MOUSEX" && !isNil "GW_MOUSEY" && { GW_MOUSEX > 0.4 } ) then {
 			systemChat 'That key is not allowed.';
 		} else {
 			[_index, _keyCode] call formatBind;
-			[_index] call saveBinds;
+			// [_index] call saveBinds;
 		};
 
 	} else {

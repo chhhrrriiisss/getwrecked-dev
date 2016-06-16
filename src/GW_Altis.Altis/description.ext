@@ -17,7 +17,7 @@ class Header
 {
 	gameType = SANDBOX; 
 	minPlayers = 1; 
-	maxPlayers = 20; 
+	maxPlayers = 16; 
 };
 
 onPauseScript = "onPause.sqf";
@@ -65,6 +65,13 @@ class RscTitles
 class CfgSounds
 {
 	sounds[] = {};
+
+	class leeroy
+	{
+		name = "leeroy";
+		sound[] = {"\client\sounds\leeroy.ogg", 1, 1};
+		titles[] = {};
+	};
 
 	class china
 	{

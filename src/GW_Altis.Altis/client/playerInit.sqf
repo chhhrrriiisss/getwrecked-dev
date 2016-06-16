@@ -99,7 +99,7 @@ GW_DC_EH = addMissionEventHandler ["HandleDisconnect",{
 [] call mouseHandler;
 
 // Used for detecting key presses
-// [] spawn initBinds;
+[] spawn initBinds;
 
 // Map markers, boundaries
 [] call drawMap;

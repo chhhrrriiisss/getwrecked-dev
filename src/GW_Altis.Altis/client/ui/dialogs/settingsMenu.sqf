@@ -18,6 +18,17 @@ if (!alive _vehicle || !alive _unit) exitWith {};
 
 _isOwner = [_vehicle, _unit, true] call checkOwner;
 
+closeSettingsMenu = {	
+	disableSerialization;
+	_button = (findDisplay 92000) displayCtrl 92008;
+	_button ctrlSetText "SAVING...";
+	_button ctrlCommit 0;
+	_success = [] call saveBinds; 
+	if (!_success) exitWith { systemchat 'Error saving settings.'; };
+	saveProfileNamespace;
+	closeDialog 0;
+};
+
 // Check the vehicle is ok to use (compiled) and we own it
 if (!alive _vehicle || !alive _unit || !_isOwner) exitWith { GW_SETTINGS_ACTIVE = false; };
 if (isNil { (_vehicle getVariable "firstCompile") } ) exitWith {
@@ -34,6 +45,10 @@ GW_SETTINGS_READY = false;
 
 disableSerialization;
 if(!(createDialog "GW_Settings")) exitWith { GW_SETTINGS_ACTIVE = false; }; //Couldn't create the menu
+
+_button = (findDisplay 92000) displayCtrl 92008;
+_button ctrlSetText "SAVE & CLOSE";
+_button ctrlCommit 0;
 
 "dynamicBlur" ppEffectEnable true;
 "dynamicBlur" ppEffectAdjust [0.3]; 
@@ -70,7 +85,7 @@ GW_SETTINGS_READY = false;
 "dynamicBlur" ppEffectAdjust [0]; 
 "dynamicBlur" ppEffectCommit 0.1; 
 
-saveProfileNamespace;
+
 
 
 

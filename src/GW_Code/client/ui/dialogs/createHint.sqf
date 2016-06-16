@@ -61,13 +61,13 @@ _content ctrlShow true;
 _t = if (_item == "welcome") then {
 
 	format[
-		'<t size="0.85" font="puristaMedium" shadow="1" color="#FFFFFF" align="center">%1 </t>
+		"<t size='0.85' font='puristaMedium' shadow='1' color='#FFFFFF' align='center'>%1 </t>
 		<br /><br />
-		<t size="0.85" font="puristaLight" shadow="1" color="#FFFFFF" align="center">%2</t>
+		<t size='0.85' font='puristaLight' shadow='1' color='#FFFFFF' align='center'>%2</t>
 		<br /><br />
-		<t size="0.85" font="puristaMedium" shadow="1" color="#FFFFFF" align="center">For additional hints, press <t color="#FCD93B">[ %3 ]</t> when near an item or object.</t>', 
-		"Get Wrecked is a custom vehicle sandbox that challenges players to create armoured vehicles and then fight to the death in a race or battle.",
-		"To begin, find an empty Vehicle Service Terminal to load or create a vehicle from scratch. <br /> If you have issues that are not fixed by rejoining, use the !reset command.",
+		<t size='0.85' font='puristaMedium' shadow='1' color='#FFFFFF' align='center'> If you have issues that aren't fixed by rejoining, try the <t color='#FCD93B'>!reset</t> command.</t>", 
+		"Get Wrecked is a custom vehicle sandbox that challenges players to create armoured vehicles and then fight to the death in a battle zone or custom race.",
+		"To begin, find an empty 'Vehicle Service Terminal' to load or create a vehicle from scratch. <br /> You can find items to attach around the Workshop or specific parts from vendors.",
 		[ (['INFO'] call getGlobalBind) ] call codeToKey
 	]
 

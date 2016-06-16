@@ -128,3 +128,4 @@ if (count toArray _vehicleName == 0) then {} else {
 
 };
 
+true
