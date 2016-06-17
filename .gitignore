@@ -20,18 +20,22 @@ $RECYCLE.BIN/
 node_modules/
 
 # Ignore sublime project files
-*.test
 *.sublime-project
 *.sublime-workspace
 
-# Ignore everything in location-only folders, but include .sqm
-!Source/GW_Stratis.Stratis/mission.sqm
-Source/GW_Altis.Altis/*
-!Source/GW_Altis.Altis/mission.sqm
-Source/GW_Stratis.Stratis/*
-!Source/GW_Stratis.Stratis/mission.sqm
-Source/GW_Tanoa.Tanoa/*
-!Source/GW_Tanoa.Tanoa/mission.sqm
+# Ignore everything in location-only folders, but include .sqm/load-image
+
+src/GW_Altis.Altis/*
+!src/GW_Altis.Altis/mission.sqm
+!src/GW_Altis.Altis/load-image.jpg
+
+src/GW_Stratis.Stratis/*
+!src/GW_Stratis.Stratis/mission.sqm
+!src/GW_Stratis.Stratis/load-image.jpg
+
+src/GW_Tanoa.Tanoa/*
+!src/GW_Tanoa.Tanoa/mission.sqm
+!src/GW_Tanoa.Tanoa/load-image.jpg
 
 # =========================
 # Operating System Files
