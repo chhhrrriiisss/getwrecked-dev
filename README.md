@@ -10,9 +10,9 @@ Get Wrecked challenges players to create, customize, drive, survive and of cours
 
 ## Quick start
 
-Get Wrecked is not a true "mod" as all the code is contained within one mission file. If you just want to play, the easiest way is to just find a server that's currently hosting the mission and join it. You don't need to start the Arma 3 client with any funky parameters, but make sure other mods are disabled first. There is a [server list available on the website](http://getwrecked.info#play).
+Get Wrecked is not a true "mod" as all the code is contained within one mission file. If you just want to play, the easiest way is to just find a server that's currently hosting the mission and join it, but make sure all mods are disabled first. There is a [server list available on the website](http://getwrecked.info#play).
 
-If you're looking to host a game yourself, it is strongly recommended to use a dedicated server to run Get Wrecked as aspects of the game mode can impact a client when they are also hosting. Simply [download the mission.pbo](http://getwrecked.info#download) and add it to your Arma3/MpMissions folder on your server. I highly recommend [TADST](http://www.armaholic.com/page.php?id=11655) as it is quick and very configurable way to to run a server.
+If you're looking to host a game yourself, it is strongly recommended to use a dedicated server to run Get Wrecked as aspects of the game mode can impact a client when they are also hosting. Simply [download the mission.pbo](http://getwrecked.info#download) and add it to your Arma3/MpMissions folder on your server. I highly recommend [TADST](http://www.armaholic.com/page.php?id=11655) as it is a quick and configurable way to run a server.
 
 ## Guide 
 
