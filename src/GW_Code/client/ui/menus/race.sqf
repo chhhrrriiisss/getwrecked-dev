@@ -20,7 +20,7 @@ if (!_isVehicleReady) exitWith { GW_RACE_GENERATOR_ACTIVE = false; };
 disableSerialization;
 if(!(createDialog "GW_Race")) exitWith { GW_RACE_GENERATOR_ACTIVE = false; }; //Couldn't create the menu
 
-showChat false;
+showChat TRUE;
 
 getAllRaces = {
 	_rcs = profileNamespace getVariable [GW_RACES_LOCATION, []];
@@ -461,8 +461,9 @@ GW_MAP_DRAG = false;
 GW_MAP_X = -1;
 GW_MAP_Y = -1;
 GW_MAP_NUMBER = 0;
+GW_MAP_HOVER_CLOSEST = -1;
 GW_MAP_CLOSEST = -1;
-GW_MAP_BETWEEN = -1;
+GW_MAP_INSERT = -1;
 
 deleteRace = {
 	
@@ -626,8 +627,25 @@ saveCurrentRace = {
 	[] call generateRaceStats;
 };
 
+closestMarkerToPosition = {
 
-closestMarkerToMouse = {
+	private ['_dist', '_closest'];	
+
+	_dist = 99999;
+	_closest = -1;
+	{	
+		if (_x distance _this < _dist) then {
+			_closest = _forEachIndex;
+			_dist = _x distance _this;
+		};
+	} foreach GW_RACE_ARRAY;
+
+	_closest
+
+};
+
+
+findMarkerNearMouse = {
 	
 	private ['_tolerance', '_closest', '_currentPos', '_pointPos', '_currentPosMap', '_pointPosMap'];
 
@@ -637,18 +655,16 @@ closestMarkerToMouse = {
 	// If we're close to an existing marker, move it
 	disableSerialization;
 	_mapControl = ((findDisplay 90000) displayCtrl 90001);	
-
 	_currentPos = _mapControl ctrlMapScreenToWorld [GW_MAP_X, GW_MAP_Y];	
 	_currentPosMap = _mapControl ctrlMapWorldToScreen _currentPos;
 	_currentPos = if (_useMap) then { _currentPosMap } else { (_currentPos) };
 
 	_closest = -1;
-
 	// Find the closest point to current mouse position
 	{				
 		_pointPosMap = _mapControl ctrlMapWorldToScreen _x;
 		_pointPos = if (_useMap) then { _pointPosMap } else { _x };
-		if (_currentPos distance _pointPos < _tolerance) exitwith {	_closest = _foreachIndex; };
+		if (_currentPos distance _pointPos < _tolerance) exitWith { _closest = _foreachIndex; };
 	} foreach GW_RACE_ARRAY;
 
 	_closest
@@ -656,54 +672,74 @@ closestMarkerToMouse = {
 };
 
 _mouseDblClick = _mapControl ctrlAddEventHandler ["MouseButtonDblClick", { 
-
+	
+	disableSerialization;
 	_mapControl = ((findDisplay 90000) displayCtrl 90001);
 	_currentPos = _mapControl ctrlMapScreenToWorld [GW_MAP_X, GW_MAP_Y];	
 	_raceLength = count GW_RACE_ARRAY;
 
-	// Delete nearby markers on double click
-	if ((GW_RACE_ARRAY select (_raceLength -1)) distance _currentPos < 30 && (count GW_RACE_ARRAY) > 2) then {
-		GW_RACE_ARRAY deleteAt (_raceLength -1);
+	if (surfaceIsWater _currentPos) exitWith {
+		["Cant place on water", [1,0,0,0.75], 0.75] call setMapTooltip;
+		player say3D "beep_light"; 
 	};
 
-	// Add a marker at current location
-	GW_RACE_ARRAY pushback _currentPos;
+	_pos = _currentPos findEmptyPosition [5,25,"O_truck_03_ammo_f"];
+
+	if (count _pos == 0) exitWith { 
+		["Not enough space at position", [1,0,0,0.75], 0.75] call setMapTooltip;
+		player say3D "beep_light"; 
+	};	
+
+	// Add a marker at current location, insert if we're between cps
+	_index = GW_MAP_INSERT;
+	systemchat format['%1 / %2 / %3 / %4', _index, _currentPos, GW_MAP_X, GW_MAP_Y];
+
+  	if (GW_MAP_INSERT == -1) exitWith {
+  		GW_RACE_ARRAY = [GW_RACE_ARRAY, _currentPos] call BIS_fnc_ArrayUnshift
+  	};
+
+	GW_RACE_ARRAY = [GW_RACE_ARRAY, GW_MAP_INSERT, _currentPos] call insertAt;
 
 }];
 
 
 _mouseUp = _mapControl ctrlAddEventHandler ["MouseButtonUp", { 
 	
-
-	disableSerialization;
-	_mapControl = ((findDisplay 90000) displayCtrl 90001);	
-	_currentPos =_mapControl ctrlMapScreenToWorld [GW_MAP_X, GW_MAP_Y];
-	_raceLength = count GW_RACE_ARRAY;
-
-	if ((_this select 1) == 0 && GW_MAP_BETWEEN > 0) exitWith {
-		if (surfaceIsWater _currentPos) exitWith {};
-		GW_RACE_ARRAY = [GW_RACE_ARRAY, GW_MAP_BETWEEN, _currentPos] call insertAt;
-		GW_MAP_NUMBER = GW_MAP_NUMBER + 1; 
+	 	
+	if (GW_MAP_HOVER_CLOSEST > -1) then {
+		['Press delete to remove', [1,1,1,1], 0] call setMapTooltip;
 	};
 
-	if ((_this select 1) == 1 || GW_RACE_EDITING) exitWith {};
 
-	_tooClose = -1;
+	// disableSerialization;
+	// _mapControl = ((findDisplay 90000) displayCtrl 90001);	
+	// _currentPos =_mapControl ctrlMapScreenToWorld [GW_MAP_X, GW_MAP_Y];
+	// _raceLength = count GW_RACE_ARRAY;
 
-	_nearbyMarker = [100, false] call closestMarkerToMouse;
-	if (_nearbyMarker >= 0 && _raceLength > 1 && GW_MAP_NUMBER != _nearbyMarker) exitWith {
-		["Not enough space at position", [1,0,0,0.75], 0.75] call setMapTooltip;
-		player say3D "beep_light";
-	};	
+	// if ((_this select 1) == 0) exitWith {
+	// 	if (surfaceIsWater _currentPos) exitWith {};
+	// 	GW_RACE_ARRAY = [GW_RACE_ARRAY, GW_MAP_BETWEEN, _currentPos] call insertAt;
+	// 	GW_MAP_NUMBER = GW_MAP_NUMBER + 1; 
+	// };
 
-	_currentPos = _currentPos findEmptyPosition [10,75,"O_truck_03_ammo_f"];
-	if (count _currentPos == 0) exitWith {
-		["Not enough space at position", [1,0,0,0.75], 0.75] call setMapTooltip;
-		player say3D "beep_light";
-	};
+	// if ((_this select 1) == 1 || GW_RACE_EDITING) exitWith {};
 
-	GW_RACE_ARRAY set [GW_MAP_NUMBER, _currentPos];
-	GW_MAP_NUMBER = GW_MAP_NUMBER + 1; 
+	// _tooClose = -1;
+
+	// _nearbyMarker = [100, false] call closestMarkerToMouse;
+	// if (_nearbyMarker >= 0 && _raceLength > 1 && GW_MAP_NUMBER != _nearbyMarker) exitWith {
+	// 	["Not enough space at position", [1,0,0,0.75], 0.75] call setMapTooltip;
+	// 	player say3D "beep_light";
+	// };	
+
+	// _currentPos = _currentPos findEmptyPosition [10,75,"O_truck_03_ammo_f"];
+	// if (count _currentPos == 0) exitWith {
+	// 	["Not enough space at position", [1,0,0,0.75], 0.75] call setMapTooltip;
+	// 	player say3D "beep_light";
+	// };
+
+	// GW_RACE_ARRAY set [GW_MAP_NUMBER, _currentPos];
+	// GW_MAP_NUMBER = GW_MAP_NUMBER + 1; 
 
 
 
@@ -712,15 +748,19 @@ _mouseUp = _mapControl ctrlAddEventHandler ["MouseButtonUp", {
 
 
 _mouseDown = _mapControl ctrlAddEventHandler ["MouseButtonDown", { 
+	
+
+	// _currentPos = _mapControl ctrlMapScreenToWorld [GW_MAP_X, GW_MAP_Y];	
+ // 	GW_RACE_ARRAY pushback _currentPos;
 
 	if (GW_RACE_EDITING && !GW_MAP_DRAG) exitWith {
 
 		disableSerialization;
 		_mapControl = ((findDisplay 90000) displayCtrl 90001);	
 
-		if (GW_MAP_CLOSEST >= 0 && (_this select 1) == 0) exitWith {
+		if (GW_MAP_HOVER_CLOSEST >= 0 && (_this select 1) == 0) exitWith {
 
-			GW_MAP_CLOSEST spawn {
+			GW_MAP_HOVER_CLOSEST spawn {
 
 				disableSerialization;
 				_mapControl = ((findDisplay 90000) displayCtrl 90001);	
@@ -751,17 +791,7 @@ _mouseDown = _mapControl ctrlAddEventHandler ["MouseButtonDown", {
 }];
 
 
-_mouseHold = _mapControl ctrlAddEventHandler ["MouseHolding", { 
-	// _tooltip = (findDisplay 90000) displayCtrl 90020;
-	// _tooltip ctrlSetFade 0;
-	// _tooltip ctrlCommit 0.2;
 
-
-
-	// Populate race properties
-	[] call generateRaceStats;
-
-}];
 
 setMapTooltip = {
 
@@ -808,6 +838,16 @@ setMapTooltip = {
 	
 };
 
+_mouseHold = _mapControl ctrlAddEventHandler ["MouseHolding", { 
+	// _tooltip = (findDisplay 90000) displayCtrl 90020;
+	// _tooltip ctrlSetFade 0;
+	// _tooltip ctrlCommit 0.2;
+
+	// Populate race properties
+	[] call generateRaceStats;
+
+}];
+
 
 _mouseMove = _mapControl ctrlAddEventHandler ["MouseMoving", { 	
 	GW_MAP_X = _this select 1; 
@@ -816,7 +856,7 @@ _mouseMove = _mapControl ctrlAddEventHandler ["MouseMoving", {
 	_str = [] call {
 		if (!GW_RACE_EDITING) exitWith { "" };
 		if (GW_LMBDOWN) exitWith { "" };
-		if (GW_MAP_CHECKPOINT_HOVER) exitWith { "Click and drag to move"};
+		if (GW_MAP_HOVER_CLOSEST > -1) exitWith { "Click and drag to move"};			
 		if (GW_RACE_EDITING) exitWith { "Double click to add a checkpoint" };
 		""
 	};
@@ -827,6 +867,16 @@ _mouseMove = _mapControl ctrlAddEventHandler ["MouseMoving", {
 	// _mapControl ctrlCommit 1;
 	
 }];
+
+
+_mapKeyDown = _mapControl ctrlAddEventHandler ["KeyDown", {  
+	
+	if (GW_RACE_EDITING && (_this select 1) == 211 && GW_MAP_HOVER_CLOSEST >= 0 && (count GW_RACE_ARRAY) > 2) exitWith {
+		GW_RACE_ARRAY deleteAt GW_MAP_HOVER_CLOSEST;
+	};
+
+}];
+
 
 drawSegment = {
 
@@ -851,31 +901,63 @@ drawSegment = {
 	];
 };
 
-_mapKeyDown = _mapControl ctrlAddEventHandler ["KeyDown", {  
-	
-	if (!GW_RACE_EDITING && (_this select 1) == 211 && GW_MAP_CLOSEST >= 0 && (count GW_RACE_ARRAY) > 2) exitWith {
-		GW_RACE_ARRAY deleteAt GW_MAP_CLOSEST;
-	};
-
-}];
-
 _mapDraw = _mapControl ctrlAddEventHandler ["Draw", {  
 	
 	_raceLength = count GW_RACE_ARRAY;
 	if (count GW_RACE_ARRAY == 0) exitWith {};
 
 	_lastPos = [0,0,0];
-	GW_MAP_CLOSEST = [0.05] call closestMarkerToMouse;
+	GW_MAP_HOVER_CLOSEST = [0.05] call findMarkerNearMouse;	
 
 	disableSerialization;
 	_mapControl = (_this select 0);
 	_mousePos = _mapControl ctrlMapScreenToWorld [GW_MAP_X, GW_MAP_Y];	
-	GW_MAP_BETWEEN = -1;
+	GW_MAP_CLOSEST = _mousePos call closestMarkerToPosition;
 
-	GW_MAP_CHECKPOINT_HOVER = false;
+	// Render line segments between mouse and closest points
+	if (!GW_LMBDOWN && GW_RACE_EDITING && GW_MAP_HOVER_CLOSEST <0) then {	
 
+		// Is last in array
+		if (GW_MAP_CLOSEST < 0 || GW_MAP_CLOSEST >= _raceLength) exitWith {};
 
+		[(GW_RACE_ARRAY select GW_MAP_CLOSEST), _mousePos, '(0.99,0.85,0.23,0.3)'] call drawSegment;
+		
+		// Also render +checkpoint icon at mouse location
 
+		_mapControl drawIcon [
+			checkpointMarkerAddIcon,
+			[1,1,1,0.5],
+			_mousePos,
+			30,
+			30,
+			0,
+			'',
+			0,
+			0.1,
+			'puristaMedium',
+			'center'
+		];
+
+		// Don't render line if last point doesnt exist
+		_next = GW_MAP_CLOSEST + 1;
+		GW_MAP_INSERT = _next;
+		if (_next >= _raceLength) exitWith {};
+		
+		// Don't render next if the mouse is far closer to the first checkpoint
+		_maxDistanceBetween = (GW_RACE_ARRAY select GW_MAP_CLOSEST) distance (GW_RACE_ARRAY select _next);
+		_distanceNextToMouse = (GW_RACE_ARRAY select _next) distance _mousePos;
+
+		// If the range is too far from previous/next cp (first and last checkpoints typicall), only render one line
+		if (_distanceNextToMouse > _maxDistanceBetween && (GW_MAP_CLOSEST == 0 || GW_MAP_CLOSEST == _raceLength)) exitWith {
+
+			// Adjust insertion index (when mousedblclick) appropriately for first+last cps
+			GW_MAP_INSERT = if (GW_MAP_CLOSEST == _raceLength) then {  GW_MAP_INSERT + 1 } else {  GW_MAP_INSERT -1 };
+		};
+
+		[GW_RACE_ARRAY select _next, _mousePos, '(0.99,0.85,0.23,0.3)'] call drawSegment;
+
+	};
+	
 	{
 		if (_foreachIndex == 0) then {} else {
 
@@ -883,19 +965,19 @@ _mapDraw = _mapControl ctrlAddEventHandler ["Draw", {
 			_currentPos = _x;
 			
 			// Mouse between these two points?		
-			_maxDist = _lastPos distance _currentPos;
-			if (_mousePos distance _currentPos > _maxDist || _mousePos distance _lastPos > _maxDist) then {} else {
+			// _maxDist = _lastPos distance _currentPos;
+			// if (_mousePos distance _currentPos > _maxDist || _mousePos distance _lastPos > _maxDist) then {} else {
 
-				// Mouse angle is close enough to angle between points	
-				_dirMouseToMarker = [_mousePos, _currentPos] call dirTo;
-				_dirMarkerToNext = [_lastPos, _currentPos] call dirTo;
-				_difDir = abs ([_dirMouseToMarker - _dirMarkerToNext] call flattenAngle);
+			// 	// Mouse angle is close enough to angle between points	
+			// 	_dirMouseToMarker = [_mousePos, _currentPos] call dirTo;
+			// 	_dirMarkerToNext = [_lastPos, _currentPos] call dirTo;
+			// 	_difDir = abs ([_dirMouseToMarker - _dirMarkerToNext] call flattenAngle);
 
-				if (_difDir < 0.5 && (_mousePos distance _currentPos > 100) && (_mousePos distance _lastPos > 100)) then {
-					GW_MAP_BETWEEN = _forEachIndex;
-				};
+			// 	if (_difDir < 0.5 && (_mousePos distance _currentPos > 100) && (_mousePos distance _lastPos > 100)) then {
+			// 		GW_MAP_BETWEEN = _forEachIndex;
+			// 	};
 
-			};
+			// };
 
 			_lastPos set [2, 0];
 			_currentPos set [2, 0];
@@ -955,6 +1037,21 @@ _mapDraw = _mapControl ctrlAddEventHandler ["Draw", {
 			};
 
 			if (count _segments == 0) exitWith { [_lastPos, _currentPos] call drawSegment; };
+
+			// Render segments between closest marker and mouse
+			// _closest = [9999, true] call closestMarkerToMouse;
+
+			// if (_closest > 0 && count GW_RACE_ARRAY > 0) then {
+
+			// 	systemchat str GW_MAP_HOVER_CLOSEST;
+
+			// 	[(GW_RACE_ARRAY select _closest), _mousePos, '(0.99,0.85,0.23,0.25)'] call drawSegment;
+
+			// 	if (true) exitWith {};
+			// 	if ((_closest + 1) > count GW_RACE_ARRAY) exitWith {};
+			// 	_segments pushback [(GW_RACE_ARRAY select 1), _mousePos, '(0.99,0.85,0.23,0.25)'];
+			// };
+
 			{ [(_x select 0), (_x select 1), (_x select 2)] call drawSegment; false } count _segments;
 		
 		};
@@ -972,14 +1069,12 @@ _mapDraw = _mapControl ctrlAddEventHandler ["Draw", {
 			([([_x, GW_RACE_ARRAY select (_foreachIndex + 1)] call dirTo) - 90] call normalizeAngle)
 		} else { 0 };
 
-		if (GW_LMBDOWN && _foreachIndex == GW_MAP_CLOSEST) then {
+		if (GW_LMBDOWN && _foreachIndex == GW_MAP_HOVER_CLOSEST) then {
 			_color set [3, 0.5];
 
 		};
 
-		if (_foreachIndex == GW_MAP_CLOSEST && !GW_LMBDOWN) then {
-
-			GW_MAP_CHECKPOINT_HOVER = true;
+		if (_foreachIndex == GW_MAP_HOVER_CLOSEST && !GW_LMBDOWN) then {
 
 			_scale = _scale * 1.25;
 			
@@ -1017,30 +1112,28 @@ _mapDraw = _mapControl ctrlAddEventHandler ["Draw", {
 			'center'
 		];
 
-		if (GW_MAP_BETWEEN > 0 && GW_MAP_BETWEEN == _foreachIndex && !GW_LMBDOWN) then {
+		// if (GW_MAP_BETWEEN > 0 && GW_MAP_BETWEEN == _foreachIndex && !GW_LMBDOWN) then {
 
-			_dirPrev = if (_foreachIndex > 0) then { ([([GW_RACE_ARRAY select (_foreachIndex - 1), _x] call dirTo) - 90] call normalizeAngle) } else { 0 };
+		// 	_dirPrev = if (_foreachIndex > 0) then { ([([GW_RACE_ARRAY select (_foreachIndex - 1), _x] call dirTo) - 90] call normalizeAngle) } else { 0 };
 
-			// Additionally draw a tempIcon if mouse is currently between points
-			(_this select 0) drawIcon [
-				checkpointMarkerAddIcon,
-				[1,1,1,0.5],
-				_mousePos,
-				30,
-				30,
-				_dirPrev,
-				'',
-				0,
-				0.1,
-				'puristaMedium',
-				'center'
-			];
+		// 	// Additionally draw a tempIcon if mouse is currently between points
+		// 	(_this select 0) drawIcon [
+		// 		checkpointMarkerAddIcon,
+		// 		[1,1,1,0.5],
+		// 		_mousePos,
+		// 		30,
+		// 		30,
+		// 		_dirPrev,
+		// 		'',
+		// 		0,
+		// 		0.1,
+		// 		'puristaMedium',
+		// 		'center'
+		// 	];
 
-		};
+		// };
 
 	} foreach GW_RACE_ARRAY;
-
-	systemchat str GW_RACE_EDITING;
 
 }];
 
