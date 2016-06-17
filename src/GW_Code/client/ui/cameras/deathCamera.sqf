@@ -11,6 +11,9 @@ if (GW_IGNORE_DEATH_CAMERA) exitWith {
 	GW_IGNORE_DEATH_CAMERA = false; 
 	player cameraeffect["terminate","back"]; 
 	9999 cutText ["", "BLACK IN", 1.5]; 
+
+	// Set our current zone early
+	["workshopZone"] call setCurrentZone;
 };
 
 _target = if (!isNil { _this select 0 }) then { (_this select 0) } else { (getMarkerPos "workshopZone_camera") };

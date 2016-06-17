@@ -118,7 +118,7 @@ setTaunt = compile preprocessFile "client\ui\functions\setTaunt.sqf";
 // When GW_ACTIVE_RACES triggered, update races if we're in the menu
 "GW_ACTIVE_RACES" addPublicVariableEventHandler { call updateRaces; };
 updateRaces = compile preprocessFile "client\ui\functions\updateRaces.sqf";
-
+raceMenu = compile preprocessFile 'client\ui\menus\race.sqf';
 
 // Resets a bind row and saves
 clearBind = {

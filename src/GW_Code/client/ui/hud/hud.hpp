@@ -344,6 +344,18 @@ class GW_HUD_Vehicle
 
 	class controls {		
 
+		class RaceBar : GW_StructuredTextBox
+		{
+
+			idc = 18020;
+			fade = 1;
+			colorBackground[] = {1,1,1,0.75};
+			x = (0.25) * safezoneW + safezoneX;
+			y = (0.13 - (GW_BUTTON_HEIGHT) + 0.003) * safezoneH + safezoneY;
+			w = (0.5) * safezoneW;
+			h = (0.003) * safezoneH;
+		};
+
 		class RaceOpp1 : GW_Race_Opp {	idc = 18031; };
 		class RaceOpp2 : GW_Race_Opp {	idc = 18032; };
 		class RaceOpp3 : GW_Race_Opp {	idc = 18033; };
@@ -398,17 +410,7 @@ class GW_HUD_Vehicle
 			text = "<img size='1.5' image='client\images\icons\menus\finishMarker.paa' />";
 		};
 
-		class RaceBar : GW_StructuredTextBox
-		{
-
-			idc = 18020;
-			fade = 1;
-			colorBackground[] = {1,1,1,0.75};
-			x = (0.25) * safezoneW + safezoneX;
-			y = (0.13 - (GW_BUTTON_HEIGHT) + 0.003) * safezoneH + safezoneY;
-			w = (0.5) * safezoneW;
-			h = (0.003) * safezoneH;
-		};
+	
 
 		class RaceTime : GW_StructuredTextBox
 		{

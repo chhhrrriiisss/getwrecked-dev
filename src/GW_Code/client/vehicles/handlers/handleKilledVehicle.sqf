@@ -68,10 +68,16 @@ _veh spawn {
      
     _newSpawn = _veh getVariable ["newSpawn", false];
 
+    // Don't award money for race deaths 
+    _inRace = if (isNil "GW_CURRENTRACE") then { false } else {
+        IF ([GW_CURRENTRACE] call checkRaceStatus == 2) exitWith { true };
+        false
+    };
+
     // No money for killing new spawns
     _rawValue = _veh getVariable ['GW_Value', 200];
     _wanted = _veh getVariable ['GW_WantedValue', 0];
-    _valueOfKill =  if (_newSpawn) then { 0 } else { ((_rawValue + _wanted) * GW_KILL_VALUE) };
+    _valueOfKill =  if (_newSpawn || _inRace) then { 0 } else { ((_rawValue + _wanted) * GW_KILL_VALUE) };
     _crew = crew _veh;    
     
     // No money for destroying own vehicle

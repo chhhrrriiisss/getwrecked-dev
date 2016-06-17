@@ -205,7 +205,7 @@ for "_i" from 0 to 1 step 0 do {
 			_timeSince = serverTime - ((((GW_CURRENTRACE call getRaceID) select 0) select 0) select 5);
 
 			_vHudRaceTime ctrlSetStructuredText parseText ( format["<t size='1.25' color='#ffffff' align='center'>+%1</t>", _timeSince call formatTimestamp ] );
-			_vHudRacePlayer ctrlSetStructuredText parseText ( format["<img size='1.5' image='%1' /><t size='1' color='#ffffff' align='left'> 1</t>", racePlayer ] );		
+			_vHudRacePlayer ctrlSetStructuredText parseText ( format["<img size='1.5' image='%1' /><t size='1' color='#ffffff' align='left'>%2</t>", racePlayer, name player ] );		
 
 			_vHudRace ctrlCommit 0;
 			_vHudRaceTime ctrlCommit 0;

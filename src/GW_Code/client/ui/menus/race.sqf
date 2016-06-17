@@ -490,7 +490,7 @@ deleteRace = {
 
 renameCurrentRace = {
 
-	private ['_result'];
+	private ['_result', '_originalName'];
 	
 	_originalName = GW_RACE_NAME;
 	_result = ['RENAME RACE', toUpper(GW_RACE_NAME), 'INPUT'] call createMessage;	
@@ -502,7 +502,8 @@ renameCurrentRace = {
 	// Check race name isn't the same as an existing race
 	if ( ({ if (((_x select 0) select 0) == _result) exitWith { 1 }; false } count call getAllRaces) >= 1) exitWith {  systemchat "Race name conflicts with an existing race."; };
 
-	GW_RACE_NAME = [toUpper (_result), 10] call cropString;
+	// GW_RACE_NAME = [toUpper (_result), 10] call cropString;
+	GW_RACE_NAME = toUpper _result;
 	[] call saveCurrentRace;
 
 	// Delete previous race entry
@@ -679,7 +680,7 @@ _mouseDblClick = _mapControl ctrlAddEventHandler ["MouseButtonDblClick", {
 	_raceLength = count GW_RACE_ARRAY;
 
 	if (surfaceIsWater _currentPos) exitWith {
-		["Cant place on water", [1,0,0,0.75], 0.75] call setMapTooltip;
+		["Cannot place on water", [1,0,0,0.75], 0.75] call setMapTooltip;
 		player say3D "beep_light"; 
 	};
 
@@ -692,7 +693,7 @@ _mouseDblClick = _mapControl ctrlAddEventHandler ["MouseButtonDblClick", {
 
 	// Add a marker at current location, insert if we're between cps
 	_index = GW_MAP_INSERT;
-	systemchat format['%1 / %2 / %3 / %4', _index, _currentPos, GW_MAP_X, GW_MAP_Y];
+	// systemchat format['%1 / %2 / %3 / %4', _index, _currentPos, GW_MAP_X, GW_MAP_Y];
 
   	if (GW_MAP_INSERT == -1) exitWith {
   		GW_RACE_ARRAY = [GW_RACE_ARRAY, _currentPos] call BIS_fnc_ArrayUnshift

@@ -58,7 +58,7 @@ GW_ARMOR_SYSTEM_ENABLED = true;
 
 // Weapon Damage vs vehicles 
 GW_GDS = 0.08; // Damage modifier while in a battle (default: 0.08)
-GW_GDS_RACE = 0.2; // Damage modifier while in a race (default: 0.2)
+GW_GDS_RACE = 0.16; // Damage modifier while in a race (default: 0.2)
 
 // Weapon Damage vs objects
 GW_GHS = 4; // Damage modifier weapons vs items (default: 4)
@@ -91,7 +91,7 @@ GW_EFFECTS_RANGE = 1000; // Increasing this may add lag at the workshop/airfield
 GW_EJECT_FAILURE = 15;
 
 // Default player start balance
-GW_INIT_BALANCE = 5000; // (Default: 5000)
+GW_INIT_BALANCE = 10000; // (Default: 5000)
 
 // Value modifier for killed vehicles
 GW_KILL_VALUE = 0.5; // How much of the vehicles value should the killer get? (default: 0.5)

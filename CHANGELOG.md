@@ -37,7 +37,6 @@ Items without Fixed/Added/Removed proceeding are typically balance changes.
 - Caching on entries in drawIcons to eliminate unnecessary repeat position finding per frame
 - Damage now differs between Battle / Race zones
 - Magnetic Coil now 50% less power/range in race zones
-- Group management added - Use Insert (Default) to access group management (friendly fire is still enabled)
 - Group global keybind added (open settings menu to configure)
 - Mines can now be dropped while airborne
 - Warning icons for mines and caltrops, now only added for first item in the group

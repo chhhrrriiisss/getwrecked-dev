@@ -361,6 +361,8 @@ class GW_Settings
 			color2[] = {1,1,1,1};			
 			colorText[] = {1,1,1,1};
 
+			tooltip = "Use ESC to close without saving"
+
 			class TextPos
 			{
 				left = 0;

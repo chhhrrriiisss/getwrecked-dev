@@ -57,7 +57,7 @@ GW_CHECKPOINTS_COMPLETED = [];
 [GW_CURRENTVEHICLE, ["noshoot", "nouse", "noammo", "nofuel"], 9999] call addVehicleStatus;
 
 // Checkpoint trigger configuration
-_distTolerance = 10;
+_distTolerance = 15;
 
 // Create initial checkpoint group
 _checkpointGroup = [GW_CHECKPOINTS_PROGRESS, GW_CHECKPOINTS] call createCheckpoint;
