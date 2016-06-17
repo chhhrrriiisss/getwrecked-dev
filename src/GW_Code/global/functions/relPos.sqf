@@ -4,7 +4,7 @@ _dir = [_this, 2, 0, [0]] call filterParam;
 
 if (_s isEqualType true) exitWith { [0,0,0] };
 _s = if (_s isEqualType objNull) then { 
-	if (X_Client) exitWith { (ASLtoATL visiblePositionASL _s) };
+	if (GW_Client) exitWith { (ASLtoATL visiblePositionASL _s) };
 	(ASLtoATL getPosASL _s) 
 } else { _s };
 

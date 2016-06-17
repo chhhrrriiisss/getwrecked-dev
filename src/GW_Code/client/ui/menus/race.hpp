@@ -651,6 +651,8 @@ class GW_Race
       w = (GW_BUTTON_WIDTH * 0.33) * safezoneW;
       h = GW_BUTTON_HEIGHT * safezoneH;
 
+      tooltip = "Create new race";
+
       size = 0.04;
 
       class TextPos

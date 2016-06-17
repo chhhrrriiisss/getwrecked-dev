@@ -14,7 +14,7 @@ if (_source isEqualType [] && { (count _source == 0) }) exitWith { "workshopZone
 
 // Convert reference to a physical location on map
 _source = if (_source isEqualType objNull) then {
-	if (X_Client) exitWith { (ASLtoATL visiblePositionASL _source) };
+	if (GW_Client) exitWith { (ASLtoATL visiblePositionASL _source) };
 	(ASLtoATL getPosASL _source)
 } else {	
 	_source

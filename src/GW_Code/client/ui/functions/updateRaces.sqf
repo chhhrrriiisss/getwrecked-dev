@@ -6,13 +6,10 @@
 
 if (!GW_RACE_GENERATOR_ACTIVE) exitWith { false };
 
-// current state
-_editing = GW_RACE_EDITING;
-
 // current race id
 _id = GW_RACE_ID;
 
-// Id of last active race
+// Id of last active race (one that was just added)
 _lastRace = GW_ACTIVE_RACES select (count GW_ACTIVE_RACES) -1;
 _lastRaceName = (_lastRace select 0) select 0;
 
@@ -28,8 +25,15 @@ if (_index == -1) exitWith { false };
 // _list = ((findDisplay 90000) displayCtrl 90011);	
 // _list lbSetCurSel _index;
 
-// If player is currently editing, wait until they save before updating race list
-if (GW_RACE_EDITING) exitWith {};
+// If player is currently editing, wait until they save before updating race list ( triggered elsewhere )
+if (GW_RACE_EDITING) exitWith { true };
+
+// Index needs to increase by whatever GW_ACTIVE_RACES has changed by to avoid selecting a race that we're not actually looking at/editing
+
+// _filterList = ((findDisplay 90000) displayCtrl 90011);
+// _currentLength = lnbSize 90011;
+
+// _newLength = cound (call getAllRaces);
 
 [_id] call generateRaceList;
 

@@ -20,16 +20,48 @@ if (!_isVehicleReady) exitWith { GW_RACE_GENERATOR_ACTIVE = false; };
 disableSerialization;
 if(!(createDialog "GW_Race")) exitWith { GW_RACE_GENERATOR_ACTIVE = false; }; //Couldn't create the menu
 
-showChat true;
-
-
+showChat false;
 
 getAllRaces = {
 	_rcs = profileNamespace getVariable [GW_RACES_LOCATION, []];
-	_rcs = if (count _rcs == 0) then {
+	_version = profileNamespace getVariable [GW_RACES_VERSION_LOCATION, 0];
+
+	_updateRequired = if (isNil "_version" || _version < GW_VERSION) then { true } else { false };
+	_defaultRequired = if (count _Rcs == 0) then { true } else { false };
+
+	// No existing race library, or no race library empty + update required
+	if ((_defaultRequired && !_updateRequired) || (_updateRequired && count _rcs == 0)) then {
 		[] call createDefaultRaces; 
-		(profileNamespace getVariable [GW_RACES_LOCATION, []])
-	} else { _rcs };
+		_rcs = profileNamespace getVariable [GW_RACES_LOCATION, []];
+	};
+
+	// Existing race library + update required
+	if (_updateRequired && count _rcs > 0) then {
+
+		// Set defaults
+		[] call createDefaultRaces; 
+		_rcsNew = profileNamespace getVariable [GW_RACES_LOCATION, []];
+
+		// Try to port across races into the new array
+		{
+			_r = _x;
+			_name = (_x select 0) select 0;
+
+			// Check race with same name doesn't exist and push if it doesn't
+			if ( ({ if (((_x select 0) select 0) == _name) exitWith { 1 }; false } count _rcsNew) >= 1) then {} else { 
+				_rcsNew pushback _r;
+			};
+
+		} foreach _rcs;
+
+		// Save race to profile
+		profileNamespace setVariable [GW_RACES_LOCATION, _rcsNew];
+		profilenamespace setVariable [GW_RACES_VERSION_LOCATION, GW_VERSION];
+		saveProfileNamespace;
+
+		systemchat 'Race library successfully updated to new version.';
+	};
+
 
 	_libraryRaces = +_rcs;
 
@@ -55,6 +87,7 @@ startRace = {
 	
 	disableSerialization;
 
+	if (GW_RACE_EDITING) exitWith {};
 	if (GW_RACE_ACTIVE) exitWith { systemchat 'You cant host more than one race at a time.'; };
 	GW_RACE_ACTIVE = true;
 
@@ -187,6 +220,7 @@ startRace = {
 };
 
 changeRace = {
+	if (GW_RACE_EDITING) exitWith {};
 	private ['_list', '_newSelection'];	
 	_existingRaces = call getAllRaces;
 	_newSelection = [GW_RACE_ID + _this, 0, (count _existingRaces) - 1, true] call limitToRange;
@@ -538,6 +572,14 @@ toggleRaceEditing = {
 		[] call focusCurrentRace;
 		[] call saveCurrentRace;
 
+		GW_RACE_EDITING = false;
+
+		// Reset tooltips while out of editing
+		_mapControl = ((findDisplay 90000) displayCtrl 90001);
+		_mapControl ctrlSetTooltip "";
+		_mapControl ctrlCommit 0;
+
+
 	} else {
 
 		_mapTitle ctrlSetFade 1;
@@ -550,6 +592,8 @@ toggleRaceEditing = {
 			_x ctrlSetFade 1;
 			_x ctrlCommit 0;
 		} foreach _nonEditorControls;
+
+		GW_RACE_EDITING = true;
 
 	};
 
@@ -642,17 +686,19 @@ _mouseUp = _mapControl ctrlAddEventHandler ["MouseButtonUp", {
 		GW_MAP_NUMBER = GW_MAP_NUMBER + 1; 
 	};
 
-	if ((_this select 1) == 1 || !GW_RACE_EDITING) exitWith {};
+	if ((_this select 1) == 1 || GW_RACE_EDITING) exitWith {};
 
 	_tooClose = -1;
 
 	_nearbyMarker = [100, false] call closestMarkerToMouse;
 	if (_nearbyMarker >= 0 && _raceLength > 1 && GW_MAP_NUMBER != _nearbyMarker) exitWith {
+		["Not enough space at position", [1,0,0,0.75], 0.75] call setMapTooltip;
 		player say3D "beep_light";
 	};	
 
 	_currentPos = _currentPos findEmptyPosition [10,75,"O_truck_03_ammo_f"];
 	if (count _currentPos == 0) exitWith {
+		["Not enough space at position", [1,0,0,0.75], 0.75] call setMapTooltip;
 		player say3D "beep_light";
 	};
 
@@ -663,9 +709,11 @@ _mouseUp = _mapControl ctrlAddEventHandler ["MouseButtonUp", {
 
 }];
 
+
+
 _mouseDown = _mapControl ctrlAddEventHandler ["MouseButtonDown", { 
 
-	if (!GW_RACE_EDITING && !GW_MAP_DRAG) exitWith {
+	if (GW_RACE_EDITING && !GW_MAP_DRAG) exitWith {
 
 		disableSerialization;
 		_mapControl = ((findDisplay 90000) displayCtrl 90001);	
@@ -686,7 +734,13 @@ _mouseDown = _mapControl ctrlAddEventHandler ["MouseButtonDown", {
 				};
 
 				_pos = _pos findEmptyPosition [5,25,"O_truck_03_ammo_f"];
-				_pos = if (count _pos == 0) then { player say3D "beep_light"; _prevPos } else { _pos };
+				_pos = if (count _pos == 0) then { 
+
+					["Not enough space at position", [1,0,0,0.75], 0.75] call setMapTooltip;
+
+					player say3D "beep_light"; 
+					_prevPos 
+				} else { _pos };
 				GW_RACE_ARRAY set [_this, _pos];
 
 				GW_MAP_DRAG = false;
@@ -696,19 +750,82 @@ _mouseDown = _mapControl ctrlAddEventHandler ["MouseButtonDown", {
 
 }];
 
+
 _mouseHold = _mapControl ctrlAddEventHandler ["MouseHolding", { 
-	_tooltip = (findDisplay 90000) displayCtrl 90020;
-	_tooltip ctrlSetFade 0;
-	_tooltip ctrlCommit 0.2;
+	// _tooltip = (findDisplay 90000) displayCtrl 90020;
+	// _tooltip ctrlSetFade 0;
+	// _tooltip ctrlCommit 0.2;
+
+
 
 	// Populate race properties
 	[] call generateRaceStats;
 
 }];
 
+setMapTooltip = {
+
+	params ['_str', '_color', '_duration'];
+
+	_str = [_this, 0, "", [""]] call filterParam;
+	_color = [_this, 1, [1,1,1,1], [[]]] call filterParam;
+	_duration = [_this, 2, 0, [0]] call filterParam;
+
+	_mapControl = ((findDisplay 90000) displayCtrl 90001);
+	if (!ctrlCommitted _mapControl) exitWith {};
+
+	if (_duration > 0) exitWith {
+
+		_this spawn {
+
+			disableSerialization;
+			_mapControl = ((findDisplay 90000) displayCtrl 90001);
+			_mapControl ctrlSetTooltip (_this select 0);
+			_mapControl ctrlSetTooltipColorText (_this select 1);
+
+			_bgColor = +(_this select 1);
+			_bgColor set [3, (_bgColor select 3) * 0.5];
+
+			_mapControl ctrlSetTooltipColorBox _bgColor;
+			_mapControl ctrlCommit (_this select 2);
+
+			Sleep (_this select 2);
+
+			_mapControl ctrlSetTooltip "";
+			_mapControl ctrlSetTooltipColorText [1,1,1,1];
+			_mapControl ctrlSetTooltipColorBox [1,1,1,1];
+			_mapControl ctrlCommit 0;
+
+		};
+	};
+
+	disableSerialization;
+	_mapControl ctrlSetTooltip (_this select 0);
+	_mapControl ctrlSetTooltipColorText _color;
+	_mapControl ctrlSetTooltipColorBox [1,1,1,1];
+	_mapControl ctrlCommit 0;
+	
+	
+};
+
+
 _mouseMove = _mapControl ctrlAddEventHandler ["MouseMoving", { 	
 	GW_MAP_X = _this select 1; 
 	GW_MAP_Y = _this select 2; 	
+
+	_str = [] call {
+		if (!GW_RACE_EDITING) exitWith { "" };
+		if (GW_LMBDOWN) exitWith { "" };
+		if (GW_MAP_CHECKPOINT_HOVER) exitWith { "Click and drag to move"};
+		if (GW_RACE_EDITING) exitWith { "Double click to add a checkpoint" };
+		""
+	};
+ 	
+ 	[_str, [1,1,1,1], 0] call setMapTooltip;
+	// _mapControl = ((findDisplay 90000) displayCtrl 90001);
+	// _mapControl ctrlSetTooltip "";
+	// _mapControl ctrlCommit 1;
+	
 }];
 
 drawSegment = {
@@ -753,7 +870,11 @@ _mapDraw = _mapControl ctrlAddEventHandler ["Draw", {
 	disableSerialization;
 	_mapControl = (_this select 0);
 	_mousePos = _mapControl ctrlMapScreenToWorld [GW_MAP_X, GW_MAP_Y];	
-	 GW_MAP_BETWEEN = -1;
+	GW_MAP_BETWEEN = -1;
+
+	GW_MAP_CHECKPOINT_HOVER = false;
+
+
 
 	{
 		if (_foreachIndex == 0) then {} else {
@@ -770,7 +891,7 @@ _mapDraw = _mapControl ctrlAddEventHandler ["Draw", {
 				_dirMarkerToNext = [_lastPos, _currentPos] call dirTo;
 				_difDir = abs ([_dirMouseToMarker - _dirMarkerToNext] call flattenAngle);
 
-				if (_difDir < 0.5 && (_mousePos distance _currentPos > 100) && (_mousePos distance _lastPos > 100) && !GW_RACE_EDITING) then {
+				if (_difDir < 0.5 && (_mousePos distance _currentPos > 100) && (_mousePos distance _lastPos > 100)) then {
 					GW_MAP_BETWEEN = _forEachIndex;
 				};
 
@@ -843,9 +964,7 @@ _mapDraw = _mapControl ctrlAddEventHandler ["Draw", {
 
 		_iconToUse = switch (true) do {
 			case (_foreachIndex == 0): { _scale = _scale * 1.5; startMarkerIcon };
-			case (
-				(_raceLength > 1 &&  _foreachIndex == (_raceLength -1) && !GW_RACE_EDITING)		
-			) : { _scale = _scale * 1.5; finishMarkerIcon };
+			case ( _raceLength > 1 &&  _foreachIndex == _raceLength -1) : { _scale = _scale * 1.5; finishMarkerIcon };
 			default { checkpointMarkerIcon };
 		};
 
@@ -855,9 +974,12 @@ _mapDraw = _mapControl ctrlAddEventHandler ["Draw", {
 
 		if (GW_LMBDOWN && _foreachIndex == GW_MAP_CLOSEST) then {
 			_color set [3, 0.5];
+
 		};
 
 		if (_foreachIndex == GW_MAP_CLOSEST && !GW_LMBDOWN) then {
+
+			GW_MAP_CHECKPOINT_HOVER = true;
 
 			_scale = _scale * 1.25;
 			
@@ -877,6 +999,8 @@ _mapDraw = _mapControl ctrlAddEventHandler ["Draw", {
 			];	
 
 		};
+
+
 
 		// Draw icons for each point
 		(_this select 0) drawIcon [
@@ -916,6 +1040,8 @@ _mapDraw = _mapControl ctrlAddEventHandler ["Draw", {
 
 	} foreach GW_RACE_ARRAY;
 
+	systemchat str GW_RACE_EDITING;
+
 }];
 
 Sleep 0.1;
@@ -932,6 +1058,7 @@ _mapControl ctrlRemoveEventHandler ["MouseButtonDblClick", _mouseDblClick];
 _mapControl ctrlRemoveEventHandler ["Draw", _mapDraw];
 
 GW_RACE_GENERATOR_ACTIVE = false;
+GW_RACE_EDITING = false;
 
 showChat true;
 

@@ -18,6 +18,10 @@ If you're looking to host a game yourself, it is strongly recommended to use a d
 
 This isn't your typical infantry shooter and if you're coming from more mil-sim orientated game modes you're in for a surprise. A short guide is [available on the website](http://getwrecked.info#guide). [Orangesherbet](http://twitch.tv/orangesherbet) also has an [excellent tutorial video](https://www.youtube.com/watch?v=KL3aYOJD0fY&feature=youtu.be&a=) that introduces the basics, shows some game-play and also offers some tips for survival. 
 
+## Bugs &amp; Issues 
+
+From time to time you will encounter problems, most of which are usually fixed by rejoining the server. Please report any bugs you can easily replicate to the [github issues page](https://github.com/chrisnic/getwrecked/issues). In the event you find a bug that persists after rejoining the server, you can use the !reset command in chat. Available commands are !reset <money | unlocks | library | races | binds | all>. Be aware this action is permanent and progress reset this way is not recoverable.
+
 ## License
 
 **Created, coded and designed by Sli**

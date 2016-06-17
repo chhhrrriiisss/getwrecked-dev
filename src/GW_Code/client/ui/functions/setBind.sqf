@@ -14,7 +14,7 @@ if (isNil "GW_LASTBIND_TRIGGER") then {
 	GW_LASTBIND_TRIGGER = time;
 };
 
-if (time < (GW_LASTBIND_TRIGGER + 0.25)) exitWith {};
+if (time < (GW_LASTBIND_TRIGGER + 0.5)) exitWith {};
 GW_LASTBIND_TRIGGER = time;
 
 // Invalid row selected (like a category header for example)
@@ -24,7 +24,12 @@ disableSerialization;
 _list = ((findDisplay 92000) displayCtrl 92001);
 _list lnbSetColor [_index, 1, [1,0,0,1]];
 
+// Don't bind to reserved indexs
 if (_index in reservedIndexes) exitWith { _list lnbSetCurSelRow _index; };
+
+// If the index is already waiting for a bind, cancel binding
+
+
 
 // Check if we're selecting the mouse icon rather than the keybind area
 if (!isNil "GW_MOUSEX" && !isNil "GW_MOUSEY" && { GW_MOUSEX > 0.4 } ) then {
@@ -37,6 +42,7 @@ if (!isNil "GW_MOUSEX" && !isNil "GW_MOUSEY" && { GW_MOUSEX > 0.4 } ) then {
 	_mouseBindState = if (_mouseBindState == "1") then { systemchat 'Mouse fire disabled.'; [mouseInactiveIcon, "0"] } else { systemchat 'Mouse fire enabled.'; [mouseActiveIcon, "1"] };
 	lnbSetData [92001, [_index, 3], (_mouseBindState select 1)];
 	lnbSetPicture[92001, [_index, 3], (_mouseBindState select 0)];
+
 	// [_index] call saveBinds;
 
 } else {
@@ -46,6 +52,7 @@ if (!isNil "GW_MOUSEX" && !isNil "GW_MOUSEY" && { GW_MOUSEX > 0.4 } ) then {
 
 	lnbSetText [92001, [_index, 2], '  []'];
 	lnbSetData [92001, [_index, 2], ''];
+	lnbSetColor [92001, [_index, 2], colorRed];
 
 	// Retrieve the object reference (and any existing bind)
 	_obj = missionNamespace getVariable [format['%1', [_index,0]], nil];
@@ -84,6 +91,7 @@ if (!isNil "GW_MOUSEX" && !isNil "GW_MOUSEY" && { GW_MOUSEX > 0.4 } ) then {
 		systemChat 'Timed out waiting for key bind';
 		lnbSetText [92001, [_index, 2], _prevText];
 		lnbSetData [92001, [_index, 2], _prevData];
+		lnbSetColor [92001, [_index, 2], [1,1,1,1]];
 		GW_SETTING_CANCEL = nil;
 	};	
 

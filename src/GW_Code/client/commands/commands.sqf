@@ -117,12 +117,12 @@ GW_COMMANDS_LIST = [
 
 			call compile preprocessFile "global\compile.sqf";
 
-			if (X_Client || X_JIP) then {
+			if (GW_Client || GW_JIP) then {
 				call compile preprocessFile "client\compile.sqf";  
 				call compile preprocessFile 'client\ui\compile.sqf';
 			};
 
-			if (X_Server) then {
+			if (GW_Server) then {
 				call compile preprocessFile "server\compile.sqf";  
 			};
 

@@ -51,6 +51,7 @@ getWeaponIcon = {
 	noTargetIcon
 };
 
+GW_CURRENTPOS = [0,0,0];
 GW_IGNORE_DEATH_CAMERA = false;
 GW_INVEHICLE = false;
 GW_ISDRIVER = false;

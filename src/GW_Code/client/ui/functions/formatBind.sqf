@@ -13,3 +13,4 @@ _dK = if ( (count toArray _dK) == 0) then { "" } else { format['[ %1 ]', _dK] };
 
 lnbSetText [92001, [_i, 2], _dK];
 lnbSetData [92001, [_i, 2], format['%1', _k]];
+lnbSetColor [92001, [_i, 2], [1,1,1,1]];

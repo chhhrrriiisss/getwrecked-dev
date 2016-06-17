@@ -16,6 +16,7 @@ GW_LIBRARY_LOCATION = format['%1_LIBRARY', GW_LOCATION_TAG];
 
 // Profile races location
 GW_RACES_LOCATION = format['%1_RACES', GW_LOCATION_TAG];
+GW_RACES_VERSION_LOCATION = format['%1_RACES_VERSION', GW_LOCATION_TAG];
 
 // Profile unlocks location
 GW_UNLOCKED_ITEMS_LOCATION = format['%1_UNLOCKED_ITEMS', GW_LOCATION_TAG];
@@ -207,6 +208,7 @@ GW_UNCLEARABLE_ITEMS = [
     'Land_spp_Transformer_F',
     'Land_HelipadSquare_F',
     'Land_File1_F',
+    'Intel_File1_F',
     'Camera',
     'HouseFly',
     'Mosquito',

@@ -37,7 +37,7 @@ _bg ctrlShow true;
 _bg ctrlCommit 0;
 
 _btnA ctrlShow true;
-_btnA ctrlSetText 'GOT IT!';
+_btnA ctrlSetText 'CONTINUE';
 ctrlSetFocus _btnA;
 _btnA ctrlCommit 0;
 

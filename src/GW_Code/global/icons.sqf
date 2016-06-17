@@ -114,6 +114,7 @@ radarSupplyIcon = ICON_ROOT + "hud\radarSupply.paa";
 
 racePlayer = ICON_ROOT + "hud\racePlayer.paa";
 raceOpponent = ICON_ROOT + "hud\raceOpponent.paa";
+timerIcon = ICON_ROOT + 'menus\timer.paa';
 
 // Markers
 targetIcon = ICON_ROOT + "hud\target.paa";

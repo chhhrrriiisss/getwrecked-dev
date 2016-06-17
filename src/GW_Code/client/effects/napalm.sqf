@@ -34,7 +34,6 @@ for "_i" from 0 to 4 step 1 do {
 	_src = "Land_PenBlack_F" createVehicleLocal _pos;	
 	[_src, 10] spawn flameEffect;
 	_src setVelocity [(random 22)-11, (random 22)-11, 15];	
-	systemchat format['%1', _src];
 	_objectsArray pushback _src;
 };
 

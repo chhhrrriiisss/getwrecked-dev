@@ -31,6 +31,9 @@ _applyBindToObject = {
         _tag = (_this select 1) getVariable ['GW_Tag', ''];
         _objClass = ([_tag, GW_LOOT_LIST] call getData) select 0;
 
+        // Abort if we don't find a valid class
+        IF (isNil "_objClass") exitWith { false };
+
 		_pos = if ((_x select 1) isEqualType "") then { call compile (_x select 1) } else { (_x select 1) };
 		if ((_class == _objClass) && (_objPos distance _pos) < _tolerance) exitWith {
 			_x set [3, (_this select 2)];
@@ -115,17 +118,16 @@ for "_i" from 0 to _listLength step 1 do {
 };
 
 // Store vehicle binds to profileNamespace
-_vehicleName = GW_SETTINGS_VEHICLE getVariable ['name', ''];
-if (count toArray _vehicleName == 0) then {} else {
+if (isNull GW_SETTINGS_VEHICLE || count toArray _vehicleName == 0) exitWith { false };
 
-	_bindsList = GW_SETTINGS_VEHICLE getVariable [GW_BINDS_LOCATION, []];
+_bindsList = GW_SETTINGS_VEHICLE getVariable ["GW_Binds", []];
 
-	// Update meta
-	((_raw select 0) select 6) set [5, _bindsList];
+// Update meta
+((_raw select 0) select 6) set [5, _bindsList];
 
-	// Store updated data
-	[_vehicleName, _raw] call setVehicleData;
+// Store updated data
+[_vehicleName, _raw] call setVehicleData;
 
-};
+
 
 true
