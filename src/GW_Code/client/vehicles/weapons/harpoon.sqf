@@ -60,7 +60,7 @@ _hook addEventHandler['EpeContact', {
 _rope = ropeCreate[_vehicle, (_vehicle worldToModelVisual (ASLtoATL visiblePositionASL _obj)), _hook, [0,0,0], 60];
 _hook setVariable ['GW_ropeSource', _rope];
 
-playSound3D [format["a3\sounds_f\weapons\Mortar\mortar_%1.wss", [(ceil (random 7) + 1), 2] call padZeros], _obj, false, _oPos, 10, 1, 100];
+playSound3D [format["a3\sounds_f\weapons\Mortar\mortar_%1.wss", [(ceil (random 7) + 1), 2] call padZeros], _obj, false, ATLtoasl _oPos, 10, 1, 100];
 
 
 [_obj] spawn muzzleEffect;

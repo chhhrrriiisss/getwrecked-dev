@@ -43,7 +43,7 @@ _this spawn {
 			_launch setDir _dir;
 			_launch setVelocity _velocity;
 
-			playSound3D [_soundToPlay, _gun, false,_gPos, 1, 1, 50];
+			playSound3D [_soundToPlay, _gun, false,ATLtoASL _gPos, 1, 1, 50];
 
 			Sleep 1;
 			deleteVehicle _launch;

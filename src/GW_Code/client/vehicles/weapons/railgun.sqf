@@ -63,7 +63,7 @@ _this spawn {
 	_power = -20;
 	_vehicle setVelocity [(_vel select 0)+(sin _dir*_power),(_vel select 1)+(cos _dir*_power),(_vel select 2) + 0.4];	
 
-	playSound3D ["a3\sounds_f\sfx\special_sfx\sparkles_wreck_2.wss", _obj, false, _oPos, 2, 1, 50];	
+	playSound3D ["a3\sounds_f\sfx\special_sfx\sparkles_wreck_2.wss", _obj, false, ATLtoASL _oPos, 2, 1, 50];	
 
 	[(ATLtoASL _oPos), (ATLtoASL _tPos), "RLG"] call markIntersects;				
 	[(ATLtoASL _oPos), (ATLtoASL _tPos), GW_CURRENTVEHICLE, 0.1, "RLG"] call damageIntersects;

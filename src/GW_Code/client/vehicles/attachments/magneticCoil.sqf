@@ -36,16 +36,16 @@ _this spawn {
 	
 	_range = random (_maxRange - _minRange) + _minRange;
 
-	playSound3D ["a3\sounds_f\sfx\alarmCar.wss", _vehicle, false, _pos, 3, 1, 200]; 
-	playSound3D ["a3\sounds_f\vehicles\armor\APC\APC2\int_engine_start.wss", _vehicle, false, _pos, 3, 1, 250];
+	playSound3D ["a3\sounds_f\sfx\alarmCar.wss", _vehicle, false, ATLtoASL _pos, 3, 1, 200]; 
+	playSound3D ["a3\sounds_f\vehicles\armor\APC\APC2\int_engine_start.wss", _vehicle, false, ATLtoASL _pos, 3, 1, 250];
 
 	Sleep 1 + (random 1);
 
 	_status = _vehicle getVariable ["status", []];
 	if ('emp' in _status || 'cloak' in _status) exitWith { false };
 
-	playSound3D ["a3\sounds_f\sfx\special_sfx\sparkles_wreck_2.wss", _vehicle, false, _pos, 2, 1, 150];
-	playSound3D ["a3\sounds_f\sfx\earthquake1.wss", _vehicle, false, _pos, 10, 1, 150];
+	playSound3D ["a3\sounds_f\sfx\special_sfx\sparkles_wreck_2.wss", _vehicle, false, ATLtoASL _pos, 2, 1, 150];
+	playSound3D ["a3\sounds_f\sfx\earthquake1.wss", _vehicle, false, ATLtoASL _pos, 10, 1, 150];
 
 	[
 		[
@@ -123,7 +123,7 @@ _this spawn {
 		
 	} count _nearby > 0;
 
-	playSound3D ["a3\sounds_f\vehicles\armor\APC\APC2\int_engine_stop.wss", _vehicle, false, _pos, 2, 1, 150];
+	playSound3D ["a3\sounds_f\vehicles\armor\APC\APC2\int_engine_stop.wss", _vehicle, false, ATLtoASL _pos, 2, 1, 150];
 
 };
 

@@ -12,7 +12,7 @@ if (isNull ( _this select 0) || isNull (_this select 1)) exitWith { false };
 
 params ['_obj', '_vehicle'];
 
-playSound3D ["a3\sounds_f\sfx\vehicle_drag_end.wss",_vehicle, false, getPosATL _vehicle, 2, 1, 50];
+playSound3D ["a3\sounds_f\sfx\vehicle_drag_end.wss",_vehicle, false, visiblePositionASL _vehicle, 2, 1, 50];
 
 _type = typeOf _obj;
 deleteVehicle _obj;
@@ -83,7 +83,7 @@ GW_DEPLOYLIST = GW_DEPLOYLIST + [_obj];
 		if (!alive _o || time > _t || _triggered) exitWith {};
 
 		_triggered = _o getVariable ["triggered", false];
-		playSound3D ["a3\sounds_f\sfx\beep_target.wss", _o, false, getPos _o, 2, 1, 25]; 
+		playSound3D ["a3\sounds_f\sfx\beep_target.wss", _o, false, visiblePositionASL _o, 2, 1, 25]; 
 		Sleep 0.5;
 	};
 
@@ -92,7 +92,7 @@ GW_DEPLOYLIST = GW_DEPLOYLIST + [_obj];
 
 		_pos = (ASLtoATL visiblePositionASL _o);
 
-		playSound3D ["a3\sounds_f\weapons\mines\electron_trigger_1.wss", _o, false, _pos, 2, 1, 150]; 
+		playSound3D ["a3\sounds_f\weapons\mines\electron_trigger_1.wss", _o, false, atlTOasl _pos, 2, 1, 150]; 
 		
 		_pos set [2,2];
 

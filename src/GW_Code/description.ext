@@ -66,6 +66,13 @@ class CfgSounds
 {
 	sounds[] = {};
 
+	class banana
+	{
+		name = "banana";
+		sound[] = {"\client\sounds\banana.ogg", 1, 1};
+		titles[] = {};
+	};
+
 	class leeroy
 	{
 		name = "leeroy";

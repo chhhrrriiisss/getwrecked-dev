@@ -43,7 +43,7 @@ _this spawn {
 			GW_WARNINGICON_ARRAY pushback _o;
 		};		
 
-		playSound3D ["a3\sounds_f\weapons\other\sfx9.wss", GW_CURRENTVEHICLE, false, (ASLtoATL visiblePositionASL GW_CURRENTVEHICLE), 2, 1, 50];
+		playSound3D ["a3\sounds_f\weapons\other\sfx9.wss", GW_CURRENTVEHICLE, false, visiblePositionASL GW_CURRENTVEHICLE, 2, 1, 50];
 
 		_o allowDamage false;
 
@@ -106,7 +106,7 @@ _this spawn {
 		_o allowDamage true;
 	};
 
-	playSound3D ["a3\sounds_f\sfx\vehicle_drag_end.wss", GW_CURRENTVEHICLE, false, (ASLtoATL visiblePositionASL GW_CURRENTVEHICLE), 2, 1, 50];
+	playSound3D ["a3\sounds_f\sfx\vehicle_drag_end.wss", GW_CURRENTVEHICLE, false, visiblePositionASL GW_CURRENTVEHICLE, 2, 1, 50];
 
 	// Make our own tyres partially invulnerable for a limited duration
 	[_vehicle, ['invTyres'], 3] call addVehicleStatus;

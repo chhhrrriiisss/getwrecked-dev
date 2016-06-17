@@ -40,7 +40,7 @@ GW_GUIDED_MISSILE = createVehicle [_round, _gPos, [], 0, "FLY"];
 GW_GUIDED_MISSILE setVectorUp GW_GUIDED_HEADING; 
 GW_GUIDED_MISSILE setVelocity GW_GUIDED_VELOCITY;
 
-playSound3D ["a3\sounds_f\weapons\Launcher\nlaw_final_2.wss", GW_GUIDED_MISSILE, false, (visiblePosition GW_GUIDED_MISSILE), 5, 1, 100];
+playSound3D ["a3\sounds_f\weapons\Launcher\nlaw_final_2.wss", GW_GUIDED_MISSILE, false, (visiblePositionASL GW_GUIDED_MISSILE), 5, 1, 100];
 
 [_vehicle, ['radar'], 20] call addVehicleStatus;
 

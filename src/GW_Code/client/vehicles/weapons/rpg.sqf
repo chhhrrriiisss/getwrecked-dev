@@ -29,7 +29,7 @@ _bullet = createVehicle [_round, _gPos, [], 0, "FLY"];
 _bullet setVectorDir _heading; 
 _bullet setVelocity _velocity; 
 
-playSound3D [_soundToPlay, _gun, false, getPos _gun, 10, 1, 50];		
+playSound3D [_soundToPlay, _gun, false, getPosASL _gun, 10, 1, 50];		
 
 addCamShake [.5, 1,20];
 

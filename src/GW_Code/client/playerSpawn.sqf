@@ -230,6 +230,11 @@ GW_MM_EH = (findDisplay 46) displayAddEventHandler ["MouseMoving", "[_this, 'mou
 
 inGameUISetEventHandler['PrevAction', '[_this, "scroll"] call triggerLazyUpdate; false'];
 inGameUISetEventHandler['NextAction', '[_this, "scroll"] call triggerLazyUpdate; false'];
+inGameUISetEventHandler ["Action", "
+	if (_this select 3 == 'DisAssemble') then {
+		true
+	}
+"];
 
 // Prevent weapon disassembly
 // inGameUISetEventHandler ["Action", "

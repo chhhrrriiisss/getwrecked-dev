@@ -12,7 +12,7 @@ if (!alive _obj || !alive _vehicle) exitWith { false };
 
 _oPos = (ASLtoATL getPosASL _obj);
 
-playSound3D ["a3\sounds_f\sfx\explosion3.wss", _obj, false, _oPos, 2, 1, 100];
+playSound3D ["a3\sounds_f\sfx\explosion3.wss", _obj, false,ATLtoASL _oPos, 2, 1, 100];
 
 // Red bubble effect
 [

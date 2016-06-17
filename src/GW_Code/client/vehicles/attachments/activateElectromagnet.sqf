@@ -13,17 +13,17 @@ _this spawn {
 
 	if (!alive _vehicle) exitWith { false };
 
-	_pos = ASLtoATL getPosASL _vehicle;
+	_pos = ASLtoATL visiblePositionASL _vehicle;
 
-	playSound3D ["a3\sounds_f\vehicles\armor\APC\APC2\int_engine_start.wss", _vehicle, false, _pos, 3, 1, 250];
+	playSound3D ["a3\sounds_f\vehicles\armor\APC\APC2\int_engine_start.wss", _vehicle, false, ATLtoASL _pos, 3, 1, 250];
 
 	Sleep 0.5 + (random 0.5);
 
 	_status = _vehicle getVariable ["status", []];
 	if ('emp' in _status || 'cloak' in _status) exitWith { false };
 
-	playSound3D ["a3\sounds_f\sfx\special_sfx\sparkles_wreck_2.wss", _vehicle, false, _pos, 5, 1, 50];
-	playSound3D [format["a3\sounds_f\sfx\earthquake%1.wss", ceil (random 4)], _vehicle, false, _pos, 10, 1, 150];
+	playSound3D ["a3\sounds_f\sfx\special_sfx\sparkles_wreck_2.wss", _vehicle, false, ATLtoASL _pos, 5, 1, 50];
+	playSound3D [format["a3\sounds_f\sfx\earthquake%1.wss", ceil (random 4)], _vehicle, false, ATLtoASL _pos, 10, 1, 150];
 
 	_magnetizeNearby = {
 
@@ -85,7 +85,7 @@ _this spawn {
 		(time > _timeout)
 	};
 
-	playSound3D ["a3\sounds_f\vehicles\armor\APC\APC2\int_engine_stop.wss", _vehicle, false, _pos, 2, 1, 150];
+	playSound3D ["a3\sounds_f\vehicles\armor\APC\APC2\int_engine_stop.wss", _vehicle, false, ATLtoASL _pos, 2, 1, 150];
 
 };
 

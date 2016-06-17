@@ -42,7 +42,7 @@ if (!alive _lockedTarget) then {
 	_missile setVelocity _velocity; 
 
 	addCamShake [.5, 1,30];
-	playSound3D [_soundToPlay, _gun, false, getPos _gun, 1, 1, 50];		
+	playSound3D [_soundToPlay, _gun, false, visiblePositionASL _gun, 1, 1, 50];		
 
 	// Spawn the loop that keeps updating the missile heading/velocity
 	[_missile, _vehicle, _lockedTarget] spawn {		

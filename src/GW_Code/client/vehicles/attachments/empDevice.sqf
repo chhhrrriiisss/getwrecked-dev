@@ -22,7 +22,7 @@ _vehs = _pos nearEntities [["Car", "Tank"], 40];
 	"empCircle"
 ] call bis_fnc_mp;
 
-playSound3D ["a3\sounds_f\sfx\special_sfx\sparkles_wreck_3.wss", _obj, false, _pos, 2, 1, 100];	
+playSound3D ["a3\sounds_f\sfx\special_sfx\sparkles_wreck_3.wss", _obj, false, ATLtoASL _pos, 2, 1, 100];	
 
 {
 	_isVehicle = _x getVariable ['isVehicle', false];

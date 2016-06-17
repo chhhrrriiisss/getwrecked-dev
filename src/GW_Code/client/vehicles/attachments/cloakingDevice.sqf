@@ -40,7 +40,7 @@ _size = ( (_dimensions select 0) * (_dimensions select 1) * (_dimensions select 
 _layerStatic = ("BIS_layerStatic" call BIS_fnc_rscLayer);
 _layerStatic cutRsc ["RscStatic", "PLAIN" , 2];
 
-playSound3D ["a3\sounds_f\sfx\special_sfx\sparkles_wreck_3.wss", _vehicle, false, _pos, 2, 1, 30];	
+playSound3D ["a3\sounds_f\sfx\special_sfx\sparkles_wreck_3.wss", _vehicle, false, ATLtoASL _pos, 2, 1, 30];	
 
 [_vehicle, ['cloak'], 9999] call addVehicleStatus;
 
@@ -160,7 +160,7 @@ waitUntil{
 		false 
 	] call bis_fnc_mp;  
 
-	playSound3D ["a3\sounds_f\sfx\special_sfx\sparkles_wreck_1.wss", _v, false, _p, 2, 1, 150];	
+	playSound3D ["a3\sounds_f\sfx\special_sfx\sparkles_wreck_1.wss", _v, false, ATLtoASL _p, 2, 1, 150];	
 	
 
 };

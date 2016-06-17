@@ -42,7 +42,7 @@ if (count _statusList > 0) then {
 	if (!_isAI) then { ["SMOKE ACTIVATED!", 1, smokeIcon, nil, "default"] spawn createAlert; };
 };
 
-playSound3D ["a3\sounds_f\sfx\explosion3.wss", _obj, false, _oPos, 2, 1, 100];
+playSound3D ["a3\sounds_f\sfx\explosion3.wss", _obj, false, ATLtoASL _oPos, 2, 1, 100];
 
 [
 	[

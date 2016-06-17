@@ -91,7 +91,7 @@ if (_alt <= 4) exitWith { ['TOO LOW!', 0.25, warningIcon, colorRed, "flash"] spa
 			((_pos select 2 < 4) || !GW_CHUTE_ACTIVE || !alive (_this select 0) || (count _intersects > 0) )
 		};
 
-		playSound3D ["a3\sounds_f\weapons\Flare_Gun\flaregun_1_shoot.wss", _veh, false, (ASLtoATL visiblePositionASL _veh), 10, 1, 50]; 
+		playSound3D ["a3\sounds_f\weapons\Flare_Gun\flaregun_1_shoot.wss", _veh, false, visiblePositionASL _veh, 10, 1, 50]; 
 		detach _veh;  		  
         GW_CHUTE_ACTIVE = false;
 		GW_WAITCOMPILE = false;

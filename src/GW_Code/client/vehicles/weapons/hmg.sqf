@@ -22,7 +22,7 @@ _heading = if (_indirect) then { ([ATLtoASL _gPos, ATLtoASL _targetPos] call BIS
 _velocity = [_heading, _projectileSpeed] call BIS_fnc_vectorMultiply; 
 _velocity = _velocity vectorAdd GW_CURRENTVEL;
 
-playSound3D ["a3\sounds_f\weapons\HMG\HMG_gun.wss", _gun, false, _gPos, 7, 1, 100];
+playSound3D ["a3\sounds_f\weapons\HMG\HMG_gun.wss", _gun, false, ATLtoASL _gPos, 7, 1, 100];
 
 // If we're using HE Ammo
 if ('EXP' in GW_VEHICLE_SPECIAL) then {		

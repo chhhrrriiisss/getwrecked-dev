@@ -20,7 +20,7 @@ _tPos = if (_target isEqualTo objNull) then { (ASLtoATL visiblePositionASL _targ
 	false
 ] call bis_fnc_mp;
 
-playSound3D ["a3\sounds_f\sfx\special_sfx\sparkles_wreck_2.wss", _obj, false, _oPos, 2, 1, 50];	
+playSound3D ["a3\sounds_f\sfx\special_sfx\sparkles_wreck_2.wss", _obj, false, ATLtoASL _oPos, 2, 1, 50];	
 
 [_obj, _target, _vehicle] spawn {
 	
@@ -49,7 +49,7 @@ playSound3D ["a3\sounds_f\sfx\special_sfx\sparkles_wreck_2.wss", _obj, false, _o
 		_bullet setVectorDir _heading; 
 		_bullet setVelocity _velocity; 
 
-		[ATLtoASL _oPos, ATLtoASL _tPos, (vehicle player), 90, 0] spawn burnIntersects;
+		[ATLtoASL _oPos, ATLtoASL _tPos, GW_CURRENTVEHICLE, 90, 0] spawn burnIntersects;
 		[(ATLtoASL _oPos), (ATLtoASL _tPos), "LSR"] call markIntersects;
 
 		Sleep 0.02;

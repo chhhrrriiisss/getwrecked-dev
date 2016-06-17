@@ -31,7 +31,7 @@ _this spawn {
 		_velocity = _velocity vectorAdd GW_CURRENTVEL;	
 
 		_rocket = createVehicle ["M_Titan_AT_static", _gPos, [], 0, "FLY"];
-		playSound3D ["a3\sounds_f\weapons\rockets\new_rocket_8.wss", (_this select 2), false, (ASLtoATL visiblePositionASL (_this select 2)), 10, 1, 40]; 
+		playSound3D ["a3\sounds_f\weapons\rockets\new_rocket_8.wss", (_this select 2), false, visiblePositionASL (_this select 2), 10, 1, 40]; 
 
 		_rocket setVectorDir _heading;
 		_rocket setVelocity _velocity;

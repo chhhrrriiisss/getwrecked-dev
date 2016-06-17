@@ -289,7 +289,8 @@ GW_TAUNTS_LIST = [
 	'party',
 	'sparta',
 	'china',
-	'leeroy'
+	'leeroy',
+	'banana'
 ];
 
 // Specific map configs

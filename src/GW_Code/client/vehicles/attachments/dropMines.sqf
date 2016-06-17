@@ -72,7 +72,7 @@ _this spawn {
 
 						if (_x != GW_CURRENTVEHICLE) then { [_x, "MIN"] call checkMark;	};
 
-						playSound3D ["a3\sounds_f\weapons\mines\electron_trigger_1.wss", _obj, false, getPos _obj, 5, 1, 50]; 
+						playSound3D ["a3\sounds_f\weapons\mines\electron_trigger_1.wss", _obj, false, visiblePositionASL _obj, 5, 1, 50]; 
 
 						_tPos =  (ASLtoATL visiblePositionASL _x);
 						_tPos set[2, 0];
@@ -163,7 +163,7 @@ _this spawn {
 			false 
 		] call bis_fnc_mp;
 
-		playSound3D ["a3\sounds_f\weapons\other\sfx9.wss", GW_CURRENTVEHICLE, false, (ASLtoATL visiblePositionASL GW_CURRENTVEHICLE), 6, 1, 50];
+		playSound3D ["a3\sounds_f\weapons\other\sfx9.wss", GW_CURRENTVEHICLE, false, visiblePositionASL GW_CURRENTVEHICLE, 6, 1, 50];
 
 		// Wait half a second before arming
 		Sleep 0.5;
@@ -173,7 +173,7 @@ _this spawn {
 
 	};
 
-	playSound3D ["a3\sounds_f\sfx\vehicle_drag_end.wss", GW_CURRENTVEHICLE, false,(ASLtoATL visiblePositionASL GW_CURRENTVEHICLE), 8, 1, 50];
+	playSound3D ["a3\sounds_f\sfx\vehicle_drag_end.wss", GW_CURRENTVEHICLE, false,visiblePositionASL GW_CURRENTVEHICLE, 8, 1, 50];
 
 	for "_i" from 0 to 4 step 1 do {
 		
