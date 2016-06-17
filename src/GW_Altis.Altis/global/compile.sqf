@@ -284,9 +284,7 @@ GW_globalFunctions = [
 	['getRaceID', nil],
 
 	['gw_fnc_mp', 'global\functions\network\'],
-	['gw_fnc_mpexec', 'global\functions\network\'],
-
-	['dynamicGroups', nil]
+	['gw_fnc_mpexec', 'global\functions\network\']
 
 
 

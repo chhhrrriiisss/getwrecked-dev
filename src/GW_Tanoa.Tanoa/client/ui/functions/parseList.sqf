@@ -18,7 +18,7 @@ _register = [];
 	// For bags of explosives and teleport devices, ignore additional entries
 	if (true) then {
 
-		// Is it actually legit?
+		// Is it actually legit? 
 		_data = [_tag, GW_LOOT_LIST] call getData;
 		if (isNil "_data") exitWith {};
 		

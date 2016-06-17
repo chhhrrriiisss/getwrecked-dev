@@ -1,13 +1,13 @@
-X_Server = false;
-X_Client = false;
-X_JIP = false;
+GW_Server = false;
+GW_Client = false;
+GW_JIP = false;
 
 // Used to determine if saved vehicles are out-of-date
 GW_VERSION = 86;
 
-if (isServer) then { X_Server = true };
-if (!isDedicated) then { X_Client = true };
-if (isNull player) then { X_JIP = true };
+if (isServer) then { GW_Server = true; };
+if (!isDedicated) then { GW_Client = true; };
+if (isNull player) then { GW_JIP = true; };
 
 // Get the mission directory
 MISSION_ROOT = call {
@@ -25,7 +25,7 @@ hint "v0.8.6 DEV";
 
 99999 cutText [localize "str_gw_loading", "BLACK", 0.01]; 
 
-if (X_Client || X_JIP) then {
+if (GW_Client || GW_JIP) then {
    
    [] spawn {  
 
@@ -37,7 +37,7 @@ if (X_Client || X_JIP) then {
 
 };
 
-if (X_Server) then {      
+if (GW_Server) then {      
 
 	[] spawn {
 

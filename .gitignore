@@ -20,8 +20,9 @@ $RECYCLE.BIN/
 node_modules/
 
 # Ignore sublime project files
-!*.sublime-project
-!*.sublime-workspace
+*.gitignore
+*.sublime-project
+*.sublime-workspace
 
 # Ignore everything in location-only folders, but include .sqm
 !Source/GW_Stratis.Stratis/mission.sqm
