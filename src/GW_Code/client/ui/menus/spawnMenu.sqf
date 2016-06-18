@@ -17,7 +17,13 @@ if (!_isVehicleReady) exitWith { GW_SPAWN_ACTIVE = false; };
 _allZones = GW_VALID_ZONES;
 
 // If we've deployed somewhere previously, show that
-GW_SPAWN_LOCATION = if (!isNil "GW_LASTLOCATION") then { GW_LASTLOCATION } else {  ((_allZones select (random (count _allZones -1))) select 0) };
+GW_SPAWN_LOCATION = if (!isNil "GW_LASTLOCATION") then { GW_LASTLOCATION } else {  
+	
+	// -2 To avoid selecting workshop
+	((_allZones select (random (count _allZones -2))) select 0) 
+
+};
+
 _displayName = '';
 _type = 'battle';
 _startIndex = 0;

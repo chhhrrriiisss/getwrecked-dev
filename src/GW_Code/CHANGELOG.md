@@ -5,6 +5,29 @@ Note: Some changes that are deemed spoilers are hidden from this log.
 (WIP) Indicates items that may not be fully functional and are only partially implemented.
 Items without Fixed/Added/Removed proceeding are typically balance changes.
 
+**v0.8.6d**
+
+[d]
+
+- Last loaded vehicle is no longer loaded on player respawn to prevent terminals overflowing
+- Loading in a new vehicle will now clear other vehicles you own in the workshop
+- Reduced sound volume on GMG, HMG, Rocket Pods
+- Fixed Mines should now properly sit below ground when dropped
+- Fixed Race progress bar stopping for remaining players after first player completes it
+- Fixed Player unable to return to workshop if all vehicle terminals are full
+- Fixed Crash when deploying to a zone with a chat channel open
+
+[c]
+- Improved race editor usability (tooltips and changes to the way checkpoints are added to make it a bit more logical)
+- Race checkpoint trigger area is now 15m (10m previously)
+- Damage in race zones decreased slightly (it's now roughly 2x damage in a battle zone)
+- Fixed Workshop occasionally showed as an option when deploying to a battle
+- Fixed HUD progress bar was overlapping player locations in race
+- Fixed Renaming a race twice caused race library to break
+- Fixed No sound when shooting some weapons
+- Fixed Some actions (save, deploy) seemed to be running on multiple clients
+
+
 **v0.8.2 - v0.8.6** [Closed alpha release]
 
 - Added Race editor and race mode (this feature is very Alpha and VERY subject to change)

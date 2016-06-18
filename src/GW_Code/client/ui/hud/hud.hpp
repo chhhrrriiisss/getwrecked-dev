@@ -367,6 +367,10 @@ class GW_HUD_Vehicle
 		class RaceOpp9 : GW_Race_Opp {	idc = 18039; };
 		class RaceOpp10 : GW_Race_Opp {	idc = 18040; };
 		class RaceOpp11 : GW_Race_Opp {	idc = 18041; };
+		class RaceOpp12 : GW_Race_Opp {	idc = 18042; };
+		class RaceOpp13 : GW_Race_Opp {	idc = 18043; };
+		class RaceOpp14 : GW_Race_Opp {	idc = 18044; };
+		class RaceOpp15 : GW_Race_Opp {	idc = 18045; };
 
 		class RacePlayer : GW_StructuredTextBox
 		{

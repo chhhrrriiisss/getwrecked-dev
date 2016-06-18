@@ -10,6 +10,7 @@ if (!GW_RACE_GENERATOR_ACTIVE) exitWith { false };
 _id = GW_RACE_ID;
 
 // Id of last active race (one that was just added)
+if (count GW_ACTIVE_RACES == 0) exitWith { false };
 _lastRace = GW_ACTIVE_RACES select (count GW_ACTIVE_RACES) -1;
 _lastRaceName = (_lastRace select 0) select 0;
 

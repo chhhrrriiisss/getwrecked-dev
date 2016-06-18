@@ -149,8 +149,9 @@ _this spawn {
 		deleteVehicle _host;
 
 		_oPos = getPos _o;
-		_o setPos [(_oPos select 0), (_oPos select 1), -0.33];
-			
+
+		_o setPos [(_oPos select 0), (_oPos select 1), -0.35];	
+		_o enableSimulation false;
 		_o allowDamage true;
 
 		[		

@@ -5,8 +5,10 @@ GW_INT_MONITOR_LAST_UPDATE = time;
 GW_CURRENTPOS = (ASLtoATL visiblePositionASL player);
 
 // Restore the HUD if we're somewhere that needs it
-if (GW_DEATH_CAMERA_ACTIVE || GW_PREVIEW_CAM_ACTIVE || GW_SPECTATOR_ACTIVE || GW_TIMER_ACTIVE || GW_TITLE_ACTIVE || GW_GUIDED_ACTIVE || GW_SETTINGS_ACTIVE || GW_LOADING_ACTIVE || GW_HUD_LOCK || GW_LOBBY_ACTIVE) then {} else {
-	if (!GW_HUD_ACTIVE) then {	
+if (GW_DEATH_CAMERA_ACTIVE || GW_PREVIEW_CAM_ACTIVE || GW_SPECTATOR_ACTIVE || GW_TIMER_ACTIVE || GW_TITLE_ACTIVE || GW_GUIDED_ACTIVE || GW_SETTINGS_ACTIVE || GW_LOADING_ACTIVE || GW_LOBBY_ACTIVE) then {
+	if (GW_HUD_ACTIVE) then { GW_HUD_ACTIVE = false; };
+} else {
+	if (!GW_HUD_ACTIVE && !GW_HUD_LOCK) then {	
 		[] spawn drawHud;
 	};
 };
@@ -74,8 +76,6 @@ if (!isNil "GW_CURRENTZONE") then {
 	} else {
 		player setVariable ["outofbounds", false];	
 	};	
-
-	// Check if near edge-of-zone sections and render them
 
 };
 

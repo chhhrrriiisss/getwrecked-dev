@@ -16,7 +16,7 @@ _vehicle lockCargo true;
 [_vehicle] call compileAttached;
 
 // Set us as the owner
-if (!isServer) then { _vehicle setVariable ["GW_Owner", name player, true]; };
+if (!isDedicated) then { _vehicle setVariable ["GW_Owner", name player, true]; };
 
 _name = _vehicle getVariable ["name", ''];
 if (_name == '' || _name == "UNTITLED") exitWith {};

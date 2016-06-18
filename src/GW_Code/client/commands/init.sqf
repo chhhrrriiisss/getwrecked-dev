@@ -87,6 +87,17 @@ GW_COMMANDS_SETUP = [] spawn {
 		waitUntil{sleep 0.22;!isNull (finddisplay 24 displayctrl 101)};
 		
 		GW_COMMANDS_EH = (findDisplay 24) displayAddEventHandler["KeyDown",{
+
+			// If enter pressed in chat dialog
+			IF (isNull (finddisplay 24 displayctrl 101)) exitWith {
+
+				if (!isNil "GW_COMMANDS_EH")then{ (findDisplay 24) displayRemoveEventHandler ["KeyDown",GW_COMMANDS_EH]; };
+				GW_COMMANDS_EH = nil;
+				GW_COMMANDS_STRING = (ctrlText (finddisplay 24 displayctrl 101));
+			};
+
+			GW_COMMANDS_STRING = (ctrlText (finddisplay 24 displayctrl 101));
+
 			if (!((_this select 1) in [28, 200, 208]) ) exitWith{false};
 			
 			// Up
@@ -122,19 +133,7 @@ GW_COMMANDS_SETUP = [] spawn {
 				
 				_equal
 			};
-		}];
+		}];	
 		
-		waitUntil{
-			if (isNull (finddisplay 24 displayctrl 101))exitWith{
-				if (!isNil "GW_COMMANDS_EH")then{
-					(findDisplay 24) displayRemoveEventHandler ["KeyDown",GW_COMMANDS_EH];
-				};
-				GW_COMMANDS_EH = nil;
-				true
-			};
-			GW_COMMANDS_STRING = (ctrlText (finddisplay 24 displayctrl 101));
-			false
-		};
-
 	};
 };

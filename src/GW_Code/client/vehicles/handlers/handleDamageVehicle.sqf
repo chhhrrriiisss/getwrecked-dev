@@ -7,7 +7,7 @@ private ["_vehicle", "_selection", "_damage", "_ammo"];
 params ['_vehicle', '_selection', '_damage', '_nil', '_projectile'];
 
 // If we're in the workshop, ignore all damage
-if (_vehicle distance (getMarkerPos "workshopZone_camera") < 200) exitWith { false };
+if (_vehicle distance (getMarkerPos "workshopZone_camera") < 500) exitWith { false };
 
 _origDamage = _damage;
 _oldDamage = nil;

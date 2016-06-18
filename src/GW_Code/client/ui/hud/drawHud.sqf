@@ -85,7 +85,7 @@ _vHudRaceFinish = (_vHud displayCtrl 18019);
 
 _vHudRaceOpponents = [];
 _baseIDC = 18031;
-_maxOpponents = 11;
+_maxOpponents = GW_MAX_PLAYERS - 1;
 
 for "_i" from 0 to (_maxOpponents-1) step 1 do {
 	_marker = (_vHud displayCtrl (_baseIDC + _i));	
@@ -146,14 +146,10 @@ for "_i" from 0 to 1 step 0 do {
 	_startTime = time;
 
 	_inRace = if (isNil "GW_CURRENTRACE") then { false } else {
-		IF ([GW_CURRENTRACE] call checkRaceStatus == 2) exitWith { true };
+		IF ([GW_CURRENTRACE] call checkRaceStatus >= 2) exitWith { true };
 		false
 	};
-
-	_vehicle = GW_CURRENTVEHICLE;		
-	_inVehicle = GW_INVEHICLE;
-	_isDriver = GW_ISDRIVER;	
-
+	
 	// Open the default HUD
 	if (!GW_HUD_NORMAL_ACTIVE && (!GW_PREVIEW_CAM_ACTIVE || !GW_TIMER_ACTIVE) ) then {
 
@@ -171,7 +167,7 @@ for "_i" from 0 to 1 step 0 do {
 	
 	
 	// We're in a vehicle
-	if (_inVehicle && _isDriver) then {		
+	if (GW_INVEHICLE && GW_ISDRIVER) then {		
 
 		// We're in a race
 		if (_inRace) then {
@@ -225,7 +221,7 @@ for "_i" from 0 to 1 step 0 do {
 			_tag = _x getVariable ['GW_Tag', ''];
 			if ( !(_tag in _moduleList) && (_tag in GW_WEAPONSARRAY || _tag in GW_TACTICALARRAY)) then {  _moduleList pushBack _tag; };
 			false
-		} count attachedObjects _vehicle > 0;
+		} count attachedObjects GW_CURRENTVEHICLE > 0;
 
 		if ((count _moduleList) > (count _vHudBars)) then {
 			_moduleList resize (count _vHudBars);
@@ -254,7 +250,7 @@ for "_i" from 0 to 1 step 0 do {
 
 			// Fade in Vehicle HUD, if 3rd person camera
 			[[_vHudIcon, _vHudFuel, _vHudAmmo, _vHudHealth, _vHudMoney, _vHudNotification], [['fade', 1, 0, 0.1]], "quad"] spawn createTween;
-			_vHudIcon ctrlSetStructuredText parseText ( format["<img size='2.4' align='center' valign='top' image='%1' />", [typeOf _vehicle] call getVehiclePicture] );
+			_vHudIcon ctrlSetStructuredText parseText ( format["<img size='2.4' align='center' valign='top' image='%1' />", [typeOf GW_CURRENTVEHICLE] call getVehiclePicture] );
 			_vHudIcon ctrlCommit 0;
 				
 			_count = 0;
@@ -324,14 +320,14 @@ for "_i" from 0 to 1 step 0 do {
 		_status = GW_VEHICLE_STATUS;
 
 		// Fuel Status
-	    _fuel = fuel _vehicle + (_vehicle getVariable ["fuel", 0]);
-	    _maxFuel = _vehicle getVariable ["maxFuel", 1];
+	    _fuel = fuel GW_CURRENTVEHICLE + (GW_CURRENTVEHICLE getVariable ["fuel", 0]);
+	    _maxFuel = GW_CURRENTVEHICLE getVariable ["maxFuel", 1];
 	    _actualFuel = round ( (_fuel / _maxFuel) * 100 );
 	    _actualFuel = [_actualFuel, 0, 100] call limitToRange;	
 
 		// Ammo Status
-	    _ammo = _vehicle getVariable ["ammo", 0];
-	    _maxAmmo = _vehicle getVariable ["maxAmmo", 1];
+	    _ammo = GW_CURRENTVEHICLE getVariable ["ammo", 0];
+	    _maxAmmo = GW_CURRENTVEHICLE getVariable ["maxAmmo", 1];
 	    _actualAmmo = round( (_ammo / _maxAmmo) * 100);
  		_actualAmmo = [_actualAmmo, 0, 100] call limitToRange;	
 
@@ -458,14 +454,14 @@ for "_i" from 0 to 1 step 0 do {
             };                        
         };
 
-        _weaponsArray = _vehicle getVariable ['weapons', []];
-        _tacticalArray = _vehicle getVariable ['tactical', []];        
+        _weaponsArray = GW_CURRENTVEHICLE getVariable ['weapons', []];
+        _tacticalArray = GW_CURRENTVEHICLE getVariable ['tactical', []];        
        	
 		// Calculate reload times for each module        
 		_c = 0;
 		{
 			_tag = _x;
-			_hasType = [_tag, _vehicle] call hasType;
+			_hasType = [_tag, GW_CURRENTVEHICLE] call hasType;
 			_relArray = if (_tag in GW_WEAPONSARRAY) then { _weaponsArray } else { _tacticalArray };
 
 			// If the type is missing

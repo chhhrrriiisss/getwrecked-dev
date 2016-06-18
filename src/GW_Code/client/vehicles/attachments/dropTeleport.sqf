@@ -24,6 +24,9 @@ _obj = createVehicle ["containmentArea_02_forest_F", _pos, [], 0, 'CAN_COLLIDE']
 _obj setVectorUp (surfaceNormal _pos);
 _obj setDir (random 360);
 
+_obj disableCollisionWith _vehicle;
+_obj enableSimulation false;
+	
 // Disable simulation
 [		
 	[
@@ -34,6 +37,8 @@ _obj setDir (random 360);
 	false,
 	false 
 ] call bis_fnc_mp;
+
+_obj disableCollisionWith _vehicle;
 
 // Recompile the vehicle to account for dropping one bag
 [_this select 2] call compileAttached;

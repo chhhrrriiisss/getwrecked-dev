@@ -23,7 +23,10 @@ IF (vectorUp _vehicle distance [0,0,1] > 1) exitWith {};
 
 // Get all the camera information we need
 _cameraPosition = positionCameraToWorld [0,0,0];
-GW_TARGET_DIRECTION = [_cameraPosition, (positionCameraToWorld [0,0,4])] call dirTo;
+// GW_TARGET_DIRECTION = [(_cameraPosition), (positionCameraToWorld [0,0,4])] call dirTo;
+
+GW_TARGET_DIRECTION = [GW_CURRENTPOS, screenToWorld [0.5, 0.5]] call dirTo;
+
 GW_CAMERA_HEADING = [ATLtoASL  positionCameraToWorld[0,0,-4], ATLtoASL positionCameraToWorld[0,0,10]] call BIS_fnc_vectorFromXToY;
 GW_VEHICLE_HEADING = [(GW_CURRENTVEHICLE modelToWorldVisual [0,0,0]), (GW_CURRENTVEHICLE modelToWorldVisual [0,4,0])] call bis_fnc_vectorFromXToY;
 

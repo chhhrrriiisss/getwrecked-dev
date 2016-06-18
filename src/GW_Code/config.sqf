@@ -123,7 +123,7 @@ GW_CLEANUP_RATE = 3;
 	If you edit below here, I hope you know what you're doing...
 */
 
-GW_MAX_PLAYERS = 12;
+GW_MAX_PLAYERS = 16;
 
 // Returns damage of projectile vs vehicle
 vehicleDamageData = {

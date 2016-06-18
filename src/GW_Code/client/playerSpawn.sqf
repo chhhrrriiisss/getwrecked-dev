@@ -48,7 +48,7 @@ GW_DIALOG_ACTIVE = false;
 GW_HUD_LOCK = false;
 GW_HUD_ACTIVE = true;
 GW_INVEHICLE = false;
-GW_INDRIVER = false;
+GW_ISDRIVER = false;
 
 // Get rid of previous locked targets 
 GW_LOCKED_TARGETS = [];
@@ -152,10 +152,10 @@ if (!_firstSpawn) then {
 			((time > _timeout) || (_d > 1))
 		};
 
-		_fail = if ( ((getpos _this) distance (getMarkerPos "respawn_civilian")) <= 3) then { true } else { false };
-		if (!isNil "GW_LASTLOAD" && !_fail) then {
-			_closest = [saveAreas, (getpos _this)] call findClosest; 
-			[(ASLtoATL getPosASL _closest), GW_LASTLOAD] spawn requestVehicle;
+		// Set player to default respawn if all pads full or setPosEmpty fails to find a spot
+		_fail = if ( (getpos _this) distance _p <= 3) then { true } else { false };
+		if (_fail) then {
+			player setPos (getMarkerPos "respawn_civilian");
 		};
 
 	};
@@ -231,6 +231,7 @@ GW_MM_EH = (findDisplay 46) displayAddEventHandler ["MouseMoving", "[_this, 'mou
 inGameUISetEventHandler['PrevAction', '[_this, "scroll"] call triggerLazyUpdate; false'];
 inGameUISetEventHandler['NextAction', '[_this, "scroll"] call triggerLazyUpdate; false'];
 inGameUISetEventHandler ["Action", "
+	if (isNil '_this select 3') exitWith { false };
 	if (_this select 3 == 'DisAssemble') then {
 		true
 	}
