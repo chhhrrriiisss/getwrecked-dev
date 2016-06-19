@@ -196,8 +196,6 @@ checkBinds = {
 
 						};	
 
-						hint format['%1 / %2', _isWeaponBind, _canShoot];
-
 						// Weapon binds
 						if (_canShoot && _isWeaponBind) exitWith {					
 

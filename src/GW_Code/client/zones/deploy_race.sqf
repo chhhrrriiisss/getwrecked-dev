@@ -60,6 +60,7 @@ _currentPos = getPos _vehicleToDeploy;
 	if (_p distance (getpos _v) <= 3) exitWith {
 		systemChat 'No valid deploy location available.';
 		GW_DEPLOY_ACTIVE = false;
+		_v call destroyInstantly;
 	};
 
 	_d = [(getPos _v), (_this select 1)] call dirTo;

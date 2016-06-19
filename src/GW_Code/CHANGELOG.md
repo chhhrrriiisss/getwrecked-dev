@@ -26,6 +26,7 @@ Items without Fixed/Added/Removed proceeding are typically balance changes.
 - Fixed deploy point out of bounds on Plantation
 
 [c]
+
 - Improved race editor usability (tooltips and changes to the way checkpoints are added to make it a bit more logical)
 - Race checkpoint trigger area is now 15m (10m previously)
 - Damage in race zones decreased slightly (it's now roughly 2x damage in a battle zone)
