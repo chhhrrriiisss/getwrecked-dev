@@ -20,18 +20,19 @@ resetBinds = {
 		keyDown = false;
 	};
 
-	if ((_this select 1) in (actionKeys "showMap") && !visibleMap) then {
-		GW_HUD_ACTIVE = false;	
-		GW_HUD_LOCK = true;
+	// if ((_this select 1) in (actionKeys "showMap") && !visibleMap) then {
+	// 	GW_HUD_ACTIVE = false;	
+	// 	GW_HUD_LOCK = true;
 
-		[] spawn {
-			waitUntil {
-				!visibleMap
-			};
-			GW_HUD_ACTIVE = false;	
-			GW_HUD_LOCK = false;
-		};
-	};	
+	// 	[] spawn {
+	// 		waitUntil {
+	// 			!visibleMap
+	// 		};
+	// 		GW_HUD_ACTIVE = false;	
+	// 		GW_HUD_LOCK = false;
+	// 	};
+	// };	
+
 
 	GW_HOLD_ROTATE = false;
 	GW_KEYDOWN = nil;
@@ -145,8 +146,8 @@ checkBinds = {
 
 	if (GW_INVEHICLE && GW_ISDRIVER) then {
 
-		_canShoot = if (!("cloak" in GW_CURRENTVEHICLE_STATUS) && !("noshoot" in GW_CURRENTVEHICLE_STATUS)) then { true } else { false };
-		_canUse = if (!GW_WAITUSE && !("cloak" in GW_CURRENTVEHICLE_STATUS) && !("nouse" in GW_CURRENTVEHICLE_STATUS)) then { true } else { false };
+		_canShoot = if (!("cloak" in GW_VEHICLE_STATUS) && !("noshoot" in GW_VEHICLE_STATUS)) then { true } else { false };
+		_canUse = if (!GW_WAITUSE && !("cloak" in GW_VEHICLE_STATUS) && !("nouse" in GW_VEHICLE_STATUS)) then { true } else { false };
 
 		["Can Use", true] call logDebug;
 
@@ -193,10 +194,14 @@ checkBinds = {
 							if (_tag == "PARC" && ((["PAR", GW_CURRENTVEHICLE] call hasType) > 0) ) exitWith { if (GW_CHUTE_ACTIVE) then { GW_CHUTE_ACTIVE = false; playSound "beep"; };  };
 							
 
-						};
+						};	
+
+						hint format['%1 / %2', _isWeaponBind, _canShoot];
 
 						// Weapon binds
 						if (_canShoot && _isWeaponBind) exitWith {					
+
+							
 
 							_indirect = true;
 							{	if ((_x select 0) == _obj) exitWith { _indirect = false; }; false } count GW_AVAIL_WEAPONS > 0;

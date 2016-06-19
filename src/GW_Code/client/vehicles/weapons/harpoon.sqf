@@ -30,7 +30,7 @@ _hook addEventHandler['EpeContact', {
 		_sourceRope = _hook getVariable ['GW_ropeSource', nil];
 		if (isNil "_sourceRope") exitWith {};
 
-		playSound3D ["a3\sounds_f\sfx\vehicle_drag_end.wss", _target, false, (ASLtoATL visiblePositionASL _target), 10, 1, 100];
+		playSound3D ["a3\sounds_f\sfx\missions\vehicle_drag_end.wss", _target, false, (ASLtoATL visiblePositionASL _target), 10, 1, 100];
 		playSound3D ["a3\sounds_f\sfx\special_sfx\sparkles_wreck_1.wss", _target, false, (ASLtoATL visiblePositionASL _target), 5, 1, 100];	
 
 		_dist = _target distance GW_CURRENTVEHICLE;

@@ -11,7 +11,8 @@ if (isNull _victim) exitWith {};
 GW_HUD_ACTIVE = false;
 GW_HUD_LOCK = true;
 
-["workshopZone"] call setCurrentZone;
+// Remove us from current zone (get set againwhen back at workshop)
+["remove"] call setCurrentZone;
 
 if (GW_IGNORE_DEATH_CAMERA) then {} else {
 	9999 cutText ["", "BLACK OUT", 0.3];  
@@ -24,18 +25,20 @@ if (!isNil "_prevVehicle") then {
     ['death', _prevVehicle, 1, true] call logStat;
 };
 
+// Remove us from any active races
 if (!isNil "GW_CURRENTRACE") then {	
 
-	if (([GW_CURRENTRACE] call checkRaceStatus) == -1) exitWith {};
+	if (isNil "GW_CURRENTRACE_VEHICLE") exitWith {};
 
 	[
-		[GW_CURRENTRACE, GW_CURRENTVEHICLE],
+		[GW_CURRENTRACE, GW_CURRENTRACE_VEHICLE],
 		'removeFromRace',
 		false,
 		false
 	] call bis_fnc_mp;	
 
 	GW_CURRENTRACE = nil;
+	GW_CURRENTRACE_VEHICLE = nil;
 
 };
 

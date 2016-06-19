@@ -243,7 +243,7 @@ _para setVectorUp [0,0,1];
 		(  (((getPos _s) select 2) < 0.5) || time > _timeout)
 	};	
 	
-	playSound3D ["a3\sounds_f\sfx\vehicle_drag_end.wss", _s, false, getPos _s, 2, 1, 60];
+	playSound3D ["a3\sounds_f\sfx\missions\vehicle_drag_end.wss", _s, false, getPos _s, 2, 1, 60];
 
 	[
 		[

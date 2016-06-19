@@ -18,6 +18,7 @@ if (count _targetRace == 0) exitWith { systemchat 'Bad race data, could not init
 // Determine the start checkpoint
 _raceName = (_targetRace select 0) select 0;
 GW_CURRENTRACE = _raceName;
+GW_CURRENTRACE_VEHICLE = GW_CURRENTVEHICLE;
 _raceStatus = [_raceName] call checkRaceStatus;
 _raceHost = if (isNil "_targetRace select 2") then { 'UNKNOWN' } else { (_targetRace select 2) };
 _points = _targetRace select 1;

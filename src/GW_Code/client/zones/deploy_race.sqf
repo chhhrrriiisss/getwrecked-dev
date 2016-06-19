@@ -10,6 +10,12 @@ private ['_pad', '_unit', '_location', '_vehicleToDeploy'];
 if (GW_DEPLOY_ACTIVE) exitWith { systemChat 'Cant deploy more than one vehicle at once.'; false };
 GW_DEPLOY_ACTIVE = true;
 
+_abortAction = {	
+	systemchat _this;
+	GW_DEPLOY_ACTIVE = false; 
+	false
+};
+
 // Set as last loaded vehicle
 _targetName = _vehicleToDeploy getVariable ['name', ''];
 GW_LASTLOAD = _targetName;
@@ -21,7 +27,7 @@ if (!_success) exitWith {
 };
 
 _targetRace = [_this, 2, [], [[]]] call filterParam;
-if (count _targetRace == 0) exitWith { systemchat 'Invalid race data, deploy aborted'; GW_DEPLOY_ACTIVE = false; false };
+if (count _targetRace == 0) exitWith { 'Bad race data, deploy aborted. Use !reset races if this persists.' call _abortAction; };
 
 // Determine the start checkpoint
 _racePoints = _targetRace select 1;
@@ -31,6 +37,10 @@ _startPosition = _racePoints select 0;
 _firstPosition = _racePoints select 1;
 _raceStatus = [_targetRace, 3, -1, [0]] call filterParam;
 _raceID = (_raceName call getRaceID) select 1;
+
+// If race entry is invalid or no races exist, abort
+if (count GW_ACTIVE_RACES == 0) exitWith { 'No active races! Deploy aborted. ' call _abortAction; };
+if (isNil { (GW_ACTIVE_RACES select _raceID) }) exitWith { 'Bad race id, aborted! Use !reset races if this persists.' call _abortAction; };
 
 // Get direction to first checkpoint
 _dirTo = [_startPosition, _firstPosition] call dirTo;
@@ -85,8 +95,6 @@ GW_DEPLOY_ACTIVE = false;
 
 // Set our ready state to not-ready by default
 GW_CURRENTVEHICLE setVariable ['GW_R_PR', -1, true];
-
-// Get the latest race data (updated from server while we were loading...)
 
 // Initialize race lobby dialog
 [(GW_ACTIVE_RACES select _raceID)] spawn raceLobby;

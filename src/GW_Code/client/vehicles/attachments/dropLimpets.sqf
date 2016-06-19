@@ -146,7 +146,7 @@ _this spawn {
 
 	};
 
-	playSound3D ["a3\sounds_f\sfx\vehicle_drag_end.wss", GW_CURRENTVEHICLE, false,(ASLtoATL visiblePositionASL GW_CURRENTVEHICLE), 2, 1, 50];
+	playSound3D ["a3\sounds_f\sfx\missions\vehicle_drag_end.wss", GW_CURRENTVEHICLE, false,(ASLtoATL visiblePositionASL GW_CURRENTVEHICLE), 2, 1, 50];
 
 	for "_i" from 0 to 3 step 1 do {
 		

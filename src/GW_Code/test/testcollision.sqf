@@ -24,7 +24,7 @@ _collide = {
 	if (isNil "GW_LAST_AUDIO_UPDATE") then { GW_LAST_AUDIO_UPDATE = time - 0.2; };
 	if (time - GW_LAST_AUDIO_UPDATE > 0.1) then {
 		GW_LAST_AUDIO_UPDATE = time;
-		playSound3D ["a3\sounds_f\sfx\vehicle_drag_end.wss", _v1, false, (ASLtoATL visiblePositionASL _v1), 2, 1, 50];
+		playSound3D ["a3\sounds_f\sfx\missions\vehicle_drag_end.wss", _v1, false, (ASLtoATL visiblePositionASL _v1), 2, 1, 50];
 	};
 
 	_speed = ((velocity _v1) distance [0,0,0]) * 0.1;

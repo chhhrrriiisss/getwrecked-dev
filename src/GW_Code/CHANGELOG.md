@@ -12,10 +12,18 @@ Items without Fixed/Added/Removed proceeding are typically balance changes.
 - Last loaded vehicle is no longer loaded on player respawn to prevent terminals overflowing
 - Loading in a new vehicle will now clear other vehicles you own in the workshop
 - Reduced sound volume on GMG, HMG, Rocket Pods
+- Better handling of bad race data or ID when deploying to a race zone
+- Removed an unnecessary loop from the chat commands system
+- Improved angle of ramps at Terminal
+- Added repair, refuel and rearm points to Plantation
+- Slightly tweaked boundaries on Plantation to ignore dense jungle sections
 - Fixed Mines should now properly sit below ground when dropped
 - Fixed Race progress bar stopping for remaining players after first player completes it
 - Fixed Player unable to return to workshop if all vehicle terminals are full
 - Fixed Crash when deploying to a zone with a chat channel open
+- Fixed missing sound at a3\sounds_f\sfx\vehicle_drag_end.wss
+- Fixed Races not ending as intended when players killed outside their vehicles or DC
+- Fixed deploy point out of bounds on Plantation
 
 [c]
 - Improved race editor usability (tooltips and changes to the way checkpoints are added to make it a bit more logical)

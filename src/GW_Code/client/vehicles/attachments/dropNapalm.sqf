@@ -12,7 +12,7 @@ if (isNull ( _this select 0) || isNull (_this select 1)) exitWith { false };
 
 params ['_obj', '_vehicle'];
 
-playSound3D ["a3\sounds_f\sfx\vehicle_drag_end.wss",_vehicle, false, visiblePositionASL _vehicle, 2, 1, 50];
+playSound3D ["a3\sounds_f\sfx\missions\vehicle_drag_end.wss",_vehicle, false, visiblePositionASL _vehicle, 2, 1, 50];
 
 _type = typeOf _obj;
 deleteVehicle _obj;

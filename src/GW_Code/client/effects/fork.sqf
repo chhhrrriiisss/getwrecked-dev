@@ -42,7 +42,7 @@ waitUntil {
 _t attachTo [_s];
 _t setVectorDirAndUp _vect;
 
-playSound3D ["a3\sounds_f\sfx\vehicle_drag_end.wss", _t, false, (ASLtoATL visiblePositionASL _t), 2, 1, 50];
+playSound3D ["a3\sounds_f\sfx\missions\vehicle_drag_end.wss", _t, false, (ASLtoATL visiblePositionASL _t), 2, 1, 50];
 
 _initVel = [0,0,0] distance (velocity _s);
 

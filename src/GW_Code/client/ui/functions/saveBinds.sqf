@@ -4,7 +4,7 @@
 //      Return: None
 //
 
-private ['_list', '_listLength', '_binds'];
+private ['_list', '_listLength', '_binds','_raw', '_vehicleName', '_index'];
 
 disableSerialization;
 _list = ((findDisplay 92000) displayCtrl 92001);

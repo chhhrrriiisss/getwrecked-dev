@@ -81,8 +81,18 @@ GW_DC_EH = addMissionEventHandler ["HandleDisconnect",{
 	// Tell the server to delete us from the manifest
 	["remove"] call setCurrentZone;
 
-	// Kill the unit
-	_p setDammage 1;
+	// Remove us from any active races
+	if (!isNil "GW_CURRENTRACE") then {	
+		if (isNil "GW_CURRENTRACE_VEHICLE") exitWith {};
+		[
+			[GW_CURRENTRACE, GW_CURRENTRACE_VEHICLE],
+			'removeFromRace',
+			false,
+			false
+		] call bis_fnc_mp;	
+		GW_CURRENTRACE = nil;
+		GW_CURRENTRACE_VEHICLE = nil;
+	};
 
 	pubVar_logDiag = format['%1 disconnected.', _n];
 	publicVariableServer "pubVar_logDiag";

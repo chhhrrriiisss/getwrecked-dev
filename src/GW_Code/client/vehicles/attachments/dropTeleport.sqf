@@ -17,7 +17,7 @@ _maxLength = ([_vehicle] call getBoundingBox) select 1;
 _pos = _vehicle modelToWorldVisual [0, (-1 * ((_maxLength/2) + 2)), 0];
 _pos set [2, 0];
 
-playSound3D ["a3\sounds_f\sfx\vehicle_drag_end.wss",_vehicle, false, visiblePositionASL _vehicle, 10, 1, 50];
+playSound3D ["a3\sounds_f\sfx\missions\vehicle_drag_end.wss",_vehicle, false, visiblePositionASL _vehicle, 10, 1, 50];
 deleteVehicle _obj;
 
 _obj = createVehicle ["containmentArea_02_forest_F", _pos, [], 0, 'CAN_COLLIDE']; // So it doesnt collide when spawned in]

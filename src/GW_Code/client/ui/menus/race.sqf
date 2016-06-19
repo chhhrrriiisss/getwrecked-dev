@@ -88,7 +88,6 @@ startRace = {
 	disableSerialization;
 
 	if (GW_RACE_EDITING) exitWith {};
-	if (GW_RACE_ACTIVE) exitWith { systemchat 'You cant host more than one race at a time.'; };
 	GW_RACE_ACTIVE = true;
 
 	_existingRaces = (call getAllRaces);

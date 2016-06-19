@@ -11,7 +11,7 @@ _vehicle = [_this,1, objNull, [objNull]] call filterParam;
 
 [] spawn cleanDeployList;
 
-playSound3D ["a3\sounds_f\sfx\vehicle_drag_end.wss",_vehicle, false, getPosATL _vehicle, 2, 1, 50];
+playSound3D ["a3\sounds_f\sfx\missions\vehicle_drag_end.wss",_vehicle, false, getPosATL _vehicle, 2, 1, 50];
 
 // _type = typeOf _obj;
 // detach _obj;
