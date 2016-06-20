@@ -7,6 +7,12 @@ Items without Fixed/Added/Removed proceeding are typically balance changes.
 
 **v0.8.6d**
 
+[e]
+
+- New 'hidden' icon to targetCursor while using cloak
+- Reduction in number of simulated objects in zones using makeSimpleObject
+- Vehicles should no longer get clipped so easily on flame pads
+
 [d]
 
 - Last loaded vehicle is no longer loaded on player respawn to prevent terminals overflowing

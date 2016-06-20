@@ -41,7 +41,7 @@ initSupply = {
 
 	_pos = getMarkerPos "workshopZone_camera";
 
-	_objs = nearestObjects [_pos, [], 125];
+	_objs = nearestObjects [_pos, [], 200];
 
 	if (count _objs <= 0) exitWith { true };
 

@@ -21,7 +21,7 @@ MISSION_ROOT = call {
 call compile preprocessFile "global\compile.sqf";
 [] execVM "briefing.sqf";
 
-hint "v0.8.6d DEV";
+hint "v0.8.6e DEV";
 
 99999 cutText [localize "str_gw_loading", "BLACK", 0.01]; 
 
