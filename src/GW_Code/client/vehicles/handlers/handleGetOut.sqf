@@ -4,18 +4,28 @@
 //      Return: None
 //
 
+private ['_vehicle', '_nil', '_unit'];
 params ['_vehicle', '_nil', '_unit'];
 
+hint str _this;
+
+if (isNull _vehicle) exitWith {};
+if (!local _vehicle) exitWith { systemchat 'not local!'; };
 if (alive _vehicle) then { _unit setDammage 0; };
-GW_INVULNERABLE = false;
 
-GW_INVEHICLE = false;
-GW_ISDRIVER = false;
+if (_unit == player) then {
 
-// If we've been kicked out due to lower health blow it up
+	GW_INVULNERABLE = false;
+	GW_ISDRIVER = false;
+	GW_INVEHICLE = false;
+
+	"dynamicBlur" ppEffectEnable false; 
+	"colorCorrections" ppEffectEnable false; 
+
+};
+
 if (getDammage _vehicle >= 0.9) then {
 	_vehicle setDammage 1;
 };
 
-"dynamicBlur" ppEffectEnable false; 
-"colorCorrections" ppEffectEnable false; 
+

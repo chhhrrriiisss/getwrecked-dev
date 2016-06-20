@@ -5,11 +5,11 @@
 //
 
 private ['_source', '_destination', '_ignore'];
-
-_vehicle = [_this,0, objNull, [objNull]] call filterParam;
-_velocity = [_this,1, [], [[]]] call filterParam;	
+params ['_vehicle', '_velocity'];
 
 if (isNull _vehicle || count _velocity == 0) exitWith {};
+if (!local _vehicle) exitWith {};
+if (!alive _vehicle) exitWith {};
 if ((_velocity distance [0,0,0]) <= 0) exitWith {};
 
 // Prevent incoming network spam of velocity updates

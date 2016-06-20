@@ -12,6 +12,7 @@ _unit = [_this,2,objNull, [objNull]] call filterParam;
 
 if (isNull _vehicle) exitWith {};
 if (isNull _unit) exitWith {};
+if (_unit != player) exitWith {};
 
 GW_INVEHICLE = true;
 GW_ISDRIVER = if (_position == "driver") then { true } else { false };
