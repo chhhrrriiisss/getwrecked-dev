@@ -160,7 +160,11 @@ GW_clientFunctions = [
 	['estimateRaceTime', nil],
 	['createCheckpoint', 'client\zones\'],
 
-	['isIndirect', nil]
+	['isIndirect', nil],
+
+	['buildZoneBoundary', nil],
+	['cacheZoneBoundary', nil],
+	['removeZoneBoundary', nil]
 
 ];
 
@@ -293,9 +297,6 @@ effectIsVisible = compile preprocessFile "client\functions\effectIsVisible.sqf";
 // Zone Functions
 returnToZone =  compile preprocessFile "client\functions\returnToZone.sqf";
 setCurrentZone = compile preprocessFile "client\functions\setCurrentZone.sqf";	
-buildZoneBoundary = compile preprocessFile "client\functions\buildZoneBoundary.sqf";	
-removeZoneBoundary = compile preprocessFile "client\functions\removeZoneBoundary.sqf";	
-cacheZoneBoundary = compile preprocessFile "client\functions\cacheZoneBoundary.sqf";
 
 // Sponsorship
 giveSponsor = compile preprocessFile "client\functions\giveSponsor.sqf";	

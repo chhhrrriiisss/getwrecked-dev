@@ -10,6 +10,7 @@ setupPaint = {
 	
 	private ['_bucket', '_rnd', '_height'];
 
+	// Make simple object from it
 	_bucket = _this;
 
 	// Get the height of the bucket
@@ -39,7 +40,7 @@ setupPaint = {
 
 
 _pos = getMarkerPos "workshopZone_camera";
-_objs = nearestObjects [_pos, [], 150];
+_objs = nearestObjects [_pos, [], 200];
 
 if (count _objs <= 0) exitWith { true };
 

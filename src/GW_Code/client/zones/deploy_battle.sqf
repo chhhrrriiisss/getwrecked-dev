@@ -90,12 +90,14 @@ _vehicleToDeploy spawn {
 
 GW_BOUNDARY_BUILD = nil;
 
+_waitTime = if (GW_BOUNDARIES_ENABLED) then { 10 } else { 2 };
+
 [
 	format["<br /><t size='3' color='#ffffff' align='center'>%1</t>", "DEPLOYING..."], 
 	"", 
 	[false, { false }],
 	{ isNil "GW_BOUNDARY_BUILD" }, 
-	10, 
+	_waitTime, 
 	true, 
 	{ true }
 ] spawn createTitle;
@@ -108,11 +110,14 @@ GW_BOUNDARY_BUILD = nil;
 	false
 ] call bis_fnc_mp;	
 
-// Remove any previous boundary if it differs from current (caching this way allows players to deploy quickly back to same location)
-{
-	if ((_x select 0) != _zoneName && (_x select 0) != "workshopZone" && count (_x select 3) > 0) then { [(_x select 0)] call removeZoneBoundary; };
-} foreach GW_ZONE_BOUNDARIES;
+if (GW_BOUNDARIES_ENABLED) then {
+	// Remove any previous boundary if it differs from current (caching this way allows players to deploy quickly back to same location)
+	{
+		if ((_x select 0) != _zoneName && (_x select 0) != "workshopZone" && count (_x select 3) > 0) then { [(_x select 0)] call removeZoneBoundary; };
+	} foreach GW_ZONE_BOUNDARIES;
 
-[_zoneName] call buildZoneBoundary;
+	[_zoneName] call buildZoneBoundary;
+};
+
 
 true

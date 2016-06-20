@@ -53,7 +53,7 @@ _hasFired = false;
 if ('cloak' in GW_VEHICLE_STATUS || 'noshoot' in GW_VEHICLE_STATUS) exitWith {
 	_pos = _vehicle modelToWorldVisual [0,40,0];
 	drawIcon3D [vehicleTargetIcon, [1,1,1,0.5], _pos, 1.25, 1.25, 0];	
-	drawIcon3D [noTargetIcon, _col, GW_TARGET, _scale, _scale, 0];	
+	drawIcon3D [hiddenIcon, _col, GW_TARGET, _scale, _scale, 0];	
 };
 
 // Reset the available weapons each pass
