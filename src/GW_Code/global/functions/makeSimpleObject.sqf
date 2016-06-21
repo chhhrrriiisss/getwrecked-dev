@@ -4,6 +4,10 @@
 //      Return: None
 //
 
+<<<<<<< HEAD
+=======
+if (!isServer) exitWith {};
+>>>>>>> origin/master
 if (!local _this) exitWith {};
 
 private ['_o', '_p', '_v', '_i'];

@@ -9,11 +9,19 @@ Items without Fixed/Added/Removed proceeding are typically balance changes.
 
 [e]
 
+<<<<<<< HEAD
+- Reduced setPos frequency on life vehicle
+- Overall fire damage reduced
+- Slightly lowered GMG rate of fire
 - Removed zone boundaries from workshop
 - New 'hidden' icon to targetCursor while using cloak
 - Reduction in number of simulated objects in zones using makeSimpleObject
-- Vehicles should no longer get clipped so easily on flame pads
 - Fixed Potential HUD break related to getOut EH on vehicles
+=======
+- New 'hidden' icon to targetCursor while using cloak
+- Reduction in number of simulated objects in zones using makeSimpleObject
+- Vehicles should no longer get clipped so easily on flame pads
+>>>>>>> origin/master
 
 [d]
 

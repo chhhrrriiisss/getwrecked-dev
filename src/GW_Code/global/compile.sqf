@@ -262,9 +262,6 @@ GW_globalFunctions = [
 	['dropLimpets', 'client\vehicles\attachments\'],
 	['activateElectromagnet', 'client\vehicles\attachments\'],
 
-	// Zone Functions
-	['parseZones', nil],
-
 	// Vehicle functions
 	['compileAttached', 'client\vehicles\'],
 	['cleanAttached', 'client\vehicles\'],
@@ -293,8 +290,6 @@ GW_globalFunctions = [
 // Batch compile all functions
 [GW_globalFunctions, 'global\functions\', GW_DEV_BUILD] call functionCompiler;
 
-// Zone boundaries
-[] call parseZones;
 
 // Pre-compile location arrays
 reloadAreas = ['reloadArea', false, true] call findAllObjects;
@@ -308,4 +303,5 @@ vehicleTerminals = ['vehicleTerminal'] call findAllObjects;
 nitroPads = ['nitroPad', false, true] call findAllObjects;
 flamePads = ['flamePad', false, true] call findAllObjects;
 
-hintObjects = +buySigns append +vehicleTerminals;
+// Get General point data regarding boundary
+call compile preprocessFile "global\functions\getZoneBoundaryPoints.sqf";

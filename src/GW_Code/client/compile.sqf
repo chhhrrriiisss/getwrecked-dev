@@ -297,7 +297,10 @@ effectIsVisible = compile preprocessFile "client\functions\effectIsVisible.sqf";
 // Zone Functions
 returnToZone =  compile preprocessFile "client\functions\returnToZone.sqf";
 setCurrentZone = compile preprocessFile "client\functions\setCurrentZone.sqf";	
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/master
 
 // Sponsorship
 giveSponsor = compile preprocessFile "client\functions\giveSponsor.sqf";	
