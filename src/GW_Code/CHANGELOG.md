@@ -9,6 +9,7 @@ Items without Fixed/Added/Removed proceeding are typically balance changes.
 
 [e]
 
+- Removed zone boundaries from workshop
 - New 'hidden' icon to targetCursor while using cloak
 - Reduction in number of simulated objects in zones using makeSimpleObject
 - Vehicles should no longer get clipped so easily on flame pads

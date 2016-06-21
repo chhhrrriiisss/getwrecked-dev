@@ -75,7 +75,7 @@ for "_i" from 0 to 1 step 0 do {
 	_origPosition set[2, _height];
 	_vehicle setPos _origPosition;
 
-	Sleep 0.1;
+	Sleep 0.25;
 
 };
 

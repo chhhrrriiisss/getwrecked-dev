@@ -66,7 +66,7 @@ GW_GHS = 4; // Damage modifier weapons vs items (default: 4)
 OBJ_COLLISION_DMG_SCALE = 0;
 WHEEL_COLLISION_DMG_SCALE = 0; 
 COLLISION_DMG_SCALE = 0; 
-FIRE_DMG_SCALE = 8; 
+FIRE_DMG_SCALE = 7; 
 
 // Melee Damage Frequency (default: 1)
 GW_COLLISION_FREQUENCY = 1;

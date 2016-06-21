@@ -26,7 +26,7 @@ GW_LOOT_LIST = [
 	// Weapons
 
 	["B_HMG_01_A_F", "HMG .50 Cal", 750, 9999, 0, 0, 'HMG', "Heavy machine gun", 0.1, hmgIcon, [0.15, 0.002]],
-	["B_GMG_01_A_F", "GMG 20mm HE", 750, 9999, 0, 0, 'GMG', "High explosive grenade launcher", 0.3, gmgIcon, [0.75,0.015]],
+	["B_GMG_01_A_F", "GMG 20mm HE", 750, 9999, 0, 0, 'GMG', "High explosive grenade launcher", 0.3, gmgIcon, [1,0.025]],
 	["B_static_AT_F", "Lock-On Missile Launcher", 750, 9999, 0, 0, 'MIS', "Fires heat seeking missiles", 1, lockonIcon, [10,0.1]],
 	["B_Mortar_01_F", "Mk6 Mortar", 750, 9999, 0, 0, 'MOR', "Heat seeking mounted mortar", 0.1, mortarIcon, [3,0.025]],
 	["Land_Runway_PAPI", "Tactical Laser", 400, 9999, 0, 0, 'LSR', "High Energy Laser", 0.9, laserIcon, [3,0.05]],

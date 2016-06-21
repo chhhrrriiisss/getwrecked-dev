@@ -23,7 +23,7 @@ _unit addItem "ItemMap";
 _unit assignItem "ItemMap";
 
 // Default Zone
-[([player] call findCurrentZone)] call setCurrentZone;
+["workshopZone"] call setCurrentZone;
 
 _unit setVariable ["firstSpawn", true];
 _unit addeventhandler ["respawn", { _this spawn playerRespawn; }];  
