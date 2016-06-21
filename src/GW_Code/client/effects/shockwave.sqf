@@ -5,9 +5,11 @@
 //		Return: None
 //
 
-_target = if ((_this select 0) isEqualType objNull) then { (ASLtoATL visiblePositionASL (_this select 1)) } else { (_this select 0) };
-_radius = if ((_this select 1) isEqualType 0) then { (_this select 1) } else { 20 };
-_force =  if ((_this select 2) isEqualType 0) then { (_this select 2) } else { 25 };
+params ['_target', '_radius', '_force'];
+
+_target = if (_target isEqualType objNull) then { (ASLtoATL visiblePositionASL _target) } else { _target };
+_radius = if (_radius isEqualType 0) then { _radius } else { 20 };
+_force =  if (_force isEqualType 0) then { _force } else { 25 };
 
 _objectList = _target nearEntities [["Car", "Man"], (_this select 1)];
 

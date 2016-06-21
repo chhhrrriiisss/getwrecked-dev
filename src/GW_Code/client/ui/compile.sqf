@@ -57,24 +57,28 @@ generateFilterList = compile preprocessFile "client\ui\functions\generateFilterL
 
 // Spawns selected vehicle
 selectVehicle = {
+
+
 	if (!isNil "GW_PREVIEW_VEHICLE") then {
 		GW_PREVIEW_SELECTED = GW_PREVIEW_VEHICLE;
 		closeDialog 0;
+
+		// Find other vehicles in workshop that we own and delete them
+		if (GW_CURRENTZONE == "workshopZone") then {
+
+		    {
+		        if (_x != GW_PREVIEW_VEHICLE) then {
+		            _owner =  _x getVariable ['GW_Owner', ''];
+		            if (_owner == (name player)) then {             
+		                [_x] call clearPad;
+		            };               
+		        };   
+		    } foreach ((getMarkerPos "workshopZone_camera") nearEntities [["Car"], 500]);
+
+		};
+
 	};
-
-	// Find other vehicles in workshop that we own and delete them
-	if (GW_CURRENTZONE == "workshopZone") then {
-
-	    {
-	        if (_x != GW_PREVIEW_VEHICLE) then {
-	            _owner =  _x getVariable ['GW_Owner', ''];
-	            if (_owner == (name player)) then {             
-	                [_x] call clearPad;
-	            };               
-	        };   
-	    } foreach ((getMarkerPos "workshopZone_camera") nearEntities [["Car"], 500]);
-
-	};
+	
 };
 
 //

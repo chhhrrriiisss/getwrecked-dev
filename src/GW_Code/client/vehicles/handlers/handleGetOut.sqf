@@ -7,8 +7,6 @@
 private ['_vehicle', '_nil', '_unit'];
 params ['_vehicle', '_nil', '_unit'];
 
-hint str _this;
-
 if (isNull _vehicle) exitWith {};
 if (!local _vehicle) exitWith { systemchat 'not local!'; };
 if (alive _vehicle) then { _unit setDammage 0; };

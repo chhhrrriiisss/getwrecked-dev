@@ -26,7 +26,7 @@ _statusToAdd = if ('fire' in _status) then { ['inferno'] } else { ['fire'] };
 // Fire duration
 _rnd = random 6 + _minDuration;
 
-if (_target != (vehicle player) ) then { [_target] call markAsKilledBy;  };
+// if (_target != (vehicle player) ) then { [_target] call markAsKilledBy;  };
 
 [       
     [

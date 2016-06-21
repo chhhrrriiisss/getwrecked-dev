@@ -9,10 +9,13 @@ params ['_source', '_target'];
 _status = _target getVariable ['status', []];
 if ('invulnerable' in _status || 'cloak' in _status) exitWith { true };
 
-_vehicle = attachedTo _source;
-_damage = [(random 0.15), 0.05, 0.1] call limitToRange;
-_velocity = (velocity _vehicle) distance [0,0,0];   
-_source setDammage (getDammage _source) + ((random 0.07) + 0.01); 
+_vehicle = attachedTo _source;      
+_velocity = GW_CURRENTVEL distance [0,0,0]; 
+_multiplier = [((random (_velocity/100)) + ((_velocity/100) * 0.25)), 0.04, 0.5] call limitToRange;
+_damage = if ('nanoarmor' in _status) then { 0.001 } else { (_multiplier*GW_GMM) };
+
+_damageSelf = ((random 0.08) + 0.03) * GW_MELEE_DEGRADATION;
+_source setDammage (getDammage _source) + _damageSelf; 
 
 if ((getDammage _source) >= 1) exitWith {
 
@@ -33,14 +36,18 @@ if ((getDammage _source) >= 1) exitWith {
 
 };
 
-[       
-    [
-        _source modelToWorldVisual [0,0,0]
-    ],
-    "impactEffect",
-    true,
-    false 
-] call bis_fnc_mp; 
+_pos = lineIntersectsSurfaces [visiblePositionASL _source, ATLtoASL (_source modelToWorldVisual [2,0,0]), _source, GW_CURRENTVEHICLE, true, 1];
+
+if (count _pos > 0) then {
+    [       
+        [
+            (ASLtoATL ((_pos select 0) select 0))
+        ],
+        "impactEffect",
+        true,
+        false 
+    ] call bis_fnc_mp; 
+};
 
 _target setDammage (getDammage _target) + _damage;
 

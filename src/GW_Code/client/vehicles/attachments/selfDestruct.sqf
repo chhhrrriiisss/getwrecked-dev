@@ -7,10 +7,8 @@
 _this spawn {
 
 	private ["_vehicle"];
-
-	_vehicle = [_this,1, objNull, [objNull]] call filterParam;
-
-	if (isNull _vehicle) exitWith {};
+	params ['_nil', '_vehicle'];
+	if (isNull _vehicle) exitWith { false };
 	if (!local _vehicle || !alive _vehicle) exitWith { false };
 
 	_timeout = 2;
@@ -34,7 +32,7 @@ _this spawn {
 		};
 	};
 
-	_pos = (ASLtoATL getPosATL _vehicle);
+	_pos = (ASLtoATL getPosASL _vehicle);
 
 	// Prevent invulnerability from stopping it
 	_vehicle setVariable ["status", [], true];

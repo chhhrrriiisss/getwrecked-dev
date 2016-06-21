@@ -17,8 +17,15 @@ params ['_pad', '_unit'];
 _isVehicleReady = [_pad, _unit] call vehicleReadyCheck;
 if (!_isVehicleReady) exitWith { GW_RACE_GENERATOR_ACTIVE = false; };
 	
+// Lock the HUD
+GW_HUD_LOCK = true;
+
+// Wait until hud locked
+waitUntil{isNil "GW_HUD_INITIALIZED"};
+
+
 disableSerialization;
-if(!(createDialog "GW_Race")) exitWith { GW_RACE_GENERATOR_ACTIVE = false; }; //Couldn't create the menu
+if(!(createDialog "GW_Race")) exitWith { GW_RACE_GENERATOR_ACTIVE = false; GW_HUD_LOCK = false; }; //Couldn't create the menu
 
 showChat TRUE;
 
@@ -1141,6 +1148,8 @@ Sleep 0.1;
 
 // Menu has been closed, kill everything!
 waitUntil { isNull (findDisplay 90000) };
+
+GW_HUD_LOCK = false; 
 
 _mapControl ctrlRemoveEventHandler ["KeyDown", _mapKeyDown];
 _mapControl ctrlRemoveEventHandler ["MouseButtonUp", _mouseUp];

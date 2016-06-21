@@ -127,9 +127,9 @@ GW_DEPLOYLIST = GW_DEPLOYLIST + [_obj];
 					_x,
 					false
 				] call bis_fnc_mp; 		
-
-				[_x, 100, 6] call setVehicleOnFire;
-				[_x, 'NPA'] call markAsKilledBy;				
+				
+				[_x, 'NPA'] call markAsKilledBy;	
+				[_x, 100, 6] call setVehicleOnFire;			
 				
 				false
 				

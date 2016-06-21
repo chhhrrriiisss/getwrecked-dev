@@ -13,17 +13,23 @@ if ('invulnerable' in _status || 'cloak' in _status) exitWith { true };
 
 _vehicle = attachedTo _source;
 _vP = _vehicle worldToModelVisual (_target modelToWorldVisual [0,0,0]);				
-_damage = if ('nanoarmor' in _status) then { 0.001 } else { ((random 0.05) + 0.025) };
-_source setDammage (getDammage _source) + ((random 0.07) + 0.01); 
+_damage = if ('nanoarmor' in _status) then { 0.001 } else { (((random 0.022) + 0.011) * GW_GMM) };
 
-[       
-    [
-        _source modelToWorldVisual [1,0,0]
-    ],
-    "impactEffect",
-    true,
-    false 
-] call bis_fnc_mp; 
+_damageSelf = ((random 0.07) + 0.01) * GW_MELEE_DEGRADATION;
+_source setDammage (getDammage _source) + _damageSelf; 
+
+_pos = lineIntersectsSurfaces [visiblePositionASL _source, ATLtoASL (_source modelToWorldVisual [1,0,0]), _source, GW_CURRENTVEHICLE, true, 1];
+
+if (count _pos > 0) then {
+	[       
+	    [
+	        (ASLtoATL ((_pos select 0) select 0))
+	    ],
+	    "impactEffect",
+	    true,
+	    false 
+	] call bis_fnc_mp; 
+};
 
 if ((_target isKindOf "Car") && !('forked' in _status || 'nofork' in _status) ) then  {
 

@@ -3,10 +3,11 @@
 //      Desc: Small smoke burst at point to simulate gun firing
 //     
 
-_source = [_this,0, objNull, [objNull]] call filterParam;
-_offset = [_this,1, [0,0,0], [[]]] call filterParam;
+params ['_source', '_offset'];
 
 if (isNull _source) exitWith {};
+_offset = if (isNil "_this select 1") then { [0,0,0] } else { (_this select 1) };
+_offset = if (_offset isEqualType []) then { _offset } else { [0,0,0] };
 
 _pos = (ASLtoATL visiblePositionASL _source);
 _isVisible = [_pos, 1.3] call effectIsVisible;

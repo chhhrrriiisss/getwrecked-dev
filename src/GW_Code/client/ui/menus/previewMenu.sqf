@@ -21,8 +21,17 @@ if (!_owner) exitWith {
 
 GW_LIBRARY = [] call getVehicleLibrary;
 
+// Lock the HUD
+GW_HUD_LOCK = true;
+
+// Wait until hud locked
+waitUntil{isNil "GW_HUD_INITIALIZED"};
+
 disableSerialization;
-if(!(createDialog "GW_Menu")) exitWith {}; 
+if(!(createDialog "GW_Menu")) exitWith { GW_HUD_LOCK = false; }; 
+
+
+
 
 // Misc vars
 currentPreview = 0;
@@ -56,9 +65,11 @@ _startPos set [2,1.1];
 _layerStatic = ("BIS_layerStatic" call BIS_fnc_rscLayer);
 _layerStatic cutRsc ["RscStatic", "PLAIN" , 1];
 
-
 // Menu has been closed, kill everything!
 waitUntil{isNull (findDisplay 42000)};
+
+// Unlock the HUD
+GW_HUD_LOCK = false;
 
 45000 cutText ["", "BLACK IN", 0.35];  
 

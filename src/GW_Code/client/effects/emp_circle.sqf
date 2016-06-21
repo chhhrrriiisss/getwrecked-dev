@@ -4,10 +4,10 @@
 //      Return: None
 //
 
-_target = [_this,0, objNull, [objNull]] call filterParam;
-_duration = [_this,1, 1, [0]] call filterParam;
+params ['_target', '_duration'];
 
-if (isNull _target || _duration < 0) exitWith {};
+if (isNull _target) exitWith {};
+_duration = if (_duration isEqualType 0) then { _duration } else { 1 };
 
 _pos = (ASLtoATL visiblePositionASL _target);
 _isVisible = [_pos, _duration] call effectIsVisible;

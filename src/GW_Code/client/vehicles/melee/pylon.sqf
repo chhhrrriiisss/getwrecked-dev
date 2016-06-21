@@ -11,18 +11,23 @@ if ('invulnerable' in _status || 'cloak' in _status) exitWith { true };
 
 _vehicle = attachedTo _source;
 _velocity = (velocity _vehicle) distance [0,0,0];	
-_multiplier = [((random (_velocity/100)) + ((_velocity/100) * 0.25)), 0.04, 0.5] call limitToRange;
-_damage = if ('nanoarmor' in _status) then { 0.001 } else { _multiplier };
-_source setDammage (getDammage _source) + ((random 0.025) + 0.01); 
+_damage = if ('nanoarmor' in _status) then { 0.001 } else { (((random 0.046) + 0.023) * GW_GMM) };
 
-[       
-    [
-        _source modelToWorldVisual [0,-2,0]
-    ],
-    "impactEffect",
-    true,
-    false 
-] call bis_fnc_mp; 
+_damageSelf = ((random 0.025) + 0.01) * GW_MELEE_DEGRADATION;
+_source setDammage (getDammage _source) + _damageSelf; 
+
+_pos = lineIntersectsSurfaces [visiblePositionASL _source, ATLtoASL (_source modelToWorldVisual [0,-2,0]), _source, GW_CURRENTVEHICLE, true, 1];
+
+if (count _pos > 0) then {
+    [       
+        [
+            (ASLtoATL ((_pos select 0) select 0))
+        ],
+        "impactEffect",
+        true,
+        false 
+    ] call bis_fnc_mp; 
+};
 
 _target setDammage (getDammage _target) + _damage;
 

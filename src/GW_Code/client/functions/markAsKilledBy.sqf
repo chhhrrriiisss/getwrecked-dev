@@ -5,12 +5,12 @@
 //
 
 private ['_v', '_m'];
-
-_v = [_this, 0, objNull, [objNull]] call filterParam;
-_m = [_this, 1, "", [""]] call filterParam;
+params ['_v'];
 
 if (isNull _v) exitWith {};
 if (!alive _v) exitWith {};
+
+_m = if (isNil "_this select 1") then { "" } else { (_this select 1) };
 
 // Don't tag our own vehicle
 if (_v == GW_CURRENTVEHICLE) exitWith {};

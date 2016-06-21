@@ -11,6 +11,27 @@ _unit = [_this,1, objNull, [objNull]] call filterParam;
 
 if (isNull _vehicle || isNull _unit) exitWith {};
 
+_origPosition = (ASLtoATL visiblePositionASL _vehicle);
+
+// Clear area of any nearby supply boxes or items
+{      
+
+    _isVehicle = _x getVariable ["isVehicle", false];
+    _type = typeof _x;
+
+     // Make sure its not a whitelisted item
+    switch (true) do {
+        case (isPlayer _x || _type in GW_UNCLEARABLE_ITEMS || _isVehicle): { };
+        default {
+           _relPos = [_origPosition, 8, (random 360)] call relPos;
+            _x setPos _relPos;
+        };
+
+    };
+
+
+    false
+} count (_origPosition nearObjects 10) > 0;
 
 GW_LIFT_ACTIVE = true;
 GW_LIFT_VEHICLE = _vehicle;
@@ -36,8 +57,6 @@ _unit addAction [dropVehicleFormat, {
 	GW_LIFT_VEHICLE setVariable ['GW_suspend', false];
 	GW_LIFT_ACTIVE = false;
 }, [], 0, true, false, "", "( (GW_CURRENTZONE == 'workshopZone') && GW_LIFT_ACTIVE )"];
-
-_origPosition = (ASLtoATL getPosASL _vehicle);
 
 GW_HOLD_ROTATE_POS = [];
 _startAngle = 360;

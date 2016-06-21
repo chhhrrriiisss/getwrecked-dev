@@ -211,31 +211,69 @@ _unit spawn setPlayerActions;
 
 _unit setVariable ['name', name player, true];
 
+
 // Trigger Lazy Update settings
-GW_minUpdateFrequency = 1.5;
-GW_maxUpdateFrequency = 1;
-GW_updateDistance = 1.5;
-GW_updateAimpoint = 0.1;
-GW_cooldown = false;
-GW_lastUpdate = time - GW_minUpdateFrequency;
+// GW_minUpdateFrequency = 1.5;
+// GW_maxUpdateFrequency = 1;
+// GW_updateDistance = 1.5;
+// GW_updateAimpoint = 0.1;
+// GW_cooldown = false;
+// GW_lastUpdate = time - GW_minUpdateFrequency;
 
-GW_lastPosition = [0,0,0];
-GW_lastAimpoint = [0,0,0];
+// GW_lastPosition = [0,0,0];
+// GW_lastAimpoint = [0,0,0];
 
-if (!isNil "GW_MM_EH") then { (findDisplay 46) displayRemoveEventHandler ["MouseMoving", GW_MM_EH]; };	
-GW_MM_EH = (findDisplay 46) displayAddEventHandler ["MouseMoving", "[_this, 'mouse'] call triggerLazyUpdate; false;"];
+// if (!isNil "GW_MM_EH") then { (findDisplay 46) displayRemoveEventHandler ["MouseMoving", GW_MM_EH]; };	
+// GW_MM_EH = (findDisplay 46) displayAddEventHandler ["MouseMoving", "[_this, 'mouse'] call triggerLazyUpdate; false;"];
 
-// Looped items that only require a periodic, non consistent refresh
-[nil, 'manual'] call triggerLazyUpdate;
+// // Looped items that only require a periodic, non consistent refresh
+// [nil, 'manual'] call triggerLazyUpdate;
 
-inGameUISetEventHandler['PrevAction', '[_this, "scroll"] call triggerLazyUpdate; false'];
-inGameUISetEventHandler['NextAction', '[_this, "scroll"] call triggerLazyUpdate; false'];
+// inGameUISetEventHandler['PrevAction', '[_this, "scroll"] call triggerLazyUpdate; false'];
+// inGameUISetEventHandler['NextAction', '[_this, "scroll"] call triggerLazyUpdate; false'];
+
 inGameUISetEventHandler ["Action", "
 	if (isNil '_this select 3') exitWith { false };
 	if (_this select 3 == 'DisAssemble') then {
 		true
 	}
 "];
+
+
+// Destroy any existing player loops
+
+if (!isNIl "GW_PLAYER_LOOP") then {
+	terminate GW_PLAYER_LOOP;
+	GW_PLAYER_LOOP = nil;
+};
+
+GW_PLAYER_LOOP = [] spawn {
+	
+	_refreshRate = 0.5;
+
+	// Player loop
+	for "_i" from 0 to 1 step 0 do {
+
+		_startTime = time;
+		[] call playerLoop;
+		_endTime = format['%1', ([(time - _startTime), 2] call roundTo)];
+		['Loop Update', _endTime] call logDebug;
+
+		_startTime = time;
+		_refreshRate call drawHud;
+		_endTime = format['%1', ([(time - _startTime), 2] call roundTo)];
+		['HUD Update', _endTime] call logDebug;
+
+		// hint _endTime;
+
+		if (!alive player) exitWith {};
+
+		Sleep _refreshRate;
+	};
+
+};
+
+if (true) exitWith {};
 
 // Prevent weapon disassembly
 // inGameUISetEventHandler ["Action", "
@@ -245,5 +283,3 @@ inGameUISetEventHandler ["Action", "
 // 		true
 // 	};
 // "];
-
-if (true) exitWith {};

@@ -63,6 +63,10 @@ GW_GDS_RACE = 0.16; // Damage modifier while in a race (default: 0.2)
 // Weapon Damage vs objects
 GW_GHS = 4; // Damage modifier weapons vs items (default: 4)
 
+// Melee weapon global modifier
+GW_GMM = 3;
+GW_MELEE_DEGRADATION = 7;
+
 OBJ_COLLISION_DMG_SCALE = 0;
 WHEEL_COLLISION_DMG_SCALE = 0; 
 COLLISION_DMG_SCALE = 0; 
@@ -217,8 +221,9 @@ GW_UNCLEARABLE_ITEMS = [
     '#track',
     'Land_Bucket_painted_F',
     'UserTexture1m_F',
-    'SignAd_Sponsor_ARMEX_F',
-    'Land_Tyres_F'
+    'SignAd_Sponsor_ARMEX_F',    
+    'Land_Tyres_F',
+    ''
 ];
 
 GW_PROTECTED_ITEMS = [
@@ -377,7 +382,7 @@ switch (worldName) do {
 			['city', 'battle', 'City'],
 			['port', 'battle', 'Port'],
 			['quarry', 'battle', 'Quarry'],
-			['crater', 'battle', 'Crater'],
+			// ['crater', 'battle', 'Crater'],
 			['plantation', 'battle', 'Plantation'],
 			['workshop', 'safe', 'Workshop']
 		];

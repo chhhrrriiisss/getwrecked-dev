@@ -29,6 +29,10 @@ _vehicle call cleanAttached;
 // Get rid of excess addActions
 { 
 	_x call _stripActions;
+
+	// Disable fuel on napalm bombs
+	if (typeof _x == "FlexibleTank_01_forest_F") then { _x setFuelCargo 0; };
+
 	false
 } count (attachedObjects _vehicle) > 0;
 

@@ -36,8 +36,12 @@ cancelCurrentTimer = {
 	GW_TIMER_ACTIVE = false;
 };
 
+// Disable HUD
+GW_HUD_LOCK = true;
+waitUntil {isNil "GW_HUD_INITIALIZED" };
+
 disableSerialization;
-if(!(createDialog "GW_Timer")) exitWith { GW_TIMER_ACTIVE = false; }; 
+if(!(createDialog "GW_Timer")) exitWith { GW_TIMER_ACTIVE = false; GW_HUD_LOCK = false; }; 
 
 _text = ((findDisplay 94000) displayCtrl 94001);
 _btn = ((findDisplay 94000) displayCtrl 94002);
@@ -110,6 +114,8 @@ for "_i" from 0 to 1 step 0 do {
 	Sleep _sleepTime;
 
 };
+
+GW_HUD_LOCK = false;
 
 // Timer over, tidy up
 showChat true;

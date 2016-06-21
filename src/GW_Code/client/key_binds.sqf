@@ -71,12 +71,6 @@ checkBinds = {
 	// Tilde key for cancelling hints
 	if (_key == 41) exitWith { hint ''; };
 
-	if (_ctrl && _shift && _key == 46) then {
-		if (GW_CURRENTVEHICLE call hasMelee) then {	
-			GW_CURRENTVEHICLE call meleeAttached;
-		};
-	};
-
 	// Toggle Debug
 	if (_ctrl && _alt && _shift && _key == 32) exitWith {
 		GW_DEBUG = if (GW_DEBUG) then { false } else { true };

@@ -80,6 +80,8 @@ if (isNil "getMeleeOffsets") then {
 
 			if (isNil "_obj") exitWith {};
 			if ((typeOf _obj) isEqualTo "") exitWith {};
+
+			if (isNull attachedTo _obj && _obj isKindOf "Building") exitWith {};
 			if ({ if (_obj isKindOf _x) exitWith {1}; false	} count ["ReammoBox", "Man", "ThingEffect", "RopeSegment"] isEqualTo 1) exitWith {};
 
 			_vectInc = [(ASLtoATL visiblePositionASL _obj), (ASLtoATL visiblePositionASL _source)] call bis_fnc_vectorFromXToY;

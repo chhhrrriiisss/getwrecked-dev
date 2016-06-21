@@ -51,6 +51,7 @@ getWeaponIcon = {
 	noTargetIcon
 };
 
+GW_VEHICLE_STATUS = [];
 GW_CURRENTPOS = [0,0,0];
 GW_IGNORE_DEATH_CAMERA = false;
 GW_INVEHICLE = false;
@@ -134,7 +135,7 @@ GW_clientFunctions = [
 	['targetCursor', 'client\ui\display\'],
 	['mouseHandler', 'client\ui\display\'],
 
-	['drawHud', 'client\ui\hud\'],
+	['drawHud', 'client\ui\display\'],
 	['drawServiceIcon', nil],
 
 	['settingsMenu', 'client\ui\dialogs\'],
@@ -297,10 +298,7 @@ effectIsVisible = compile preprocessFile "client\functions\effectIsVisible.sqf";
 // Zone Functions
 returnToZone =  compile preprocessFile "client\functions\returnToZone.sqf";
 setCurrentZone = compile preprocessFile "client\functions\setCurrentZone.sqf";	
-<<<<<<< HEAD
 
-=======
->>>>>>> origin/master
 
 // Sponsorship
 giveSponsor = compile preprocessFile "client\functions\giveSponsor.sqf";	

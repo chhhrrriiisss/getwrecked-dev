@@ -26,6 +26,8 @@ if (count toArray _zoneName == 0) exitWith { ['Not a valid zone.'] call _onExit;
 
 // Global zone doesn't need a boundary
 if (_zoneName == "globalZone") exitWith { ['Global zone does not require boundaries.'] call _onExit; };
+if (_zoneName == "workshopZone") exitWith { ['Workshop zone does not require boundaries.'] call _onExit; };
+
 
 _exists = false;
 _index = -1;

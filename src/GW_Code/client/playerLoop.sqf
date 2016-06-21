@@ -1,23 +1,15 @@
-if (isNil "GW_INT_MONITOR_LAST_UPDATE") then { GW_INT_MONITOR_LAST_UPDATE = time; };
-['Interaction Update', (format['%1', ([time - GW_INT_MONITOR_LAST_UPDATE, 2] call roundTo)])] call logDebug;
-GW_INT_MONITOR_LAST_UPDATE = time;
-
-GW_CURRENTPOS = (ASLtoATL visiblePositionASL player);
-
-// Restore the HUD if we're somewhere that needs it
-if (GW_DEATH_CAMERA_ACTIVE || GW_PREVIEW_CAM_ACTIVE || GW_SPECTATOR_ACTIVE || GW_TIMER_ACTIVE || GW_TITLE_ACTIVE || GW_GUIDED_ACTIVE || GW_SETTINGS_ACTIVE || GW_LOADING_ACTIVE || GW_LOBBY_ACTIVE) then {
-	if (GW_HUD_ACTIVE) then { GW_HUD_ACTIVE = false; };
-} else {
-	if (!GW_HUD_ACTIVE && !GW_HUD_LOCK) then {	
-		[] spawn drawHud;
-	};
-};
-
 // Update vehicle damage
 GW_CURRENTVEHICLE call updateVehicleDamage;
 
 // Toggle simulation back if we lose it for any reason
 if (!simulationEnabled GW_CURRENTVEHICLE) then { GW_CURRENTVEHICLE enableSimulation true; };
+
+// If we're using melee weapons, do a collision check
+_meleeEnabled = GW_CURRENTVEHICLE getVariable ['GW_MELEE', false];
+IF (_meleeEnabled) then {
+	GW_CURRENTVEHICLE call collisionCheck;
+};
+['Melee enabled:', _meleeEnabled] call logDebug;
 
 // Every 5 seconds, track mileage + alive state
 _remainder = round (time) % 5;
@@ -76,6 +68,23 @@ if (!isNil "GW_CURRENTZONE") then {
 	} else {
 		player setVariable ["outofbounds", false];	
 	};	
+
+	// If we're not disabled to any extent (or we've not been to a pad for 3 seconds)
+	if ({ if (_x in GW_VEHICLE_STATUS) exitWith {1}; false } count ["emp", "disabled", "noservice"] isEqualTo 0) then { 
+
+		_nearbyService = GW_CURRENTVEHICLE getVariable ["GW_NEARBY_SERVICE", nil];
+		[GW_CURRENTVEHICLE] spawn checkTyres;
+
+		if (!isNil "_nearbyService") then {   
+			[GW_CURRENTVEHICLE, _nearbyService] call servicePoint;
+		};
+	};	
+
+	// Give a little bit of fuel if it looks like we're out
+	if (fuel GW_CURRENTVEHICLE < 0.01 && !("emp" in GW_VEHICLE_STATUS)) then {
+		GW_CURRENTVEHICLE setFuel 0.01;
+	};
+
 
 };
 

@@ -9,19 +9,20 @@ Items without Fixed/Added/Removed proceeding are typically balance changes.
 
 [e]
 
-<<<<<<< HEAD
-- Reduced setPos frequency on life vehicle
+- Refactored HUD and playerLoop to run from same loop
+- Reduced setPos frequency on lift vehicle
 - Overall fire damage reduced
 - Slightly lowered GMG rate of fire
 - Removed zone boundaries from workshop
+- Removed 'Crater' battle zone 
 - New 'hidden' icon to targetCursor while using cloak
 - Reduction in number of simulated objects in zones using makeSimpleObject
+- Melee weapons now do more damage, break more easily and no longer collide with buildings
+- Fixed Melee weapons colliding with invisible objects on bridge
 - Fixed Potential HUD break related to getOut EH on vehicles
-=======
-- New 'hidden' icon to targetCursor while using cloak
-- Reduction in number of simulated objects in zones using makeSimpleObject
-- Vehicles should no longer get clipped so easily on flame pads
->>>>>>> origin/master
+- Fixed Objects placed below vehicle when lifted caused vehicle to explode
+- Fixed param error when using Rocket Pods on opponents
+- Fixed param error related to muzzleEffect
 
 [d]
 
