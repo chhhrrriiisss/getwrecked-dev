@@ -22,7 +22,8 @@ Items without Fixed/Added/Removed proceeding are typically balance changes.
 - Fixed Potential HUD break related to getOut EH on vehicles
 - Fixed Objects placed below vehicle when lifted caused vehicle to explode
 - Fixed param error when using Rocket Pods on opponents
-- Fixed param error related to muzzleEffect
+- Fixed param error related to 
+- Fixed Battleye kick when using too many lasers
 
 [d]
 

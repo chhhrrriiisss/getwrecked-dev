@@ -35,7 +35,7 @@ if (!isNil "GW_CURRENTZONE") then {
    
     // Add actions to nearby objects
 	if (GW_CURRENTZONE == "workshopZone" && !GW_INVEHICLE && !GW_EDITING) then {		
-		[GW_CURRENTPOS] spawn checkNearbyActions;
+		[(ASLtoATL visiblePositionASL player)] spawn checkNearbyActions;
 	};
 
 	// Invulnerability toggle

@@ -556,6 +556,16 @@ for "_i" from 0 to 1 step 0 do {
 
 
 
+		// If we're not disabled to any extent (or we've not been to a pad for 3 seconds)
+		if ({ if (_x in GW_VEHICLE_STATUS) exitWith {1}; false } count ["emp", "disabled", "noservice"] isEqualTo 0) then { 
+
+			_nearbyService = GW_CURRENTVEHICLE getVariable ["GW_NEARBY_SERVICE", nil];
+			[GW_CURRENTVEHICLE] spawn checkTyres;
+
+			if (!isNil "_nearbyService") then {   
+				[GW_CURRENTVEHICLE, _nearbyService] call servicePoint;
+			};
+		};	
 
 		// Check tyres aren't disabled
 		[GW_CURRENTVEHICLE] spawn checkTyres;

@@ -4,12 +4,13 @@
 //      Return: None
 //
 
-if (!isServer) exitWith {};
-
 private ['_obj', '_pad', '_p'];
 params ['_obj', '_var'];
 
 _obj setVariable ['isTerminal', _var];
+
+if (!isServer) exitWith {};
+
 _obj setVariable ['GW_CU_IGNORE', true];
 
 if (typeOf _obj == "SignAd_Sponsor_ARMEX_F" && _var isEqualType objNull) exitWith {
