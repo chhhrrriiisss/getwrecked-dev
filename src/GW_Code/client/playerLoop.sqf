@@ -1,3 +1,19 @@
+// Get all the conditions we need
+GW_CURRENTVEHICLE = (vehicle player);		
+GW_VEHICLE_STATUS = GW_CURRENTVEHICLE getVariable ["status", []];
+GW_VEHICLE_SPECIAL = GW_CURRENTVEHICLE getVariable ["special", []];
+
+GW_HASLOCKONS = GW_CURRENTVEHICLE getVariable ["lockOns", false];
+GW_HASMELEE = GW_CURRENTVEHICLE call hasMelee;
+GW_NEWSPAWN = GW_CURRENTVEHICLE getVariable ["newSpawn", false];
+
+GW_CURRENTPOS = (ASLtoATL visiblePositionASL GW_CURRENTVEHICLE);
+GW_CURRENTDIR = getDir GW_CURRENTVEHICLE;	
+GW_CURRENTVEL = (velocity GW_CURRENTVEHICLE);
+
+GW_CURRENTVEHICLE setVariable ['GW_prevPos', GW_CURRENTPOS];
+player setVariable ['GW_prevPos', GW_CURRENTPOS];
+
 // Update vehicle damage
 GW_CURRENTVEHICLE call updateVehicleDamage;
 

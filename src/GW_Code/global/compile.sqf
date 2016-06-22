@@ -290,7 +290,6 @@ GW_globalFunctions = [
 // Batch compile all functions
 [GW_globalFunctions, 'global\functions\', GW_DEV_BUILD] call functionCompiler;
 
-
 // Pre-compile location arrays
 reloadAreas = ['reloadArea', false, true] call findAllObjects;
 repairAreas = ['repairArea', false, true] call findAllObjects;

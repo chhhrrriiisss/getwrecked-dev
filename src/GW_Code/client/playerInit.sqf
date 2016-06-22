@@ -100,13 +100,10 @@ GW_DC_EH = addMissionEventHandler ["HandleDisconnect",{
 }];
 
 // Cache boundary information
-[] call cacheZoneBoundary;
+// [] call cacheZoneBoundary;
 
 // Player set up
 [_unit] spawn playerSpawn;
-
-// Useful for detecting mouse presses
-[] call mouseHandler;
 
 // Used for detecting key presses
 [] spawn initBinds;

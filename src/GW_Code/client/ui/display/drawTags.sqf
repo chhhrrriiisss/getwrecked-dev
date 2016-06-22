@@ -14,8 +14,6 @@ if (!('radar' in GW_VEHICLE_STATUS)) then { GW_TARGETICON_ARRAY = []; };
 _vehicleRendered = false;
 {	
 	
-	
-
 	// Target must be in a vehicle
 	_inVehicle = if (_x == (vehicle _x)) then { false } else { true };	
 
@@ -42,12 +40,9 @@ _vehicleRendered = false;
 		if ('radar' in GW_VEHICLE_STATUS && !(_x in GW_TARGETICON_ARRAY) && _x != GW_CURRENTVEHICLE) then { GW_TARGETICON_ARRAY pushback _x; };			
 
 		// Only render first vehicle captured by this loop that's in scope
-		_inScope = if (GW_CURRENTVEHICLE == _x) then { true } else { ([GW_TARGET_DIRECTION, _x, 12.5] call checkScope) };
-
-		
+		_inScope = if (GW_CURRENTVEHICLE == _x) then { true } else { ([GW_TARGET_DIRECTION, _x, 12.5] call checkScope) };		
 
 		if (!_inScope) exitWith {};
-
 
 		[_x] call vehicleTag;
 

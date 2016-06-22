@@ -20,39 +20,21 @@ resetBinds = {
 		keyDown = false;
 	};
 
-	// if ((_this select 1) in (actionKeys "showMap") && !visibleMap) then {
-	// 	GW_HUD_ACTIVE = false;	
-	// 	GW_HUD_LOCK = true;
-
-	// 	[] spawn {
-	// 		waitUntil {
-	// 			!visibleMap
-	// 		};
-	// 		GW_HUD_ACTIVE = false;	
-	// 		GW_HUD_LOCK = false;
-	// 	};
-	// };	
-
-
 	GW_HOLD_ROTATE = false;
 	GW_KEYDOWN = nil;
 
 	// _groupsKey = ["GROUPS"] call getGlobalBind;
 	_infoKey = ["INFO"] call getGlobalBind;
 
-	if (_key == _infoKey) then {
-		hint 'This feature is not yet implemented.';
-		// [] execVM "client\ui\dialogs\createHint.sqf";
-	};
-
-	// if (_key == _groupsKey) then {
-	// 	["OnKeyUp", _this] call dynamicGroups;
+	// if (_key == _infoKey) then {
+	// 	hint 'This feature is not yet implemented.';
+	// 	// [] execVM "client\ui\dialogs\createHint.sqf";
 	// };
 };
 
 checkBinds = {
 	
-	[_this, "key"] call triggerLazyUpdate;
+	// [_this, "key"] call triggerLazyUpdate;
 
 	_key = _this select 1; // The key that was pressed
 	_shift = _this select 2; 

@@ -80,3 +80,5 @@ GW_ZONE_DEPLOY_TARGETS = [];
 	false
 
 } count GW_VALID_ZONES;
+
+GW_ZONE_BOUNDARIES_COMPILED = compileFinal "true";

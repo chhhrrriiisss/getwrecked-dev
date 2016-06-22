@@ -13,6 +13,14 @@ _startTime = time;
 [] call GWS_fnc_initNitroAndFlame;
 [] spawn initEvents;
 
+// Wait for zone boundary compilation
+waitUntil {
+	Sleep 0.25;
+	!isNIl "GW_ZONE_BOUNDARIES_COMPILED"
+};
+
+[] execVM 'server\zones\buildZoneBoundaryServer.sqf';
+
 // Prevent cleanup on mission.sqm placed items
 {
 	_x setVariable ['GW_CU_IGNORE', true];
@@ -22,6 +30,12 @@ _startTime = time;
 // Make AI attack civlian players
 west setFriend [civilian, 0];
 east setFriend [civilian, 0];
+
+// Wait for boundaries to complete for confirming server ready
+waitUntil {	
+	Sleep 0.25;
+	!isNIl "GW_BOUNDARY_BUILD"
+};
 
 serverSetupComplete = compileFinal "true";
 publicVariable "serverSetupComplete";

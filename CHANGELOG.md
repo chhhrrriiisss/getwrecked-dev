@@ -7,6 +7,13 @@ Items without Fixed/Added/Removed proceeding are typically balance changes.
 
 **v0.8.6d**
 
+[f]
+
+- Removed duplicate mouseHandler function
+- Reverted boundary spawn to server side only
+- Fixed Deploy point on plantation above flame pad (lol)
+- Fixed .rpt error related to effectIsVisible
+
 [e]
 
 - Refactored HUD and playerLoop to run from same loop

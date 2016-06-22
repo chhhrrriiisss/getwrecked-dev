@@ -161,11 +161,11 @@ GW_clientFunctions = [
 	['estimateRaceTime', nil],
 	['createCheckpoint', 'client\zones\'],
 
-	['isIndirect', nil],
+	['isIndirect', nil]
 
-	['buildZoneBoundary', nil],
-	['cacheZoneBoundary', nil],
-	['removeZoneBoundary', nil]
+	// ['buildZoneBoundary', nil],
+	// ['cacheZoneBoundary', nil],
+	// ['removeZoneBoundary', nil]
 
 ];
 
