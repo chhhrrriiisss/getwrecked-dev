@@ -19,6 +19,8 @@ $RECYCLE.BIN/
 
 node_modules/
 
+*.gitignore
+
 # Ignore sublime project files
 *.sublime-project
 *.sublime-workspace
