@@ -207,6 +207,12 @@ if (GW_INVEHICLE && GW_ISDRIVER) then {
 		_vHudRaceTime ctrlSetStructuredText parseText ( format["<t size='1.25' color='#ffffff' align='center'>+%1</t>", _timeSince call formatTimestamp ] );
 		_vHudRacePlayer ctrlSetStructuredText parseText ( format["<img size='1.5' image='%1' /><t size='1' color='#ffffff' align='left'>%2</t>", racePlayer, name player ] );		
 
+		if (GW_POWERUP_ACTIVE) then { 
+			if (ctrlFade _vHudRaceTime < 1) then { _vHudRaceTime ctrlSetFade 1; };
+		} else {
+			if (ctrlFade _vHudRaceTime > 0) then { _vHudRaceTime ctrlSetFade 0; };
+		};
+
 		_vHudRace ctrlCommit 0;
 		_vHudRaceTime ctrlCommit 0;
 		_vHudRacePlayer ctrlCommit _this;

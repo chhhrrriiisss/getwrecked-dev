@@ -134,32 +134,32 @@ GW_SUPPLY_TYPES = [
 	],
 
 
-	[		
-		"emp",
-		0.7,
-		randomSign,
-		{	
-			_crate = _this;
-			_vehiclesInZone = [GW_CURRENTZONE, { (_this == (driver (vehicle _this))) }, true] call findAllInZone;
+	// [		
+	// 	"emp",
+	// 	0.7,
+	// 	randomSign,
+	// 	{	
+	// 		_crate = _this;
+	// 		_vehiclesInZone = [GW_CURRENTZONE, { (_this == (driver (vehicle _this))) }, true] call findAllInZone;
 
-			{
-				[       
-					[
-						_x,
-						"['emp']",
-						10
-					],
-					"addVehicleStatus",
-					_x,
-					false 
-				] call bis_fnc_mp; 	
+	// 		{
+	// 			[       
+	// 				[
+	// 					_x,
+	// 					"['emp']",
+	// 					10
+	// 				],
+	// 				"addVehicleStatus",
+	// 				_x,
+	// 				false 
+	// 			] call bis_fnc_mp; 	
 
-				false
+	// 			false
 
-			} count _vehiclesInZone > 0;		
+	// 		} count _vehiclesInZone > 0;		
 
-		}
-	],
+	// 	}
+	// ],
 
 	// [		
 	// 	"damage", // not working right now
@@ -218,6 +218,105 @@ GW_SUPPLY_TYPES = [
 			['MAXIMUM ARMOR', _maxTime, armorSupplyIcon, _condition] spawn createPowerup;
 		}
 	],
+
+	[		
+		"hsm",
+		0.5,
+		hsmSign,
+		{	
+			_crate = _this;
+			_condition = { ("hsm" in ((vehicle player) getVariable ['status', []])) };
+			_maxTime = 120;
+			_vehicle = (vehicle player);
+			_vehicle setVariable ['status', [], true];
+			
+			[_vehicle, ['hsm'], _maxTime] call addVehicleStatus;			
+
+			['HUNTER SEEKER MISSILE', _maxTime, hsmSupplyIcon, _condition, 59, { 
+
+				player say3D "beep_light";
+				
+				[GW_CURRENTVEHICLE, ['hsm']] call removeVehicleStatus;	
+
+				hint 'fired!'; 
+
+				true 
+
+			}] spawn createPowerup;
+		}
+	],
+
+	[		
+		"ems",
+		0.5,
+		empSign,
+		{	
+			_crate = _this;
+			_condition = { ("ems" in ((vehicle player) getVariable ['status', []])) };
+			_maxTime = 120;
+			_vehicle = (vehicle player);
+			_vehicle setVariable ['status', [], true];
+			
+			[_vehicle, ['ems'], _maxTime] call addVehicleStatus;			
+
+			['EMP STRIKE', _maxTime, empSupplyIcon, _condition, 59, { 
+
+				player say3D "beep_light";
+
+				[GW_CURRENTVEHICLE, ['ems']] call removeVehicleStatus;	
+
+				_vehiclesInZone = [GW_CURRENTZONE, { true }, true] call findAllInZone;
+
+				{	
+
+					if ((vehicle _x) == GW_CURRENTVEHICLE) then {} else {
+
+						[       
+							[
+								(vehicle _x),
+								"['emp']",
+								10
+							],
+							"addVehicleStatus",
+							(vehicle _x),
+							false 
+						] call bis_fnc_mp; 	
+
+					};
+
+					false
+
+				} count _vehiclesInZone > 0;		
+			
+
+				true 
+
+			}] spawn createPowerup;
+
+		}
+	],
+
+	// {	
+	// 		_crate = _this;
+	// 		_vehiclesInZone = [GW_CURRENTZONE, { (_this == (driver (vehicle _this))) }, true] call findAllInZone;
+
+	// 		{
+	// 			[       
+	// 				[
+	// 					_x,
+	// 					"['emp']",
+	// 					10
+	// 				],
+	// 				"addVehicleStatus",
+	// 				_x,
+	// 				false 
+	// 			] call bis_fnc_mp; 	
+
+	// 			false
+
+	// 		} count _vehiclesInZone > 0;		
+
+	// 	}
 
 	// [		
 	// 	"radar",

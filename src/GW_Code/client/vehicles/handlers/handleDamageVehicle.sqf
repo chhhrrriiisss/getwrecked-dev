@@ -128,7 +128,7 @@ _vehicle spawn {
 
 
 
-[_vehicle, ['noservice'], 5] call addVehicleStatus;
+[_vehicle, ['noservice'], 10] call addVehicleStatus;
 
 _damage
 

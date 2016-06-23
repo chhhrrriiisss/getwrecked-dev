@@ -290,6 +290,7 @@ GW_LOOT_VEHICLES = [
 
 	// Military
 
+	["B_T_LSV_01_unarmed_F", 10000],
 	["I_MRAP_03_F", 25000],
 	["B_MRAP_01_F", 20000],
 	["O_MRAP_02_F", 15000]

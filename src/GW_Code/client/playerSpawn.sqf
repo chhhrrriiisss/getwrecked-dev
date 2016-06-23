@@ -17,7 +17,7 @@ waitUntil { !isNull _unit && (alive _unit) };
 // };
 
 // Hide unwanted hud elements
-showHUD [true,false,false,false,false,false,false,true];
+showHUD [true,false,false,false,false,false,false,true,false];
 
 removeAllActions _unit;
 removeAllWeapons _unit;
@@ -33,6 +33,7 @@ _unit addItem "ItemMap";
 _unit assignItem "ItemMap";
 
 // Reset just in case
+GW_POWERUP_ACTIVE = false;
 GW_WAITFIRE = false;
 GW_WAITUSE = false;
 GW_WAITLIST = [];

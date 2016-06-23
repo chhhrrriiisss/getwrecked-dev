@@ -53,8 +53,8 @@ checkBinds = {
 	// Tilde key for cancelling hints
 	if (_key == 41) exitWith { hint ''; };
 
-	// Toggle Debug
-	if (_ctrl && _alt && _shift && _key == 32) exitWith {
+	// Toggle Debug ctrl+shift+alt+numpadenter
+	if (_ctrl && _alt && _shift && _key == 184) exitWith {
 		GW_DEBUG = if (GW_DEBUG) then { false } else { true };
 	};
 

@@ -89,6 +89,7 @@ buyAreaIcon = ICON_ROOT + "hud\buyArea.paa";
 lootAreaIcon = ICON_ROOT + "hud\lootArea.paa"; 
 hiddenIcon =  ICON_ROOT + "hud\hidden.paa";
 
+plusRepairIcon =  ICON_ROOT + "hud\plusRepair.paa";
 plusAmmoIcon =  ICON_ROOT + "hud\plusAmmo.paa";
 plusFuelIcon =  ICON_ROOT + "hud\plusFuel.paa";
 
@@ -109,6 +110,8 @@ damageSupplyIcon = ICON_ROOT + "hud\damageSupply.paa";
 speedSupplyIcon = ICON_ROOT + "hud\speedSupply.paa";
 armorSupplyIcon = ICON_ROOT + "hud\armorSupply.paa";
 radarSupplyIcon = ICON_ROOT + "hud\radarSupply.paa";
+hsmSupplyIcon = ICON_ROOT + "hud\hsmSupply.paa";
+empSupplyIcon = ICON_ROOT + "hud\empSupply.paa";
 
 // Race Icons
 
@@ -153,6 +156,8 @@ damageSign = MISSION_ROOT + 'client\images\signage\supply_damage.jpg';
 randomSign = MISSION_ROOT + 'client\images\signage\supply_random.jpg';
 speedSign = MISSION_ROOT + 'client\images\signage\supply_speed.jpg';
 jammerSign = MISSION_ROOT + 'client\images\signage\supply_jammer.jpg';
+empSign = MISSION_ROOT + 'client\images\signage\supply_emp.jpg';
+hsmSign = MISSION_ROOT + 'client\images\signage\supply_hsm.jpg';
 
 // Action Menu Formatting
 settingsIcon = ICON_ROOT + 'menus\settings.paa';

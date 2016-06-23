@@ -97,7 +97,7 @@ for "_i" from 0 to 1 step 0 do {
 	// Publically update progress once every second
 	if (round (time) % 1 == 0) then { GW_CURRENTVEHICLE setVariable ['GW_R_PR', GW_CURRENTRACE_PROGRESS, true]; };
 
-	_distanceToCheckpoint = GW_CURRENTPOS distance (GW_CHECKPOINTS select GW_CHECKPOINTS_PROGRESS);
+	_distanceToCheckpoint = GW_CURRENTPOS distance (ASLtoATL (GW_CHECKPOINTS select GW_CHECKPOINTS_PROGRESS));
 	if (_distanceToCheckpoint < _distTolerance) then {			
 
 		// Remove shooting/use restrictions after first WP

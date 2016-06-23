@@ -64,13 +64,13 @@ GW_GDS_RACE = 0.16; // Damage modifier while in a race (default: 0.2)
 GW_GHS = 4; // Damage modifier weapons vs items (default: 4)
 
 // Melee weapon global modifier
-GW_GMM = 3;
+GW_GMM = 2.5;
 GW_MELEE_DEGRADATION = 7;
 
 OBJ_COLLISION_DMG_SCALE = 0;
 WHEEL_COLLISION_DMG_SCALE = 0; 
 COLLISION_DMG_SCALE = 0; 
-FIRE_DMG_SCALE = 7; 
+FIRE_DMG_SCALE = 6; 
 
 // Melee Damage Frequency (default: 1)
 GW_COLLISION_FREQUENCY = 1;

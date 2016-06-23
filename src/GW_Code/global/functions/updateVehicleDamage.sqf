@@ -15,6 +15,8 @@ _oD = 3; // Maximum damage the vehicle can take  (sum of all parts)
 
 _actual = ((_oD / 3) * 100) min ((1-(getDammage _this)) * 100);
 
+['Vehicle health:', (round _actual)] call logDebug;
+
 _this setVariable ['GW_Health', (round _actual), true];
 
 // Apply vehicle damage to driver

@@ -22,19 +22,9 @@ if (_type == "REPAIR" && _currentDmg > 0 && _lowVelocity) exitWith {
 
 	if (!_inUse) then {
 		_vehicle setVariable ['inUse', true];
-		["REPAIRING...      ", 1, healthIcon, nil, "flash"] spawn createAlert;
-	};
+		["", 1, plusRepairIcon, [0,0,0,0.5], "slideUp", "upgrade"] spawn createNotification;
 
-	[		
-		[
-			_vehicle,
-			"rep",
-			30
-		],
-		"playSoundAll",
-		true,
-		false
-	] call bis_fnc_mp;	
+	};
 
 	_vehicle setDamage ((getDammage _vehicle) - 0.05);
 
@@ -49,19 +39,8 @@ if (_type == "REFUEL" && _currentFuel < _maxFuel && _lowVelocity ) exitWith {
 
 	if (!_inUse) then {
 		_vehicle setVariable ['inUse', true];
-		["REFUELLING...      ", 1, fuelIcon, nil, "flash"] spawn createAlert;
+		["", 1, plusFuelIcon, [0,0,0,0.5], "slideUp", "rep"] spawn createNotification;
 	};
-
-	[		
-		[
-			_vehicle,
-			"rep",
-			30
-		],
-		"playSoundAll",
-		true,
-		false
-	] call bis_fnc_mp;	
 
 	_increment = (_maxFuel * 0.05);
 
@@ -82,19 +61,8 @@ if (_type == "REARM" && _currentAmmo < _maxAmmo && _lowVelocity ) exitWith {
 
 	if (!_inUse) then {
 		_vehicle setVariable ['inUse', true];
-		["REARMING...      ", 1, ammoIcon, nil, "flash"] spawn createAlert;
+		["", 1, plusAmmoIcon, [0,0,0,0.5], "slideUp", "upgrade"] spawn createNotification;
 	};
-
-	[		
-		[
-			_vehicle,
-			"upgrade",
-			20
-		],
-	"playSoundAll",
-	true,
-	false
-	] call bis_fnc_mp;	 
 
 	_increment = _maxAmmo * 0.1;
 

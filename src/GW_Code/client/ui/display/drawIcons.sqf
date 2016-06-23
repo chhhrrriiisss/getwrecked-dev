@@ -289,14 +289,14 @@ _totalCheckpoints = count GW_CHECKPOINTS;
 	if (_forEachIndex >= GW_CHECKPOINTS_PROGRESS && _forEachIndex <= GW_CHECKPOINTS_PROGRESS + 2) then {
 
 		// Icon config and properties
-		_pos = _x;
+		_pos = if (surfaceIsWater _x) then { _x } else { ASLtoATL _x };
 		_dist = (GW_CURRENTVEHICLE distance _pos);
 		_alpha = [1 - (_dist / 1000), 0.05, 1] call limitToRange;	
 		_alpha = if (GW_CHECKPOINTS_PROGRESS == _forEachIndex) then { 1 } else { _alpha };
 		_divider = '/';
 		_size = [2.5 - (_dist / 100), 1.2, 2.5] call limitToRange;
 		_fontSize = 0.032;
-		_pos set [2, ([(_dist / 15), 0, 4] call limitToRange)];
+		// _pos set [2, ([(_dist / 15), 0, 4] call limitToRange)];
 		_colour = [255,255,255,_alpha];
 
 		// Change icon for completed checkpoints

@@ -144,7 +144,7 @@ _rate = GW_CLEANUP_RATE call {
 	if (_this == 4) exitWith { [3*60, 2*60, 60] }; // High		
 	if (_this == 2) exitWith { [6*60, 5*60, 4*60] }; // Med
 	if (_this == 1) exitWith { [10*60, 8*60, 6*60] }; // Low
-	[5*60, 3*60, 2*60] // Default (3)
+	[3*60, 2*60, 1*60, 30] // Default (3)
 };
 
 GW_CLEANUP_RATE_LOW = _rate select 0; // < 50%

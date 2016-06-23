@@ -1,18 +1,27 @@
 # [Get Wrecked](http://getwrecked.info) Changelog
-## Last Updated: [10-06-2016] ##
+## Last Updated: [23-06-2016] ##
 
 Note: Some changes that are deemed spoilers are hidden from this log. 
 (WIP) Indicates items that may not be fully functional and are only partially implemented.
 Items without Fixed/Added/Removed proceeding are typically balance changes.
 
-**v0.8.6d**
+**v0.8.6**
 
 [f]
 
+- Increased cleanup rate to account for higher player cap
+- Lowered laser chance of burn, but increased raw damage output
+- Service points now use notification icon instead of screen alert
+- Various tweaks to race editor to improve usability further
+- Invalid position icons for race editor
+- Added Prowler to unlockable vehicles
+- Removed squadRadar
 - Removed duplicate mouseHandler function
 - Reverted boundary spawn to server side only
+- Fixed Race checkpoints can now be placed on bridges
 - Fixed Deploy point on plantation above flame pad (lol)
 - Fixed .rpt error related to effectIsVisible
+- Fixed setVehicleTexture no longer called for blank paints
 
 [e]
 
@@ -62,7 +71,7 @@ Items without Fixed/Added/Removed proceeding are typically balance changes.
 - Fixed Some actions (save, deploy) seemed to be running on multiple clients
 
 
-**v0.8.2 - v0.8.6** [Closed alpha release]
+**v0.8.2 - v0.8.5** [Closed alpha release]
 
 - Added Race editor and race mode (this feature is very Alpha and VERY subject to change)
 - Added FlamePads to map

@@ -20,7 +20,7 @@ This isn't your typical infantry shooter and if you're coming from more mil-sim 
 
 ## Bugs &amp; Issues 
 
-From time to time you will encounter problems, most of which are usually fixed by rejoining the server. Please report any bugs you can easily replicate to the [github issues page](https://github.com/chrisnic/getwrecked/issues). In the event you find a bug that persists after rejoining the server, you can use the !reset command in chat. Available commands are !reset <money | unlocks | library | races | binds | all>. Be aware this action is permanent and progress reset this way is not recoverable.
+From time to time you will encounter problems, most of which are usually fixed by rejoining the server. Please report any bugs you can easily replicate to the [github issues page](https://github.com/chrisnic/getwrecked/issues). In the event you find a bug that persists after rejoining the server, you can use the !reset command in chat. Available commands are !reset money | unlocks | library | races | binds | all. Be aware this action is permanent and progress reset this way is not recoverable.
 
 ## License
 

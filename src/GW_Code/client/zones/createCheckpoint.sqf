@@ -15,14 +15,19 @@ _dirNext = 0;
 _dirNext = if (_index == (count _cpArray - 1)) then { _dirNext } else { ([_cPos, _cpArray select (_index + 1)] call dirTo) };
 
 _cp = "Sign_Circle_F" createVehicleLocal _cPos;
-_cp setPos [_cPos select 0, _cPos select 1, (_cPos select 2) - 5];
+
+_np = [_cPos select 0, _cPos select 1, (_cPos select 2) - 5];
+_np = if (surfaceIsWater _cPos) then { _np } else { ASLtoATL _np };
+
+_cp setPos _np;
+
 _cp setDir _dirNext;
 _cp enableSimulation false;
 
 _objArray pushBack _cp;
 
 {
-	if ((surfaceNormal (_cp modelToWorldVisual _x)) distance [0,0,1] > 0.1) then {} else {
+	if ((surfaceNormal (_cp modelToWorldVisual _x)) distance [0,0,1] > 0.1 || surfaceIsWater _np) then {} else {
 
 		_t = "UserTexture10m_F" createVehicleLocal _cPos; 
 		_t setObjectTextureGlobal [0,"client\images\stripes_fade.paa"]; 

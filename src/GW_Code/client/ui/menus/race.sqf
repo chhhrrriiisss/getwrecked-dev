@@ -463,6 +463,7 @@ _selection call generateRaceList;
 GW_MARKER_ARRAY = [];
 GW_RACE_EDITING = false;
 GW_MAP_DRAG = false;
+GW_VALID_POS = true;
 
 GW_MAP_X = -1;
 GW_MAP_Y = -1;
@@ -679,23 +680,19 @@ findMarkerNearMouse = {
 };
 
 _mouseDblClick = _mapControl ctrlAddEventHandler ["MouseButtonDblClick", { 
+
+	private ['_currentPos'];
 	
 	disableSerialization;
 	_mapControl = ((findDisplay 90000) displayCtrl 90001);
 	_currentPos = _mapControl ctrlMapScreenToWorld [GW_MAP_X, GW_MAP_Y];	
-	_raceLength = count GW_RACE_ARRAY;
 
-	if (surfaceIsWater _currentPos) exitWith {
-		["Cannot place on water", [1,0,0,0.75], 0.75] call setMapTooltip;
+	_currentPos = _currentPos call validLocationForCheckpoint;
+	if (count _currentPos == 0) exitWith {
+		["Cannot place here", [1,0,0,0.75], 0.75] call setMapTooltip;
 		player say3D "beep_light"; 
 	};
-
-	_pos = _currentPos findEmptyPosition [5,25,"O_truck_03_ammo_f"];
-
-	if (count _pos == 0) exitWith { 
-		["Not enough space at position", [1,0,0,0.75], 0.75] call setMapTooltip;
-		player say3D "beep_light"; 
-	};	
+			
 
 	// Add a marker at current location, insert if we're between cps
 	_index = GW_MAP_INSERT;
@@ -774,21 +771,29 @@ _mouseDown = _mapControl ctrlAddEventHandler ["MouseButtonDown", {
 				_prevPos = GW_RACE_ARRAY select _this;
 				_pos = _prevPos;
 
+
+
 				waitUntil {
-					_pos = _mapControl ctrlMapScreenToWorld [GW_MAP_X, GW_MAP_Y];					
-					if (!surfaceIsWater _pos) then { GW_RACE_ARRAY set [_this, _pos]; };
+					_pos = _mapControl ctrlMapScreenToWorld [GW_MAP_X, GW_MAP_Y];	
+					
+					_pos = _pos call validLocationForCheckpoint;
+					if (count _pos > 0) then {
+						GW_RACE_ARRAY set [_this, _pos]; 
+					} else {
+						["Not a valid location", [1,0,0,0.75], 0] call setMapTooltip;
+					};
+
 					(!GW_LMBDOWN)
 				};
 
-				_pos = _pos findEmptyPosition [5,25,"O_truck_03_ammo_f"];
-				_pos = if (count _pos == 0) then { 
+				// _pos = _pos call validLocationForCheckpoint;
+				// _pos = if (count _pos == 0) then { 
+				// 	["Not a valid location", [1,0,0,0.75], 0.75] call setMapTooltip;
+				// 	player say3D "beep_light"; 
+				// } else { _pos };
+				// GW_RACE_ARRAY set [_this, _pos];
 
-					["Not enough space at position", [1,0,0,0.75], 0.75] call setMapTooltip;
-
-					player say3D "beep_light"; 
-					_prevPos 
-				} else { _pos };
-				GW_RACE_ARRAY set [_this, _pos];
+				// systemchat str _pos;
 
 				GW_MAP_DRAG = false;
 			};
@@ -860,7 +865,9 @@ _mouseMove = _mapControl ctrlAddEventHandler ["MouseMoving", {
 	GW_MAP_X = _this select 1; 
 	GW_MAP_Y = _this select 2; 	
 
+	_clr = [1,1,1,1];
 	_str = [] call {
+		if (!GW_VALID_POS) exitWith { "" };
 		if (!GW_RACE_EDITING) exitWith { "" };
 		if (GW_LMBDOWN) exitWith { "" };
 		if (GW_MAP_HOVER_CLOSEST > -1) exitWith { "Click and drag to move"};			
@@ -868,7 +875,8 @@ _mouseMove = _mapControl ctrlAddEventHandler ["MouseMoving", {
 		""
 	};
  	
- 	[_str, [1,1,1,1], 0] call setMapTooltip;
+
+ 	[_str, _clr, 0] call setMapTooltip;
 	// _mapControl = ((findDisplay 90000) displayCtrl 90001);
 	// _mapControl ctrlSetTooltip "";
 	// _mapControl ctrlCommit 1;
@@ -884,10 +892,53 @@ _mapKeyDown = _mapControl ctrlAddEventHandler ["KeyDown", {
 
 }];
 
+validLocationForCheckpoint = {
+	
+	private ['_pos', '_isWater', '_nearRoad'];
+	
+	_pos = _this;
+	
+	if (count _pos == 0) exitWith { [] };
+	if (count _pos == 2) then { _pos set [2, 0]; };
+
+	_isWater = surfaceIsWater _pos;
+	_range = if (_isWater) then { 30 } else { 30 };
+	_nearbyRoads = _pos nearRoads _range;
+	_nearRoad = if (count _nearbyRoads > 0) then { true } else { false };
+
+	// Water
+	if (_isWater && !_nearRoad) exitWith { 
+		[] 
+	};
+
+	// Bridge, dock etc
+	if (_nearRoad) exitWith {
+
+		// Draw a line down until we hit the bridge
+		_int = lineIntersectsSurfaces [ATLtoASL [_pos select 0, _pos select 1, (_pos select 2) + 100], ATLtoASL _pos, objNull, objNull, true, 1];
+
+		if (count _int == 0) exitWith { [] };
+
+		// Return first intersect we hit as pos
+		((_int select 0) select 0)
+
+	};
+
+
+	if (!_isWater)  exitWith {
+
+		_pos = _pos findEmptyPosition [5,15,"O_truck_03_ammo_f"];
+		_pos
+
+	};
+
+	[]
+
+};
 
 drawSegment = {
 
-	private ['_p1','_p2', '_map', '_dist', '_dirTo', '_midPos'];
+	private ['_p1','_p2', '_map', '_dist', '_dirTo', '_midPos', '_color'];
 	params ['_p1', '_p2'];
 	_color = [_this, 2, '(0.99,0.85,0.23,1)', ['']] call filterParam;
 
@@ -900,7 +951,7 @@ drawSegment = {
 
 	_mapControl drawRectangle [
 		_midPos,
-		([ (50 * ctrlMapScale _mapControl), 5, 30] call limitToRange),
+		([ (50 * ctrlMapScale _mapControl), 2, 30] call limitToRange),
 		_dist,
 		_dirTo,
 		[1,1,1,0.5],
@@ -921,22 +972,36 @@ _mapDraw = _mapControl ctrlAddEventHandler ["Draw", {
 	_mousePos = _mapControl ctrlMapScreenToWorld [GW_MAP_X, GW_MAP_Y];	
 	GW_MAP_CLOSEST = _mousePos call closestMarkerToPosition;
 
+	GW_VALID_POS = true;
+	
 	// Render line segments between mouse and closest points
 	if (!GW_LMBDOWN && GW_RACE_EDITING && GW_MAP_HOVER_CLOSEST <0) then {	
 
 		// Is last in array
 		if (GW_MAP_CLOSEST < 0 || GW_MAP_CLOSEST >= _raceLength) exitWith {};
 
-		[(GW_RACE_ARRAY select GW_MAP_CLOSEST), _mousePos, '(0.99,0.85,0.23,0.3)'] call drawSegment;
+		// Check mouse position is valid
+		_newPos = _mousePos call validLocationForCheckpoint;
+		_c = if (count _newPos == 0) then { GW_VALID_POS = false; '(0.99,0,0,0.3)' } else { GW_VALID_POS = true; '(0.99,0.85,0.23,0.3)' };
+		[(GW_RACE_ARRAY select GW_MAP_CLOSEST), _mousePos, _c] call drawSegment;
 		
+		// systemchat str _mousePos;
+		_p = +_mousePos;
+		_p set [2, 0];
+		// systemchat str (_p call validLocationForCheckpoint);
+
+
 		// Also render +checkpoint icon at mouse location
+		_color = [1,1,1,0.5];
+		_size = 30;
+		_icon = if (!GW_VALID_POS) then { _size = 50; _color = [1,0,0,1]; noTargetIcon } else { checkpointMarkerAddIcon };
 
 		_mapControl drawIcon [
-			checkpointMarkerAddIcon,
-			[1,1,1,0.5],
+			_icon,
+			_color,
 			_mousePos,
-			30,
-			30,
+			_size,
+			_size,
 			0,
 			'',
 			0,
@@ -961,7 +1026,7 @@ _mapDraw = _mapControl ctrlAddEventHandler ["Draw", {
 			GW_MAP_INSERT = if (GW_MAP_CLOSEST == _raceLength) then {  GW_MAP_INSERT + 1 } else {  GW_MAP_INSERT -1 };
 		};
 
-		[GW_RACE_ARRAY select _next, _mousePos, '(0.99,0.85,0.23,0.3)'] call drawSegment;
+		[GW_RACE_ARRAY select _next, _mousePos, _c] call drawSegment;
 
 	};
 	
@@ -986,8 +1051,8 @@ _mapDraw = _mapControl ctrlAddEventHandler ["Draw", {
 
 			// };
 
-			_lastPos set [2, 0];
-			_currentPos set [2, 0];
+			// _lastPos set [2, 0];
+			// _currentPos set [2, 0];
 
 			_dirTo = ([_lastPos, _currentPos] call dirTo);		
 			_dist = (_lastPos distance _currentPos) / 2;
@@ -1102,7 +1167,24 @@ _mapDraw = _mapControl ctrlAddEventHandler ["Draw", {
 
 		};
 
+		if (_foreachIndex == 0 || _foreachIndex == _raceLength -1) then {
 
+			// Draw box background
+			(_this select 0) drawIcon [
+				uiBar,
+				[0,0,0,0.25],
+				_x,
+				_scale * 0.72,
+				_scale * 0.72,
+				_dirTo,
+				'',
+				2,
+				0.1,
+				'puristaMedium',
+				'center'
+			];		
+
+		};
 
 		// Draw icons for each point
 		(_this select 0) drawIcon [

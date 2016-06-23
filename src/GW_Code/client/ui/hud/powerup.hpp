@@ -87,7 +87,7 @@ class GW_Powerup
 			};
 		
 			x = (NOTFX_X) * safezoneW + safezoneX;
-			y = (NOTFX_Y) * safezoneH + safezoneY;
+			y = (NOTFX_Y + 0.015) * safezoneH + safezoneY;
 			w = (GW_ALERT_WIDTH * 1.25) * safezoneW;
 			h = (GW_ALERT_HEIGHT * 3) * safezoneH;
 		};

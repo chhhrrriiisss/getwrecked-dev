@@ -178,6 +178,10 @@ waitUntil { Sleep 0.1; ((time > _timeout) || (simulationEnabled _newVehicle)) };
 
 // Apply texture
 if (!isNil "_paint") then {
+
+    // Don't apply blank paints to vehicles
+    if (count toArray _paint == 0) exitWith {};
+        
     [[_newVehicle,_paint],"setVehicleTexture",true,false] call bis_fnc_mp;
 };
 

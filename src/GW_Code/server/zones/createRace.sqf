@@ -169,6 +169,14 @@ waitUntil {
 
 // Get race ID again incase the array has updated
 _id = (_raceName call getRaceID) select 1;
+if (_id == -1) exitWith {
+
+	// Announce race to all players
+	pubVar_systemChat = 'Error starting race — race already active or invalid.';
+	publicVariable "pubVar_systemChat";
+	systemchat pubVar_systemChat;
+};
+
 (GW_ACTIVE_RACES select _id) set [5, _v];
 (GW_ACTIVE_RACES select _id) set [6, []];
 publicVariable "GW_ACTIVE_RACES";

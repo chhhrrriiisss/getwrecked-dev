@@ -9,7 +9,7 @@ params ['_vehicle', '_projectile'];
 
 if (!local _vehicle) exitWith {};
 
-[_vehicle, ['noservice'], 5] call addVehicleStatus;
+[_vehicle, ['noservice'], 10] call addVehicleStatus;
 [_vehicle] spawn checkTyres; 
 
 false

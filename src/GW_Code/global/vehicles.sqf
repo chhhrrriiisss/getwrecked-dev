@@ -29,6 +29,7 @@ GW_VEHICLE_LIST = [
 
 	// Military
 
+	["B_T_LSV_01_unarmed_F", "Prowler", [ [0.9, 99999], 4, 3, 1, 1, 6, 1, 'Medium', 4000 ], 'Lightweight and agile offroad predator.', true ],
 	["I_MRAP_03_F", "Strider", [ [2.25, 99999], 5, 3, 2, 0.5, 9, 1.22, 'Medium', 4000 ], 'A fast, heavily armoured amphibious assault vehicle.', true ],
 	["B_MRAP_01_F", "Hunter", [ [1.75, 99999], 4, 4, 2, 1, 8, 1.09, 'Medium', 3500 ], 'An armoured jack of all trades.', true ],
 	["O_MRAP_02_F", "Ifrit", [ [1.5, 99999], 5, 3, 2, 0.75, 7, 1.13, 'Large', 1000 ], 'Trades speed for upgraded armor and marginally better looks.', true ],
@@ -47,6 +48,7 @@ GW_LOCKED_ITEMS = [
 	"I_MRAP_03_F",
 	"O_MRAP_02_F",
 	"B_MRAP_01_F",
+	"B_T_LSV_01_unarmed_F",
 
 	"C_Van_01_box_F",
 	"C_Van_01_fuel_F",
