@@ -219,32 +219,32 @@ GW_SUPPLY_TYPES = [
 		}
 	],
 
-	[		
-		"hsm",
-		0.5,
-		hsmSign,
-		{	
-			_crate = _this;
-			_condition = { ("hsm" in ((vehicle player) getVariable ['status', []])) };
-			_maxTime = 120;
-			_vehicle = (vehicle player);
-			_vehicle setVariable ['status', [], true];
+	// [		
+	// 	"hsm",
+	// 	0.5,
+	// 	hsmSign,
+	// 	{	
+	// 		_crate = _this;
+	// 		_condition = { ("hsm" in ((vehicle player) getVariable ['status', []])) };
+	// 		_maxTime = 120;
+	// 		_vehicle = (vehicle player);
+	// 		_vehicle setVariable ['status', [], true];
 			
-			[_vehicle, ['hsm'], _maxTime] call addVehicleStatus;			
+	// 		[_vehicle, ['hsm'], _maxTime] call addVehicleStatus;			
 
-			['HUNTER SEEKER MISSILE', _maxTime, hsmSupplyIcon, _condition, 59, { 
+	// 		['HUNTER SEEKER MISSILE', _maxTime, hsmSupplyIcon, _condition, 59, { 
 
-				player say3D "beep_light";
+	// 			player say3D "beep_light";
 				
-				[GW_CURRENTVEHICLE, ['hsm']] call removeVehicleStatus;	
+	// 			[GW_CURRENTVEHICLE, ['hsm']] call removeVehicleStatus;	
 
-				hint 'fired!'; 
+	// 			hint 'fired!'; 
 
-				true 
+	// 			true 
 
-			}] spawn createPowerup;
-		}
-	],
+	// 		}] spawn createPowerup;
+	// 	}
+	// ],
 
 	[		
 		"ems",

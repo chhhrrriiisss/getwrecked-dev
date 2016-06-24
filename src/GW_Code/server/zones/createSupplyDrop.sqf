@@ -27,15 +27,15 @@ if (_para) then {
 // Position config for the supply box
 _supplyBoxFormat = [
 
-	[ [0, 0, 0], [0, 0, 0],  "" ], // middle
-	[ [0, (- PALLETY - 0.1), 0], [0,0,180], "" ], // left 
-	[ [0, (PALLETY + 0.1) , 0], [0,0,0],  "" ], // right
-	[ [(- PALLETY - GAP), 0, 0], [0,0,-90],  "" ], // front
-	[ [(PALLETY + GAP), 0, 0], [0,0,90],  "" ], // back
-	[ [0, 0, (PALLETZ + GAP)], [90, 0, 0],  "" ], // top
-	// [ [0, 0, -(PALLETZ - GAP)], [90, 0, 0],  "" ], // bottom
-	[ [0, (- PALLETY - 0.22), 0.5 + (PALLETZ / 3)], [0,0,0], "icon" ], // tx a 
-	[ [0, (PALLETY + 0.22) , 0.5 + (PALLETZ / 3)], [0,0,180], "icon" ] // tx b	
+	[ [0, 0, 0], [0, 0, 0],  "middle" ], // middle
+	// [ [0, (- PALLETY - 0.1), 0], [0,0,180], "" ], // left 
+	// [ [0, (PALLETY + 0.1) , 0], [0,0,0],  "" ], // right
+	// [ [(- PALLETY - GAP), 0, 0], [0,0,-90],  "" ], // front
+	// [ [(PALLETY + GAP), 0, 0], [0,0,90],  "" ], // back
+	[ [0, 0, 1.235], [-90, 0, 0],  "icon" ] // top
+
+	// [ [0, (- PALLETY + 0.01), 0.5 + (PALLETZ / 4)], [0,0,0], "icon" ], // tx a 
+	// [ [0, (PALLETY - 0.01) , 0.5 + (PALLETZ / 4)], [0,0,180], "icon" ] // tx b	
 
 ];
 
@@ -73,6 +73,13 @@ supplyBoxCleanup = {
 	GW_SUPPLY_ACTIVE = if (GW_SUPPLY_ACTIVE < 0) then { 0 } else { GW_SUPPLY_ACTIVE };
 	_parts = (_this select 0) getVariable ['GW_Parts', []];
 
+	_p = [vectorUp (_this select 0), getPos (_this select 0), getDir (_this select 0)];
+	deleteVehicle (_this select 0);
+
+	_empty = createVehicle ["Land_Pallet_vertical_F", (_p select 1), [], 0, "CAN_COLLIDE"];	
+	[_empty, [90,0,(_p select 2)]] call setPitchBankYaw;
+	_parts pushback _empty;
+
 	[
 		[
 			(_this select 0),
@@ -87,7 +94,7 @@ supplyBoxCleanup = {
 		{ deleteVehicle _x; } count _this > 0;
 	};	
 	
-	{ if (typeOf _x == "UserTexture1m_f") then { deleteVehicle _x; }; _x removeEventHandler ["EpeContactStart", 0]; _x removeEventHandler ["hit", 0]; } count _parts > 0;
+	{ if (typeOf _x == "UserTexture1m_f") then { deleteVehicle _x; }; _x removeEventHandler ["Explosion", 0]; _x removeEventHandler ["EpeContactStart", 0]; _x removeEventHandler ["hit", 0]; } count _parts > 0;
 
 	true
 };
@@ -115,10 +122,8 @@ if (_rnd > 85 && (count toArray _type == 0) && (_supplyContents select 0) != ((c
 	_p = (_pos vectorAdd (_x select 0));
 
 	_class = (_x select 2) call {
-		if (_this == "") exitWith { "Land_Pallet_vertical_F" };
+		if (_this == "middle") exitWith { "CargoNet_01_Box_F" };
 		if (_this == "icon") exitWith { "UserTexture1m_F" };
-		if (_this == "tx") exitWith { "UserTexture10m_F" };
-
 		_this
 	};
 
@@ -166,55 +171,41 @@ _source = (_spawnedItems select 0);
 GW_SUPPLY_ACTIVE = GW_SUPPLY_ACTIVE + 1;
 
 _source setDir (random 360);
+_source setVariable ['GW_Parts', _spawnedItems];
+_source setVariable ['GW_SupplyType', (_supplyContents select 0)];
 
-{
+// Triggers/event handlers for source
+_source addEventHandler['Explosion', {
+	[(_this select 0), true] call supplyBoxCleanup;
+}];
 
-	if (typeOf _x != "UserTexture1m_F") then {
+_source addEventHandler['EpeContactStart', {		
+	
+	_isVehicle = (_this select 1) getVariable ["isVehicle", false];
+	_type = (_this select 0) getVariable ['GW_SupplyType', nil];	
 
-		_x setVariable ['GW_Parts', _spawnedItems];
-		_x setVariable ['GW_SupplyType', (_supplyContents select 0)];
+	if (_isVehicle && !isNil "_type") then {
 
-		_x addEventHandler['Explosion', {
-			[(_this select 0), true] call supplyBoxCleanup;
-		}];
+		_parts = (_this select 0) getVariable ['GW_Parts', []];							
+		(_this select 0) setVariable ['GW_SupplyType', nil];
 
-		_x addEventHandler['EpeContactStart', {		
-			
-			_isVehicle = (_this select 1) getVariable ["isVehicle", false];
-			_type = (_this select 0) getVariable ['GW_SupplyType', nil];	
+		[		
+			[(_this select 0), _type],
+			"supplyDropEffect",
+			(_this select 1),
+			false
+		] call bis_fnc_mp;	
 
-			if (_isVehicle && !isNil "_type") then {
-
-				_parts = (_this select 0) getVariable ['GW_Parts', []];							
-				(_this select 0) setVariable ['GW_SupplyType', nil];
-
-				[(_this select 0), false] call supplyBoxCleanup;				
-				
-				_vel = velocity (_this select 1);
-				_dir = getDir (_this select 1);
-				_speed = (_this select 4) / 12;
-
-				[[(_this select 1),[(_vel select 0)+(sin _dir*_speed),(_vel select 1)+(cos _dir*_speed),(_vel select 2)]],"setVelocityLocal",(_this select 1),false ] call bis_fnc_mp;  
-
-				[		
-					[(_this select 0), _type],
-					"supplyDropEffect",
-					(_this select 1),
-					false
-				] call bis_fnc_mp;				
-				
-			};
-
-		}];
-
+		[(_this select 0), false] call supplyBoxCleanup;	
+		
 	};
 
-	false
-} count _spawnedItems > 0;
+}];
 
 _para = createVehicle ["I_parachute_02_F", [0,0,0], [], 0, "FLY"];
 _para addEventHandler['handleDamage', { false }];
 _para attachTo [_source, [0,0,1]];
+_source setmass 1;
 _para setVectorUp [0,0,1];
 
 // Tidy up and particle effects
@@ -227,7 +218,8 @@ _para setVectorUp [0,0,1];
 
 	_timeout = time + 20;
 	waitUntil {
-		(  (((getPos _s) select 2) < 10) || time > _timeout)
+		_int = lineIntersectsSurfaces [ATLtoASL (_s modelToWorld [0,0,0]), ATLtoASL (_s modelToWorld [0,0,-10]), _s, _ps, true, 1];
+		(  count _int > 0 || time > _timeout)
 	};
 
 	detach _ps;
@@ -239,8 +231,11 @@ _para setVectorUp [0,0,1];
 	};
 
 	_timeout = time + 20;
+	_intP = [0,0,0];
 	waitUntil {
-		(  (((getPos _s) select 2) < 0.5) || time > _timeout)
+		_int = lineIntersectsSurfaces [ATLtoASL (_s modelToWorld [0,0,0]), ATLtoASL (_s modelToWorld [0,0,-0.5]), _s, _ps, true, 1];
+		if (count _int > 0) then { _intP = ((_int select 0) select 0); };
+		(  count _int > 0 || time > _timeout)
 	};	
 	
 	playSound3D ["a3\sounds_f\sfx\missions\vehicle_drag_end.wss", _s, false, getPos _s, 2, 1, 60];
@@ -265,16 +260,16 @@ _para setVectorUp [0,0,1];
 	] call bis_fnc_mp;
 
 	_p = getPos _s;
-	_p set [2,0];
 	_normal = surfaceNormal _p;
 	_s setVectorUp _normal;
-	_s setPos _p;
 
-	Sleep 0.5;
-
-	{ if (typeOf _x != "UserTexture1m_F") then { detach _x; }; false } count (attachedObjects _s) > 0;
-
-	
+	if (_intP distance [0,0,0] > 1) then {
+		_intP set [2, (_intP select 2)+ 0.05];
+		_s setMass 1;
+		_s setPos _intP;
+	} else {
+		_s setPos _p;
+	};
 
 };
 

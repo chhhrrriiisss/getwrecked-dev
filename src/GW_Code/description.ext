@@ -331,7 +331,7 @@ class CfgSounds
 	class sparta
 	{
 		name = "sparta";
-		sound[] = {"\client\sounds\sparta.ogg", 1.1, 1};
+		sound[] = {"\client\sounds\sparta.ogg", 1.5, 1};
 		titles[] = {};
 	};
 

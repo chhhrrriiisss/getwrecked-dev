@@ -25,7 +25,7 @@ if (!isNil "_prevVehicle") then {
     ['death', _prevVehicle, 1, true] call logStat;
 };
 
-// Remove us from any active races
+// We're currently in a race zone
 if (!isNil "GW_CURRENTRACE") then {	
 
 	if (isNil "GW_CURRENTRACE_VEHICLE") exitWith {};

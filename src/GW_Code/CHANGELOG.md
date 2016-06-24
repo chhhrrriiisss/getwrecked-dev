@@ -9,6 +9,8 @@ Items without Fixed/Added/Removed proceeding are typically balance changes.
 
 [f]
 
+- Updated and simplified supply box script to allow them to function on bridges/steeper terrain
+- Added service points to Port, Quarry
 - Increased cleanup rate to account for higher player cap
 - Lowered laser chance of burn, but increased raw damage output
 - Service points now use notification icon instead of screen alert
@@ -22,6 +24,7 @@ Items without Fixed/Added/Removed proceeding are typically balance changes.
 - Fixed Deploy point on plantation above flame pad (lol)
 - Fixed .rpt error related to effectIsVisible
 - Fixed setVehicleTexture no longer called for blank paints
+- Fixed closing settings menu too quickly causes corrupted keybinds
 
 [e]
 

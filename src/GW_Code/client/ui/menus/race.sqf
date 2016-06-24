@@ -902,7 +902,7 @@ validLocationForCheckpoint = {
 	if (count _pos == 2) then { _pos set [2, 0]; };
 
 	_isWater = surfaceIsWater _pos;
-	_range = if (_isWater) then { 30 } else { 30 };
+	_range = if (_isWater) then { 30 } else { 10 };
 	_nearbyRoads = _pos nearRoads _range;
 	_nearRoad = if (count _nearbyRoads > 0) then { true } else { false };
 

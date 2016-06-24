@@ -60,8 +60,13 @@ _raceStatus = [_targetRace, 3, -1, [0]] call filterParam;
 // Clear up start position of any stray vehicles
 _objects = nearestObjects [_startPosition, [], 100];
 {	
-	{ deleteVehicle _x; } foreach (attachedObjects _x);
-	deleteVehicle _x;
+	_ignore = _x getVariable ['GW_CU_IGNORE', false];	
+	if (_ignore) then {} else {
+		{		
+			deleteVehicle _x; 	
+		} foreach (attachedObjects _x);
+		deleteVehicle _x;
+	};
 } foreach _objects;
 
 // Generate 12 unique start positions at first checkpoint

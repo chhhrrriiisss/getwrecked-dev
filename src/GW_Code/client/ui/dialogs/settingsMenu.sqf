@@ -19,12 +19,21 @@ if (!alive _vehicle || !alive _unit) exitWith {};
 _isOwner = [_vehicle, _unit, true] call checkOwner;
 
 closeSettingsMenu = {	
+
+	// Lock inputs until we're done
+	[92000, true] call toggleDisplayLock;	
+
 	disableSerialization;
 	_button = (findDisplay 92000) displayCtrl 92008;
 	_button ctrlSetText "SAVING...";
 	_button ctrlCommit 0;
 	_success = [] call saveBinds; 
-	if (!_success) exitWith { systemchat 'Error saving settings.'; };
+
+	[92000, false] call toggleDisplayLock;	
+	if (!_success) exitWith { 		
+		systemchat 'Error saving settings.'; 
+	};
+
 	saveProfileNamespace;
 	closeDialog 0;
 };
@@ -34,6 +43,13 @@ if (!alive _vehicle || !alive _unit || !_isOwner) exitWith { GW_SETTINGS_ACTIVE 
 if (isNil { (_vehicle getVariable "firstCompile") } ) exitWith {
 	systemChat 'Something is not right here... try again in a second.';
 	[_vehicle] call compileAttached;
+	GW_SETTINGS_ACTIVE = false;
+};
+
+// Check the vehicle is saved first before we start applying keybinds
+_isSaved = _vehicle getVariable ['isSaved', false];
+if (!_isSaved) exitWith {
+	systemChat 'Please save your vehicle first before editing keybinds.';
 	GW_SETTINGS_ACTIVE = false;
 };
 
@@ -57,10 +73,16 @@ _button ctrlCommit 0;
 _layerStatic = ("BIS_layerStatic" call BIS_fnc_rscLayer);
 _layerStatic cutRsc ["RscStatic", "PLAIN" , 0.5];
 
-[] spawn generateSettingsList;
+
+[92000, true] call toggleDisplayLock;
+
+[] call generateSettingsList;
+
 [ [92000, 92004] , GW_SETTINGS_VEHICLE, time - 5] call generateStatsList;
 
-[] spawn generateTauntsList;
+[] call generateTauntsList;
+
+[92000, false] call toggleDisplayLock;
 
 _statsTitle = (findDisplay 92000) displayCtrl 92005;
 _name = [(_vehicle getVariable ["name", "UNTITLED"]), 32, "..."] call cropString;
@@ -73,6 +95,8 @@ _statsTitle ctrlCommit 0;
 	Sleep 1;
 	GW_SETTINGS_READY = true;
 };
+
+
 
 // Menu has been closed, kill everything!
 waitUntil { (isNull (findDisplay 92000) || (!alive GW_SETTINGS_VEHICLE)) };
