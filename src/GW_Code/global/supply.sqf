@@ -247,9 +247,7 @@ GW_SUPPLY_TYPES = [
 					"createHunterSeeker",
 					false,
 					false 
-				] call bis_fnc_mp; 	
-
-				hint 'fired!'; 
+				] call bis_fnc_mp; 
 
 				true 
 

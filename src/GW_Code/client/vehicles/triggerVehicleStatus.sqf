@@ -27,6 +27,13 @@ if ({ if (_x == _statusEffect) exitWith {1}; false } count ["overcharge", "extra
 
 };
 
+if ("hsmlock" == _statusEffect) then {	
+	_condition = { ("hsmlock" in GW_VEHICLE_STATUS) };
+	[_targetVehicle, 9999, 'client\images\lock_halo.paa', _condition, true, [0,0,0.5], true] spawn createHalo;
+	playSound3D ["a3\sounds_f\weapons\rockets\locking_2.wss", _targetVehicle, false, visiblePositionASL _targetVehicle, 5, 1, 100]; 
+};
+
+
 if ("teleport" == _statusEffect) then {
 
 	_zoneToSend = GW_VALID_ZONES select (floor (random ((count GW_VALID_ZONES) - 1)));
@@ -55,7 +62,7 @@ if ("emp" == _statusEffect || "harpoon" == _statusEffect) then {
 
 if ("locked" == _statusEffect) then {
 	_condition = { ("locked" in GW_VEHICLE_STATUS) };
-	[_targetVehicle, 9999, 'client\images\lock_halo.paa', _condition, false, [0,0,0.5], true] spawn createHalo;
+	[_targetVehicle, 9999, 'client\images\lock_halo.paa', _condition, true, [0,0,0.5], true] spawn createHalo;
 	playSound "beep_warning";
 };
 

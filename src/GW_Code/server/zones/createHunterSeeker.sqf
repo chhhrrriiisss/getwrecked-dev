@@ -1,10 +1,10 @@
 params ['_sourceVehicle', '_currentZone'];
 
-systemchat format['%1 / %2', _sourceVehicle, _currentZone];
+diag_log format['%1 spawned a hunter seeker in %2.', (owner _sourceVehicle), _currentZone];
 
-if !(_sourceVehicle isEqualType objNull) exitWith {};
-if (isNull _sourceVehicle) exitWith { systemchat "Cant spawn hunter seeker as source vehicle is null." ; };
-if (!alive _sourceVehicle) exitWith {};
+if !(_sourceVehicle isEqualType objNull) exitWith { diag_log "Not a valid parameter for hunter seeker." ; };
+if (isNull _sourceVehicle) exitWith { diag_log "Cant spawn hunter seeker as source vehicle is null." ; };
+if (!alive _sourceVehicle) exitWith { diag_log "Cant spawn hunter seeker as source vehicle is dead." ; };
 
 // Function for finding a valid target for hunter seeker
 findSeekerTarget = {
@@ -55,13 +55,15 @@ findSeekerTarget = {
 		([_z, _ex, _count] call findSeekerTarget)
 	};
 
-	_selected
+	(vehicle _selected)
 
 };
 
-// Find us a target
-_target = [_currentZone, [_sourceVehicle, driver _sourceVehicle]] call findSeekerTarget;
-if (isNull _target) exitWith { systemchat 'No targets available for hunter seeker.'; };
+// Find us a target (if not specified by function call)
+_target = if (isNil {_this select 2}) then { ([_currentZone, [_sourceVehicle, driver _sourceVehicle]] call findSeekerTarget) } else { (_this select 2) };
+if (isNull _target) exitWith { diag_log 'No targets available for hunter seeker.'; };
+
+diag_log format['Target for missile is: %1', _target];
 
 GW_TEST_TARGET = _target;
 
@@ -69,7 +71,7 @@ GW_TEST_TARGET = _target;
 _timeout = time + 5;
 waitUntil {
 	Sleep 0.5;
-	_intersects = lineIntersectsSurfaces [ATLtoASL (_sourceVehicle modelToWorld [0,0,0]), ATLtoASL (_sourceVehicle modelToWorld [0,0,100]), objNull, true, 1];
+	_intersects = lineIntersectsSurfaces [ATLtoASL (_sourceVehicle modelToWorld [0,0,0]), ATLtoASL (_sourceVehicle modelToWorld [0,0,100]), _sourceVehicle, objnull, true, 1];
 	((count _intersects == 0) || (time > _timeout))
 };
 
@@ -88,6 +90,9 @@ _beepFrequency = 1;
 _lastBeep = time - _beepFrequency;
 _initDistance = _launchPos distance _targetPos;
 
+_statusFrequency = 15;
+_lastStatus = time - _statusFrequency;
+
 // Prep phase
 _timeout = time + 1;
 for "_i" from 0 to 1 step 0 do {
@@ -96,13 +101,6 @@ for "_i" from 0 to 1 step 0 do {
 	if (time > _timeout) exitWith {};
 };
 
-_cam = "camera" camCreate _launchPos;
-showCinemaBorder false;
-_cam cameraEffect ["internal","back"];
-_cam camSetTarget _missile;
-_cam camSetRelPos [0,-1,0.05];
-_cam camCommit 0;
-
 // Tracking phase
 _timeout = time + 60;
 for "_i" from 0 to 1 step 0 do {
@@ -110,15 +108,13 @@ for "_i" from 0 to 1 step 0 do {
 	// If target goes bad, find us another
 	_noValidTarget = if (isNull _target || {!alive _target}) then {
 
-
-
 		_target = [_currentZone, [_sourceVehicle, driver _sourceVehicle, _target]] call findSeekerTarget;
 		
-		systemchat format['Swapping target: %1', _target];
+		diag_log format['Swapping target: %1', _target];
 
 		if (isNull _target || {!alive _target}) exitWith { true };
 
-		systemchat 'Aborted due to lack of targets';
+		diag_log 'Aborted due to lack of targets';
 
 		_initDistance = _missilePos distance _targetPos;
 
@@ -137,6 +133,24 @@ for "_i" from 0 to 1 step 0 do {
 	_heightAboveTerrain = _missilePos select 2;
 	_distanceToTarget = _missilePos distance _targetPos;	
 
+	// Apply 'HSMLOCK' status every 15 seconds
+	if (time - _lastStatus > _statusFrequency) then {
+		_lastStatus = time;
+
+		[
+			[
+	            _target,
+	            "['hsmlock']",
+	            _statusFrequency
+	        ],
+	        "addVehicleStatus",
+	        _target,
+	        false 
+		] call bis_fnc_mp;  
+
+	};
+
+	// Send proximity beep to target
 	if (time - _lastBeep > _beepFrequency) then {
 
 		_lastBeep = time;
@@ -159,15 +173,28 @@ for "_i" from 0 to 1 step 0 do {
 
 	};
 
-		_cam camSetTarget _missile;
-	_cam camSetRelPos [0,-3,1];
-	_cam camPrepareFOV 0.6;
-	_cam camCommit 0;
-
+	// _cam camSetTarget _missile;
+	// _cam camSetRelPos [0,-3,1];
+	// _cam camPrepareFOV 0.6;
+	// _cam camCommit 0;
 
 	if (_distanceToTarget < 5) exitWith {
+
+		// Bombs don't actually do any damage so this is just for effect
 		_bomb = createVehicle ["Bo_GBU12_LGB", (ASLtoATL getPosASL _target), [], 0, "FLY"];	
-		//_target setDammage 1;
+
+		// Nanoarmor will make this survivable
+		_status = _target getVariable ['status', []];
+		_d = if ('nano' in _status) then { 0.5 } else { 0.95 };
+
+		_target setDammage ((getdammage _target) + _d);
+
+		[       
+			_target,
+			"updateVehicleDamage",
+			_target,
+			false
+		] call bis_fnc_mp; 	
 	};
 
 	_speed = [_speed + 0.04, 35, 200] call limitToRange;
@@ -188,9 +215,11 @@ for "_i" from 0 to 1 step 0 do {
 
 };
 
+diag_log 'Hunter seeker missile ended.';
+
 // Cleanup
 deleteVehicle _missile;
 
-camdestroy _cam;
-player cameraeffect["terminate","back"];
+// camdestroy _cam;
+// player cameraeffect["terminate","back"];
 

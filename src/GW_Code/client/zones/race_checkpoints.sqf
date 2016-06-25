@@ -105,8 +105,8 @@ for "_i" from 0 to 1 step 0 do {
 			[GW_CURRENTVEHICLE, ["noshoot", "nouse", "noammo", "nofuel"]] call removeVehicleStatus;
 		};
 
-		// 50/50 Chance of 10% Ammo or Fuel per checkpoint		
-		if (random 100 > 50) then {
+		// If even number, give ammo, if odd give fuel
+		if (GW_CHECKPOINTS_PROGRESS % 2 == 0) then {
 
 			// Give 10% ammo
 			_maxAmmo = GW_CURRENTVEHICLE getVariable ["maxAmmo", 1];

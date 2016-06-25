@@ -907,15 +907,20 @@ validLocationForCheckpoint = {
 	_nearRoad = if (count _nearbyRoads > 0) then { true } else { false };
 
 	_int = lineIntersectsSurfaces [ATLtoASL [_pos select 0, _pos select 1, (_pos select 2) + 100], ATLtoASL _pos, objNull, objNull, true, 1];
+	_pos = _pos findEmptyPosition [5,15,"O_truck_03_ammo_f"];
 
 	// Water
-	if (_isWater && count _int == 0) exitWith { 
+	if (_isWater && count _int == 0 && count _pos == 0) exitWith { 
 		[] 
 	};
 
-	// Bridge, dock etc
-	if (count _int > 0) exitWith {
+	// Use pos method if we find something and there's no intersecting object above (ie bridge)
+	if (count _pos > 0 && count _int == 0) exitWith {
+		(ATLtoASL _pos)
+	};
 
+	// Bridge, dock etc
+	if (count _int > 0 && _nearRoad) exitWith {
 		// // Draw a line down until we hit the bridge
 		// _int = lineIntersectsSurfaces [ATLtoASL [_pos select 0, _pos select 1, (_pos select 2) + 100], ATLtoASL _pos, objNull, objNull, true, 1];
 
@@ -926,9 +931,11 @@ validLocationForCheckpoint = {
 
 	};	
 
-	_pos = _pos findEmptyPosition [5,15,"O_truck_03_ammo_f"];
-	_pos
+	if (count _pos > 0) exitWith {
+		(ATLtoASL _pos)
+	};
 
+	[]
 };
 
 drawSegment = {
@@ -989,7 +996,16 @@ _mapDraw = _mapControl ctrlAddEventHandler ["Draw", {
 		// Also render +checkpoint icon at mouse location
 		_color = [1,1,1,0.5];
 		_size = 30;
-		_icon = if (!GW_VALID_POS) then { _size = 50; _color = [1,0,0,1]; noTargetIcon } else { checkpointMarkerAddIcon };
+		_icon = checkpointMarkerAddIcon;
+
+		if (!GW_VALID_POS) then { 
+			_size = 50; 
+			_color = [1,0,0,1]; 
+			_icon = noTargetIcon 
+		} else { 
+			if (GW_MAP_CLOSEST == 0) then { _icon = startMarkerIcon };
+			if (GW_MAP_CLOSEST == (count GW_RACE_ARRAY-1)) then { _icon = finishMarkerIcon };
+		};
 
 		_mapControl drawIcon [
 			_icon,
@@ -1190,7 +1206,7 @@ _mapDraw = _mapControl ctrlAddEventHandler ["Draw", {
 			_scale,
 			_dirTo,
 			'',
-			0,
+			2,
 			0.1,
 			'puristaMedium',
 			'center'

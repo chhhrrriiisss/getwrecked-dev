@@ -10,6 +10,7 @@ Items without Fixed/Added/Removed proceeding are typically balance changes.
 [f]
 
 - Updated and simplified supply box script to allow them to function on bridges/steeper terrain
+- Added Hunter Seeker Missile to supply crates
 - Added service points to Port, Quarry
 - Increased cleanup rate to account for higher player cap
 - Lowered laser chance of burn, but increased raw damage output
@@ -20,6 +21,8 @@ Items without Fixed/Added/Removed proceeding are typically balance changes.
 - Removed squadRadar
 - Removed duplicate mouseHandler function
 - Reverted boundary spawn to server side only
+- Updated validLocationForCheckpoint to more efficiently work with land/water/bridge positions
+- Added 'Tanoan Bridge Massacre' as a default race
 - Fixed Race checkpoints can now be placed on bridges
 - Fixed Deploy point on plantation above flame pad (lol)
 - Fixed .rpt error related to effectIsVisible
