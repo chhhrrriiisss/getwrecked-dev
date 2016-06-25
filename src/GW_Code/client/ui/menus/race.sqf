@@ -906,33 +906,28 @@ validLocationForCheckpoint = {
 	_nearbyRoads = _pos nearRoads _range;
 	_nearRoad = if (count _nearbyRoads > 0) then { true } else { false };
 
+	_int = lineIntersectsSurfaces [ATLtoASL [_pos select 0, _pos select 1, (_pos select 2) + 100], ATLtoASL _pos, objNull, objNull, true, 1];
+
 	// Water
-	if (_isWater && !_nearRoad) exitWith { 
+	if (_isWater && count _int == 0) exitWith { 
 		[] 
 	};
 
 	// Bridge, dock etc
-	if (_nearRoad) exitWith {
+	if (count _int > 0) exitWith {
 
-		// Draw a line down until we hit the bridge
-		_int = lineIntersectsSurfaces [ATLtoASL [_pos select 0, _pos select 1, (_pos select 2) + 100], ATLtoASL _pos, objNull, objNull, true, 1];
+		// // Draw a line down until we hit the bridge
+		// _int = lineIntersectsSurfaces [ATLtoASL [_pos select 0, _pos select 1, (_pos select 2) + 100], ATLtoASL _pos, objNull, objNull, true, 1];
 
-		if (count _int == 0) exitWith { [] };
+		// if (count _int == 0) exitWith { [] };
 
 		// Return first intersect we hit as pos
 		((_int select 0) select 0)
 
-	};
+	};	
 
-
-	if (!_isWater)  exitWith {
-
-		_pos = _pos findEmptyPosition [5,15,"O_truck_03_ammo_f"];
-		_pos
-
-	};
-
-	[]
+	_pos = _pos findEmptyPosition [5,15,"O_truck_03_ammo_f"];
+	_pos
 
 };
 
