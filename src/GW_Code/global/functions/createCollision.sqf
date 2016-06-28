@@ -17,7 +17,7 @@ GW_LAST_VELOCITY_UPDATE = time;
 if (isNil "GW_LAST_AUDIO_UPDATE") then { GW_LAST_AUDIO_UPDATE = time - 0.2; };
 if (time - GW_LAST_AUDIO_UPDATE > 0.1) then {
 	GW_LAST_AUDIO_UPDATE = time;
-	_sfx = if ((random 100) > 50) then { "a3\sounds_f\sfx\missions\vehicle_drag_end.wss" } else { "a3\sounds_f\sfx\vehicle_collision.wss" };
+	_sfx = if ((random 100) > 50) then { "a3\sounds_f\sfx\missions\vehicle_drag_end.wss" } else { "a3\sounds_f\sfx\missions\vehicle_collision.wss" };
 	playSound3D [_sfx, _v1, false, (ASLtoATL visiblePositionASL _v1), 10, 1, 50];
 };
 

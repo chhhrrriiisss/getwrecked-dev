@@ -7,8 +7,13 @@ Items without Fixed/Added/Removed proceeding are typically balance changes.
 
 **v0.8.6**
 
+[g]
+
+- Fixed Several outdated .wss file locations 
+
 [f]
 
+- Race checkpoints now give 10% ammo on even points and 10% fuel on odd points
 - Updated and simplified supply box script to allow them to function on bridges/steeper terrain
 - Added Hunter Seeker Missile to supply crates
 - Added service points to Port, Quarry

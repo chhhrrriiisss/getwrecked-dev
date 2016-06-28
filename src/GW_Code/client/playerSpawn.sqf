@@ -10,11 +10,16 @@ if (!local _unit) exitWith {};
 
 waitUntil { !isNull _unit && (alive _unit) }; 
 
+
 45000 cutText ["", "BLACK IN", 1.5]; 
 
 // if (GW_BOUNDARIES_ENABLED) then { 
 // 	[] spawn { ["workshopZone"] call buildZoneBoundary;  };
 // };
+
+waitUntil {
+	hasInterface
+};
 
 // Hide unwanted hud elements
 showHUD [true,false,false,false,false,false,false,true,false];

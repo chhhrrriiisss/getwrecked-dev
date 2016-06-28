@@ -19,7 +19,7 @@ _source setDammage (getDammage _source) + _damageSelf;
 
 if ((getDammage _source) >= 1) exitWith {
 
-    playSound3D ["a3\sounds_f\sfx\vehicle_collision.wss", _source, false, (ASLtoATL visiblePositionASL _source), 10, 1, 50];
+    playSound3D ["a3\sounds_f\sfx\missions\vehicle_collision.wss", _source, false, (ASLtoATL visiblePositionASL _source), 10, 1, 50];
 
     [       
         [
