@@ -80,7 +80,7 @@ _createBoundary	 = compileFinal "
 
 } count GW_ZONE_BOUNDARIES;
 
-GW_BOUNDARY_BUILD = compileFinal "true";
+GW_BOUNDARY_BUILT = compileFinal "true";
 
 true
 

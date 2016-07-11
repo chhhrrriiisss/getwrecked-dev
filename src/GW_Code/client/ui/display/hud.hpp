@@ -337,6 +337,41 @@ class GW_HUD_Vehicle
 			text = "";
 		};
 
+		class StatusBackgroundI : GW_Block
+		{
+			idc = 12009;
+			fade = 1;
+			colorBackground[] = {0,0,0,0.25};
+			x = (STATUS_X) * safezoneW + safezoneX;
+			y = (STATUS_Y - (GW_BUTTON_HEIGHT * 9) - (GW_BUTTON_GAP_Y * 9)) * safezoneH + safezoneY;
+			w = (GW_BUTTON_WIDTH) * safezoneW;
+			h = (GW_BUTTON_HEIGHT) * safezoneH;
+		};
+
+		class ProgressBarI : GW_ProgressBar
+		{
+			idc = 13009;
+			fade = 1;
+			x = (STATUS_X) * safezoneW + safezoneX;
+			y = (STATUS_Y - (GW_BUTTON_HEIGHT * 9) - (GW_BUTTON_GAP_Y * 9)) * safezoneH + safezoneY;
+			w = (GW_BUTTON_WIDTH) * safezoneW;
+			h = (GW_BUTTON_HEIGHT) * safezoneH;
+		};	
+
+		class IconI : GW_StructuredTextBox
+		{
+			idc = 14009;
+			fade = 1;
+			colorBackground[] = {0,0,0,0.25};
+			x = (STATUS_X) * safezoneW + safezoneX;
+			y = (STATUS_Y - (GW_BUTTON_HEIGHT * 9) - (GW_BUTTON_GAP_Y * 9)) * safezoneH + safezoneY;
+			w = (GW_BUTTON_WIDTH) * safezoneW;
+			h = (GW_BUTTON_HEIGHT) * safezoneH;
+
+			text = "";
+		};
+
+
 	
 
 

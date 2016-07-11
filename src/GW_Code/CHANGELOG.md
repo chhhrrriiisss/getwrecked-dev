@@ -1,5 +1,5 @@
 # [Get Wrecked](http://getwrecked.info) Changelog
-## Last Updated: [23-06-2016] ##
+## Last Updated: [30-06-2016] ##
 
 Note: Some changes that are deemed spoilers are hidden from this log. 
 (WIP) Indicates items that may not be fully functional and are only partially implemented.
@@ -7,9 +7,20 @@ Items without Fixed/Added/Removed proceeding are typically balance changes.
 
 **v0.8.6**
 
+[h]
+
+- Updated Altis spawn locations and temp areas
+- Updated events system to work more effectively
+
 [g]
 
+- Added new hud marker for dead players in current race
+- Added service points to City
+- Changes to loading process to ensure welcome message doesn't appear while on loading screen
+- Fixed Race not correctly ending after at least one player has finished
+- Fixed "_newFuel" undefined variable error
 - Fixed Several outdated .wss file locations 
+- Fixed isEqualType [] error related to lack of available vHud bar space
 
 [f]
 

@@ -15,20 +15,23 @@ if (GW_EVENTS_ACTIVE) then {
 	waitUntil{ Sleep 1; (isNil "GW_EVENTS_ACTIVE") };
 };
 
-_eventsList = [
+GW_EVENTS_LIST = [
 	
 	[	
+		// Name of even
 		"sponsorship",
-		100,
+
+		// Minimum time between checks
+		120,
+
+		// Condition to check for
 		{
-			if (isNil "GW_LASTPAYCHECK") then {  GW_LASTPAYCHECK = time; };
-
-			// Players are in zone and it's been at least 120 seconds since last payment
-			if ((time - GW_LASTPAYCHECK > 10) && (count (['workshopZone'] call findAllInZone) < (count allUnits)) ) exitWith { true };
-			false
-
+			( count (['workshopZone'] call findAllInZone) < (count allUnits) )
 		},
+
+		// Script to run on TRUE
 		{
+
 			_activeZones = [];
 			{
 				if ((_x select 1) isEqualTo "battle") then {
@@ -59,17 +62,24 @@ _eventsList = [
 				false
 			} count GW_VALID_ZONES > 0;
 
-		}
+		},
+
+		// Script to run on FALSE
+		{ true }
 	],
 
 	[
-		"supply", // Name of event
-		80, // Probability of event
+		// Name of event
+		"supply", 
+
+		// Minimum time between checks
+		60, 
+
 		// Condition to check for
 		{ 
-			if (count (['workshopZone'] call findAllInZone) < (count allUnits)) exitWith { true };
-			false
+			((count (['workshopZone'] call findAllInZone) < (count allUnits)) && random 1 > 0.80)
 		},
+
 		// Script to run on TRUE condition
 		{ 
 			_activeZones = [];
@@ -96,85 +106,145 @@ _eventsList = [
 
 			true	
 
-		}
+		},
+
+		// Script to run on FALSE condition
+		{ true }
 	],
 
 	// Ignore night
 	[
-		"time", // Name of event
-		100, // Probability of event
+		// Name of event
+		"time", 
+
+		// Minimum time between checks
+		10*60, 
+
 		// Condition to check for
 		{ ((daytime >= 17) || (daytime < 7)) },
+
 		// Script to run on TRUE condition
 		{ 
 			_curTime = daytime;
 			if (_curTime >= 17) exitWith { skiptime (7 + (24 - _curTime)); true };
 			if (_curTime < 7) exitWith { skiptime (7 - _curTime); true };
 			true
-		}
+		},
+
+		// Script to run on FALSE condition
+		{ true }
 	],
 
 	// Cleanup check
 	[
-		"cleanup", // Name of event
-		100, // Probability of event
+		// Name of event
+		"cleanup", 
+
+		// Minimum time between checks
+		5 * 60, 
+
 		// Condition to check for
-		{ (time >= GW_CLEANUP_TIMEOUT) },
+		{ TRUE },
+
 		// Script to run on TRUE condition
 		{ 
 
-			_rate = ( (count allPlayers) / GW_MAX_PLAYERS) call {
-				_this = [_this, 0, 1] call limitToRange;
-				if (_this >= 0.75) exitWith { GW_CLEANUP_RATE_HIGH };
-				if (_this >= 0.5) exitWith { GW_CLEANUP_RATE_MED };
-				GW_CLEANUP_RATE_LOW
-			};
+			// // Adjust cleanup frequency 
+			// _rate = ( (count allPlayers) / GW_MAX_PLAYERS) call {
+			// 	_this = [_this, 0, 1] call limitToRange;
+			// 	if (_this >= 0.75) exitWith { GW_CLEANUP_RATE_HIGH };
+			// 	if (_this >= 0.5) exitWith { GW_CLEANUP_RATE_MED };
+			// 	GW_CLEANUP_RATE_LOW
+			// };
 
-			GW_CLEANUP_TIMEOUT = time + _rate;
-			diag_log format['Running cleanup script at %1', time];
+			// GW_CLEANUP_TIMEOUT = time + _rate;
+			// diag_log format['Running cleanup script at %1', time];
 
 			[] call executeCleanUp;
 
 			true
-		}
+		},
+
+		{ false }
+
 	]
 
 ];
 
-GW_EVENTS_ACTIVE = true;
-diag_log format['Events check initialized at %1.', time];
 
 waitUntil {
+    Sleep 1;
+    serverTime > 0
+};
+
+if (!isServer) exitWith {};
+
+if (isNil "GW_EVENTS_ACTIVE") then { 
+	GW_EVENTS_ACTIVE = true; 
+} else {
+	GW_EVENTS_ACTIVE = false;
+	_timeout = time + 5;
+	waitUntil{ Sleep 1; (isNil "GW_EVENTS_ACTIVE" || time > _timeout) };
+};
+
+GW_EVENTS_ACTIVE = true;
+
+diag_log format['Events check initialized at %1.', time];
+
+// Pre calculate a list of event timeouts
+_eventTimeouts = [];
+{
+    _eventTimeouts pushback [(_x select 0), serverTime - (_x select 1)];
+    false
+} count GW_EVENTS_LIST;
+
+for "_i" from 0 to 1 step 0 do {
 
 	if (!GW_EVENTS_ACTIVE) exitWith {};	
 
-	// Adjust timeout based on number of active players on server
-	_timeout = ( (count allPlayers) - (count (['workshopZone'] call findAllInZone)) ) call {
-		if (_this > 8) exitWith { (GW_EVENTS_FREQUENCY select 2) };
-		if (_this >= 4) exitWith { (GW_EVENTS_FREQUENCY select 1) };
-		(GW_EVENTS_FREQUENCY select 0)
-	};
+	if (round (time) % 30 == 0) then { diag_log format['Events system active [%1]', time]; };
 
-    Sleep _timeout;
-    diag_log format['Running events check at %1.', time];
-
+    // Find what the current timeout is for this event
     {
 
-    	_chance = (_x select 1);
-    	_rnd = random (100);
+    	_timeout = 0;
+        _event = _x;
+        _name = (_event select 0);
+        _index = 0;
+        if ({
+            if ((_x select 0) == _name) exitWith { _timeout = (_x select 1); 1};
+            _index = _index + 1;
+            false
+        } count _eventTimeouts > 0) then {                    
 
-    	if (_rnd < _chance) then {
-    		_condition = [] call (_x select 2);    		
-    		if (_condition) then {
-    			[] spawn (_x select 3);
-    		};
-    	};
+            _minTimeout = (_event select 1);
+
+            // If minTimeout has not been reached and we're not a 0 second timeout
+            if (_minTimeout != 0 && { (serverTime - _timeout < _minTimeout) }) exitWith {};
+
+            // Update the timeout
+            (_eventTimeouts select _index) set [1, serverTime];
+
+            // Call trigger condition and execute fail/success functions
+        	if (call (_event select 2)) then {
+
+        		diag_log format['Running event [%1] at %2', _name, serverTime];	
+        		[] call (_event select 3);
+
+        	} else {
+
+                // Call fail condition otherwise
+                [] call (_event select 4);
+            };
+
+        };
 
     	false
 
-	} count _eventsList > 0;
+	} count GW_EVENTS_LIST > 0;
 
-	!GW_EVENTS_ACTIVE
+	Sleep 1;	
+	
 };
 
 diag_log format['Events check stopped at %1.', time];

@@ -6,38 +6,22 @@
 //
 //
 
-// Set to true for enhanced debugging/logging
-GW_DEV_BUILD = true;
+//
+//		!
+//
+//		PLEASE NOTE: Most of these settings are currently non functional. Changing them is very likely to cause issues. A full server-side configuration tool that doesn't require a pbo unpack is in the pipeline and will be implemented in a future version.
+//		
+//		!
+//
 
-GW_LOCATION_TAG = if (GW_DEV_BUILD) then { 'GWDEV' } else { 'GW' };
+// Set to true for enhanced debugging/logging 
+GW_DEV_BUILD = false;
 
-// Profile library location
-GW_LIBRARY_LOCATION = format['%1_LIBRARY', GW_LOCATION_TAG];
+// Change this to any other unique identifier if you want player progression (money/vehicles/races) to be unique to this server
+// NOTE: this is in no way secure — and easily tampered with but makes a simple adjustement to the location of info stored in profilenamespace
+GW_PROFILE_LOCATION = "GW";
 
-// Profile races location
-GW_RACES_LOCATION = format['%1_RACES', GW_LOCATION_TAG];
-GW_RACES_VERSION_LOCATION = format['%1_RACES_VERSION', GW_LOCATION_TAG];
-
-// Profile unlocks location
-GW_UNLOCKED_ITEMS_LOCATION = format['%1_UNLOCKED_ITEMS', GW_LOCATION_TAG];
-
-// Profile binds location
-GW_BINDS_LOCATION = format['%1_BINDS', GW_LOCATION_TAG];
-GW_BINDS_VERSION_LOCATION = format['%1_BINDS_VERSION', GW_LOCATION_TAG];
-
-// Profile balance location
-GW_BALANCE_LOCATION = format['%1_BALANCE', GW_LOCATION_TAG];
-
-// Leaderboard stats tracking (default: false)
-// Currently non-functional
-GW_LEADERBOARD_ENABLED = false;
-
-// Player global statistics tracking (default: true)
-// Currently non-functional
-GW_GLOBAL_STATS_ENABLED = false;
-
-// Whether or not zone boundaries should be visible (turning this OFF can improve client FPS)
-GW_BOUNDARIES_ENABLED = true;
+GW_LOCATION_TAG = if (GW_DEV_BUILD) then { 'GWDEV' } else { GW_PROFILE_LOCATION };
 
 // Game mode setting (0 = Standard, 1 = Creative)
 GW_GAME_MODE = 0;
@@ -63,19 +47,24 @@ GW_GDS_RACE = 0.16; // Damage modifier while in a race (default: 0.2)
 // Weapon Damage vs objects
 GW_GHS = 4; // Damage modifier weapons vs items (default: 4)
 
-// Melee weapon global modifier
-GW_GMM = 2.5;
-GW_MELEE_DEGRADATION = 7;
-
+// Generic damage modifiers
 OBJ_COLLISION_DMG_SCALE = 0;
 WHEEL_COLLISION_DMG_SCALE = 0; 
 COLLISION_DMG_SCALE = 0; 
 FIRE_DMG_SCALE = 6; 
 
+// Melee weapon global modifiers
+GW_GMM = 2.5;
+GW_MELEE_DEGRADATION = 7;
+
+
 // Melee Damage Frequency (default: 1)
+// How often the system checks for intersections (too often means more lag yo)
 GW_COLLISION_FREQUENCY = 1;
 
 // Global armor modifier (default: 32)
+// This is a multiplier based off of the Offroad vehicle's stock armor
+// It is very sensitive and doesn't work the way you think
 GW_GAM = 32;
 
 // Lock on properties
@@ -90,9 +79,6 @@ GW_MAXDEPLOYABLES = 25; // Per player (default :25)
 // Render distance of effects 
 GW_WORKSHOP_VISUAL_RANGE = 300; // ViewDistance while in workshop (default: 300)
 GW_EFFECTS_RANGE = 1000; // Increasing this may add lag at the workshop/airfield (default: 1000)
-
-// % Chance of eject system failing
-GW_EJECT_FAILURE = 15;
 
 // Default player start balance
 GW_INIT_BALANCE = 10000; // (Default: 5000)
@@ -114,18 +100,43 @@ GW_SUPPLY_MAX = 30; // Maximum number of supply drops active at once (default: 3
 GW_SUPPLY_CLEANUP = (3*60); // Timeout before cleaning up supply drop (default: (3*60) )
 
 // AI
+// [This doesn't do anything special right now]
 GW_AI_MAX = 3;
 GW_AI_ACTIVE = [];
 
 // Misc
+// This limits how big loaded vehicles can be. It's quite important to stop people spawning in tampered vehicles that could break a server.
 GW_MAX_DATA_SIZE = 8000; // Max packet size (in characters) that can be loaded (loadVehicle or saveVehicle will not work if this is too large)
 
-// Cleanup timer settings
-GW_CLEANUP_RATE = 3;
+//
+//	 If you edit below here, this is where shit gets dicey
+//	
 
-/*	
-	If you edit below here, I hope you know what you're doing...
-*/
+// Profile library location
+GW_LIBRARY_LOCATION = format['%1_LIBRARY', GW_LOCATION_TAG];
+
+// Profile races location
+GW_RACES_LOCATION = format['%1_RACES', GW_LOCATION_TAG];
+GW_RACES_VERSION_LOCATION = format['%1_RACES_VERSION', GW_LOCATION_TAG];
+
+// Profile unlocks location
+GW_UNLOCKED_ITEMS_LOCATION = format['%1_UNLOCKED_ITEMS', GW_LOCATION_TAG];
+
+// Profile binds location
+GW_BINDS_LOCATION = format['%1_BINDS', GW_LOCATION_TAG];
+GW_BINDS_VERSION_LOCATION = format['%1_BINDS_VERSION', GW_LOCATION_TAG];
+
+// Profile balance location
+GW_BALANCE_LOCATION = format['%1_BALANCE', GW_LOCATION_TAG];
+
+// Leaderboard stats tracking (default: false)
+GW_LEADERBOARD_ENABLED = false;
+
+// Player global statistics tracking (default: true)
+GW_GLOBAL_STATS_ENABLED = false;
+
+// Whether or not zone boundaries should be visible
+GW_BOUNDARIES_ENABLED = true;
 
 GW_MAX_PLAYERS = 16;
 
@@ -303,6 +314,8 @@ switch (worldName) do {
 	
 	case "Altis":
 	{
+		// Render distance of effects
+		GW_EFFECTS_RANGE = 1000; 
 
 		if (isServer) then {
 
@@ -341,7 +354,7 @@ switch (worldName) do {
 	{
 
 		// Render distance of effects
-		GW_EFFECTS_RANGE = 3500; 
+		GW_EFFECTS_RANGE = 1000; 
 
 		// Available arenas and game type
 		GW_VALID_ZONES = [
@@ -354,7 +367,7 @@ switch (worldName) do {
 		// Cleanup unwanted buildings from workshop
 		if (isServer) then {
 
-			_objectsToClear = ['Land_Cargo_House_V1_F', 'Land_Cargo_Patrol_V1_F', 'Land_MilOffices_V1_F', 'Land_Shed_Big_F']; 
+			_objectsToClear = ['Land_Cargo_House_V1_F', 'Land_Cargo_Patrol_V1_F', 'Land_MilOffices_V1_F']; 
 			_objects = (getMarkerPos "workshopZone_camera") nearObjects 200;    
 
 			{   

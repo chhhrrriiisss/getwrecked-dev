@@ -172,6 +172,10 @@ filterArray = {
 	{
 		disableSerialization;
 
+		if (isNil "_x") then {
+			systemchat format['Bad value %1 passed to createTween [%2]', _x, _this];
+		};
+
 		if (_x isEqualType []) then {
 			[_x, _properties] spawn filterArray;		
 		};

@@ -37,13 +37,15 @@ if (!local _vehicle) then {
 	(owner _vehicle) publicVariableClient "GW_CR_F";
 };
 
-// Are we the last player? Delete the race from the active races
-if (count _activeArray == 0 || ({ if (alive _x) exitWith { 1 }; false } count _activeArray) <= 0) then {
+[_raceName, _vehicle] call removeFromRace;
 
-	// Delete the race from the active races
-	GW_ACTIVE_RACES deleteAt _raceID;
-	publicVariable "GW_ACTIVE_RACES";
-};
+// // Are we the last player? Delete the race from the active races
+// if (count _activeArray == 0 || ({ if (alive _x) exitWith { 1 }; false } count _activeArray) <= 0) then {
+
+// 	// Delete the race from the active races
+// 	GW_ACTIVE_RACES deleteAt _raceID;
+// 	publicVariable "GW_ACTIVE_RACES";
+// };
 
 // Race already ended, abort doing anything else
 if (_raceStatus == 3) exitWith {};

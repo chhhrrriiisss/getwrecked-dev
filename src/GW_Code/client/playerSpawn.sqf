@@ -8,7 +8,10 @@ _unit = [_this,0, objNull, [objNull]] call filterParam;
 if (isNull _unit) exitWith {};
 if (!local _unit) exitWith {};
 
-waitUntil { !isNull _unit && (alive _unit) }; 
+waitUntil { 
+	Sleep 0.1; 
+	(!isNil "serverSetupComplete" &&  { !isNull _unit } && { (alive _unit) }) 
+}; 
 
 
 45000 cutText ["", "BLACK IN", 1.5]; 

@@ -70,7 +70,7 @@ if (_vehPos distance [0,0,0] <= 200) exitWith {
 };
 
 _heightAboveTerrain = 3;
-_vehPosATL = (ASLtoATL getPosASL _vehPos);
+_vehPosATL = _vehPos;
 _vehPosATL set[2, _heightAboveTerrain];
 
 _newVehicle = createVehicle [_class, _vehPosATL, [], 0, "CAN_COLLIDE"];

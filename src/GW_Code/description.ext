@@ -7,7 +7,7 @@ author="SLI";
 OnLoadName = "GET WRECKED";
 OnLoadMission = "Vehicle combat sandbox.";
 enableDebugConsole = 1;
- 
+skipLobby = 1;
 overviewPicture = "load-image.jpg";
 loadScreen = "load-image.jpg";
 
@@ -55,6 +55,7 @@ class CfgFunctions
 class RscTitles 
 {   
    #include "client\ui\display\hud.hpp"
+   #include "client\ui\hud\loading.hpp"
    #include "client\ui\hud\alert.hpp"   
    #include "client\ui\hud\powerup.hpp"
    #include "client\ui\hud\notification.hpp"

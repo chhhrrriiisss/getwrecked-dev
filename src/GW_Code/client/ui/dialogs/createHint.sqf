@@ -52,7 +52,7 @@ _btnB ctrlShow true;
 _btnB ctrlCommit 0;
 
 _title ctrlShow true;
-_t = format['<img image="%1" size="16" align="center"/>', MISSION_ROOT + "client\images\logo_isolation2.paa"];
+_t = format['<img image="%1" size="16" align="center"/>', MISSION_ROOT + "client\images\logo_isolation.paa"];
 _title ctrlSetStructuredText(parseText(_t));
 _title ctrlCommit 0;
 

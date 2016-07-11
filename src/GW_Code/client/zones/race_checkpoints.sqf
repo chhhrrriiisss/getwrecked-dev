@@ -176,7 +176,7 @@ if ( time <= (_timeout + 0.1) && alive GW_CURRENTVEHICLE && alive (driver GW_CUR
 	GW_CURRENTVEHICLE say "summon";
 
 	[
-		[_raceName, GW_CURRENTVEHICLE],
+		[_raceName, GW_CURRENTRACE_VEHICLE],
 		'endRace',
 		false,
 		false

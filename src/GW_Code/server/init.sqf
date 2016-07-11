@@ -15,11 +15,11 @@ _startTime = time;
 
 // Wait for zone boundary compilation
 waitUntil {
-	Sleep 0.25;
+	SLEEP 0.1;
 	!isNIl "GW_ZONE_BOUNDARIES_COMPILED"
 };
 
-[] execVM 'server\zones\buildZoneBoundaryServer.sqf';
+[] call buildZoneBoundaryServer;
 
 // Prevent cleanup on mission.sqm placed items
 {
@@ -33,8 +33,8 @@ east setFriend [civilian, 0];
 
 // Wait for boundaries to complete for confirming server ready
 waitUntil {	
-	Sleep 0.25;
-	!isNIl "GW_BOUNDARY_BUILD"
+	SLEEP 0.1;
+	!isNIl "GW_BOUNDARY_BUILT"
 };
 
 serverSetupComplete = compileFinal "true";

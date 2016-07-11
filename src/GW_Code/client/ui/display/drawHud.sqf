@@ -41,7 +41,8 @@ _vHudSidebar = [
 	(_vHud displayCtrl 12005),
 	(_vHud displayCtrl 12006),
 	(_vHud displayCtrl 12007),
-	(_vHud displayCtrl 12008)
+	(_vHud displayCtrl 12008),
+	(_vHud displayCtrl 12009)
 ];
 
 _vHudBars = [
@@ -52,7 +53,8 @@ _vHudBars = [
 	(_vHud displayCtrl 13005),
 	(_vHud displayCtrl 13006),
 	(_vHud displayCtrl 13007),
-	(_vHud displayCtrl 13008)
+	(_vHud displayCtrl 13008),
+	(_vHud displayCtrl 13009)
 ];
 
 _vHudIcons = [
@@ -63,7 +65,8 @@ _vHudIcons = [
 	(_vHud displayCtrl 14005),
 	(_vHud displayCtrl 14006),
 	(_vHud displayCtrl 14007),
-	(_vHud displayCtrl 14008)
+	(_vHud displayCtrl 14008),
+	(_vHud displayCtrl 14009)
 ];
 
 // Status information while in vehicle
@@ -114,8 +117,6 @@ _vHudRaceInfo = [
 ];
 
 _vHudRaceInfo append _vHudRaceOpponents;
-
-
 
 if (isNil "GW_HUD_INITIALIZED") then {	
 
@@ -173,8 +174,22 @@ if (GW_INVEHICLE && GW_ISDRIVER) then {
 
 		if (!GW_HUD_RACE_ACTIVE) then {
 			GW_HUD_RACE_ACTIVE = true;
-			[_vHudRaceInfo, [['fade', 1, 0, 0.5]], "quad"] spawn createTween;
+			[_vHudRaceInfo, [['fade', 1, 0, 0]], "quad"] spawn createTween;
 		};
+
+		// Check these items aren't faded
+		{
+			if (ctrlFade _x > 0) then {
+				_x ctrlSetFade 0;
+				_x ctrlCommit 0.25;
+			};
+		} count [
+			_vHudRaceStart,
+			_vHudRaceFinish,
+			_vHudRacePlayer,
+			_vHudRaceTime,
+			_vHudRace
+		];
 
 		_vHudRaceX = 0.25;
 		_vHudRaceRange = 0.5;
@@ -192,13 +207,22 @@ if (GW_INVEHICLE && GW_ISDRIVER) then {
 				_marker ctrlSetFade 0;
 				_marker ctrlCommit 0;
 
+				_color = '';
+				_size = 1.5;
+				_iconToUse = if (!alive _x && _progress < 1) then { _size = 1.7; _color = '#ff0000'; noTargetIcon } else { 
+					if (_progress == 0) exitWith { blankIcon };
+					raceOpponent 
+				};
+
+				_marker ctrlSetStructuredText parseText (format["<img size='%3' color='%2' image='%1' />", _iconToUse, _color, _size]);
+
 				_marker ctrlSetPosition [(((_progress * _vHudRaceRange) + _vHudRaceX) - 0.02) * safezoneW + safezoneX, (ctrlPosition _marker) select 1];
 				_marker ctrlCommit 1.5;
 			};
 			false
 		} foreach (((GW_CURRENTRACE call getRaceID) select 0) select 5);
 
-		// Update our own progress
+		// Update our own progress		
 		_vHudRacePlayer ctrlSetPosition [(((GW_CURRENTRACE_PROGRESS * _vHudRaceRange) + _vHudRaceX) - 0.02) * safezoneW + safezoneX, (ctrlPosition _vHudRacePlayer) select 1];
 
 		// Calculate how long race has been running
@@ -221,12 +245,12 @@ if (GW_INVEHICLE && GW_ISDRIVER) then {
 
 		if (GW_HUD_RACE_ACTIVE) then {
 			GW_HUD_RACE_ACTIVE = false;
-						[_vHudRaceInfo, [['fade', 0, 1, 0.5]], "quad"] spawn createTween;
+			[_vHudRaceInfo, [['fade', 0, 1, 0.5]], "quad"] spawn createTween;
 		};
 	};
 
 	// Set available bars to modulelist length
-	if ((count _vHudModuleList) > (count _vHudBars)) then { _vHudModuleList resize (count _vHudBars); };	
+	if ((count _vHudModuleList) > (count _vHudBars)) then { _vHudModuleList resize ((count _vHudBars) -1); };	
 
 	if (!GW_HUD_VEHICLE_ACTIVE || GW_HUD_REFRESH) then {
 		
@@ -258,15 +282,24 @@ if (GW_INVEHICLE && GW_ISDRIVER) then {
 		[[_vHudIcon, _vHudFuel, _vHudAmmo, _vHudHealth, _vHudMoney, _vHudNotification], [['fade', 1, 0, 0.1]], "quad"] spawn createTween;
 		_vHudIcon ctrlSetStructuredText parseText ( format["<img size='2.4' align='center' valign='top' image='%1' />", [typeOf GW_CURRENTVEHICLE] call getVehiclePicture] );
 		_vHudIcon ctrlCommit 0;
-			
-		_count = 0;
-		{
 		
-			[[(_vHudBars select _count), (_vHudSidebar select _count), (_vHudIcons select _count)], [['fade', 1, 0, 0.5]], "quad"] spawn createTween;	
-			_count = _count + 1;
+		// Don't fade in until vHudModuleList is ready
+		if (count _vHudModuleList == 0) exitWith {};		
+		for "_i" from 0 to (count _vHudModuleList) -1 step 1 do {
+			[[(_vHudBars select _i), (_vHudSidebar select _i), (_vHudIcons select _i)], [['fade', 1, 0, 0.5]], "quad"] spawn createTween;	
+		};
 
-			false
-		} count _vHudModuleList > 0;		
+		// _count = 0;
+		// {
+		// 	_barsToFade = [];
+
+
+
+		// 	[[(_vHudBars select _count), (_vHudSidebar select _count), (_vHudIcons select _count)], [['fade', 1, 0, 0.5]], "quad"] spawn createTween;	
+		// 	_count = _count + 1;
+
+		// 	false
+		// } count _vHudModuleList > 0;		
 
 	};
 

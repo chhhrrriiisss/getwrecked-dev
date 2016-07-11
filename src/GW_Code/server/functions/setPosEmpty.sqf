@@ -70,7 +70,7 @@ if (typename _selectedLocation == "ARRAY") exitWith {
 };
 
 if (typename _selectedLocation == "MARKER") exitWith {
-	_target setPos (getMarkerPos _selectedLocation);\
+	_target setPos (getMarkerPos _selectedLocation);
 	true
 };
 
