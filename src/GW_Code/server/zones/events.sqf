@@ -112,10 +112,10 @@ GW_EVENTS_LIST = [
 		{ true }
 	],
 
-	// Ignore night
+	// Ignore night + excess fog (looking at you Tanoa...)
 	[
 		// Name of event
-		"time", 
+		"env", 
 
 		// Minimum time between checks
 		10*60, 
@@ -126,8 +126,16 @@ GW_EVENTS_LIST = [
 		// Script to run on TRUE condition
 		{ 
 			_curTime = daytime;
+
+			// Don't allow fog over 0.2
+			if (fog > 0.2) then {
+				30 setFog [0.2,0,0];
+			};
+
+			// Set time to loop (almost)
 			if (_curTime >= 17) exitWith { skiptime (7 + (24 - _curTime)); true };
 			if (_curTime < 7) exitWith { skiptime (7 - _curTime); true };
+
 			true
 		},
 

@@ -9,8 +9,12 @@ Items without Fixed/Added/Removed proceeding are typically balance changes.
 
 [h]
 
-- Updated Altis spawn locations and temp areas
-- Updated events system to work more effectively
+- All prior races/vehicles/progress [not on dev] has been reset to avoid conflicts
+- New load images across all three maps
+- Updated Altis, Stratis and Tanoa spawn locations and temp areas
+- Tweak to timeouts on events system to work more effectively
+- Removed variable cleanup rate (now always every 5 minutes)
+- Fixed race not starting when start position was on high terrain
 
 [g]
 

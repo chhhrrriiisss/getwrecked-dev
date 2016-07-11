@@ -19,7 +19,7 @@ GW_DEV_BUILD = false;
 
 // Change this to any other unique identifier if you want player progression (money/vehicles/races) to be unique to this server
 // NOTE: this is in no way secure — and easily tampered with but makes a simple adjustement to the location of info stored in profilenamespace
-GW_PROFILE_LOCATION = "GW";
+GW_PROFILE_LOCATION = "GW086";
 
 GW_LOCATION_TAG = if (GW_DEV_BUILD) then { 'GWDEV' } else { GW_PROFILE_LOCATION };
 

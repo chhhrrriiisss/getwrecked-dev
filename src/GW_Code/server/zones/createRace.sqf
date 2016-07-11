@@ -57,8 +57,12 @@ _startPosition = _racePoints select 0;
 _firstPosition = _racePoints select 1;
 _raceStatus = [_targetRace, 3, -1, [0]] call filterParam;
 
+// Ensure start position is AGL
+// _startPosition SET [2, (getTerrainHeightASL _startPosition)];
+// systemchat format['START POSITION: %1', _startPosition];
+
 // Clear up start position of any stray vehicles
-_objects = nearestObjects [_startPosition, [], 100];
+_objects = nearestObjects [(ASLtoAGL _startPosition), [], 100];
 {	
 	_ignore = _x getVariable ['GW_CU_IGNORE', false];	
 	if (_ignore) then {} else {
@@ -112,7 +116,7 @@ waitUntil {
 	Sleep 1;
 
 	// Ensure we only count vehicles with drivers
-	_v = _startPosition nearEntities [["Car"], 150];
+	_v = (ASLtoAGL _startPosition) nearEntities [["Car"], 150];
 	{
 		_isVehicle = _x getVariable ['isVehicle', false];
 		_hasDriver = !isNull (driver _x);

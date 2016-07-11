@@ -138,17 +138,17 @@ executeCleanUp = {
 
 };
 
-_rate = GW_CLEANUP_RATE call {
-	if (_this == 0) exitWith { [0,0,0] }; // Off	
-	if (_this == 5) exitWith { [60, 45, 30] }; // V.High
-	if (_this == 4) exitWith { [3*60, 2*60, 60] }; // High		
-	if (_this == 2) exitWith { [6*60, 5*60, 4*60] }; // Med
-	if (_this == 1) exitWith { [10*60, 8*60, 6*60] }; // Low
-	[3*60, 2*60, 1*60, 30] // Default (3)
-};
+// _rate = GW_CLEANUP_RATE call {
+// 	if (_this == 0) exitWith { [0,0,0] }; // Off	
+// 	if (_this == 5) exitWith { [60, 45, 30] }; // V.High
+// 	if (_this == 4) exitWith { [3*60, 2*60, 60] }; // High		
+// 	if (_this == 2) exitWith { [6*60, 5*60, 4*60] }; // Med
+// 	if (_this == 1) exitWith { [10*60, 8*60, 6*60] }; // Low
+// 	[3*60, 2*60, 1*60, 30] // Default (3)
+// };
 
-GW_CLEANUP_RATE_LOW = _rate select 0; // < 50%
-GW_CLEANUP_RATE_MED = _rate select 1; // >= 50%
-GW_CLEANUP_RATE_HIGH = _rate select 2; // >= 75%
-GW_CLEANUP_TIMEOUT = time;
+// GW_CLEANUP_RATE_LOW = _rate select 0; // < 50%
+// GW_CLEANUP_RATE_MED = _rate select 1; // >= 50%
+// GW_CLEANUP_RATE_HIGH = _rate select 2; // >= 75%
+// GW_CLEANUP_TIMEOUT = time;
 
