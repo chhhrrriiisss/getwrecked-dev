@@ -61,6 +61,7 @@ if ('cloak' in GW_VEHICLE_STATUS || 'noshoot' in GW_VEHICLE_STATUS) exitWith {
 // Reset the available weapons each pass
 GW_AVAIL_WEAPONS = [];
 
+
 {
 
 	if (GW_WAITFIRE) exitWith {};
@@ -92,7 +93,7 @@ GW_AVAIL_WEAPONS = [];
 			if (_bind != "1") exitWith {};
 
 			_hasFired = true;
-			[_type, _vehicle, _obj] spawn fireAttached;
+			[_type, _vehicle, _obj] call fireAttached;
 
 		};	
 

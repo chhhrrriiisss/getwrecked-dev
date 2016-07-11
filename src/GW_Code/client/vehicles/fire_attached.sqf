@@ -67,10 +67,14 @@ _found = _state select 1;
 
 // Is the device on timeout?
 if (_timeLeft > 0 && _found) exitWith {
+
+	
+
 	if ( _type == "HMG" || _type == "GMG" || _type == "FLM" || _type == "LMG" || _type == "RPD") then {} else {
 		[format['PLEASE WAIT (%1s)', round(_timeLeft)], 0.5, warningIcon, nil, "flash"] spawn createAlert;
-	};
-		GW_WAITFIRE = false;
+	};	
+	
+	GW_WAITFIRE = false;
 };	
 
 // Check we have enough ammo
