@@ -1,96 +1,71 @@
 # [Get Wrecked](http://getwrecked.info) Changelog
-## Last Updated: [30-06-2016] ##
+## Last Updated: [12-07-2016] ##
 
 Note: Some changes that are deemed spoilers are hidden from this log. 
 (WIP) Indicates items that may not be fully functional and are only partially implemented.
 Items without Fixed/Added/Removed proceeding are typically balance changes.
 
-**v0.8.6**
+**v0.8.6** [Public alpha release — A3 1.62]
 
-[g]
-
-- Added new hud marker for dead players in current race
-- Added service points to City
+- Added hud marker for dead players in current race
+- Added Prowler to unlockable vehicles
 - Changes to loading process to ensure welcome message doesn't appear while on loading screen
-- Fixed Race not correctly ending after at least one player has finished
-- Fixed "_newFuel" undefined variable error
-- Fixed Several outdated .wss file locations 
-- Fixed isEqualType [] error related to lack of available vHud bar space
-
-[f]
-
 - Race checkpoints now give 10% ammo on even points and 10% fuel on odd points
 - Updated and simplified supply box script to allow them to function on bridges/steeper terrain
-- Added Hunter Seeker Missile to supply crates
+- Added Hunter Seeker Missile to supply crates (will be added to races at a later point)
 - Added service points to Port, Quarry
-- Increased cleanup rate to account for higher player cap
 - Lowered laser chance of burn, but increased raw damage output
 - Service points now use notification icon instead of screen alert
-- Various tweaks to race editor to improve usability further
 - Invalid position icons for race editor
-- Added Prowler to unlockable vehicles
 - Removed squadRadar
 - Removed duplicate mouseHandler function
 - Reverted boundary spawn to server side only
-- Updated validLocationForCheckpoint to more efficiently work with land/water/bridge positions
-- Added 'Tanoan Bridge Massacre' as a default race
-- Fixed Race checkpoints can now be placed on bridges
-- Fixed Deploy point on plantation above flame pad (lol)
-- Fixed .rpt error related to effectIsVisible
-- Fixed setVehicleTexture no longer called for blank paints
-- Fixed closing settings menu too quickly causes corrupted keybinds
-
-[e]
-
 - Refactored HUD and playerLoop to run from same loop
 - Reduced setPos frequency on lift vehicle
 - Overall fire damage reduced
 - Slightly lowered GMG rate of fire
 - Removed zone boundaries from workshop
-- Removed 'Crater' battle zone 
 - New 'hidden' icon to targetCursor while using cloak
 - Reduction in number of simulated objects in zones using makeSimpleObject
 - Melee weapons now do more damage, break more easily and no longer collide with buildings
-- Fixed Melee weapons colliding with invisible objects on bridge
-- Fixed Potential HUD break related to getOut EH on vehicles
-- Fixed Objects placed below vehicle when lifted caused vehicle to explode
-- Fixed param error when using Rocket Pods on opponents
-- Fixed param error related to 
-- Fixed Battleye kick when using too many lasers
-
-[d]
-
+- Improved race editor usability (tooltips and changes to the way checkpoints are added to make it a bit more logical)
+- Race checkpoint trigger area is now 15m (10m previously)
+- Damage in race zones decreased slightly (it's now roughly 2x damage in a battle zone)
 - Last loaded vehicle is no longer loaded on player respawn to prevent terminals overflowing
 - Loading in a new vehicle will now clear other vehicles you own in the workshop
 - Reduced sound volume on GMG, HMG, Rocket Pods
 - Better handling of bad race data or ID when deploying to a race zone
 - Removed an unnecessary loop from the chat commands system
 - Improved angle of ramps at Terminal
-- Added repair, refuel and rearm points to Plantation
-- Slightly tweaked boundaries on Plantation to ignore dense jungle sections
-- Fixed Mines should now properly sit below ground when dropped
+
+- Fixed Race not correctly ending after at least one player has finished
+- Fixed "_newFuel" undefined variable error
+- Fixed Several outdated .wss file locations 
+- Fixed isEqualType [] error related to lack of available vHud bar space
+- Fixed Race checkpoints couldn't be placed on bridges
+- Fixed Deploy point on plantation above flame pad (lol)
+- Fixed setVehicleTexture no longer called for blank paints
+- Fixed Closing settings menu too quickly causes corrupted keybinds
+- Fixed Melee weapons colliding with invisible objects on bridges
+- Fixed Potential HUD break related to getOut EH on vehicles
+- Fixed Objects placed below vehicle when lifted caused vehicle to explode
+- Fixed Param error when using Rocket Pods on opponents
+- Fixed Battleye kick when using too many lasers
+- Fixed Mines sitting above ground when deployed
 - Fixed Race progress bar stopping for remaining players after first player completes it
 - Fixed Player unable to return to workshop if all vehicle terminals are full
 - Fixed Crash when deploying to a zone with a chat channel open
-- Fixed missing sound at a3\sounds_f\sfx\vehicle_drag_end.wss
 - Fixed Races not ending as intended when players killed outside their vehicles or DC
-- Fixed deploy point out of bounds on Plantation
-
-[c]
-
-- Improved race editor usability (tooltips and changes to the way checkpoints are added to make it a bit more logical)
-- Race checkpoint trigger area is now 15m (10m previously)
-- Damage in race zones decreased slightly (it's now roughly 2x damage in a battle zone)
+- Fixed Out of bounds deploy point on Plantation
 - Fixed Workshop occasionally showed as an option when deploying to a battle
 - Fixed HUD progress bar was overlapping player locations in race
 - Fixed Renaming a race twice caused race library to break
 - Fixed No sound when shooting some weapons
-- Fixed Some actions (save, deploy) seemed to be running on multiple clients
-
+- Fixed Some actions (save, deploy) were running on multiple clients
 
 **v0.8.2 - v0.8.5** [Closed alpha release]
 
-- Added Race editor and race mode (this feature is very Alpha and VERY subject to change)
+- Added Race editor and race mode
 - Added FlamePads to map
 - Added 'Loading' text to vehicle preview
 - Added 'Crash Test Dummy' texture for dev builds
@@ -127,6 +102,7 @@ Items without Fixed/Added/Removed proceeding are typically balance changes.
 - Progress saved on DEV versions of Get Wrecked is now isolated from live version
 - Emergency repair device now only repairs 50% damage
 - Updated targetCursor to better calculate shooting while on steep terrain
+
 - Fixed Issue with stats retrieval occuring too early on previewVehicle
 - Fixed Bug preventing local vehicle setup from properly occuring
 - Fixed Suspended vehicles no longer drop altitude when attaching/detaching objects
@@ -148,17 +124,7 @@ Items without Fixed/Added/Removed proceeding are typically balance changes.
 - Fixed Filter list on deploy menu should now correctly update when arrows are used
 - Fixed Race menu should now correctly only show races valid on the current map
 
-* Known issues *
-- Small stutter when saving to profilenamespace (keybinds, cars etc)
-- 'lineMarker' missing error on opening race creation screen
-- Occasional param errors due to changes in 1.54 turn off -showscripterrors to remove these
-- Race Mode is WIP, largely incomplete and only working in a demonstrative capacity
-- Attaching items to suspended vehicles often doesn't show the correct rotation until the vehicle is moved again
-- Vehicles that are suspended have their direction always set to 0
-- Low FPS while using snapping tools
-- Key Binds dont save correctly if you close the settings menu too quickly after setting a bind
-
-**v0.8.2c** [1.48 Compatibility - Public alpha release]
+**v0.8.2c** [Public alpha release — 1.48 Compatibility]
 
 - Combined cleanup scripts into events loop to improve server fps
 - Guided missile, lock-on, railgun, mines and explosive damage now affected by target armor

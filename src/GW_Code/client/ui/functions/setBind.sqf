@@ -67,7 +67,7 @@ if (!isNil "GW_MOUSEX" && !isNil "GW_MOUSEY" && { GW_MOUSEX > 0.4 } ) then {
 
 	// Wait for a key press
 	waitUntil{
-		( (time > _timeout) || !isNil "GW_KEYDOWN" || !isNil { GW_SETTING_CANCEL } )
+		( (time > _timeout) || !isNil "GW_KEYDOWN" || !isNil "GW_SETTING_CANCEL")
 	};
 
 	GW_KEYBIND_ACTIVE = false;

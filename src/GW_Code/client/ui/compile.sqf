@@ -143,13 +143,24 @@ clearBind = {
 
 	private ['_index'];
 
-	GW_SETTING_CANCEL = true;
-	
-	_index = lnbcurselrow 92001;
-	lnbSetText [92001, [_index, 2], ''];
-	lnbSetData [92001, [_index, 2], '-1'];
+	//if (GW_KEYBIND_ACTIVE) then { 
 
-	[] call saveBinds;
+		// GW_KEYDOWN = nil;
+		GW_SETTING_CANCEL = true; 
+
+		// _timeout = time + 1;
+		// waitUntil {
+		// 	Sleep 0.25;
+		// 	(isNil "GW_SETTING_CANCEL" || time > _timeout)
+		// };
+		
+		_index = lnbcurselrow 92001;
+		lnbSetText [92001, [_index, 2], ''];
+		lnbSetData [92001, [_index, 2], '-1'];
+
+	//};
+
+	//[] call saveBinds;
 
 };
 
