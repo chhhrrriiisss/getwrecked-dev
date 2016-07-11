@@ -422,11 +422,12 @@ focusCurrentRace = {
 createNewRace = {
 	private ['_existingRaces', '_raceName', '_origin', '_p1', '_p2'];
 
-	_existingRaces = call getAllRaces;
+
+	_allRaces = profilenamespace getVariable [GW_RACES_LOCATION, []];	
 	_raceName = toUpper([true] call generateName);
 
 	// Make sure we don't create two identical names
-	if ( ({ if (((_x select 0) select 0) == _raceName) exitWith { 1 }; false } count call getAllRaces) >= 1) exitWith { [] call createNewRace; };
+	if ( ({ if (((_x select 0) select 0) == _raceName) exitWith { 1 }; false } count _allRaces) >= 1) exitWith { [] call createNewRace; };
 
 	// Create a basic set of waypoints to start
 	_origin = [[], 0, 20000, 25, 0, 5, 0] call bis_fnc_findSafePos;
@@ -435,13 +436,22 @@ createNewRace = {
 
 	if (count _origin == 0 || count _p1 == 0 || count _p2 == 0) exitWith { [] call createNewRace; };
 	{_x set [2, 0];	} foreach [_origin, _p1, _p2];
+	
+	_allRaces pushBack [[_raceName,(name player),worldName, false],[_origin,_p1,_p2]];	
 
-	_existingRaces pushBack [[_raceName,(name player),worldName, false],[_origin,_p1,_p2]];	
-
-	profileNamespace setVariable [GW_RACES_LOCATION, _existingRaces];
+	profileNamespace setVariable [GW_RACES_LOCATION, _allRaces];
 	saveProfileNamespace;
 
-	[((count _existingRaces) -1)] call generateRaceList;
+	// Get index of race in existing race array
+	_existingRaces = call getAllRaces;
+	_index = -1;
+	{
+		if (_raceName == ((_x select 0) select 0)) exitWith { _index = _forEachIndex; };
+	} foreach _existingRaces;		
+
+	if (_index < 0) exitWith {};
+		
+	[_index] call generateRaceList;
 
 };
 
@@ -481,7 +491,7 @@ deleteRace = {
 	_result = if (isNil {_this select 0}) then { ([format['DELETE %1?', _raceToDelete], '', 'CONFIRM'] call createMessage) } else { true };
 	if (!_result) exitWith {};	
 
-	_existingRaces = call getAllRaces;
+	_existingRaces = profileNamespace getVariable [GW_RACES_LOCATION, []];
 
 	// Dlete race from array
 	{ 

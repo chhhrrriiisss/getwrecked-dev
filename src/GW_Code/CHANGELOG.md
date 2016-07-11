@@ -38,7 +38,7 @@ Items without Fixed/Added/Removed proceeding are typically balance changes.
 - Removed an unnecessary loop from the chat commands system
 - Improved angle of ramps at Terminal
 
-- Fixed Clear bind button not correctly clearing entries that are waiting for a key press
+- Fixed Race library corruption when creating/deleting races on other maps
 - Fixed Race not correctly ending after at least one player has finished
 - Fixed "_newFuel" undefined variable error
 - Fixed Several outdated .wss file locations 
