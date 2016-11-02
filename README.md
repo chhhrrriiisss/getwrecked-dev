@@ -30,6 +30,9 @@ This mod and its content (excluding those already attributed therein) are under 
 Attribution-NonCommercial-NoDerivatives 4.0 International
 Permission must be sought from the Author for its commercial use, any modification or use of a non-public release obtained via the mission cache
 
+**Additional translations:**
+French - S.M.Z
+
 **Additional scripts (added post MANW):**
 
 Nuclear Explosion by [Moerderhoschi](http://www.armaholic.com/page.php?id=23963)

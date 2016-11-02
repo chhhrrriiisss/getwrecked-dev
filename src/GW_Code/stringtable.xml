@@ -1,10 +1,11 @@
-<!-- 
-
-	This stringtable is a WIP and it is likely to contain some errors. 
+<!--
+ 
+	This stringtable is a WIP and it is likely to contain some errors.
 	If you see one, or would like to help translate, please email hello@getwrecked.info or message @getwreckeda3!
 
 	Translations:
-	English/French - Sli	
+	English - Sli
+	French - S.M.Z
 
 -->
 <?xml version="1.0" encoding="utf-8"?>
@@ -12,7 +13,7 @@
 <Project name="GetWrecked">
 
 	<!-- Mission load -->
-	<Package name="Init">				
+	<Package name="Init">
 		<Key ID="str_gw_loading">
 			<English>Loading...</English>
 			<French>Chargement...</French>
@@ -20,12 +21,12 @@
 
 		<Key ID="str_gw_welcome">
 			<English>Welcome to Get Wrecked!</English>
-			<French>Bienvenue à Get Wrecked!</French>
-		</Key>		
+			<French>Bienvenue sur Get Wrecked!</French>
+		</Key>
 
 		<Key ID="str_gw_welcome_guide">
 			<English>A guide is available at getwrecked.info</English>
-			<French>Un guide est disponible au getwrecked.info</French>
+			<French>Un guide est disponible sur getwrecked.info</French>
 		</Key>
 
 	</Package>
@@ -34,12 +35,12 @@
 	<Package name="Warnings">
 		<Key ID="str_gw_version_mismatch">
 			<English>Warning: Vehicle saved with an older version, please re-save, clear and load to fix errors!</English>
-			<French>Attention: Véhicule sauvé avec une version antérieure, se il vous plaît ré-enregistrer, claire et charger à nouveau pour corriger les erreurs!</French>
+			<French>Attention: Véhicule sauvegardé avec une version antérieure du mod, veuilez ré-enregistrer et charger votre vehicule à nouveau.</French>
 		</Key>
 	</Package>
-	
+
 	<!-- Alert Dialogs -->
-	<Package name="Alerts">					
+	<Package name="Alerts">
 
 		<Key ID="str_gw_wheels_disabled">
 			<English>WHEELS DISABLED!</English>
@@ -58,7 +59,7 @@
 
 		<Key ID="str_gw_lock_detected">
 			<English>LOCK DETECTED!</English>
-			<French>VERROUILLER DÉTECTÉ!</French>
+			<French>VERROUILLAGE MISSILE DÉTECTÉ!</French>
 		</Key>
 
 		<Key ID="str_gw_disabled">
@@ -68,21 +69,21 @@
 
 		<Key ID="str_gw_connection_lost">
 			<English>CONNECTION LOST!</English>
-			<French>CONNEXION TERMINÉ!</French>
-		</Key>	
+			<French>CONNEXION PERDUE!</French>
+		</Key>
 
 		<Key ID="str_gw_no_vehicle_found">
 			<English>NO VEHICLE FOUND!</English>
-			<French>AUCUN VÉHICLE TROUVÉ!</French>
+			<French>AUCUN VÉHICLE DISPONIBLE!</French>
 		</Key>
 		<Key ID="str_gw_cannot_attach">
 			<English>CANNOT ATTACH!</English>
-			<French>NE PEUT PAS JOINDRE!</French>
+			<French>NE PEUT PAS ETRE ATTACHÉ ICI!</French>
 		</Key>
 
 		<Key ID="str_gw_too_many_weapons">
 			<English>TOO MANY WEAPONS!</English>
-			<French>TROP D'ARMES!</French>
+			<French>TROP D'ARMEMEMENT!</French>
 		</Key>
 
 		<Key ID="str_gw_too_many_modules">
@@ -92,7 +93,7 @@
 
 		<Key ID="str_gw_permission_error">
 			<English>PERMISSION ERROR!</English>
-			<French>ERREUR D'AUTORISATION!</French>
+			<French>TU N'AS PAS LA PERMISSION!</French>
 		</Key>
 
 		<Key ID="str_gw_too_heavy">
@@ -115,7 +116,7 @@
 			<French>SORTIE DE LA ZONE! (%1s)</French>
 		</Key>
 
-	
+
 
 	</Package>
 </Project>

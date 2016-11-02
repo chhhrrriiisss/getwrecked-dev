@@ -1,9 +1,18 @@
 # [Get Wrecked](http://getwrecked.info) Changelog
-## Last Updated: [12-07-2016] ##
+## Last Updated: [29-08-2016] ##
 
-Note: Some changes that are deemed spoilers are hidden from this log. 
+Note: Some changes that are deemed spoilers are hidden from this log.
 (WIP) Indicates items that may not be fully functional and are only partially implemented.
 Items without Fixed/Added/Removed proceeding are typically balance changes.
+
+**v0.8.6L** [Closed Alpha Release]
+
+- Modified and simplified vehicle config format to make it more modding friendly
+- Increased number of service terminals on Altis to allow support for 24 players
+- Slightly lowered overall fire damage
+- Added check for proximity to workshop during a race
+- Fixed Able to add race checkpoints to the workshop area/safezone
+- Fixed Player able to pickup some weapons and disassemble static weapons
 
 **v0.8.6** [Public alpha release — A3 1.62]
 
@@ -41,7 +50,7 @@ Items without Fixed/Added/Removed proceeding are typically balance changes.
 - Fixed Race library corruption when creating/deleting races on other maps
 - Fixed Race not correctly ending after at least one player has finished
 - Fixed "_newFuel" undefined variable error
-- Fixed Several outdated .wss file locations 
+- Fixed Several outdated .wss file locations
 - Fixed isEqualType [] error related to lack of available vHud bar space
 - Fixed Race checkpoints couldn't be placed on bridges
 - Fixed Deploy point on plantation above flame pad (lol)
@@ -120,7 +129,7 @@ Items without Fixed/Added/Removed proceeding are typically balance changes.
 - Fixed occasional missing items on vehicle load
 - Fixed 'Slytech' missing texture bug
 - Fixed some vehicle items tending not to load under low server fps
-- Fixed Items shifting position when saved multiple times 
+- Fixed Items shifting position when saved multiple times
 - Fixed Purchasing multiple items should now correctly use nearby supply boxes owned by player
 - Fixed Filter list on deploy menu should now correctly update when arrows are used
 - Fixed Race menu should now correctly only show races valid on the current map
@@ -144,11 +153,11 @@ Items without Fixed/Added/Removed proceeding are typically balance changes.
 - Melee weapons now take a small amount of damage when used until they break (damage no longer less per item)
 - Weapon damage and vehicle armor pass to help re-balance engagement times and viability
 - Supply boxes should no longer take over the workshop
-- Objects now hold their rotate while attaching them 
+- Objects now hold their rotate while attaching them
 - effectIsVisible dedicated check to minimize unnecessary visual effects being spawned on clients
 - Teleport mechanic adjusted to make it more practical to use
 - Shockwave velocity limitation
-- Increased audability of most weapon/module effects 
+- Increased audability of most weapon/module effects
 - Re-write to object manipulation system to avoid collisions in workshop
 - loadVehicle system is now client side to improve reliability (WIP)
 - Improved status effect handler system to improve fps
@@ -171,7 +180,7 @@ Items without Fixed/Added/Removed proceeding are typically balance changes.
 - Fixed - Vehicles spawning simultaneously now are both deleted to avoid collisions
 - Fixed - Laser firing from center of object
 - Fixed - Memory crash involving object handle damage event handler
-- Fixed - Crash on attaching HMGs/GMGs 
+- Fixed - Crash on attaching HMGs/GMGs
 - Fixed - setVehicleTexture not exiting correctly on server
 - Fixed - Vehicle stats should now be recorded properly
 - Fixed - Infinite flight with the emergency parachute
@@ -188,7 +197,7 @@ Items without Fixed/Added/Removed proceeding are typically balance changes.
 - Added - Rocket Pods, Grappling Hook, Teleportation Device, Electromagnet (WIP)
 - Added - EMP Resistant Fencing, Military-Grade Concrete, Chainlink Panel, Thick Concrete Wall
 - Added - Concrete Pylon, Hydraulic Hook (WIP)
-- Added - Box Truck, Fuel and Ammo and Tempest Trucks to available vehicles 
+- Added - Box Truck, Fuel and Ammo and Tempest Trucks to available vehicles
 - Added - Suspend option to lift vehicle mechanic
 
 
@@ -253,7 +262,7 @@ Items without Fixed/Added/Removed proceeding are typically balance changes.
 - Slowed HMG rate of fire, increased stock damage per round
 - Shield generator now correctly swaps textures for vehicles without a custom texture
 - Lowered chance of tyre pop on mortar impact and mortar rof reduced
-- Eject system is now an emergency parachute (WIP) 
+- Eject system is now an emergency parachute (WIP)
 - Optimized HUD loop to improve client fps
 - Vehicles with engines off now have lower radar signatures
 - Overcharge no longer affects weapons, only module cooldowns
@@ -273,11 +282,11 @@ Items without Fixed/Added/Removed proceeding are typically balance changes.
 - EMP timeout increased to 40 seconds and effect duration on source vehicle increased to 4 seconds
 - Fixed - Damage object causing action menu to bug out
 - Fixed - Lock ons causing excessive network traffic
-- Fixed - Key binds resetting on load vehicle 
-- Fixed - Guided missile always exploding at 1000m 
+- Fixed - Key binds resetting on load vehicle
+- Fixed - Guided missile always exploding at 1000m
 - Fixed - Lock-on using front of vehicle instead of camera direction
 - Fixed - Mouse fire mode not defaulting to 'active' on newly attached weapons
-- Fixed - Laser not firing due to script error 
+- Fixed - Laser not firing due to script error
 - Fixed - Bug causing player invulnerability to toggle on/off in the wrong areas
 - Fixed - Railgun should now correctly use indirect/direct fire mode after delay
 - Fixed - Lock on missile failing to launch to target and no minimum lock range
@@ -286,18 +295,18 @@ Items without Fixed/Added/Removed proceeding are typically balance changes.
 - Fixed - Karts and vehicles shifting sideways with stuck wheels on deploy
 - Fixed - Bag of explosives should no longer bump source vehicle when detaching
 - Fixed - Meta data bug with default vehicles for new players
-- Fixed - Railgun, mortar blocking mouse fire for all weapons 
+- Fixed - Railgun, mortar blocking mouse fire for all weapons
 - Fixed - New players unable to get past 'loading screen'
-- Fixed - Older saved cars not using updated vehicle binds order on fresh load 
+- Fixed - Older saved cars not using updated vehicle binds order on fresh load
 - Fixed - Jittery vehicles (due to excess weight)
 - Fixed - Flamethrower should no longer set light to source vehicle when firing ahead
 - Fixed - Teleport Supply crate putting vehicles below ground
-- Fixed - Cleanup should no longer remove attached objects on vehicles 
+- Fixed - Cleanup should no longer remove attached objects on vehicles
 - Fixed - Weapon marking system not re-marking for same player with different weapon
 - Fixed - Weapons/modules activating while message dialog open
 - Temp Fix - Multiple vehicles loading on top of each other when multiple people spawn at same pad
 - Removed - Parachute vehicle drop as it causes desync and does not work properly
-- Removed - Long concrete wall, for balance purposes 
+- Removed - Long concrete wall, for balance purposes
 - Removed - Jammer supply crate in place of radar powerup
 - Added - Custom sounds to vehicle service points
 - Added - cleanup to remove excess actions from unnecessary items while in battle
@@ -307,14 +316,14 @@ Items without Fixed/Added/Removed proceeding are typically balance changes.
 - Added - New events system to handle random, condition based script execution
 - Added - New text notifications to show deploying players, weapon used to kill
 - Added - Charge up noise on railgun
-- Added - More taunts: batman, sparta, herewego, hax, headshot and horn icon for settings menu 
+- Added - More taunts: batman, sparta, herewego, hax, headshot and horn icon for settings menu
 - Added - Beep sound effect to 'lock detected'
 - Added - Lights to temporary vehicle spawn areas so you can see them in preview at night
 - Added - More vehicle terminals and support for 12 players
 - Added - Support for destroyable attached building objects on vehicles (WIP)
 - Added - Key binds for modules now shown on vehicle hud
 - Added - !reset to allow for character profile resets
-- Added - Reintroduced simulation manager to increase overall fps 
+- Added - Reintroduced simulation manager to increase overall fps
 - Added - Unflip vehicle option to vehicle scroll menu (when in zone)
 - Added - Status new health bars to vehicle tags
 - Added - Vehicle armor ratings to prolong time-to-kill
@@ -327,7 +336,7 @@ Items without Fixed/Added/Removed proceeding are typically balance changes.
 - Lift Vehicle and settings options now attached to player proximity to owned vehicle
 - Vertical Thrusters should no longer be linked, along with most other modules
 - 'Key Restricted' warning when trying to use a restricted key for a bind
-- Tweaks to hud timeout bars to better show time remaining for multiple modules of the same type 
+- Tweaks to hud timeout bars to better show time remaining for multiple modules of the same type
 - You can no longer detach or move objects while in a race zone
 - If you get kicked out of a vehicle due to low health the vehicle will now explode
 - Flamethrower should now have better hit detection
@@ -341,11 +350,11 @@ Items without Fixed/Added/Removed proceeding are typically balance changes.
 - Fixed - Last loaded vehicle is now set via vehicle save (previously only on vehicle load)
 - Fixed - Buy menu being generated twice on menu load
 - Fixed - Script errors when buying items across different categories
-- Fixed - Total cost should now update when just selecting one item in buy menu 
-- Fixed - Bug allowing supply boxes to be attached to vehicles 
+- Fixed - Total cost should now update when just selecting one item in buy menu
+- Fixed - Bug allowing supply boxes to be attached to vehicles
 - Fixed - Easy money from tagging own vehicle with mortar
 - Fixed - Emergency Repair Device failing to repair caltropped wheels
-- Removed - Repair/reload/refuel area map triggers in favour of a new system 
+- Removed - Repair/reload/refuel area map triggers in favour of a new system
 - Removed - Muzzle effect showing for non-local clients due to excess lag with hmg/gmg/laser fire
 - Added - Special vehicle binds (taunt/unflip/toggle lock/detonate explosives) to settings menu
 - Added - New nitro pads to some zones (WIP)
@@ -353,7 +362,7 @@ Items without Fixed/Added/Removed proceeding are typically balance changes.
 - Added - !fixdlc can now be used to toggle removing non-dlc headgear on spawn for people without the Karts DLc
 - Added - Tyre burst sound effect to caltrops
 - Added - Indirect fire mode for weapons (eg shooting backwards)
-- Added - Mouse fire toggle button for individual weapons 
+- Added - Mouse fire toggle button for individual weapons
 - Added - !sendmoney <player name> can now be used to transfer money to other players
 - Added - New pink and camouflage paint
 - Added - New vehicle taunts: surprise, horn, toot and buzzer
@@ -372,7 +381,7 @@ Items without Fixed/Added/Removed proceeding are typically balance changes.
 - Effective range of Magnetic Coil reduced slightly and reload time increased
 - Mortar round now has less variance and a faster speed when locked
 - Newly parachuted vehicles no longer show tags
-- New checks on save to automatically compile and re-enable simulation on vehicle 
+- New checks on save to automatically compile and re-enable simulation on vehicle
 - Lowered overall weapon damage slightly
 - Moved spawn location at airfield that was above runway edgelights
 - Text added to vehicle service terminal icons
@@ -383,7 +392,7 @@ Items without Fixed/Added/Removed proceeding are typically balance changes.
 - Reduced quality of all vehicle textures to bring down overall file size (feedback needed here)
 - Settings key in a vehicle now bindable to User Action 20
 - Last vehicle should now be automatically loaded at a nearby pad when you spawn back at the workshop
-- Added filter button to buy menu 
+- Added filter button to buy menu
 - Added new hud marker for junk piles
 - Added Flamethrower (WIP)
 - Added cleanup scripts for abandoned and dead objects
@@ -404,7 +413,7 @@ Items without Fixed/Added/Removed proceeding are typically balance changes.
 - No money earned for killing newly deployed vehicles
 - Some light tweaks to the targetting to improve aiming (still a WIP)
 - Mortar should now lock correctly and fire when locked
-- Welcome note for new players 
+- Welcome note for new players
 - Added truck to starter vehicles in library
 - $500 starting cash so weapons are more accessible
 - Tweaked minimum lock range to 175m
@@ -412,19 +421,3 @@ Items without Fixed/Added/Removed proceeding are typically balance changes.
 - Having low ammo should no longer prevent you using some items
 - Prevent tagging self with proxmity mines, explosives etc
 - Magnetic coil now correctly tags victims
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

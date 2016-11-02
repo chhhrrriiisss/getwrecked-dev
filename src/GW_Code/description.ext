@@ -1,23 +1,25 @@
-respawn = "BASE"; 
-respawndelay = 1;  
-respawnTemplates[] = {"Base"}; 
+respawn = "BASE";
+respawndelay = 1;
+respawnTemplates[] = {"Base"};
 respawnDialog = 0;
 
 author="SLI";
 OnLoadName = "GET WRECKED";
 OnLoadMission = "Vehicle combat sandbox.";
 enableDebugConsole = 1;
-skipLobby = 1;
 overviewPicture = "load-image.jpg";
 loadScreen = "load-image.jpg";
+
+/* Remove on live */
+allowFunctionsRecompile = 1;
 
 disabledAI = true;
 
 class Header
 {
-	gameType = SANDBOX; 
-	minPlayers = 1; 
-	maxPlayers = 16; 
+	gameType = SANDBOX;
+	minPlayers = 1;
+	maxPlayers = 24;
 };
 
 onPauseScript = "onPause.sqf";
@@ -52,11 +54,11 @@ class CfgFunctions
 	#include "global\Functions.h"
 };
 
-class RscTitles 
-{   
+class RscTitles
+{
    #include "client\ui\display\hud.hpp"
    #include "client\ui\hud\loading.hpp"
-   #include "client\ui\hud\alert.hpp"   
+   #include "client\ui\hud\alert.hpp"
    #include "client\ui\hud\powerup.hpp"
    #include "client\ui\hud\notification.hpp"
 };
@@ -147,7 +149,7 @@ class CfgSounds
 	};
 
 	// Retrieved from the awesome http://www.freesfx.co.uk
-	// Modified by Sli 
+	// Modified by Sli
 	class paint
 	{
 		name = "paint";
@@ -156,7 +158,7 @@ class CfgSounds
 	};
 
 	// Retrieved from the awesome http://www.freesfx.co.uk
-	// Modified by Sli 
+	// Modified by Sli
 	class money
 	{
 		name = "money";
@@ -165,7 +167,7 @@ class CfgSounds
 	};
 
 	// Retrieved from the awesome http://www.freesfx.co.uk
-	// Modified by Sli 
+	// Modified by Sli
 	class flamethrower
 	{
 		name = "flamethrower";
@@ -174,7 +176,7 @@ class CfgSounds
 	};
 
 	// Retrieved from the awesome http://www.freesfx.co.uk
-	// Modified by Sli 
+	// Modified by Sli
 	class railgun
 	{
 		name = "railgun";
@@ -183,7 +185,7 @@ class CfgSounds
 	};
 
 	// Retrieved from the awesome http://www.freesfx.co.uk
-	// Modified by Sli 
+	// Modified by Sli
 	class upgrade
 	{
 		name = "upgrade";
@@ -192,7 +194,7 @@ class CfgSounds
 	};
 
 	// Retrieved from the awesome http://www.freesfx.co.uk
-	// Modified by Sli 
+	// Modified by Sli
 	class oil
 	{
 		name = "oil";
@@ -201,7 +203,7 @@ class CfgSounds
 	};
 
 	// Retrieved from the awesome http://www.freesfx.co.uk
-	// Modified by Sli 
+	// Modified by Sli
 	class rep
 	{
 		name = "rep";
@@ -210,7 +212,7 @@ class CfgSounds
 	};
 
 	// Retrieved from the awesome http://www.freesfx.co.uk
-	// Modified by Sli 
+	// Modified by Sli
 	class nuke
 	{
 		name = "nuke";
@@ -243,7 +245,7 @@ class CfgSounds
 	};
 
 	// Retrieved from the awesome http://www.freesfx.co.uk
-	// Modified by Sli 
+	// Modified by Sli
 	class squirrel
 	{
 		name = "squirrel";
@@ -252,7 +254,7 @@ class CfgSounds
 	};
 
 	// Retrieved from Youtube under public domain
-	// Modified by Sli 
+	// Modified by Sli
 	class surprise
 	{
 		name = "surprise";
@@ -261,7 +263,7 @@ class CfgSounds
 	};
 
 	// Retrieved from the awesome http://www.freesfx.co.uk
-	// Modified by Sli 
+	// Modified by Sli
 	class buzzer
 	{
 		name = "buzzer";
@@ -270,7 +272,7 @@ class CfgSounds
 	};
 
 	// Retrieved from the awesome http://www.freesfx.co.uk
-	// Modified by Sli 
+	// Modified by Sli
 	class toot
 	{
 		name = "toot";
@@ -279,7 +281,7 @@ class CfgSounds
 	};
 
 	// Retrieved from the awesome http://www.freesfx.co.uk
-	// Modified by Sli 
+	// Modified by Sli
 	class horn
 	{
 		name = "horn";
@@ -405,7 +407,6 @@ class CfgSounds
 		sound[] = {"\client\sounds\wrench5.ogg", 1.1, 1};
 		titles[] = {};
 	};
- 
- 
-};
 
+
+};
